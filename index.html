@@ -4,118 +4,336 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Random Phone Builds</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --accent: #C42020;
     --bg: #FAFAFA;
+    --card-bg: #FFFFFF;
     --text-primary: #1D1D1F;
     --text-secondary: #6E6E73;
     --divider: #E5E5E7;
+    --hover-bg: rgba(0, 0, 0, 0.02);
   }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
     background: var(--bg);
     color: var(--text-primary);
-    border-top: 3px solid var(--accent);
     line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+
+  .top-bar {
+    height: 3px;
+    background: var(--accent);
+  }
+
   .container {
-    max-width: 720px;
+    max-width: 680px;
     margin: 0 auto;
-    padding: clamp(2rem, 6vw, 6rem) clamp(1.5rem, 4vw, 2rem);
+    padding: clamp(3rem, 8vw, 7rem) clamp(1.5rem, 4vw, 2rem) 4rem;
   }
+
+  /* Header */
   header {
-    margin-bottom: 3rem;
+    margin-bottom: 3.5rem;
     animation: fadeInUp 0.6s ease-out both;
   }
-  h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+
+  header .label {
+    font-size: 0.7rem;
     font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 1rem;
   }
-  header p {
-    font-size: 1.1rem;
+
+  h1 {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+  }
+
+  header .subtitle {
+    font-size: 1.05rem;
     color: var(--text-secondary);
     font-weight: 300;
+    line-height: 1.6;
   }
+
+  /* Count badge */
+  .count {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 100px;
+    padding: 0.3rem 0.9rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* Project list */
   .projects {
     list-style: none;
   }
+
   .projects li {
-    border-top: 1px solid var(--divider);
-    animation: fadeInUp 0.5s ease-out both;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeInUp 0.45s ease-out forwards;
   }
-  .projects li:nth-child(1) { animation-delay: 0.1s; }
-  .projects li:nth-child(2) { animation-delay: 0.15s; }
-  .projects li:nth-child(3) { animation-delay: 0.2s; }
-  .projects li:nth-child(4) { animation-delay: 0.25s; }
-  .projects li:nth-child(5) { animation-delay: 0.3s; }
-  .projects li:nth-child(6) { animation-delay: 0.35s; }
-  .projects li:nth-child(7) { animation-delay: 0.4s; }
-  .projects li:nth-child(8) { animation-delay: 0.45s; }
-  .projects li:nth-child(9) { animation-delay: 0.5s; }
-  .projects li:nth-child(10) { animation-delay: 0.55s; }
+
+  .projects li + li {
+    border-top: 1px solid var(--divider);
+  }
+
   .projects a {
-    display: block;
-    padding: 1.25rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.2rem 0.75rem;
+    margin: 0 -0.75rem;
     text-decoration: none;
     color: var(--text-primary);
-    transition: color 0.2s ease;
+    border-radius: 12px;
+    transition: background 0.2s ease, color 0.2s ease;
   }
+
   .projects a:hover {
+    background: var(--hover-bg);
+  }
+
+  .projects a:hover .title {
     color: var(--accent);
   }
+
+  .projects .info {
+    flex: 1;
+    min-width: 0;
+  }
+
   .projects .title {
-    font-size: 1.15rem;
+    display: block;
+    font-size: 1.05rem;
     font-weight: 500;
     letter-spacing: -0.01em;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
+
   .projects .desc {
-    font-size: 0.85rem;
+    display: block;
+    font-size: 0.82rem;
     color: var(--text-secondary);
     font-weight: 300;
-    margin-top: 0.25rem;
+    margin-top: 0.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .empty {
-    padding: 3rem 0;
+
+  .projects .arrow {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: var(--divider);
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .projects a:hover .arrow {
+    color: var(--accent);
+    transform: translateX(3px);
+  }
+
+  /* Loading & empty states */
+  .state-msg {
+    padding: 4rem 0;
     text-align: center;
     color: var(--text-secondary);
     font-weight: 300;
+    font-size: 0.95rem;
   }
+
+  .loader {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--divider);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+
+  /* Footer */
   footer {
-    margin-top: 4rem;
+    margin-top: 5rem;
     padding-top: 2rem;
     border-top: 1px solid var(--divider);
-    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  footer span,
+  footer a {
+    font-size: 0.75rem;
     color: var(--text-secondary);
     font-weight: 300;
   }
+
+  footer a {
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  footer a:hover {
+    color: var(--accent);
+  }
+
+  /* Animations */
   @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(15px); }
+    from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Mobile */
+  @media (max-width: 500px) {
+    .projects a {
+      padding: 1rem 0.5rem;
+      margin: 0 -0.5rem;
+    }
+    .projects .desc {
+      white-space: normal;
+    }
   }
 </style>
 </head>
 <body>
+
+<div class="top-bar"></div>
+
 <div class="container">
   <header>
+    <p class="label">Matt Matheson</p>
     <h1>Random Phone Builds</h1>
-    <p>Research docs, HTML articles, and random builds from my phone.</p>
+    <p class="subtitle">Research docs, HTML articles, and random builds — all made from my phone.</p>
+    <span class="count" id="count"></span>
   </header>
 
   <ul class="projects" id="projects">
-    <!-- PROJECT_LIST_START -->
-    <li><a href="Nathan_crt/"><span class="title">Nathan_crt</span><br><span class="desc">HDMI-to-RCA Converter Research for CRT Gaming</span></a></li>
-    <!-- PROJECT_LIST_END -->
+    <li class="state-msg" id="loading"><span class="loader"></span> Loading projects&hellip;</li>
   </ul>
 
   <footer>
-    <p>Hosted on GitHub Pages &middot; <a href="https://github.com/mattmatheson/RandomPhoneBuilds" style="color: var(--text-secondary);">View source</a></p>
+    <span>&copy; 2026</span>
+    <a href="https://github.com/mattmatheson/RandomPhoneBuilds">Source on GitHub</a>
   </footer>
 </div>
+
+<script>
+(async function () {
+  const REPO = 'mattmatheson/RandomPhoneBuilds';
+  const API  = 'https://api.github.com/repos/' + REPO + '/contents/';
+  const SKIP = new Set(['index.html', 'CLAUDE.md', 'README.md', 'LICENSE', '.gitignore', 'CNAME']);
+
+  const listEl  = document.getElementById('projects');
+  const countEl = document.getElementById('count');
+
+  // Pretty-print folder names: underscores/hyphens → spaces, title case
+  function prettify(name) {
+    return name
+      .replace(/[-_]+/g, ' ')
+      .replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+  }
+
+  // Fetch the <title> from a project's index.html to use as description
+  async function fetchTitle(folder) {
+    try {
+      var res = await fetch('/' + REPO.split('/')[1] + '/' + folder + '/index.html');
+      if (!res.ok) return null;
+      var html = await res.text();
+      var m = html.match(/<title[^>]*>(.*?)<\/title>/i);
+      return m ? m[1].trim() : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  try {
+    var res = await fetch(API);
+    if (!res.ok) throw new Error('GitHub API returned ' + res.status);
+    var items = await res.json();
+
+    // Filter to directories only, skip known root files
+    var folders = items.filter(function (item) {
+      return item.type === 'dir' && !SKIP.has(item.name) && !item.name.startsWith('.');
+    });
+
+    if (folders.length === 0) {
+      listEl.innerHTML = '<li class="state-msg">No projects yet.</li>';
+      countEl.textContent = '0 projects';
+      return;
+    }
+
+    countEl.textContent = folders.length + (folders.length === 1 ? ' project' : ' projects');
+
+    // Fetch titles in parallel
+    var titles = await Promise.all(folders.map(function (f) { return fetchTitle(f.name); }));
+
+    listEl.innerHTML = '';
+
+    folders.forEach(function (folder, i) {
+      var li = document.createElement('li');
+      li.style.animationDelay = (0.08 + i * 0.05) + 's';
+
+      var desc = titles[i] || prettify(folder.name);
+      var displayName = prettify(folder.name);
+
+      li.innerHTML =
+        '<a href="' + folder.name + '/">' +
+          '<span class="info">' +
+            '<span class="title">' + displayName + '</span>' +
+            (titles[i] ? '<span class="desc">' + titles[i] + '</span>' : '') +
+          '</span>' +
+          '<svg class="arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
+            '<path d="M7 4l6 6-6 6"/>' +
+          '</svg>' +
+        '</a>';
+
+      listEl.appendChild(li);
+    });
+  } catch (e) {
+    // Fallback: if API fails (rate limit, etc.), show a static link
+    listEl.innerHTML =
+      '<li class="state-msg">Couldn\'t load projects automatically.<br>' +
+      '<a href="https://github.com/mattmatheson/RandomPhoneBuilds" style="color:var(--accent)">Browse on GitHub</a></li>';
+    console.error('Directory fetch failed:', e);
+  }
+})();
+</script>
+
 </body>
 </html>
