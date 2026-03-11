@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why HDMI-to-RCA Converters Are Terrible for CRT Gaming</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --bg: #FAFAFA;
+    --text-primary: #1D1D1F;
+    --text-secondary: #6E6E73;
+    --divider: #E5E5E7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    border-top: 3px solid var(--accent);
+    line-height: 1.7;
+    font-weight: 400;
+    font-size: 16px;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: clamp(2rem, 6vw, 6rem) clamp(1.5rem, 4vw, 2rem);
+  }
+
+  header {
+    margin-bottom: 3rem;
+    animation: fadeInUp 0.6s ease-out both;
+  }
+
+  header .date {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  header .scope {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  h2 {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+  }
+
+  h3 {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  p {
+    margin-bottom: 1.25rem;
+    font-weight: 300;
+  }
+
+  section {
+    padding: 4rem 0;
+    border-top: 1px solid var(--divider);
+  }
+
+  section:first-of-type {
+    border-top: none;
+    padding-top: 2rem;
+  }
+
+  nav.toc {
+    margin-bottom: 2rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--divider);
+    animation: fadeInUp 0.6s ease-out both;
+    animation-delay: 0.05s;
+  }
+
+  nav.toc a {
+    display: block;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    padding: 0.35rem 0;
+    transition: color 0.2s ease;
+  }
+
+  nav.toc a:hover {
+    color: var(--accent);
+  }
+
+  article {
+    margin-bottom: 2.5rem;
+  }
+
+  article:last-child {
+    margin-bottom: 0;
+  }
+
+  .stats-grid .stat-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+    margin: 2.5rem 0;
+  }
+
+  .stat-group .stat {
+    text-align: center;
+  }
+
+  .stat .number {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1.2;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  .stat .label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.35rem;
+    font-weight: 400;
+  }
+
+  .signal-diagram {
+    background: #fff;
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .signal-path {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .signal-node {
+    background: var(--text-primary);
+    color: #fff;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .signal-node.bad {
+    background: var(--accent);
+  }
+
+  .signal-node.good {
+    background: #2D7D46;
+  }
+
+  .signal-arrow {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+  }
+
+  .signal-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 0.75rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .callout {
+    border-left: 3px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    background: rgba(196, 32, 32, 0.03);
+    border-radius: 0 8px 8px 0;
+  }
+
+  .callout p {
+    margin-bottom: 0;
+    font-weight: 400;
+    font-size: 0.95rem;
+  }
+
+  .video-section {
+    margin: 2.5rem 0;
+  }
+
+  .video-card {
+    background: #fff;
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .video-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+
+  .video-card .video-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+  }
+
+  .video-card .video-embed iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .video-card .video-info {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .video-card .video-info h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+    letter-spacing: -0.01em;
+  }
+
+  .video-card .video-info p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+    font-weight: 300;
+  }
+
+  footer {
+    padding: 4rem 0 2rem;
+    border-top: 1px solid var(--divider);
+  }
+
+  footer ol {
+    padding-left: 1.5rem;
+  }
+
+  footer li {
+    margin-bottom: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  footer a {
+    color: var(--text-secondary);
+    text-decoration: underline;
+    text-decoration-color: rgba(110, 110, 115, 0.3);
+    transition: text-decoration-color 0.2s ease, color 0.2s ease;
+  }
+
+  footer a:hover {
+    color: var(--accent);
+    text-decoration-color: var(--accent);
+  }
+
+  a.source-link {
+    color: var(--text-secondary);
+    text-decoration: underline;
+    text-decoration-color: rgba(110, 110, 115, 0.3);
+    transition: text-decoration-color 0.2s ease, color 0.2s ease;
+    font-weight: 400;
+  }
+
+  a.source-link:hover {
+    color: var(--accent);
+    text-decoration-color: var(--accent);
+  }
+
+  .back-to-top {
+    display: block;
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 400;
+    transition: color 0.2s ease;
+  }
+
+  .back-to-top:hover {
+    color: var(--accent);
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  section:nth-of-type(1) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.1s; }
+  section:nth-of-type(2) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.2s; }
+  section:nth-of-type(3) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.3s; }
+  section:nth-of-type(4) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.4s; }
+  section:nth-of-type(5) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.5s; }
+  section:nth-of-type(6) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.6s; }
+  section:nth-of-type(7) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.7s; }
+  footer { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.8s; }
+
+  @media print {
+    body { border-top: none; }
+    .back-to-top, .video-card .video-embed, nav.toc { display: none; }
+    section { break-inside: avoid; }
+    .signal-diagram { border: 1px solid #ccc; }
+  }
+
+  @media (max-width: 480px) {
+    .signal-path { flex-direction: column; }
+    .signal-arrow { transform: rotate(90deg); }
+    .stats-grid .stat-group { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+
+</head>
+<body>
+<div class="container">
+
+  <header id="top">
+    <p class="date">March 2026 &middot; Signal Path Research</p>
+    <h1>Stop Using HDMI&#8209;to&#8209;RCA Converters on Your CRT</h1>
+    <p class="scope">A deep dive into why plugging a Nintendo Switch into a cheap converter box is the worst way to use a CRT TV — and what the signal path actually needs to look like.</p>
+  </header>
+
+  <nav class="toc">
+    <a href="#tldr">TL;DR — The Short Version</a>
+    <a href="#background">How CRT Signals Actually Work</a>
+    <a href="#the-problem">The HDMI-to-RCA Converter Problem</a>
+    <a href="#data">The Numbers</a>
+    <a href="#the-right-way">The Right Way to Use a CRT</a>
+    <a href="#videos">Essential Viewing</a>
+    <a href="#recommendations">What You Should Actually Do</a>
+    <a href="#sources">Sources</a>
+  </nav>
+
+  <section id="tldr">
+    <h2>TL;DR — The Short Version</h2>
+    <p>A CRT television is an analog display that natively accepts signals at 240p or 480i — resolutions generated by retro consoles like the SNES and N64. The Nintendo Switch outputs a minimum of 720p over HDMI, which is a purely digital signal. A cheap HDMI-to-RCA converter has to downscale that 720p digital signal into a 480i analog composite signal. This process introduces massive input lag (often 2–6 frames), destroys the image through crude resolution scaling, squashes or crops the 16:9 picture into 4:3, and eliminates every single advantage of owning a CRT in the first place. You are literally paying money to make the experience worse than just playing on a flat-panel TV.</p>
+
+    <div class="callout">
+      <p>The whole reason you want a CRT is for <em>zero processing latency</em> and <em>native analog signal handling</em>. A cheap converter box puts a laggy digital processor between your console and the screen, defeating the entire purpose.</p>
+    </div>
+  </section>
+
+  <section id="background">
+    <h2>How CRT Signals Actually Work</h2>
+
+    <article>
+      <h3>The Analog Signal Path</h3>
+      <p>A CRT draws an image by firing an electron beam across the screen line by line, from top to bottom, 60 times per second. There is no frame buffer. There is no image processor. The electrical signal from your console directly modulates the intensity of that beam in real time. This is why CRTs have effectively zero input lag — the image appears on screen as fast as the signal physically travels through the wire and circuits.</p>
+      <p>Retro consoles from the SNES and N64 era output a 240p signal — 240 visible lines drawn progressively at 60 frames per second. This was a clever exploitation of the NTSC video standard, where the console essentially told the CRT to draw the same 240 lines every pass instead of alternating between two interlaced fields. The CRT doesn't care — it just draws whatever analog voltages arrive at its input.</p>
+    </article>
+
+    <article>
+      <h3>240p vs 480i — Why This Matters</h3>
+      <p>Standard NTSC video (as used by VCRs, DVD players, and broadcast TV) runs at 480i: 480 visible lines, drawn in two alternating fields of 240 lines each at 60 fields per second, creating a full frame 30 times per second. Retro game consoles bypass this interlacing to display 240 unique lines progressively at a true 60 frames per second, giving much smoother motion for gameplay.</p>
+      <p>This 240p signal is electrically very similar to 480i, but with a subtle timing difference. A standard-definition CRT handles both natively with zero issues. The electron beam simply draws what it receives. There is no digital processing, no frame buffering, and no scaling. The signal path from the console's video output chip to the phosphors on the glass is entirely analog.</p>
+    </article>
+
+    <article>
+      <h3>Why the Signal Type Matters</h3>
+      <p>The quality hierarchy for analog connections goes: RF (worst) → Composite → S-Video → Component → RGB SCART (best). Each step up separates more of the video information into discrete channels, reducing interference and color bleeding. But critically, all of these are analog formats at native CRT resolutions. The CRT isn't doing any digital conversion — it's just receiving an electrical waveform and drawing it.</p>
+    </article>
+  </section>
+
+  <section id="the-problem">
+    <h2>The HDMI-to-RCA Converter Problem</h2>
+
+    <article>
+      <h3>What Actually Happens Inside the Box</h3>
+      <p>When you plug a Nintendo Switch dock's HDMI output into a cheap converter box, here is the actual signal chain:</p>
+
+      <div class="signal-diagram">
+        <p class="signal-label">The Bad Signal Path</p>
+        <div class="signal-path">
+          <span class="signal-node">Switch GPU<br><small>renders 720p/1080p</small></span>
+          <span class="signal-arrow">&rarr;</span>
+          <span class="signal-node">HDMI Out<br><small>digital 720p</small></span>
+          <span class="signal-arrow">&rarr;</span>
+          <span class="signal-node bad">Converter Box<br><small>downscale + encode</small></span>
+          <span class="signal-arrow">&rarr;</span>
+          <span class="signal-node bad">Composite RCA<br><small>480i analog</small></span>
+          <span class="signal-arrow">&rarr;</span>
+          <span class="signal-node">CRT TV<br><small>displays 480i</small></span>
+        </div>
+
+        <p class="signal-label" style="margin-top: 2.5rem;">The Good Signal Path (Original Hardware)</p>
+        <div class="signal-path">
+          <span class="signal-node">SNES PPU<br><small>renders 256&times;224</small></span>
+          <span class="signal-arrow">&rarr;</span>
+          <span class="signal-node good">Analog Encoder<br><small>on-board chip</small></span>
+          <span class="signal-arrow">&rarr;</span>
+          <span class="signal-node good">Composite/S-Video<br><small>native 240p</small></span>
+          <span class="signal-arrow">&rarr;</span>
+          <span class="signal-node">CRT TV<br><small>displays 240p</small></span>
+        </div>
+      </div>
+
+      <p>That red "Converter Box" is doing an enormous amount of work. It must receive and decode the HDMI digital signal, buffer at least one complete frame in memory, mathematically downscale from 720p (or 1080p) down to 480 lines, convert the digital pixel data into an NTSC-compliant analog composite waveform, and output that signal over the yellow RCA jack. Every one of these steps introduces latency, degrades image quality, or both.</p>
+    </article>
+
+    <article>
+      <h3>Resolution Mismatch and Scaling Artifacts</h3>
+      <p>The Switch outputs at 720p in docked mode (1280&times;720 pixels) or 1080p (1920&times;1080). A standard-definition CRT accepts 480i at most, which displays roughly 640&times;480 visible pixels. The converter must throw away more than half the image data. This isn't a clean integer division — 720 doesn't divide evenly into 480 — so the scaler has to blend and interpolate rows of pixels, producing a soft, smeared mess. Fine text becomes unreadable. Sharp pixel edges turn into muddy gradients.</p>
+    </article>
+
+    <article>
+      <h3>Aspect Ratio Destruction</h3>
+      <p>The Switch outputs a 16:9 widescreen signal. Your CRT is a 4:3 display. The cheap converter has exactly three options, all terrible: squeeze the full 16:9 image horizontally into the 4:3 frame (making everything look tall and stretched), crop the sides off the image (losing game content that may include UI elements, health bars, or map edges), or letterbox with black bars on top and bottom (wasting a huge portion of your already tiny SD screen). Most cheap converters just squeeze, and they give you zero control over it.</p>
+    </article>
+
+    <article>
+      <h3>Input Lag — The CRT Killer</h3>
+      <p>This is the big one. The entire reason competitive gamers and retro enthusiasts seek out CRTs is the near-zero input lag. A CRT with a native analog signal has essentially no processing delay — the signal-to-photon time is limited only by the speed of the electron beam sweep. But a cheap HDMI-to-composite converter introduces its own processing pipeline. Community testing has found that budget downscalers commonly add anywhere from 2 to 6 frames of lag — that's 33ms to 100ms of delay inserted before the CRT even sees the signal. At 6 frames of lag, you've made your CRT perform worse than a modern gaming monitor. You've taken the one thing a CRT does better than everything else and completely destroyed it.</p>
+    </article>
+
+    <article>
+      <h3>Composite Is Already the Worst Connection</h3>
+      <p>Even if the converter were perfect (it isn't), you're feeding the CRT a composite signal — the lowest quality analog video format. Composite mashes all color and brightness information into a single wire, causing color bleeding, dot crawl artifacts, and a general loss of clarity. Your SNES connected via S-Video or component cables to the same CRT would look dramatically sharper than anything a converter box could produce from a Switch's HDMI output.</p>
+    </article>
+  </section>
+
+  <section id="data" class="stats-grid">
+    <h2>The Numbers</h2>
+    <div class="stat-group">
+      <div class="stat">
+        <div class="number">720p</div>
+        <div class="label">Switch Dock Output</div>
+      </div>
+      <div class="stat">
+        <div class="number">480i</div>
+        <div class="label">CRT Max Resolution</div>
+      </div>
+      <div class="stat">
+        <div class="number">2–6</div>
+        <div class="label">Frames of Added Lag</div>
+      </div>
+      <div class="stat">
+        <div class="number">~0ms</div>
+        <div class="label">Native CRT Lag</div>
+      </div>
+    </div>
+    <p>A standard-definition CRT at 60Hz draws the middle of the screen roughly 8.3ms after the start of each frame — that's the physics-limited "input lag" of the display itself. Budget HDMI-to-composite converters can add 33–100ms of additional processing delay on top of that, multiplying the total display latency by a factor of 5 to 12. On a competitive fighting game or a precision platformer, this difference is not subtle — it's the gap between playable and unplayable.</p>
+    <p>Meanwhile, an original SNES connected via composite or S-Video to the same CRT adds exactly zero frames of additional processing lag. The analog signal passes directly to the electron beam with no buffering step.</p>
+  </section>
+
+  <section id="the-right-way">
+    <h2>The Right Way to Use a CRT</h2>
+
+    <article>
+      <h3>Original Hardware, Native Signals</h3>
+      <p>The correct approach — and the entire point of collecting CRTs — is to connect original retro consoles using their native analog outputs. A Super Nintendo connected via S-Video or component cables to a standard-definition CRT produces the image exactly as the developers intended. No scaling, no conversion, no lag. The console's built-in video encoder generates a 240p analog signal that the CRT draws directly. This is the gold standard.</p>
+    </article>
+
+    <article>
+      <h3>If You Must Use an HDMI Source</h3>
+      <p>If you genuinely want to display modern HDMI content on a CRT (for streaming video, retro-styled indie games, etc.), the right tool is a purpose-built downscaler. Devices like the GBS-Control (a community-modified GBS-8200 board), the RetroTINK 5x in downscale mode, or an Extron VSC 500 are specifically engineered to convert HD signals to CRT-compatible resolutions with minimal lag and proper aspect ratio control. These cost more than a $10 Amazon converter, but they actually work — with some achieving less than one frame of added latency.</p>
+      <p>RetroRGB's Bob also demonstrated that even cheap-but-purpose-built HDMI-to-S-Video converters (like the Tendak units) can work acceptably for video content at under $20, though they still add some lag and lack aspect ratio controls.</p>
+    </article>
+
+    <article>
+      <h3>The PC-to-CRT Path</h3>
+      <p>For the ultimate setup, hobbyists use custom GPU drivers like CRT Emudriver (for AMD cards) to output true 15kHz analog signals — the exact same timing as a retro console — directly from a PC. This lets you run emulators at native 240p resolution with zero scaling lag, output through a VGA-to-component transcoder, and drive a CRT exactly as original hardware would. It requires specific older AMD GPU models and some configuration, but the results are indistinguishable from original hardware.</p>
+    </article>
+  </section>
+
+  <section id="videos">
+    <h2>Essential Viewing</h2>
+    <p>These videos from trusted channels in the retro gaming community explain these concepts visually. They're worth your time.</p>
+
+    <div class="video-section">
+      <div class="video-card">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/sgSwTWamCpw" title="Cheap & Easy HDMI to CRT Converters" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <h4>Cheap & Easy HDMI to CRT Converters — RetroRGB</h4>
+          <p>Bob walks through the budget options for getting HDMI content onto a CRT, explains the tradeoffs, and shows you what actually works versus what doesn't. Covers composite, S-Video, and RF converters with real-world testing.</p>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/RAi8AVj9GV8" title="My Life in Gaming - RGB Master Class" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <h4>RGB Master Class — My Life in Gaming</h4>
+          <p>The definitive primer on retro gaming signal quality. Coury and Marc explain composite vs S-Video vs component vs RGB, show real comparison footage on CRTs, and break down why the cable you use matters as much as the TV.</p>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/V8BVTHxc4LM" title="The RetroTINK 5X and Downscaling" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <h4>RetroTINK 5X for Downscaling — RetroRGB / MarcoRetro</h4>
+          <p>If you're serious about sending modern signals to a CRT properly, this covers the RetroTINK 5x's downscaling capabilities — showing what a quality downscaler can actually achieve vs a cheap converter box.</p>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/v5uTu3hRkaE" title="RetroTINK 4K Downscaling" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <h4>The RetroTINK 4K Can Downscale — RetroRGB / MarcoRetro</h4>
+          <p>Covers how the RetroTINK 4K's pre-scale function can decimate vertical resolution to perfectly restore integer-upscaled retro content (like Nintendo Switch Online games) back to true 240p on a CRT.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="recommendations">
+    <h2>What You Should Actually Do</h2>
+
+    <article>
+      <h3>For Playing Retro Games on a CRT</h3>
+      <p>Use original hardware. Connect your real SNES, N64, Genesis, or whatever console you have using the best analog cable it supports. For SNES, that means S-Video at minimum (the console supports it natively). For N64, S-Video is the best stock option without hardware mods. For PS2 and GameCube, component cables unlock 480p progressive scan on supported titles. This is the only way to get the zero-lag, native-resolution CRT experience that makes the whole hobby worthwhile.</p>
+    </article>
+
+    <article>
+      <h3>For Playing the Switch</h3>
+      <p>Play it on your modern TV or monitor. Seriously. The Switch was designed for modern digital displays. Its games are rendered at HD resolutions with widescreen aspect ratios and digital output. Running it through any converter to a CRT will always be a compromise. If you want retro games on a CRT, use retro hardware — or at minimum, a purpose-built FPGA console like an Analogue product or a MiSTer, which can output native 240p analog signals directly.</p>
+    </article>
+
+    <article>
+      <h3>If You're Stubborn About HDMI-to-CRT</h3>
+      <p>Get a proper downscaler. A GBS-Control build can be done for under $50 with the right parts, and it gives you actual aspect ratio control, low lag, and both 240p and 480i output options. The RetroTINK 5x is a premium option that handles downscaling beautifully. Even the cheap Tendak-style HDMI-to-S-Video converters that RetroRGB tested are better than the generic composite converter boxes, with noticeably lower lag and a cleaner signal — though they're still not ideal for gaming.</p>
+    </article>
+  </section>
+
+  <footer id="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li>HD Retrovision — <em>240p Compatibility</em>. Detailed technical explanation of 240p signaling and how it differs from 480i. <a href="https://www.hdretrovision.com/240p" target="_blank" rel="noopener">hdretrovision.com/240p</a></li>
+      <li>RetroRGB — <em>Cheap & Easy HDMI to CRT Converters</em>. Real-world testing of budget downscaler options. <a href="https://retrorgb.com/cheap-easy-hdmi-to-crt-converters.html" target="_blank" rel="noopener">retrorgb.com</a></li>
+      <li>RetroRGB — <em>480i Downscalers Tested</em>. Comparison of downscaler lag and image quality. <a href="https://retrorgb.com/480i-downscalers-tested.html" target="_blank" rel="noopener">retrorgb.com</a></li>
+      <li>RetroRGB — <em>Downscaling</em>. Comprehensive overview of all downscaling devices and methods. <a href="https://retrorgb.com/downscaling.html" target="_blank" rel="noopener">retrorgb.com</a></li>
+      <li>RetroRGB — <em>Converters</em>. Technical reference on transcoders vs converters vs scalers. <a href="https://retrorgb.com/converters.html" target="_blank" rel="noopener">retrorgb.com</a></li>
+      <li>CRT Database — <em>AV Equipment & Cables Recommendations</em>. Community-maintained reference for CRT-compatible gear. <a href="https://crtdatabase.com/faq/av-equipment-reccomendations" target="_blank" rel="noopener">crtdatabase.com</a></li>
+      <li>ResetEra — <em>CRTs have 8.3ms of input lag</em>. Technical discussion on CRT display latency mechanics. <a href="https://www.resetera.com/threads/crts-have-8-3ms-of-input-lag-addressing-a-common-misconception-about-display-latency.40628/" target="_blank" rel="noopener">resetera.com</a></li>
+      <li>ResetEra — <em>HDMI to RCA converters. Any advice?</em>. Community discussion on converter shortcomings. <a href="https://www.resetera.com/threads/hdmi-to-rca-converters-any-advice.17362/" target="_blank" rel="noopener">resetera.com</a></li>
+      <li>Reviewed.com — <em>Input lag: What is it, and how do you avoid it?</em>. Side-by-side latency testing across display types. <a href="https://www.reviewed.com/televisions/features/input-lag-how-to-find-the-best-type-of-tv-for-gaming" target="_blank" rel="noopener">reviewed.com</a></li>
+      <li>WIRED — <em>Your Grandma's Tube TV Is the Hottest Gaming Tech</em>. Feature on the CRT retro gaming revival with My Life in Gaming. <a href="https://www.wired.com/story/crt-tube-tv-hot-gaming-tech-retro-games/" target="_blank" rel="noopener">wired.com</a></li>
+      <li>Inverse — <em>Modern TVs Hate Retro Games</em>. Interview with 240p Test Suite creator and My Life in Gaming. <a href="https://www.inverse.com/input/features/modern-tvs-hate-retro-gaming-consoles-240p-test-suite-can-help" target="_blank" rel="noopener">inverse.com</a></li>
+      <li>Nintendo Support Forums — <em>Workstation CRTs and the Nintendo Switch</em>. First-hand testing of Switch output on CRT monitors. <a href="https://en-americas-support.nintendo.com/app/social/questions/detail/qid/69897/" target="_blank" rel="noopener">nintendo.com</a></li>
+    </ol>
+  </footer>
+
+  <a href="#top" class="back-to-top">&uarr; Back to Top</a>
+
+</div>
+</body>
+</html>
