@@ -505,23 +505,33 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Debug voice list */
-  .voice-debug {
-    font-size: 0.7rem;
+  /* Pro tip banner */
+  .listen-tip {
+    margin-top: 0.75rem;
+    font-size: 0.78rem;
     color: var(--text-secondary);
-    margin-top: 0.5rem;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
+    font-weight: 300;
+    line-height: 1.5;
   }
-  .voice-debug.open {
-    max-height: 300px;
-    overflow-y: auto;
+
+  .listen-tip strong {
+    color: var(--text-primary);
+    font-weight: 500;
   }
-  .voice-debug p {
-    margin-bottom: 2px;
-    font-weight: 400;
-    font-size: 0.7rem;
+
+  .select-all-btn {
+    display: inline;
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    text-decoration-color: rgba(196, 32, 32, 0.3);
+    -webkit-tap-highlight-color: transparent;
   }
 
   section.reading {
@@ -569,7 +579,9 @@
       <select class="voice-select" id="voiceSelect" aria-label="Choose voice"></select>
       <button class="speed-btn" id="speedBtn" aria-label="Playback speed">1x</button>
     </div>
-    <div class="voice-debug" id="voiceDebug"></div>
+    <p class="listen-tip">
+      Want a better voice? On iPhone, <button class="select-all-btn" id="selectAllBtn">tap here to select the article text</button>, then tap <strong>Speak</strong> in the popup menu. It uses your phone's premium voices (enable in Settings &gt; Accessibility &gt; Spoken Content &gt; Speak Selection).
+    </p>
   </header>
 
   <nav class="toc">
@@ -819,7 +831,7 @@
   var btn = document.getElementById('listenBtn');
   var voiceSelect = document.getElementById('voiceSelect');
   var speedBtn = document.getElementById('speedBtn');
-  var debugEl = document.getElementById('voiceDebug');
+  var selectAllBtn = document.getElementById('selectAllBtn');
   var bar = document.getElementById('listenBar');
   var barPlayPause = document.getElementById('barPlayPause');
   var barTitle = document.getElementById('barTitle');
@@ -827,6 +839,19 @@
   var barVoice = document.getElementById('barVoice');
   var barSpeed = document.getElementById('barSpeed');
   var barStop = document.getElementById('barStop');
+
+  // ── Select All for iOS Speak Selection ──
+  if (selectAllBtn) {
+    selectAllBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      var container = document.querySelector('.container') || document.querySelector('main') || document.body;
+      var range = document.createRange();
+      range.selectNodeContents(container);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    });
+  }
 
   if (!btn || !('speechSynthesis' in window)) {
     if (btn) btn.parentElement.style.display = 'none';
@@ -841,80 +866,73 @@
   var speeds = [0.8, 1, 1.2, 1.5];
   var speedLabels = ['0.8x', '1x', '1.2x', '1.5x'];
   var speedIdx = 1;
-  var articleTitle = document.querySelector('h1') ? document.querySelector('h1').textContent : 'Article';
 
-  // ── Voice ranking: prioritize premium iOS/macOS voices ──
+  // ── Curated voice whitelist — only decent-sounding voices ──
+  var goodVoices = [
+    'samantha', 'karen', 'daniel', 'moira', 'tessa',
+    'ava', 'allison', 'tom', 'aaron', 'nicky', 'evan',
+    'zoe', 'joelle', 'fiona', 'martha', 'arthur',
+    'google us english', 'google uk english'
+  ];
+
+  function isGoodVoice(v) {
+    var name = v.name.toLowerCase();
+    for (var i = 0; i < goodVoices.length; i++) {
+      if (name.indexOf(goodVoices[i]) !== -1) return true;
+    }
+    return false;
+  }
+
   function voiceScore(v) {
     var name = v.name.toLowerCase();
     if (/premium/.test(name)) return 100;
-    if (/siri/.test(name)) return 90;
     if (/enhanced/.test(name)) return 80;
-    if (/\(natural\)/.test(name)) return 75;
-    if (/zoe|ava|allison|tom|aaron|nicky|evan|joelle|fiona/.test(name)) return 60;
-    if (/samantha|karen|daniel|moira|tessa/.test(name)) return 50;
-    if (v.localService) return 30;
-    return 10;
+    if (/samantha|karen|daniel/.test(name)) return 60;
+    if (/ava|allison|tom|aaron|zoe|fiona/.test(name)) return 50;
+    if (/google/.test(name)) return 40;
+    return 20;
   }
 
-  function getEnglishVoices() {
-    return synth.getVoices()
-      .filter(function(v) { return v.lang && v.lang.startsWith('en'); })
-      .sort(function(a, b) { return voiceScore(b) - voiceScore(a); });
+  function getCuratedVoices() {
+    var all = synth.getVoices().filter(function(v) {
+      return v.lang && v.lang.startsWith('en') && isGoodVoice(v);
+    });
+    all.sort(function(a, b) { return voiceScore(b) - voiceScore(a); });
+    // If nothing matched whitelist, fall back to first 4 English voices
+    if (!all.length) {
+      all = synth.getVoices().filter(function(v) {
+        return v.lang && v.lang.startsWith('en');
+      }).slice(0, 4);
+    }
+    return all;
   }
 
   function populateSelect(selectEl, voices) {
     selectEl.innerHTML = '';
     voices.forEach(function(v, i) {
       var opt = document.createElement('option');
-      var label = v.name.replace(/Google |Microsoft |Apple /, '');
-      if (/premium/i.test(v.name)) label += ' *';
-      else if (/enhanced|siri/i.test(v.name)) label += ' +';
-      opt.textContent = label;
+      opt.textContent = v.name.replace(/Google |Microsoft |Apple /i, '');
       opt.value = i;
       selectEl.appendChild(opt);
     });
   }
 
   function populateVoiceList() {
-    var voices = getEnglishVoices();
+    var voices = getCuratedVoices();
     if (!voices.length) return;
     populateSelect(voiceSelect, voices);
     populateSelect(barVoice, voices);
     voice = voices[0];
-
-    // Debug: show ALL voices the browser sees
-    var allVoices = synth.getVoices();
-    var html = '<p style="margin-top:6px"><strong>' + allVoices.length + ' total voices (' + voices.length + ' English):</strong></p>';
-    allVoices.forEach(function(v) {
-      var isEn = v.lang && v.lang.startsWith('en');
-      html += '<p' + (isEn ? ' style="color:var(--accent)"' : '') + '>'
-            + v.name + ' — ' + v.lang + (v.localService ? ' (local)' : ' (network)') + '</p>';
-    });
-    debugEl.innerHTML = html;
   }
 
   populateVoiceList();
   synth.addEventListener('voiceschanged', populateVoiceList);
   synth.cancel();
 
-  // Triple-tap the voice dropdown label to toggle debug
-  var tapCount = 0;
-  var tapTimer;
-  voiceSelect.addEventListener('focus', function() {
-    tapCount++;
-    clearTimeout(tapTimer);
-    tapTimer = setTimeout(function() { tapCount = 0; }, 600);
-    if (tapCount >= 3) {
-      debugEl.classList.toggle('open');
-      tapCount = 0;
-    }
-  });
-
   function syncVoice(fromSelect) {
-    var voices = getEnglishVoices();
+    var voices = getCuratedVoices();
     var idx = parseInt(fromSelect.value);
     voice = voices[idx] || voices[0];
-    // Sync the other select
     if (fromSelect === voiceSelect) barVoice.value = fromSelect.value;
     else voiceSelect.value = fromSelect.value;
     if (state === 'playing') { synth.cancel(); speakSection(currentIndex); }
@@ -1076,14 +1094,12 @@
     hideBar();
   }
 
-  // Header button
   btn.addEventListener('click', function() {
     if (state === 'stopped') play();
     else if (state === 'playing') pause();
     else if (state === 'paused') resume();
   });
 
-  // Bar buttons
   barPlayPause.addEventListener('click', function() {
     if (state === 'playing') pause();
     else if (state === 'paused') resume();
