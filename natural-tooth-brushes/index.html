@@ -362,6 +362,37 @@
             .comparison-table { font-size: 0.8rem; }
             .comparison-table th, .comparison-table td { padding: 8px 10px; }
         }
+
+        /* Listen Mode */
+        .listen-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #C42020;
+            color: #fff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.6rem 1.5rem;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 1.25rem;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+        .listen-btn:hover { background: #a01a1a; }
+        .listen-btn:active { transform: scale(0.97); }
+        .listen-btn.paused { background: #6E6E73; }
+        section.reading {
+            border-left: 3px solid #C42020;
+            background: rgba(196, 32, 32, 0.04);
+            padding-left: 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        @media (max-width: 480px) {
+            .listen-btn { width: 100%; justify-content: center; }
+        }
     </style>
 </head>
 <body>
@@ -369,6 +400,7 @@
 <header class="hero">
     <h1>Natural Toothbrushes &amp; <span>Gum Repair</span></h1>
     <p class="subtitle">Chewing sticks, natural bristles, gum health — what actually works, what's hype, and where to find the real stuff.</p>
+    <button class="listen-btn" id="listenBtn" aria-label="Listen to article">&#9654; Listen</button>
 </header>
 
 <main class="container">
@@ -857,6 +889,115 @@
 <footer>
     <p>Natural Toothbrushes &amp; Gum Repair &mdash; Research compiled March 2026</p>
 </footer>
+
+<script>
+(function() {
+  const btn = document.getElementById('listenBtn');
+  if (!btn || !('speechSynthesis' in window)) {
+    if (btn) btn.style.display = 'none';
+    return;
+  }
+
+  const synth = window.speechSynthesis;
+  const sections = Array.from(document.querySelectorAll('section'));
+  let currentIndex = -1;
+  let state = 'stopped';
+  let voice = null;
+
+  function pickVoice() {
+    const voices = synth.getVoices();
+    voice = voices.find(v => /samantha|karen|daniel|english/i.test(v.name) && v.lang.startsWith('en'))
+         || voices.find(v => v.lang.startsWith('en') && v.localService)
+         || voices.find(v => v.lang.startsWith('en'))
+         || voices[0] || null;
+  }
+
+  pickVoice();
+  synth.addEventListener('voiceschanged', pickVoice);
+
+  function clearHighlight() {
+    sections.forEach(s => s.classList.remove('reading'));
+  }
+
+  function highlight(idx) {
+    clearHighlight();
+    if (idx >= 0 && idx < sections.length) {
+      sections[idx].classList.add('reading');
+      sections[idx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function updateBtn(label, icon) {
+    btn.innerHTML = icon + ' ' + label;
+  }
+
+  function speakSection(idx) {
+    if (idx >= sections.length) { stop(); return; }
+    currentIndex = idx;
+    highlight(idx);
+    const text = sections[idx].textContent.trim();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.rate = 1.0;
+    utter.pitch = 1.0;
+    if (voice) utter.voice = voice;
+    utter.onend = function() { if (state === 'playing') speakSection(idx + 1); };
+    utter.onerror = function(e) { if (e.error !== 'canceled') stop(); };
+    synth.speak(utter);
+  }
+
+  function play() {
+    state = 'playing';
+    updateBtn('Pause', '&#9208;');
+    btn.classList.remove('paused');
+    speakSection(currentIndex < 0 ? 0 : currentIndex);
+  }
+
+  function pause() {
+    state = 'paused';
+    synth.pause();
+    updateBtn('Resume', '&#9654;');
+    btn.classList.add('paused');
+  }
+
+  function resume() {
+    state = 'playing';
+    synth.resume();
+    updateBtn('Pause', '&#9208;');
+    btn.classList.remove('paused');
+  }
+
+  function stop() {
+    state = 'stopped';
+    synth.cancel();
+    currentIndex = -1;
+    clearHighlight();
+    updateBtn('Listen', '&#9654;');
+    btn.classList.remove('paused');
+  }
+
+  btn.addEventListener('click', function() {
+    if (state === 'stopped') play();
+    else if (state === 'playing') pause();
+    else if (state === 'paused') resume();
+  });
+
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden && state === 'playing') pause();
+  });
+
+  let keepAlive;
+  const startKeepAlive = () => {
+    keepAlive = setInterval(() => {
+      if (synth.speaking && !synth.paused) synth.resume();
+    }, 10000);
+  };
+  const stopKeepAlive = () => clearInterval(keepAlive);
+  const origPlay = play;
+  play = function() { origPlay(); startKeepAlive(); };
+  const origStop = stop;
+  stop = function() { stopKeepAlive(); origStop(); };
+})();
+</script>
 
 </body>
 </html>
