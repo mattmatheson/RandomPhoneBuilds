@@ -915,6 +915,9 @@
   pickVoice();
   synth.addEventListener('voiceschanged', pickVoice);
 
+  // Clear any queued speech from previous page visits
+  synth.cancel();
+
   function clearHighlight() {
     sections.forEach(s => s.classList.remove('reading'));
   }
@@ -942,6 +945,7 @@
     if (voice) utter.voice = voice;
     utter.onend = function() { if (state === 'playing') speakSection(idx + 1); };
     utter.onerror = function(e) { if (e.error !== 'canceled') stop(); };
+    synth.cancel();
     synth.speak(utter);
   }
 

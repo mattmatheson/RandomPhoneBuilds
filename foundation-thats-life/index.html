@@ -628,6 +628,9 @@
   pickVoice();
   synth.addEventListener('voiceschanged', pickVoice);
 
+  // Clear any queued speech from previous page visits
+  synth.cancel();
+
   function clearHighlight() {
     sections.forEach(s => s.classList.remove('reading'));
   }
@@ -666,6 +669,7 @@
       if (e.error !== 'canceled') stop();
     };
 
+    synth.cancel();
     synth.speak(utter);
   }
 
