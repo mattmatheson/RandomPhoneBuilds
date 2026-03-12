@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Toothbrushes &amp; Gum Repair — A Deep Dive</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+            background: #FAFAFA;
+            color: #1D1D1F;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .hero {
+            background: #1D1D1F;
+            color: #FAFAFA;
+            padding: 80px 24px 72px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            max-width: 720px;
+            margin: 0 auto 16px;
+        }
+
+        .hero h1 span {
+            color: #C42020;
+        }
+
+        .hero .subtitle {
+            font-size: 1.1rem;
+            color: #A1A1A6;
+            max-width: 560px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 740px;
+            margin: 0 auto;
+            padding: 56px 24px 80px;
+        }
+
+        .intro {
+            font-size: 1.15rem;
+            color: #6E6E73;
+            margin-bottom: 48px;
+            line-height: 1.8;
+            border-left: 3px solid #C42020;
+            padding-left: 20px;
+        }
+
+        .toc {
+            background: #F2F2F7;
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 56px;
+        }
+
+        .toc h2 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #C42020;
+            margin-bottom: 14px;
+        }
+
+        .toc ol {
+            list-style: none;
+            counter-reset: toc;
+        }
+
+        .toc ol li {
+            counter-increment: toc;
+            margin-bottom: 8px;
+        }
+
+        .toc ol li a {
+            color: #1D1D1F;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            transition: color 0.2s;
+        }
+
+        .toc ol li a:hover {
+            color: #C42020;
+        }
+
+        .toc ol li a::before {
+            content: counter(toc, decimal-leading-zero);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #A1A1A6;
+            min-width: 20px;
+        }
+
+        section {
+            margin-bottom: 56px;
+            padding-bottom: 56px;
+            border-bottom: 1px solid #E5E5E7;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #C42020;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.25;
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-top: 32px;
+            margin-bottom: 10px;
+            letter-spacing: -0.01em;
+        }
+
+        p {
+            color: #6E6E73;
+            margin-bottom: 16px;
+            font-size: 0.975rem;
+        }
+
+        .highlight-box {
+            background: #F2F2F7;
+            border-radius: 14px;
+            padding: 24px 28px;
+            margin: 24px 0;
+        }
+
+        .highlight-box.warning {
+            background: #FFF3E0;
+            border-left: 4px solid #FF9500;
+        }
+
+        .highlight-box.tip {
+            background: #E8F5E9;
+            border-left: 4px solid #34C759;
+        }
+
+        .highlight-box.science {
+            background: #EDE7F6;
+            border-left: 4px solid #7C4DFF;
+        }
+
+        .highlight-box h4 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+            color: #1D1D1F;
+        }
+
+        .highlight-box p {
+            margin-bottom: 8px;
+            font-size: 0.92rem;
+        }
+
+        .highlight-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .product-card {
+            background: #fff;
+            border: 1px solid #E5E5E7;
+            border-radius: 14px;
+            padding: 22px 24px;
+            transition: box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .product-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1D1D1F;
+            margin-bottom: 4px;
+        }
+
+        .product-type {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #C42020;
+            margin-bottom: 8px;
+        }
+
+        .product-desc {
+            font-size: 0.88rem;
+            color: #6E6E73;
+            margin-bottom: 0;
+        }
+
+        .product-price {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #1D1D1F;
+            margin-top: 8px;
+            margin-bottom: 0;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #fff;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+
+        .tag.red { background: #C42020; }
+        .tag.green { background: #34C759; }
+        .tag.orange { background: #FF9500; }
+        .tag.purple { background: #7C4DFF; }
+        .tag.blue { background: #007AFF; }
+
+        ul, ol {
+            color: #6E6E73;
+            font-size: 0.975rem;
+            padding-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: #1D1D1F;
+            font-weight: 600;
+        }
+
+        .steps {
+            counter-reset: steps;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .steps li {
+            counter-increment: steps;
+            padding-left: 36px;
+            position: relative;
+            margin-bottom: 14px;
+        }
+
+        .steps li::before {
+            content: counter(steps);
+            position: absolute;
+            left: 0;
+            top: 1px;
+            width: 24px;
+            height: 24px;
+            background: #C42020;
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.88rem;
+        }
+
+        .comparison-table th {
+            text-align: left;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #A1A1A6;
+            padding: 10px 14px;
+            border-bottom: 2px solid #E5E5E7;
+        }
+
+        .comparison-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #F2F2F7;
+            color: #6E6E73;
+            vertical-align: top;
+        }
+
+        .comparison-table td:first-child {
+            font-weight: 600;
+            color: #1D1D1F;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            border-top: 1px solid #E5E5E7;
+            color: #A1A1A6;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 480px) {
+            .hero { padding: 56px 20px 48px; }
+            .container { padding: 40px 20px 60px; }
+            .toc { padding: 20px 22px; }
+            .highlight-box { padding: 18px 20px; }
+            .comparison-table { font-size: 0.8rem; }
+            .comparison-table th, .comparison-table td { padding: 8px 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="hero">
+    <h1>Natural Toothbrushes &amp; <span>Gum Repair</span></h1>
+    <p class="subtitle">Chewing sticks, natural bristles, gum health — what actually works, what's hype, and where to find the real stuff.</p>
+</header>
+
+<main class="container">
+    <p class="intro">
+        Humans cleaned their teeth for thousands of years before nylon bristles showed up in 1938. Chewing sticks, tree bark, and plant fibers did the job — and modern science is now confirming that some of these ancient tools hold up surprisingly well. Here's the full breakdown.
+    </p>
+
+    <nav class="toc">
+        <h2>Contents</h2>
+        <ol>
+            <li><a href="#miswak">Miswak — The African &amp; Middle Eastern Chewing Stick</a></li>
+            <li><a href="#neem">Neem Sticks — India's Oral Care Tradition</a></li>
+            <li><a href="#other-sticks">Other Natural Chewing Sticks</a></li>
+            <li><a href="#bamboo">Bamboo Toothbrushes — The Truth About Greenwashing</a></li>
+            <li><a href="#gum-repair">Natural Gum Repair &amp; Gum Health</a></li>
+            <li><a href="#products">Product Guide — What to Actually Buy</a></li>
+            <li><a href="#science">The Science — Studies &amp; Evidence</a></li>
+        </ol>
+    </nav>
+
+    <!-- ============================================ -->
+    <!-- MISWAK -->
+    <!-- ============================================ -->
+    <section id="miswak">
+        <div class="section-label">01 &mdash; The Original</div>
+        <h2>Miswak (Siwak) — The 7,000-Year-Old Toothbrush</h2>
+
+        <p>
+            The miswak is a teeth-cleaning twig made from the <strong>Salvadora persica</strong> tree (also called the "toothbrush tree" or arak tree). It's been used across Africa, the Middle East, and South Asia for at least 7,000 years. The Prophet Muhammad recommended it, and it remains deeply embedded in Islamic hygiene practices — but its use predates Islam by thousands of years, with evidence found in ancient Babylonian and Egyptian records.
+        </p>
+
+        <p>
+            You don't add toothpaste. The stick itself <em>is</em> the toothpaste. When you chew the tip, it frays into soft bristles, and the wood releases a cocktail of natural compounds that clean, protect, and even whiten teeth.
+        </p>
+
+        <h3>What's Inside the Wood</h3>
+        <ul>
+            <li><strong>Silica</strong> — a mild natural abrasive that removes stains</li>
+            <li><strong>Sodium bicarbonate</strong> — baking soda, a known tooth cleaner</li>
+            <li><strong>Tannic acid</strong> — astringent that reduces gum inflammation</li>
+            <li><strong>Resins</strong> — form a protective coating over enamel</li>
+            <li><strong>Essential oils</strong> — antiseptic compounds like salvadorine</li>
+            <li><strong>Fluoride</strong> — natural trace amounts for enamel strength</li>
+            <li><strong>Sulfur compounds</strong> — antibacterial activity</li>
+            <li><strong>Vitamin C</strong> — supports gum tissue healing</li>
+            <li><strong>Chloride</strong> — helps remove tartar and staining</li>
+        </ul>
+
+        <div class="highlight-box science">
+            <h4>WHO Endorsement</h4>
+            <p>In 1986 and again in 2000, the <strong>World Health Organization</strong> recommended the use of miswak for oral hygiene. Multiple studies have found it performs equal to — and in some cases better than — conventional toothbrushes for reducing plaque and gingivitis.</p>
+        </div>
+
+        <h3>How to Use a Miswak</h3>
+        <ol class="steps">
+            <li>Cut or peel about 1 cm of bark from one end of the stick</li>
+            <li>Chew the exposed end until it softens and frays into bristle-like fibers (takes 1–2 minutes)</li>
+            <li>Use the frayed bristles to brush teeth — horizontal strokes along the gumline, vertical strokes on front teeth</li>
+            <li>Brush your tongue with the bristles for freshness</li>
+            <li>When bristles get worn (every 2–3 days), cut them off and fray a new section</li>
+            <li>Keep the stick in a ventilated area — don't seal it in plastic</li>
+        </ol>
+
+        <div class="highlight-box tip">
+            <h4>Pro Tip</h4>
+            <p>Soak the tip in water for 15–30 minutes before first use to soften it. Some people soak theirs in rose water for a better taste. A fresh miswak should taste slightly peppery and bitter — that's the active compounds.</p>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- NEEM -->
+    <!-- ============================================ -->
+    <section id="neem">
+        <div class="section-label">02 &mdash; Ayurvedic Tradition</div>
+        <h2>Neem Sticks — India's Ancient Toothbrush</h2>
+
+        <p>
+            In India, the neem tree (<strong>Azadirachta indica</strong>) has been called the "village pharmacy" for centuries. Neem twigs, called <strong>datun</strong>, are still used daily by millions of people across rural India, Pakistan, and Bangladesh. You'll see street vendors selling fresh bundles of neem sticks every morning.
+        </p>
+
+        <p>
+            Like miswak, you chew one end until it frays and use it as a brush. Neem's bitter flavor is intense — much stronger than miswak — but its antibacterial properties are powerful.
+        </p>
+
+        <h3>Key Compounds in Neem</h3>
+        <ul>
+            <li><strong>Nimbidin &amp; Nimbin</strong> — potent anti-inflammatory compounds</li>
+            <li><strong>Azadirachtin</strong> — the signature compound, strong antibacterial and antifungal activity</li>
+            <li><strong>Catechins</strong> — antioxidant flavonoids (also found in green tea)</li>
+            <li><strong>Gedunin</strong> — antifungal properties, fights Candida in the mouth</li>
+            <li><strong>Gallotannins</strong> — astringent, tighten gum tissue</li>
+        </ul>
+
+        <div class="highlight-box science">
+            <h4>Research Findings</h4>
+            <p>A 2017 study in the <em>Journal of Clinical and Diagnostic Research</em> found that neem extract mouthwash was as effective as chlorhexidine (the gold-standard prescription mouthwash) at reducing plaque and gingivitis — without the staining side effects. Multiple studies confirm neem's activity against <em>Streptococcus mutans</em>, the primary cavity-causing bacterium.</p>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- OTHER STICKS -->
+    <!-- ============================================ -->
+    <section id="other-sticks">
+        <div class="section-label">03 &mdash; Around the World</div>
+        <h2>Other Natural Chewing Sticks</h2>
+
+        <h3>Licorice Root (Glycyrrhiza glabra)</h3>
+        <p>
+            Used across Southern Europe, Central Asia, and parts of Africa. Licorice root contains <strong>glycyrrhizin</strong> and <strong>licoricidin</strong>, which studies have shown to significantly inhibit the growth of cavity-causing and gum disease bacteria. A 2012 study in the <em>Journal of Natural Products</em> identified two licorice compounds that killed the major bacteria linked to tooth decay and gum disease. It has a pleasant sweet flavor, making it the most palatable chewing stick option.
+        </p>
+
+        <h3>Walnut Tree Bark (Juglans regia)</h3>
+        <p>
+            Traditional in parts of Pakistan, Afghanistan, and Central Asia. The bark contains <strong>juglone</strong>, a natural antimicrobial compound. Also used as a natural tooth-whitening agent — though evidence for whitening is mostly anecdotal.
+        </p>
+
+        <h3>Orange &amp; Lime Wood</h3>
+        <p>
+            Citrus wood sticks were historically used in parts of the Caribbean and Central America. The wood is dense and hard, providing good mechanical cleaning, and citrus oils have mild antiseptic properties. Less studied than miswak or neem, but still in traditional use.
+        </p>
+
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Stick Type</th>
+                    <th>Origin</th>
+                    <th>Taste</th>
+                    <th>Key Strength</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Miswak</td>
+                    <td>Africa / Middle East</td>
+                    <td>Mild, peppery</td>
+                    <td>Best-studied, WHO-endorsed</td>
+                </tr>
+                <tr>
+                    <td>Neem</td>
+                    <td>India / South Asia</td>
+                    <td>Very bitter</td>
+                    <td>Strongest antibacterial</td>
+                </tr>
+                <tr>
+                    <td>Licorice Root</td>
+                    <td>Europe / Central Asia</td>
+                    <td>Sweet</td>
+                    <td>Anti-cavity, pleasant taste</td>
+                </tr>
+                <tr>
+                    <td>Walnut Bark</td>
+                    <td>Central Asia</td>
+                    <td>Earthy, bitter</td>
+                    <td>Antimicrobial, whitening</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- BAMBOO -->
+    <!-- ============================================ -->
+    <section id="bamboo">
+        <div class="section-label">04 &mdash; Buyer Beware</div>
+        <h2>Bamboo Toothbrushes — The Greenwashing Problem</h2>
+
+        <p>
+            Bamboo toothbrushes exploded in popularity as a plastic-free alternative. The handle is made from bamboo (usually Moso bamboo), which is fast-growing and biodegradable. Sounds great on paper. But there's a big problem the marketing doesn't mention.
+        </p>
+
+        <div class="highlight-box warning">
+            <h4>The Bristle Problem</h4>
+            <p>Multiple consumer reports and independent tests have found that <strong>a significant number of "bamboo" toothbrushes still use nylon or plastic bristles</strong> — sometimes marketed misleadingly as "BPA-free" or "eco-friendly." The bristles are the part that touches your teeth, and in many cases they're just standard nylon-6 or nylon-4 — identical to conventional toothbrushes.</p>
+            <p>A 2022 investigation found that many brands advertising "biodegradable bristles" or "plant-based bristles" were still using petroleum-derived nylon with minor additives. <strong>True 100% biodegradable bristles basically don't exist yet</strong> at a commercial scale — boar hair is the closest option, but it raises hygiene concerns (harbors bacteria, doesn't dry well) and isn't vegan.</p>
+        </div>
+
+        <h3>What to Look For (If You Still Want Bamboo)</h3>
+        <ul>
+            <li><strong>Boar bristle</strong> — the only truly natural bristle option, but less hygienic and not vegan</li>
+            <li><strong>Nylon-4 (polyamide 4)</strong> — some evidence it may biodegrade in certain conditions, but not proven in landfills</li>
+            <li><strong>Castor oil-based nylon</strong> — partially bio-based but still not biodegradable (brands like Humble Brush use this)</li>
+            <li><strong>Charcoal-infused nylon</strong> — the charcoal is just mixed into nylon; the base is still plastic</li>
+        </ul>
+
+        <h3>Brands That Are More Transparent</h3>
+        <ul>
+            <li><strong>Brush with Bamboo</strong> — uses castor bean oil-based bristles (bioplastic, not fully compostable). One of the more honest brands about limitations.</li>
+            <li><strong>Humble Brush</strong> — Swedish brand, nylon-6 bristles, donates to oral health charities. Honest about bristles being nylon.</li>
+            <li><strong>BKIND</strong> — charcoal-infused nylon bristles on bamboo handle. Transparent labeling.</li>
+        </ul>
+
+        <div class="highlight-box">
+            <h4>The Real Move</h4>
+            <p>If you genuinely want to go plastic-free for oral care, <strong>chewing sticks (miswak, neem) are the actual zero-waste option</strong>. No bristles, no handle, no packaging — just a stick from a tree. Bamboo toothbrushes are a half-measure at best. Chewing sticks are the real deal.</p>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- GUM REPAIR -->
+    <!-- ============================================ -->
+    <section id="gum-repair">
+        <div class="section-label">05 &mdash; Gum Health</div>
+        <h2>Natural Gum Repair &amp; Reversing Recession</h2>
+
+        <p>
+            Gum recession — where the gum tissue pulls back from the tooth, exposing more root — is extremely common. It can be caused by aggressive brushing, gum disease (periodontitis), genetics, grinding, or tobacco use. Once gum tissue is physically lost, it doesn't grow back on its own. But you <em>can</em> stop further recession, reduce inflammation, and strengthen what you have.
+        </p>
+
+        <div class="highlight-box warning">
+            <h4>Important Disclaimer</h4>
+            <p>Severe gum recession may require professional treatment (grafting, pinhole surgical technique, etc.). Natural approaches work best for <strong>early-stage gum problems</strong> and <strong>maintenance</strong>. If you have significant recession, loose teeth, or persistent bleeding, see a periodontist.</p>
+        </div>
+
+        <h3>Natural Ingredients That Help Gums</h3>
+
+        <p><strong>Coenzyme Q10 (CoQ10)</strong> — Your gum tissue has high CoQ10 demand. Studies show that people with periodontal disease have lower CoQ10 levels in their gum tissue. Topical and supplemental CoQ10 (100–200mg daily) has shown measurable reduction in gum inflammation, pocket depth, and bleeding in multiple clinical trials.</p>
+
+        <p><strong>Aloe Vera</strong> — A 2012 study in the <em>Journal of Indian Society of Periodontology</em> found that aloe vera gel applied subgingivally (under the gumline) was as effective as scaling and root planing at reducing pocket depth in moderate periodontitis cases. Its anti-inflammatory and antimicrobial properties are well-documented.</p>
+
+        <p><strong>Oil Pulling (Coconut or Sesame Oil)</strong> — The ancient Ayurvedic practice of swishing oil in your mouth for 15–20 minutes. A 2015 systematic review found oil pulling with coconut oil significantly reduced plaque and gingivitis scores comparable to chlorhexidine mouthwash. Coconut oil's lauric acid has strong antimicrobial properties.</p>
+
+        <p><strong>Vitamin C</strong> — Scurvy (severe vitamin C deficiency) causes gum destruction — that alone tells you how critical it is. Studies show that even moderate deficiency worsens gum bleeding. Supplementing 500–1000mg daily can improve gum health, especially if your diet is low in fruits and vegetables.</p>
+
+        <p><strong>Tea Tree Oil</strong> — Potent antimicrobial and anti-inflammatory. A gel containing 2.5% tea tree oil has been shown to significantly reduce gum bleeding and inflammation. Never use undiluted — always in a toothpaste, gel, or diluted rinse.</p>
+
+        <p><strong>Sea Salt Rinses</strong> — Simple warm salt water (1/2 tsp in 8 oz warm water) is anti-inflammatory, mildly antimicrobial, and promotes healing. Dentists recommend it post-surgery for a reason. Use as a rinse 2–3 times daily when gums are inflamed.</p>
+
+        <p><strong>Hyaluronic Acid</strong> — Newer research supports topical hyaluronic acid gel for gum healing. A 2016 meta-analysis found it significantly reduced gingival inflammation and promoted tissue regeneration after periodontal procedures.</p>
+
+        <p><strong>Green Tea</strong> — Contains catechins (especially EGCG) that reduce inflammation and inhibit the bacteria that cause periodontal disease. A Japanese study of 940 men found that regular green tea drinkers had measurably healthier gums.</p>
+
+        <h3>Daily Routine for Gum Health</h3>
+        <ol class="steps">
+            <li>Oil pull with coconut oil for 10–15 minutes (morning, before eating)</li>
+            <li>Brush gently with a natural toothpaste containing CoQ10, tea tree oil, or neem — or use a miswak stick</li>
+            <li>Rinse with warm salt water or an aloe-based mouth rinse</li>
+            <li>Supplement with Vitamin C (500mg) and CoQ10 (100mg) daily</li>
+            <li>Drink green tea instead of sugary drinks</li>
+            <li>Floss or use interdental brushes — non-negotiable</li>
+        </ol>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- PRODUCTS -->
+    <!-- ============================================ -->
+    <section id="products">
+        <div class="section-label">06 &mdash; What to Buy</div>
+        <h2>Product Guide</h2>
+
+        <p>Here are specific products across each category. All are available online through major retailers.</p>
+
+        <h3>Miswak Sticks</h3>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-type">Chewing Stick</div>
+                <div class="product-name">Sewak Al-Falah Miswak</div>
+                <p class="product-desc">The most widely available miswak brand worldwide. Vacuum-sealed for freshness, Salvadora persica wood. Considered the gold standard by regular miswak users. Available individually or in bulk packs.</p>
+                <p class="product-price">~$2–4 per stick / ~$12–15 for 10-pack</p>
+            </div>
+            <div class="product-card">
+                <div class="product-type">Chewing Stick</div>
+                <div class="product-name">Miswak Club — Holder + Sticks Kit</div>
+                <p class="product-desc">Modern take on miswak. Comes with a carrying case/holder that looks like a regular toothbrush, plus fresh Salvadora persica sticks. Great entry point if you're new to miswak — the holder makes it feel familiar.</p>
+                <p class="product-price">~$10–15 for starter kit</p>
+            </div>
+            <div class="product-card">
+                <div class="product-type">Chewing Stick</div>
+                <div class="product-name">SwakBrush (Swak)</div>
+                <p class="product-desc">German-designed miswak head that clips into a reusable handle. Replaceable miswak tips. A bridge between traditional chewing stick and modern toothbrush design. Clean, minimal aesthetic.</p>
+                <p class="product-price">~$15–20 for handle + heads</p>
+            </div>
+        </div>
+
+        <h3>Neem Products</h3>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-type">Toothpaste</div>
+                <div class="product-name">Auromere Ayurvedic Toothpaste</div>
+                <p class="product-desc">Contains neem, peelu (Salvadora persica extract), and 23 Ayurvedic botanicals. Fluoride-free. One of the most respected natural toothpaste brands. The "Fresh Mint" flavor balances the herbal taste well.</p>
+                <p class="product-price">~$6–8 per tube</p>
+            </div>
+            <div class="product-card">
+                <div class="product-type">Chewing Stick</div>
+                <div class="product-name">Organic Neem Sticks (various sellers)</div>
+                <p class="product-desc">Fresh neem twigs, usually 6–8 inches. Available from multiple sellers on Amazon and Indian grocery stores. Look for organic, pesticide-free sourcing. Best used within a few weeks of purchase for maximum potency.</p>
+                <p class="product-price">~$8–12 for a bundle of 10–15</p>
+            </div>
+            <div class="product-card">
+                <div class="product-type">Toothpaste</div>
+                <div class="product-name">Himalaya Neem &amp; Pomegranate Toothpaste</div>
+                <p class="product-desc">Well-known Ayurvedic brand. Combines neem with pomegranate for gum health. Fluoride-free, no SLS. Widely available at health food stores and mainstream retailers. Mild, approachable flavor.</p>
+                <p class="product-price">~$5–7 per tube</p>
+            </div>
+        </div>
+
+        <h3>Natural Gum Repair Products</h3>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-type">Toothpaste / System</div>
+                <div class="product-name">Dental Herb Company — Tooth &amp; Gums Tonic + Paste</div>
+                <p class="product-desc">Professional-grade natural oral care system formulated by a dentist. Contains echinacea, gotu kola, green tea, and essential oils. Used by holistic dentists. The Tonic (concentrate rinse) is their standout product — extremely potent.</p>
+                <p class="product-price">~$30 for tonic / ~$15 for paste</p>
+            </div>
+            <div class="product-card">
+                <div class="product-type">Mouthwash</div>
+                <div class="product-name">Nature's Answer PerioBrite</div>
+                <p class="product-desc">Alcohol-free mouth rinse with CoQ10, folic acid, and herbal extracts. Specifically formulated for gum health and periodontal support. Good clinical-adjacent option without the harshness of conventional rinses.</p>
+                <p class="product-price">~$8–10</p>
+            </div>
+            <div class="product-card">
+                <div class="product-type">Toothpaste</div>
+                <div class="product-name">Desert Essence Tea Tree Oil Toothpaste</div>
+                <p class="product-desc">Tea tree oil-based, with neem and baking soda. Fluoride-free, no SLS, no carrageenan. Good for inflamed gums — the tea tree oil concentration is effective. Mint tea tree flavor is the most popular.</p>
+                <p class="product-price">~$6–8 per tube</p>
+            </div>
+            <div class="product-card">
+                <div class="product-type">Toothpaste</div>
+                <div class="product-name">Uncle Harry's Natural Toothpaste</div>
+                <p class="product-desc">Remineralizing toothpaste with bentonite clay, sea salt, calcium, and essential oils. Comes in a jar (not a tube). Very "crunchy" but genuinely effective — the mineral base helps strengthen enamel and soothe gums. Made in Oregon.</p>
+                <p class="product-price">~$8–12 per jar</p>
+            </div>
+            <div class="product-card">
+                <div class="product-type">Oil Pulling</div>
+                <div class="product-name">Georganics Oil Pulling Mouthwash</div>
+                <p class="product-desc">Pre-made coconut oil pulling solution infused with essential oils (spearmint, tea tree, or activated charcoal options). Takes the mess out of traditional oil pulling — pre-measured, flavored, and packaged in glass jars.</p>
+                <p class="product-price">~$12–16 per jar</p>
+            </div>
+            <div class="product-card">
+                <div class="product-type">Supplement</div>
+                <div class="product-name">CoQ10 (Ubiquinol form, 100mg)</div>
+                <p class="product-desc">Look for ubiquinol (not ubiquinone) — it's the active, bioavailable form. Brands like Jarrow, NOW Foods, or Qunol. Take 100–200mg daily for gum health support. This is one of the most evidence-backed supplements for periodontal health.</p>
+                <p class="product-price">~$15–25 for 60 softgels</p>
+            </div>
+        </div>
+
+        <h3>Licorice Root Sticks</h3>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-type">Chewing Stick</div>
+                <div class="product-name">Licorice Root Chew Sticks (bulk)</div>
+                <p class="product-desc">Available from herbal suppliers like Mountain Rose Herbs, Starwest Botanicals, or Amazon sellers. Look for whole root sticks, not shredded. Sweet flavor, good for people who find miswak or neem too bitter. Also a natural breath freshener.</p>
+                <p class="product-price">~$8–14 per lb</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SCIENCE -->
+    <!-- ============================================ -->
+    <section id="science">
+        <div class="section-label">07 &mdash; Evidence</div>
+        <h2>The Science</h2>
+
+        <p>Natural oral care has a surprising amount of real clinical research behind it. Here are some of the key findings:</p>
+
+        <h3>Miswak vs. Conventional Toothbrushes</h3>
+        <div class="highlight-box science">
+            <h4>Key Studies</h4>
+            <p>A 2003 study published in the <em>Journal of Clinical Periodontology</em> compared miswak users to conventional toothbrush users. After controlling for other factors, miswak users had <strong>significantly lower plaque scores</strong> and better gum health overall.</p>
+            <p>A systematic review in the <em>Saudi Dental Journal</em> (2016) analyzed 15 studies and concluded that miswak was <strong>at least as effective as conventional toothbrushing</strong> at plaque removal. Several included studies showed it was superior for gum health measures.</p>
+            <p>A 2019 randomized controlled trial found that Salvadora persica extract in mouthwash form was <strong>comparable to 0.2% chlorhexidine</strong> (prescription-strength) for reducing bacterial counts.</p>
+        </div>
+
+        <h3>Neem</h3>
+        <div class="highlight-box science">
+            <h4>Key Studies</h4>
+            <p>A 2014 study in the <em>Journal of Traditional and Complementary Medicine</em> found neem stick users had <strong>lower rates of dental caries</strong> compared to toothbrush users in the same population.</p>
+            <p>Multiple in-vitro studies have demonstrated neem extract's activity against <em>Streptococcus mutans</em>, <em>Lactobacillus</em>, and <em>Porphyromonas gingivalis</em> — the key bacteria behind cavities and gum disease.</p>
+        </div>
+
+        <h3>Oil Pulling</h3>
+        <div class="highlight-box science">
+            <h4>Key Studies</h4>
+            <p>A 2016 systematic review in the <em>Journal of Traditional and Complementary Medicine</em> covering 6 clinical trials found oil pulling <strong>significantly reduced plaque and gingivitis scores</strong>. Effect size was comparable to chlorhexidine mouthwash in most trials.</p>
+            <p>Coconut oil specifically has shown the strongest results, likely due to its <strong>high lauric acid content</strong> (~50%), which has proven antimicrobial activity against oral pathogens.</p>
+        </div>
+
+        <h3>CoQ10 for Gum Disease</h3>
+        <div class="highlight-box science">
+            <h4>Key Studies</h4>
+            <p>A 2013 meta-analysis in the <em>Australian Dental Journal</em> reviewed 8 clinical trials and found that <strong>CoQ10 supplementation significantly reduced gingival bleeding, pocket depth, and inflammatory markers</strong> in patients with periodontal disease.</p>
+            <p>Both topical (gel) and systemic (oral supplement) CoQ10 showed benefits, with topical application showing faster localized effects and oral supplementation showing broader systemic improvement.</p>
+        </div>
+
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Evidence Level</th>
+                    <th>Verdict</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Miswak</td>
+                    <td><span class="tag green">Strong</span></td>
+                    <td>WHO-endorsed. Multiple RCTs support it.</td>
+                </tr>
+                <tr>
+                    <td>Neem</td>
+                    <td><span class="tag green">Strong</span></td>
+                    <td>Well-studied antibacterial. Works.</td>
+                </tr>
+                <tr>
+                    <td>Oil Pulling</td>
+                    <td><span class="tag blue">Moderate</span></td>
+                    <td>Growing evidence. Not a replacement for brushing, but good adjunct.</td>
+                </tr>
+                <tr>
+                    <td>CoQ10</td>
+                    <td><span class="tag green">Strong</span></td>
+                    <td>Meta-analysis supports it for periodontal health.</td>
+                </tr>
+                <tr>
+                    <td>Tea Tree Oil</td>
+                    <td><span class="tag blue">Moderate</span></td>
+                    <td>Effective topically. Use in products, never straight.</td>
+                </tr>
+                <tr>
+                    <td>Licorice Root</td>
+                    <td><span class="tag blue">Moderate</span></td>
+                    <td>Promising lab studies, fewer clinical trials.</td>
+                </tr>
+                <tr>
+                    <td>Bamboo Brushes</td>
+                    <td><span class="tag orange">Handle only</span></td>
+                    <td>Eco handle, but bristles are still plastic.</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+</main>
+
+<footer>
+    <p>Natural Toothbrushes &amp; Gum Repair &mdash; Research compiled March 2026</p>
+</footer>
+
+</body>
+</html>
