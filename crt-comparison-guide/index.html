@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRT Deep Dive: XBR vs DXR & The Holy Grail Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --accent-glow: rgba(196, 32, 32, 0.15);
+    --bg: #FAFAFA;
+    --text-primary: #1D1D1F;
+    --text-secondary: #6E6E73;
+    --divider: #E5E5E7;
+    --card-bg: #FFFFFF;
+    --box-bg: #F2F2F7;
+    --green: #34C759;
+    --orange: #FF9500;
+    --blue: #007AFF;
+    --purple: #7C4DFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.7;
+    border-top: 3px solid var(--accent);
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: #1D1D1F;
+    color: #FAFAFA;
+    text-align: center;
+    padding: 80px 40px 70px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(ellipse at center, rgba(196,32,32,0.08) 0%, transparent 60%);
+    animation: heroGlow 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes heroGlow {
+    0% { transform: translate(0,0) scale(1); }
+    100% { transform: translate(5%,5%) scale(1.1); }
+  }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .hero-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(196,32,32,0.4);
+    border-radius: 100px;
+    padding: 5px 16px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 span { color: var(--accent); }
+
+  .hero p {
+    font-size: 1.1rem;
+    color: #A1A1A6;
+    max-width: 580px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Scanline overlay */
+  .scanlines {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* ── Container ── */
+  .container {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 56px 40px 80px;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--box-bg);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 56px;
+  }
+
+  .toc h2 {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .toc ol { list-style: none; counter-reset: toc; }
+
+  .toc li { counter-increment: toc; margin-bottom: 8px; }
+
+  .toc li a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .toc li a::before {
+    content: counter(toc, decimal-leading-zero) " ";
+    color: var(--text-secondary);
+    font-weight: 400;
+    margin-right: 4px;
+  }
+
+  .toc li a:hover { color: var(--accent); }
+
+  /* ── Sections ── */
+  section {
+    padding-top: 56px;
+    margin-bottom: 56px;
+    border-top: 1px solid var(--divider);
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+    margin-top: 32px;
+  }
+
+  p { margin-bottom: 16px; color: var(--text-secondary); }
+  strong { color: var(--text-primary); }
+
+  /* ── Scroll Reveal ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── VS Cards ── */
+  .vs-container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    align-items: stretch;
+    margin: 32px 0;
+  }
+
+  .vs-card {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 16px;
+    padding: 28px 24px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .vs-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  }
+
+  .vs-badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-bottom: 12px;
+  }
+
+  .vs-badge.xbr { background: rgba(196,32,32,0.1); color: var(--accent); }
+  .vs-badge.dxr { background: rgba(124,77,255,0.1); color: var(--purple); }
+
+  .vs-card h3 { margin-top: 0; font-size: 1.2rem; }
+
+  .vs-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+  }
+
+  .vs-circle {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--text-primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.75rem;
+  }
+
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--divider);
+    font-size: 0.88rem;
+  }
+  .spec-row:last-child { border-bottom: none; }
+  .spec-label { color: var(--text-secondary); }
+  .spec-value { font-weight: 600; color: var(--text-primary); }
+
+  /* ── Bar Charts ── */
+  .chart-container {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 16px;
+    padding: 28px;
+    margin: 32px 0;
+  }
+
+  .chart-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+  }
+
+  .bar-group { margin-bottom: 20px; }
+
+  .bar-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .bar-label span { color: var(--text-secondary); font-weight: 500; }
+
+  .bar-track {
+    height: 28px;
+    background: var(--box-bg);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 8px;
+    width: 0;
+    transition: width 1.5s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  .bar-fill.red { background: linear-gradient(90deg, var(--accent), #E84545); }
+  .bar-fill.purple { background: linear-gradient(90deg, #5C2D91, var(--purple)); }
+  .bar-fill.blue { background: linear-gradient(90deg, #0055CC, var(--blue)); }
+  .bar-fill.green { background: linear-gradient(90deg, #1B8C3A, var(--green)); }
+  .bar-fill.orange { background: linear-gradient(90deg, #CC7700, var(--orange)); }
+
+  /* ── Tier List ── */
+  .tier-list { margin: 32px 0; }
+
+  .tier-row {
+    display: flex;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    overflow: hidden;
+    min-height: 56px;
+  }
+
+  .tier-label {
+    min-width: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: #fff;
+    padding: 12px;
+  }
+
+  .tier-label.s { background: #C42020; }
+  .tier-label.a { background: #E85D2D; }
+  .tier-label.b { background: #F5A623; }
+  .tier-label.c { background: #34C759; }
+  .tier-label.d { background: #007AFF; }
+
+  .tier-items {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-left: none;
+    align-items: center;
+  }
+
+  .tier-item {
+    background: var(--box-bg);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: default;
+    transition: transform 0.2s, background 0.2s;
+  }
+
+  .tier-item:hover {
+    transform: scale(1.06);
+    background: var(--divider);
+  }
+
+  /* ── Highlight Boxes ── */
+  .highlight-box {
+    background: var(--box-bg);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin: 24px 0;
+  }
+
+  .highlight-box.warning { background: #FFF3E0; border-left: 3px solid var(--orange); }
+  .highlight-box.tip { background: #E8F5E9; border-left: 3px solid var(--green); }
+  .highlight-box.science { background: #EDE7F6; border-left: 3px solid var(--purple); }
+  .highlight-box.fire { background: #FBE9E7; border-left: 3px solid var(--accent); }
+
+  .highlight-box p:last-child { margin-bottom: 0; }
+  .highlight-box strong { display: block; margin-bottom: 6px; color: var(--text-primary); }
+
+  /* ── Product Cards ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 24px 0;
+  }
+
+  .product-card {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 14px;
+    padding: 22px 24px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+
+  .product-type {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .product-type.sony { color: var(--accent); }
+  .product-type.jvc { color: var(--purple); }
+  .product-type.toshiba { color: var(--blue); }
+  .product-type.bo { color: var(--orange); }
+  .product-type.pro { color: var(--green); }
+
+  .product-name { font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
+
+  .product-detail { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0; }
+
+  .product-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+
+  .tag.red { background: rgba(196,32,32,0.1); color: var(--accent); }
+  .tag.green { background: rgba(52,199,89,0.1); color: var(--green); }
+  .tag.blue { background: rgba(0,122,255,0.1); color: var(--blue); }
+  .tag.purple { background: rgba(124,77,255,0.1); color: var(--purple); }
+  .tag.orange { background: rgba(255,149,0,0.1); color: var(--orange); }
+
+  /* ── Price Ticker ── */
+  .price-ticker {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 4px 0 12px;
+    margin: 24px 0;
+    scrollbar-width: thin;
+  }
+
+  .ticker-card {
+    min-width: 155px;
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 16px 18px;
+    flex-shrink: 0;
+  }
+
+  .ticker-name { font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; }
+  .ticker-price { font-size: 1.3rem; font-weight: 800; color: var(--text-primary); }
+  .ticker-trend { font-size: 0.72rem; font-weight: 700; margin-top: 4px; }
+  .ticker-trend.up { color: var(--accent); }
+  .ticker-trend.stable { color: var(--green); }
+
+  /* ── Comparison Table ── */
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 0.85rem;
+  }
+
+  .comparison-table th {
+    text-align: left;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    padding: 12px 14px;
+    border-bottom: 2px solid var(--divider);
+  }
+
+  .comparison-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--divider);
+    vertical-align: top;
+  }
+
+  .comparison-table tr:hover td { background: var(--box-bg); }
+  .comparison-table .winner { color: var(--accent); font-weight: 700; }
+
+  /* ── Phosphor Demo ── */
+  .phosphor-demo {
+    width: 100%;
+    height: 200px;
+    background: #111;
+    border-radius: 14px;
+    margin: 24px 0;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .phosphor-demo canvas { width: 100%; height: 100%; }
+
+  .phosphor-label {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  /* ── Signal Path ── */
+  .signal-path {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 32px 0;
+    flex-wrap: wrap;
+  }
+
+  .signal-node {
+    background: var(--card-bg);
+    border: 2px solid var(--divider);
+    border-radius: 12px;
+    padding: 14px 18px;
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 600;
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: default;
+  }
+
+  .signal-node:hover {
+    border-color: var(--accent);
+    transform: scale(1.05);
+  }
+
+  .signal-node small {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  .signal-arrow {
+    font-size: 1.2rem;
+    color: var(--accent);
+    padding: 0 6px;
+    animation: pulseArrow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulseArrow {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* ── Checklist ── */
+  .checklist { list-style: none; margin: 16px 0; }
+
+  .checklist li {
+    padding: 10px 0 10px 32px;
+    position: relative;
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .checklist li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  .checklist li:last-child { border-bottom: none; }
+
+  .red-flags li::before { content: '✗'; color: var(--accent); }
+
+  /* ── Mini sparkline charts ── */
+  .sparkline-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--divider);
+  }
+  .sparkline-row:last-child { border-bottom: none; }
+  .sparkline-info { flex: 1; }
+  .sparkline-name { font-weight: 600; font-size: 0.88rem; }
+  .sparkline-sub { font-size: 0.75rem; color: var(--text-secondary); }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--divider);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .hero { padding: 56px 24px 48px; }
+    .container { padding: 40px 20px 60px; }
+    .vs-container { grid-template-columns: 1fr; gap: 12px; }
+    .vs-divider { padding: 8px 0; }
+    .card-grid { grid-template-columns: 1fr; }
+    .signal-path { flex-direction: column; }
+    .signal-arrow { transform: rotate(90deg); }
+    .tier-row { flex-direction: column; }
+    .tier-label { min-width: auto; padding: 8px 16px; }
+    .tier-items { border-left: 1px solid var(--divider); border-top: none; }
+    .phosphor-label { font-size: 0.55rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<div class="hero">
+  <div class="scanlines"></div>
+  <div class="hero-content">
+    <div class="hero-badge">CRT Collector's Deep Dive</div>
+    <h1>Trinitron <span>XBR</span> vs <span>DXR</span><br>& The Holy Grail Guide</h1>
+    <p>Everything about Sony's legendary 25" Trinitrons, the CRTs worth hunting on Marketplace, and building the forever living room setup.</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════ TOC ═══════════════════ -->
+  <nav class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#origins">The KV-25XBR & KV-25DXR Story</a></li>
+      <li><a href="#comparison">Head-to-Head Comparison</a></li>
+      <li><a href="#tech">What Makes a CRT Great</a></li>
+      <li><a href="#holygrail">The Holy Grail Tier List</a></li>
+      <li><a href="#marketplace">Marketplace Hunting Guide</a></li>
+      <li><a href="#forever">The Forever Living Room Setup</a></li>
+    </ol>
+  </nav>
+
+  <!-- ═══════════════════ SECTION 1: ORIGINS ═══════════════════ -->
+  <section id="origins" class="reveal">
+    <div class="section-label">The Legend</div>
+    <h2>The KV-25XBR & KV-25DXR Story</h2>
+
+    <p>In the mid-1980s, Sony's consumer television division was on an absolute tear. The <strong>Trinitron XBR</strong> line — "eXtra Bright Resolution" — had become the gold standard for home video. These weren't just TVs; they were statements. And the <strong>25-inch models</strong> were the sweet spot: big enough to impress, small enough to move without a team of linebackers.</p>
+
+    <p>The <strong>KV-25XBR</strong> was Sony's first XBR television, released around 1984–1986. It featured the proprietary <strong>Microblack aperture grille</strong> — a refinement of Trinitron technology with darkened phosphor gaps that made the screen appear black when off (vs. the light grey of earlier Trinitrons), dramatically improving perceived contrast. The result was a picture so sharp and vibrant it made everything else on the showroom floor look like it was broadcasting through a wet paper towel. Original MSRP: <strong>$1,199.95</strong> — though actual street prices ran closer to $1,800.</p>
+
+    <p>Then came the <strong>KV-25DXR</strong> — the "Digital" Trinitron. Same legendary tube. Same Microblack technology. But Sony strapped a computer to it. Listed at <strong>$1,399.95</strong> — a $200 premium — the DXR added the <strong>Home Management Helper</strong>, essentially a PDA built into your television. It came paired with the <strong>Express Commander</strong>, the first TV remote ever with a full alphanumeric keypad. This was Sony's vision of the smart TV... in 1985.</p>
+
+    <div class="highlight-box science">
+      <strong>The Same Tube, Different Brain</strong>
+      <p>Both the KV-25XBR and KV-25DXR use fundamentally the <strong>same 25" Microblack Trinitron picture tube</strong> — reportedly the same tube found in the professional <strong>PVM-2530</strong> broadcast monitor. The DXR runs on the P3 chassis while the XBR runs on the SCC chassis. The image quality is virtually identical. The real differentiator is the DXR's digital brain. Both also share a rare <strong>34-pin RGB input</strong> — unusual for consumer sets and different from the 25-pin RGB connector on other Sonys.</p>
+    </div>
+
+    <h3>What Made XBR Special</h3>
+    <p>XBR wasn't just a model name — it was a philosophy. Sony reserved the badge for their absolute best consumer picture quality:</p>
+    <ul class="checklist">
+      <li><strong>400+ lines of horizontal resolution</strong> — pushing the limits of NTSC</li>
+      <li><strong>Microblack aperture grille</strong> — black screen-off appearance, superior contrast</li>
+      <li><strong>S-Video and A/V inputs</strong> — direct connection for LaserDisc and high-end VCRs</li>
+      <li><strong>34-pin RGB connector</strong> — extremely rare on a consumer TV</li>
+      <li><strong>MTS stereo decoder</strong> with detachable speakers</li>
+      <li><strong>Velocity Modulation</strong> — edge enhancement (great for broadcast, less ideal for gaming)</li>
+      <li><strong>RM-724 Express Commander remote</strong> — quartz-locked tuning, 125 cable channels</li>
+      <li>Available in <strong>Beige/Grey, Plum/Grey, and all-black</strong> colorways</li>
+    </ul>
+
+    <h3>What the DXR Added</h3>
+    <p>The DXR took everything the XBR offered and layered on Sony's ambitious (if premature) connected-home vision:</p>
+    <ul class="checklist">
+      <li><strong>Home Management Helper (HMH)</strong> — full on-screen computer/organizer system</li>
+      <li><strong>Express Commander with alphanumeric keypad</strong> — the first of its kind on any TV</li>
+      <li><strong>80 pages of programmable storage</strong> — birthdays, bills, appointments, notes</li>
+      <li><strong>Automatic on-screen reminders</strong> — alerts starting 2 weeks before programmed dates</li>
+      <li><strong>6-event programmable timer</strong> — could auto-trigger recording on connected Betamax VCRs</li>
+      <li><strong>Program blocking</strong> — essentially parental controls, decades before V-Chip</li>
+      <li><strong>All XBR picture quality features</strong> — identical Microblack tube and video chain</li>
+    </ul>
+  </section>
+
+  <!-- ═══════════════════ SECTION 2: COMPARISON ═══════════════════ -->
+  <section id="comparison" class="reveal">
+    <div class="section-label">Head to Head</div>
+    <h2>XBR vs DXR: The Full Breakdown</h2>
+
+    <div class="vs-container">
+      <div class="vs-card">
+        <span class="vs-badge xbr">KV-25XBR</span>
+        <h3>Trinitron XBR</h3>
+        <div class="spec-row"><span class="spec-label">Screen</span><span class="spec-value">25" Trinitron</span></div>
+        <div class="spec-row"><span class="spec-label">Tube</span><span class="spec-value">Microblack AG</span></div>
+        <div class="spec-row"><span class="spec-label">Resolution</span><span class="spec-value">400+ TVL</span></div>
+        <div class="spec-row"><span class="spec-label">Chassis</span><span class="spec-value">SCC</span></div>
+        <div class="spec-row"><span class="spec-label">Smart Features</span><span class="spec-value">None</span></div>
+        <div class="spec-row"><span class="spec-label">Remote</span><span class="spec-value">RM-724</span></div>
+        <div class="spec-row"><span class="spec-label">RGB</span><span class="spec-value">34-pin</span></div>
+        <div class="spec-row"><span class="spec-label">MSRP</span><span class="spec-value">$1,199</span></div>
+        <div class="spec-row"><span class="spec-label">Value Today</span><span class="spec-value">$400–$800</span></div>
+      </div>
+
+      <div class="vs-divider">
+        <div class="vs-circle">VS</div>
+      </div>
+
+      <div class="vs-card">
+        <span class="vs-badge dxr">KV-25DXR</span>
+        <h3>Digital Trinitron DXR</h3>
+        <div class="spec-row"><span class="spec-label">Screen</span><span class="spec-value">25" Trinitron</span></div>
+        <div class="spec-row"><span class="spec-label">Tube</span><span class="spec-value">Microblack AG</span></div>
+        <div class="spec-row"><span class="spec-label">Resolution</span><span class="spec-value">400+ TVL</span></div>
+        <div class="spec-row"><span class="spec-label">Chassis</span><span class="spec-value">P3</span></div>
+        <div class="spec-row"><span class="spec-label">Smart Features</span><span class="spec-value">HMH Computer</span></div>
+        <div class="spec-row"><span class="spec-label">Remote</span><span class="spec-value">Express Cmdr</span></div>
+        <div class="spec-row"><span class="spec-label">RGB</span><span class="spec-value">34-pin</span></div>
+        <div class="spec-row"><span class="spec-label">MSRP</span><span class="spec-value">$1,399</span></div>
+        <div class="spec-row"><span class="spec-label">Value Today</span><span class="spec-value">$500–$1,000</span></div>
+      </div>
+    </div>
+
+    <h3>Picture Quality Ratings</h3>
+    <p>Since both share the same Microblack tube, picture quality is virtually identical. The slight differences come from the video processing chain in each chassis:</p>
+
+    <div class="chart-container">
+      <div class="chart-title">Performance Comparison (out of 100)</div>
+
+      <div class="bar-group">
+        <div class="bar-label">Sharpness <span>XBR: 94 · DXR: 93</span></div>
+        <div class="bar-track"><div class="bar-fill red" data-width="94"></div></div>
+        <div class="bar-track" style="margin-top:4px"><div class="bar-fill purple" data-width="93"></div></div>
+      </div>
+
+      <div class="bar-group">
+        <div class="bar-label">Color Accuracy <span>XBR: 92 · DXR: 92</span></div>
+        <div class="bar-track"><div class="bar-fill red" data-width="92"></div></div>
+        <div class="bar-track" style="margin-top:4px"><div class="bar-fill purple" data-width="92"></div></div>
+      </div>
+
+      <div class="bar-group">
+        <div class="bar-label">Contrast <span>XBR: 91 · DXR: 91</span></div>
+        <div class="bar-track"><div class="bar-fill red" data-width="91"></div></div>
+        <div class="bar-track" style="margin-top:4px"><div class="bar-fill purple" data-width="91"></div></div>
+      </div>
+
+      <div class="bar-group">
+        <div class="bar-label">Convergence <span>XBR: 88 · DXR: 89</span></div>
+        <div class="bar-track"><div class="bar-fill red" data-width="88"></div></div>
+        <div class="bar-track" style="margin-top:4px"><div class="bar-fill purple" data-width="89"></div></div>
+      </div>
+
+      <div class="bar-group">
+        <div class="bar-label">Collectibility <span>XBR: 82 · DXR: 96</span></div>
+        <div class="bar-track"><div class="bar-fill red" data-width="82"></div></div>
+        <div class="bar-track" style="margin-top:4px"><div class="bar-fill purple" data-width="96"></div></div>
+      </div>
+
+      <div style="display:flex;gap:16px;margin-top:16px;">
+        <div style="display:flex;align-items:center;gap:6px;font-size:0.75rem;"><div style="width:12px;height:12px;border-radius:3px;background:var(--accent);"></div> KV-25XBR</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:0.75rem;"><div style="width:12px;height:12px;border-radius:3px;background:var(--purple);"></div> KV-25DXR</div>
+      </div>
+    </div>
+
+    <h3>Feature Comparison</h3>
+    <table class="comparison-table">
+      <thead>
+        <tr><th>Feature</th><th>KV-25XBR</th><th>KV-25DXR</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Picture Tube</td><td>Microblack Trinitron</td><td>Microblack Trinitron</td></tr>
+        <tr><td>Horizontal Resolution</td><td class="winner">400+ lines</td><td class="winner">400+ lines</td></tr>
+        <tr><td>On-Screen Display</td><td>Basic OSD</td><td class="winner">Full GUI + HMH Computer</td></tr>
+        <tr><td>Remote Control</td><td>RM-724 Standard</td><td class="winner">Alphanumeric Express Cmdr</td></tr>
+        <tr><td>S-Video Input</td><td class="winner">Yes</td><td class="winner">Yes</td></tr>
+        <tr><td>34-Pin RGB</td><td class="winner">Yes</td><td class="winner">Yes</td></tr>
+        <tr><td>Betamax Integration</td><td>No</td><td class="winner">Auto record/playback</td></tr>
+        <tr><td>Parental Controls</td><td>No</td><td class="winner">Program blocking</td></tr>
+        <tr><td>Collectibility</td><td>High</td><td class="winner">Very High</td></tr>
+        <tr><td>Serviceability</td><td class="winner">Easier (SCC chassis)</td><td>More complex (P3)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="highlight-box tip">
+      <strong>The Verdict</strong>
+      <p>For <strong>picture quality alone</strong>, either set is essentially identical — same Microblack tube, same PVM-2530 DNA. The DXR commands a premium because of rarity, the fascinating Home Management Helper system, and the fact that it represents a dead-end vision of the smart TV from 1985. If you find an XBR for less, grab it — your eyes won't know the difference. But if you want the ultimate conversation piece? The DXR with its calculator remote is unmatched.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ SECTION 3: TECH ═══════════════════ -->
+  <section id="tech" class="reveal">
+    <div class="section-label">The Science</div>
+    <h2>What Makes a CRT Great</h2>
+
+    <p>Not all CRTs are equal. Understanding the technology is the difference between a gem and a 150-pound disappointment.</p>
+
+    <h3>Aperture Grille vs Shadow Mask</h3>
+
+    <div class="highlight-box science">
+      <strong>The Great Divide</strong>
+      <p><strong>Aperture grille</strong> tubes (Trinitron, Diamondtron) use vertical wires stretched across the tube face — over 80% of electrons reach the phosphor, producing a dramatically brighter image. <strong>Shadow mask</strong> tubes use a perforated metal plate where only ~20% of electrons pass through. Aperture grille = brighter, sharper, but you get two faint horizontal stabilization wire shadows. Shadow mask = better geometry out of the box, no wire artifacts, more uniform focus across the screen.</p>
+    </div>
+
+    <div class="phosphor-demo" id="phosphorDemo">
+      <canvas id="phosphorCanvas"></canvas>
+      <div class="phosphor-label">Click to toggle: Aperture Grille ↔ Shadow Mask</div>
+    </div>
+
+    <h3>TVL — Television Lines</h3>
+    <p>TVL measures how many distinct alternating black/white vertical lines a monitor can resolve. Higher TVL = more detail. Here's the hierarchy:</p>
+
+    <div class="chart-container">
+      <div class="chart-title">TVL by CRT Class</div>
+
+      <div class="bar-group">
+        <div class="bar-label">Sony BVM-20F1U <span>900+ TVL</span></div>
+        <div class="bar-track"><div class="bar-fill red" data-width="100"></div></div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-label">Sony PVM-20L5 <span>1000+ TVL</span></div>
+        <div class="bar-track"><div class="bar-fill red" data-width="100"></div></div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-label">Sony PVM-20M4U <span>800 TVL</span></div>
+        <div class="bar-track"><div class="bar-fill purple" data-width="80"></div></div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-label">Sony PVM-14M4U <span>600 TVL</span></div>
+        <div class="bar-track"><div class="bar-fill purple" data-width="60"></div></div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-label">Sony KV-36FV310 <span>~500 TVL</span></div>
+        <div class="bar-track"><div class="bar-fill blue" data-width="50"></div></div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-label">JVC D-Series <span>~500 TVL</span></div>
+        <div class="bar-track"><div class="bar-fill green" data-width="50"></div></div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-label">Sony KV-25XBR / DXR <span>400+ TVL</span></div>
+        <div class="bar-track"><div class="bar-fill blue" data-width="42"></div></div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-label">Average Consumer CRT <span>~300 TVL</span></div>
+        <div class="bar-track"><div class="bar-fill orange" data-width="30"></div></div>
+      </div>
+    </div>
+
+    <h3>The 240p Factor</h3>
+    <div class="highlight-box warning">
+      <strong>Why This Matters for Retro Gaming</strong>
+      <p>Classic consoles (NES, SNES, Genesis, PS1) output <strong>240p progressive scan</strong>. Standard-definition CRTs handle this perfectly with clean scanlines. But <strong>HD CRTs</strong> and some flat-panel CRTs misinterpret 240p as 480i interlaced, causing ugly flickering and deinterlacing artifacts. For retro gaming, always use an <strong>SD CRT</strong> — not an HD one. This is why those "old" curved Trinitrons are actually more desirable for this purpose than newer sets.</p>
+    </div>
+
+    <h3>Signal Quality Chain</h3>
+    <p>What you feed the TV matters as much as the TV itself. From worst to best:</p>
+
+    <div class="signal-path">
+      <div class="signal-node">RF<small>Worst</small></div>
+      <span class="signal-arrow">→</span>
+      <div class="signal-node">Composite<small>Muddy</small></div>
+      <span class="signal-arrow">→</span>
+      <div class="signal-node">S-Video<small>Good</small></div>
+      <span class="signal-arrow">→</span>
+      <div class="signal-node">Component<small>Great</small></div>
+      <span class="signal-arrow">→</span>
+      <div class="signal-node" style="border-color:var(--accent);">RGB<small>Best</small></div>
+    </div>
+
+    <h3>Key Specs Cheat Sheet</h3>
+    <table class="comparison-table">
+      <thead>
+        <tr><th>Spec</th><th>What It Means</th><th>What to Look For</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>TVL</strong></td><td>Horizontal resolution in TV lines</td><td>400+ consumer, 600+ pro</td></tr>
+        <tr><td><strong>Tube Type</strong></td><td>Aperture grille vs shadow mask</td><td>AG for brightness, SM for geometry</td></tr>
+        <tr><td><strong>Inputs</strong></td><td>How you connect sources</td><td>Component or RGB minimum</td></tr>
+        <tr><td><strong>Geometry</strong></td><td>How straight the image edges are</td><td>Check corners for bowing/pincushion</td></tr>
+        <tr><td><strong>Convergence</strong></td><td>How well R/G/B beams align</td><td>Color fringing on white text = bad</td></tr>
+        <tr><td><strong>Tube Hours</strong></td><td>Total runtime on the phosphor</td><td>Lower = brighter, but hard to verify</td></tr>
+        <tr><td><strong>HV Regulation</strong></td><td>Voltage stability under load</td><td>FV310 has it; prevents bloom</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ═══════════════════ SECTION 4: HOLY GRAIL ═══════════════════ -->
+  <section id="holygrail" class="reveal">
+    <div class="section-label">The Hunt</div>
+    <h2>The Holy Grail Tier List</h2>
+
+    <p>Every CRT collector has a white whale. Here's the definitive tier list of sets to watch for on Marketplace, Craigslist, and estate sales.</p>
+
+    <div class="tier-list">
+      <div class="tier-row">
+        <div class="tier-label s">S</div>
+        <div class="tier-items">
+          <div class="tier-item">Sony BVM-20F1U</div>
+          <div class="tier-item">Sony GDM-FW900</div>
+          <div class="tier-item">Sony BVM-D24E1WU</div>
+          <div class="tier-item">Sony PVM-20L5</div>
+          <div class="tier-item">Sony BVM-D32E1WU</div>
+        </div>
+      </div>
+      <div class="tier-row">
+        <div class="tier-label a">A</div>
+        <div class="tier-items">
+          <div class="tier-item">Sony PVM-20M4U</div>
+          <div class="tier-item">Sony BVM-14F5U</div>
+          <div class="tier-item">B&O MX 7000</div>
+          <div class="tier-item">Sony KV-25DXR</div>
+          <div class="tier-item">JVC TM-H150CG</div>
+        </div>
+      </div>
+      <div class="tier-row">
+        <div class="tier-label b">B</div>
+        <div class="tier-items">
+          <div class="tier-item">Sony KV-36FV310</div>
+          <div class="tier-item">Sony KV-25XBR</div>
+          <div class="tier-item">JVC D-Series</div>
+          <div class="tier-item">Toshiba 27AF53</div>
+          <div class="tier-item">Sony PVM-14M4U</div>
+          <div class="tier-item">B&O MX 4002</div>
+        </div>
+      </div>
+      <div class="tier-row">
+        <div class="tier-label c">C</div>
+        <div class="tier-items">
+          <div class="tier-item">Sony KV-27FV310</div>
+          <div class="tier-item">Panasonic CT-27SF37</div>
+          <div class="tier-item">Toshiba 14AF</div>
+          <div class="tier-item">Sony PVM-20M2U</div>
+          <div class="tier-item">B&O MX 1500</div>
+        </div>
+      </div>
+      <div class="tier-row">
+        <div class="tier-label d">D</div>
+        <div class="tier-items">
+          <div class="tier-item">Generic Emerson/Funai</div>
+          <div class="tier-item">Composite-only no-name</div>
+          <div class="tier-item">Any CRT with burn-in</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>S-Tier: The Legends</h3>
+
+    <div class="card-grid">
+      <div class="product-card">
+        <div class="product-type pro">Broadcast Monitor</div>
+        <div class="product-name">Sony BVM-20F1U</div>
+        <p class="product-detail">The undisputed king. 20" broadcast monitor, 900+ TVL, multi-format input, native RGB/component. These were $10,000+ new and lived in broadcast studios worldwide. BVM designation "F" = 900 TVL class.</p>
+        <div class="product-tags">
+          <span class="tag red">Holy Grail</span>
+          <span class="tag orange">$2,000–$5,000+</span>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-type pro">Computer Monitor</div>
+        <div class="product-name">Sony GDM-FW900</div>
+        <p class="product-detail">The greatest CRT monitor ever made. 24" widescreen 16:10, flat aperture grille, <strong>2304×1440 @ 80Hz</strong>. Nothing has matched it since. Also sold as HP A7217A, SGI FW9011, and Sun FW9010 rebadges. MSRP was $2,300.</p>
+        <div class="product-tags">
+          <span class="tag red">Unicorn</span>
+          <span class="tag orange">$3,000–$8,000+</span>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-type pro">Broadcast Monitor</div>
+        <div class="product-name">Sony BVM-D24E1WU</div>
+        <p class="product-detail">Considered the ultimate retro gaming monitor. 24", handles everything from 240p SD to full HD. The "D" prefix indicates digital processing with analog display perfection.</p>
+        <div class="product-tags">
+          <span class="tag red">Endgame</span>
+          <span class="tag orange">$3,000–$7,000+</span>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-type pro">Professional Monitor</div>
+        <div class="product-name">Sony PVM-20L5</div>
+        <p class="product-detail">The most sought-after PVM. 20", 1000+ TVL, SDI inputs, supports both 15kHz and 31kHz. The "affordable" endgame — if $1,500+ counts as affordable. Some note scanlines can be overly pronounced at 240p due to high TVL.</p>
+        <div class="product-tags">
+          <span class="tag red">The Grail PVM</span>
+          <span class="tag orange">$1,200–$2,500</span>
+        </div>
+      </div>
+    </div>
+
+    <h3>A-Tier: The Heavy Hitters</h3>
+
+    <div class="card-grid">
+      <div class="product-card">
+        <div class="product-type pro">Professional Monitor</div>
+        <div class="product-name">Sony PVM-20M4U</div>
+        <p class="product-detail">HR Trinitron, 800 TVL, SMPTE-C phosphors for broadcast-accurate color. Native RGB and component. The workhorse of retro gaming — virtually identical to the 20L5 for 240p content at a lower price.</p>
+        <div class="product-tags">
+          <span class="tag green">Best Value Pro</span>
+          <span class="tag orange">$800–$1,800</span>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-type bo">Bang & Olufsen</div>
+        <div class="product-name">B&O BeoVision MX 7000</div>
+        <p class="product-detail">Danish design icon with motorized screen. Built-in <strong>SCART/RGB inputs</strong> — no modification needed. High-quality Philips tube. Stunning living room centerpiece. Your non-CRT friends will actually think this is cool.</p>
+        <div class="product-tags">
+          <span class="tag purple">Design Icon</span>
+          <span class="tag orange">$500–$2,000</span>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-type sony">Consumer Legend</div>
+        <div class="product-name">Sony KV-25DXR</div>
+        <p class="product-detail">The one from the listing. PVM-2530 tube DNA, Home Management Helper computer, Express Commander alphanumeric remote. A time capsule of 1985's vision of the smart home. Complete systems with pedestal are extremely rare.</p>
+        <div class="product-tags">
+          <span class="tag red">Rare Find</span>
+          <span class="tag orange">$500–$1,000</span>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-type pro">Professional Monitor</div>
+        <div class="product-name">JVC TM-H150CG</div>
+        <p class="product-detail">JVC's professional broadcast monitor. 600+ TVL, native RGB, excellent color. An underrated Sony PVM alternative at often significantly lower prices. The sleeper pick.</p>
+        <div class="product-tags">
+          <span class="tag green">Sleeper Pick</span>
+          <span class="tag orange">$300–$800</span>
+        </div>
+      </div>
+    </div>
+
+    <h3>B-Tier: The Attainable Greats</h3>
+
+    <div class="card-grid">
+      <div class="product-card">
+        <div class="product-type sony">Consumer</div>
+        <div class="product-name">Sony KV-36FV310</div>
+        <p class="product-detail">The king of consumer CRTs. 36" flat Trinitron with a unique <strong>High Voltage Regulator (HVR)</strong> — the only consumer TV known to have one — eliminating bloom and providing 30% brighter image. Dual component inputs, RGB-moddable via OSD mux. Weighs 224 lbs.</p>
+        <div class="product-tags">
+          <span class="tag blue">Living Room King</span>
+          <span class="tag orange">$200–$500</span>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-type jvc">Consumer</div>
+        <div class="product-name">JVC D-Series (AV-27/32/36D)</div>
+        <p class="product-detail">Excellent geometry out of box, component/S-Video inputs. Note: JVC inflated TVL specs by ~33% vs standard measurement. Multiple tube manufacturers within same model — Samsung tubes have adjustable convergence rings (best). Check serial number suffix.</p>
+        <div class="product-tags">
+          <span class="tag green">Fan Favorite</span>
+          <span class="tag orange">$100–$350</span>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-type toshiba">Consumer</div>
+        <div class="product-name">Toshiba 27AF53 / 36AF53</div>
+        <p class="product-detail">Toshiba's "Cinema Series" — the best CRTs Toshiba ever made. Component, S-Video, solid build quality. Often found cheap because the Toshiba name doesn't carry the Sony premium. Genuine sleeper.</p>
+        <div class="product-tags">
+          <span class="tag green">Budget King</span>
+          <span class="tag orange">$50–$200</span>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-type pro">Professional Monitor</div>
+        <div class="product-name">Sony PVM-14M4U</div>
+        <p class="product-detail">The 14" M4 series. 800 TVL, RGB/component. Perfect desk monitor for retro gaming. Only 36 lbs — actually manageable. The entry point to the PVM world.</p>
+        <div class="product-tags">
+          <span class="tag green">Desk Perfect</span>
+          <span class="tag orange">$300–$600</span>
+        </div>
+      </div>
+    </div>
+
+    <h3>Current Market Snapshot</h3>
+    <p>CRT prices have climbed roughly <strong>300% since 2020</strong> as retro gaming and analog appreciation has gone mainstream:</p>
+
+    <div class="price-ticker" id="priceTicker">
+      <div class="ticker-card">
+        <div class="ticker-name">GDM-FW900</div>
+        <div class="ticker-price">$4,500</div>
+        <div class="ticker-trend up">↑ Rising fast</div>
+      </div>
+      <div class="ticker-card">
+        <div class="ticker-name">BVM-D24E1WU</div>
+        <div class="ticker-price">$5,000</div>
+        <div class="ticker-trend up">↑ Peak demand</div>
+      </div>
+      <div class="ticker-card">
+        <div class="ticker-name">BVM-20F1U</div>
+        <div class="ticker-price">$3,200</div>
+        <div class="ticker-trend up">↑ Steady climb</div>
+      </div>
+      <div class="ticker-card">
+        <div class="ticker-name">PVM-20L5</div>
+        <div class="ticker-price">$1,800</div>
+        <div class="ticker-trend up">↑ High demand</div>
+      </div>
+      <div class="ticker-card">
+        <div class="ticker-name">PVM-20M4U</div>
+        <div class="ticker-price">$1,200</div>
+        <div class="ticker-trend up">↑ Rising</div>
+      </div>
+      <div class="ticker-card">
+        <div class="ticker-name">B&O MX 7000</div>
+        <div class="ticker-price">$1,200</div>
+        <div class="ticker-trend up">↑ Design premium</div>
+      </div>
+      <div class="ticker-card">
+        <div class="ticker-name">KV-25DXR</div>
+        <div class="ticker-price">$800</div>
+        <div class="ticker-trend up">↑ Niche demand</div>
+      </div>
+      <div class="ticker-card">
+        <div class="ticker-name">KV-36FV310</div>
+        <div class="ticker-price">$350</div>
+        <div class="ticker-trend stable">→ Stable</div>
+      </div>
+      <div class="ticker-card">
+        <div class="ticker-name">JVC D-Series</div>
+        <div class="ticker-price">$200</div>
+        <div class="ticker-trend up">↑ Growing</div>
+      </div>
+      <div class="ticker-card">
+        <div class="ticker-name">Toshiba AF</div>
+        <div class="ticker-price">$100</div>
+        <div class="ticker-trend stable">→ Stable</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ SECTION 5: MARKETPLACE ═══════════════════ -->
+  <section id="marketplace" class="reveal">
+    <div class="section-label">Marketplace Hunting</div>
+    <h2>How to Score on Marketplace</h2>
+
+    <p>Finding CRTs in the wild is half the fun. Here's your field guide to not hauling home a dud.</p>
+
+    <h3>Search Strategy</h3>
+    <div class="highlight-box tip">
+      <strong>Use Dumb Keywords</strong>
+      <p>Search for <strong>"box TV," "old TV," "tube TV," "old monitor"</strong> — sellers unaware of CRT value price lower. Avoid "retro gaming," "CRT TV," or "vintage" — these attract inflated prices. Facebook's algorithm will learn to auto-detect CRTs in photos regardless of what the seller typed.</p>
+    </div>
+
+    <h3>What to Look For</h3>
+    <ul class="checklist">
+      <li><strong>Check the inputs first:</strong> Component video (red/green/blue RCA) is the minimum for a quality setup</li>
+      <li><strong>Bring test patterns:</strong> A DVD or console with test pattern software reveals geometry, convergence, and linearity</li>
+      <li><strong>Ask for a white screen photo:</strong> Reveals geometry bowing, convergence fringing, and burn-in instantly</li>
+      <li><strong>Model number research:</strong> Look up the exact model — some "Trinitrons" are rebadged low-end sets</li>
+      <li><strong>Check purity:</strong> Solid R/G/B full-screen colors should be uniform, no discolored blotches</li>
+      <li><strong>Listen carefully:</strong> Crackling, arcing, or burning smell = walk away</li>
+      <li><strong>Confirm remote is included:</strong> Some TVs can't switch inputs without it — deal breaker</li>
+      <li><strong>Estate sales are goldmines:</strong> Elderly sellers often have pristine, low-hour sets stored carefully</li>
+      <li><strong>Hospital/school surplus sales:</strong> Excellent source for professional PVMs — they're being decomissioned constantly</li>
+      <li><strong>Size sweet spot: 27"</strong> — great picture, one person can carry it (barely)</li>
+    </ul>
+
+    <h3>Red Flags</h3>
+    <ul class="checklist red-flags">
+      <li><strong>"HD CRT" for retro gaming:</strong> These process 240p as 480i, causing flickering and deinterlacing artifacts</li>
+      <li><strong>Stored in a garage or shed:</strong> Humidity and temperature swings kill capacitors and corrode connections</li>
+      <li><strong>Visible burn-in:</strong> Channel logos, game HUDs, or news tickers permanently etched into the phosphor</li>
+      <li><strong>Colored patches (green, orange, pink):</strong> Concentric patterns = degaussing circuit failure. Might be fixable, might not</li>
+      <li><strong>"Powers on but no picture":</strong> Could be a simple cap or a dead flyback — walk away unless free</li>
+      <li><strong>Unstable picture, bouncing image:</strong> Bad capacitors or failing flyback transformer</li>
+      <li><strong>Excessive bloom on bright scenes:</strong> Weak tube or failing voltage regulation</li>
+      <li><strong>Cold/wet storage:</strong> CRT stored outside needs days to acclimate — moisture can bridge pins and kill it instantly</li>
+    </ul>
+
+    <div class="highlight-box warning">
+      <strong>The Weight Problem</strong>
+      <p>Large CRTs are <strong>absurdly heavy</strong>. A Sony KV-36FV310 is 224 lbs. A 32" BVM is close to the same. You need two strong people minimum, ideally a hand truck, and a vehicle with cargo space. <strong>Measure your doorways.</strong> Check your floors. Plan your route. Always transport CRTs <strong>screen-up or screen-forward</strong>, never face-down — the tube face is the most vulnerable part.</p>
+    </div>
+
+    <h3>Negotiation Tips</h3>
+    <div class="highlight-box">
+      <strong>How to Close the Deal</strong>
+      <p>Most sellers have no idea what they have. A Sony PVM listed as an "old computer screen" for $20 happens more often than you'd think. Conversely, some sellers have Googled "vintage Sony TV" and think their composite-only KV-27S42 is worth $500. Know your prices. Be friendly. Offer to pick up <strong>immediately</strong> — sellers love not having to hold things. And remember: most people just want these heavy things out of their house. That's your leverage.</p>
+    </div>
+
+    <div class="highlight-box fire">
+      <strong>Safety Warning</strong>
+      <p>CRT tubes hold up to <strong>30,000 volts</strong> even when unplugged — capacitors can retain lethal charge for weeks. <strong>Never open a CRT casing unless you are properly trained.</strong> Internal servicing should be left to qualified technicians. This is not a "watch a YouTube video" situation.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ SECTION 6: FOREVER SETUP ═══════════════════ -->
+  <section id="forever" class="reveal">
+    <div class="section-label">The Endgame</div>
+    <h2>The Forever Living Room Setup</h2>
+
+    <p>You've got a collection. Now you want <strong>the one</strong>. The set that stays in the living room forever. The conversation starter. The centerpiece.</p>
+
+    <h3>The Living Room Criteria</h3>
+    <p>A living room CRT needs more than image quality — it has to earn its space aesthetically too:</p>
+
+    <div class="chart-container">
+      <div class="chart-title">Forever Setup: What Matters Most</div>
+      <canvas id="radarChart" width="400" height="360" style="width:100%;max-width:400px;display:block;margin:0 auto;"></canvas>
+    </div>
+
+    <h3>Top 3 Forever Picks</h3>
+
+    <div class="highlight-box fire">
+      <strong>Option 1: Sony KV-36FV310</strong>
+      <p>The most practical "forever" CRT. 36" flat Trinitron, component inputs, that unique HVR for bloom-free performance, and it looks like a proper TV. The BA-5D chassis can be <strong>RGB-modded</strong> via OSD mux method for the absolute cleanest signal. Pair it with a good receiver and it handles everything from retro games to DVDs beautifully. Flat screen minimizes glare. Downside: you'll need help moving it. Once. $200–$500 on Marketplace.</p>
+    </div>
+
+    <div class="highlight-box fire">
+      <strong>Option 2: Bang & Olufsen BeoVision MX 7000</strong>
+      <p>If aesthetics matter as much as picture quality, nothing touches B&O. The motorized screen, the Scandinavian design, the built-in SCART/RGB. Your non-CRT friends will actually think this is cool instead of asking why you have a "giant old TV." Note: after 30+ years, the capacitors across its 8 circuit boards may need servicing. Factor in maintenance costs.</p>
+    </div>
+
+    <div class="highlight-box fire">
+      <strong>Option 3: The KV-25DXR on its Pedestal</strong>
+      <p>The listing you found — $800 for a complete KV-25DXR with control pedestal and side speakers — is a <strong>full system</strong>. That pedestal setup was Sony's premium living room package in 1985. 25" is small for a modern living room, but on its dedicated pedestal with flanking speakers, it has real presence. As a time-capsule conversation piece that also delivers genuinely excellent PVM-grade picture quality, this is hard to beat.</p>
+    </div>
+
+    <div class="highlight-box warning">
+      <strong>About That Listing...</strong>
+      <p>The seller says model number <strong>KV-25XBR</strong> but the photos clearly show the DXR with the Home Management Helper interface on screen. <strong>Clarify which model it actually is before buying.</strong> If it's truly the DXR with the Express Commander remote included, $800 is fair for a complete system with pedestal and speakers — these are genuinely rare. If it turns out to be the XBR (matching the stated model number), you could negotiate down since XBRs, while excellent, are less rare and lack the digital features.</p>
+    </div>
+
+    <h3>The Dream Stack</h3>
+    <p>For the truly committed — three CRTs, three purposes:</p>
+
+    <div class="signal-path" style="flex-wrap:wrap; gap:8px;">
+      <div class="signal-node" style="border-color:var(--accent); flex:1; min-width:140px;">
+        <strong>Living Room</strong>
+        <small>KV-36FV310 or B&O</small>
+      </div>
+      <span class="signal-arrow">+</span>
+      <div class="signal-node" style="flex:1; min-width:140px;">
+        <strong>Gaming Desk</strong>
+        <small>PVM-20M4U</small>
+      </div>
+      <span class="signal-arrow">+</span>
+      <div class="signal-node" style="flex:1; min-width:140px;">
+        <strong>Showpiece</strong>
+        <small>KV-25DXR w/ Pedestal</small>
+      </div>
+    </div>
+
+    <h3>Final Wisdom</h3>
+    <p>The "forever" CRT isn't about having the most expensive or highest-spec set. It's about finding the one that makes you <strong>want to sit down and watch something</strong> every time you walk past it. The warm glow of phosphors. The way motion looks absolutely liquid with zero input latency. The satisfying <em>thunk</em> of the degauss coil when you power on. That's the magic. That's why we do this.</p>
+    <p>Happy hunting.</p>
+  </section>
+
+</div>
+
+<footer class="footer">
+  CRT Deep Dive — Built with love for phosphor glow & analog warmth
+</footer>
+
+<!-- ═══════════════════ JAVASCRIPT ═══════════════════ -->
+<script>
+// ── Scroll Reveal ──
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ── Animated Bar Charts ──
+const barObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.bar-fill').forEach((bar, i) => {
+        setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, i * 80);
+      });
+      barObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.chart-container').forEach(c => barObserver.observe(c));
+
+// ── Phosphor Dot Canvas Demo ──
+(function() {
+  const canvas = document.getElementById('phosphorCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let mode = true; // true = aperture grille
+
+  function resize() {
+    const r = canvas.parentElement.getBoundingClientRect();
+    canvas.width = r.width * 2;
+    canvas.height = r.height * 2;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function drawAG(t) {
+    ctx.fillStyle = '#111';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const sw = 6, colors = ['#ff2020','#20ff20','#2040ff'];
+    for (let x = 0; x < canvas.width; x += sw * 3) {
+      for (let ci = 0; ci < 3; ci++) {
+        const sx = x + ci * sw;
+        ctx.globalAlpha = 0.5 + 0.3 * Math.sin(t * 0.002 + sx * 0.01);
+        ctx.fillStyle = colors[ci];
+        ctx.fillRect(sx, 0, sw - 1, canvas.height);
+      }
+    }
+    // Stabilization wires
+    ctx.globalAlpha = 0.35;
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, canvas.height * 0.33, canvas.width, 3);
+    ctx.fillRect(0, canvas.height * 0.66, canvas.width, 3);
+    ctx.globalAlpha = 1;
+  }
+
+  function drawSM(t) {
+    ctx.fillStyle = '#111';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const dr = 3, sp = 10, colors = ['#ff2020','#20ff20','#2040ff'];
+    for (let y = 0; y < canvas.height; y += sp) {
+      const off = (Math.floor(y / sp) % 2) * (sp / 2);
+      for (let x = 0; x < canvas.width; x += sp * 1.5) {
+        for (let ci = 0; ci < 3; ci++) {
+          const dx = x + off + ci * (dr * 2.5), dy = y;
+          ctx.globalAlpha = 0.4 + 0.3 * Math.sin(t * 0.002 + dx * 0.02 + dy * 0.02);
+          ctx.fillStyle = colors[ci];
+          ctx.beginPath();
+          ctx.arc(dx, dy, dr, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function loop(t) {
+    mode ? drawAG(t) : drawSM(t);
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  document.getElementById('phosphorDemo').addEventListener('click', () => {
+    mode = !mode;
+    document.querySelector('.phosphor-label').textContent = mode
+      ? 'Viewing: Aperture Grille (Trinitron) — Click for Shadow Mask'
+      : 'Viewing: Shadow Mask (dots) — Click for Aperture Grille';
+  });
+})();
+
+// ── Radar Chart ──
+(function() {
+  const canvas = document.getElementById('radarChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const cx = W / 2, cy = H / 2 + 15;
+  const R = Math.min(W, H) * 0.36;
+
+  const labels = ['Picture Quality','Aesthetics','Screen Size','Input Options','Wow Factor','Practicality'];
+  const sets = [
+    { name: 'KV-36FV310', color: 'rgba(196,32,32,1)', data: [0.95,0.7,0.95,0.88,0.78,0.85] },
+    { name: 'B&O MX 7000', color: 'rgba(255,149,0,1)', data: [0.85,0.98,0.78,0.82,0.95,0.55] },
+    { name: 'KV-25DXR', color: 'rgba(124,77,255,1)', data: [0.92,0.82,0.6,0.7,0.98,0.5] }
+  ];
+  const n = labels.length;
+  let progress = 0, started = false;
+
+  function angle(i) { return (Math.PI * 2 * i / n) - Math.PI / 2; }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    // Grid rings
+    for (let ring = 1; ring <= 5; ring++) {
+      const r = R * ring / 5;
+      ctx.beginPath();
+      for (let i = 0; i <= n; i++) {
+        const a = angle(i % n);
+        const x = cx + Math.cos(a) * r, y = cy + Math.sin(a) * r;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = '#E5E5E7';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+    // Spokes
+    for (let i = 0; i < n; i++) {
+      const a = angle(i);
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + Math.cos(a) * R, cy + Math.sin(a) * R);
+      ctx.strokeStyle = '#E5E5E7';
+      ctx.stroke();
+    }
+    // Labels
+    ctx.font = '600 11px Inter, sans-serif';
+    ctx.fillStyle = '#6E6E73';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    for (let i = 0; i < n; i++) {
+      const a = angle(i);
+      ctx.fillText(labels[i], cx + Math.cos(a) * (R + 30), cy + Math.sin(a) * (R + 30));
+    }
+    // Data
+    const p = Math.min(progress, 1);
+    sets.forEach(s => {
+      ctx.beginPath();
+      for (let i = 0; i <= n; i++) {
+        const a = angle(i % n), r = R * s.data[i % n] * p;
+        const x = cx + Math.cos(a) * r, y = cy + Math.sin(a) * r;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.fillStyle = s.color.replace(',1)', ',0.1)');
+      ctx.fill();
+      ctx.strokeStyle = s.color;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    });
+    // Legend
+    ctx.font = '600 10px Inter, sans-serif';
+    let lx = W / 2 - 130;
+    sets.forEach(s => {
+      ctx.fillStyle = s.color;
+      ctx.fillRect(lx, 12, 10, 10);
+      ctx.fillStyle = '#1D1D1F';
+      ctx.textAlign = 'left';
+      ctx.fillText(s.name, lx + 14, 21);
+      lx += 95;
+    });
+  }
+
+  const rObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !started) {
+        started = true;
+        (function anim() {
+          progress += 0.025;
+          draw();
+          if (progress < 1) requestAnimationFrame(anim);
+        })();
+      }
+    });
+  }, { threshold: 0.3 });
+  rObs.observe(canvas);
+  draw();
+})();
+
+// ── Price ticker auto-scroll ──
+(function() {
+  const ticker = document.getElementById('priceTicker');
+  if (!ticker) return;
+  let dir = 1, iv;
+
+  function start() {
+    iv = setInterval(() => {
+      ticker.scrollLeft += dir * 0.5;
+      if (ticker.scrollLeft >= ticker.scrollWidth - ticker.clientWidth) dir = -1;
+      if (ticker.scrollLeft <= 0) dir = 1;
+    }, 30);
+  }
+
+  const tObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { e.isIntersecting ? start() : clearInterval(iv); });
+  });
+  tObs.observe(ticker);
+
+  ticker.addEventListener('mouseenter', () => clearInterval(iv));
+  ticker.addEventListener('mouseleave', start);
+  ticker.addEventListener('touchstart', () => clearInterval(iv), { passive: true });
+  ticker.addEventListener('touchend', () => setTimeout(start, 2000));
+})();
+</script>
+
+</body>
+</html>
