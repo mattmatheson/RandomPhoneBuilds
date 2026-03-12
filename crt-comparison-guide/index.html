@@ -627,6 +627,16 @@
   }
 
   /* Listen Mode */
+  .listen-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 3;
+  }
+
   .listen-btn {
     display: inline-flex;
     align-items: center;
@@ -640,14 +650,43 @@
     font-size: 0.9rem;
     font-weight: 500;
     cursor: pointer;
-    margin-top: 1.25rem;
     transition: background 0.2s ease, transform 0.1s ease;
-    position: relative;
-    z-index: 3;
+    -webkit-tap-highlight-color: transparent;
   }
+
   .listen-btn:hover { background: #a01a1a; }
   .listen-btn:active { transform: scale(0.97); }
   .listen-btn.paused { background: var(--text-secondary); }
+
+  .voice-select {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 0.8rem;
+    padding: 0.45rem 0.75rem;
+    border: 1px solid var(--divider);
+    border-radius: 2rem;
+    background: #fff;
+    color: var(--text-primary);
+    cursor: pointer;
+    max-width: 180px;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .speed-btn {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--divider);
+    border-radius: 2rem;
+    background: #fff;
+    color: var(--text-secondary);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .speed-btn:active { background: var(--bg); }
+
   section.reading {
     border-left: 3px solid var(--accent);
     background: rgba(196, 32, 32, 0.04);
@@ -655,8 +694,11 @@
     border-radius: 4px;
     transition: all 0.3s ease;
   }
+
   @media (max-width: 480px) {
+    .listen-controls { flex-direction: column; align-items: stretch; }
     .listen-btn { width: 100%; justify-content: center; }
+    .voice-select { max-width: 100%; }
   }
 </style>
 </head>
@@ -669,7 +711,11 @@
     <div class="hero-badge">CRT Collector's Deep Dive</div>
     <h1>Trinitron <span>XBR</span> vs <span>DXR</span><br>& The Holy Grail Guide</h1>
     <p>Everything about Sony's legendary 25" Trinitrons, the CRTs worth hunting on Marketplace, and building the forever living room setup.</p>
-    <button class="listen-btn" id="listenBtn" aria-label="Listen to article">&#9654; Listen</button>
+    <div class="listen-controls">
+      <button class="listen-btn" id="listenBtn" aria-label="Listen to article">&#9654; Listen</button>
+      <select class="voice-select" id="voiceSelect" aria-label="Choose voice"></select>
+      <button class="speed-btn" id="speedBtn" aria-label="Playback speed">1x</button>
+    </div>
   </div>
 </div>
 
@@ -1520,34 +1566,85 @@ document.querySelectorAll('.chart-container').forEach(c => barObserver.observe(c
 
 <script>
 (function() {
-  const btn = document.getElementById('listenBtn');
+  var btn = document.getElementById('listenBtn');
+  var voiceSelect = document.getElementById('voiceSelect');
+  var speedBtn = document.getElementById('speedBtn');
   if (!btn || !('speechSynthesis' in window)) {
-    if (btn) btn.style.display = 'none';
+    if (btn) btn.parentElement.style.display = 'none';
     return;
   }
 
-  const synth = window.speechSynthesis;
-  const sections = Array.from(document.querySelectorAll('section'));
-  let currentIndex = -1;
-  let state = 'stopped';
-  let voice = null;
+  var synth = window.speechSynthesis;
+  var sections = Array.from(document.querySelectorAll('section'));
+  var currentIndex = -1;
+  var state = 'stopped';
+  var voice = null;
+  var speeds = [0.8, 1, 1.2, 1.5];
+  var speedLabels = ['0.8x', '1x', '1.2x', '1.5x'];
+  var speedIdx = 1;
 
-  function pickVoice() {
-    const voices = synth.getVoices();
-    voice = voices.find(v => /samantha|karen|daniel|english/i.test(v.name) && v.lang.startsWith('en'))
-         || voices.find(v => v.lang.startsWith('en') && v.localService)
-         || voices.find(v => v.lang.startsWith('en'))
-         || voices[0] || null;
+  // ── Voice ranking: prioritize premium iOS/macOS voices ──
+  function voiceScore(v) {
+    var name = v.name.toLowerCase();
+    if (/premium/.test(name)) return 100;
+    if (/siri/.test(name)) return 90;
+    if (/enhanced/.test(name)) return 80;
+    if (/\(natural\)/.test(name)) return 75;
+    // Good known voices
+    if (/zoe|ava|allison|tom|aaron|nicky|evan|joelle|fiona/.test(name)) return 60;
+    if (/samantha|karen|daniel|moira|tessa/.test(name)) return 50;
+    // Prefer local voices (higher quality than network on iOS)
+    if (v.localService) return 30;
+    return 10;
   }
 
-  pickVoice();
-  synth.addEventListener('voiceschanged', pickVoice);
+  function getEnglishVoices() {
+    return synth.getVoices()
+      .filter(function(v) { return v.lang && v.lang.startsWith('en'); })
+      .sort(function(a, b) { return voiceScore(b) - voiceScore(a); });
+  }
 
-  // Clear any queued speech from previous page visits
+  function populateVoiceList() {
+    var voices = getEnglishVoices();
+    if (!voices.length) return;
+    voiceSelect.innerHTML = '';
+    voices.forEach(function(v, i) {
+      var opt = document.createElement('option');
+      var label = v.name.replace(/Google |Microsoft |Apple /, '');
+      if (/premium/i.test(v.name)) label += ' *';
+      else if (/enhanced|siri/i.test(v.name)) label += ' +';
+      opt.textContent = label;
+      opt.value = i;
+      voiceSelect.appendChild(opt);
+    });
+    voice = voices[0];
+  }
+
+  populateVoiceList();
+  synth.addEventListener('voiceschanged', populateVoiceList);
   synth.cancel();
 
+  voiceSelect.addEventListener('change', function() {
+    var voices = getEnglishVoices();
+    voice = voices[parseInt(voiceSelect.value)] || voices[0];
+    // If currently playing, restart current section with new voice
+    if (state === 'playing') {
+      synth.cancel();
+      speakSection(currentIndex);
+    }
+  });
+
+  speedBtn.addEventListener('click', function() {
+    speedIdx = (speedIdx + 1) % speeds.length;
+    speedBtn.textContent = speedLabels[speedIdx];
+    if (state === 'playing') {
+      synth.cancel();
+      speakSection(currentIndex);
+    }
+  });
+
   function clearHighlight() {
-    sections.forEach(s => s.classList.remove('reading'));
+    sections.forEach(function(s) { s.classList.remove('reading'); });
   }
 
   function highlight(idx) {
@@ -1562,17 +1659,73 @@ document.querySelectorAll('.chart-container').forEach(c => barObserver.observe(c
     btn.innerHTML = icon + ' ' + label;
   }
 
+  // ── Break section into readable chunks for natural pacing ──
+  function getChunks(section) {
+    var chunks = [];
+    var els = section.querySelectorAll('h2, h3, h4, p, li, .callout p, .stat .label');
+    if (!els.length) {
+      // Fallback: just read all text
+      var t = section.textContent.trim();
+      if (t) chunks.push({ text: t, isHeading: false });
+      return chunks;
+    }
+    var seen = new Set();
+    els.forEach(function(el) {
+      var t = el.textContent.trim();
+      if (!t || seen.has(t)) return;
+      seen.add(t);
+      var tag = el.tagName.toLowerCase();
+      chunks.push({ text: t, isHeading: /^h[2-4]$/.test(tag) });
+    });
+    return chunks;
+  }
+
+  var currentChunks = [];
+  var currentChunkIdx = 0;
+
   function speakSection(idx) {
     if (idx >= sections.length) { stop(); return; }
     currentIndex = idx;
     highlight(idx);
-    const text = sections[idx].textContent.trim();
-    const utter = new SpeechSynthesisUtterance(text);
-    utter.rate = 1.0;
-    utter.pitch = 1.0;
+    currentChunks = getChunks(sections[idx]);
+    currentChunkIdx = 0;
+    speakNextChunk();
+  }
+
+  function speakNextChunk() {
+    if (currentChunkIdx >= currentChunks.length) {
+      // Done with this section — pause briefly, then next section
+      if (state === 'playing') {
+        setTimeout(function() {
+          if (state === 'playing') speakSection(currentIndex + 1);
+        }, 600);
+      }
+      return;
+    }
+
+    var chunk = currentChunks[currentChunkIdx];
+    var utter = new SpeechSynthesisUtterance(chunk.text);
+    utter.rate = speeds[speedIdx] * (chunk.isHeading ? 0.9 : 1.0);
+    utter.pitch = chunk.isHeading ? 1.05 : 1.0;
     if (voice) utter.voice = voice;
-    utter.onend = function() { if (state === 'playing') speakSection(idx + 1); };
-    utter.onerror = function(e) { if (e.error !== 'canceled') stop(); };
+
+    utter.onend = function() {
+      if (state !== 'playing') return;
+      currentChunkIdx++;
+      // Small pause between paragraphs
+      var delay = chunk.isHeading ? 400 : 200;
+      setTimeout(function() {
+        if (state === 'playing') speakNextChunk();
+      }, delay);
+    };
+
+    utter.onerror = function(e) {
+      if (e.error !== 'canceled') {
+        currentChunkIdx++;
+        if (state === 'playing') speakNextChunk();
+      }
+    };
+
     synth.cancel();
     synth.speak(utter);
   }
@@ -1602,6 +1755,8 @@ document.querySelectorAll('.chart-container').forEach(c => barObserver.observe(c
     state = 'stopped';
     synth.cancel();
     currentIndex = -1;
+    currentChunks = [];
+    currentChunkIdx = 0;
     clearHighlight();
     updateBtn('Listen', '&#9654;');
     btn.classList.remove('paused');
@@ -1617,17 +1772,20 @@ document.querySelectorAll('.chart-container').forEach(c => barObserver.observe(c
     if (document.hidden && state === 'playing') pause();
   });
 
-  let keepAlive;
-  const startKeepAlive = () => {
-    keepAlive = setInterval(() => {
+  // Chrome keep-alive workaround
+  var keepAlive;
+  var origPlay = play;
+  play = function() {
+    origPlay();
+    keepAlive = setInterval(function() {
       if (synth.speaking && !synth.paused) synth.resume();
     }, 10000);
   };
-  const stopKeepAlive = () => clearInterval(keepAlive);
-  const origPlay = play;
-  play = function() { origPlay(); startKeepAlive(); };
-  const origStop = stop;
-  stop = function() { stopKeepAlive(); origStop(); };
+  var origStop = stop;
+  stop = function() {
+    clearInterval(keepAlive);
+    origStop();
+  };
 })();
 </script>
 
