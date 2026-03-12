@@ -45,7 +45,9 @@ GitHub Pages deploys automatically — usually takes 30-60 seconds.
   - Responsive — must look good on phones
 - Keep HTML self-contained (inline styles, no build step)
 
-## Important
-- Always push to `main` branch — that's what GitHub Pages serves
+## CRITICAL — Branch Rules
+- **ALWAYS push directly to `main`.** Do NOT create feature branches, do NOT create `claude/` branches.
+- This is a simple static site — there is no PR workflow, no review process. Just commit and push to `main`.
+- `git push origin main` — every single time. If you push to any other branch, the site won't update and the link will be broken.
 - Do NOT edit the root `index.html` — it's dynamic and self-updating
 - Each project folder must have an `index.html` with a descriptive `<title>`
