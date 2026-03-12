@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Brewing Guide — Five Methods Compared</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+            background: #FAFAFA;
+            color: #1D1D1F;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .hero {
+            background: #1D1D1F;
+            color: #FAFAFA;
+            padding: 80px 24px 72px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            max-width: 680px;
+            margin: 0 auto 16px;
+        }
+
+        .hero h1 span {
+            color: #C42020;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #A1A1A6;
+            max-width: 520px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 56px 24px 80px;
+        }
+
+        .intro {
+            font-size: 1.15rem;
+            color: #6E6E73;
+            margin-bottom: 48px;
+            line-height: 1.8;
+            border-left: 3px solid #C42020;
+            padding-left: 20px;
+        }
+
+        .method {
+            margin-bottom: 48px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid #E5E5E7;
+        }
+
+        .method:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .method-header {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .method-number {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #C42020;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .method h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .method p {
+            color: #6E6E73;
+            margin-bottom: 16px;
+            font-size: 0.975rem;
+        }
+
+        .specs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .spec {
+            background: #F2F2F7;
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .spec-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #A1A1A6;
+            margin-bottom: 4px;
+        }
+
+        .spec-value {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1D1D1F;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #C42020;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .tag.mild { background: #34C759; }
+        .tag.medium { background: #FF9500; }
+        .tag.strong { background: #C42020; }
+
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            border-top: 1px solid #E5E5E7;
+            color: #A1A1A6;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 480px) {
+            .hero { padding: 56px 20px 48px; }
+            .container { padding: 40px 20px 60px; }
+            .specs { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="hero">
+    <h1>Five Ways to Brew <span>Better Coffee</span></h1>
+    <p>A quick-reference guide to the most popular manual brewing methods and what makes each one unique.</p>
+</header>
+
+<main class="container">
+    <p class="intro">
+        There's no single "best" way to brew coffee — it depends on what you're after. Here's a breakdown of five popular methods, how they work, and what kind of cup they produce.
+    </p>
+
+    <article class="method">
+        <div class="method-header">
+            <span class="method-number">01</span>
+            <h2>Pour Over</h2>
+            <span class="tag mild">Clean Cup</span>
+        </div>
+        <p>
+            The pour over is all about clarity. Hot water passes through a paper filter and a bed of ground coffee by gravity alone, producing a bright, nuanced cup that highlights origin flavors. It rewards patience and precision.
+        </p>
+        <p>
+            The ritual of a slow, circular pour is part of the appeal. Devices like the V60, Chemex, and Kalita Wave each produce slightly different results based on filter shape and flow rate.
+        </p>
+        <div class="specs">
+            <div class="spec">
+                <div class="spec-label">Brew Time</div>
+                <div class="spec-value">3–4 min</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Grind</div>
+                <div class="spec-value">Medium-Fine</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Ratio</div>
+                <div class="spec-value">1:16</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Difficulty</div>
+                <div class="spec-value">Moderate</div>
+            </div>
+        </div>
+    </article>
+
+    <article class="method">
+        <div class="method-header">
+            <span class="method-number">02</span>
+            <h2>French Press</h2>
+            <span class="tag medium">Full Body</span>
+        </div>
+        <p>
+            The French press is the no-fuss classic. Coarse grounds steep in hot water for four minutes, then a metal mesh plunger separates the brew. No paper filter means all the oils and fine particles end up in your cup.
+        </p>
+        <p>
+            The result is rich, heavy, and full-bodied — almost velvety. It's forgiving on technique and great for brewing multiple cups at once. Just don't let it sit on the grounds too long or it'll over-extract.
+        </p>
+        <div class="specs">
+            <div class="spec">
+                <div class="spec-label">Brew Time</div>
+                <div class="spec-value">4 min</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Grind</div>
+                <div class="spec-value">Coarse</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Ratio</div>
+                <div class="spec-value">1:15</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Difficulty</div>
+                <div class="spec-value">Easy</div>
+            </div>
+        </div>
+    </article>
+
+    <article class="method">
+        <div class="method-header">
+            <span class="method-number">03</span>
+            <h2>AeroPress</h2>
+            <span class="tag mild">Versatile</span>
+        </div>
+        <p>
+            The AeroPress is a cult favorite for good reason. It's a small plastic plunger that uses air pressure to push water through a compact puck of coffee. Portable, fast, and nearly impossible to break.
+        </p>
+        <p>
+            What makes it special is its versatility — you can brew something espresso-like or something closer to a pour over just by changing the grind, water temp, and steep time. There's even an annual championship dedicated to finding the best recipe.
+        </p>
+        <div class="specs">
+            <div class="spec">
+                <div class="spec-label">Brew Time</div>
+                <div class="spec-value">1–2 min</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Grind</div>
+                <div class="spec-value">Fine–Medium</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Ratio</div>
+                <div class="spec-value">1:12–1:16</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Difficulty</div>
+                <div class="spec-value">Easy</div>
+            </div>
+        </div>
+    </article>
+
+    <article class="method">
+        <div class="method-header">
+            <span class="method-number">04</span>
+            <h2>Moka Pot</h2>
+            <span class="tag strong">Intense</span>
+        </div>
+        <p>
+            The stovetop Moka pot brews by pushing steam-pressurized water up through finely ground coffee. It originated in Italy in the 1930s and remains a staple in European kitchens.
+        </p>
+        <p>
+            The result is a strong, concentrated brew — not true espresso, but closer to it than most home methods. It pairs beautifully with milk and makes a solid base for lattes or Americano-style drinks.
+        </p>
+        <div class="specs">
+            <div class="spec">
+                <div class="spec-label">Brew Time</div>
+                <div class="spec-value">4–5 min</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Grind</div>
+                <div class="spec-value">Fine</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Ratio</div>
+                <div class="spec-value">1:10</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Difficulty</div>
+                <div class="spec-value">Moderate</div>
+            </div>
+        </div>
+    </article>
+
+    <article class="method">
+        <div class="method-header">
+            <span class="method-number">05</span>
+            <h2>Cold Brew</h2>
+            <span class="tag medium">Smooth</span>
+        </div>
+        <p>
+            Cold brew takes the long road. Coarse grounds steep in cold or room-temp water for 12 to 24 hours, then the mixture is filtered. No heat means lower acidity and a naturally sweeter, smoother flavor profile.
+        </p>
+        <p>
+            The concentrate you get is strong — most people dilute it 1:1 with water or milk. It keeps in the fridge for up to two weeks, making it a great batch-prep option for iced coffee all week.
+        </p>
+        <div class="specs">
+            <div class="spec">
+                <div class="spec-label">Brew Time</div>
+                <div class="spec-value">12–24 hrs</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Grind</div>
+                <div class="spec-value">Extra Coarse</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Ratio</div>
+                <div class="spec-value">1:8</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Difficulty</div>
+                <div class="spec-value">Easy</div>
+            </div>
+        </div>
+    </article>
+</main>
+
+<footer>
+    <p>A sample deep dive document &middot; 2026</p>
+</footer>
+
+</body>
+</html>
