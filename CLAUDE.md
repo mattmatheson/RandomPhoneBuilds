@@ -45,6 +45,9 @@ GitHub Pages deploys automatically — usually takes 30-60 seconds.
   - Responsive — must look good on phones
 - Keep HTML self-contained (inline styles, no build step)
 
+## Formatting Rules
+- Never wrap URLs/links in bold (`**`). Just paste them plain. Matt hates bolded links.
+
 ## Branch Rules
 - Try `git push origin main` first.
 - If you get a 403 or can't push to main, push to a `claude/*` branch instead. **A GitHub Action will auto-merge it to main within ~30 seconds.** This is expected and normal — just tell Matt the link will be live in about a minute.
