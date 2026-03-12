@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flip — Sorry (2002): The Video That Changed Skateboarding</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --bg: #FAFAFA;
+    --card-bg: #FFFFFF;
+    --text-primary: #1D1D1F;
+    --text-secondary: #6E6E73;
+    --divider: #E5E5E7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    border-top: 3px solid var(--accent);
+    line-height: 1.7;
+    font-weight: 400;
+    font-size: 16px;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: clamp(2rem, 6vw, 6rem) clamp(1.5rem, 4vw, 2rem);
+  }
+
+  header {
+    margin-bottom: 3rem;
+    animation: fadeInUp 0.6s ease-out both;
+  }
+
+  header .date {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  header .scope {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  h2 {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+  }
+
+  h3 {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  p {
+    margin-bottom: 1.25rem;
+    font-weight: 300;
+  }
+
+  section {
+    padding: 4rem 0;
+    border-top: 1px solid var(--divider);
+  }
+
+  section:first-of-type {
+    border-top: none;
+    padding-top: 2rem;
+  }
+
+  nav.toc {
+    margin-bottom: 2rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--divider);
+    animation: fadeInUp 0.6s ease-out both;
+    animation-delay: 0.05s;
+  }
+
+  nav.toc a {
+    display: block;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    padding: 0.35rem 0;
+    transition: color 0.2s ease;
+  }
+
+  nav.toc a:hover { color: var(--accent); }
+
+  article {
+    margin-bottom: 2.5rem;
+  }
+
+  article:last-child {
+    margin-bottom: 0;
+  }
+
+  .stats-grid .stat-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 2rem;
+    margin: 2.5rem 0;
+  }
+
+  .stat-group .stat {
+    text-align: center;
+  }
+
+  .stat .number {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1.2;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  .stat .label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.35rem;
+    font-weight: 400;
+  }
+
+  .callout {
+    border-left: 3px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    background: rgba(196, 32, 32, 0.03);
+    border-radius: 0 8px 8px 0;
+  }
+
+  .callout p {
+    margin-bottom: 0;
+    font-weight: 400;
+    font-size: 0.95rem;
+  }
+
+  .callout p + p {
+    margin-top: 0.75rem;
+  }
+
+  /* Skater cards */
+  .skater-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .skater-card {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .skater-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+
+  .skater-card h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .skater-card .song {
+    font-size: 0.8rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+
+  .skater-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  /* Soundtrack table */
+  .soundtrack-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+  }
+
+  .soundtrack-table th {
+    text-align: left;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    font-weight: 500;
+    padding: 0.75rem 0;
+    border-bottom: 2px solid var(--divider);
+  }
+
+  .soundtrack-table td {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--divider);
+    font-weight: 300;
+    vertical-align: top;
+  }
+
+  .soundtrack-table td:first-child {
+    font-weight: 500;
+    color: var(--text-primary);
+    width: 35%;
+    padding-right: 1rem;
+  }
+
+  .soundtrack-table td:last-child {
+    color: var(--text-secondary);
+  }
+
+  .soundtrack-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* Timeline */
+  .timeline {
+    margin: 2rem 0;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--divider);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: 2rem;
+    padding-left: 1.5rem;
+  }
+
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -1.6rem;
+    top: 0.5rem;
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    border: 2px solid var(--bg);
+  }
+
+  .timeline-item .year {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-item p {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+    font-weight: 300;
+  }
+
+  .video-section {
+    margin: 2.5rem 0;
+  }
+
+  .video-card {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .video-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+
+  .video-card .video-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+  }
+
+  .video-card .video-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  .video-card .video-info {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .video-card .video-info h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+    letter-spacing: -0.01em;
+  }
+
+  .video-card .video-info p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+    font-weight: 300;
+  }
+
+  footer {
+    padding: 4rem 0 2rem;
+    border-top: 1px solid var(--divider);
+  }
+
+  footer ol {
+    padding-left: 1.5rem;
+  }
+
+  footer li {
+    margin-bottom: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  footer a {
+    color: var(--text-secondary);
+    text-decoration: underline;
+    text-decoration-color: rgba(110, 110, 115, 0.3);
+    transition: text-decoration-color 0.2s ease, color 0.2s ease;
+  }
+
+  footer a:hover {
+    color: var(--accent);
+    text-decoration-color: var(--accent);
+  }
+
+  .back-to-top {
+    display: block;
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 400;
+    transition: color 0.2s ease;
+  }
+
+  .back-to-top:hover { color: var(--accent); }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  section:nth-of-type(1) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.1s; }
+  section:nth-of-type(2) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.2s; }
+  section:nth-of-type(3) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.3s; }
+  section:nth-of-type(4) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.4s; }
+  section:nth-of-type(5) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.5s; }
+  section:nth-of-type(6) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.6s; }
+  section:nth-of-type(7) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.7s; }
+  section:nth-of-type(8) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.8s; }
+  footer { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.9s; }
+
+  @media print {
+    body { border-top: none; }
+    .back-to-top, .video-card .video-embed, nav.toc { display: none; }
+    section { break-inside: avoid; }
+  }
+
+  @media (max-width: 480px) {
+    .stats-grid .stat-group { grid-template-columns: repeat(2, 1fr); }
+    .soundtrack-table td:first-child { width: 40%; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header id="top">
+    <p class="date">March 2026 &middot; Skate Video Deep Dive</p>
+    <h1>Flip &mdash; <em>Sorry</em></h1>
+    <p class="scope">How an international crew of misfits, a punk rock frontman, and a French filmmaker made the most influential skate video of the early 2000s.</p>
+  </header>
+
+  <nav class="toc">
+    <a href="#overview">Overview</a>
+    <a href="#numbers">By the Numbers</a>
+    <a href="#crew">The Crew</a>
+    <a href="#skaters">The Parts</a>
+    <a href="#lyon">The Lyon 25</a>
+    <a href="#soundtrack">Full Soundtrack</a>
+    <a href="#legacy">Legacy &amp; the Sorry Trilogy</a>
+    <a href="#watch">Watch</a>
+    <a href="#sources">Sources</a>
+  </nav>
+
+  <section id="overview">
+    <h2>The Video That Changed Everything</h2>
+
+    <p>Released in 2002, <strong>Sorry</strong> was Flip Skateboards' first full-length video &mdash; and it landed like a bomb. Directed by Jeremy Fox and filmed primarily by Fred Mortagne (known universally as "French Fred"), the video was shot across the United States, Spain, France, and the United Kingdom over a period of roughly five years.</p>
+
+    <p>What set Sorry apart wasn't just the skating &mdash; though the skating was absurd. It was the personality. The entire 60-minute film was introduced and interlinked by <strong>John Lydon</strong>, a.k.a. Johnny Rotten of the Sex Pistols, who delivered deadpan commentary between parts. His most famous line about the team: <em>"As brilliant as they are on their skateboards, they're fucking idiots off them."</em></p>
+
+    <p>The video opened with Nancy Sinatra's "These Boots Are Made For Walking" and The Stooges' "I Wanna Be Your Dog" &mdash; immediately setting a tone that was equal parts irreverent and aggressive. Between the banter, the ridiculous quick scenes, and the gnarly skateboarding, Sorry's influence on the skate community was forever cemented.</p>
+
+    <div class="callout">
+      <p>Sorry "really changed what people thought was possible within skateboarding." The tricks done in this video still stand up to the standards of professional skateboarding today &mdash; over two decades later.</p>
+    </div>
+  </section>
+
+  <section id="numbers" class="stats-grid">
+    <h2>By the Numbers</h2>
+    <div class="stat-group">
+      <div class="stat">
+        <div class="number">2002</div>
+        <div class="label">Release Year</div>
+      </div>
+      <div class="stat">
+        <div class="number">60</div>
+        <div class="label">Minutes Runtime</div>
+      </div>
+      <div class="stat">
+        <div class="number">8</div>
+        <div class="label">Skaters Featured</div>
+      </div>
+      <div class="stat">
+        <div class="number">5</div>
+        <div class="label">Years Filming</div>
+      </div>
+    </div>
+    <p>The first trick filmed for Sorry was Geoff Rowley's lipslide down the double kink rail at Laguna &mdash; shot all the way back in 1997. The last trick filmed was Tom Penny's ledge line at Belmont in Long Beach, captured just days before the May 21, 2002 premiere. Five years of footage, distilled into one hour.</p>
+  </section>
+
+  <section id="crew">
+    <h2>Behind the Camera</h2>
+
+    <article>
+      <h3>Fred Mortagne &mdash; "French Fred"</h3>
+      <p>The primary filmmaker behind Sorry, French Fred's cinematography elevated skate video from shaky handheld footage to something approaching art. His use of long-lens filming, creative angles, and the iconic fisheye work became a signature of the Flip aesthetic. He traveled with the team across four countries to capture every part.</p>
+    </article>
+
+    <article>
+      <h3>Jeremy Fox</h3>
+      <p>Co-director alongside Fred Mortagne and Geoff Rowley, Fox handled much of the editing and post-production. The decision to bring in John Lydon as an on-camera host gave the video a narrative structure that most skate videos of the era completely lacked.</p>
+    </article>
+
+    <article>
+      <h3>John Lydon &mdash; Johnny Rotten</h3>
+      <p>The Sex Pistols frontman served as the video's unlikely narrator, appearing between parts to roast the skaters and introduce their sections. His punk credibility gave Sorry a cultural weight that extended beyond the skate world. It was a perfect match &mdash; Flip's aggressive, no-compromise skating paired with punk rock's most famous agitator.</p>
+    </article>
+  </section>
+
+  <section id="skaters">
+    <h2>The Parts</h2>
+    <p>Sorry featured eight full parts from Flip's international roster. Each skater brought a completely different style, making the video feel like a world tour of what skateboarding could be.</p>
+
+    <div class="skater-grid">
+
+      <div class="skater-card">
+        <h4>Mark Appleyard</h4>
+        <div class="song">Placebo &mdash; "Every You Every Me"</div>
+        <p>The Canadian tech wizard opens the individual parts. Appleyard's smooth, creative lines through street spots made Placebo's track inseparable from his skating &mdash; to this day, fans say they can't hear the song without picturing his part. He was 18 during filming and went on to win Thrasher's Skater of the Year in 2003, largely on the strength of his Sorry footage.</p>
+      </div>
+
+      <div class="skater-card">
+        <h4>Ali Boulala</h4>
+        <div class="song">Gray Matter &mdash; "Burn No Bridges"</div>
+        <p>The wild Swede. Boulala's part is pure chaos &mdash; equal parts incredible skating and absurd off-board antics. His hijinks, fearless stair attacks, and the legendary Lyon 25-stair ollie attempt became the most talked-about footage in the entire video. Every second is unpredictable.</p>
+      </div>
+
+      <div class="skater-card">
+        <h4>Alex Chalmers</h4>
+        <div class="song">Faction &mdash; "Let's Go Get Cokes"</div>
+        <p>The unsung ripper. Chalmers brought raw energy to a no-nonsense hardcore punk soundtrack. His part is fast, aggressive street skating that showed you didn't need to be the most famous name on the team to deliver one of the most watchable sections.</p>
+      </div>
+
+      <div class="skater-card">
+        <h4>Bastien Salabanzi</h4>
+        <div class="song">Mr. Dibbs &mdash; "Side A / Side B Excerpts"</div>
+        <p>The French prodigy. Salabanzi was already turning heads as a contest destroyer, and his Sorry part confirmed the hype. Technical precision mixed with power &mdash; his ability to combine flip tricks with massive gaps was ahead of its time.</p>
+      </div>
+
+      <div class="skater-card">
+        <h4>Geoff Rowley</h4>
+        <div class="song">Gray Matter &mdash; "I Am The Walrus"</div>
+        <p>The boss. As both a co-director and the team's spiritual leader, Rowley's part is pure commitment &mdash; huge drops, terrifying rails, and an intensity that defined what "gnarly" meant in early 2000s skating. His lipslide down the Laguna double kink rail was literally the first trick filmed for the entire video, back in 1997. Thrasher SOTY 2000.</p>
+      </div>
+
+      <div class="skater-card">
+        <h4>Rune Glifberg</h4>
+        <div class="song">The Prodigy &mdash; "Breathe"</div>
+        <p>The Danish transition king. Glifberg's park and pool footage set to The Prodigy was an adrenaline shot in the middle of a street-heavy video. His fluid, powerful style on vert and in bowls showed the range of Flip's team beyond pure street skating.</p>
+      </div>
+
+      <div class="skater-card">
+        <h4>Tom Penny</h4>
+        <div class="song">The Velvet Underground &mdash; "Venus in Furs"</div>
+        <p>The enigma. Penny is widely considered one of the most naturally talented skateboarders who ever lived, and his Sorry part &mdash; though not his longest &mdash; showed why. Effortless style, zero visible effort. His mini-ramp section set to &Eacute;dith Piaf's "La Vie En Rose" is one of the most memorable sequences in skate video history. His last trick was the final footage captured for the entire project.</p>
+      </div>
+
+      <div class="skater-card">
+        <h4>Arto Saari</h4>
+        <div class="song">David Bowie &mdash; "1984" / "Rock 'n' Roll Suicide"</div>
+        <p>The ender. Saari got the coveted last part &mdash; the exclamation point on the whole video. Set to David Bowie, his section is an onslaught of heavy street skating with a refined, almost photographic eye for spot selection. Coming off his 2001 Thrasher SOTY win, Saari delivered exactly what a closing part demands: something you can't follow.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="lyon">
+    <h2>The Lyon 25</h2>
+
+    <p>No discussion of Sorry is complete without the <strong>Lyon 25-stair set</strong> &mdash; a monstrous staircase in Lyon, France that became skateboarding's Everest.</p>
+
+    <p>Ali Boulala attempted to ollie the full 25 stairs on two separate occasions during filming for Sorry. On his first attempt, he actually landed on his board &mdash; but the deck <strong>exploded on impact</strong>. The sheer force of dropping that distance shattered the wood beneath his feet.</p>
+
+    <p>The second attempt was do-or-die. It was the last day he could try it &mdash; French Fred was leaving for the U.S. the next morning to begin editing the video. On the way to the spot, it started to drizzle. Boulala had to set up a fresh board and, feeling rushed by the weather closing in, went for it without properly warming up.</p>
+
+    <p>He landed on his board but couldn't stay on. Then he tried again &mdash; but the run-up was getting wet, his foot slipped while pushing at full speed, and he lost his balance at the point of no return.</p>
+
+    <div class="callout">
+      <p>The Lyon 25 wouldn't be successfully landed until 2015, when Jaws (Aaron Homoki) ollied it clean &mdash; thirteen years after Boulala's attempts. The staircase has since become one of the most famous spots in skateboarding history, with Boulala's Sorry footage as its origin story.</p>
+    </div>
+  </section>
+
+  <section id="soundtrack">
+    <h2>Full Soundtrack</h2>
+    <p>One of Sorry's most lasting contributions is its soundtrack. The song-to-part pairings became iconic, and a vinyl compilation was later released.</p>
+
+    <table class="soundtrack-table">
+      <thead>
+        <tr>
+          <th>Section</th>
+          <th>Song</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Intro</td><td>Nancy Sinatra &mdash; "These Boots Are Made For Walking"</td></tr>
+        <tr><td>Team Intro</td><td>The Stooges &mdash; "I Wanna Be Your Dog"</td></tr>
+        <tr><td>Mark Appleyard</td><td>Placebo &mdash; "Every You Every Me"</td></tr>
+        <tr><td>Ali Boulala</td><td>Gray Matter &mdash; "Burn No Bridges"</td></tr>
+        <tr><td>Alex Chalmers</td><td>Faction &mdash; "Let's Go Get Cokes"</td></tr>
+        <tr><td>Bastien Salabanzi</td><td>Mr. Dibbs &mdash; "Side A / Side B Excerpts"</td></tr>
+        <tr><td>Geoff Rowley</td><td>Gray Matter &mdash; "I Am The Walrus"</td></tr>
+        <tr><td>Rune Glifberg</td><td>The Prodigy &mdash; "Breathe"</td></tr>
+        <tr><td>Tom Penny (mini ramp)</td><td>&Eacute;dith Piaf &mdash; "La Vie En Rose"</td></tr>
+        <tr><td>Tom Penny (street)</td><td>The Velvet Underground &mdash; "Venus in Furs"</td></tr>
+        <tr><td>Arto Saari</td><td>David Bowie &mdash; "1984" / "Rock 'n' Roll Suicide"</td></tr>
+        <tr><td>Slow Motion</td><td>Lou Reed &mdash; "Perfect Day"</td></tr>
+        <tr><td>Credits</td><td>Connie Francis &mdash; "Who's Sorry Now"</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="legacy">
+    <h2>Legacy &amp; the Sorry Trilogy</h2>
+
+    <p>Sorry didn't just establish Flip as a video powerhouse &mdash; it redefined what a team video could be. The combination of international filming, A-list soundtrack curation, a punk rock narrator, and career-defining parts from every skater set a new bar that companies spent the rest of the decade trying to reach.</p>
+
+    <p>The video's success led to two sequels, forming the "Sorry Trilogy":</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="year">2002</div>
+        <p><strong>Sorry</strong> &mdash; The original. Directed by Jeremy Fox and Fred Mortagne. Premiered May 21, 2002. Instantly recognized as a classic.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">2003</div>
+        <p><strong>Really Sorry</strong> &mdash; The follow-up, produced by Ewan Bowman. Added PJ Ladd and Danny Cerezini to the roster. PJ Ladd's part in particular became one of the most rewatched sections in skate video history.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">2009</div>
+        <p><strong>Extremely Sorry</strong> &mdash; The trilogy closer. Introduced David Gonzalez (2012 SOTY) and Luan Oliveira to the Flip team. Filmed in HD, marking the transition to a new era of skate video production.</p>
+      </div>
+    </div>
+
+    <p>Five Flip team members &mdash; past and present &mdash; have won Thrasher's Skater of the Year award: Bob Burnquist (1997), Geoff Rowley (2000), Arto Saari (2001), Mark Appleyard (2003), and David Gonz&aacute;lez (2012). The Sorry era alone produced three consecutive winners.</p>
+
+    <div class="callout">
+      <p>Sorry is regularly cited alongside videos like Girl's <em>Yeah Right!</em> (2003) and &eacute;S' <em>Menikmati</em> (2000) as one of the defining skate videos of the early 2000s golden age. Some fans on Letterboxd have called it "probably the most influential skate video of all time."</p>
+    </div>
+  </section>
+
+  <section id="watch">
+    <h2>Watch</h2>
+    <p>The full video and individual parts are available to watch online.</p>
+
+    <div class="video-section">
+      <div class="video-card">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/HKIhE5SS3qs" title="Flip - Sorry (2002) Full Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <h4>Flip &mdash; Sorry (2002) &mdash; Full Video</h4>
+          <p>The complete 60-minute video featuring all parts, John Lydon intros, and bonus footage.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li>Flip Skateboards &mdash; <em>Sorry</em> (2002). Full video listing and part breakdown. <a href="https://www.skatevideosite.com/videos/flip-sorry" target="_blank" rel="noopener">skatevideosite.com</a></li>
+      <li>Flip Skateboards &mdash; Wikipedia. Team history and SOTY winners. <a href="https://en.wikipedia.org/wiki/Flip_Skateboards" target="_blank" rel="noopener">wikipedia.org</a></li>
+      <li>Skate Sonr &mdash; <em>Sorry</em> by Flip Skateboards. Video details and cultural context. <a href="https://skatesonr.com/films/s/sorry-1/" target="_blank" rel="noopener">skatesonr.com</a></li>
+      <li>Shop of Skatan &mdash; <em>Flip - Sorry (2002 Skate Video)</em>. Behind-the-scenes details and analysis. <a href="https://www.shopofskatan.com/blogs/skate-videos/flip-sorry-skate-video" target="_blank" rel="noopener">shopofskatan.com</a></li>
+      <li>Ali Boulala &mdash; Wikipedia. Lyon 25-stair attempt details. <a href="https://en.wikipedia.org/wiki/Ali_Boulala" target="_blank" rel="noopener">wikipedia.org</a></li>
+      <li>Furtivo Skateboarding &mdash; <em>20 Years of "Sorry"</em>. Retrospective and legacy analysis. <a href="https://furtivoskateboarding.com/blogs/news/20-years-of-sorry" target="_blank" rel="noopener">furtivoskateboarding.com</a></li>
+      <li>Skately &mdash; <em>Flip Skateboards - Sorry (2002) Soundtrack</em>. Complete soundtrack listing. <a href="http://skately.com/library/soundtracks/flip-skateboards-sorry" target="_blank" rel="noopener">skately.com</a></li>
+      <li>JohnLydon.com &mdash; <em>Flip: Sorry (2002)</em>. John Lydon's involvement details. <a href="https://www.johnlydon.com/project/flip-sorry-2002/" target="_blank" rel="noopener">johnlydon.com</a></li>
+    </ol>
+  </footer>
+
+  <a href="#top" class="back-to-top">&uarr; Back to Top</a>
+
+</div>
+</body>
+</html>
