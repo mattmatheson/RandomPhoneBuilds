@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foundation — That's Life: A Skateboarding Video Retrospective</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --bg: #FAFAFA;
+    --text-primary: #1D1D1F;
+    --text-secondary: #6E6E73;
+    --divider: #E5E5E7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    border-top: 3px solid var(--accent);
+    line-height: 1.7;
+    font-weight: 400;
+    font-size: 16px;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: clamp(2rem, 6vw, 6rem) clamp(1.5rem, 4vw, 2rem);
+  }
+
+  header {
+    margin-bottom: 3rem;
+    animation: fadeInUp 0.6s ease-out both;
+  }
+
+  header .date {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  header .scope {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  h2 {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+  }
+
+  h3 {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  p {
+    margin-bottom: 1.25rem;
+    font-weight: 300;
+  }
+
+  section {
+    padding: 4rem 0;
+    border-top: 1px solid var(--divider);
+  }
+
+  section:first-of-type {
+    border-top: none;
+    padding-top: 2rem;
+  }
+
+  nav.toc {
+    margin-bottom: 2rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--divider);
+    animation: fadeInUp 0.6s ease-out both;
+    animation-delay: 0.05s;
+  }
+
+  nav.toc a {
+    display: block;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    padding: 0.35rem 0;
+    transition: color 0.2s ease;
+  }
+
+  nav.toc a:hover {
+    color: var(--accent);
+  }
+
+  article {
+    margin-bottom: 2.5rem;
+  }
+
+  article:last-child {
+    margin-bottom: 0;
+  }
+
+  .stats-grid .stat-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+    margin: 2.5rem 0;
+  }
+
+  .stat-group .stat {
+    text-align: center;
+  }
+
+  .stat .number {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1.2;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  .stat .label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.35rem;
+    font-weight: 400;
+  }
+
+  .callout {
+    border-left: 3px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    background: rgba(196, 32, 32, 0.03);
+    border-radius: 0 8px 8px 0;
+  }
+
+  .callout p {
+    margin-bottom: 0;
+    font-weight: 400;
+    font-size: 0.95rem;
+  }
+
+  .rider-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .rider-card {
+    background: #fff;
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .rider-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+
+  .rider-card h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .rider-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .rider-card .rider-role {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline {
+    position: relative;
+    margin: 2.5rem 0;
+    padding-left: 2rem;
+    border-left: 2px solid var(--divider);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+
+  .timeline-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2rem;
+    top: 0.35rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    transform: translateX(-4px);
+  }
+
+  .timeline-item .year {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-item h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+  }
+
+  .timeline-item p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+  }
+
+  .pull-quote {
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: var(--text-primary);
+    line-height: 1.5;
+    margin: 2.5rem 0;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+    text-align: center;
+    font-style: italic;
+  }
+
+  .pull-quote span {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-style: normal;
+    margin-top: 0.75rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .trick-list {
+    list-style: none;
+    margin: 1.5rem 0;
+  }
+
+  .trick-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--divider);
+    font-weight: 300;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  .trick-list li:last-child {
+    border-bottom: none;
+  }
+
+  .trick-list .trick-marker {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+
+  footer {
+    padding: 4rem 0 2rem;
+    border-top: 1px solid var(--divider);
+  }
+
+  footer p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .back-to-top {
+    display: block;
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 400;
+    transition: color 0.2s ease;
+  }
+
+  .back-to-top:hover {
+    color: var(--accent);
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  section:nth-of-type(1) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.1s; }
+  section:nth-of-type(2) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.2s; }
+  section:nth-of-type(3) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.3s; }
+  section:nth-of-type(4) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.4s; }
+  section:nth-of-type(5) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.5s; }
+  section:nth-of-type(6) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.6s; }
+  section:nth-of-type(7) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.7s; }
+  footer { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.8s; }
+
+  @media print {
+    body { border-top: none; }
+    .back-to-top, nav.toc { display: none; }
+    section { break-inside: avoid; }
+  }
+
+  @media (max-width: 480px) {
+    .rider-grid { grid-template-columns: 1fr; }
+    .stats-grid .stat-group { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header id="top">
+    <p class="date">2004 &middot; Foundation Skateboards</p>
+    <h1>That's Life</h1>
+    <p class="scope">A look back at Foundation Skateboards' landmark video — a raw, punk-fueled full-length that captured the chaotic energy of early 2000s skateboarding and launched one of the most unhinged careers the sport has ever seen.</p>
+  </header>
+
+  <nav class="toc">
+    <a href="#overview">The Video</a>
+    <a href="#foundation">Foundation Skateboards &amp; Tod Swank</a>
+    <a href="#riders">The Riders</a>
+    <a href="#duffel">The Corey Duffel Part</a>
+    <a href="#style">The Aesthetic</a>
+    <a href="#legacy">Why It Still Matters</a>
+    <a href="#foundation-timeline">Foundation Video Timeline</a>
+  </nav>
+
+  <section id="overview">
+    <h2>The Video</h2>
+
+    <article>
+      <p>"That's Life" dropped in 2004, and it landed like a Molotov cocktail on the front porch of polished skate media. While other companies were chasing cinematic production values and pristine HD footage, Foundation put out a video that felt like it was filmed in the back of a van that smelled like cigarettes and warm beer. And that was entirely the point.</p>
+      <p>Directed and produced by Tod Swank — Foundation's founder and the quiet architect behind decades of skateboarding's weirdest and most authentic moments — "That's Life" was a full-length team video that showcased Foundation's roster at a moment when the company was hitting a creative stride. The skating was gnarly, the editing was fast, and the whole thing had an energy that felt genuinely dangerous.</p>
+    </article>
+
+    <div class="callout">
+      <p>Foundation never tried to be the biggest company. They tried to be the realest. "That's Life" is what happens when a brand that doesn't care about marketability just points a camera at its team and lets the chaos speak for itself.</p>
+    </div>
+  </section>
+
+  <section id="foundation">
+    <h2>Foundation Skateboards &amp; Tod Swank</h2>
+
+    <article>
+      <h3>The Company</h3>
+      <p>Foundation Skateboards was started by Tod Swank in 1989. Swank had been a pro skater himself — riding for companies like Vision and SMA in the 1980s — and transitioned into the business side with a specific vision: build a company that prioritized the weird, the raw, and the unpolished. Foundation was never about the most technically gifted skaters or the cleanest video parts. It was about personality, creativity, and an attitude that said "we don't care if you like us."</p>
+      <p>The company operated under the Tum Yeto distribution umbrella alongside Toy Machine, Pig Wheels, Dekline Footwear, and others — a constellation of brands that shared a warehouse, a punk rock ethos, and a general disregard for corporate skateboarding.</p>
+    </article>
+
+    <article>
+      <h3>Tod Swank</h3>
+      <p>Swank is one of skateboarding's most important behind-the-scenes figures. As a filmer, editor, team manager, and company owner, he shaped the careers of dozens of skaters while maintaining an almost stubborn commitment to keeping things raw. He filmed on Hi8 and MiniDV when others were upgrading to HD. He edited with a style that favored energy over polish. He picked riders based on personality as much as skill. The result was a catalog of videos that feel more like punk zines than corporate product — and "That's Life" is arguably the peak of that philosophy.</p>
+    </article>
+  </section>
+
+  <section id="riders">
+    <h2>The Riders</h2>
+    <p>The "That's Life" roster was a mix of established Foundation veterans and newer additions who were about to blow up. The team at the time included a crew of skaters who all shared that Foundation DNA — a willingness to throw themselves down things that most people would walk away from.</p>
+
+    <div class="rider-grid">
+      <div class="rider-card">
+        <div class="rider-role">Breakout Part</div>
+        <h4>Corey Duffel</h4>
+        <p>The teenager who stole the entire video. Reckless speed, massive gaps, and a style that looked like he was actively trying to destroy himself. Instantly iconic.</p>
+      </div>
+      <div class="rider-card">
+        <div class="rider-role">Team Veteran</div>
+        <h4>Josh Harmony</h4>
+        <p>Consistent, technical, and always solid. A reliable presence who balanced the team's more chaotic tendencies with clean, well-rounded skating.</p>
+      </div>
+      <div class="rider-card">
+        <div class="rider-role">Team Rider</div>
+        <h4>Nick Merlino</h4>
+        <p>Raw street skating with a loose, flowing style. Merlino brought a natural, unfussy approach that fit the Foundation ethos perfectly.</p>
+      </div>
+      <div class="rider-card">
+        <div class="rider-role">Team Rider</div>
+        <h4>Jimmy Carlin</h4>
+        <p>Another rider who embodied Foundation's go-for-broke mentality. Carlin was never afraid to commit to sketchy spots and questionable run-ups.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="duffel" class="stats-grid">
+    <h2>The Corey Duffel Part</h2>
+
+    <p>If "That's Life" is remembered for one thing, it's Corey Duffel's part. Duffel was a teenager when the video came out, and his section immediately became one of the most talked-about video parts of the year. It wasn't just the tricks — it was the sheer velocity and apparent disregard for personal safety that made people rewind the tape.</p>
+
+    <div class="stat-group">
+      <div class="stat">
+        <div class="number">17</div>
+        <div class="label">Years Old</div>
+      </div>
+      <div class="stat">
+        <div class="number">100%</div>
+        <div class="label">Commitment Level</div>
+      </div>
+      <div class="stat">
+        <div class="number">0</div>
+        <div class="label">Self-Preservation</div>
+      </div>
+    </div>
+
+    <article>
+      <h3>Speed as a Weapon</h3>
+      <p>Duffel's defining characteristic was speed. While most street skaters approach obstacles with measured, controlled pushes, Duffel looked like he was fleeing something. He bombed into gaps and stair sets with a full-sprint approach that added a visceral, almost nauseating intensity to every trick. The speed wasn't reckless for its own sake — it was how he generated the pop and distance for the massive gaps he was clearing. But it made every clip feel like it could end in catastrophe.</p>
+    </article>
+
+    <article>
+      <h3>The Music</h3>
+      <p>Duffel's part was set to AFI — fitting for a skater who looked like he'd walked straight out of a horror-punk show. With his long black hair, skeletal frame, and all-black wardrobe, Duffel's aesthetic matched the music perfectly. It wasn't just a soundtrack choice; it was world-building. The part felt like a complete artistic statement, with the dark, driving music amplifying the intensity of the skating.</p>
+    </article>
+
+    <div class="pull-quote">
+      He skated like every trick might be his last — and watching it, you believed him.
+      <span>On Corey Duffel's part</span>
+    </div>
+
+    <article>
+      <h3>Signature Moments</h3>
+      <ul class="trick-list">
+        <li><span class="trick-marker">01</span>Massive ollie gaps cleared at full speed with zero hesitation — the kind of distances that made you question the laws of physics and his sanity</li>
+        <li><span class="trick-marker">02</span>Kickflips and heelflips down large stair sets, always approached with that trademark sprinting run-up</li>
+        <li><span class="trick-marker">03</span>Boardslides and 50-50s on rails and ledges that most skaters would look at and keep walking</li>
+        <li><span class="trick-marker">04</span>Slam sequences that showed just how many times he had to eat concrete to land the final makes — Foundation never edited out the carnage</li>
+      </ul>
+    </article>
+  </section>
+
+  <section id="style">
+    <h2>The Aesthetic</h2>
+
+    <article>
+      <h3>Filming &amp; Editing</h3>
+      <p>Tod Swank's approach to filming and editing was the anti-thesis of what mainstream skate videos were becoming in the mid-2000s. While companies like Girl and Transworld were pushing toward cinematic production — dolly shots, color grading, elaborate B-roll — Foundation stuck with a raw, handheld, VX1000-era feel. The fisheye lens was front and center. The long-lens angles were functional, not artistic. The editing was fast and punchy, matching the energy of the skating rather than trying to aestheticize it.</p>
+      <p>There were no luxury hotel montages. No trips to Barcelona with first-class flights. Foundation's skaters were filmed at crusty spots in industrial parks, cracked schoolyard lots, and whatever downtown ledge hadn't been skate-stopped yet. The locations matched the energy: rough, unglamorous, and real.</p>
+    </article>
+
+    <article>
+      <h3>The Soundtrack</h3>
+      <p>"That's Life" was wall-to-wall punk, metal, and hardcore. The music choices were aggressive and fast — perfectly synced to the pace of the skating. This wasn't a video where you'd hear indie folk or jazz over a tech ledge part. Every song selection reinforced the identity: Foundation is loud, Foundation is fast, Foundation doesn't care if you think it's too much.</p>
+    </article>
+
+    <article>
+      <h3>The Foundation Identity</h3>
+      <p>By 2004, Foundation had carved out a niche that no other company really occupied. They weren't the tech brand (that was Girl/Chocolate). They weren't the art brand (that was Alien Workshop). They weren't the party brand (that was Baker). Foundation was the weird-punk-DIY brand — the company for skaters who were too strange for the mainstream but too committed to be dismissed. "That's Life" was the purest expression of that identity put to tape.</p>
+    </article>
+  </section>
+
+  <section id="legacy">
+    <h2>Why It Still Matters</h2>
+
+    <article>
+      <h3>Corey Duffel's Career</h3>
+      <p>Duffel's part in "That's Life" launched him into immediate prominence. He went on to have a long career in professional skateboarding, riding for Foundation for years and becoming one of the brand's most recognizable figures. His skating evolved — he became more technical over time, added transition skating to his repertoire, and continued pushing himself into progressively gnarlier terrain. But it all started here, with a teenager bombing full-speed into stair sets while AFI screamed in the background.</p>
+      <p>Duffel also became known for his resilience. He suffered serious injuries throughout his career — including a devastating car accident that many thought would end his skating — but kept coming back. That refusal to quit was already visible in "That's Life," in every slam clip that preceded a make.</p>
+    </article>
+
+    <article>
+      <h3>The Video's Influence</h3>
+      <p>"That's Life" demonstrated that you didn't need a massive budget to make a skate video that people would remember. In an era when the industry was trending toward expensive, highly-produced full-lengths, Foundation proved that energy, personality, and raw skating could carry a video further than production value alone. It was a reminder that skateboarding's power comes from the streets, not the edit suite.</p>
+      <p>The video also reinforced Foundation's position as a feeder system for skating culture — a brand that found interesting people, gave them boards, pointed a camera at them, and let the results speak for themselves. That model influenced how smaller brands approached team-building and video production for years afterward.</p>
+    </article>
+
+    <article>
+      <h3>The Tum Yeto Ecosystem</h3>
+      <p>Foundation didn't exist in a vacuum. As part of the Tum Yeto family — alongside Ed Templeton's Toy Machine, another brand famous for raw, personality-driven videos — the company was part of a distribution network that proved independent skateboarding could sustain itself without corporate backing. "That's Life" was a product of that ecosystem: modest budget, total creative freedom, no marketing department telling anyone to tone it down.</p>
+    </article>
+  </section>
+
+  <section id="foundation-timeline">
+    <h2>Foundation Video Timeline</h2>
+    <p>Foundation's video catalog is a roadmap of the brand's evolution — from early skate-and-destroy VHS tapes to the polished-but-still-punk DVDs of the 2000s.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="year">1990</div>
+        <h4>Duty Now for the Future</h4>
+        <p>Foundation's debut video. Set the tone for everything that followed — raw, fast, and unapologetically weird.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">1993</div>
+        <h4>Super Conductor</h4>
+        <p>Early 90s Foundation at its finest. The roster was shifting, the skating was getting gnarlier, and Swank's editing style was sharpening.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">2004</div>
+        <h4>That's Life</h4>
+        <p>The one you're reading about. Peak Foundation. Duffel's breakout. Punk rock energy from first frame to last.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">2009</div>
+        <h4>Cataclysmic Abyss</h4>
+        <p>A follow-up that proved Foundation still had it. The team had evolved but the DNA was intact — raw, weird, and fully committed.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <h2>About This Page</h2>
+    <p>This retrospective is written from general knowledge and appreciation of skateboarding video history. Foundation Skateboards continues to operate under the Tum Yeto umbrella. Tod Swank continues to be one of skateboarding's most important behind-the-scenes figures. Corey Duffel is still skating. "That's Life" is still worth watching front to back.</p>
+  </footer>
+
+  <a href="#top" class="back-to-top">&uarr; Back to Top</a>
+
+</div>
+</body>
+</html>
