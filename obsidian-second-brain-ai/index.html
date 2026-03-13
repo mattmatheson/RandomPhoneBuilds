@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obsidian as a Second Brain for AI Agents — Complete Setup Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #C42020;
+            --bg: #FAFAFA;
+            --text: #1D1D1F;
+            --text2: #6E6E73;
+            --border: #E5E5E7;
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .hero {
+            background: var(--text);
+            color: var(--bg);
+            padding: 80px 24px 72px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            max-width: 720px;
+            margin: 0 auto 16px;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .scope {
+            font-size: 1.1rem;
+            color: #A1A1A6;
+            max-width: 560px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        .listen-controls {
+            margin-top: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .listen-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.6rem 1.5rem;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .listen-btn:hover { opacity: 0.85; }
+
+        .voice-select {
+            background: rgba(255,255,255,0.1);
+            color: #A1A1A6;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 2rem;
+            padding: 0.5rem 1rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .voice-select option { background: #1D1D1F; color: #FAFAFA; }
+
+        .speed-btn {
+            background: rgba(255,255,255,0.1);
+            color: #A1A1A6;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 2rem;
+            padding: 0.5rem 1rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .pro-tip {
+            font-size: 0.8rem;
+            color: #6E6E73;
+            max-width: 480px;
+            margin: 16px auto 0;
+            line-height: 1.5;
+        }
+
+        .pro-tip a {
+            color: #A1A1A6;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 56px 24px 80px;
+        }
+
+        .intro {
+            font-size: 1.15rem;
+            color: var(--text2);
+            margin-bottom: 48px;
+            line-height: 1.8;
+            border-left: 3px solid var(--accent);
+            padding-left: 20px;
+        }
+
+        section {
+            margin-bottom: 48px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        section.reading {
+            border-left: 3px solid var(--accent);
+            background: rgba(196, 32, 32, 0.04);
+            padding-left: 1rem;
+            border-radius: 4px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        h2 .num {
+            color: var(--accent);
+            margin-right: 4px;
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-top: 28px;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: var(--text2);
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        ul, ol {
+            margin-bottom: 16px;
+            padding-left: 24px;
+            color: var(--text2);
+        }
+
+        li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        li strong {
+            color: var(--text);
+        }
+
+        .card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+        }
+
+        .card h4 {
+            margin-top: 0;
+            color: var(--text);
+        }
+
+        .card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .verdict {
+            background: var(--text);
+            color: var(--bg);
+            border-radius: 12px;
+            padding: 24px 28px;
+            margin-top: 20px;
+            margin-bottom: 16px;
+        }
+
+        .verdict p {
+            color: #A1A1A6;
+            margin-bottom: 0;
+        }
+
+        .verdict strong {
+            color: var(--bg);
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 520px) {
+            .pros-cons { grid-template-columns: 1fr; }
+            .listen-controls { flex-direction: column; }
+            .listen-btn { width: 100%; }
+        }
+
+        .pros-cons .pro, .pros-cons .con {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            font-size: 0.9rem;
+        }
+
+        .pros-cons .pro::before { content: "+ "; color: #34C759; font-weight: 700; }
+        .pros-cons .con::before { content: "- "; color: var(--accent); font-weight: 700; }
+
+        code, .code {
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+            background: #F0F0F2;
+            padding: 2px 7px;
+            border-radius: 5px;
+            font-size: 0.88em;
+            color: var(--text);
+        }
+
+        pre {
+            background: var(--text);
+            color: #E5E5E7;
+            border-radius: 12px;
+            padding: 20px 24px;
+            overflow-x: auto;
+            margin-bottom: 16px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover { text-decoration: underline; }
+
+        .tag {
+            display: inline-block;
+            background: rgba(196, 32, 32, 0.08);
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 2rem;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+            font-size: 0.9rem;
+        }
+
+        th {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 2px solid var(--border);
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text2);
+        }
+
+        /* Sticky player bar */
+        .player-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(30, 30, 30, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 20px;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #FAFAFA;
+            font-size: 0.85rem;
+        }
+
+        .player-bar.visible {
+            transform: translateY(0);
+        }
+
+        .player-bar button {
+            background: none;
+            border: none;
+            color: #FAFAFA;
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .player-bar button:hover { background: rgba(255,255,255,0.1); }
+
+        .player-bar .current-section {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #A1A1A6;
+            font-size: 0.8rem;
+        }
+
+        .player-bar .bar-voice-select {
+            background: rgba(255,255,255,0.1);
+            color: #A1A1A6;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-family: inherit;
+            font-size: 0.75rem;
+        }
+
+        .player-bar .bar-voice-select option { background: #1D1D1F; color: #FAFAFA; }
+
+        .player-bar .bar-speed {
+            background: rgba(255,255,255,0.1);
+            color: #A1A1A6;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Obsidian as a <span>Second Brain</span> for AI Agents</h1>
+        <p class="scope">Complete research guide covering frameworks, AI integration workflows, plugins, capture systems, templates, and common pitfalls. Updated March 2026.</p>
+
+        <div class="listen-controls">
+            <button class="listen-btn" id="listenBtn">Listen</button>
+            <select class="voice-select" id="voiceSelect"></select>
+            <button class="speed-btn" id="speedBtn">1x</button>
+        </div>
+        <p class="pro-tip"><em>Pro tip: For a better voice, tap <a id="selectAllBtn">select all</a> below then use iOS Speak Selection (Settings > Accessibility > Spoken Content > Speak Selection).</em></p>
+    </div>
+
+    <div class="container" id="mainContent">
+
+        <p class="intro">The idea is simple: your Obsidian vault becomes a persistent knowledge base that AI agents (Claude Code, ChatGPT, Gemini CLI) can read, search, write to, and reason over. Instead of starting every AI conversation from scratch, you give it access to everything you've ever captured. This guide covers how to set that up well.</p>
+
+        <!-- Section 1: Frameworks -->
+        <section id="s1">
+            <p class="section-label">Part 1</p>
+            <h2><span class="num">01</span> Second Brain Frameworks</h2>
+            <p>There are four major organizational frameworks people use in Obsidian. The consensus in 2025-2026 is that a hybrid approach works best, not picking one system rigidly.</p>
+
+            <h3>PARA Method (Tiago Forte)</h3>
+            <p>Organizes everything into four top-level folders: Projects (active, with deadlines), Areas (ongoing responsibilities), Resources (reference material by topic), and Archive (inactive stuff). It is action-oriented and beginner-friendly.</p>
+            <div class="pros-cons">
+                <div class="pro">Intuitive folder structure, easy to start</div>
+                <div class="pro">Great for managing active work and projects</div>
+                <div class="con">Can become folder-heavy if over-applied</div>
+                <div class="con">Weak at capturing deep knowledge connections</div>
+            </div>
+
+            <h3>Zettelkasten (Niklas Luhmann)</h3>
+            <p>Atomic notes with unique IDs (like <code>202603131430</code>) connected via links. Every note captures one idea. Non-hierarchical by design. The power comes from linking ideas across domains, which is exactly what makes it good for AI retrieval.</p>
+            <div class="pros-cons">
+                <div class="pro">Excellent for building deep, interconnected knowledge</div>
+                <div class="pro">AI loves atomic notes: easier to embed, search, and retrieve</div>
+                <div class="con">Steeper learning curve, can feel disorienting at first</div>
+                <div class="con">Maintenance overhead grows with vault size</div>
+            </div>
+
+            <h3>Maps of Content (MOCs)</h3>
+            <p>A MOC is simply a note that serves as a curated index or entry point to a cluster of related ideas. Think of it as a dynamic table of contents that you build bottom-up as your vault grows. Created by Nick Milo (Linking Your Thinking). You do not need MOCs when your vault is small, but they become essential once you pass a few hundred notes.</p>
+            <div class="pros-cons">
+                <div class="pro">Flexible, emergent structure that grows with you</div>
+                <div class="pro">Great navigation layer for both humans and AI</div>
+                <div class="con">Requires active curation to keep useful</div>
+                <div class="con">Can overlap confusingly with folders if not intentional</div>
+            </div>
+
+            <h3>Johnny Decimal</h3>
+            <p>A strict numbering system (10-19 for Finance, 20-29 for Projects, etc.) that works well for file systems and reference-heavy vaults. Less popular in Obsidian because it fights against the link-first philosophy, but useful as a mental model for your top-level folder structure.</p>
+
+            <div class="verdict">
+                <p><strong>Recommendation:</strong> Use PARA as your top-level folder structure (it gives notes an obvious home) combined with Zettelkasten-style atomic linking within those folders. Add MOCs as your vault grows past 200+ notes. This is the "dual-engine" approach that most experienced users converge on.</p>
+            </div>
+        </section>
+
+        <!-- Section 2: AI Agent Integration -->
+        <section id="s2">
+            <p class="section-label">Part 2</p>
+            <h2><span class="num">02</span> Obsidian + AI Agent Workflows</h2>
+            <p>The biggest development in 2025-2026 is connecting Claude Code directly to your Obsidian vault. Since Obsidian stores everything as local plain-text Markdown files, any CLI agent with filesystem access can read and write to your vault natively.</p>
+
+            <h3>The Claude Code + CLAUDE.md Approach</h3>
+            <p>This is the most popular and powerful setup right now. You open a terminal in your vault folder, run <code>claude</code>, and the agent has full access to every note. The key file is <code>CLAUDE.md</code> at your vault root, which acts as persistent instructions that Claude reads at startup every session.</p>
+
+            <h4>What goes in CLAUDE.md:</h4>
+            <ul>
+                <li><strong>Vault architecture:</strong> Explain your folder structure and what goes where</li>
+                <li><strong>Naming conventions:</strong> How you name files (kebab-case, Zettelkasten IDs, etc.)</li>
+                <li><strong>Frontmatter standards:</strong> What YAML fields every note should have</li>
+                <li><strong>Template locations:</strong> Where templates live so Claude can use them when creating notes</li>
+                <li><strong>Linking rules:</strong> How you expect wikilinks to work, what MOCs exist</li>
+                <li><strong>Do/don't rules:</strong> Things like "never delete notes, always archive" or "always add a source field"</li>
+            </ul>
+
+            <h4>Example CLAUDE.md for a vault:</h4>
+<pre><code># Vault Instructions for Claude
+
+## Structure
+- /Projects    — Active projects with deadlines
+- /Areas       — Ongoing areas of responsibility
+- /Resources   — Reference material by topic
+- /Archive     — Completed/inactive items
+- /Inbox       — Unsorted captures, process weekly
+- /Templates   — Note templates
+- /Daily       — Daily journal notes (YYYY-MM-DD.md)
+
+## Note Conventions
+- Filenames: kebab-case (e.g., meeting-with-client-name.md)
+- Every note needs YAML frontmatter with: tags, created, status
+- Use [[wikilinks]] for internal links, not markdown links
+- One idea per note when possible (atomic notes)
+
+## Frontmatter Standard
+---
+tags: []
+created: YYYY-MM-DD
+status: seedling | growing | evergreen
+source: ""
+related: []
+---
+
+## Rules
+- Never delete notes. Move to /Archive instead.
+- When creating notes, always use the appropriate template.
+- Add [[MOC - Topic]] links when a note relates to an existing MOC.
+- Daily notes go in /Daily/YYYY/MM/ subfolder structure.</code></pre>
+
+            <h3>MCP (Model Context Protocol) Integration</h3>
+            <p>MCP allows Claude (and other AI tools) to interact with Obsidian through a standardized protocol. Plugins like Claudian and obsidian-ai-agent embed Claude Code directly inside Obsidian's interface, giving you agentic capabilities (file read/write, search, bash execution) without leaving the app.</p>
+
+            <h3>What AI Agents Can Actually Do With Your Vault</h3>
+            <ul>
+                <li><strong>Research and summarize:</strong> "Read all my notes tagged #marketing and write a summary of key themes"</li>
+                <li><strong>Create structured notes:</strong> "Create a meeting note from this transcript using my meeting template"</li>
+                <li><strong>Find connections:</strong> "What notes in my vault relate to this topic that I might have forgotten?"</li>
+                <li><strong>Maintain and clean:</strong> "Find all notes without proper frontmatter and fix them"</li>
+                <li><strong>Generate MOCs:</strong> "Create a Map of Content for all my AI-related notes"</li>
+                <li><strong>Batch operations:</strong> "Convert all images in /assets to webp format" (Stefan Imhoff's example)</li>
+                <li><strong>Build SOPs:</strong> Turn any workflow into a repeatable skill file that runs with a slash command</li>
+            </ul>
+
+            <h3>Making Your Vault AI-Friendly</h3>
+            <p>The structure decisions that matter most for AI retrieval:</p>
+            <ul>
+                <li><strong>Consistent frontmatter:</strong> Tags and properties in YAML are machine-readable. AI can filter and query by them. Use them on every note.</li>
+                <li><strong>Atomic notes:</strong> Small, focused notes are easier for AI to embed in vector space and retrieve accurately than 3000-word brain dumps</li>
+                <li><strong>Descriptive filenames:</strong> <code>meeting-acme-q1-review.md</code> beats <code>meeting-032526.md</code> for both human and AI findability</li>
+                <li><strong>Consistent date format:</strong> Always YYYY-MM-DD. AI parses this reliably.</li>
+                <li><strong>Tags over folders for categorization:</strong> Tags are metadata that AI can query. Deeply nested folders are harder to reason about.</li>
+                <li><strong>Wikilinks with context:</strong> A link like <code>discussed in [[project-alpha-brief]]</code> gives AI more to work with than a bare <code>[[project-alpha-brief]]</code></li>
+            </ul>
+        </section>
+
+        <!-- Section 3: Plugin Stack -->
+        <section id="s3">
+            <p class="section-label">Part 3</p>
+            <h2><span class="num">03</span> Essential Plugin Stack</h2>
+            <p>The community consensus is to standardize on 8-12 vetted plugins. Plugin sprawl fragments your workflow. Here is the recommended stack for an AI-integrated second brain:</p>
+
+            <h3>Tier 1: Must-Have Foundation</h3>
+
+            <div class="card">
+                <h4>Templater</h4>
+                <p>Far more powerful than core Templates. Supports dynamic dates, file creation hooks, conditional logic, and JavaScript execution. Essential for consistent note creation. AI agents can reference your Templater templates when creating notes.</p>
+            </div>
+
+            <div class="card">
+                <h4>Dataview</h4>
+                <p>Treats your vault like a database. Write queries to create dynamic lists, tables, and dashboards from your frontmatter metadata. Example: <code>TABLE status, created FROM #project WHERE status != "archived" SORT created DESC</code>. This is what makes consistent frontmatter pay off.</p>
+            </div>
+
+            <div class="card">
+                <h4>Calendar</h4>
+                <p>Visual calendar for daily notes. Click a date, get a note from your daily template. Pairs with Templater for auto-populated daily journals.</p>
+            </div>
+
+            <h3>Tier 2: AI Integration</h3>
+
+            <div class="card">
+                <h4>Smart Connections</h4>
+                <p>The most popular AI plugin. Uses embeddings to find semantically related notes (not just keyword matches). Chat with your entire vault using RAG. Free, local-first by default, indexing happens on-device. Stores workspace in <code>.smart-env/</code> folder.</p>
+            </div>
+
+            <div class="card">
+                <h4>Copilot for Obsidian</h4>
+                <p>In-vault AI assistant with chat-based vault search, web and YouTube support, and agentic capabilities. Use your own API key. Good for asking questions across your notes in natural language. Complements Smart Connections (use both).</p>
+            </div>
+
+            <div class="card">
+                <h4>Claudian / Agent Client</h4>
+                <p>Embeds Claude Code directly inside Obsidian. Full agentic capabilities: file read/write, search, bash execution, sub-agents. This is the bridge between Obsidian's GUI and Claude Code's CLI power. Agent Client also supports Codex and Gemini CLI.</p>
+            </div>
+
+            <div class="card">
+                <h4>AI for Templater</h4>
+                <p>Extends Templater with AI chat commands using the OpenAI client library. Lets you call LLMs directly from template commands. Example: auto-summarize a meeting note on creation.</p>
+            </div>
+
+            <h3>Tier 3: Quality of Life</h3>
+
+            <div class="card">
+                <h4>Tasks</h4>
+                <p>Manages tasks across your vault with due dates, recurrence, and Dataview-queryable metadata. Checkboxes become a real task management system.</p>
+            </div>
+
+            <div class="card">
+                <h4>Periodic Notes</h4>
+                <p>Extends daily notes with weekly, monthly, quarterly, and yearly note templates. Good for review cycles.</p>
+            </div>
+
+            <div class="card">
+                <h4>Linter</h4>
+                <p>Auto-formats your notes on save: fixes YAML frontmatter, consistent heading levels, trailing spaces. Keeps your vault clean for both you and AI parsers.</p>
+            </div>
+
+            <div class="card">
+                <h4>Quick Add</h4>
+                <p>Create notes from templates with a single hotkey or command. Supports multi-choice templates, macros, and capture workflows. Faster than navigating to file > new note > pick template.</p>
+            </div>
+
+            <div class="card">
+                <h4>Text Generator</h4>
+                <p>Versatile plugin for generating text using various AI providers (OpenAI, Anthropic, Google, local models). Good for in-note generation tasks.</p>
+            </div>
+        </section>
+
+        <!-- Section 4: Capture Workflows -->
+        <section id="s4">
+            <p class="section-label">Part 4</p>
+            <h2><span class="num">04</span> Capture Workflows (Especially iPhone)</h2>
+            <p>The hardest part of any second brain is getting information into it. Here are the best approaches ranked by friction level, with a focus on mobile capture.</p>
+
+            <h3>iOS Quick Capture Options</h3>
+
+            <div class="card">
+                <h4>Quick Draft (New in 2025)</h4>
+                <p>Companion app for Obsidian that supports text, voice notes with transcription, photos, and attachments. Sends directly to your vault. Currently the most complete mobile capture solution.</p>
+            </div>
+
+            <div class="card">
+                <h4>Quick Capture for Vault Notes</h4>
+                <p>iOS app that handles voice recordings with automatic transcription, document scanning, and file/photo sending to your vault. Available on the App Store.</p>
+            </div>
+
+            <div class="card">
+                <h4>iOS Shortcuts (DIY)</h4>
+                <p>Build a Shortcut that pops up a text input and appends to a capture file in your vault. If you have an iPhone 15 Pro or later, bind it to the Action Button for one-tap capture. The shortcut writes to iCloud or uses Obsidian's URL scheme (<code>obsidian://new</code>).</p>
+            </div>
+
+            <div class="card">
+                <h4>Funnel</h4>
+                <p>iPhone app designed specifically for quick capture into Obsidian. Minimal friction, designed for speed.</p>
+            </div>
+
+            <div class="card">
+                <h4>Obsidian Mobile App</h4>
+                <p>The official app works but is not optimized for quick capture. Opening it, navigating to the right folder, creating a note, and typing is too many steps for a fleeting thought. Use it for reading/editing, not capturing.</p>
+            </div>
+
+            <h3>Capture Processing Workflow</h3>
+            <p>The key insight: separate capture from processing. Everything goes into an <code>/Inbox</code> folder first, tagged with a date. Then during a weekly review (or let Claude do it), process inbox items into proper notes with templates and frontmatter. A Dataview query in your daily note can show unprocessed inbox items:</p>
+<pre><code>```dataview
+TABLE file.ctime as "Captured"
+FROM "Inbox"
+SORT file.ctime DESC
+```</code></pre>
+
+            <h3>Web Clipping</h3>
+            <p>Use the Obsidian Web Clipper browser extension (official, released 2024) to save web pages as Markdown directly into your vault with proper frontmatter. On iOS, share sheet integration sends articles to your vault. Readwise is another popular option that syncs highlights from Kindle, articles, podcasts, and tweets into Obsidian automatically.</p>
+
+            <h3>Voice Notes</h3>
+            <p>Record voice memos, then have Claude Code transcribe and process them. Workflow: capture audio with Quick Draft or Apple Voice Memos, then run a Claude Code command that transcribes the audio and creates a structured note from it. Some users run Whisper locally for transcription.</p>
+        </section>
+
+        <!-- Section 5: Templates -->
+        <section id="s5">
+            <p class="section-label">Part 5</p>
+            <h2><span class="num">05</span> Template Examples</h2>
+            <p>Good templates have three things: useful frontmatter that AI can query, clear structure for humans, and Templater variables for automation. Here are practical examples.</p>
+
+            <h3>Daily Journal</h3>
+<pre><code>---
+tags:
+  - daily
+created: <% tp.date.now("YYYY-MM-DD") %>
+week: <% tp.date.now("WW") %>
+---
+
+# <% tp.date.now("dddd, MMMM D, YYYY") %>
+
+## Focus
+- [ ] Top priority:
+- [ ] Secondary:
+- [ ] If time:
+
+## Log
+-
+
+## Reflections
+
+
+## Inbox to Process
+```dataview
+LIST FROM "Inbox"
+WHERE file.ctime >= date(today) - dur(1 day)
+```</code></pre>
+
+            <h3>Meeting Notes</h3>
+<pre><code>---
+tags:
+  - meeting
+created: <% tp.date.now("YYYY-MM-DD") %>
+attendees: []
+project: ""
+status: active
+---
+
+# Meeting: <% tp.file.title %>
+
+**Date:** <% tp.date.now("YYYY-MM-DD HH:mm") %>
+**Attendees:**
+**Context:** [[]]
+
+## Agenda
+1.
+
+## Notes
+
+
+## Action Items
+- [ ]
+
+## Decisions Made
+
+
+## Follow-up
+- Next meeting:</code></pre>
+
+            <h3>Client / Contact Profile</h3>
+<pre><code>---
+tags:
+  - person
+  - client
+created: <% tp.date.now("YYYY-MM-DD") %>
+company: ""
+role: ""
+email: ""
+phone: ""
+status: active
+last-contact: <% tp.date.now("YYYY-MM-DD") %>
+---
+
+# <% tp.file.title %>
+
+## Overview
+-
+
+## Key Details
+- **Company:**
+- **Role:**
+- **How we met:**
+- **Working on:**
+
+## Interactions
+```dataview
+TABLE created, tags
+FROM [[]]
+WHERE contains(tags, "meeting")
+SORT created DESC
+```
+
+## Notes</code></pre>
+
+            <h3>Project Brief</h3>
+<pre><code>---
+tags:
+  - project
+created: <% tp.date.now("YYYY-MM-DD") %>
+status: planning | active | paused | completed
+deadline: ""
+stakeholders: []
+related: []
+---
+
+# Project: <% tp.file.title %>
+
+## Objective
+What are we trying to accomplish?
+
+## Background
+Why does this matter?
+
+## Scope
+- In scope:
+- Out of scope:
+
+## Key Milestones
+- [ ]
+
+## Resources & Links
+
+
+## Updates
+### <% tp.date.now("YYYY-MM-DD") %>
+-</code></pre>
+
+            <h3>Research Note</h3>
+<pre><code>---
+tags:
+  - research
+created: <% tp.date.now("YYYY-MM-DD") %>
+source: ""
+status: seedling
+related: []
+---
+
+# <% tp.file.title %>
+
+## Key Takeaway
+One sentence summary of the insight.
+
+## Details
+
+
+## Source
+- URL:
+- Author:
+- Date accessed:
+
+## My Thoughts
+
+
+## Connected Ideas
+- [[]]</code></pre>
+
+            <h3>Quick Idea / Fleeting Note</h3>
+<pre><code>---
+tags:
+  - idea
+created: <% tp.date.now("YYYY-MM-DD HH:mm") %>
+status: inbox
+---
+
+# <% tp.file.title %>
+
+<% tp.file.cursor() %></code></pre>
+        </section>
+
+        <!-- Section 6: Common Mistakes -->
+        <section id="s6">
+            <p class="section-label">Part 6</p>
+            <h2><span class="num">06</span> Common Mistakes to Avoid</h2>
+            <p>Most people who abandon Obsidian do so because they over-engineer the system before using it. Here are the specific traps, based on community experience across thousands of users.</p>
+
+            <h3>Mistake 1: Too Many Folders</h3>
+            <p>The number one mistake. People create a folder for every conceivable category before writing a single note. Then they spend more time deciding where a note goes than actually writing it. Users with 6000+ notes report that reducing to 4-5 "pillar" folders eliminated the decision fatigue. Obsidian's search, backlinks, and tags surface what you need without folder hierarchies.</p>
+            <p><strong>Fix:</strong> Start with 5-7 top-level folders max. Use tags for categorization. Let structure emerge from use.</p>
+
+            <h3>Mistake 2: Perfecting the System Before Using It</h3>
+            <p>Spending weeks choosing between PARA and Zettelkasten, configuring 30 plugins, designing the perfect template system, and never actually taking a note. The system only becomes clear through use.</p>
+            <p><strong>Fix:</strong> Start with daily notes and an inbox folder. Add structure only when you feel pain from not having it.</p>
+
+            <h3>Mistake 3: Plugin Overload</h3>
+            <p>Installing every plugin that looks interesting. Each plugin adds cognitive overhead, potential conflicts, and update maintenance. The community recommends 8-12 vetted plugins maximum.</p>
+            <p><strong>Fix:</strong> Install the core stack (Templater, Dataview, Calendar). Add others only when you have a specific problem to solve.</p>
+
+            <h3>Mistake 4: Inconsistent Frontmatter</h3>
+            <p>This one kills AI integration. If half your notes have <code>tags:</code> in YAML and half use inline <code>#tags</code>, if dates are sometimes MM/DD/YYYY and sometimes YYYY-MM-DD, if some notes have frontmatter and some do not, then Dataview queries break and AI has unreliable metadata to work with.</p>
+            <p><strong>Fix:</strong> Define your frontmatter standard in CLAUDE.md and templates. Use the Linter plugin to enforce it. Run periodic Claude Code sweeps to fix inconsistencies.</p>
+
+            <h3>Mistake 5: Writing Long Notes Instead of Atomic Notes</h3>
+            <p>Dumping everything about a topic into one massive note. This makes linking, retrieval, and AI embedding all worse. A 5000-word note about "Marketing" is less useful than twenty 250-word notes about specific marketing concepts that link to each other.</p>
+            <p><strong>Fix:</strong> One idea per note. If a note is getting long, split it. Link the pieces together.</p>
+
+            <h3>Mistake 6: Not Processing the Inbox</h3>
+            <p>Capturing everything into an inbox folder and never processing it. After a month you have 200 unprocessed captures and the system feels broken.</p>
+            <p><strong>Fix:</strong> Process inbox items in your weekly review. Or set up a Claude Code skill that helps you process them: "look at my inbox, suggest where each note should go, add proper frontmatter."</p>
+
+            <h3>Mistake 7: Ignoring Backlinks</h3>
+            <p>Using Obsidian like a file system instead of a knowledge graph. The entire point of Obsidian over a folder of text files is bidirectional linking. If you are not creating [[wikilinks]] between notes, you are missing the core value.</p>
+            <p><strong>Fix:</strong> Every note should link to at least one other note. Build this habit from day one.</p>
+        </section>
+
+        <!-- Section 7: Real Examples & Resources -->
+        <section id="s7">
+            <p class="section-label">Part 7</p>
+            <h2><span class="num">07</span> Real Examples & Notable Guides</h2>
+            <p>These are specific people and resources doing Obsidian + AI agent workflows well, with links to their work.</p>
+
+            <h3>Blog Posts & Guides</h3>
+            <ul>
+                <li><strong>Stefan Imhoff</strong> -- "Agentic Note-Taking: Transforming My Obsidian Vault with Claude Code" (stefanimhoff.de). The most detailed real-world writeup. He uses PARA + Zettelkasten hybrid, Zettelkasten timestamp filenames (YYYYMMDDHHmm.md), and had Claude Code clean up his entire assets folder and convert images to webp.</li>
+                <li><strong>Noah Vincent</strong> -- "How to Build Your AI Second Brain Using Obsidian + Claude Code" (noahvnct.substack.com). Practical setup guide focused on CLAUDE.md configuration and making your vault structure legible to AI.</li>
+                <li><strong>WhyTryAI</strong> -- "Build Your Second Brain With Claude Code & Obsidian" (whytryai.com). Good overview of the MCP integration approach and practical workflow examples.</li>
+                <li><strong>NxCode</strong> -- "Obsidian AI Second Brain: Complete Guide to Building Your AI-Powered Knowledge System (2026)" (nxcode.io). Comprehensive 2026 guide covering the full stack.</li>
+                <li><strong>Mauricio Gomes</strong> -- "Teaching Claude Code My Obsidian Vault" (mauriciogomes.com). Focuses on the CLAUDE.md instruction file and how to teach Claude your vault's conventions.</li>
+                <li><strong>Towards AI (Medium)</strong> -- "From Notes to Knowledge: The Claude and Obsidian Second-Brain Setup." Covers the theory and practice of turning notes into a queryable knowledge base.</li>
+                <li><strong>Okhlopkov</strong> -- "Second brain: Obsidian + Claude Code setup guide" (okhlopkov.com). Step-by-step setup walkthrough.</li>
+                <li><strong>Hugo Sequier (Medium)</strong> -- "How I Turned Obsidian Into an AI-Powered Second Brain with Claude Code." February 2026 writeup with real workflow examples.</li>
+                <li><strong>CoworkHow</strong> -- "Claude Cowork + Obsidian: Build Your AI-Powered Second Brain" (coworkhow.com). Focuses on the Cowork integration angle.</li>
+            </ul>
+
+            <h3>Obsidian Plugins & Tools</h3>
+            <ul>
+                <li><strong>Claudian</strong> (github.com/YishenTu/claudian) -- Obsidian plugin embedding Claude Code directly in your vault with full agentic capabilities</li>
+                <li><strong>Agent Client</strong> (Obsidian Forum) -- Supports Claude Code, Codex, and Gemini CLI inside Obsidian</li>
+                <li><strong>obsidian-ai-agent</strong> (github.com/m-rgba/obsidian-ai-agent) -- Integrated AI agent plugin for Obsidian</li>
+                <li><strong>Claudesidian</strong> (github.com/heyitsnoah/claudesidian) -- Another Claude Code + Obsidian integration</li>
+                <li><strong>Smart Connections</strong> (github.com/brianpetro/obsidian-smart-connections) -- RAG-based chat with your vault using embeddings</li>
+                <li><strong>Desktop Commander</strong> (desktopcommander.app) -- Blog has good guides on creating and managing Obsidian vaults with AI</li>
+            </ul>
+
+            <h3>Framework & Method Resources</h3>
+            <ul>
+                <li><strong>Nick Milo</strong> -- Linking Your Thinking (linkingyourthinking.com). The originator of MOCs and the LYT framework for Obsidian</li>
+                <li><strong>Tiago Forte</strong> -- Building a Second Brain (fortelabs.com). Creator of PARA method</li>
+                <li><strong>Bryan Hogan</strong> -- "A Second Brain: Smart Notes With An Obsidian Zettelkasten" (bryanhogan.com). Good practical Zettelkasten guide plus vault setup tour</li>
+                <li><strong>Obsidian Zettelkasten Template</strong> (github.com/kulapoo/obsidian-template) -- Ready-to-use vault template with Zettelkasten structure</li>
+                <li><strong>Groepl Obsidian Templates</strong> (github.com/groepl/Obsidian-Templates) -- Large collection of templates supporting Zettelkasten workflows</li>
+            </ul>
+
+            <h3>Key YouTube Channels</h3>
+            <ul>
+                <li><strong>Nick Milo</strong> -- Linking Your Thinking channel. Deep dives on MOCs, vault organization, and the LYT framework</li>
+                <li><strong>Nicole van der Hoeven</strong> -- Prolific Obsidian content. Covers plugins, workflows, and PARA/Zettelkasten implementations</li>
+                <li><strong>Danny Hatcher</strong> -- Obsidian daily note and meeting note template walkthroughs (dannb.org has the companion blog posts)</li>
+                <li><strong>Sergio (FromSergio)</strong> -- Beginner-friendly Obsidian setup and second brain content</li>
+            </ul>
+        </section>
+
+        <!-- Section 8: Quick-Start Recommendation -->
+        <section id="s8">
+            <p class="section-label">Part 8</p>
+            <h2><span class="num">08</span> Quick-Start Action Plan</h2>
+            <p>If you want to go from zero to a working AI-integrated second brain, here is the sequence that avoids over-engineering.</p>
+
+            <h3>Day 1: Foundation</h3>
+            <ol>
+                <li>Create a new Obsidian vault</li>
+                <li>Create these folders: <code>Inbox</code>, <code>Projects</code>, <code>Areas</code>, <code>Resources</code>, <code>Archive</code>, <code>Templates</code>, <code>Daily</code></li>
+                <li>Install Templater, Dataview, and Calendar plugins</li>
+                <li>Create your daily note template and meeting note template (use examples from Part 5)</li>
+                <li>Set up daily notes to auto-create with your template</li>
+            </ol>
+
+            <h3>Day 2: AI Integration</h3>
+            <ol>
+                <li>Open your vault folder in terminal, run <code>claude</code> (or <code>claude /init</code>)</li>
+                <li>Create a CLAUDE.md file describing your vault structure (use the example from Part 2)</li>
+                <li>Install Smart Connections plugin for in-vault semantic search</li>
+                <li>Test: ask Claude Code to create a note using your template, search your vault, generate a MOC</li>
+            </ol>
+
+            <h3>Day 3-7: Capture Pipeline</h3>
+            <ol>
+                <li>Install Quick Draft or Quick Capture on your iPhone</li>
+                <li>Set up an iOS Shortcut for one-tap text capture to your Inbox folder</li>
+                <li>Install the Obsidian Web Clipper browser extension</li>
+                <li>Start using it. Take notes. Capture ideas. Do not reorganize yet.</li>
+            </ol>
+
+            <h3>Week 2+: Iterate</h3>
+            <ol>
+                <li>Do a weekly review: process Inbox items into proper notes</li>
+                <li>Notice what feels clunky. Add plugins or templates only to solve real friction.</li>
+                <li>When you have 50+ notes, create your first MOC</li>
+                <li>Have Claude Code audit your vault: "find notes missing frontmatter" or "suggest connections between these notes"</li>
+                <li>Build Claude Code skills/SOPs for your repeating workflows</li>
+            </ol>
+
+            <div class="verdict">
+                <p><strong>The core principle:</strong> Your vault is a living workspace, not an architecture project. The best system is the one you actually use every day. Start simple, let AI handle the maintenance and organization tasks, and add complexity only when you feel the need.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Sticky player bar -->
+    <div class="player-bar" id="playerBar">
+        <button id="barPlayPause" title="Play/Pause">&#9654;</button>
+        <span class="current-section" id="barSection">Ready</span>
+        <select class="bar-voice-select" id="barVoiceSelect"></select>
+        <button class="bar-speed" id="barSpeed">1x</button>
+        <button id="barStop" title="Stop">&#9632;</button>
+    </div>
+
+    <script>
+    (function() {
+        const WHITELISTED_VOICES = [
+            'samantha', 'karen', 'daniel', 'moira', 'tessa', 'ava', 'allison',
+            'tom', 'aaron', 'nicky', 'evan', 'zoe', 'joelle', 'fiona', 'martha', 'arthur'
+        ];
+        const WHITELISTED_PATTERNS = ['google us english', 'google uk english'];
+        const SPEEDS = [0.8, 1, 1.2, 1.5];
+        let speedIdx = 1;
+        let currentRate = 1;
+        let voices = [];
+        let selectedVoice = null;
+        let isPlaying = false;
+        let isPaused = false;
+        let chunks = [];
+        let chunkIdx = 0;
+        let currentSection = null;
+        let keepAliveInterval = null;
+
+        const listenBtn = document.getElementById('listenBtn');
+        const voiceSelect = document.getElementById('voiceSelect');
+        const speedBtn = document.getElementById('speedBtn');
+        const playerBar = document.getElementById('playerBar');
+        const barPlayPause = document.getElementById('barPlayPause');
+        const barSection = document.getElementById('barSection');
+        const barVoiceSelect = document.getElementById('barVoiceSelect');
+        const barSpeed = document.getElementById('barSpeed');
+        const barStop = document.getElementById('barStop');
+        const selectAllBtn = document.getElementById('selectAllBtn');
+
+        function isWhitelisted(name) {
+            const lower = name.toLowerCase();
+            if (WHITELISTED_VOICES.some(w => lower.includes(w))) return true;
+            if (WHITELISTED_PATTERNS.some(p => lower.includes(p))) return true;
+            return false;
+        }
+
+        function populateVoices() {
+            voices = speechSynthesis.getVoices().filter(v => isWhitelisted(v.name));
+            [voiceSelect, barVoiceSelect].forEach(sel => {
+                sel.innerHTML = '';
+                voices.forEach((v, i) => {
+                    const opt = document.createElement('option');
+                    opt.value = i;
+                    opt.textContent = v.name;
+                    sel.appendChild(opt);
+                });
+            });
+            if (voices.length > 0) {
+                const samIdx = voices.findIndex(v => v.name.toLowerCase().includes('samantha'));
+                const idx = samIdx >= 0 ? samIdx : 0;
+                voiceSelect.value = idx;
+                barVoiceSelect.value = idx;
+                selectedVoice = voices[idx];
+            }
+        }
+
+        speechSynthesis.onvoiceschanged = populateVoices;
+        populateVoices();
+
+        function syncVoice(fromSelect) {
+            const idx = parseInt(fromSelect.value);
+            selectedVoice = voices[idx] || null;
+            voiceSelect.value = idx;
+            barVoiceSelect.value = idx;
+        }
+
+        voiceSelect.addEventListener('change', () => syncVoice(voiceSelect));
+        barVoiceSelect.addEventListener('change', () => syncVoice(barVoiceSelect));
+
+        function cycleSpeed(btn) {
+            speedIdx = (speedIdx + 1) % SPEEDS.length;
+            currentRate = SPEEDS[speedIdx];
+            speedBtn.textContent = currentRate + 'x';
+            barSpeed.textContent = currentRate + 'x';
+        }
+
+        speedBtn.addEventListener('click', cycleSpeed);
+        barSpeed.addEventListener('click', cycleSpeed);
+
+        function buildChunks() {
+            chunks = [];
+            const sections = document.querySelectorAll('#mainContent section, #mainContent .intro');
+            sections.forEach(sec => {
+                const els = sec.querySelectorAll('h2, h3, h4, p, li, pre code');
+                const sectionTitle = sec.querySelector('h2') ? sec.querySelector('h2').textContent : 'Introduction';
+                els.forEach(el => {
+                    const text = el.textContent.trim();
+                    if (!text) return;
+                    const isHeading = /^H[2-4]$/.test(el.tagName);
+                    chunks.push({ text, isHeading, section: sec, sectionTitle, el });
+                });
+            });
+        }
+
+        function highlightSection(sec) {
+            if (currentSection && currentSection !== sec) {
+                currentSection.classList.remove('reading');
+            }
+            if (sec) {
+                sec.classList.add('reading');
+                if (currentSection !== sec) {
+                    sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                currentSection = sec;
+            }
+        }
+
+        function showBar() { playerBar.classList.add('visible'); }
+        function hideBar() { playerBar.classList.remove('visible'); }
+
+        function startKeepAlive() {
+            if (keepAliveInterval) clearInterval(keepAliveInterval);
+            keepAliveInterval = setInterval(() => {
+                if (speechSynthesis.speaking && !speechSynthesis.paused) {
+                    speechSynthesis.resume();
+                }
+            }, 10000);
+        }
+
+        function stopKeepAlive() {
+            if (keepAliveInterval) { clearInterval(keepAliveInterval); keepAliveInterval = null; }
+        }
+
+        function speakChunk(idx) {
+            if (idx >= chunks.length) {
+                stopPlayback();
+                return;
+            }
+            chunkIdx = idx;
+            const chunk = chunks[idx];
+            const utt = new SpeechSynthesisUtterance(chunk.text);
+            if (selectedVoice) utt.voice = selectedVoice;
+            utt.rate = chunk.isHeading ? currentRate * 0.9 : currentRate;
+            if (chunk.isHeading) utt.pitch = 1.05;
+
+            highlightSection(chunk.section);
+            barSection.textContent = chunk.sectionTitle;
+
+            utt.onend = () => {
+                const delay = chunk.isHeading ? 400 : 200;
+                setTimeout(() => {
+                    if (isPlaying && !isPaused) speakChunk(idx + 1);
+                }, delay);
+            };
+
+            speechSynthesis.speak(utt);
+        }
+
+        function startPlayback() {
+            speechSynthesis.cancel();
+            buildChunks();
+            if (chunks.length === 0) return;
+            isPlaying = true;
+            isPaused = false;
+            chunkIdx = 0;
+            barPlayPause.innerHTML = '&#10074;&#10074;';
+            listenBtn.textContent = 'Pause';
+            showBar();
+            startKeepAlive();
+            speakChunk(0);
+        }
+
+        function togglePause() {
+            if (!isPlaying) { startPlayback(); return; }
+            if (isPaused) {
+                isPaused = false;
+                speechSynthesis.resume();
+                barPlayPause.innerHTML = '&#10074;&#10074;';
+                listenBtn.textContent = 'Pause';
+            } else {
+                isPaused = true;
+                speechSynthesis.pause();
+                barPlayPause.innerHTML = '&#9654;';
+                listenBtn.textContent = 'Resume';
+            }
+        }
+
+        function stopPlayback() {
+            isPlaying = false;
+            isPaused = false;
+            speechSynthesis.cancel();
+            stopKeepAlive();
+            if (currentSection) currentSection.classList.remove('reading');
+            currentSection = null;
+            barPlayPause.innerHTML = '&#9654;';
+            listenBtn.textContent = 'Listen';
+            barSection.textContent = 'Ready';
+            hideBar();
+        }
+
+        listenBtn.addEventListener('click', () => {
+            if (!isPlaying) startPlayback();
+            else togglePause();
+        });
+
+        barPlayPause.addEventListener('click', togglePause);
+        barStop.addEventListener('click', stopPlayback);
+
+        selectAllBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const range = document.createRange();
+            range.selectNodeContents(document.getElementById('mainContent'));
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        });
+    })();
+    </script>
+</body>
+</html>
