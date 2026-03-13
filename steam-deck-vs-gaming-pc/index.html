@@ -661,6 +661,37 @@
                 grid-template-columns: 1fr;
             }
         }
+        .select-section-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 4px 12px;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+        .select-section-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(196, 32, 32, 0.04);
+        }
+        .select-section-btn:active {
+            transform: scale(0.96);
+        }
+        .select-section-btn.selected {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(196, 32, 32, 0.06);
+        }
     </style>
 </head>
 <body>
@@ -701,6 +732,7 @@
     <section id="sec-money">
         <div class="section-label">Part 1</div>
         <h2>The Money: Gaming PC Costs Are Out of Control</h2>
+        <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
         <p>Let's start where it hurts — your wallet. Building a "decent" gaming PC in 2026 is more expensive than it's ever been, and the value proposition has cratered.</p>
 
@@ -830,6 +862,7 @@
     <section id="sec-pc">
         <div class="section-label">Part 2</div>
         <h2>It's Not Just a Handheld — It's a Full Computer</h2>
+        <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
         <p>This is the part most people don't get. The Steam Deck isn't a console. It's a full x86 Linux PC running an AMD Zen 2 APU with RDNA 2 graphics. When you plug it into a dock, you get a full desktop experience with KDE Plasma — a complete desktop environment with a taskbar, file manager, web browser, and app store.</p>
 
@@ -893,6 +926,7 @@
     <section id="sec-beyond">
         <div class="section-label">Part 3</div>
         <h2>Way More Than a Gaming Machine</h2>
+        <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
         <p>People are using Steam Decks for things Valve never even imagined. Because it's a full Linux PC, you can install virtually any software that runs on Linux — and that's a LOT of software.</p>
 
@@ -976,6 +1010,7 @@
     <section id="sec-obsolete">
         <div class="section-label">Part 4</div>
         <h2>The Obsolescence Trap of Gaming PCs</h2>
+        <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
         <p>Here's the dirty secret of PC gaming: it never stops costing money. The moment you finish building a gaming PC, the clock starts ticking on when you'll need to upgrade.</p>
 
@@ -1000,6 +1035,7 @@
     <section id="sec-valve">
         <div class="section-label">Part 5</div>
         <h2>The Valve Difference: A Company That Actually Respects You</h2>
+        <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
         <p>This is about more than hardware specs. It's about who you're giving your money to and what they believe in.</p>
 
@@ -1042,6 +1078,7 @@
     <section id="sec-repair">
         <div class="section-label">Part 6</div>
         <h2>When Something Breaks (And It Will Eventually)</h2>
+        <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
         <p>Everything breaks eventually. The question is: what happens when it does?</p>
 
@@ -1098,6 +1135,7 @@
     <section id="sec-oled">
         <div class="section-label">Part 7</div>
         <h2>The Steam Deck OLED: The Best Version Yet</h2>
+        <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
         <p>In late 2023, Valve released the Steam Deck OLED — and instead of price-gouging, they made it better AND kept the same price points. That's the Valve difference in action.</p>
 
@@ -1129,6 +1167,7 @@
     <section id="sec-emulation">
         <div class="section-label">Part 8</div>
         <h2>Every Game You Ever Loved, All in One Place</h2>
+        <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
         <p>The Steam Deck doesn't just play Steam games. Through emulation, it plays virtually every console game ever made — NES, SNES, Game Boy, Genesis, N64, PlayStation 1 & 2, GameCube, Wii, DS, PSP, and more. With EmuDeck or RetroDECK, setting up emulation takes about 10 minutes.</p>
 
@@ -1144,6 +1183,7 @@
     <section id="sec-verdict">
         <div class="section-label">The Bottom Line</div>
         <h2>The Verdict</h2>
+        <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
         <p>A gaming PC made sense when there was no alternative. Now there is. The Steam Deck gives you:</p>
 
@@ -1172,6 +1212,7 @@
     <section id="sec-videos">
         <div class="section-label">Watch More</div>
         <h2>More Videos Worth Watching</h2>
+        <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
         <p class="text-secondary">Deep dives, reviews, and real-world usage that back up everything in this article.</p>
 
         <div class="video-grid">
@@ -1452,6 +1493,20 @@
         sel.removeAllRanges();
         sel.addRange(range);
     });
+
+// ── Select Section for macOS Speak ──
+window.selectSection = function(btn) {
+    var section = btn.closest('section') || btn.closest('.method') || btn.parentElement.parentElement;
+    var range = document.createRange();
+    range.selectNodeContents(section);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    document.querySelectorAll('.select-section-btn').forEach(function(b) { b.classList.remove('selected'); b.textContent = 'Select Section'; });
+    btn.classList.add('selected');
+    btn.textContent = 'Selected!';
+    setTimeout(function() { btn.textContent = 'Select Section'; btn.classList.remove('selected'); }, 2000);
+};
 })();
 </script>
 

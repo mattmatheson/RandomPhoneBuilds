@@ -562,6 +562,38 @@
     .listen-bar .bar-voice { display: none; }
   }
 
+  .select-section-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: 1px solid var(--divider);
+    border-radius: 100px;
+    padding: 4px 12px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    vertical-align: middle;
+    margin-left: 8px;
+  }
+  .select-section-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(196, 32, 32, 0.04);
+  }
+  .select-section-btn:active {
+    transform: scale(0.96);
+  }
+  .select-section-btn.selected {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(196, 32, 32, 0.06);
+  }
+
   @media print {
     body { border-top: none; }
     .back-to-top, nav.toc { display: none; }
@@ -603,6 +635,7 @@
 
   <section id="overview">
     <h2>The Video</h2>
+    <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
     <article>
       <p>"That's Life" dropped in 2004, and it landed like a Molotov cocktail on the front porch of polished skate media. While other companies were chasing cinematic production values and pristine HD footage, Foundation put out a video that felt like it was filmed in the back of a van that smelled like cigarettes and warm beer. And that was entirely the point.</p>
@@ -616,6 +649,7 @@
 
   <section id="foundation">
     <h2>Foundation Skateboards &amp; Tod Swank</h2>
+    <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
     <article>
       <h3>The Company</h3>
@@ -631,6 +665,7 @@
 
   <section id="riders">
     <h2>The Riders</h2>
+    <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
     <p>The "That's Life" roster was a mix of established Foundation veterans and newer additions who were about to blow up. The team at the time included a crew of skaters who all shared that Foundation DNA — a willingness to throw themselves down things that most people would walk away from.</p>
 
     <div class="rider-grid">
@@ -659,6 +694,7 @@
 
   <section id="duffel" class="stats-grid">
     <h2>The Corey Duffel Part</h2>
+    <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
     <p>If "That's Life" is remembered for one thing, it's Corey Duffel's part. Duffel was a teenager when the video came out, and his section immediately became one of the most talked-about video parts of the year. It wasn't just the tricks — it was the sheer velocity and apparent disregard for personal safety that made people rewind the tape.</p>
 
@@ -705,6 +741,7 @@
 
   <section id="style">
     <h2>The Aesthetic</h2>
+    <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
     <article>
       <h3>Filming &amp; Editing</h3>
@@ -725,6 +762,7 @@
 
   <section id="legacy">
     <h2>Why It Still Matters</h2>
+    <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
     <article>
       <h3>Corey Duffel's Career</h3>
@@ -746,6 +784,7 @@
 
   <section id="foundation-timeline">
     <h2>Foundation Video Timeline</h2>
+    <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
     <p>Foundation's video catalog is a roadmap of the brand's evolution — from early skate-and-destroy VHS tapes to the polished-but-still-punk DVDs of the 2000s.</p>
 
     <div class="timeline">
@@ -1093,6 +1132,20 @@
     clearInterval(keepAlive);
     origStop();
   };
+
+// ── Select Section for macOS Speak ──
+window.selectSection = function(btn) {
+    var section = btn.closest('section') || btn.closest('.method') || btn.parentElement.parentElement;
+    var range = document.createRange();
+    range.selectNodeContents(section);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    document.querySelectorAll('.select-section-btn').forEach(function(b) { b.classList.remove('selected'); b.textContent = 'Select Section'; });
+    btn.classList.add('selected');
+    btn.textContent = 'Selected!';
+    setTimeout(function() { btn.textContent = 'Select Section'; btn.classList.remove('selected'); }, 2000);
+};
 })();
 </script>
 </body>

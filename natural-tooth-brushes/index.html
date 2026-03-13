@@ -570,6 +570,38 @@
             .voice-select { max-width: 100%; }
             .listen-bar .bar-voice { display: none; }
         }
+
+        .select-section-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: 1px solid #E5E5E7;
+            border-radius: 100px;
+            padding: 4px 12px;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #6E6E73;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+        .select-section-btn:hover {
+            border-color: #C42020;
+            color: #C42020;
+            background: rgba(196, 32, 32, 0.04);
+        }
+        .select-section-btn:active {
+            transform: scale(0.96);
+        }
+        .select-section-btn.selected {
+            border-color: #C42020;
+            color: #C42020;
+            background: rgba(196, 32, 32, 0.06);
+        }
     </style>
 </head>
 <body>
@@ -612,6 +644,7 @@
     <section id="miswak">
         <div class="section-label">01 &mdash; The Original</div>
         <h2>Miswak (Siwak) — The 7,000-Year-Old Toothbrush</h2>
+        <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
         <p>
             The miswak is a teeth-cleaning twig made from the <strong>Salvadora persica</strong> tree (also called the "toothbrush tree" or arak tree). It's been used across Africa, the Middle East, and South Asia for at least 7,000 years. The Prophet Muhammad recommended it, and it remains deeply embedded in Islamic hygiene practices — but its use predates Islam by thousands of years, with evidence found in ancient Babylonian and Egyptian records.
@@ -661,6 +694,7 @@
     <section id="neem">
         <div class="section-label">02 &mdash; Ayurvedic Tradition</div>
         <h2>Neem Sticks — India's Ancient Toothbrush</h2>
+        <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
         <p>
             In India, the neem tree (<strong>Azadirachta indica</strong>) has been called the "village pharmacy" for centuries. Neem twigs, called <strong>datun</strong>, are still used daily by millions of people across rural India, Pakistan, and Bangladesh. You'll see street vendors selling fresh bundles of neem sticks every morning.
@@ -691,6 +725,7 @@
     <section id="other-sticks">
         <div class="section-label">03 &mdash; Around the World</div>
         <h2>Other Natural Chewing Sticks</h2>
+        <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
         <h3>Licorice Root (Glycyrrhiza glabra)</h3>
         <p>
@@ -751,6 +786,7 @@
     <section id="bamboo">
         <div class="section-label">04 &mdash; Buyer Beware</div>
         <h2>Bamboo Toothbrushes — The Greenwashing Problem</h2>
+        <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
         <p>
             Bamboo toothbrushes exploded in popularity as a plastic-free alternative. The handle is made from bamboo (usually Moso bamboo), which is fast-growing and biodegradable. Sounds great on paper. But there's a big problem the marketing doesn't mention.
@@ -789,6 +825,7 @@
     <section id="gum-repair">
         <div class="section-label">05 &mdash; Gum Health</div>
         <h2>Natural Gum Repair &amp; Reversing Recession</h2>
+        <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
         <p>
             Gum recession — where the gum tissue pulls back from the tooth, exposing more root — is extremely common. It can be caused by aggressive brushing, gum disease (periodontitis), genetics, grinding, or tobacco use. Once gum tissue is physically lost, it doesn't grow back on its own. But you <em>can</em> stop further recession, reduce inflammation, and strengthen what you have.
@@ -834,6 +871,7 @@
     <section id="products">
         <div class="section-label">06 &mdash; What to Buy</div>
         <h2>Product Guide</h2>
+        <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
         <p>Here are specific products across each category. All are available online through major retailers.</p>
 
@@ -987,6 +1025,7 @@
     <section id="science">
         <div class="section-label">07 &mdash; Evidence</div>
         <h2>The Science</h2>
+        <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
 
         <p>Natural oral care has a surprising amount of real clinical research behind it. Here are some of the key findings:</p>
 
@@ -1384,6 +1423,19 @@
   stop = function() {
     clearInterval(keepAlive);
     origStop();
+  };
+  // ── Select Section for macOS Speak ──
+  window.selectSection = function(btn) {
+      var section = btn.closest('section') || btn.closest('.method') || btn.parentElement.parentElement;
+      var range = document.createRange();
+      range.selectNodeContents(section);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      document.querySelectorAll('.select-section-btn').forEach(function(b) { b.classList.remove('selected'); b.textContent = 'Select Section'; });
+      btn.classList.add('selected');
+      btn.textContent = 'Selected!';
+      setTimeout(function() { btn.textContent = 'Select Section'; btn.classList.remove('selected'); }, 2000);
   };
 })();
 </script>

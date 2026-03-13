@@ -362,6 +362,38 @@
             transition: all 0.3s ease;
         }
 
+        .select-section-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: 1px solid #E5E5E7;
+            border-radius: 100px;
+            padding: 4px 12px;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #6E6E73;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+        .select-section-btn:hover {
+            border-color: #C42020;
+            color: #C42020;
+            background: rgba(196, 32, 32, 0.04);
+        }
+        .select-section-btn:active {
+            transform: scale(0.96);
+        }
+        .select-section-btn.selected {
+            border-color: #C42020;
+            color: #C42020;
+            background: rgba(196, 32, 32, 0.06);
+        }
+
         /* Extra bottom padding so content isn't hidden behind sticky bar */
         body.listening { padding-bottom: 80px; }
 
@@ -397,6 +429,7 @@
         <div class="method-header">
             <span class="method-number">01</span>
             <h2>Pour Over</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <span class="tag mild">Clean Cup</span>
         </div>
         <p>
@@ -429,6 +462,7 @@
         <div class="method-header">
             <span class="method-number">02</span>
             <h2>French Press</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <span class="tag medium">Full Body</span>
         </div>
         <p>
@@ -461,6 +495,7 @@
         <div class="method-header">
             <span class="method-number">03</span>
             <h2>AeroPress</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <span class="tag mild">Versatile</span>
         </div>
         <p>
@@ -493,6 +528,7 @@
         <div class="method-header">
             <span class="method-number">04</span>
             <h2>Moka Pot</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <span class="tag strong">Intense</span>
         </div>
         <p>
@@ -525,6 +561,7 @@
         <div class="method-header">
             <span class="method-number">05</span>
             <h2>Cold Brew</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <span class="tag medium">Smooth</span>
         </div>
         <p>
@@ -869,6 +906,21 @@
     clearInterval(keepAlive);
     origStop();
   };
+
+// ── Select Section for macOS Speak ──
+window.selectSection = function(btn) {
+    var section = btn.closest('.method') || btn.closest('section') || btn.parentElement.parentElement;
+    var range = document.createRange();
+    range.selectNodeContents(section);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    // Visual feedback
+    document.querySelectorAll('.select-section-btn').forEach(function(b) { b.classList.remove('selected'); b.textContent = 'Select Section'; });
+    btn.classList.add('selected');
+    btn.textContent = 'Selected!';
+    setTimeout(function() { btn.textContent = 'Select Section'; btn.classList.remove('selected'); }, 2000);
+};
 })();
 </script>
 

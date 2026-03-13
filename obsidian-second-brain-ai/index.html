@@ -411,6 +411,37 @@
             cursor: pointer;
             font-family: inherit;
         }
+        .select-section-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: 1px solid #E5E5E7;
+            border-radius: 100px;
+            padding: 4px 12px;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #6E6E73;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+        .select-section-btn:hover {
+            border-color: #C42020;
+            color: #C42020;
+            background: rgba(196, 32, 32, 0.04);
+        }
+        .select-section-btn:active {
+            transform: scale(0.96);
+        }
+        .select-section-btn.selected {
+            border-color: #C42020;
+            color: #C42020;
+            background: rgba(196, 32, 32, 0.06);
+        }
     </style>
 </head>
 <body>
@@ -434,6 +465,7 @@
         <section id="s1">
             <p class="section-label">Part 1</p>
             <h2><span class="num">01</span> Second Brain Frameworks</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <p>There are four major organizational frameworks people use in Obsidian. The consensus in 2025-2026 is that a hybrid approach works best, not picking one system rigidly.</p>
 
             <h3>PARA Method (Tiago Forte)</h3>
@@ -475,6 +507,7 @@
         <section id="s2">
             <p class="section-label">Part 2</p>
             <h2><span class="num">02</span> Obsidian + AI Agent Workflows</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <p>The biggest development in 2025-2026 is connecting Claude Code directly to your Obsidian vault. Since Obsidian stores everything as local plain-text Markdown files, any CLI agent with filesystem access can read and write to your vault natively.</p>
 
             <h3>The Claude Code + CLAUDE.md Approach</h3>
@@ -553,6 +586,7 @@ related: []
         <section id="s3">
             <p class="section-label">Part 3</p>
             <h2><span class="num">03</span> Essential Plugin Stack</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <p>The community consensus is to standardize on 8-12 vetted plugins. Plugin sprawl fragments your workflow. Here is the recommended stack for an AI-integrated second brain:</p>
 
             <h3>Tier 1: Must-Have Foundation</h3>
@@ -626,6 +660,7 @@ related: []
         <section id="s4">
             <p class="section-label">Part 4</p>
             <h2><span class="num">04</span> Capture Workflows (Especially iPhone)</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <p>The hardest part of any second brain is getting information into it. Here are the best approaches ranked by friction level, with a focus on mobile capture.</p>
 
             <h3>iOS Quick Capture Options</h3>
@@ -674,6 +709,7 @@ SORT file.ctime DESC
         <section id="s5">
             <p class="section-label">Part 5</p>
             <h2><span class="num">05</span> Template Examples</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <p>Good templates have three things: useful frontmatter that AI can query, clear structure for humans, and Templater variables for automation. Here are practical examples.</p>
 
             <h3>Daily Journal</h3>
@@ -848,6 +884,7 @@ status: inbox
         <section id="s6">
             <p class="section-label">Part 6</p>
             <h2><span class="num">06</span> Common Mistakes to Avoid</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <p>Most people who abandon Obsidian do so because they over-engineer the system before using it. Here are the specific traps, based on community experience across thousands of users.</p>
 
             <h3>Mistake 1: Too Many Folders</h3>
@@ -883,6 +920,7 @@ status: inbox
         <section id="s7">
             <p class="section-label">Part 7</p>
             <h2><span class="num">07</span> Real Examples & Notable Guides</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <p>These are specific people and resources doing Obsidian + AI agent workflows well, with links to their work.</p>
 
             <h3>Blog Posts & Guides</h3>
@@ -930,6 +968,7 @@ status: inbox
         <section id="s8">
             <p class="section-label">Part 8</p>
             <h2><span class="num">08</span> Quick-Start Action Plan</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <p>If you want to go from zero to a working AI-integrated second brain, here is the sequence that avoids over-engineering.</p>
 
             <h3>Day 1: Foundation</h3>
@@ -1189,6 +1228,19 @@ status: inbox
             sel.removeAllRanges();
             sel.addRange(range);
         });
+        // ── Select Section for macOS Speak ──
+        window.selectSection = function(btn) {
+            var section = btn.closest('section') || btn.closest('.method') || btn.parentElement.parentElement;
+            var range = document.createRange();
+            range.selectNodeContents(section);
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+            document.querySelectorAll('.select-section-btn').forEach(function(b) { b.classList.remove('selected'); b.textContent = 'Select Section'; });
+            btn.classList.add('selected');
+            btn.textContent = 'Selected!';
+            setTimeout(function() { btn.textContent = 'Select Section'; btn.classList.remove('selected'); }, 2000);
+        };
     })();
     </script>
 </body>
