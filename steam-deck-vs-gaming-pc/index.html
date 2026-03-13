@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Deck vs Gaming PC — Why the Deck Wins in 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --accent: #C42020;
+            --accent-light: rgba(196, 32, 32, 0.08);
+            --bg: #FAFAFA;
+            --text: #1D1D1F;
+            --text-secondary: #6E6E73;
+            --border: #E5E5E7;
+            --card-bg: #FFFFFF;
+            --valve-blue: #1B2838;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Hero */
+        .hero {
+            background: var(--valve-blue);
+            color: #FAFAFA;
+            padding: 80px 24px 72px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(196, 32, 32, 0.15) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 50%, rgba(100, 149, 237, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            background: rgba(196, 32, 32, 0.15);
+            padding: 6px 14px;
+            border-radius: 100px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.4rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            max-width: 720px;
+            margin: 0 auto 16px;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .scope {
+            font-size: 1.1rem;
+            color: #A1A1A6;
+            max-width: 560px;
+            margin: 0 auto 24px;
+            font-weight: 400;
+        }
+
+        /* Listen Button */
+        .listen-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .listen-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.6rem 1.5rem;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .listen-btn:hover {
+            background: #a81a1a;
+            transform: scale(1.02);
+        }
+
+        .voice-select {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 2rem;
+            padding: 0.5rem 1rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .voice-select option {
+            background: #1D1D1F;
+            color: white;
+        }
+
+        .speed-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 2rem;
+            padding: 0.5rem 1rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .pro-tip {
+            font-size: 0.8rem;
+            color: #6E6E73;
+            margin-top: 14px;
+            font-style: italic;
+        }
+
+        .pro-tip a {
+            color: #A1A1A6;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        /* Player Bar */
+        .player-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(30, 30, 30, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 20px;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            color: white;
+            font-size: 0.85rem;
+        }
+
+        .player-bar.visible {
+            transform: translateY(0);
+        }
+
+        .player-bar button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 50%;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .player-bar button:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .player-section-title {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
+
+        .player-bar select {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 1rem;
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            font-family: inherit;
+            max-width: 100px;
+        }
+
+        .player-bar select option {
+            background: #1D1D1F;
+        }
+
+        .player-speed-btn {
+            background: rgba(255,255,255,0.15) !important;
+            border-radius: 1rem !important;
+            padding: 4px 10px !important;
+            font-size: 0.75rem !important;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 56px 24px 120px;
+        }
+
+        .intro {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            line-height: 1.8;
+            border-left: 3px solid var(--accent);
+            padding-left: 20px;
+        }
+
+        section {
+            margin-bottom: 56px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        section.reading {
+            border-left: 3px solid var(--accent);
+            background: rgba(196, 32, 32, 0.04);
+            padding-left: 1rem;
+            border-radius: 4px;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-top: 28px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+
+        .text-secondary {
+            color: var(--text-secondary);
+        }
+
+        /* Cost Table */
+        .cost-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.9rem;
+        }
+
+        .cost-table th {
+            background: var(--valve-blue);
+            color: white;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .cost-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cost-table tr:nth-child(even) td {
+            background: rgba(0,0,0,0.02);
+        }
+
+        .cost-table .total-row td {
+            font-weight: 700;
+            background: var(--accent-light);
+            border-top: 2px solid var(--accent);
+            font-size: 1rem;
+        }
+
+        .cost-table .savings td {
+            color: #16a34a;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        /* Stat Cards */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .stat-card .label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Comparison Cards */
+        .vs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        @media (max-width: 540px) {
+            .vs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .vs-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .vs-card.winner {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px var(--accent);
+        }
+
+        .vs-card h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .vs-card.winner h4::after {
+            content: 'WINNER';
+            font-size: 0.6rem;
+            background: var(--accent);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 100px;
+            letter-spacing: 0.05em;
+        }
+
+        .vs-card ul {
+            list-style: none;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .vs-card ul li {
+            padding: 4px 0;
+        }
+
+        .vs-card ul li::before {
+            content: '•';
+            color: var(--accent);
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        /* Video Embeds */
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin: 24px 0;
+        }
+
+        .video-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .video-embed {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+        }
+
+        .video-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-info {
+            padding: 14px 16px;
+        }
+
+        .video-info h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .video-info p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* Use-case list */
+        .use-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 24px 0;
+        }
+
+        .use-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .use-icon {
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .use-text h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .use-text p {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        /* Callout */
+        .callout {
+            background: var(--valve-blue);
+            color: white;
+            border-radius: 12px;
+            padding: 28px 24px;
+            margin: 32px 0;
+        }
+
+        .callout h3 {
+            color: white;
+            margin-top: 0;
+            font-size: 1.1rem;
+        }
+
+        .callout p {
+            color: #A1A1A6;
+            font-size: 0.9rem;
+        }
+
+        .callout p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Quote */
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 16px 20px;
+            margin: 20px 0;
+            background: var(--accent-light);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        blockquote cite {
+            display: block;
+            margin-top: 8px;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text);
+        }
+
+        /* Feature list */
+        .feature-list {
+            list-style: none;
+            margin: 16px 0;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* Verdict */
+        .verdict {
+            background: linear-gradient(135deg, var(--valve-blue) 0%, #2a3f56 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 40px 28px;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .verdict h2 {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+
+        .verdict p {
+            color: #A1A1A6;
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto 12px;
+        }
+
+        .verdict .price-highlight {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 16px 0 8px;
+        }
+
+        .verdict .price-note {
+            font-size: 0.85rem;
+            color: #6E6E73;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .hero {
+                padding: 60px 20px 52px;
+            }
+
+            .container {
+                padding: 40px 20px 120px;
+            }
+
+            .listen-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .listen-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .use-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+    <div class="hero-content">
+        <div class="hero-badge">Deep Dive — March 2026</div>
+        <h1>Why a <span>Steam Deck</span> Beats a Gaming PC<br>In Every Way That Matters</h1>
+        <p class="scope">A comprehensive breakdown of cost, versatility, repairability, and the Valve philosophy — for anyone debating between a $400 handheld and a $1,500+ desktop.</p>
+
+        <div class="listen-controls">
+            <button class="listen-btn" id="listenBtn">Listen to Article</button>
+            <select class="voice-select" id="voiceSelect"></select>
+            <button class="speed-btn" id="speedBtn">1x</button>
+        </div>
+        <p class="pro-tip">Pro tip: For a better voice, <a id="selectAllBtn">select all text</a> then use iOS Speak Selection (Settings &gt; Accessibility &gt; Spoken Content).</p>
+    </div>
+</header>
+
+<!-- PLAYER BAR -->
+<div class="player-bar" id="playerBar">
+    <button id="playerPlayPause">⏸</button>
+    <span class="player-section-title" id="playerSectionTitle">Playing...</span>
+    <select id="playerVoice"></select>
+    <button class="player-speed-btn" id="playerSpeed">1x</button>
+    <button id="playerStop">⏹</button>
+</div>
+
+<!-- MAIN CONTENT -->
+<main class="container" id="mainContent">
+
+    <p class="intro">
+        Your kid wants to game. You're looking at $1,500+ for a gaming PC that'll be outdated in two years, needs constant upgrades, and turns into expensive paperweight the second a GPU dies. Or you could spend $400–$650 on a Steam Deck that games, works, creates, and goes everywhere. This isn't even close.
+    </p>
+
+    <!-- SECTION 1: The Money -->
+    <section id="sec-money">
+        <div class="section-label">Part 1</div>
+        <h2>The Money: Gaming PC Costs Are Out of Control</h2>
+
+        <p>Let's start where it hurts — your wallet. Building a "decent" gaming PC in 2026 is more expensive than it's ever been, and the value proposition has cratered.</p>
+
+        <h3>What a Mid-Range Gaming PC Actually Costs</h3>
+
+        <table class="cost-table">
+            <thead>
+                <tr>
+                    <th>Component</th>
+                    <th>Gaming PC</th>
+                    <th>Steam Deck OLED</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>GPU (Graphics Card)</td>
+                    <td>$450–$700</td>
+                    <td>Built in</td>
+                </tr>
+                <tr>
+                    <td>CPU (Processor)</td>
+                    <td>$200–$350</td>
+                    <td>Built in (AMD APU)</td>
+                </tr>
+                <tr>
+                    <td>RAM (16–32GB)</td>
+                    <td>$60–$120</td>
+                    <td>Built in (16GB)</td>
+                </tr>
+                <tr>
+                    <td>Motherboard</td>
+                    <td>$120–$200</td>
+                    <td>Built in</td>
+                </tr>
+                <tr>
+                    <td>Storage (1TB SSD)</td>
+                    <td>$80–$120</td>
+                    <td>Built in (512GB/1TB)</td>
+                </tr>
+                <tr>
+                    <td>Power Supply</td>
+                    <td>$80–$120</td>
+                    <td>Built in</td>
+                </tr>
+                <tr>
+                    <td>Case</td>
+                    <td>$80–$150</td>
+                    <td>Built in</td>
+                </tr>
+                <tr>
+                    <td>Monitor</td>
+                    <td>$200–$400</td>
+                    <td>Built in (7.4" OLED HDR)</td>
+                </tr>
+                <tr>
+                    <td>Keyboard + Mouse</td>
+                    <td>$50–$150</td>
+                    <td>Built-in controls</td>
+                </tr>
+                <tr>
+                    <td>Windows License</td>
+                    <td>$100–$140</td>
+                    <td>SteamOS (free)</td>
+                </tr>
+                <tr class="total-row">
+                    <td>Total</td>
+                    <td>$1,420–$2,450</td>
+                    <td>$399–$649</td>
+                </tr>
+                <tr class="savings">
+                    <td colspan="2">You save with Steam Deck</td>
+                    <td>$800–$1,800+</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>And that's before something breaks. A single GPU failure? $400–$700 to replace. Motherboard dies? There goes $200 plus the labor to rebuild. With a Steam Deck, if something breaks, Valve sells you the exact replacement part through iFixit for a fraction of the cost.</p>
+
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="number">$549</div>
+                <div class="label">Steam Deck OLED (512GB)</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">$1,500+</div>
+                <div class="label">Mid-range Gaming PC</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">73%</div>
+                <div class="label">Less money spent</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">$0</div>
+                <div class="label">Operating system cost</div>
+            </div>
+        </div>
+
+        <h3>GPU Prices Have Lost the Plot</h3>
+
+        <p>NVIDIA's RTX 50-series launch in 2025 was a masterclass in price gouging. The RTX 5070 launched at $550 with misleading performance claims. Gamers Nexus called it outright: "NVIDIA is Selling Lies." Meanwhile, NVIDIA is prioritizing AI data center chips over gaming GPUs, creating artificial scarcity that keeps prices sky-high for consumers.</p>
+
+        <p>RAM prices have surged too. DDR5 adoption has been slow and expensive, and even DDR4 is more expensive than it was two years ago due to supply chain constraints. Every single component in a gaming PC has gotten more expensive while delivering marginally better performance.</p>
+
+        <div class="video-grid">
+            <div class="video-card">
+                <div class="video-embed">
+                    <iframe src="https://www.youtube.com/embed/OCJYDJXDRHw" title="The Great NVIDIA Switcheroo | GPU Shrinkflation" loading="lazy" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h4>Gamers Nexus: The Great NVIDIA Switcheroo</h4>
+                    <p>How NVIDIA has been giving consumers less value per dollar across each GPU generation.</p>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-embed">
+                    <iframe src="https://www.youtube.com/embed/j9vC9NBL8zo" title="NVIDIA is Selling Lies | RTX 5070 Review" loading="lazy" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h4>Gamers Nexus: NVIDIA is Selling Lies</h4>
+                    <p>RTX 5070 review exposing misleading performance claims and inflated pricing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: It's a Full PC -->
+    <section id="sec-pc">
+        <div class="section-label">Part 2</div>
+        <h2>It's Not Just a Handheld — It's a Full Computer</h2>
+
+        <p>This is the part most people don't get. The Steam Deck isn't a console. It's a full x86 Linux PC running an AMD Zen 2 APU with RDNA 2 graphics. When you plug it into a dock, you get a full desktop experience with KDE Plasma — a complete desktop environment with a taskbar, file manager, web browser, and app store.</p>
+
+        <div class="vs-grid">
+            <div class="vs-card">
+                <h4>Gaming PC</h4>
+                <ul>
+                    <li>Stuck on your desk</li>
+                    <li>200-500 watts power draw</li>
+                    <li>Loud fans under load</li>
+                    <li>Windows bloat & updates</li>
+                    <li>$100+ OS license</li>
+                    <li>Parts go obsolete fast</li>
+                </ul>
+            </div>
+            <div class="vs-card winner">
+                <h4>Steam Deck</h4>
+                <ul>
+                    <li>Take it anywhere</li>
+                    <li>15-45 watts total</li>
+                    <li>Quiet, efficient cooling</li>
+                    <li>SteamOS — clean & fast</li>
+                    <li>Free OS, forever</li>
+                    <li>One device, no part juggling</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>Dock It and Go Desktop</h3>
+
+        <p>For $40–$100, you can buy a USB-C dock that gives you HDMI output, USB ports, Ethernet, and power delivery. Plug the Steam Deck into a monitor, keyboard, and mouse, and you've got a desktop PC. Browse the web, write documents, manage files, stream movies, video call — anything you'd do on a regular computer.</p>
+
+        <div class="video-grid">
+            <div class="video-card">
+                <div class="video-embed">
+                    <iframe src="https://www.youtube.com/embed/e2d57mPVV6w" title="Steam Deck Dock Comparison" loading="lazy" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h4>Retro Game Corps: Steam Deck Dock Comparison</h4>
+                    <p>Four different dock solutions compared — ports, performance, and value.</p>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-embed">
+                    <iframe src="https://www.youtube.com/embed/Vd6hVYkkq88" title="A Linux Power User Puts SteamOS to Work" loading="lazy" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h4>SteamOS as a Full Desktop Workstation</h4>
+                    <p>Using the Steam Deck as a daily-driver Linux desktop for productivity, browsing, and office work.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="callout">
+            <h3>Think About This</h3>
+            <p>A gaming PC sits on a desk. A Steam Deck sits on a desk, rides in a backpack, plays in bed, games on the couch, works at a coffee shop, entertains on a road trip, and docks into a full workstation when you get home. Same games. Same apps. Zero compromises on portability.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 3: Beyond Gaming -->
+    <section id="sec-beyond">
+        <div class="section-label">Part 3</div>
+        <h2>Way More Than a Gaming Machine</h2>
+
+        <p>People are using Steam Decks for things Valve never even imagined. Because it's a full Linux PC, you can install virtually any software that runs on Linux — and that's a LOT of software.</p>
+
+        <div class="use-grid">
+            <div class="use-item">
+                <div class="use-icon">🎵</div>
+                <div class="use-text">
+                    <h4>Music Production</h4>
+                    <p>Run DAWs like LMMS, Ardour, and Audacity. People are making full tracks on Steam Deck.</p>
+                </div>
+            </div>
+            <div class="use-item">
+                <div class="use-icon">🚗</div>
+                <div class="use-text">
+                    <h4>Car Diagnostics</h4>
+                    <p>Plug in an OBD2 adapter and run diagnostic software. Mechanics are using these in the shop.</p>
+                </div>
+            </div>
+            <div class="use-item">
+                <div class="use-icon">🎮</div>
+                <div class="use-text">
+                    <h4>Retro Emulation</h4>
+                    <p>NES, SNES, N64, GameCube, PS1, PS2, Wii — decades of gaming in one device.</p>
+                </div>
+            </div>
+            <div class="use-item">
+                <div class="use-icon">📺</div>
+                <div class="use-text">
+                    <h4>Media Center</h4>
+                    <p>Netflix, YouTube, Plex, Kodi — dock it to your TV for a full streaming box.</p>
+                </div>
+            </div>
+            <div class="use-item">
+                <div class="use-icon">💻</div>
+                <div class="use-text">
+                    <h4>Web Browsing & Office</h4>
+                    <p>Firefox, Chrome, LibreOffice — homework, email, research, all built in.</p>
+                </div>
+            </div>
+            <div class="use-item">
+                <div class="use-icon">🎨</div>
+                <div class="use-text">
+                    <h4>Art & Creative Work</h4>
+                    <p>GIMP, Krita, Blender — touch screen on OLED model supports drawing.</p>
+                </div>
+            </div>
+            <div class="use-item">
+                <div class="use-icon">📡</div>
+                <div class="use-text">
+                    <h4>Network Tools</h4>
+                    <p>Full Linux terminal — SSH, network diagnostics, server management on the go.</p>
+                </div>
+            </div>
+            <div class="use-item">
+                <div class="use-icon">📚</div>
+                <div class="use-text">
+                    <h4>Learning to Code</h4>
+                    <p>VS Code, Python, Git — it's a portable dev environment for learning programming.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="video-grid">
+            <div class="video-card">
+                <div class="video-embed">
+                    <iframe src="https://www.youtube.com/embed/DK2lkwMB5oI" title="Making Music on Steam Deck" loading="lazy" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h4>Making Music on Steam Deck</h4>
+                    <p>Music production in desktop mode — showing that the Deck is a legit creative tool.</p>
+                </div>
+            </div>
+        </div>
+
+        <blockquote>
+            "People have hooked Steam Decks up to cars to read engine codes, used them as portable music studios, run entire home servers off them, and even used them as field computers for data collection. It's not a game console — it's a Swiss Army knife."
+        </blockquote>
+    </section>
+
+    <!-- SECTION 4: Obsolescence -->
+    <section id="sec-obsolete">
+        <div class="section-label">Part 4</div>
+        <h2>The Obsolescence Trap of Gaming PCs</h2>
+
+        <p>Here's the dirty secret of PC gaming: it never stops costing money. The moment you finish building a gaming PC, the clock starts ticking on when you'll need to upgrade.</p>
+
+        <h3>The Upgrade Treadmill</h3>
+        <ul class="feature-list">
+            <li>GPU: New generation every 18-24 months, previous gen loses 40-60% value overnight</li>
+            <li>CPU: Socket changes every 2-3 years, often requiring a new motherboard too</li>
+            <li>RAM: DDR4 to DDR5 transition means your old RAM is worthless with a new board</li>
+            <li>Storage: NVMe standards keep changing, older drives bottleneck newer systems</li>
+            <li>Power Supply: Higher wattage GPUs mean your PSU might not cut it anymore</li>
+        </ul>
+
+        <p>A $1,500 gaming PC built today will struggle with AAA games in 3-4 years without at least a GPU upgrade ($400-700). In 5 years, you're basically looking at a full rebuild.</p>
+
+        <h3>Steam Deck: One Price, Done</h3>
+        <p>The Steam Deck is designed as a complete, optimized system. Games are tested and verified to run on its specific hardware. Valve pushes software updates that actually improve performance over time — your device gets <em>better</em>, not worse. The original Steam Deck from 2022 plays more games better today than it did at launch, thanks to Proton compatibility improvements and SteamOS optimizations.</p>
+
+        <p>And when a new Steam Deck comes out? You sell the old one (they hold value well) and buy the new one for $400-650. Still cheaper than one GPU upgrade on a desktop.</p>
+    </section>
+
+    <!-- SECTION 5: Valve Philosophy -->
+    <section id="sec-valve">
+        <div class="section-label">Part 5</div>
+        <h2>The Valve Difference: A Company That Actually Respects You</h2>
+
+        <p>This is about more than hardware specs. It's about who you're giving your money to and what they believe in.</p>
+
+        <h3>Valve's Philosophy</h3>
+        <p>Valve is a privately held company — no shareholders demanding they squeeze every penny out of customers. Gabe Newell has been consistent for decades: make the best product, treat customers well, and the money follows. This isn't marketing speak — it's backed up by their actions:</p>
+
+        <ul class="feature-list">
+            <li>SteamOS is completely free and open source — no licensing fees, ever</li>
+            <li>Official iFixit partnership for replacement parts — they WANT you to repair it</li>
+            <li>Published their own teardown video before launch to show repairability</li>
+            <li>No planned obsolescence — software updates keep improving older hardware</li>
+            <li>No proprietary ecosystem lock-in — install Windows if you want, use any accessories</li>
+            <li>Proton compatibility layer is open source — they invest millions so Linux gaming works</li>
+            <li>Steam sales are legendary — games cost a fraction of console/retail prices</li>
+            <li>No subscription fees — no "Steam Online" monthly charge to play with friends</li>
+        </ul>
+
+        <blockquote>
+            "The easiest way to stop piracy is not by putting antipiracy technology to work. It's by giving those people a service that's better than what they're receiving from the pirates."
+            <cite>— Gabe Newell, Valve CEO</cite>
+        </blockquote>
+
+        <h3>Compare That to the PC Component Industry</h3>
+        <p>NVIDIA is openly prioritizing AI data centers over gamers, price-gouging on consumer GPUs, and using misleading benchmarks. Intel and AMD change CPU sockets regularly, forcing motherboard replacements. Microsoft charges $100+ for Windows and fills it with ads and telemetry. The PC gaming industry is designed to keep you spending. Valve is designed to keep you playing.</p>
+
+        <div class="video-grid">
+            <div class="video-card">
+                <div class="video-embed">
+                    <iframe src="https://www.youtube.com/embed/9kO6Dj2XNfY" title="Gabe Newell Talks Steam Deck" loading="lazy" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h4>IGN: Gabe Newell on Steam Deck's Origin, Goals, and Future</h4>
+                    <p>27-minute interview where Gabe explains why openness is Valve's "superpower."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: Repairability -->
+    <section id="sec-repair">
+        <div class="section-label">Part 6</div>
+        <h2>When Something Breaks (And It Will Eventually)</h2>
+
+        <p>Everything breaks eventually. The question is: what happens when it does?</p>
+
+        <div class="vs-grid">
+            <div class="vs-card">
+                <h4>Gaming PC Breaks</h4>
+                <ul>
+                    <li>Diagnose which part failed</li>
+                    <li>Hope it's still under warranty</li>
+                    <li>Buy replacement ($100-$700)</li>
+                    <li>Reinstall, reconfigure, pray</li>
+                    <li>Compatibility issues with new part</li>
+                    <li>Total repair: $150–$800+</li>
+                </ul>
+            </div>
+            <div class="vs-card winner">
+                <h4>Steam Deck Breaks</h4>
+                <ul>
+                    <li>Order exact part from iFixit</li>
+                    <li>Follow Valve's official guide</li>
+                    <li>Swap the part yourself</li>
+                    <li>Joystick: $20, Screen: $100</li>
+                    <li>Battery: $30, SSD: $25-$60</li>
+                    <li>Total repair: $20–$100</li>
+                </ul>
+            </div>
+        </div>
+
+        <p>Valve partnered with iFixit specifically to make the Steam Deck repairable. They published teardown videos, sell official replacement parts, and designed the device to be opened with standard screws. This is the polar opposite of Apple's approach and most PC component manufacturers who'd rather you buy new.</p>
+
+        <div class="video-grid">
+            <div class="video-card">
+                <div class="video-embed">
+                    <iframe src="https://www.youtube.com/embed/4T0RZ6ustKQ" title="iFixit Steam Deck Teardown" loading="lazy" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h4>iFixit: Steam Deck Teardown</h4>
+                    <p>Full teardown showing the Steam Deck's 7/10 repairability score — modular, labeled internals.</p>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-embed">
+                    <iframe src="https://www.youtube.com/embed/Dxnr2FAADAs" title="Valve Official Teardown" loading="lazy" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h4>Valve: Official Steam Deck Teardown</h4>
+                    <p>Valve themselves showing you how to open the device — because they want you to be able to fix it.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: OLED -->
+    <section id="sec-oled">
+        <div class="section-label">Part 7</div>
+        <h2>The Steam Deck OLED: The Best Version Yet</h2>
+
+        <p>In late 2023, Valve released the Steam Deck OLED — and instead of price-gouging, they made it better AND kept the same price points. That's the Valve difference in action.</p>
+
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="number">1000</div>
+                <div class="label">Nits peak HDR brightness</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">90Hz</div>
+                <div class="label">Refresh rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">50%</div>
+                <div class="label">Bigger battery</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">WiFi 6E</div>
+                <div class="label">Faster downloads</div>
+            </div>
+        </div>
+
+        <p>The OLED display is genuinely stunning — perfect blacks, vibrant colors, 1000-nit HDR brightness. It's a better display than most monitors people pair with their $1,500 gaming PCs. They also upgraded to a 6nm APU (more efficient), added a bigger 50Wh battery for longer play sessions, and included WiFi 6E. All at the same price.</p>
+
+        <p>Try getting a monitor upgrade, better power supply, AND better WiFi card for $0 extra on a gaming PC. It doesn't happen.</p>
+    </section>
+
+    <!-- SECTION 8: Emulation -->
+    <section id="sec-emulation">
+        <div class="section-label">Part 8</div>
+        <h2>Every Game You Ever Loved, All in One Place</h2>
+
+        <p>The Steam Deck doesn't just play Steam games. Through emulation, it plays virtually every console game ever made — NES, SNES, Game Boy, Genesis, N64, PlayStation 1 & 2, GameCube, Wii, DS, PSP, and more. With EmuDeck or RetroDECK, setting up emulation takes about 10 minutes.</p>
+
+        <p>Your kid gets access to the entire history of gaming — from the classics you grew up with to modern AAA titles — on one $400-$650 device. A gaming PC can do this too, but at 3-4x the cost.</p>
+
+        <div class="callout">
+            <h3>The Game Library Advantage</h3>
+            <p>Steam regularly has sales where AAA games go for $5-$20. Your Steam library follows you forever — to any device, any future Steam Deck, any PC. You never lose your games. Console games? Stuck on that console. PC parts die? Good luck getting your games running on the replacement without hours of setup.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 9: The Verdict -->
+    <section id="sec-verdict">
+        <div class="section-label">The Bottom Line</div>
+        <h2>The Verdict</h2>
+
+        <p>A gaming PC made sense when there was no alternative. Now there is. The Steam Deck gives you:</p>
+
+        <ul class="feature-list">
+            <li>AAA gaming at a fraction of the cost</li>
+            <li>A full desktop PC when docked</li>
+            <li>Portable gaming anywhere you go</li>
+            <li>A music production station</li>
+            <li>A retro gaming powerhouse</li>
+            <li>A car diagnostic tool</li>
+            <li>A media center for your TV</li>
+            <li>A device you can actually repair yourself</li>
+            <li>An operating system that respects you</li>
+            <li>A company that doesn't try to milk you dry</li>
+        </ul>
+
+        <div class="verdict">
+            <h2>Save Your Money. Get the Deck.</h2>
+            <div class="price-highlight">$399–$649</div>
+            <p class="price-note">vs. $1,500–$2,500 for a comparable gaming PC setup</p>
+            <p>Put the $1,000+ you save toward games, accessories, a nice dock, or just keep it in your pocket. Your kid will be gaming in minutes, not hours of building and troubleshooting.</p>
+        </div>
+    </section>
+
+    <!-- MORE VIDEOS -->
+    <section id="sec-videos">
+        <div class="section-label">Watch More</div>
+        <h2>More Videos Worth Watching</h2>
+        <p class="text-secondary">Deep dives, reviews, and real-world usage that back up everything in this article.</p>
+
+        <div class="video-grid">
+            <div class="video-card">
+                <div class="video-embed">
+                    <iframe src="https://www.youtube.com/embed/v-L-Iov3RQ8" title="The Ultimate Steam Deck" loading="lazy" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h4>Linus Tech Tips: The Ultimate Steam Deck</h4>
+                    <p>LTT builds the best possible Steam Deck with 2TB SSD, upgraded sticks, cooling mods, and battery upgrades — showing how modular and upgradeable it is.</p>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-embed">
+                    <iframe src="https://www.youtube.com/embed/Lnxj1ltd5vk" title="Steam Deck Mini PC Build" loading="lazy" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h4>ETA Prime: Steam Deck Mini PC Build</h4>
+                    <p>Turning a Steam Deck motherboard into a functional mini desktop PC for under $150.</p>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-embed">
+                    <iframe src="https://www.youtube.com/embed/ZkolKam3kjU" title="Valve Steam Deck Specs vs Switch" loading="lazy" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h4>Gamers Nexus: Steam Deck Specs & Hardware Deep Dive</h4>
+                    <p>Technical breakdown of the Steam Deck hardware — LP-DDR5, custom AMD APU, and how it compares to competitors.</p>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-embed">
+                    <iframe src="https://www.youtube.com/embed/h3JfOxx6Hh4" title="NVIDIA AI Impact on Gaming GPUs" loading="lazy" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h4>How NVIDIA's AI Focus is Hurting Gamers</h4>
+                    <p>Why NVIDIA prioritizing AI chips over gaming GPUs is driving consumer graphics card prices through the roof.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>Built by Matt Matheson — March 2026</p>
+    <p style="margin-top: 8px;">Part of <a href="https://mattmatheson.github.io/RandomPhoneBuilds/">RandomPhoneBuilds</a></p>
+</footer>
+
+<script>
+(function() {
+    // ========================
+    // LISTEN MODE (Web Speech API)
+    // ========================
+    const VOICE_WHITELIST = [
+        'samantha', 'karen', 'daniel', 'moira', 'tessa', 'ava', 'allison',
+        'tom', 'aaron', 'nicky', 'evan', 'zoe', 'joelle', 'fiona', 'martha', 'arthur'
+    ];
+
+    const SPEEDS = [0.8, 1, 1.2, 1.5];
+    let currentSpeedIndex = 1;
+    let currentVoice = null;
+    let isPlaying = false;
+    let isPaused = false;
+    let currentSectionIndex = 0;
+    let currentChunkIndex = 0;
+    let sections = [];
+    let chunks = [];
+    let keepAliveInterval = null;
+
+    const listenBtn = document.getElementById('listenBtn');
+    const voiceSelect = document.getElementById('voiceSelect');
+    const speedBtn = document.getElementById('speedBtn');
+    const playerBar = document.getElementById('playerBar');
+    const playerPlayPause = document.getElementById('playerPlayPause');
+    const playerSectionTitle = document.getElementById('playerSectionTitle');
+    const playerVoice = document.getElementById('playerVoice');
+    const playerSpeed = document.getElementById('playerSpeed');
+    const playerStop = document.getElementById('playerStop');
+    const selectAllBtn = document.getElementById('selectAllBtn');
+
+    function isWhitelistedVoice(name) {
+        const lower = name.toLowerCase();
+        if (lower.includes('google us english') || lower.includes('google uk english')) return true;
+        return VOICE_WHITELIST.some(w => lower.includes(w));
+    }
+
+    function populateVoices() {
+        const voices = speechSynthesis.getVoices().filter(v => isWhitelistedVoice(v.name));
+        [voiceSelect, playerVoice].forEach(select => {
+            select.innerHTML = '';
+            voices.forEach((v, i) => {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.textContent = v.name.replace(/\(.*?\)/g, '').trim();
+                select.appendChild(opt);
+            });
+        });
+        if (voices.length > 0) {
+            const samantha = voices.findIndex(v => v.name.toLowerCase().includes('samantha'));
+            const defaultIdx = samantha >= 0 ? samantha : 0;
+            voiceSelect.value = defaultIdx;
+            playerVoice.value = defaultIdx;
+            currentVoice = voices[defaultIdx];
+        }
+        return voices;
+    }
+
+    speechSynthesis.onvoiceschanged = populateVoices;
+    populateVoices();
+
+    function syncVoice(source) {
+        const voices = speechSynthesis.getVoices().filter(v => isWhitelistedVoice(v.name));
+        const idx = parseInt(source.value);
+        currentVoice = voices[idx];
+        if (source === voiceSelect) playerVoice.value = idx;
+        else voiceSelect.value = idx;
+    }
+
+    voiceSelect.addEventListener('change', () => syncVoice(voiceSelect));
+    playerVoice.addEventListener('change', () => syncVoice(playerVoice));
+
+    function cycleSpeed(btn) {
+        currentSpeedIndex = (currentSpeedIndex + 1) % SPEEDS.length;
+        const label = SPEEDS[currentSpeedIndex] + 'x';
+        speedBtn.textContent = label;
+        playerSpeed.textContent = label;
+    }
+
+    speedBtn.addEventListener('click', cycleSpeed);
+    playerSpeed.addEventListener('click', cycleSpeed);
+
+    function getSections() {
+        return Array.from(document.querySelectorAll('#mainContent section'));
+    }
+
+    function getChunksForSection(section) {
+        const elements = section.querySelectorAll('h2, h3, p, li, blockquote, cite, .stat-card .label, .use-text h4');
+        return Array.from(elements).filter(el => {
+            const text = el.textContent.trim();
+            return text.length > 0 && !el.closest('.video-info') && !el.closest('.pro-tip');
+        });
+    }
+
+    function showPlayer() {
+        playerBar.classList.add('visible');
+    }
+
+    function hidePlayer() {
+        playerBar.classList.remove('visible');
+    }
+
+    function highlightSection(section) {
+        document.querySelectorAll('section.reading').forEach(s => s.classList.remove('reading'));
+        if (section) {
+            section.classList.add('reading');
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    function startKeepAlive() {
+        stopKeepAlive();
+        keepAliveInterval = setInterval(() => {
+            if (speechSynthesis.speaking && !speechSynthesis.paused) {
+                speechSynthesis.pause();
+                speechSynthesis.resume();
+            }
+        }, 10000);
+    }
+
+    function stopKeepAlive() {
+        if (keepAliveInterval) {
+            clearInterval(keepAliveInterval);
+            keepAliveInterval = null;
+        }
+    }
+
+    function speakChunk(sectionIdx, chunkIdx) {
+        if (!isPlaying) return;
+
+        sections = getSections();
+        if (sectionIdx >= sections.length) {
+            stopPlayback();
+            return;
+        }
+
+        const section = sections[sectionIdx];
+        const sChunks = getChunksForSection(section);
+
+        if (chunkIdx >= sChunks.length) {
+            speakChunk(sectionIdx + 1, 0);
+            return;
+        }
+
+        currentSectionIndex = sectionIdx;
+        currentChunkIndex = chunkIdx;
+
+        if (chunkIdx === 0) {
+            highlightSection(section);
+            const title = section.querySelector('h2');
+            playerSectionTitle.textContent = title ? title.textContent : 'Section ' + (sectionIdx + 1);
+        }
+
+        const el = sChunks[chunkIdx];
+        const text = el.textContent.trim();
+        const utt = new SpeechSynthesisUtterance(text);
+
+        if (currentVoice) utt.voice = currentVoice;
+        utt.rate = SPEEDS[currentSpeedIndex];
+
+        const isHeading = el.tagName === 'H2' || el.tagName === 'H3';
+        if (isHeading) {
+            utt.rate = SPEEDS[currentSpeedIndex] * 0.9;
+            utt.pitch = 1.05;
+        }
+
+        const pauseAfter = isHeading ? 400 : 200;
+
+        utt.onend = () => {
+            setTimeout(() => speakChunk(sectionIdx, chunkIdx + 1), pauseAfter);
+        };
+
+        utt.onerror = () => {
+            setTimeout(() => speakChunk(sectionIdx, chunkIdx + 1), 100);
+        };
+
+        speechSynthesis.speak(utt);
+    }
+
+    function startPlayback() {
+        speechSynthesis.cancel();
+        isPlaying = true;
+        isPaused = false;
+        listenBtn.textContent = 'Stop Listening';
+        playerPlayPause.textContent = '⏸';
+        showPlayer();
+        startKeepAlive();
+        speakChunk(0, 0);
+    }
+
+    function stopPlayback() {
+        speechSynthesis.cancel();
+        isPlaying = false;
+        isPaused = false;
+        listenBtn.textContent = 'Listen to Article';
+        stopKeepAlive();
+        hidePlayer();
+        document.querySelectorAll('section.reading').forEach(s => s.classList.remove('reading'));
+    }
+
+    function togglePause() {
+        if (isPaused) {
+            speechSynthesis.resume();
+            isPaused = false;
+            playerPlayPause.textContent = '⏸';
+            startKeepAlive();
+        } else {
+            speechSynthesis.pause();
+            isPaused = true;
+            playerPlayPause.textContent = '▶';
+            stopKeepAlive();
+        }
+    }
+
+    listenBtn.addEventListener('click', () => {
+        if (isPlaying) stopPlayback();
+        else startPlayback();
+    });
+
+    playerPlayPause.addEventListener('click', togglePause);
+    playerStop.addEventListener('click', stopPlayback);
+
+    selectAllBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const range = document.createRange();
+        range.selectNodeContents(document.getElementById('mainContent'));
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+    });
+})();
+</script>
+
+</body>
+</html>
