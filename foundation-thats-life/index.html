@@ -354,7 +354,7 @@
   section:nth-of-type(7) { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.7s; }
   footer { animation: fadeInUp 0.6s ease-out both; animation-delay: 0.8s; }
 
-  /* Listen Mode */
+  /* Listen Mode — header controls */
   .listen-controls {
     display: flex;
     align-items: center;
@@ -394,8 +394,6 @@
     color: var(--text-primary);
     cursor: pointer;
     max-width: 180px;
-    -webkit-appearance: none;
-    appearance: none;
   }
 
   .speed-btn {
@@ -413,6 +411,139 @@
 
   .speed-btn:active { background: var(--bg); }
 
+  /* Sticky bottom player bar */
+  .listen-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(29, 29, 31, 0.95);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    color: #fff;
+    padding: 12px 20px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 9999;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    box-shadow: 0 -2px 20px rgba(0,0,0,0.15);
+  }
+
+  .listen-bar.visible {
+    transform: translateY(0);
+  }
+
+  .listen-bar .bar-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .listen-bar .bar-btn.paused { background: #6E6E73; }
+
+  .listen-bar .bar-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .listen-bar .bar-title {
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .listen-bar .bar-section {
+    font-size: 0.7rem;
+    color: #A1A1A6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .listen-bar .bar-voice {
+    font-size: 0.75rem;
+    padding: 6px 10px;
+    border-radius: 2rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    max-width: 120px;
+  }
+
+  .listen-bar .bar-speed {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 2rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    flex-shrink: 0;
+  }
+
+  .listen-bar .bar-stop {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: transparent;
+    color: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Pro tip banner */
+  .listen-tip {
+    margin-top: 0.75rem;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .listen-tip strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .select-all-btn {
+    display: inline;
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    text-decoration-color: rgba(196, 32, 32, 0.3);
+    -webkit-tap-highlight-color: transparent;
+  }
+
   section.reading {
     border-left: 3px solid var(--accent);
     background: rgba(196, 32, 32, 0.04);
@@ -421,10 +552,14 @@
     transition: all 0.3s ease;
   }
 
+  /* Extra bottom padding so content isn't hidden behind sticky bar */
+  body.listening { padding-bottom: 80px; }
+
   @media (max-width: 480px) {
     .listen-controls { flex-direction: column; align-items: stretch; }
     .listen-btn { width: 100%; justify-content: center; }
     .voice-select { max-width: 100%; }
+    .listen-bar .bar-voice { display: none; }
   }
 
   @media print {
@@ -451,6 +586,9 @@
       <select class="voice-select" id="voiceSelect" aria-label="Choose voice"></select>
       <button class="speed-btn" id="speedBtn" aria-label="Playback speed">1x</button>
     </div>
+    <p class="listen-tip">
+      Want a better voice? On iPhone, <button class="select-all-btn" id="selectAllBtn">tap here to select the article text</button>, then tap <strong>Speak</strong> in the popup menu. It uses your phone's premium voices (enable in Settings &gt; Accessibility &gt; Spoken Content &gt; Speak Selection).
+    </p>
   </header>
 
   <nav class="toc">
@@ -643,11 +781,45 @@
 
 </div>
 
+<!-- Sticky listen bar -->
+<div class="listen-bar" id="listenBar">
+  <button class="bar-btn" id="barPlayPause" aria-label="Play/Pause">&#9654;</button>
+  <div class="bar-info">
+    <div class="bar-title" id="barTitle">Listening</div>
+    <div class="bar-section" id="barSection"></div>
+  </div>
+  <select class="bar-voice" id="barVoice" aria-label="Voice"></select>
+  <button class="bar-speed" id="barSpeed" aria-label="Speed">1x</button>
+  <button class="bar-stop" id="barStop" aria-label="Stop">&#9632;</button>
+</div>
+
 <script>
 (function() {
   var btn = document.getElementById('listenBtn');
   var voiceSelect = document.getElementById('voiceSelect');
   var speedBtn = document.getElementById('speedBtn');
+  var selectAllBtn = document.getElementById('selectAllBtn');
+  var bar = document.getElementById('listenBar');
+  var barPlayPause = document.getElementById('barPlayPause');
+  var barTitle = document.getElementById('barTitle');
+  var barSection = document.getElementById('barSection');
+  var barVoice = document.getElementById('barVoice');
+  var barSpeed = document.getElementById('barSpeed');
+  var barStop = document.getElementById('barStop');
+
+  // ── Select All for iOS Speak Selection ──
+  if (selectAllBtn) {
+    selectAllBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      var container = document.querySelector('.container') || document.querySelector('main') || document.body;
+      var range = document.createRange();
+      range.selectNodeContents(container);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    });
+  }
+
   if (!btn || !('speechSynthesis' in window)) {
     if (btn) btn.parentElement.style.display = 'none';
     return;
@@ -662,40 +834,61 @@
   var speedLabels = ['0.8x', '1x', '1.2x', '1.5x'];
   var speedIdx = 1;
 
-  // ── Voice ranking: prioritize premium iOS/macOS voices ──
+  // ── Curated voice whitelist — only decent-sounding voices ──
+  var goodVoices = [
+    'samantha', 'karen', 'daniel', 'moira', 'tessa',
+    'ava', 'allison', 'tom', 'aaron', 'nicky', 'evan',
+    'zoe', 'joelle', 'fiona', 'martha', 'arthur',
+    'google us english', 'google uk english'
+  ];
+
+  function isGoodVoice(v) {
+    var name = v.name.toLowerCase();
+    for (var i = 0; i < goodVoices.length; i++) {
+      if (name.indexOf(goodVoices[i]) !== -1) return true;
+    }
+    return false;
+  }
+
   function voiceScore(v) {
     var name = v.name.toLowerCase();
     if (/premium/.test(name)) return 100;
-    if (/siri/.test(name)) return 90;
     if (/enhanced/.test(name)) return 80;
-    if (/\(natural\)/.test(name)) return 75;
-    // Good known voices
-    if (/zoe|ava|allison|tom|aaron|nicky|evan|joelle|fiona/.test(name)) return 60;
-    if (/samantha|karen|daniel|moira|tessa/.test(name)) return 50;
-    // Prefer local voices (higher quality than network on iOS)
-    if (v.localService) return 30;
-    return 10;
+    if (/samantha|karen|daniel/.test(name)) return 60;
+    if (/ava|allison|tom|aaron|zoe|fiona/.test(name)) return 50;
+    if (/google/.test(name)) return 40;
+    return 20;
   }
 
-  function getEnglishVoices() {
-    return synth.getVoices()
-      .filter(function(v) { return v.lang && v.lang.startsWith('en'); })
-      .sort(function(a, b) { return voiceScore(b) - voiceScore(a); });
+  function getCuratedVoices() {
+    var all = synth.getVoices().filter(function(v) {
+      return v.lang && v.lang.startsWith('en') && isGoodVoice(v);
+    });
+    all.sort(function(a, b) { return voiceScore(b) - voiceScore(a); });
+    // If nothing matched whitelist, fall back to first 4 English voices
+    if (!all.length) {
+      all = synth.getVoices().filter(function(v) {
+        return v.lang && v.lang.startsWith('en');
+      }).slice(0, 4);
+    }
+    return all;
+  }
+
+  function populateSelect(selectEl, voices) {
+    selectEl.innerHTML = '';
+    voices.forEach(function(v, i) {
+      var opt = document.createElement('option');
+      opt.textContent = v.name.replace(/Google |Microsoft |Apple /i, '');
+      opt.value = i;
+      selectEl.appendChild(opt);
+    });
   }
 
   function populateVoiceList() {
-    var voices = getEnglishVoices();
+    var voices = getCuratedVoices();
     if (!voices.length) return;
-    voiceSelect.innerHTML = '';
-    voices.forEach(function(v, i) {
-      var opt = document.createElement('option');
-      var label = v.name.replace(/Google |Microsoft |Apple /, '');
-      if (/premium/i.test(v.name)) label += ' *';
-      else if (/enhanced|siri/i.test(v.name)) label += ' +';
-      opt.textContent = label;
-      opt.value = i;
-      voiceSelect.appendChild(opt);
-    });
+    populateSelect(voiceSelect, voices);
+    populateSelect(barVoice, voices);
     voice = voices[0];
   }
 
@@ -703,24 +896,48 @@
   synth.addEventListener('voiceschanged', populateVoiceList);
   synth.cancel();
 
-  voiceSelect.addEventListener('change', function() {
-    var voices = getEnglishVoices();
-    voice = voices[parseInt(voiceSelect.value)] || voices[0];
-    // If currently playing, restart current section with new voice
-    if (state === 'playing') {
-      synth.cancel();
-      speakSection(currentIndex);
-    }
-  });
+  function syncVoice(fromSelect) {
+    var voices = getCuratedVoices();
+    var idx = parseInt(fromSelect.value);
+    voice = voices[idx] || voices[0];
+    if (fromSelect === voiceSelect) barVoice.value = fromSelect.value;
+    else voiceSelect.value = fromSelect.value;
+    if (state === 'playing') { synth.cancel(); speakSection(currentIndex); }
+  }
 
-  speedBtn.addEventListener('click', function() {
+  voiceSelect.addEventListener('change', function() { syncVoice(voiceSelect); });
+  barVoice.addEventListener('change', function() { syncVoice(barVoice); });
+
+  function cycleSpeed() {
     speedIdx = (speedIdx + 1) % speeds.length;
     speedBtn.textContent = speedLabels[speedIdx];
-    if (state === 'playing') {
-      synth.cancel();
-      speakSection(currentIndex);
+    barSpeed.textContent = speedLabels[speedIdx];
+    if (state === 'playing') { synth.cancel(); speakSection(currentIndex); }
+  }
+
+  speedBtn.addEventListener('click', cycleSpeed);
+  barSpeed.addEventListener('click', cycleSpeed);
+
+  // ── Sticky bar ──
+  function showBar() {
+    bar.classList.add('visible');
+    document.body.classList.add('listening');
+  }
+
+  function hideBar() {
+    bar.classList.remove('visible');
+    document.body.classList.remove('listening');
+  }
+
+  function updateBar(isPlaying) {
+    barPlayPause.innerHTML = isPlaying ? '&#9208;' : '&#9654;';
+    barPlayPause.classList.toggle('paused', !isPlaying);
+    barTitle.textContent = isPlaying ? 'Now Playing' : 'Paused';
+    if (currentIndex >= 0 && currentIndex < sections.length) {
+      var h = sections[currentIndex].querySelector('h2');
+      barSection.textContent = h ? h.textContent : ('Section ' + (currentIndex + 1));
     }
-  });
+  }
 
   function clearHighlight() {
     sections.forEach(function(s) { s.classList.remove('reading'); });
@@ -738,12 +955,11 @@
     btn.innerHTML = icon + ' ' + label;
   }
 
-  // ── Break section into readable chunks for natural pacing ──
+  // ── Chunk-based reading ──
   function getChunks(section) {
     var chunks = [];
     var els = section.querySelectorAll('h2, h3, h4, p, li, .callout p, .stat .label');
     if (!els.length) {
-      // Fallback: just read all text
       var t = section.textContent.trim();
       if (t) chunks.push({ text: t, isHeading: false });
       return chunks;
@@ -766,6 +982,7 @@
     if (idx >= sections.length) { stop(); return; }
     currentIndex = idx;
     highlight(idx);
+    updateBar(true);
     currentChunks = getChunks(sections[idx]);
     currentChunkIdx = 0;
     speakNextChunk();
@@ -773,7 +990,6 @@
 
   function speakNextChunk() {
     if (currentChunkIdx >= currentChunks.length) {
-      // Done with this section — pause briefly, then next section
       if (state === 'playing') {
         setTimeout(function() {
           if (state === 'playing') speakSection(currentIndex + 1);
@@ -791,7 +1007,6 @@
     utter.onend = function() {
       if (state !== 'playing') return;
       currentChunkIdx++;
-      // Small pause between paragraphs
       var delay = chunk.isHeading ? 400 : 200;
       setTimeout(function() {
         if (state === 'playing') speakNextChunk();
@@ -813,6 +1028,8 @@
     state = 'playing';
     updateBtn('Pause', '&#9208;');
     btn.classList.remove('paused');
+    showBar();
+    updateBar(true);
     speakSection(currentIndex < 0 ? 0 : currentIndex);
   }
 
@@ -821,6 +1038,7 @@
     synth.pause();
     updateBtn('Resume', '&#9654;');
     btn.classList.add('paused');
+    updateBar(false);
   }
 
   function resume() {
@@ -828,6 +1046,7 @@
     synth.resume();
     updateBtn('Pause', '&#9208;');
     btn.classList.remove('paused');
+    updateBar(true);
   }
 
   function stop() {
@@ -839,6 +1058,7 @@
     clearHighlight();
     updateBtn('Listen', '&#9654;');
     btn.classList.remove('paused');
+    hideBar();
   }
 
   btn.addEventListener('click', function() {
@@ -847,11 +1067,19 @@
     else if (state === 'paused') resume();
   });
 
+  barPlayPause.addEventListener('click', function() {
+    if (state === 'playing') pause();
+    else if (state === 'paused') resume();
+    else play();
+  });
+
+  barStop.addEventListener('click', stop);
+
   document.addEventListener('visibilitychange', function() {
     if (document.hidden && state === 'playing') pause();
   });
 
-  // Chrome keep-alive workaround
+  // Chrome keep-alive
   var keepAlive;
   var origPlay = play;
   play = function() {

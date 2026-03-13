@@ -52,44 +52,60 @@ GitHub Pages deploys automatically — usually takes 30-60 seconds.
 
 Every research document must include a **Listen** button in the header area, right below the title/scope. This uses the browser's built-in **Web Speech API** (`speechSynthesis`) — no external dependencies needed.
 
-### How it works
-1. A play/pause button sits at the top of the article (inside `<header>`, after the `.scope` paragraph)
-2. When pressed, it reads the document **section by section** using `speechSynthesis.speak()`
-3. The **currently-reading section** gets a highlight class (subtle left border + light background, using the accent color)
-4. The page **auto-scrolls** to each section as it begins reading (`scrollIntoView({ behavior: 'smooth', block: 'start' })`)
-5. When a section finishes, the highlight moves to the next section
-6. The button toggles between ▶ Play / ⏸ Pause / ■ Stop states
-7. Clicking while playing pauses; clicking again resumes; long-idle auto-stops
-
-### Listen button design
-- Sits in the header after the scope/subtitle
-- Styled as a pill button: `background: var(--accent); color: white; border-radius: 2rem; padding: 0.6rem 1.5rem;`
-- Icon + text: "▶ Listen" / "⏸ Pause" / "■ Stop"
+### Listen button
+- Red pill button in the header (after the `.scope` paragraph)
+- Styled as a pill: `background: var(--accent); color: white; border-radius: 2rem; padding: 0.6rem 1.5rem;`
 - On mobile, full-width under the subtitle
-- Smooth transitions on state changes
 
-### Section highlight style
-```css
-section.reading {
-  border-left: 3px solid var(--accent);
-  background: rgba(196, 32, 32, 0.04);
-  padding-left: 1rem;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-```
+### Voice selector dropdown
+- Dropdown next to the listen button (or in the player bar) to pick a voice
+- **Whitelist only decent-sounding voices.** Filter `speechSynthesis.getVoices()` to match these names (case-insensitive): Samantha, Karen, Daniel, Moira, Tessa, Ava, Allison, Tom, Aaron, Nicky, Evan, Zoe, Joelle, Fiona, Martha, Arthur, and any voice whose name includes "Google US English" or "Google UK English"
+- Exclude novelty/robotic voices (Bubbles, Zarvox, Trinoids, etc.) — if a voice name doesn't match the whitelist, don't show it
+- Default to Samantha or the first available whitelisted voice
 
-### Implementation notes
-- Gather all `<section>` elements in document order
-- For each section, extract `.textContent` (strips HTML tags — speech API only needs plain text)
-- Create a `SpeechSynthesisUtterance` for each section
-- Use the `onend` event of each utterance to advance to the next section
-- Use `onstart` to add the `.reading` class and scroll into view
+### Speed control
+- Button that cycles through: **0.8x → 1x → 1.2x → 1.5x** (then wraps back to 0.8x)
+- Applies `utterance.rate` to each new utterance
+
+### Pro tip for premium voice
+- Below the header controls (or in the player bar), include a small muted paragraph:
+  > *Pro tip: For a better voice, tap "select all" below then use iOS Speak Selection (Settings > Accessibility > Spoken Content > Speak Selection).*
+- Include a "select all" link/button that programmatically selects the main content container using `document.createRange()` + `range.selectNodeContents(container)` + `window.getSelection().addRange(range)`
+
+### Sticky bottom player bar
+- When playback starts, a **dark frosted-glass bar** slides up from the bottom (like a music player mini-bar)
+- `position: fixed; bottom: 0; left: 0; right: 0;` with `padding-bottom: env(safe-area-inset-bottom)` for iPhone home indicator
+- Background: dark translucent with `backdrop-filter: blur(20px)` (e.g. `rgba(30, 30, 30, 0.92)`)
+- Hidden by default. Slides in via `transform: translateY(100%)` → `translateY(0)` with a CSS transition
+- Contains (in a single row, compact): **play/pause button**, **current section title** (truncated), **voice picker**, **speed control**, **stop button**
+- Stays visible while audio is playing or paused. Slides away on stop or when playback completes
+
+### Section-by-section reading with chunk-based pacing
+- Do NOT read an entire section as one huge blob of text
+- Break each `<section>` into individual **paragraphs** (`<p>`, `<li>`, `<h2>`, `<h3>`, etc.)
+- Create a separate `SpeechSynthesisUtterance` for each paragraph/element
+- **Pacing pauses:** 200ms pause between paragraphs, 400ms pause after headings
+- **Heading style:** Read headings at a slightly slower rate (0.9x of current speed) with a slight pitch shift (`utterance.pitch = 1.05`) to differentiate them from body text
+- Use the `onend` event of each utterance to advance to the next chunk, applying the appropriate pause via `setTimeout`
+
+### Section highlight + auto-scroll
+- The **currently-reading section** gets a highlight class:
+  ```css
+  section.reading {
+    border-left: 3px solid var(--accent);
+    background: rgba(196, 32, 32, 0.04);
+    padding-left: 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+  ```
+- Auto-scrolls to each new section: `scrollIntoView({ behavior: 'smooth', block: 'start' })`
 - Remove `.reading` from the previous section before highlighting the next
-- Handle edge cases: user scrolls manually (don't fight it), page visibility change (pause if tab hidden), reaching the end (reset button to Play)
-- Prefer a natural-sounding voice if available (check for voices with "English" and pick one that isn't robotic — `speechSynthesis.getVoices()`)
-- Set a comfortable speech rate: `utterance.rate = 1.0` (can be adjusted)
-- The listen feature must work on both desktop and mobile Safari/Chrome
+- Don't fight manual scrolling — only auto-scroll on section transitions
+
+### Chrome keep-alive workaround
+- Chrome kills long utterances silently. Set up a `setInterval` that calls `speechSynthesis.resume()` every **10 seconds** while playback is active
+- Clear the interval when playback stops
 
 ## Branch Rules
 - Try `git push origin main` first.
