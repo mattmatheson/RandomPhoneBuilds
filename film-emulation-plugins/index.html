@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film Emulation Plugin Deep Dive — The Full Landscape</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #C42020;
+            --bg: #FAFAFA;
+            --text: #1D1D1F;
+            --text2: #6E6E73;
+            --border: #E5E5E7;
+            --card-bg: #FFFFFF;
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .hero {
+            background: var(--text);
+            color: var(--bg);
+            padding: 80px 24px 72px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            max-width: 760px;
+            margin: 0 auto 16px;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .scope {
+            font-size: 1.1rem;
+            color: #A1A1A6;
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        .listen-controls {
+            margin-top: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .listen-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.6rem 1.5rem;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .listen-btn:hover { opacity: 0.85; }
+
+        .voice-select {
+            background: rgba(255,255,255,0.1);
+            color: #A1A1A6;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 2rem;
+            padding: 0.5rem 1rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .voice-select option { background: #1D1D1F; color: #FAFAFA; }
+
+        .speed-btn {
+            background: rgba(255,255,255,0.1);
+            color: #A1A1A6;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 2rem;
+            padding: 0.5rem 1rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .pro-tip {
+            font-size: 0.8rem;
+            color: #6E6E73;
+            max-width: 480px;
+            margin: 16px auto 0;
+            line-height: 1.5;
+        }
+
+        .pro-tip a {
+            color: #A1A1A6;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 56px 24px 100px;
+        }
+
+        .intro {
+            font-size: 1.15rem;
+            color: var(--text2);
+            margin-bottom: 48px;
+            line-height: 1.8;
+            border-left: 3px solid var(--accent);
+            padding-left: 20px;
+        }
+
+        section {
+            margin-bottom: 48px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        section.reading {
+            border-left: 3px solid var(--accent);
+            background: rgba(196, 32, 32, 0.04);
+            padding-left: 1rem;
+            border-radius: 4px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        h2 .num {
+            color: var(--accent);
+            margin-right: 4px;
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-top: 28px;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: var(--text2);
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        ul, ol {
+            margin-bottom: 16px;
+            padding-left: 24px;
+            color: var(--text2);
+        }
+
+        li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        li strong {
+            color: var(--text);
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+        }
+
+        .card h4 {
+            margin-top: 0;
+            color: var(--text);
+        }
+
+        .card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .card .price-tag {
+            display: inline-block;
+            background: rgba(196, 32, 32, 0.08);
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .card .host-tag {
+            display: inline-block;
+            background: #F0F0F2;
+            color: var(--text2);
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 2px 8px;
+            border-radius: 2rem;
+            margin-right: 4px;
+            margin-bottom: 4px;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .pros-cons .pro, .pros-cons .con {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            font-size: 0.9rem;
+            color: var(--text2);
+        }
+
+        .pros-cons .pro { border-left: 3px solid #34C759; }
+        .pros-cons .con { border-left: 3px solid var(--accent); }
+
+        .verdict {
+            background: var(--text);
+            color: var(--bg);
+            border-radius: 12px;
+            padding: 24px 28px;
+            margin-top: 20px;
+            margin-bottom: 16px;
+        }
+
+        .verdict p {
+            color: #A1A1A6;
+            margin-bottom: 0;
+        }
+
+        .verdict strong {
+            color: var(--bg);
+        }
+
+        .callout {
+            background: rgba(196, 32, 32, 0.04);
+            border: 1px solid rgba(196, 32, 32, 0.12);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 20px 0;
+        }
+
+        .callout p {
+            margin-bottom: 0;
+        }
+
+        .callout.insight {
+            border-left: 3px solid var(--accent);
+        }
+
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 16px;
+            margin: 16px 0;
+            color: var(--text2);
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        blockquote strong {
+            color: var(--text);
+            font-style: normal;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover { text-decoration: underline; }
+
+        .tag {
+            display: inline-block;
+            background: rgba(196, 32, 32, 0.08);
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 2rem;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+
+        .tag.green {
+            background: rgba(52, 199, 89, 0.1);
+            color: #2D8A4E;
+        }
+
+        .tag.blue {
+            background: rgba(0, 122, 255, 0.08);
+            color: #007AFF;
+        }
+
+        .tag.orange {
+            background: rgba(255, 149, 0, 0.1);
+            color: #CC7700;
+        }
+
+        /* Tables */
+        .table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 16px 0;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            min-width: 600px;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 14px;
+            border-bottom: 2px solid var(--border);
+            font-weight: 600;
+            color: var(--text);
+            background: #F7F7F9;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text2);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(196, 32, 32, 0.02);
+        }
+
+        /* Select section buttons */
+        .select-section-btn {
+            display: inline-block;
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text2);
+            font-family: inherit;
+            font-size: 0.72rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 8px;
+            vertical-align: middle;
+            transition: all 0.2s;
+        }
+
+        .select-section-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .select-section-btn.selected {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* Sticky player bar */
+        .player-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(30, 30, 30, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 20px;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #FAFAFA;
+            font-size: 0.85rem;
+        }
+
+        .player-bar.visible {
+            transform: translateY(0);
+        }
+
+        .player-bar button {
+            background: none;
+            border: none;
+            color: #FAFAFA;
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .player-bar button:hover { background: rgba(255,255,255,0.1); }
+
+        .player-bar .current-section {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #A1A1A6;
+            font-size: 0.8rem;
+        }
+
+        .player-bar .bar-voice-select {
+            background: rgba(255,255,255,0.1);
+            color: #A1A1A6;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-family: inherit;
+            font-size: 0.75rem;
+        }
+
+        .player-bar .bar-voice-select option {
+            background: #1D1D1F;
+            color: #FAFAFA;
+        }
+
+        .player-bar .bar-speed {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 6px;
+            padding: 4px 8px;
+            color: #A1A1A6;
+            font-family: inherit;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Numbered list style for opportunities */
+        .opp-list {
+            counter-reset: opp;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .opp-list li {
+            counter-increment: opp;
+            padding-left: 36px;
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .opp-list li::before {
+            content: counter(opp);
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 24px;
+            height: 24px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 640px) {
+            .hero { padding: 60px 20px 56px; }
+            .container { padding: 40px 20px 100px; }
+            .pros-cons { grid-template-columns: 1fr; }
+            .listen-controls { flex-direction: column; }
+            .listen-btn { width: 100%; }
+            h2 { font-size: 1.4rem; }
+            .card { padding: 16px 18px; }
+            .player-bar { gap: 8px; padding: 10px 14px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
+            .player-bar .current-section { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Film Emulation <span>Plugin Deep Dive</span></h1>
+        <p class="scope">The full landscape of commercial plugins, community tools, public consensus, technical foundations, and differentiation opportunities for building an OFX plugin for DaVinci Resolve.</p>
+
+        <div class="listen-controls">
+            <button class="listen-btn" id="listenBtn">Listen</button>
+            <select class="voice-select" id="voiceSelect"></select>
+            <button class="speed-btn" id="speedBtn">1x</button>
+        </div>
+        <p class="pro-tip"><em>Pro tip: For a better voice, tap <a id="selectAllBtn" href="#">select all</a> below then use iOS Speak Selection (Settings &gt; Accessibility &gt; Spoken Content &gt; Speak Selection).</em></p>
+    </div>
+
+    <div class="container" id="mainContent">
+
+        <div class="intro">
+            <p>Matt and Sam are exploring building an OFX film emulation plugin for DaVinci Resolve. This document covers the entire landscape &mdash; every major competitor, the community and free tools, public consensus, technical foundations, and most importantly: where the gaps are and how they could differentiate.</p>
+            <p>The goal: be the &ldquo;Apple of film emulation plugins&rdquo; &mdash; beautiful, fun to use, not just a pile of sliders.</p>
+        </div>
+
+        <!-- ──────────────────────────────────────────── -->
+        <!-- SECTION 1: Major Players -->
+        <!-- ──────────────────────────────────────────── -->
+        <section>
+            <p class="section-label">Section 01</p>
+            <h2><span class="num">1.</span> The Major Players</h2>
+            <p>The commercial plugin landscape spans from $119 budget options to $2,000 professional tools. Here's every major competitor in detail.</p>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+
+            <!-- Dehancer -->
+            <h3>Dehancer Pro</h3>
+            <div class="card">
+                <span class="price-tag">$449 perpetual (2-seat)</span>
+                <span class="price-tag">$149/3mo &bull; $199/6mo &bull; $299/12mo</span>
+                <p style="margin-top:12px"><strong>Hosts:</strong>
+                    <span class="host-tag">DaVinci Resolve</span>
+                    <span class="host-tag">Premiere Pro</span>
+                    <span class="host-tag">After Effects</span>
+                    <span class="host-tag">Final Cut Pro</span>
+                    <span class="host-tag">Lightroom</span>
+                    <span class="host-tag">Capture One</span>
+                </p>
+                <p><strong>63+ film stock profiles</strong> across motion picture, color negative, color positive, B&W, instant, exotic, and cross-processed categories.</p>
+                <h4>Key Features</h4>
+                <ul>
+                    <li>Physically modeled halation, bloom, and film breath (frame-to-frame exposure/contrast variation)</li>
+                    <li>Gate weave, CMY color head, print toning</li>
+                    <li>Per-pixel grain reconstruction (not overlaid &mdash; genuine reconstruction)</li>
+                    <li>Print film stocks (Kodak 2383, Fuji 3513)</li>
+                    <li>LUT generator</li>
+                    <li>130+ camera log profiles</li>
+                    <li>ACES and DaVinci Wide Gamut support</li>
+                </ul>
+                <h4>Technical Approach</h4>
+                <p>Profiles built from real optical prints made in a darkroom, measured with spectrophotometer and densitometer. They don't scan negatives &mdash; they print negatives on photographic paper and measure the physical prints. Took 5+ years to develop.</p>
+                <div class="pros-cons">
+                    <div class="pro">Comprehensive all-in-one solution with excellent grain reconstruction, extensive stock library, ACES/DWG support</div>
+                    <div class="con">Performance is terrible &mdash; choppy playback, laggy sliders even on Apple Silicon. $449 expensive for hobbyists. Halation can look &ldquo;overdone&rdquo; and &ldquo;artificial.&rdquo;</div>
+                </div>
+                <p><strong>683,000+ installations</strong> as of 2025.</p>
+            </div>
+
+            <!-- FilmConvert -->
+            <h3>FilmConvert Nitrate</h3>
+            <div class="card">
+                <span class="price-tag">$119 one-time (3 seats)</span>
+                <p style="margin-top:12px"><strong>Hosts:</strong>
+                    <span class="host-tag">DaVinci Resolve</span>
+                    <span class="host-tag">Premiere Pro</span>
+                    <span class="host-tag">After Effects</span>
+                    <span class="host-tag">Final Cut Pro</span>
+                </p>
+                <p><strong>19 film stock emulations</strong> + camera-specific response profiles (100+ camera packs).</p>
+                <h4>Key Features</h4>
+                <ul>
+                    <li>Camera-aware color science</li>
+                    <li>Density-based grain</li>
+                    <li>Full LOG pipeline</li>
+                    <li>LUT export at 64&times;64&times;64</li>
+                </ul>
+                <p><strong>Also offers:</strong> Halation as separate plugin ($89-99), Hazy Diffusion, CineMatch.</p>
+                <div class="pros-cons">
+                    <div class="pro">User-friendly, quick results, affordable, camera-specific profiling</div>
+                    <div class="con">Missing Kodak 2383 print emulation. Stock library hasn't grown in years. Grain was changed and now looks &ldquo;too digital.&rdquo; NO ACES or DWG support. No halation/bloom/gate weave in main plugin.</div>
+                </div>
+                <p>More of a &ldquo;color LUT with grain&rdquo; than full photochemical emulation.</p>
+            </div>
+
+            <!-- Filmbox Pro -->
+            <h3>Filmbox Pro (Video Village)</h3>
+            <div class="card">
+                <span class="price-tag">$999 perpetual indie (&lt;$5M budget)</span>
+                <span class="price-tag">$129/quarter &bull; $349/year</span>
+                <p style="margin-top:12px"><strong>Hosts:</strong>
+                    <span class="host-tag">DaVinci Resolve</span>
+                    <span class="host-tag">Baselight</span>
+                    <span class="host-tag">Premiere Pro</span>
+                    <span class="host-tag">After Effects</span>
+                </p>
+                <p><strong>98 film stocks.</strong> Focus on Kodak Vision3 series with physically measured data. Seven photochemical systems.</p>
+                <h4>Key Features</h4>
+                <ul>
+                    <li>Print Color Science 3.0</li>
+                    <li>Node-based color management</li>
+                    <li>HDR delivery</li>
+                    <li>Advanced grain controls (softness, roughness, streaks, 9-zone tonal mixer, RGB channel mix)</li>
+                    <li>Contact print simulation, push/pull, split tone, gate weave, dust</li>
+                    <li>Separate GPU codebases for Metal, CUDA, OpenCL</li>
+                </ul>
+                <p>Developers acknowledge emulation involves &ldquo;subjective decisions&rdquo; &mdash; an &ldquo;abstract idea&rdquo; of film.</p>
+                <div class="pros-cons">
+                    <div class="pro">Considered the &ldquo;gold standard&rdquo; for halation. Superior overall quality. Complete color management system. LUT export.</div>
+                    <div class="con">$999 is a wall. Limited new stock additions. Steep learning curve. Developer's differentiation response was just &ldquo;Filmbox looks better.&rdquo;</div>
+                </div>
+            </div>
+
+            <!-- Genesis -->
+            <h3>Genesis (Cullen Kelly / Steve Yedlin / Mitch Bogdanowicz)</h3>
+            <div class="card">
+                <span class="price-tag">$2,000 Pro (single machine)</span>
+                <span class="price-tag">$1,000 Indie (limited)</span>
+                <span class="price-tag">$7,500 Enterprise</span>
+                <p style="margin-top:12px"><strong>Hosts:</strong>
+                    <span class="host-tag">DaVinci Resolve only</span>
+                </p>
+                <p><strong>42 color negative stocks</strong> (Kodak and Fuji, 1950s to present), <strong>13 print stocks</strong> (Kodak 2383, Fuji 3513). No B&W.</p>
+                <p>Functions as a complete DRT (Display Rendering Transform), not just a filter.</p>
+                <h4>Key Features</h4>
+                <ul>
+                    <li>Push/pull development, interlayer effect adjustment, bleach bypass</li>
+                    <li>Printer points, 35mm/16mm/65mm grain, physically modeled halation</li>
+                </ul>
+                <h4>Pedigree</h4>
+                <p><strong>Steve Yedlin ASC</strong> (DP of Star Wars: The Last Jedi), <strong>Mitch Bogdanowicz</strong> (former Kodak Color Scientist who created film LUTs for Hollywood), <strong>Cullen Kelly</strong> (associate ASC, tools used on Lady Gaga Coachella, Beyonce 2024 halftime, Netflix series).</p>
+                <div class="pros-cons">
+                    <div class="pro">&ldquo;Even if you had no idea what you&rsquo;re doing you&rsquo;re going to get something good.&rdquo; Immediately polished. Dynamic system, not a filter.</div>
+                    <div class="con">$2,000 prohibitive for indie. Single-machine license. Can't separate modules. Functions as mandatory output DRT &mdash; no ACES/DWG output after.</div>
+                </div>
+                <blockquote>&ldquo;I personally cannot justify the investment despite recognizing its value for working professionals.&rdquo;</blockquote>
+            </div>
+
+            <!-- ARRI Film Lab -->
+            <h3>ARRI Film Lab (NEW &mdash; late 2025)</h3>
+            <div class="card">
+                <span class="price-tag">Starting at $25/month</span>
+                <p style="margin-top:12px"><strong>Via RE:Vision Effects.</strong></p>
+                <p><strong>Hosts:</strong>
+                    <span class="host-tag">DaVinci Resolve</span>
+                    <span class="host-tag">Baselight</span>
+                    <span class="host-tag">Nuke</span>
+                    <span class="host-tag">Autograph</span>
+                    <span class="host-tag">Flame</span>
+                    <span class="host-tag">Fusion Studio</span>
+                    <span class="host-tag">Natron</span>
+                    <span class="host-tag">Scratch</span>
+                    <span class="host-tag">Silhouette</span>
+                </p>
+                <ul>
+                    <li>Grain equivalent of 50D/200T/500T</li>
+                    <li>Print stock emulation, reversal film, bleach bypass</li>
+                    <li>Halation, gate weave, ARRI Look Library access</li>
+                    <li>Firmware update in Q1 2026 enables non-destructive previews on ALEXA 35 cameras</li>
+                </ul>
+                <p>This is <strong>ARRI themselves</strong> entering the market. Very new &mdash; limited user feedback so far.</p>
+            </div>
+
+            <!-- Other Players -->
+            <h3>Other Notable Players</h3>
+            <ul>
+                <li><strong>Koji Advance ($199&ndash;$799)</strong> &mdash; Developed with Dale Grahn (color timer for Saving Private Ryan, Dracula, Apocalypse Now Redux). Six 35mm stocks. Does NOT support Resolve.</li>
+                <li><strong>EMUL8/Cinem8</strong> &mdash; Budget alternative marketed as &ldquo;4x cheaper than Dehancer.&rdquo; 17 film looks, bloom, halation, chromatic aberration. Built for YouTubers/creators.</li>
+                <li><strong>Color.io</strong> &mdash; Browser-based/PWA. Freemium. Color Match AI feature. Interesting approach but not a plugin.</li>
+            </ul>
+        </section>
+
+        <!-- ──────────────────────────────────────────── -->
+        <!-- SECTION 2: Community & Free Tools -->
+        <!-- ──────────────────────────────────────────── -->
+        <section>
+            <p class="section-label">Section 02</p>
+            <h2><span class="num">2.</span> The Community &amp; Free Tools</h2>
+            <p>Beyond commercial plugins, a vibrant ecosystem of individual creators, open source projects, and educational resources exists.</p>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+
+            <h3>Major Individual Contributors</h3>
+            <ul>
+                <li><strong>Juan Melara</strong> &mdash; Free print film emulation LUTs (Kodak 2383 style). Paid: FilmUnlimited ($89.99) with PowerGrades for 250D and 500T</li>
+                <li><strong>Cullen Kelly</strong> &mdash; Free Fuji 3510 FPE LUT. Paid: Genesis (above), Voyager Pro v2 LUTs</li>
+                <li><strong>Nico Fink (Demystify Color)</strong> &mdash; Free DCTLs on GitHub. Paid: Film Aesthetics 2.0, Beyond Film Emulation</li>
+                <li><strong>Tom Bolles</strong> &mdash; CinePrint35 PowerGrades/LUTs based on actual film shot and developed at FotoKem</li>
+                <li><strong>Denver Riddle</strong> &mdash; 70 free LUTs including 13 film stock emulations. Created Cinema Grade plugin</li>
+                <li><strong>PixelTools</strong> &mdash; Film/Emulsion DCTL built from photometric data. Vision3 series, Vision2, Ektachrome, Fuji Eterna, Double-X</li>
+                <li><strong>MONONODES</strong> &mdash; Film Elements v2, Lewis Potts' &ldquo;Lens Node&rdquo;</li>
+            </ul>
+
+            <h3>Open Source on GitHub</h3>
+            <ul>
+                <li><strong>Demystify-Color/DCTLs</strong> &mdash; Free DCTLs by Nico Fink</li>
+                <li><strong>andreavolpato/agx-emulsion</strong> &mdash; Spectral simulation of analog photography</li>
+                <li><strong>bean-mhm/flim</strong> &mdash; Filmic Color Transform</li>
+                <li><strong>t3mujinpack/t3mujinpack</strong> &mdash; Film emulation presets for Darktable</li>
+                <li><strong>xtremestuff/resolve-dctl</strong>, <strong>mikaelsundell/dctl</strong>, <strong>jwagner/analog-film-emulator</strong></li>
+            </ul>
+
+            <h3>Other Resources</h3>
+            <ul>
+                <li><strong>FilmMatch</strong> &mdash; PowerGrades + LUTs with custom MTF DCTL, Grain DCTL, Gate Weave/Flicker</li>
+                <li><strong>Jonny Elwyn</strong> &mdash; Curates extensive free film LUT lists</li>
+                <li><strong>Lowepost</strong> &mdash; Print film emulation training courses</li>
+                <li><strong>Mixing Light</strong> &mdash; Deep-dive tutorials</li>
+            </ul>
+        </section>
+
+        <!-- ──────────────────────────────────────────── -->
+        <!-- SECTION 3: Public Consensus -->
+        <!-- ──────────────────────────────────────────── -->
+        <section>
+            <p class="section-label">Section 03</p>
+            <h2><span class="num">3.</span> Public Consensus &mdash; What the Internet Thinks</h2>
+            <p>Real opinions from forums, Reddit, and professional communities about each major tool.</p>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+
+            <h3>On Accuracy</h3>
+            <blockquote>&ldquo;What looks right is right&rdquo; &mdash; professionals prioritize emotional impact over accuracy.</blockquote>
+            <p>All three major plugins produce notably different results from identical footage on the same stock. Filmbox explicitly states their emulation involves &ldquo;subjective decisions.&rdquo;</p>
+
+            <h3>On Dehancer</h3>
+            <blockquote>&ldquo;I really like the Dehancer profiles &mdash; the reddish shadows in the Kodak profiles feel authentic.&rdquo;</blockquote>
+            <blockquote>DPReview forum: &ldquo;Underwhelmed with Dehancer so far&rdquo; &mdash; halation &ldquo;very overdone&rdquo; and &ldquo;always look artificial unlike any analog photos.&rdquo;</blockquote>
+
+            <h3>On Filmbox</h3>
+            <blockquote>&ldquo;Insanely accurate but expensive.&rdquo;</blockquote>
+            <p>Used on real jobs with happy clients.</p>
+
+            <h3>On FilmConvert</h3>
+            <p>Seen as the accessible entry point. &ldquo;More of a color LUT than a full emulation.&rdquo; Grain regression is a recurring complaint.</p>
+
+            <h3>On Genesis</h3>
+            <p>Most scientifically credible. $2,000 makes most indie users walk away.</p>
+            <blockquote>&ldquo;Even if you had no idea what you&rsquo;re doing you&rsquo;re going to get something good.&rdquo;</blockquote>
+
+            <h3>Universal Complaints</h3>
+            <ol>
+                <li><strong>Performance</strong> &mdash; choppy playback, even on high-end Macs</li>
+                <li><strong>Price</strong> &mdash; $449 to $2,000 is a lot for indie/hobbyist</li>
+                <li><strong>Grain quality</strong> &mdash; universally the hardest thing to get right. &ldquo;I&rsquo;ve never been 100% happy with grain.&rdquo;</li>
+                <li><strong>Halation overdone</strong> &mdash; easy to make look artificial</li>
+                <li><strong>One-size-fits-all</strong> &mdash; all require per-project adjustment</li>
+                <li><strong>Licensing</strong> &mdash; single machine, no easy transfer</li>
+            </ol>
+
+            <h3>What People Wish Existed</h3>
+            <ul>
+                <li>Better grain that doesn't look &ldquo;digital&rdquo; or &ldquo;predictable&rdquo;</li>
+                <li>Faster real-time performance (the #1 practical complaint)</li>
+                <li>Middle ground between FilmConvert simplicity and Dehancer comprehensiveness</li>
+                <li>Better HDR support</li>
+                <li>More film stocks (FilmConvert's library is stagnant)</li>
+                <li>Affordable option with professional halation</li>
+            </ul>
+        </section>
+
+        <!-- ──────────────────────────────────────────── -->
+        <!-- SECTION 4: Technical Landscape -->
+        <!-- ──────────────────────────────────────────── -->
+        <section>
+            <p class="section-label">Section 04</p>
+            <h2><span class="num">4.</span> Technical Landscape</h2>
+            <p>Understanding the three main approaches to film emulation &mdash; OFX plugins, DCTLs, and LUTs &mdash; and their trade-offs.</p>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>OFX Plugin</th>
+                            <th>DCTL</th>
+                            <th>LUT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Platform</strong></td>
+                            <td>Cross-host (Resolve, Premiere, Baselight)</td>
+                            <td>DaVinci Resolve only</td>
+                            <td>Universal</td>
+                        </tr>
+                        <tr>
+                            <td><strong>GPU</strong></td>
+                            <td>Requires separate CUDA/OpenCL/Metal codebases</td>
+                            <td>Single codebase runs on all GPU backends</td>
+                            <td>Instant lookup, minimal cost</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Controls</strong></td>
+                            <td>Full custom UI, unlimited parameters</td>
+                            <td>Sliders/menus within Resolve's UI</td>
+                            <td>None &mdash; baked transform</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Capabilities</strong></td>
+                            <td>Unlimited &mdash; grain, halation, temporal effects</td>
+                            <td>Per-pixel transforms, expose controls</td>
+                            <td>Fixed color remap</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Precision</strong></td>
+                            <td>Full floating point</td>
+                            <td>Full floating point</td>
+                            <td>Limited by grid size</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Limitations</strong></td>
+                            <td>Complex dev, licensing overhead</td>
+                            <td>Resolve Studio only, no temporal effects</td>
+                            <td>No grain/halation/spatial effects, can band</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Distribution</strong></td>
+                            <td>Installer, license manager</td>
+                            <td>Single .dctl file</td>
+                            <td>Single .cube file</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout insight">
+                <p><strong>Key Insight:</strong> Functions like highlight roll-off, toe compress, and split-toning can ONLY be done via DCTL &mdash; they can't be rebuilt with Resolve's built-in math. DCTLs are superior for color transforms; OFX is necessary for spatial/temporal effects and cross-host support.</p>
+            </div>
+        </section>
+
+        <!-- ──────────────────────────────────────────── -->
+        <!-- SECTION 5: Film Emulation Science -->
+        <!-- ──────────────────────────────────────────── -->
+        <section>
+            <p class="section-label">Section 05</p>
+            <h2><span class="num">5.</span> Film Emulation Science &mdash; What Makes Film Look Like Film</h2>
+            <p>The physics and chemistry behind the film look &mdash; and what most plugins get wrong.</p>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+
+            <h3>Halation</h3>
+            <p>Light passes through emulsion, bounces off the film base, and re-exposes from behind. Cyan and magenta layers are exposed more than yellow, creating the characteristic red/orange glow around bright areas. This is real physics, not an artistic choice.</p>
+
+            <h3>Grain</h3>
+            <p>Silver halide crystals, NOT uniform noise. Varies by: stock speed, exposure level, color channel (each emulsion layer is different), spatial frequency (includes mid-frequency &ldquo;clumping&rdquo;), and follows a probabilistic distribution &mdash; not a pattern.</p>
+
+            <h3>Highlight Rolloff</h3>
+            <p>Film has a smooth S-curve shoulder. Digital clips hard with ugly artifacts. Film gradually desaturates or shifts color smoothly as highlights increase.</p>
+
+            <h3>Color Response Curves</h3>
+            <p>Each emulsion layer (cyan/magenta/yellow in negative) has a different sensitivity curve. NOT linear, NOT identical. This creates film's characteristic color separation.</p>
+
+            <h3>Gate Weave</h3>
+            <p>Mechanical instability in camera/projector gate. Subtle frame-to-frame position shifts that add organic movement.</p>
+
+            <h3>Film Breath</h3>
+            <p>Frame-to-frame variations in exposure, contrast, and color from imperfect transport and chemistry. Adds life to the image.</p>
+
+            <h3>Print Film</h3>
+            <p>The final look of motion picture film is ALWAYS two films &mdash; negative + print stock. Print stock (Kodak 2383, Fuji 3513) has its own color science. Many emulations skip this critical step.</p>
+
+            <h3>What Most Plugins Get Wrong</h3>
+            <ol>
+                <li>Grain as overlay instead of per-pixel reconstruction</li>
+                <li>Missing print film step</li>
+                <li>Halation as simple glow instead of spectral model</li>
+                <li>Ignoring inter-layer chemical effects</li>
+                <li>Static response (real film varies by exposure level)</li>
+                <li>No film breath (frame-to-frame variation)</li>
+            </ol>
+
+            <h3>Film Stocks People Care About Most</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Stock</th>
+                            <th>Type</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Kodak Vision3 5219 500T</strong></td><td>Motion Picture</td><td>Workhorse cinema tungsten</td></tr>
+                        <tr><td><strong>Kodak Vision3 5207 250D</strong></td><td>Motion Picture</td><td>Daylight cinema</td></tr>
+                        <tr><td><strong>Kodak 2383</strong></td><td>Print</td><td>THE standard cinema print film</td></tr>
+                        <tr><td><strong>Fuji 3510/3513</strong></td><td>Print</td><td>Alternative print (warmer)</td></tr>
+                        <tr><td><strong>Kodak Portra 400</strong></td><td>Still</td><td>Most famous still stock</td></tr>
+                        <tr><td><strong>Cinestill 800T</strong></td><td>Still/Motion</td><td>Indie favorite (repurposed 500T)</td></tr>
+                        <tr><td><strong>Kodachrome</strong></td><td>Reversal</td><td>Iconic, discontinued, nostalgic</td></tr>
+                        <tr><td><strong>Fuji Eterna</strong></td><td>Motion Picture</td><td>Warm, smooth, exceptional skin tones</td></tr>
+                        <tr><td><strong>Kodak Double-X 5222</strong></td><td>B&W Motion</td><td>Schindler's List, The Lighthouse</td></tr>
+                        <tr><td><strong>Kodak Ektachrome</strong></td><td>Reversal</td><td>Recently revived</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ──────────────────────────────────────────── -->
+        <!-- SECTION 6: Competitive Summary Table -->
+        <!-- ──────────────────────────────────────────── -->
+        <section>
+            <p class="section-label">Section 06</p>
+            <h2><span class="num">6.</span> Competitive Landscape Summary</h2>
+            <p>A side-by-side comparison of every major plugin across key dimensions.</p>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Plugin</th>
+                            <th>Price</th>
+                            <th>Stocks</th>
+                            <th>Halation</th>
+                            <th>Grain</th>
+                            <th>Print Film</th>
+                            <th>ACES</th>
+                            <th>Hosts</th>
+                            <th>Performance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Dehancer</strong></td>
+                            <td>$449</td>
+                            <td>63+</td>
+                            <td>Yes (physical)</td>
+                            <td>Best (per-pixel)</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Resolve, Premiere, AE, FCP</td>
+                            <td><span class="tag">Poor</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Filmbox Pro</strong></td>
+                            <td>$999</td>
+                            <td>98</td>
+                            <td>Best</td>
+                            <td>Good</td>
+                            <td>Yes</td>
+                            <td>Partial</td>
+                            <td>Resolve, Baselight, Premiere, AE</td>
+                            <td><span class="tag orange">Moderate</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Genesis</strong></td>
+                            <td>$2,000</td>
+                            <td>42+13</td>
+                            <td>Yes</td>
+                            <td>Good</td>
+                            <td>Yes (mandatory)</td>
+                            <td>Input only</td>
+                            <td>Resolve only</td>
+                            <td><span class="tag blue">Unknown</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>FilmConvert</strong></td>
+                            <td>$119</td>
+                            <td>19</td>
+                            <td>Separate ($89)</td>
+                            <td>Declining</td>
+                            <td>No 2383</td>
+                            <td>No</td>
+                            <td>Resolve, Premiere, AE, FCP</td>
+                            <td><span class="tag green">Good</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>ARRI Film Lab</strong></td>
+                            <td>$25/mo</td>
+                            <td>Limited</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Coming</td>
+                            <td>Resolve, Baselight, Nuke+</td>
+                            <td><span class="tag blue">Unknown</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>EMUL8</strong></td>
+                            <td>Budget</td>
+                            <td>17</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>FCP, Resolve</td>
+                            <td><span class="tag green">Claims 4x faster</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ──────────────────────────────────────────── -->
+        <!-- SECTION 7: Gaps & Opportunities -->
+        <!-- ──────────────────────────────────────────── -->
+        <section>
+            <p class="section-label">Section 07</p>
+            <h2><span class="num">7.</span> Where the Gaps Are &mdash; Your Opportunity</h2>
+            <p>Clear market openings that an &ldquo;Apple-style&rdquo; plugin could fill.</p>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+
+            <div class="card">
+                <h4>The $200&ndash;400 Sweet Spot</h4>
+                <p>FilmConvert ($119) is too basic. Dehancer ($449) has performance issues. There is room for Dehancer-level quality at a more accessible price with better performance.</p>
+            </div>
+
+            <div class="card">
+                <h4>Real-time Performance</h4>
+                <p>Every plugin struggles here. True real-time grain + halation + color on Apple Silicon would be a genuine competitive advantage.</p>
+            </div>
+
+            <div class="card">
+                <h4>Modern HDR Workflow Support</h4>
+                <p>Few handle HDR delivery well. Netflix and streaming platforms require specific specs that current tools don't make easy.</p>
+            </div>
+
+            <div class="card">
+                <h4>Continuously Updated Stock Library</h4>
+                <p>FilmConvert hasn't grown in years. Users want new stocks regularly &mdash; a living, breathing library.</p>
+            </div>
+
+            <div class="card">
+                <h4>Community &amp; Sharing Features</h4>
+                <p>No plugin has built-in preset sharing, community looks, or social features. This is an entirely untapped dimension.</p>
+            </div>
+
+            <div class="card">
+                <h4>B&W Done Well</h4>
+                <p>Most treat B&W as afterthought. Tri-X, HP5, Double-X deserve dedicated attention with proper response curves and grain character.</p>
+            </div>
+
+            <div class="card">
+                <h4>UI/UX Is Universally Boring</h4>
+                <p>Every plugin is sliders and dropdowns. Nothing feels fun or beautiful. The entire market looks like engineering software.</p>
+            </div>
+        </section>
+
+        <!-- ──────────────────────────────────────────── -->
+        <!-- SECTION 8: The Apple Approach -->
+        <!-- ──────────────────────────────────────────── -->
+        <section>
+            <p class="section-label">Section 08</p>
+            <h2><span class="num">8.</span> How You Could Be Different &mdash; The &ldquo;Apple&rdquo; Approach</h2>
+            <p>Concrete ideas for UI/UX innovation, technical differentiation, community features, and pricing strategy.</p>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+
+            <h3>UI/UX Innovation Ideas</h3>
+            <ul class="opp-list">
+                <li><strong>Visual Film Strip Browser</strong> &mdash; Instead of dropdowns of stock names, show a visual strip of the same frame rendered through every stock. Scroll through like browsing vinyl records. Instagram proved visual browsing beats text menus.</li>
+                <li><strong>Interactive Film Response Curve</strong> &mdash; Show the actual H&D curve of the selected stock. Let users drag and reshape it. Colorists understand instantly; beginners learn by doing.</li>
+                <li><strong>&ldquo;Film Lab&rdquo; Metaphor</strong> &mdash; UI designed like a physical darkroom/film lab. Virtual timer for exposure. Virtual color head for filtration. Educational and atmospheric.</li>
+                <li><strong>Split-Screen Live Compare</strong> &mdash; Built-in A/B/C/D split view showing different stocks on the same frame. No other plugin makes comparison this easy.</li>
+                <li><strong>&ldquo;Recipe&rdquo; System</strong> &mdash; Build and share &ldquo;recipes&rdquo; (negative + print + grain + halation + push/pull settings) like a cooking app. Community ratings, trending looks, social sharing.</li>
+                <li><strong>Animated Transitions</strong> &mdash; When switching stocks, smoothly animate the color shift so users see HOW the look changes, not just before/after.</li>
+            </ul>
+
+            <h3>Technical Innovation Ideas</h3>
+            <ul class="opp-list">
+                <li><strong>Metal-first, Apple Silicon-optimized</strong> &mdash; Most plugins are built CUDA-first and ported. Building Metal-native could deliver dramatically better performance on Mac. This IS the Apple angle.</li>
+                <li><strong>Temporal coherence engine</strong> &mdash; Grain and film breath should be temporally coherent, not random noise per frame.</li>
+                <li><strong>AI-assisted stock matching</strong> &mdash; Upload a reference frame from an actual film, and the plugin reverse-engineers the closest stock + settings.</li>
+                <li><strong>Scene-adaptive processing</strong> &mdash; Analyze scene content and automatically adjust behavior. Real film does this inherently.</li>
+                <li><strong>Spectral rendering mode</strong> &mdash; For maximum accuracy, model actual wavelength interactions with dye layers, not just RGB transforms.</li>
+            </ul>
+
+            <h3>Community Features</h3>
+            <ol>
+                <li><strong>Built-in &ldquo;Look Market&rdquo;</strong> &mdash; users sell and share custom presets. Revenue share model.</li>
+                <li><strong>Collaborative grading</strong> &mdash; export recipe links importable with one click.</li>
+                <li><strong>Version history</strong> &mdash; Git-like commits for your grade, roll back anytime.</li>
+            </ol>
+
+            <h3>Pricing Strategy</h3>
+            <div class="card">
+                <ul>
+                    <li><strong>Freemium</strong> &mdash; 3&ndash;5 stocks free forever, no watermark. Charge for expanded library.</li>
+                    <li><strong>$149&ndash;199 perpetual</strong> &mdash; target the FilmConvert-to-Dehancer gap. Include halation, grain, print at this price.</li>
+                    <li><strong>Individual stock packs at $9&ndash;19 each</strong> &mdash; let users buy only what they want.</li>
+                    <li><strong>Educational discount</strong> &mdash; film schools are a massive untapped loyalty market.</li>
+                </ul>
+            </div>
+
+            <h3>What Would Make Someone Switch From Dehancer</h3>
+            <ol>
+                <li><strong>Dramatically better real-time performance</strong> &mdash; the #1 reason</li>
+                <li>Better UI/UX (Dehancer is functional but uninspiring)</li>
+                <li>Lower price with comparable quality ($200&ndash;300 range is wide open)</li>
+                <li>Superior grain</li>
+                <li>Community features (nobody has this)</li>
+                <li>Better onboarding and learning experience</li>
+                <li>Beautiful, fun experience (every plugin looks like engineering software)</li>
+            </ol>
+        </section>
+
+        <!-- ──────────────────────────────────────────── -->
+        <!-- SECTION 9: The Bottom Line -->
+        <!-- ──────────────────────────────────────────── -->
+        <section>
+            <p class="section-label">Section 09</p>
+            <h2><span class="num">9.</span> The Bottom Line</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+
+            <div class="verdict">
+                <p>The film emulation plugin market in 2025&ndash;2026 is split: <strong>expensive professional tools</strong> (Genesis, Filmbox) at $1,000&ndash;2,000, a <strong>comprehensive but slow mid-range option</strong> (Dehancer at $449), and an <strong>aging budget option</strong> (FilmConvert at $119). <strong>Nobody owns the $150&ndash;350 range with a polished, performant, fun-to-use product.</strong></p>
+            </div>
+
+            <p>Every existing plugin treats the UI as an afterthought &mdash; it's all engineering interfaces built by engineers. The &ldquo;Apple approach&rdquo; means: opinionated design, beautiful interface, just works out of the box, but with depth for power users. <strong>That product doesn't exist yet.</strong></p>
+
+            <p>The technical challenge is real &mdash; OFX development in C/C++ with separate GPU codebases isn't trivial. But the market opportunity is clear, the differentiation angles are obvious, and the competition's weaknesses are well-documented.</p>
+
+            <div class="callout insight">
+                <p><strong>The opportunity in one sentence:</strong> Build the plugin that makes film emulation feel like magic, not engineering &mdash; at a price point the entire indie market can afford, with performance that doesn't make them wait.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Player Bar -->
+    <div class="player-bar" id="playerBar">
+        <button id="barPlayPause" title="Play/Pause">&#9654;</button>
+        <span class="current-section" id="barSection">Ready</span>
+        <select class="bar-voice-select" id="barVoiceSelect"></select>
+        <button class="bar-speed" id="barSpeed">1x</button>
+        <button id="barStop" title="Stop">&#9632;</button>
+    </div>
+
+    <script>
+    (function() {
+        const WHITELISTED_VOICES = [
+            'samantha', 'karen', 'daniel', 'moira', 'tessa', 'ava', 'allison',
+            'tom', 'aaron', 'nicky', 'evan', 'zoe', 'joelle', 'fiona', 'martha', 'arthur'
+        ];
+        const WHITELISTED_PATTERNS = ['google us english', 'google uk english'];
+        const SPEEDS = [0.8, 1, 1.2, 1.5];
+        let speedIdx = 1;
+        let currentRate = 1;
+        let voices = [];
+        let selectedVoice = null;
+        let isPlaying = false;
+        let isPaused = false;
+        let chunks = [];
+        let chunkIdx = 0;
+        let currentSection = null;
+        let keepAliveInterval = null;
+
+        const listenBtn = document.getElementById('listenBtn');
+        const voiceSelect = document.getElementById('voiceSelect');
+        const speedBtn = document.getElementById('speedBtn');
+        const playerBar = document.getElementById('playerBar');
+        const barPlayPause = document.getElementById('barPlayPause');
+        const barSection = document.getElementById('barSection');
+        const barVoiceSelect = document.getElementById('barVoiceSelect');
+        const barSpeed = document.getElementById('barSpeed');
+        const barStop = document.getElementById('barStop');
+        const selectAllBtn = document.getElementById('selectAllBtn');
+
+        function isWhitelisted(name) {
+            const lower = name.toLowerCase();
+            if (WHITELISTED_VOICES.some(w => lower.includes(w))) return true;
+            if (WHITELISTED_PATTERNS.some(p => lower.includes(p))) return true;
+            return false;
+        }
+
+        function populateVoices() {
+            voices = speechSynthesis.getVoices().filter(v => isWhitelisted(v.name));
+            [voiceSelect, barVoiceSelect].forEach(sel => {
+                sel.innerHTML = '';
+                voices.forEach((v, i) => {
+                    const opt = document.createElement('option');
+                    opt.value = i;
+                    opt.textContent = v.name;
+                    sel.appendChild(opt);
+                });
+            });
+            if (voices.length > 0) {
+                const samIdx = voices.findIndex(v => v.name.toLowerCase().includes('samantha'));
+                const idx = samIdx >= 0 ? samIdx : 0;
+                voiceSelect.value = idx;
+                barVoiceSelect.value = idx;
+                selectedVoice = voices[idx];
+            }
+        }
+
+        speechSynthesis.onvoiceschanged = populateVoices;
+        populateVoices();
+
+        function syncVoice(fromSelect) {
+            const idx = parseInt(fromSelect.value);
+            selectedVoice = voices[idx] || null;
+            voiceSelect.value = idx;
+            barVoiceSelect.value = idx;
+        }
+
+        voiceSelect.addEventListener('change', () => syncVoice(voiceSelect));
+        barVoiceSelect.addEventListener('change', () => syncVoice(barVoiceSelect));
+
+        function cycleSpeed() {
+            speedIdx = (speedIdx + 1) % SPEEDS.length;
+            currentRate = SPEEDS[speedIdx];
+            speedBtn.textContent = currentRate + 'x';
+            barSpeed.textContent = currentRate + 'x';
+        }
+
+        speedBtn.addEventListener('click', cycleSpeed);
+        barSpeed.addEventListener('click', cycleSpeed);
+
+        function buildChunks() {
+            chunks = [];
+            const sections = document.querySelectorAll('#mainContent section, #mainContent .intro');
+            sections.forEach(sec => {
+                const els = sec.querySelectorAll('h2, h3, h4, p, li, blockquote');
+                const sectionTitle = sec.querySelector('h2') ? sec.querySelector('h2').textContent : 'Introduction';
+                els.forEach(el => {
+                    const text = el.textContent.trim();
+                    if (!text) return;
+                    // Skip the "Select Section" buttons
+                    if (el.tagName === 'BUTTON') return;
+                    const isHeading = /^H[2-4]$/.test(el.tagName);
+                    chunks.push({ text, isHeading, section: sec, sectionTitle, el });
+                });
+            });
+        }
+
+        function highlightSection(sec) {
+            if (currentSection && currentSection !== sec) {
+                currentSection.classList.remove('reading');
+            }
+            if (sec) {
+                sec.classList.add('reading');
+                if (currentSection !== sec) {
+                    sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                currentSection = sec;
+            }
+        }
+
+        function showBar() { playerBar.classList.add('visible'); }
+        function hideBar() { playerBar.classList.remove('visible'); }
+
+        function startKeepAlive() {
+            if (keepAliveInterval) clearInterval(keepAliveInterval);
+            keepAliveInterval = setInterval(() => {
+                if (speechSynthesis.speaking && !speechSynthesis.paused) {
+                    speechSynthesis.resume();
+                }
+            }, 10000);
+        }
+
+        function stopKeepAlive() {
+            if (keepAliveInterval) { clearInterval(keepAliveInterval); keepAliveInterval = null; }
+        }
+
+        function speakChunk(idx) {
+            if (idx >= chunks.length) {
+                stopPlayback();
+                return;
+            }
+            chunkIdx = idx;
+            const chunk = chunks[idx];
+            const utt = new SpeechSynthesisUtterance(chunk.text);
+            if (selectedVoice) utt.voice = selectedVoice;
+            utt.rate = chunk.isHeading ? currentRate * 0.9 : currentRate;
+            if (chunk.isHeading) utt.pitch = 1.05;
+
+            highlightSection(chunk.section);
+            barSection.textContent = chunk.sectionTitle;
+
+            utt.onend = () => {
+                const delay = chunk.isHeading ? 400 : 200;
+                setTimeout(() => {
+                    if (isPlaying && !isPaused) speakChunk(idx + 1);
+                }, delay);
+            };
+
+            speechSynthesis.speak(utt);
+        }
+
+        function startPlayback() {
+            speechSynthesis.cancel();
+            buildChunks();
+            if (chunks.length === 0) return;
+            isPlaying = true;
+            isPaused = false;
+            chunkIdx = 0;
+            barPlayPause.innerHTML = '&#10074;&#10074;';
+            listenBtn.textContent = 'Pause';
+            showBar();
+            startKeepAlive();
+            speakChunk(0);
+        }
+
+        function togglePause() {
+            if (!isPlaying) { startPlayback(); return; }
+            if (isPaused) {
+                isPaused = false;
+                speechSynthesis.resume();
+                barPlayPause.innerHTML = '&#10074;&#10074;';
+                listenBtn.textContent = 'Pause';
+            } else {
+                isPaused = true;
+                speechSynthesis.pause();
+                barPlayPause.innerHTML = '&#9654;';
+                listenBtn.textContent = 'Resume';
+            }
+        }
+
+        function stopPlayback() {
+            isPlaying = false;
+            isPaused = false;
+            speechSynthesis.cancel();
+            stopKeepAlive();
+            if (currentSection) currentSection.classList.remove('reading');
+            currentSection = null;
+            barPlayPause.innerHTML = '&#9654;';
+            listenBtn.textContent = 'Listen';
+            barSection.textContent = 'Ready';
+            hideBar();
+        }
+
+        listenBtn.addEventListener('click', () => {
+            if (!isPlaying) startPlayback();
+            else togglePause();
+        });
+
+        barPlayPause.addEventListener('click', togglePause);
+        barStop.addEventListener('click', stopPlayback);
+
+        selectAllBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const range = document.createRange();
+            range.selectNodeContents(document.getElementById('mainContent'));
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        });
+
+        // Select Section for macOS Speak
+        window.selectSection = function(btn) {
+            var section = btn.closest('section') || btn.closest('.intro') || btn.parentElement.parentElement;
+            var range = document.createRange();
+            range.selectNodeContents(section);
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+            document.querySelectorAll('.select-section-btn').forEach(function(b) { b.classList.remove('selected'); b.textContent = 'Select Section'; });
+            btn.classList.add('selected');
+            btn.textContent = 'Selected!';
+            setTimeout(function() { btn.textContent = 'Select Section'; btn.classList.remove('selected'); }, 2000);
+        };
+    })();
+    </script>
+</body>
+</html>
