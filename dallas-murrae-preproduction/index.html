@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dallas Murrae — Preproduction Plan | March 15, 2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+            background: #0a0a0a;
+            color: #e8e8e8;
+            padding: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 2px solid #333;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+        .header .subtitle {
+            font-size: 14px;
+            color: #888;
+            margin-top: 6px;
+        }
+        .header .date {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ff4444;
+            margin-top: 10px;
+        }
+        h2 {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ff4444;
+            margin: 30px 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #222;
+        }
+        h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            margin: 20px 0 10px 0;
+        }
+        p { font-size: 13px; color: #bbb; margin-bottom: 10px; }
+        strong { color: #fff; }
+        .overview-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .overview-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #1a1a1a;
+            font-size: 13px;
+        }
+        .overview-table td:first-child {
+            color: #888;
+            font-weight: 600;
+            width: 140px;
+        }
+        .overview-table td:last-child {
+            color: #fff;
+        }
+        .concept-box {
+            background: #141414;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 16px;
+        }
+        .concept-box p { margin-bottom: 8px; }
+        .concept-box ul {
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+        .concept-box li {
+            font-size: 13px;
+            color: #bbb;
+            margin-bottom: 6px;
+        }
+        .shot-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+            font-size: 12px;
+        }
+        .shot-table th {
+            text-align: left;
+            padding: 8px 10px;
+            background: #1a1a1a;
+            color: #888;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .shot-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #141414;
+            color: #ccc;
+        }
+        .shot-table .shot-id {
+            color: #ff4444;
+            font-weight: 700;
+        }
+        .setup-label {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .setup-white { background: #fff; color: #000; }
+        .setup-purple { background: #8b5cf6; color: #fff; }
+        .setup-pink { background: #ec4899; color: #fff; }
+        .setup-red { background: #dc2626; color: #fff; }
+        .schedule-item {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        .schedule-time {
+            width: 80px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #ff4444;
+            flex-shrink: 0;
+        }
+        .schedule-desc {
+            font-size: 13px;
+            color: #ccc;
+        }
+        .gear-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .gear-item {
+            background: #141414;
+            border-radius: 8px;
+            padding: 12px;
+        }
+        .gear-item .name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+        }
+        .gear-item .use {
+            font-size: 11px;
+            color: #888;
+            margin-top: 2px;
+        }
+        .contact-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #141414;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 6px;
+        }
+        .contact-row .name { font-weight: 600; font-size: 14px; }
+        .contact-row .role { font-size: 11px; color: #888; }
+        .contact-row a { color: #ff4444; text-decoration: none; font-size: 13px; }
+        .venue-card {
+            background: #141414;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 16px;
+        }
+        .venue-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .venue-feature {
+            display: flex;
+            align-items: center;
+            padding: 6px 0;
+        }
+        .venue-feature .dot {
+            width: 6px;
+            height: 6px;
+            background: #ff4444;
+            border-radius: 50%;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        .venue-feature span { font-size: 13px; color: #bbb; }
+        .wardrobe-item {
+            background: #141414;
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-bottom: 6px;
+        }
+        .wardrobe-item .look-num {
+            font-size: 11px;
+            color: #ff4444;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .wardrobe-item .look-desc {
+            font-size: 13px;
+            color: #ccc;
+            margin-top: 4px;
+        }
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 10px 0;
+            border-bottom: 1px solid #1a1a1a;
+            font-size: 13px;
+            color: #ccc;
+        }
+        .checklist li::before {
+            content: '☐ ';
+            color: #ff4444;
+            font-size: 14px;
+        }
+        .hard-out {
+            text-align: center;
+            padding: 16px;
+            background: #2a0a0a;
+            border: 1px solid #ff4444;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+        .hard-out span {
+            font-size: 16px;
+            font-weight: 800;
+            color: #ff4444;
+        }
+        .post-section {
+            background: #141414;
+            border-radius: 12px;
+            padding: 18px;
+        }
+        .post-section li {
+            font-size: 13px;
+            color: #bbb;
+            margin-bottom: 8px;
+            list-style: none;
+        }
+        .post-section li::before {
+            content: '→ ';
+            color: #ff4444;
+        }
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #333;
+            font-size: 11px;
+        }
+        .ref-link {
+            color: #ff4444;
+            text-decoration: none;
+            border-bottom: 1px solid #ff444444;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Dallas Murrae</h1>
+        <div class="subtitle">Music Video — Preproduction Plan</div>
+        <div class="date">Sunday, March 15, 2026 &nbsp;|&nbsp; 10 AM – 3 PM</div>
+    </div>
+
+    <!-- OVERVIEW -->
+    <h2>Overview</h2>
+    <table class="overview-table">
+        <tr><td>Artist</td><td>Dallas Murrae</td></tr>
+        <tr><td>Shoot Date</td><td>Sunday, March 15, 2026</td></tr>
+        <tr><td>Time</td><td>10:00 AM — 3:00 PM (5 hours)</td></tr>
+        <tr><td>Location</td><td>Studio PDI — Cool Springs, Franklin, TN</td></tr>
+        <tr><td>Budget</td><td>$1,500 – $2,000</td></tr>
+        <tr><td>Payment</td><td>Venmo</td></tr>
+        <tr><td>Deliverables</td><td>Final video + vertical cuts + caption lyrics</td></tr>
+        <tr><td>Team Email</td><td>varsityonlyltd@gmail.com</td></tr>
+    </table>
+
+    <!-- CONCEPT -->
+    <h2>Concept</h2>
+    <div class="concept-box">
+        <p><strong>Style:</strong> Cyc wall + colored backdrop paper — "band/making the song" vibe.</p>
+        <p><strong>Inspiration:</strong> <a class="ref-link" href="https://youtu.be/Iq8h3GEe22o">Jack Harlow — Cyc Wall MV</a></p>
+        <ul>
+            <li>White cyc for infinity background shots</li>
+            <li>Colored backdrops (purple, pink, red) for variety</li>
+            <li><strong>No love story angle</strong> — respect for Dallas & Megan</li>
+            <li>Dallas bringing filler talent/dancers</li>
+            <li>Never see feet on close shots</li>
+            <li>Caption lyrics at bottom (post-production)</li>
+            <li>All shots locked off on tripod</li>
+            <li>Multiple wardrobe changes</li>
+        </ul>
+        <p style="margin-top: 12px;"><strong>Caption references:</strong><br>
+            <a class="ref-link" href="https://youtu.be/2SnN2EpEVVY">Reference 1</a> &nbsp;|&nbsp;
+            <a class="ref-link" href="https://youtu.be/kJ5EqHhENbA">Reference 2</a>
+        </p>
+    </div>
+
+    <!-- VENUE -->
+    <h2>Venue — Studio PDI</h2>
+    <div class="venue-card">
+        <h4>Studio PDI — Cool Springs, Franklin</h4>
+        <p style="font-size: 12px; color: #888; margin-bottom: 12px;">1,600 sq ft &nbsp;|&nbsp; 5.0 stars (18 reviews) &nbsp;|&nbsp; Hosted by Taylor B.</p>
+        <div class="venue-feature"><div class="dot"></div><span>Fully equipped cyc wall (white infinity)</span></div>
+        <div class="venue-feature"><div class="dot"></div><span><strong>RGB light grid</strong> — built-in colored lighting</span></div>
+        <div class="venue-feature"><div class="dot"></div><span>Private green room for wardrobe/talent prep</span></div>
+        <div class="venue-feature"><div class="dot"></div><span>1,500 sq ft load-in area + garage door</span></div>
+        <div class="venue-feature"><div class="dot"></div><span>Restrooms, wheelchair accessible, street level</span></div>
+        <div class="venue-feature"><div class="dot"></div><span>Fiber optic connection</span></div>
+    </div>
+    <div class="concept-box">
+        <p><strong>Lighting strategy:</strong></p>
+        <ul>
+            <li><strong>White cyc shots:</strong> Aperture 120D + Light Dome as key. Venue RGB grid as fill.</li>
+            <li><strong>Colored backdrop shots:</strong> Venue RGB grid handles purple/pink/red looks — no gels needed on your 120D.</li>
+        </ul>
+    </div>
+
+    <!-- SHOT LIST -->
+    <h2>Shot List</h2>
+
+    <span class="setup-label setup-white">Setup A — White Cyc Wall</span>
+    <table class="shot-table">
+        <tr><th>Shot</th><th>Framing</th><th>Notes</th></tr>
+        <tr><td class="shot-id">A1</td><td>Wide full body</td><td>Artist centered, walking/vibing</td></tr>
+        <tr><td class="shot-id">A2</td><td>Medium waist up</td><td>Hands visible, rapping to camera</td></tr>
+        <tr><td class="shot-id">A3</td><td>Close-up</td><td>Head & shoulders, emotional delivery</td></tr>
+        <tr><td class="shot-id">A4</td><td>Extreme CU</td><td>Face fills frame, raw energy</td></tr>
+    </table>
+
+    <span class="setup-label setup-purple">Setup B — Purple / Lavender</span>
+    <table class="shot-table">
+        <tr><th>Shot</th><th>Framing</th><th>Notes</th></tr>
+        <tr><td class="shot-id">B1</td><td>Medium performance</td><td>Different outfit, rounded frame in post</td></tr>
+        <tr><td class="shot-id">B2</td><td>Split screen left</td><td>Paired with Setup C side-by-side</td></tr>
+    </table>
+
+    <span class="setup-label setup-pink">Setup C — Pink / Rose</span>
+    <table class="shot-table">
+        <tr><th>Shot</th><th>Framing</th><th>Notes</th></tr>
+        <tr><td class="shot-id">C1</td><td>Medium two-shot</td><td>Dallas + dancer, vibe/interaction</td></tr>
+        <tr><td class="shot-id">C2</td><td>Split screen right</td><td>Paired with Setup B side-by-side</td></tr>
+    </table>
+
+    <span class="setup-label setup-red">Setup D — Red / Deep</span>
+    <table class="shot-table">
+        <tr><th>Shot</th><th>Framing</th><th>Notes</th></tr>
+        <tr><td class="shot-id">D1</td><td>Medium performance</td><td>Hat + sunglasses, varsity jacket</td></tr>
+        <tr><td class="shot-id">D2</td><td>Medium w/ props</td><td>Fun props, personality shots</td></tr>
+    </table>
+
+    <!-- SCHEDULE -->
+    <h2>Shoot Schedule</h2>
+    <div class="schedule-item"><div class="schedule-time">9:30</div><div class="schedule-desc">Matt & Cortney arrive. Load-in & setup.</div></div>
+    <div class="schedule-item"><div class="schedule-time">10:00</div><div class="schedule-desc">Booking starts. Dallas arrives. Green room for wardrobe. Walk through shot list.</div></div>
+    <div class="schedule-item"><div class="schedule-time">10:30</div><div class="schedule-desc"><strong>Setup A</strong> — White cyc wall. All framings. Multiple takes.</div></div>
+    <div class="schedule-item"><div class="schedule-time">11:30</div><div class="schedule-desc">Transition to colored backdrops. Adjust RGB grid. Test shots.</div></div>
+    <div class="schedule-item"><div class="schedule-time">12:00</div><div class="schedule-desc"><strong>Setup B</strong> — Purple/lavender. Performance + split screen coverage.</div></div>
+    <div class="schedule-item" style="background: #1a1a0a; margin: 0 -20px; padding: 12px 20px;"><div class="schedule-time">12:45</div><div class="schedule-desc">Break / snacks / wardrobe change</div></div>
+    <div class="schedule-item"><div class="schedule-time">1:00</div><div class="schedule-desc"><strong>Setup C</strong> — Pink/rose. Dallas + dancers. Two-shot + split screen.</div></div>
+    <div class="schedule-item"><div class="schedule-time">1:45</div><div class="schedule-desc"><strong>Setup D</strong> — Red. Hat & sunglasses look. Props. Remaining coverage.</div></div>
+    <div class="schedule-item"><div class="schedule-time">2:30</div><div class="schedule-desc">Review footage. Pick up any missing shots.</div></div>
+    <div class="schedule-item"><div class="schedule-time">2:45</div><div class="schedule-desc">Wrap. Strike gear. Clear out.</div></div>
+
+    <div class="hard-out"><span>⚠️ 3:00 PM — HARD OUT ⚠️</span></div>
+
+    <!-- EQUIPMENT -->
+    <h2>Equipment</h2>
+    <h3>Matt's Kit</h3>
+    <div class="gear-grid">
+        <div class="gear-item"><div class="name">Sony FX3</div><div class="use">A-cam, all shots</div></div>
+        <div class="gear-item"><div class="name">Sigma 35mm f/1.4</div><div class="use">Primary — medium & full body</div></div>
+        <div class="gear-item"><div class="name">Sigma 50mm f/1.4</div><div class="use">Close-ups & extreme CU</div></div>
+        <div class="gear-item"><div class="name">Canon 16-35mm</div><div class="use">Wide establishing if needed</div></div>
+        <div class="gear-item"><div class="name">Aperture 120D</div><div class="use">Key light + Light Dome</div></div>
+        <div class="gear-item"><div class="name">Tripod</div><div class="use">All shots locked off</div></div>
+    </div>
+    <h3>Venue Provided</h3>
+    <p>RGB light grid &nbsp;|&nbsp; Cyc wall &nbsp;|&nbsp; Green room</p>
+    <p style="color: #888; font-size: 12px;"><em>No gimbal needed — all locked off per inspiration video</em></p>
+
+    <!-- CREW -->
+    <h2>Crew & Contacts</h2>
+    <div class="contact-row">
+        <div><div class="name">Matt Matheson</div><div class="role">Director / DP</div></div>
+        <a href="tel:+19312522070">(931) 252-2070</a>
+    </div>
+    <div class="contact-row">
+        <div><div class="name">Cortney Hale</div><div class="role">Production Assistant</div></div>
+        <a href="tel:+16155564851">(615) 556-4851</a>
+    </div>
+    <div class="contact-row">
+        <div><div class="name">Dallas Murrae</div><div class="role">Artist</div></div>
+        <a href="tel:+13853467722">(385) 346-7722</a>
+    </div>
+
+    <!-- WARDROBE -->
+    <h2>Wardrobe (3–4 Changes)</h2>
+    <div class="wardrobe-item">
+        <div class="look-num">Look 1 — White Cyc</div>
+        <div class="look-desc">Casual — oversized tee + baggy pants + sneakers</div>
+    </div>
+    <div class="wardrobe-item">
+        <div class="look-num">Look 2 — Purple</div>
+        <div class="look-desc">Layered — jacket or zip-up, different vibe</div>
+    </div>
+    <div class="wardrobe-item">
+        <div class="look-num">Look 3 — Pink</div>
+        <div class="look-desc">Can match Look 2 if doing split screens together</div>
+    </div>
+    <div class="wardrobe-item">
+        <div class="look-num">Look 4 — Red</div>
+        <div class="look-desc">Hat + sunglasses + varsity/letterman jacket — harder edge</div>
+    </div>
+    <p style="color: #666; font-size: 12px; margin-top: 8px;"><em>Dallas handles his own wardrobe — just bring 3-4 options</em></p>
+
+    <!-- POST PRODUCTION -->
+    <h2>Post-Production Plan</h2>
+    <div class="post-section">
+        <ul style="padding: 0;">
+            <li>Import & organize footage by setup (A/B/C/D)</li>
+            <li>Sync audio to song</li>
+            <li>Build split-screen compositions (rounded corners, black gap)</li>
+            <li>Color grade per backdrop mood</li>
+            <li>Add caption lyrics throughout</li>
+            <li>Draft 1 → varsityonlyltd@gmail.com</li>
+            <li>Vertical cuts for socials</li>
+            <li>Final delivery via Google Drive</li>
+        </ul>
+    </div>
+
+    <!-- OPEN ITEMS -->
+    <h2>Open Items</h2>
+    <ul class="checklist">
+        <li>Dallas call tomorrow afternoon — confirm props, wardrobe, dancers</li>
+        <li>Get exact venue address from Peerspace booking confirmation</li>
+        <li>Confirm colored backdrops: paper rolls or RGB grid on white cyc?</li>
+        <li>Download song from Box link — have on speaker for set playback</li>
+        <li>Charge all batteries, format cards tonight</li>
+    </ul>
+
+    <div class="footer">
+        Matt Matheson — mattmathesondotcom@gmail.com<br>
+        <span style="color: #222;">Generated March 14, 2026</span>
+    </div>
+</body>
+</html>
