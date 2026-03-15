@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sony HVR-MRC1 + Panasonic DVX100 — Tapeless Recording Setup Guide</title>
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --accent: #C42020;
+        --accent-glow: rgba(196, 32, 32, 0.15);
+        --bg: #FAFAFA;
+        --text-primary: #1D1D1F;
+        --text-secondary: #6E6E73;
+        --divider: #E5E5E7;
+        --card-bg: #FFFFFF;
+        --box-bg: #F2F2F7;
+        --green: #34C759;
+        --orange: #FF9500;
+        --blue: #007AFF;
+        --yellow: #FFCC00;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+        font-family: 'Inter', -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background: var(--bg);
+        color: var(--text-primary);
+        line-height: 1.7;
+        border-top: 3px solid var(--accent);
+    }
+
+    .hero {
+        background: #1D1D1F;
+        color: #FAFAFA;
+        text-align: center;
+        padding: 80px 24px 60px;
+    }
+
+    .hero h1 {
+        font-size: clamp(2rem, 5vw, 3.2rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        max-width: 780px;
+        margin: 0 auto 16px;
+    }
+
+    .hero h1 span { color: var(--accent); }
+
+    .hero .scope {
+        font-size: 1.1rem;
+        color: #A1A1A6;
+        max-width: 640px;
+        margin: 0 auto 28px;
+        line-height: 1.6;
+    }
+
+    /* Listen controls */
+    .listen-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+    }
+
+    .listen-btn {
+        background: var(--accent);
+        color: white;
+        border: none;
+        border-radius: 2rem;
+        padding: 0.6rem 1.5rem;
+        font-family: inherit;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity 0.2s;
+    }
+    .listen-btn:hover { opacity: 0.85; }
+
+    .voice-select, .speed-btn {
+        background: rgba(255,255,255,0.1);
+        color: #FAFAFA;
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 2rem;
+        padding: 0.5rem 1rem;
+        font-family: inherit;
+        font-size: 0.85rem;
+        cursor: pointer;
+    }
+    .voice-select option { color: #1D1D1F; background: #fff; }
+    .speed-btn { min-width: 48px; text-align: center; font-weight: 600; }
+
+    .pro-tip {
+        font-size: 0.8rem;
+        color: #6E6E73;
+        max-width: 560px;
+        margin: 8px auto 0;
+        line-height: 1.5;
+    }
+    .pro-tip a { color: var(--accent); text-decoration: underline; cursor: pointer; }
+
+    /* Container */
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 48px 24px 100px;
+    }
+
+    .intro {
+        font-size: 1.05rem;
+        color: var(--text-secondary);
+        margin-bottom: 48px;
+        padding-bottom: 32px;
+        border-bottom: 1px solid var(--divider);
+    }
+    .intro p + p { margin-top: 12px; }
+
+    section {
+        margin-bottom: 48px;
+        transition: all 0.3s ease;
+    }
+
+    section.reading {
+        border-left: 3px solid var(--accent);
+        background: rgba(196, 32, 32, 0.04);
+        padding-left: 1rem;
+        border-radius: 4px;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--accent);
+        display: inline-block;
+    }
+
+    h3 {
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin: 28px 0 12px;
+        color: var(--text-primary);
+    }
+
+    p { margin-bottom: 14px; }
+
+    a { color: var(--accent); }
+    a:hover { text-decoration: underline; }
+
+    ul, ol {
+        margin: 12px 0 20px 24px;
+    }
+    li { margin-bottom: 8px; }
+    li::marker { color: var(--accent); }
+
+    /* Cards */
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--divider);
+        border-radius: 12px;
+        padding: 24px 28px;
+        margin: 20px 0;
+    }
+
+    .card.warning {
+        border-left: 4px solid var(--orange);
+        background: rgba(255, 149, 0, 0.04);
+    }
+
+    .card.success {
+        border-left: 4px solid var(--green);
+        background: rgba(52, 199, 89, 0.04);
+    }
+
+    .card.danger {
+        border-left: 4px solid var(--accent);
+        background: rgba(196, 32, 32, 0.04);
+    }
+
+    .card.info {
+        border-left: 4px solid var(--blue);
+        background: rgba(0, 122, 255, 0.04);
+    }
+
+    .card-title {
+        font-weight: 700;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 8px;
+    }
+    .card.warning .card-title { color: var(--orange); }
+    .card.success .card-title { color: var(--green); }
+    .card.danger .card-title { color: var(--accent); }
+    .card.info .card-title { color: var(--blue); }
+
+    .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        background: var(--accent);
+        color: white;
+        border-radius: 50%;
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-right: 12px;
+        flex-shrink: 0;
+    }
+
+    .step {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 24px;
+    }
+
+    .step-content h3 {
+        margin-top: 2px;
+        margin-bottom: 6px;
+    }
+
+    code {
+        background: var(--box-bg);
+        padding: 2px 8px;
+        border-radius: 6px;
+        font-size: 0.9em;
+        font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+
+    .menu-path {
+        font-weight: 600;
+        color: var(--text-primary);
+        background: var(--box-bg);
+        padding: 2px 10px;
+        border-radius: 6px;
+        font-size: 0.95em;
+        white-space: nowrap;
+    }
+
+    .toc {
+        background: var(--card-bg);
+        border: 1px solid var(--divider);
+        border-radius: 12px;
+        padding: 24px 28px;
+        margin-bottom: 40px;
+    }
+    .toc h3 { margin-top: 0; margin-bottom: 16px; }
+    .toc ol { margin-left: 20px; }
+    .toc a { text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0 24px;
+        font-size: 0.95rem;
+    }
+    th, td {
+        text-align: left;
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--divider);
+    }
+    th {
+        background: var(--box-bg);
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--text-secondary);
+    }
+
+    /* Player bar */
+    .player-bar {
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        background: rgba(30, 30, 30, 0.92);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 20px;
+        padding-bottom: calc(12px + env(safe-area-inset-bottom));
+        transform: translateY(100%);
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 9999;
+    }
+    .player-bar.visible { transform: translateY(0); }
+    .player-bar button {
+        background: rgba(255,255,255,0.12);
+        border: none;
+        color: white;
+        width: 36px; height: 36px;
+        border-radius: 50%;
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .player-bar button:hover { background: rgba(255,255,255,0.2); }
+    .player-bar .current-section {
+        flex: 1;
+        font-size: 0.85rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #ccc;
+    }
+    .player-bar .bar-voice-select {
+        background: rgba(255,255,255,0.1);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 2rem;
+        padding: 4px 10px;
+        font-size: 0.8rem;
+        font-family: inherit;
+        max-width: 140px;
+    }
+    .player-bar .bar-voice-select option { color: #1D1D1F; background: #fff; }
+    .player-bar .bar-speed {
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        color: white;
+        border-radius: 2rem;
+        padding: 4px 12px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        width: auto;
+        height: auto;
+    }
+
+    .sources {
+        margin-top: 48px;
+        padding-top: 32px;
+        border-top: 1px solid var(--divider);
+    }
+    .sources h2 { display: block; margin-bottom: 16px; }
+    .sources li { font-size: 0.9rem; color: var(--text-secondary); }
+    .sources a { font-size: 0.9rem; }
+
+    @media (max-width: 600px) {
+        .hero { padding: 60px 20px 48px; }
+        h2 { font-size: 1.3rem; }
+        .card { padding: 18px 20px; }
+        .listen-controls { flex-direction: column; }
+        .listen-btn { width: 100%; }
+        .player-bar { gap: 8px; padding: 10px 14px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
+        .player-bar .current-section { display: none; }
+        table { font-size: 0.85rem; }
+        th, td { padding: 8px 10px; }
+    }
+</style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Sony HVR-MRC1 + <span>Panasonic DVX100</span></h1>
+        <p class="scope">How to use the Sony HVR-MRC1 Memory Recording Unit to record DV from a Panasonic AG-DVX100 to CompactFlash via FireWire &mdash; complete troubleshooting guide.</p>
+
+        <div class="listen-controls">
+            <button class="listen-btn" id="listenBtn">Listen</button>
+            <select class="voice-select" id="voiceSelect"></select>
+            <button class="speed-btn" id="speedBtn">1x</button>
+        </div>
+        <p class="pro-tip"><em>Pro tip: For a better voice, tap <a id="selectAllBtn" href="#">select all</a> below then use iOS Speak Selection (Settings &gt; Accessibility &gt; Spoken Content &gt; Speak Selection).</em></p>
+    </div>
+
+    <div class="container" id="mainContent">
+
+        <div class="intro">
+            <p>You have a Sony HVR-MRC1 Memory Recording Unit and a Panasonic AG-DVX100. The DVX100 connects fine to your MacBook via FireWire (QuickTime capture works), but when you plug the same cable into the MRC1, it won't record. This guide covers exactly what's going on and how to fix it.</p>
+            <p>The good news: this combination has been confirmed working by multiple users on DVXuser and DVinfo forums. The bad news: it requires specific settings on both devices, and the MRC1 is not exactly intuitive when used outside of its native Sony ecosystem.</p>
+        </div>
+
+        <nav class="toc">
+            <h3>Contents</h3>
+            <ol>
+                <li><a href="#tldr">The Short Answer</a></li>
+                <li><a href="#what-you-need">What You Need (Checklist)</a></li>
+                <li><a href="#dvx100-setup">Step 1: DVX100 Camera Settings</a></li>
+                <li><a href="#mrc1-setup">Step 2: HVR-MRC1 Menu Settings</a></li>
+                <li><a href="#connection">Step 3: Physical Connection &amp; Power</a></li>
+                <li><a href="#recording">Step 4: Recording Workflow</a></li>
+                <li><a href="#troubleshooting">Troubleshooting: Why It Won't Record</a></li>
+                <li><a href="#firmware">Firmware Update</a></li>
+                <li><a href="#file-formats">File Formats &amp; Importing</a></li>
+                <li><a href="#limitations">Limitations with Non-Sony Cameras</a></li>
+                <li><a href="#cf-cards">CompactFlash Card Requirements</a></li>
+                <li><a href="#sources">Sources</a></li>
+            </ol>
+        </nav>
+
+        <!-- ═══════════════════════════════════ -->
+        <section id="tldr">
+            <h2>The Short Answer</h2>
+
+            <div class="card success">
+                <div class="card-title">Yes, It Works</div>
+                <p>The Sony HVR-MRC1 can record DV from the Panasonic DVX100 via FireWire. Multiple users on DVXuser have confirmed this exact combination works. One called it "the best tapeless solution for a DVX." The MRC1 records the DV stream onto CompactFlash cards, giving you instant .dv or .avi files ready for editing &mdash; no tape capture needed.</p>
+            </div>
+
+            <div class="card danger">
+                <div class="card-title">Why Yours Isn't Working</div>
+                <p>The most likely causes, in order of probability:</p>
+                <ol>
+                    <li><strong>CAM LINK needs to be OFF.</strong> With a non-Sony camera, the MRC1 can't sync to the camera's record button. You must disable CAM LINK and use the MRC1's own start/stop button.</li>
+                    <li><strong>The DVX100 isn't outputting DV over FireWire.</strong> You need <span class="menu-path">AV IN/OUT SETUP &rarr; DV OUT &rarr; ON</span> in the camera menu, and the camera must be in Camera mode (not VCR mode) with a tape loaded, or actively recording.</li>
+                    <li><strong>The MRC1's i.LINK MODE is set wrong.</strong> It must be set to <span class="menu-path">AUTO</span> or <span class="menu-path">DV</span> (not HDV).</li>
+                    <li><strong>The MRC1 isn't powered.</strong> When used via the i.LINK cradle (not mounted on a Sony camera), the MRC1 needs its own power: an L-series battery or AC adapter.</li>
+                    <li><strong>The CompactFlash card isn't formatted.</strong> The MRC1 requires CF cards formatted by the unit itself.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════ -->
+        <section id="what-you-need">
+            <h2>What You Need (Checklist)</h2>
+
+            <table>
+                <tr>
+                    <th>Item</th>
+                    <th>Notes</th>
+                </tr>
+                <tr>
+                    <td>Sony HVR-MRC1</td>
+                    <td>The memory recording unit itself</td>
+                </tr>
+                <tr>
+                    <td>HVRA-CR1 i.LINK Cradle</td>
+                    <td>Required for use with non-Sony cameras. Came with the MRC1K kit. Has an i.LINK port, battery slot, and DC input.</td>
+                </tr>
+                <tr>
+                    <td>Sony L-series battery or AC adapter</td>
+                    <td>Powers the MRC1 when in the cradle (same batteries as HVR-Z1E)</td>
+                </tr>
+                <tr>
+                    <td>4-pin to 4-pin FireWire (i.LINK) cable</td>
+                    <td>Both the DVX100 and the MRC1 cradle use 4-pin connectors</td>
+                </tr>
+                <tr>
+                    <td>CompactFlash card</td>
+                    <td>Minimum 2GB, minimum 133x speed. Formatted in the MRC1.</td>
+                </tr>
+                <tr>
+                    <td>Panasonic AG-DVX100/A/B</td>
+                    <td>With DV OUT enabled in its menu</td>
+                </tr>
+            </table>
+
+            <div class="card warning">
+                <div class="card-title">Do You Have the Cradle?</div>
+                <p>The MRC1 alone has no i.LINK port &mdash; it uses a proprietary shoe connector designed for the Z7/Z5/S270. To connect it to any other camera via FireWire, you need the HVRA-CR1 cradle. If you bought the MRC1K kit, it was included. If you bought just the MRC1 unit off eBay, you may be missing the cradle, and it won't work without it.</p>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════ -->
+        <section id="dvx100-setup">
+            <h2>Step 1: DVX100 Camera Settings</h2>
+
+            <p>The DVX100 must be actively outputting a DV stream over its FireWire port. Here's how to verify:</p>
+
+            <div class="step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    <h3>Enable DV OUT</h3>
+                    <p>Go to <span class="menu-path">MENU &rarr; AV IN/OUT SETUP &rarr; DV OUT &rarr; ON</span>. This enables the FireWire output. If this is set to OFF, the DVX100 will not send any DV signal over FireWire, even though the port is physically connected.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    <h3>Camera Mode (Not VCR Mode)</h3>
+                    <p>For live recording, the DVX100 must be in <strong>Camera mode</strong> (the rear switch). In Camera mode with a tape loaded and the camera recording (or even just powered on), the DVX100 continuously outputs its DV signal over FireWire. When a tape is loaded, the camera is in FireWire output mode &mdash; it sends the signal out.</p>
+                    <p>VCR mode is for playback and pass-through of existing tapes, not live camera output.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    <h3>Load a Tape (Important)</h3>
+                    <p>Several users have reported that having a tape in the transport is necessary for the FireWire output to be active in Camera mode. The DVX100 outputs DV over FireWire while recording to tape &mdash; the FireWire stream is essentially a copy of what's going to tape. Without a tape, some DV cameras don't output a FireWire signal at all.</p>
+                    <p>If you want to go fully tapeless (no tape in camera), test whether your specific DVX100 variant outputs over FireWire without a tape. Some do, some don't.</p>
+                </div>
+            </div>
+
+            <div class="card info">
+                <div class="card-title">DVX100B Bonus Feature</div>
+                <p>The DVX100B specifically added a "synchro lock" feature on its IEEE 1394 terminal that allows it to remotely start/stop an external DV recording device. It supports three modes: record only to external, record to both tape and external simultaneously, or begin external recording when tape runs out. Check your DVX100B manual for <span class="menu-path">EXT REC</span> settings if you have the B model.</p>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════ -->
+        <section id="mrc1-setup">
+            <h2>Step 2: HVR-MRC1 Menu Settings</h2>
+
+            <p>The MRC1 has a small LCD screen and a few buttons for navigation (MENU, PREV/REW, NEXT/FF, PLAY/EXEC). Press MENU to enter the menu, use PREV/NEXT to navigate, and PLAY/EXEC to select.</p>
+
+            <h3>Critical Settings</h3>
+
+            <div class="card">
+                <h3>CAM LINK &mdash; Must Be OFF</h3>
+                <p>There's a physical <strong>CAM LINK button</strong> on the top of the MRC1. Make sure it's <strong>disabled</strong> (the CAM LINK indicator should NOT be lit). With CAM LINK on, the MRC1 tries to sync its start/stop to the camera's record trigger, which only works with compatible Sony cameras.</p>
+                <p>Additionally, in the menu: <span class="menu-path">SETTING &rarr; CAMLINK SEL</span> &mdash; this determines the sync mode (SYNCHRO or FOLLOW). With a non-Sony camera, this setting doesn't matter because CAM LINK should be off entirely. But if you're experimenting, set it to <strong>FOLLOW</strong> (designed for older cameras).</p>
+            </div>
+
+            <div class="card">
+                <h3>i.LINK MODE &mdash; Set to AUTO or DV</h3>
+                <p>Navigate to <span class="menu-path">i.LINK MODE</span> in the VIDEO mode menu. Options are:</p>
+                <ul>
+                    <li><strong>AUTO</strong> (default) &mdash; Automatically detects HDV or DV signal. Should work.</li>
+                    <li><strong>DV</strong> &mdash; Forces DV-only mode. Try this if AUTO isn't detecting the signal.</li>
+                    <li><strong>HDV</strong> &mdash; HDV only. The DVX100 outputs DV, NOT HDV, so this will definitely not work.</li>
+                </ul>
+                <p>Set this to <strong>AUTO</strong> first. If that doesn't work, explicitly set it to <strong>DV</strong>.</p>
+            </div>
+
+            <div class="card">
+                <h3>DV FILETYPE</h3>
+                <p>Navigate to <span class="menu-path">SETTING &rarr; DV FILETYPE</span>. Options:</p>
+                <ul>
+                    <li><strong>DV</strong> &mdash; Records .dv files. Works better with Mac/FCP.</li>
+                    <li><strong>AVI</strong> &mdash; Records .avi files. Works better with Windows/Premiere.</li>
+                </ul>
+                <p>Since you're on a Mac, choose <strong>DV</strong>.</p>
+            </div>
+
+            <div class="card">
+                <h3>REC MODE &mdash; Set to NORMAL</h3>
+                <p>Navigate to <span class="menu-path">REC MODE</span>. Set it to <strong>NORMAL</strong>. The other modes (CACHE, INTERVAL, LOOP) are specialty modes that could prevent recording if not configured correctly.</p>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════ -->
+        <section id="connection">
+            <h2>Step 3: Physical Connection &amp; Power</h2>
+
+            <div class="card danger">
+                <div class="card-title">FireWire Safety Warning</div>
+                <p>The DVX100 is notorious for blown FireWire ports. <strong>NEVER plug or unplug the FireWire cable while either device is powered on.</strong> Static discharge through the cable can fry the 1394 controller chip. Always: power off both devices &rarr; connect the cable &rarr; then power on. This is especially critical with 6-pin FireWire on Macs, but applies to all connections.</p>
+            </div>
+
+            <div class="step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    <h3>Power Off Everything</h3>
+                    <p>Turn off the DVX100 and the MRC1.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    <h3>Insert MRC1 into Cradle</h3>
+                    <p>Slide the HVR-MRC1 into the HVRA-CR1 i.LINK cradle until it clicks. Attach an L-series battery to the cradle, or connect the AC adapter.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    <h3>Insert CompactFlash Card</h3>
+                    <p>Insert a formatted CompactFlash card into the MRC1. If the card is new, you'll need to format it in the MRC1 first: <span class="menu-path">FORMAT</span> in the VIDEO mode menu.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <div class="step-content">
+                    <h3>Connect FireWire Cable</h3>
+                    <p>Connect the 4-pin FireWire cable from the DVX100's DV terminal to the i.LINK port on the MRC1 cradle. Make sure the cable is seated firmly and straight &mdash; these connectors are fragile.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">5</span>
+                <div class="step-content">
+                    <h3>Power On the MRC1 First</h3>
+                    <p>Press the POWER button on the MRC1. Wait for it to boot and show the status screen on its LCD.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">6</span>
+                <div class="step-content">
+                    <h3>Power On the DVX100</h3>
+                    <p>Turn on the DVX100 in Camera mode with a tape loaded. The MRC1 should detect the DV signal &mdash; you'll see the input format indicated on the MRC1's LCD screen.</p>
+                </div>
+            </div>
+
+            <div class="card warning">
+                <div class="card-title">Important: Disconnect Before Changing Format</div>
+                <p>From the Sony manual: "Before changing the HDV/DV format on the camcorder, disconnect the i.LINK cable. Changing the format after connecting the i.LINK cable may cause the video signal to not be recognized correctly." If you're having detection issues, power everything off, disconnect the cable, configure both devices separately, then reconnect.</p>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════ -->
+        <section id="recording">
+            <h2>Step 4: Recording Workflow</h2>
+
+            <p>With a non-Sony camera, recording is a two-button operation. The MRC1 and DVX100 operate independently.</p>
+
+            <div class="step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    <h3>Start Recording on the DVX100</h3>
+                    <p>Press the record button on the DVX100. The camera starts recording to tape and simultaneously outputs the DV stream over FireWire.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    <h3>Start Recording on the MRC1</h3>
+                    <p>Press the <strong>START/STOP</strong> button on the MRC1. The MRC1 begins capturing the incoming DV stream to CompactFlash. The LCD will show recording status, time, and remaining capacity.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    <h3>Stop Recording</h3>
+                    <p>Press START/STOP on the MRC1 to stop its recording. Press the record button on the DVX100 to stop the camera. Order doesn't matter much, but stopping the MRC1 first ensures you don't lose the tail end of a clip.</p>
+                </div>
+            </div>
+
+            <div class="card info">
+                <div class="card-title">You Can Leave the MRC1 Running</div>
+                <p>You don't have to start/stop the MRC1 for every take. You can press START/STOP on the MRC1 once and let it record continuously while you start and stop the DVX100 as usual. The MRC1 will record everything the DVX100 sends over FireWire into one long file (split at 4GB boundaries, about 20 minutes each, due to FAT32). Later, you can trim in your editor. This is simpler than trying to sync two record buttons on every take.</p>
+            </div>
+
+            <div class="card success">
+                <div class="card-title">DVX100B Users: Automatic Sync</div>
+                <p>If you have the DVX100B (not the original DVX100 or 100A), it has an external recording control feature that may be able to trigger the MRC1 automatically over FireWire. Check your camera menu for EXT REC settings. This would eliminate the two-button problem.</p>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════ -->
+        <section id="troubleshooting">
+            <h2>Troubleshooting: Why It Won't Record</h2>
+
+            <p>Work through these in order. Each one is a known cause of failure with this combination.</p>
+
+            <h3>1. MRC1 Doesn't See Any Signal</h3>
+            <ul>
+                <li><strong>Is the MRC1 in VIDEO mode?</strong> The MRC1 auto-selects VIDEO mode when connected to a camera and COMPUTER mode when connected to a PC. If the LCD shows COMPUTER mode, something is wrong with the connection. Power cycle both devices.</li>
+                <li><strong>Is DV OUT enabled on the DVX100?</strong> Check <span class="menu-path">MENU &rarr; AV IN/OUT SETUP &rarr; DV OUT &rarr; ON</span>.</li>
+                <li><strong>Is the DVX100 in Camera mode?</strong> Check the rear switch. VCR mode won't output a live camera signal.</li>
+                <li><strong>Is there a tape in the DVX100?</strong> Some DV cameras don't output over FireWire without a tape loaded.</li>
+                <li><strong>Is the MRC1's i.LINK MODE correct?</strong> Set it to AUTO or DV (not HDV).</li>
+                <li><strong>Did you connect the cable before powering on?</strong> Try: power off both &rarr; connect cable &rarr; power on MRC1 &rarr; power on DVX100.</li>
+                <li><strong>Is the FireWire cable good?</strong> You said it works fine DVX100-to-MacBook, so the cable is likely fine, but verify it's a 4-pin to 4-pin cable (the MRC1 cradle uses 4-pin).</li>
+            </ul>
+
+            <h3>2. MRC1 Sees Signal but Won't Record</h3>
+            <ul>
+                <li><strong>Is CAM LINK off?</strong> This is the #1 cause. With CAM LINK on, the MRC1 waits for a record trigger from the camera. The DVX100 can't send this trigger (it's a Sony proprietary protocol). Turn CAM LINK OFF and use the MRC1's own START/STOP button.</li>
+                <li><strong>Is the CompactFlash card formatted?</strong> A new or computer-formatted card won't work. Format it in the MRC1: <span class="menu-path">FORMAT</span> in the menu. Warning: some users reported that "FORMAT" killed certain CF cards. Try <span class="menu-path">DELETE &rarr; ALL</span> first if the card was previously used in the MRC1.</li>
+                <li><strong>Is the CF card fast enough?</strong> Must be 133x speed or faster, 2GB or larger.</li>
+                <li><strong>Is REC MODE set to NORMAL?</strong> CACHE, INTERVAL, or LOOP modes have specific trigger requirements that could prevent recording.</li>
+            </ul>
+
+            <h3>3. MRC1 Records but Files Are Corrupt/Empty</h3>
+            <ul>
+                <li><strong>Don't open the CF slot during recording.</strong> This will stop recording and may corrupt the current file.</li>
+                <li><strong>Don't lose power during recording.</strong> Use AC power when possible, or a fully charged L-series battery.</li>
+                <li><strong>Check firmware version.</strong> Firmware V01.00 had bugs with certain SanDisk CF cards and with file imports into Final Cut Pro. Update to V02.00 (see below).</li>
+                <li><strong>"Fatal error of originating software"</strong> &mdash; Power cycle the MRC1 (turn off, turn on).</li>
+            </ul>
+
+            <h3>4. Timecode Issues</h3>
+            <p>With a non-Sony camera, the timecode on the MRC1's recordings won't match the timecode on the DVX100's tape. This is a known limitation. The MRC1 generates its own timecode. If you're recording to both tape and CF simultaneously and plan to sync them, be aware of this 3-4 frame offset.</p>
+        </section>
+
+        <!-- ═══════════════════════════════════ -->
+        <section id="firmware">
+            <h2>Firmware Update</h2>
+
+            <p>Check your MRC1's firmware version in the menu. If it shows <code>Version:01</code>, update to V02.00. This update fixes several real bugs:</p>
+
+            <ul>
+                <li>Cache recording failures with SanDisk high-speed CF cards</li>
+                <li>Internal flash ROM data error causing unit malfunction</li>
+                <li>Multiple files imported as a single file in Final Cut Pro</li>
+                <li>Files recorded from HVR-1500 in DV/AVI mode couldn't be imported into FCP</li>
+            </ul>
+
+            <p>Download from Sony's support page: https://pro.sony/en_GB/support-resources/software/mpengb00000129</p>
+
+            <div class="card danger">
+                <div class="card-title">Firmware Update Warning</div>
+                <p>Do NOT update firmware on battery power. Use the AC adapter only. If power is lost during the upgrade, the unit will need to be sent to an Authorised Sony Service Centre for repair. Insert the MRC1 into its cradle, connect AC power, then follow the update procedure.</p>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════ -->
+        <section id="file-formats">
+            <h2>File Formats &amp; Importing</h2>
+
+            <p>The MRC1 creates a folder structure on the CF card: <code>VIDEO/HVR/</code> in the root directory. Files are stored there.</p>
+
+            <h3>DV Signal (from DVX100)</h3>
+            <table>
+                <tr>
+                    <th>DV FILETYPE Setting</th>
+                    <th>File Extension</th>
+                    <th>Best For</th>
+                </tr>
+                <tr>
+                    <td>DV</td>
+                    <td>.dv</td>
+                    <td>Mac / Final Cut Pro</td>
+                </tr>
+                <tr>
+                    <td>AVI</td>
+                    <td>.avi</td>
+                    <td>Windows / Premiere Pro</td>
+                </tr>
+            </table>
+
+            <p>Files are split at 4GB boundaries (approximately 20 minutes of DV recording each) due to FAT32 limitations. Sony provides a utility to merge split files, but most NLEs handle them fine as individual clips.</p>
+
+            <h3>Filename Format</h3>
+            <p>Files are named: <code>XX_CCCC_YYYY-MM-DD_hhmmss.dv</code> (or .avi), where XX is the clip number, CCCC is the camera number, and the rest is a timestamp.</p>
+
+            <h3>Importing to Mac</h3>
+            <p>Pop the CF card into a card reader (FireWire 800 CF readers are fastest). In Final Cut Pro 7, use Log &amp; Transfer &mdash; it recognizes MRC1 footage natively. Users report it's about 7x faster than real-time tape capture. In modern editors (Resolve, Premiere, FCPX), just import the .dv files directly.</p>
+
+            <div class="card info">
+                <div class="card-title">DV vs DVCAM</div>
+                <p>The DVX100 records standard DV (25 Mbps). The MRC1 accepts DV, DVCAM, and HDV. There's no difference in recording time on CF between these formats &mdash; a 16GB card holds about 72 minutes regardless. DV and DVCAM both record continuously without the "clip restart" issue that HDV has.</p>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════ -->
+        <section id="limitations">
+            <h2>Limitations with Non-Sony Cameras</h2>
+
+            <p>The HVR-MRC1 was designed specifically for the Sony HVR-Z7U, HVR-Z5U, and HVR-S270U. When used with any other camera (including the DVX100), you lose several features:</p>
+
+            <ul>
+                <li><strong>No synced start/stop.</strong> You must manually start/stop recording on the MRC1 separately from the camera (unless you have a DVX100B with EXT REC control).</li>
+                <li><strong>No viewfinder status.</strong> On Sony cameras, remaining time and recording status appear in the viewfinder. With the DVX100, you have to check the MRC1's own LCD.</li>
+                <li><strong>No automatic power-on.</strong> On Sony cameras, mounting the MRC1 on the shoe connector powers it automatically. With the cradle, you manage power separately.</li>
+                <li><strong>Timecode mismatch.</strong> The MRC1 generates its own timecode that won't match the camera's timecode.</li>
+                <li><strong>SD only.</strong> The DVX100 outputs standard definition DV. The MRC1 can handle this, but you won't get any HDV features.</li>
+            </ul>
+        </section>
+
+        <!-- ═══════════════════════════════════ -->
+        <section id="cf-cards">
+            <h2>CompactFlash Card Requirements</h2>
+
+            <table>
+                <tr>
+                    <th>Spec</th>
+                    <th>Requirement</th>
+                </tr>
+                <tr>
+                    <td>Minimum capacity</td>
+                    <td>2 GB</td>
+                </tr>
+                <tr>
+                    <td>Minimum speed</td>
+                    <td>133x (20 MB/s)</td>
+                </tr>
+                <tr>
+                    <td>Maximum tested</td>
+                    <td>32 GB (confirmed working by users)</td>
+                </tr>
+                <tr>
+                    <td>Recording time (16 GB)</td>
+                    <td>~72 minutes (DV or HDV)</td>
+                </tr>
+                <tr>
+                    <td>File system</td>
+                    <td>FAT32 (formatted by the MRC1)</td>
+                </tr>
+            </table>
+
+            <div class="card warning">
+                <div class="card-title">CF Card Formatting Tip</div>
+                <p>Some users reported that using "FORMAT" on certain CF cards in the MRC1 killed the cards permanently &mdash; they wouldn't reformat on any device afterward. If your card already has MRC1 data on it, use <span class="menu-path">DELETE &rarr; ALL</span> instead of FORMAT to clear it. Only use FORMAT on a brand-new card that's never been used in the MRC1. Also: firmware V02.00 fixes issues with SanDisk high-speed CF cards specifically.</p>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════ -->
+        <section id="sources" class="sources">
+            <h2>Sources</h2>
+            <ul>
+                <li><a href="https://pro.sony/s3/cms-static-content/operation-manual/3290149121.pdf">Sony HVR-MRC1 Official Operating Manual (PDF)</a></li>
+                <li><a href="https://www.manualslib.com/manual/163903/Sony-Hvr-Mrc1.html">Sony HVR-MRC1 User Manual &mdash; ManualsLib</a></li>
+                <li><a href="https://www.dvxuser.com/threads/anyone-out-there-share-tips-on-tapeless-recording-w-dvx100-a-b.265064/">DVXuser: Tapeless Recording with DVX100/A/B</a></li>
+                <li><a href="https://www.dvxuser.com/threads/hvx-sony-hvr-mrc1.181449/">DVXuser: HVX &amp; Sony HVR-MRC1</a></li>
+                <li><a href="https://www.dvxuser.com/threads/possible-to-connect-dvx100b-to-computer-or-external-drive-while-recording.330153/">DVXuser: DVX100B External Recording While Shooting</a></li>
+                <li><a href="https://www.dvinfo.net/forum/jvc-gy-hd-series-camera-systems/139792-wil-sony-hvr-mrc1-recorder-work-w-jvchd100.html">DVinfo: MRC1 with Non-Sony Cameras (JVC HD100 Thread)</a></li>
+                <li><a href="https://www.dvinfo.net/forum/sony-hvr-z1-hdr-fx1/508812-why-sony-mrc1k-doesnt-work-my-sony-fx1.html">DVinfo: Why MRC1K Doesn't Work with Sony FX1</a></li>
+                <li><a href="https://forum.videohelp.com/threads/347732-Sony-HDV-Z7U-won-t-record-exclusively-to-HVR-MRC1-Memory-Recording-Unit">VideoHelp: Z7U Won't Record to MRC1</a></li>
+                <li><a href="https://forum.videohelp.com/threads/410481-Working-on-an-alternative-to-a-Sony-HVR-MRC1">VideoHelp: Working on an Alternative to MRC1</a></li>
+                <li><a href="https://www.sony-asia.com/microsite/professional/hdv/pdf/HVR-DR60_MRC1K.pdf">Sony Asia: HVR-DR60 / MRC1K Product Sheet</a></li>
+                <li><a href="https://pro.sony/en_GB/support-resources/software/mpengb00000129">Sony: HVR-MRC1 Firmware V02.00 Download</a></li>
+                <li><a href="https://pro.sony/s3/cms-static-content/software/PRE-03KB.PDF">Sony: Firmware V02.00 Release Notes (PDF)</a></li>
+            </ul>
+        </section>
+
+    </div>
+
+    <!-- Player Bar -->
+    <div class="player-bar" id="playerBar">
+        <button id="barPlayPause" title="Play/Pause">&#9654;</button>
+        <span class="current-section" id="barSection">Ready</span>
+        <select class="bar-voice-select" id="barVoiceSelect"></select>
+        <button class="bar-speed" id="barSpeed">1x</button>
+        <button id="barStop" title="Stop">&#9632;</button>
+    </div>
+
+    <script>
+    (function() {
+        const WHITELISTED_VOICES = [
+            'samantha', 'karen', 'daniel', 'moira', 'tessa', 'ava', 'allison',
+            'tom', 'aaron', 'nicky', 'evan', 'zoe', 'joelle', 'fiona', 'martha', 'arthur'
+        ];
+        const WHITELISTED_PATTERNS = ['google us english', 'google uk english'];
+        const SPEEDS = [0.8, 1, 1.2, 1.5];
+        let speedIdx = 1;
+        let currentRate = 1;
+        let voices = [];
+        let selectedVoice = null;
+        let isPlaying = false;
+        let isPaused = false;
+        let chunks = [];
+        let chunkIdx = 0;
+        let currentSection = null;
+        let keepAliveInterval = null;
+
+        const listenBtn = document.getElementById('listenBtn');
+        const voiceSelect = document.getElementById('voiceSelect');
+        const speedBtn = document.getElementById('speedBtn');
+        const playerBar = document.getElementById('playerBar');
+        const barPlayPause = document.getElementById('barPlayPause');
+        const barSection = document.getElementById('barSection');
+        const barVoiceSelect = document.getElementById('barVoiceSelect');
+        const barSpeed = document.getElementById('barSpeed');
+        const barStop = document.getElementById('barStop');
+        const selectAllBtn = document.getElementById('selectAllBtn');
+
+        function isWhitelisted(name) {
+            const lower = name.toLowerCase();
+            if (WHITELISTED_VOICES.some(w => lower.includes(w))) return true;
+            if (WHITELISTED_PATTERNS.some(p => lower.includes(p))) return true;
+            return false;
+        }
+
+        function populateVoices() {
+            voices = speechSynthesis.getVoices().filter(v => isWhitelisted(v.name));
+            [voiceSelect, barVoiceSelect].forEach(sel => {
+                sel.innerHTML = '';
+                voices.forEach((v, i) => {
+                    const opt = document.createElement('option');
+                    opt.value = i;
+                    opt.textContent = v.name;
+                    sel.appendChild(opt);
+                });
+            });
+            if (voices.length > 0) {
+                const samIdx = voices.findIndex(v => v.name.toLowerCase().includes('samantha'));
+                const idx = samIdx >= 0 ? samIdx : 0;
+                voiceSelect.value = idx;
+                barVoiceSelect.value = idx;
+                selectedVoice = voices[idx];
+            }
+        }
+
+        speechSynthesis.onvoiceschanged = populateVoices;
+        populateVoices();
+
+        function syncVoice(fromSelect) {
+            const idx = parseInt(fromSelect.value);
+            selectedVoice = voices[idx] || null;
+            voiceSelect.value = idx;
+            barVoiceSelect.value = idx;
+        }
+
+        voiceSelect.addEventListener('change', () => syncVoice(voiceSelect));
+        barVoiceSelect.addEventListener('change', () => syncVoice(barVoiceSelect));
+
+        function cycleSpeed() {
+            speedIdx = (speedIdx + 1) % SPEEDS.length;
+            currentRate = SPEEDS[speedIdx];
+            speedBtn.textContent = currentRate + 'x';
+            barSpeed.textContent = currentRate + 'x';
+        }
+
+        speedBtn.addEventListener('click', cycleSpeed);
+        barSpeed.addEventListener('click', cycleSpeed);
+
+        function buildChunks() {
+            chunks = [];
+            const sections = document.querySelectorAll('#mainContent section, #mainContent .intro');
+            sections.forEach(sec => {
+                const els = sec.querySelectorAll('h2, h3, h4, p, li, blockquote');
+                const sectionTitle = sec.querySelector('h2') ? sec.querySelector('h2').textContent : 'Introduction';
+                els.forEach(el => {
+                    const text = el.textContent.trim();
+                    if (!text) return;
+                    if (el.tagName === 'BUTTON') return;
+                    const isHeading = /^H[2-4]$/.test(el.tagName);
+                    chunks.push({ text, isHeading, section: sec, sectionTitle, el });
+                });
+            });
+        }
+
+        function highlightSection(sec) {
+            if (currentSection && currentSection !== sec) {
+                currentSection.classList.remove('reading');
+            }
+            if (sec) {
+                sec.classList.add('reading');
+                if (currentSection !== sec) {
+                    sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                currentSection = sec;
+            }
+        }
+
+        function showBar() { playerBar.classList.add('visible'); }
+        function hideBar() { playerBar.classList.remove('visible'); }
+
+        function startKeepAlive() {
+            if (keepAliveInterval) clearInterval(keepAliveInterval);
+            keepAliveInterval = setInterval(() => {
+                if (speechSynthesis.speaking && !speechSynthesis.paused) {
+                    speechSynthesis.resume();
+                }
+            }, 10000);
+        }
+
+        function stopKeepAlive() {
+            if (keepAliveInterval) { clearInterval(keepAliveInterval); keepAliveInterval = null; }
+        }
+
+        function speakChunk(idx) {
+            if (idx >= chunks.length) {
+                stopPlayback();
+                return;
+            }
+            chunkIdx = idx;
+            const chunk = chunks[idx];
+            const utt = new SpeechSynthesisUtterance(chunk.text);
+            if (selectedVoice) utt.voice = selectedVoice;
+            utt.rate = chunk.isHeading ? currentRate * 0.9 : currentRate;
+            if (chunk.isHeading) utt.pitch = 1.05;
+
+            highlightSection(chunk.section);
+            barSection.textContent = chunk.sectionTitle;
+
+            utt.onend = () => {
+                const delay = chunk.isHeading ? 400 : 200;
+                setTimeout(() => {
+                    if (isPlaying && !isPaused) speakChunk(idx + 1);
+                }, delay);
+            };
+
+            speechSynthesis.speak(utt);
+        }
+
+        function startPlayback() {
+            speechSynthesis.cancel();
+            buildChunks();
+            if (chunks.length === 0) return;
+            isPlaying = true;
+            isPaused = false;
+            chunkIdx = 0;
+            barPlayPause.innerHTML = '&#10074;&#10074;';
+            listenBtn.textContent = 'Pause';
+            showBar();
+            startKeepAlive();
+            speakChunk(0);
+        }
+
+        function togglePause() {
+            if (!isPlaying) { startPlayback(); return; }
+            if (isPaused) {
+                isPaused = false;
+                speechSynthesis.resume();
+                barPlayPause.innerHTML = '&#10074;&#10074;';
+                listenBtn.textContent = 'Pause';
+            } else {
+                isPaused = true;
+                speechSynthesis.pause();
+                barPlayPause.innerHTML = '&#9654;';
+                listenBtn.textContent = 'Resume';
+            }
+        }
+
+        function stopPlayback() {
+            isPlaying = false;
+            isPaused = false;
+            speechSynthesis.cancel();
+            stopKeepAlive();
+            if (currentSection) currentSection.classList.remove('reading');
+            currentSection = null;
+            barPlayPause.innerHTML = '&#9654;';
+            listenBtn.textContent = 'Listen';
+            barSection.textContent = 'Ready';
+            hideBar();
+        }
+
+        listenBtn.addEventListener('click', () => {
+            if (!isPlaying) startPlayback();
+            else togglePause();
+        });
+
+        barPlayPause.addEventListener('click', togglePause);
+        barStop.addEventListener('click', stopPlayback);
+
+        selectAllBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const range = document.createRange();
+            range.selectNodeContents(document.getElementById('mainContent'));
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        });
+    })();
+    </script>
+</body>
+</html>
