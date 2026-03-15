@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAN SPENCER — DOSSIER</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+        :root {
+            --blood: #B50C0C;
+            --blood-glow: #ff2020;
+            --bone: #F6F6F6;
+            --void: #0a0a0a;
+            --ash: #1a1a1a;
+            --smoke: #888;
+            --ember: #ff4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--void);
+            color: var(--bone);
+            overflow-x: hidden;
+        }
+
+        /* ═══ HERO ═══ */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at 50% 50%, rgba(181,12,12,0.15) 0%, transparent 70%);
+            animation: pulse-bg 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-bg {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .hero-name {
+            font-size: clamp(48px, 12vw, 120px);
+            font-weight: 700;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: var(--bone);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            animation: name-in 1.5s ease-out;
+            text-shadow: 0 0 60px rgba(181,12,12,0.5);
+        }
+
+        @keyframes name-in {
+            0% { opacity: 0; transform: translateY(40px); letter-spacing: 30px; }
+            100% { opacity: 1; transform: translateY(0); letter-spacing: 8px; }
+        }
+
+        .hero-tagline {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(12px, 2.5vw, 16px);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--blood);
+            margin-top: 16px;
+            position: relative;
+            z-index: 2;
+            animation: tag-in 2s ease-out 0.5s both;
+        }
+
+        @keyframes tag-in {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-meta {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: var(--smoke);
+            letter-spacing: 3px;
+            margin-top: 24px;
+            position: relative;
+            z-index: 2;
+            animation: tag-in 2s ease-out 1s both;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            animation: bounce 2s ease-in-out infinite 2s;
+        }
+
+        .scroll-indicator span {
+            display: block;
+            width: 2px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--blood), transparent);
+            margin: 0 auto;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* ═══ SECTIONS ═══ */
+        .section {
+            padding: 80px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--blood);
+            margin-bottom: 8px;
+        }
+
+        .section-title {
+            font-size: clamp(28px, 5vw, 42px);
+            font-weight: 700;
+            margin-bottom: 30px;
+            line-height: 1.1;
+        }
+
+        /* ═══ STATS GRID ═══ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--ash);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid #222;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--blood);
+            transform: translateY(-4px);
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--blood);
+            font-family: 'Space Mono', monospace;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--smoke);
+            margin-top: 6px;
+        }
+
+        /* ═══ BIO ═══ */
+        .bio-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #ccc;
+            max-width: 700px;
+        }
+
+        .bio-text strong { color: var(--bone); }
+        .bio-text .accent { color: var(--blood); font-weight: 600; }
+
+        /* ═══ TIMELINE ═══ */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--blood), var(--ash));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 32px;
+            padding-left: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -32px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--blood);
+            box-shadow: 0 0 10px rgba(181,12,12,0.5);
+        }
+
+        .timeline-year {
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            color: var(--blood);
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+
+        .timeline-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .timeline-desc {
+            font-size: 13px;
+            color: var(--smoke);
+            line-height: 1.5;
+        }
+
+        /* ═══ DISCOGRAPHY ═══ */
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .album-card {
+            background: var(--ash);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #222;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .album-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--blood), transparent);
+        }
+
+        .album-card:hover {
+            border-color: var(--blood);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(181,12,12,0.1);
+        }
+
+        .album-type {
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--blood);
+        }
+
+        .album-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 8px 0;
+            line-height: 1.2;
+        }
+
+        .album-meta {
+            font-size: 12px;
+            color: var(--smoke);
+            margin-bottom: 12px;
+        }
+
+        .album-tracks {
+            list-style: none;
+            padding: 0;
+        }
+
+        .album-tracks li {
+            font-size: 12px;
+            color: #777;
+            padding: 4px 0;
+            border-bottom: 1px solid #222;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .album-tracks li .num {
+            color: var(--blood);
+            font-family: 'Space Mono', monospace;
+            width: 20px;
+            flex-shrink: 0;
+        }
+
+        .album-tracks li .title { flex: 1; color: #aaa; }
+        .album-tracks li .dur { color: #555; font-family: 'Space Mono', monospace; font-size: 11px; }
+
+        /* ═══ TOP TRACKS ═══ */
+        .track-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            gap: 16px;
+        }
+
+        .track-rank {
+            font-family: 'Space Mono', monospace;
+            font-size: 28px;
+            font-weight: 700;
+            color: #222;
+            width: 40px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .track-info { flex: 1; }
+
+        .track-name {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .track-plays {
+            font-size: 12px;
+            color: var(--smoke);
+            font-family: 'Space Mono', monospace;
+        }
+
+        .track-meter {
+            height: 4px;
+            background: var(--ash);
+            border-radius: 2px;
+            margin-top: 6px;
+            overflow: hidden;
+        }
+
+        .track-meter-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--blood), var(--blood-glow));
+            border-radius: 2px;
+            transition: width 1.5s ease-out;
+        }
+
+        /* ═══ QUOTES ═══ */
+        .quote-card {
+            background: var(--ash);
+            border-left: 3px solid var(--blood);
+            padding: 24px 28px;
+            margin-bottom: 20px;
+            border-radius: 0 12px 12px 0;
+            font-size: 15px;
+            font-style: italic;
+            color: #bbb;
+            line-height: 1.7;
+            transition: transform 0.3s;
+        }
+
+        .quote-card:hover { transform: translateX(6px); }
+
+        .quote-source {
+            font-style: normal;
+            font-size: 11px;
+            color: var(--smoke);
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+
+        /* ═══ PRESS ═══ */
+        .press-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #1a1a1a;
+            text-decoration: none;
+            color: var(--bone);
+            transition: all 0.3s;
+        }
+
+        .press-item:hover { padding-left: 12px; }
+        .press-item:hover .press-pub { color: var(--blood); }
+
+        .press-pub {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: var(--smoke);
+            width: 180px;
+            flex-shrink: 0;
+            transition: color 0.3s;
+        }
+
+        .press-title {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* ═══ BAND ═══ */
+        .band-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .band-card {
+            background: var(--ash);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #222;
+            transition: border-color 0.3s;
+        }
+
+        .band-card:hover { border-color: var(--blood); }
+
+        .band-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .band-role {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: var(--blood);
+            letter-spacing: 1px;
+        }
+
+        /* ═══ LINKS ═══ */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 20px;
+            background: var(--ash);
+            border: 1px solid #333;
+            border-radius: 10px;
+            color: var(--bone);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+
+        .link-btn:hover {
+            border-color: var(--blood);
+            background: rgba(181,12,12,0.1);
+            transform: translateY(-3px);
+        }
+
+        /* ═══ TOUR ═══ */
+        .tour-list { list-style: none; }
+
+        .tour-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid #1a1a1a;
+            transition: padding-left 0.3s;
+        }
+
+        .tour-item:hover { padding-left: 8px; }
+
+        .tour-date {
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            color: var(--blood);
+            width: 100px;
+            flex-shrink: 0;
+        }
+
+        .tour-city {
+            font-size: 14px;
+            color: var(--bone);
+        }
+
+        .tour-item.past { opacity: 0.35; }
+        .tour-item.next .tour-city { font-weight: 700; }
+        .tour-item.next::after {
+            content: 'TONIGHT';
+            font-family: 'Space Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--void);
+            background: var(--blood);
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-left: auto;
+        }
+
+        /* ═══ FOOTER ═══ */
+        .footer {
+            text-align: center;
+            padding: 60px 20px;
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            color: #333;
+            letter-spacing: 2px;
+        }
+
+        .footer .compiled {
+            color: var(--blood);
+            font-size: 11px;
+            margin-bottom: 8px;
+        }
+
+        /* ═══ DIVIDER ═══ */
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: var(--blood);
+            margin: 60px auto;
+            position: relative;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--blood);
+        }
+
+        .divider::before { left: -4px; }
+        .divider::after { right: -4px; }
+
+        /* ═══ RESPONSIVE ═══ */
+        @media (max-width: 600px) {
+            .press-item { flex-direction: column; align-items: flex-start; gap: 4px; }
+            .press-pub { width: auto; }
+            .tour-date { width: 80px; font-size: 11px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero">
+    <div class="hero-name">Dan Spencer</div>
+    <div class="hero-tagline">Country Cult Baroque</div>
+    <div class="hero-meta">Smyrna, TN &nbsp;·&nbsp; Born 1993 &nbsp;·&nbsp; Feeling Grey Records</div>
+    <div class="scroll-indicator"><span></span></div>
+</section>
+
+<!-- ═══════ STATS ═══════ -->
+<section class="section" id="stats">
+    <div class="section-label">By The Numbers</div>
+    <div class="section-title">The Numbers Don't Lie</div>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">3</div>
+            <div class="stat-label">Studio Albums</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">4</div>
+            <div class="stat-label">EPs</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">171K</div>
+            <div class="stat-label">Top Track Plays</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">3.5K</div>
+            <div class="stat-label">Monthly Listeners</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">22</div>
+            <div class="stat-label">2025 Tour Dates</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">6</div>
+            <div class="stat-label">Press Features</div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════ BIO ═══════ -->
+<section class="section" id="bio">
+    <div class="section-label">Origin Story</div>
+    <div class="section-title">Mortician Turned<br>Country Vampire</div>
+    <div class="bio-text">
+        <p>Born in <strong>Smyrna, Tennessee</strong> and now based in <strong>Cookeville</strong>, Dan Spencer is what happens when you raise a kid on gospel quartets and John Denver, let him discover <span class="accent">Slipknot's Vol. 3</span> at age 11, and then put him through mortuary school.</p>
+        <br>
+        <p>He spent his twenties touring with a rock band before deciding music was a dead end. He enrolled in <strong>mortuary school</strong> in Nashville, studying both embalming and funeral directing while working full-time at a funeral home. The exposure to death, the distinctive regional idioms of older community members, and the raw reality of mortality became the bedrock of his songwriting.</p>
+        <br>
+        <p>When his solo recordings attracted label and management attention, he dropped out of mortuary school with <strong>one semester remaining</strong>. The rest is an improbable ascent — from fry cook to funeral home to opening for <span class="accent">Post Malone</span> at Nissan Stadium.</p>
+        <br>
+        <p>He calls his sound <span class="accent">"Country Cult Baroque"</span> — a term borrowed from the late singer-songwriter Judee Sill. It's country, alt-folk, dark comedy, and black metal aesthetics colliding in a way that shouldn't work but absolutely does.</p>
+        <br>
+        <p style="color: var(--smoke); font-size: 14px;"><em>"Everybody's serious but me."</em></p>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════ TOP TRACKS ═══════ -->
+<section class="section" id="tracks">
+    <div class="section-label">Spotify</div>
+    <div class="section-title">Most Played</div>
+
+    <div class="track-bar">
+        <div class="track-rank">01</div>
+        <div class="track-info">
+            <div class="track-name">Fat Vampire</div>
+            <div class="track-plays">171,079 plays</div>
+            <div class="track-meter"><div class="track-meter-fill" data-width="100"></div></div>
+        </div>
+    </div>
+
+    <div class="track-bar">
+        <div class="track-rank">02</div>
+        <div class="track-info">
+            <div class="track-name">Beat Your Ass to Death</div>
+            <div class="track-plays">133,683 plays</div>
+            <div class="track-meter"><div class="track-meter-fill" data-width="78"></div></div>
+        </div>
+    </div>
+
+    <div class="track-bar">
+        <div class="track-rank">03</div>
+        <div class="track-info">
+            <div class="track-name">Tennessee Buddha</div>
+            <div class="track-plays">84,135 plays</div>
+            <div class="track-meter"><div class="track-meter-fill" data-width="49"></div></div>
+        </div>
+    </div>
+
+    <div class="track-bar">
+        <div class="track-rank">04</div>
+        <div class="track-info">
+            <div class="track-name">Coffee Shop Cowboy Blues</div>
+            <div class="track-plays">64,994 plays</div>
+            <div class="track-meter"><div class="track-meter-fill" data-width="38"></div></div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════ TIMELINE ═══════ -->
+<section class="section" id="timeline">
+    <div class="section-label">Journey</div>
+    <div class="section-title">The Ascent</div>
+
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="timeline-year">1993</div>
+            <div class="timeline-title">Born in Smyrna, TN</div>
+            <div class="timeline-desc">Raised on gospel quartets, John Denver, and The Eagles. Discovers KISS live cassette.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">2004</div>
+            <div class="timeline-title">The Awakening</div>
+            <div class="timeline-desc">Discovers Slipknot's Vol. 3 at age 11. Terrorizer Magazine opens the door to Slayer, Darkthrone, Mayhem.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">2010s</div>
+            <div class="timeline-title">Touring Years</div>
+            <div class="timeline-desc">Spends his twenties in rock bands (Holy Coast, Pumpkinseed), touring the underground circuit.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">2019</div>
+            <div class="timeline-title">Mortuary School</div>
+            <div class="timeline-desc">Enrolls in Nashville mortuary school. Works at a funeral home — embalming, funeral directing. Death reshapes his art.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">2020</div>
+            <div class="timeline-title">Solo Recordings Begin</div>
+            <div class="timeline-desc">Pandemic era. Starts writing and recording solo material. Shelves debut due to COVID.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">MAR 2022</div>
+            <div class="timeline-title">First Release</div>
+            <div class="timeline-desc">"I Like to Worship the Devil" EP drops. Two months later, debut album "Bursting With Country-Fresh Flavor."</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">2023</div>
+            <div class="timeline-title">Ian Shelton Discovers Him</div>
+            <div class="timeline-desc">Militarie Gun's Ian Shelton hears "Tennessee Buddha" and "Fat Vampire." Becomes a vocal champion.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">EARLY 2024</div>
+            <div class="timeline-title">Post Malone Connection</div>
+            <div class="timeline-desc">Connects with Post Malone through a Nashville pizza restaurant. Writing sessions for F-1 Trillion with Brad Paisley, HARDY, ERNEST. Signs to Feeling Grey Records.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">MAY 2024</div>
+            <div class="timeline-title">Bonnaroo + CMA Fest</div>
+            <div class="timeline-desc">Performs "Fat Vampire" during Militarie Gun's Bonnaroo set. Plays CMA Fest.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">JUN 2024</div>
+            <div class="timeline-title">Return to Your Dark Master</div>
+            <div class="timeline-desc">Sophomore album on Feeling Grey Records. Concept album inspired by reading Dracula. Full band arrangements.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">SEP-OCT 2024</div>
+            <div class="timeline-title">F-1 Trillion Tour</div>
+            <div class="timeline-desc">Opens for Post Malone nationwide. Plays Nissan Stadium in Nashville — the biggest show of his life.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">NOV 2025</div>
+            <div class="timeline-title">Weave Your Web Liar Man</div>
+            <div class="timeline-desc">Third album. 10 tracks. The catalog deepens.</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">FEB-MAR 2026</div>
+            <div class="timeline-title">22-City Headlining Tour</div>
+            <div class="timeline-desc">Houston to Nashville. His own name on the marquee. Full circle.</div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════ DISCOGRAPHY ═══════ -->
+<section class="section" id="discography">
+    <div class="section-label">Catalog</div>
+    <div class="section-title">Discography</div>
+
+    <div class="album-grid">
+        <div class="album-card">
+            <div class="album-type">Album</div>
+            <div class="album-name">Weave Your Web Liar Man</div>
+            <div class="album-meta">November 2025 · Feeling Grey Records · 10 tracks</div>
+            <ul class="album-tracks">
+                <li><span class="num">1</span><span class="title">Heaven or Knoxville</span><span class="dur">3:28</span></li>
+                <li><span class="num">2</span><span class="title">Where Do They Lay When They're Free</span><span class="dur">3:16</span></li>
+                <li><span class="num">3</span><span class="title">Dumbass Day</span><span class="dur">4:39</span></li>
+                <li><span class="num">4</span><span class="title">Memory Do</span><span class="dur">3:07</span></li>
+                <li><span class="num">5</span><span class="title">There's a Fountain</span><span class="dur">3:45</span></li>
+                <li><span class="num">6</span><span class="title">Hickory</span><span class="dur">3:46</span></li>
+                <li><span class="num">7</span><span class="title">Je T'aime</span><span class="dur">2:15</span></li>
+                <li><span class="num">8</span><span class="title">Suffering</span><span class="dur">3:43</span></li>
+                <li><span class="num">9</span><span class="title">Weave My Web</span><span class="dur">3:56</span></li>
+                <li><span class="num">10</span><span class="title">Don't Look at Me</span><span class="dur">5:30</span></li>
+            </ul>
+        </div>
+
+        <div class="album-card">
+            <div class="album-type">Album</div>
+            <div class="album-name">Return to Your Dark Master</div>
+            <div class="album-meta">June 2024 · Feeling Grey Records · 8 tracks</div>
+            <ul class="album-tracks">
+                <li><span class="num">1</span><span class="title">Cult Leader</span><span class="dur">2:29</span></li>
+                <li><span class="num">2</span><span class="title">Fat Vampire</span><span class="dur">3:40</span></li>
+                <li><span class="num">3</span><span class="title">Eternal Platitude</span><span class="dur">3:33</span></li>
+                <li><span class="num">4</span><span class="title">Immaterial</span><span class="dur">2:56</span></li>
+                <li><span class="num">5</span><span class="title">Lazy Vampire</span><span class="dur">4:41</span></li>
+                <li><span class="num">6</span><span class="title">Pink Sword Lilies</span><span class="dur">3:46</span></li>
+                <li><span class="num">7</span><span class="title">Weepin' Weekend</span><span class="dur">3:42</span></li>
+                <li><span class="num">8</span><span class="title">Return to Your Dark Master</span><span class="dur">2:32</span></li>
+            </ul>
+        </div>
+
+        <div class="album-card">
+            <div class="album-type">Album</div>
+            <div class="album-name">Bursting With Country-Fresh Flavor</div>
+            <div class="album-meta">May 2022 · Self-Released · 10 tracks</div>
+            <ul class="album-tracks">
+                <li><span class="num">1</span><span class="title">Coffee Shop Cowboy Blues</span><span class="dur">3:33</span></li>
+                <li><span class="num">2</span><span class="title">Hacker Valley, WV</span><span class="dur">4:42</span></li>
+                <li><span class="num">3</span><span class="title">If I Decided To Go</span><span class="dur">5:05</span></li>
+                <li><span class="num">4</span><span class="title">Beat Your Ass To Death</span><span class="dur">1:52</span></li>
+                <li><span class="num">5</span><span class="title">Tennessee Buddha</span><span class="dur">3:10</span></li>
+                <li><span class="num">6</span><span class="title">Marco Polo Kurt Cobain</span><span class="dur">2:00</span></li>
+                <li><span class="num">7</span><span class="title">Ain't Got No Friends</span><span class="dur">3:56</span></li>
+                <li><span class="num">8</span><span class="title">Go-Go Guerilla</span><span class="dur">3:29</span></li>
+                <li><span class="num">9</span><span class="title">Tonic & Ice</span><span class="dur">2:07</span></li>
+                <li><span class="num">10</span><span class="title">Blues & Black Metal</span><span class="dur">4:15</span></li>
+            </ul>
+        </div>
+
+        <div class="album-card">
+            <div class="album-type">EP</div>
+            <div class="album-name">Not-So-Country Songs for Sad Alcoholics</div>
+            <div class="album-meta">August 2023 · 6 tracks</div>
+            <ul class="album-tracks">
+                <li><span class="num">1</span><span class="title">Adventures Of An Invisible Dog</span><span class="dur">3:13</span></li>
+                <li><span class="num">2</span><span class="title">Cookin' With Satan</span><span class="dur">1:54</span></li>
+                <li><span class="num">3</span><span class="title">O! Grace</span><span class="dur">3:25</span></li>
+                <li><span class="num">4</span><span class="title">Bucket</span><span class="dur">2:29</span></li>
+                <li><span class="num">5</span><span class="title">Street of Fire</span><span class="dur">1:55</span></li>
+                <li><span class="num">6</span><span class="title">Palmcorder Yajna</span><span class="dur">4:18</span></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════ QUOTES ═══════ -->
+<section class="section" id="quotes">
+    <div class="section-label">In His Words</div>
+    <div class="section-title">Quotes</div>
+
+    <div class="quote-card">
+        "Being yourself isn't good enough. Be your whole self all the time."
+    </div>
+
+    <div class="quote-card">
+        "Nostalgia is the enemy of everything."
+    </div>
+
+    <div class="quote-card">
+        "I find amazing scenes of great people doing super cool things in really small towns."
+    </div>
+
+    <div class="quote-card">
+        "I get to go to a Post Malone concert every night. It f***ing rocks."
+        <div class="quote-source">— On the F-1 Trillion Tour</div>
+    </div>
+
+    <div class="quote-card">
+        "As much as I love experimental music, I can't write it. I just like pop and melody too much."
+    </div>
+
+    <div class="quote-card">
+        "Holy shit. I think I'm writing a song with Post Malone."
+        <div class="quote-source">— On late-night writing sessions in Nashville</div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════ BAND ═══════ -->
+<section class="section" id="band">
+    <div class="section-label">The Band</div>
+    <div class="section-title">Live Lineup</div>
+    <div class="band-grid">
+        <div class="band-card">
+            <div class="band-name">Dan Spencer</div>
+            <div class="band-role">Vocals / Guitar</div>
+        </div>
+        <div class="band-card">
+            <div class="band-name">Conner Duty</div>
+            <div class="band-role">Lead Guitar</div>
+        </div>
+        <div class="band-card">
+            <div class="band-name">Zach Ramsey</div>
+            <div class="band-role">Bass</div>
+        </div>
+        <div class="band-card">
+            <div class="band-name">Ethan Young</div>
+            <div class="band-role">Drums</div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════ PRESS ═══════ -->
+<section class="section" id="press">
+    <div class="section-label">Coverage</div>
+    <div class="section-title">Press</div>
+
+    <a class="press-item" href="https://americansongwriter.com/meet-dan-spencer-post-malones-f-1-trillion-opener-and-americanas-most-macabre-antithesis/" target="_blank">
+        <span class="press-pub">AMERICAN SONGWRITER</span>
+        <span class="press-title">Meet Dan Spencer, Post Malone's "F-1 Trillion" Opener and Americana's Most Macabre Antithesis</span>
+    </a>
+    <a class="press-item" href="https://metalinjection.net/editorials/notes-from-the-underground/metal-fans-should-be-keeping-an-eye-on-folky-country-artist-dan-spencer" target="_blank">
+        <span class="press-pub">METAL INJECTION</span>
+        <span class="press-title">Metal Fans Should Be Keeping An Eye On Folky Country Artist Dan Spencer</span>
+    </a>
+    <a class="press-item" href="https://newnoisemagazine.com/interviews/interview-dan-spencer-talks-return-to-your-dark-master/" target="_blank">
+        <span class="press-pub">NEW NOISE MAG</span>
+        <span class="press-title">Interview: Dan Spencer Talks 'Return to Your Dark Master'</span>
+    </a>
+    <a class="press-item" href="https://www.nashvillescene.com/music/nashvillecream/dan-spencer-post-malone-nissan-stadium-interview/article_ff53d54e-8b34-11ef-bdaa-7b6c5a7fb334.html" target="_blank">
+        <span class="press-pub">NASHVILLE SCENE</span>
+        <span class="press-title">Dan Spencer Q&A — Post Malone, Nissan Stadium Interview</span>
+    </a>
+    <a class="press-item" href="https://www.chattanoogapulse.com/arts_entertainment/music-news/musician-dan-spencer-unleashes-the-tennessee-buddha-on-chatt/" target="_blank">
+        <span class="press-pub">CHATTANOOGA PULSE</span>
+        <span class="press-title">Musician Dan Spencer Unleashes The Tennessee Buddha On Chattanooga</span>
+    </a>
+    <a class="press-item" href="https://staticanddistance.substack.com/p/s-and-d-meets-dan-spencer" target="_blank">
+        <span class="press-pub">STATIC & DISTANCE</span>
+        <span class="press-title">S&D Meets... Dan Spencer</span>
+    </a>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════ TOUR ═══════ -->
+<section class="section" id="tour">
+    <div class="section-label">2025-2026 Tour</div>
+    <div class="section-title">22-City Headlining Run</div>
+    <ul class="tour-list">
+        <li class="tour-item past"><span class="tour-date">Feb 13</span><span class="tour-city">Houston, TX</span></li>
+        <li class="tour-item past"><span class="tour-date">Feb 14</span><span class="tour-city">Dallas, TX</span></li>
+        <li class="tour-item past"><span class="tour-date">Feb 15</span><span class="tour-city">Austin, TX</span></li>
+        <li class="tour-item past"><span class="tour-date">Feb 19</span><span class="tour-city">Phoenix, AZ</span></li>
+        <li class="tour-item past"><span class="tour-date">Feb 20</span><span class="tour-city">Yucca Valley, CA</span></li>
+        <li class="tour-item past"><span class="tour-date">Feb 21</span><span class="tour-city">Los Angeles, CA</span></li>
+        <li class="tour-item past"><span class="tour-date">Feb 22</span><span class="tour-city">San Francisco, CA</span></li>
+        <li class="tour-item past"><span class="tour-date">Feb 24</span><span class="tour-city">Salt Lake City, UT</span></li>
+        <li class="tour-item past"><span class="tour-date">Feb 26</span><span class="tour-city">Denver, CO</span></li>
+        <li class="tour-item past"><span class="tour-date">Feb 27</span><span class="tour-city">Kansas City, MO</span></li>
+        <li class="tour-item past"><span class="tour-date">Feb 28</span><span class="tour-city">Chicago, IL</span></li>
+        <li class="tour-item past"><span class="tour-date">Mar 1</span><span class="tour-city">Indianapolis, IN</span></li>
+        <li class="tour-item past"><span class="tour-date">Mar 2</span><span class="tour-city">Cleveland, OH</span></li>
+        <li class="tour-item past"><span class="tour-date">Mar 4</span><span class="tour-city">Toronto, ON</span></li>
+        <li class="tour-item past"><span class="tour-date">Mar 5</span><span class="tour-city">Boston, MA</span></li>
+        <li class="tour-item past"><span class="tour-date">Mar 7</span><span class="tour-city">New York, NY</span></li>
+        <li class="tour-item past"><span class="tour-date">Mar 8</span><span class="tour-city">Philadelphia, PA</span></li>
+        <li class="tour-item past"><span class="tour-date">Mar 9</span><span class="tour-city">Washington, DC</span></li>
+        <li class="tour-item past"><span class="tour-date">Mar 11</span><span class="tour-city">Chapel Hill, NC</span></li>
+        <li class="tour-item past"><span class="tour-date">Mar 12</span><span class="tour-city">Atlanta, GA</span></li>
+        <li class="tour-item past"><span class="tour-date">Mar 14</span><span class="tour-city">Birmingham, AL</span></li>
+        <li class="tour-item next"><span class="tour-date">Mar 15</span><span class="tour-city">Nashville, TN</span></li>
+    </ul>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════ MUSIC VIDEOS ═══════ -->
+<section class="section" id="videos">
+    <div class="section-label">Visual</div>
+    <div class="section-title">Music Videos</div>
+    <div class="album-grid">
+        <a href="https://www.youtube.com/watch?v=CKBlry9awdw" target="_blank" class="album-card" style="text-decoration: none; color: inherit;">
+            <div class="album-type">Music Video</div>
+            <div class="album-name">Fat Vampire</div>
+            <div class="album-meta">From "Return to Your Dark Master" · YouTube</div>
+        </a>
+        <a href="https://www.youtube.com/watch?v=h_h9xHWDKOI" target="_blank" class="album-card" style="text-decoration: none; color: inherit;">
+            <div class="album-type">Music Video</div>
+            <div class="album-name">Immaterial</div>
+            <div class="album-meta">From "Return to Your Dark Master" · YouTube</div>
+        </a>
+        <a href="https://www.youtube.com/watch?v=A8ezqalnQ_E" target="_blank" class="album-card" style="text-decoration: none; color: inherit;">
+            <div class="album-type">Music Video</div>
+            <div class="album-name">Beat Your Ass to Death</div>
+            <div class="album-meta">From "Bursting With Country-Fresh Flavor" · YouTube</div>
+        </a>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════ LINKS ═══════ -->
+<section class="section" id="links">
+    <div class="section-label">Connect</div>
+    <div class="section-title">Links</div>
+    <div class="links-grid">
+        <a class="link-btn" href="https://open.spotify.com/artist/4nZhCPagwfGtHV2tASZkpU" target="_blank">Spotify</a>
+        <a class="link-btn" href="https://music.apple.com/us/artist/dan-spencer/1616328101" target="_blank">Apple Music</a>
+        <a class="link-btn" href="https://danspencermetal.bandcamp.com/" target="_blank">Bandcamp</a>
+        <a class="link-btn" href="https://www.instagram.com/danspencermetal/" target="_blank">Instagram</a>
+        <a class="link-btn" href="https://x.com/danspencermetal" target="_blank">X / Twitter</a>
+        <a class="link-btn" href="https://www.tiktok.com/@danspencerofficial" target="_blank">TikTok</a>
+        <a class="link-btn" href="https://www.facebook.com/p/Dan-Spencer-61554477579027/" target="_blank">Facebook</a>
+        <a class="link-btn" href="https://www.youtube.com/watch?v=kULczI7Hus4" target="_blank">YouTube</a>
+        <a class="link-btn" href="https://danspencer.bigcartel.com/" target="_blank">Merch Store</a>
+        <a class="link-btn" href="https://linktr.ee/danspencermetal" target="_blank">Linktree</a>
+    </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<div class="footer">
+    <div class="compiled">COMPILED MARCH 14, 2026</div>
+    ALL INFORMATION FROM PUBLIC SOURCES<br><br>
+    BUILT BY MATT MATHESON + CLAUDE
+</div>
+
+<!-- ═══════ SCRIPTS ═══════ -->
+<script>
+// Intersection Observer for scroll animations
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+
+            // Animate track meter fills
+            const meters = entry.target.querySelectorAll('.track-meter-fill');
+            meters.forEach(m => {
+                const w = m.dataset.width;
+                setTimeout(() => { m.style.width = w + '%'; }, 300);
+            });
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.section').forEach(s => observer.observe(s));
+
+// Parallax on hero
+window.addEventListener('scroll', () => {
+    const hero = document.querySelector('.hero');
+    const scroll = window.scrollY;
+    if (scroll < window.innerHeight) {
+        hero.style.transform = `translateY(${scroll * 0.3}px)`;
+        hero.style.opacity = 1 - (scroll / window.innerHeight);
+    }
+});
+
+// Counter animation for stats
+function animateCounters() {
+    document.querySelectorAll('.stat-number').forEach(el => {
+        const text = el.textContent;
+        const suffix = text.replace(/[\d.]/g, '');
+        const target = parseFloat(text);
+        if (isNaN(target)) return;
+
+        let current = 0;
+        const step = target / 40;
+        const interval = setInterval(() => {
+            current += step;
+            if (current >= target) {
+                el.textContent = text;
+                clearInterval(interval);
+            } else {
+                el.textContent = Math.floor(current) + suffix;
+            }
+        }, 30);
+    });
+}
+
+const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            animateCounters();
+            statsObserver.disconnect();
+        }
+    });
+}, { threshold: 0.3 });
+
+const statsSection = document.getElementById('stats');
+if (statsSection) statsObserver.observe(statsSection);
+</script>
+
+</body>
+</html>
