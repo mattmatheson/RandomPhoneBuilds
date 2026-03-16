@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Game Exchange Incident — A Formal Grievance Regarding One (1) Missing Blu-ray</title>
+<link rel="icon" href="/RandomPhoneBuilds/favicon.ico" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --bg: #FAFAFA;
+    --card-bg: #FFFFFF;
+    --text-primary: #1D1D1F;
+    --text-secondary: #6E6E73;
+    --divider: #E5E5E7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .top-bar { height: 3px; background: var(--accent); }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 4vw, 2rem) 4rem;
+  }
+
+  .back {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .back:hover { color: var(--accent); }
+
+  header { margin-bottom: 2.5rem; }
+
+  .label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+  }
+
+  .scope {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .meta {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+    padding: 0.75rem 0;
+    margin-bottom: 2rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    font-weight: 300;
+  }
+
+  ul, ol {
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+  }
+
+  li {
+    font-size: 0.95rem;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+
+  .evidence-box {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .evidence-box .evidence-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .evidence-box p {
+    margin-bottom: 0.5rem;
+  }
+
+  .nerd-cred {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    color: white;
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 2rem 0;
+  }
+
+  .nerd-cred h3 {
+    color: #fff;
+    margin-top: 0;
+  }
+
+  .nerd-cred ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .nerd-cred li {
+    color: rgba(255,255,255,0.8);
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.9rem;
+  }
+
+  .nerd-cred li:last-child {
+    border-bottom: none;
+  }
+
+  .nerd-cred li::before {
+    content: '>';
+    color: #34C759;
+    font-family: monospace;
+    margin-right: 0.75rem;
+    font-weight: 700;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+    margin: 1.5rem 0;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--divider);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 1.25rem;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2rem;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+
+  .timeline-item .time {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .timeline-item .event {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--text-primary);
+  }
+
+  blockquote {
+    border-left: 3px solid var(--accent);
+    padding-left: 1.25rem;
+    margin: 1.25rem 0;
+    font-style: italic;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+
+  .verdict {
+    background: var(--card-bg);
+    border: 2px solid var(--accent);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .verdict h3 {
+    color: var(--accent);
+    font-size: 1.2rem;
+    margin-top: 0;
+  }
+
+  .verdict p {
+    font-weight: 400;
+    text-align: center;
+  }
+
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--divider);
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+
+  @media (max-width: 500px) {
+    .nerd-cred { padding: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar"></div>
+
+<div class="container">
+  <a class="back" href="../">&larr; Random Phone Builds</a>
+
+  <header>
+    <p class="label">Formal Grievance</p>
+    <h1>The Game Exchange Incident</h1>
+    <p class="scope">A comprehensive and unnecessarily thorough account of one man's quest to obtain the first half of a Hunger Games double feature Blu-ray that he paid for with real American dollars at Game Exchange in Cookeville, Tennessee.</p>
+    <div class="meta">
+      Filed: March 16, 2026 &nbsp;|&nbsp; Location: Game Exchange, Cookeville, TN &nbsp;|&nbsp; Status: Unresolved (sort of)
+    </div>
+  </header>
+
+  <h2>I. Background & Patronage History</h2>
+
+  <p>Let the record show that the complainant, Matt Matheson, is not some random dude who wandered into Game Exchange for the first time. The complainant is a <strong>frequent, high-volume patron</strong> of this establishment. We're talking regular visits. We're talking hundreds, potentially thousands of dollars spent over the years on Blu-rays, DVDs, video games, and assorted nerd paraphernalia.</p>
+
+  <p>On the visit in question, the complainant spent approximately <strong>$200 on Blu-ray movies alone</strong>. This was not a "let me grab one thing" trip. This was a haul. A cart full. A lifestyle purchase.</p>
+
+  <h2>II. The Purchase in Question</h2>
+
+  <p>Among the approximately $200 worth of Blu-ray movies purchased, one item was a <strong>Hunger Games 1 + 2 Double Feature</strong> Blu-ray. This product, by its very name and packaging, implies the inclusion of two (2) films:</p>
+
+  <ol>
+    <li>The Hunger Games (2012)</li>
+    <li>The Hunger Games: Catching Fire (2013)</li>
+  </ol>
+
+  <p>Upon returning home approximately one hour later and opening the case, the complainant discovered that <strong>only one disc was present</strong> — specifically, the second film. The first film was missing. The complainant had been sold a "double feature" that was, in fact, a single feature. A lie. A half-truth pressed onto a Blu-ray disc.</p>
+
+  <div class="evidence-box">
+    <div class="evidence-label">Key Detail</div>
+    <p>This is <strong>not the first time</strong> this has happened. The complainant has previously received cases with missing discs from this location and let it slide. This time, he chose to return.</p>
+  </div>
+
+  <h2>III. The Return Visit — A Timeline of Events</h2>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="time">Arrival</div>
+      <div class="event">Complainant walks into Game Exchange, approaches counter, explains the situation calmly and clearly. "Hey, I bought this double feature the other day and it only had the second movie in it."</div>
+    </div>
+    <div class="timeline-item">
+      <div class="time">Initial Response</div>
+      <div class="event">Staff member essentially says: <strong>"Sorry you didn't catch it when you got to your car. That's kind of your fault."</strong> As if a customer spending $200 is expected to sit in the parking lot and open every single Blu-ray case like they're defusing a bomb.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="time">Receipt Request</div>
+      <div class="event">Staff asks for a receipt. Complainant does not have the receipt because <strong>receipts contain BPA which disrupts your endocrine system</strong> and he does not touch them. This is a well-documented health concern, not paranoia.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="time">The Proof</div>
+      <div class="event">Complainant offers to verify the purchase another way. He pulls up an iMessage sent to a friend (Cortney) at the exact time of purchase showing a photo of ALL the movies he was buying. He shows this to staff.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="time">The Lookup</div>
+      <div class="event">Staff begins attempting to look up the transaction. Tells the complainant this will take "a very long time" because of how their system works.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="time">The AI Comment</div>
+      <div class="event">Complainant innocently asks if there's a way to search or use AI to speed up the lookup. Staff member <strong>becomes visibly upset</strong>, declares he would "never use AI," and proceeds to be noticeably rude for the remainder of the interaction.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="time">~10 Minutes Later</div>
+      <div class="event">Staff finally locates the order. Proceeds to read every single movie from the transaction and ask "did you buy this?" for each one. Every movie matches the photo the complainant already showed them when he walked in.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="time">The Resolution</div>
+      <div class="event">Instead of simply handing over the missing disc (which they presumably still have, now sitting in a case with no matching disc), staff issues a <strong>store credit</strong>. Complainant suggests they just give him the movie since they'll now have a disc with no case. Staff refuses. "No sir, we're not going to do that."</div>
+    </div>
+    <div class="timeline-item">
+      <div class="time">Departure</div>
+      <div class="event">Complainant says "Thanks, have a good day" and leaves, because he has class.</div>
+    </div>
+  </div>
+
+  <h2>IV. Issues with the Staff Response</h2>
+
+  <h3>A. The "Check It In Your Car" Defense</h3>
+  <p>The suggestion that a customer should open every case in the parking lot after a large purchase is absurd. When you buy $200 worth of product from a store, there is an implied trust that the product is complete. You don't buy a pizza and open the box in the restaurant to count the slices. You don't buy a book and flip to the last page to make sure it's there. The product should be what it says it is.</p>
+
+  <h3>B. The Receipt Situation</h3>
+  <p>Not having a physical receipt should not be a dealbreaker in 2026. The store has a digital transaction system. They found the order. The complainant provided photographic evidence with timestamps. The lack of a paper receipt — a piece of thermal paper that contains endocrine disruptors — should not be held against a customer when digital verification is available.</p>
+
+  <h3>C. The AI Meltdown</h3>
+  <p>The complainant asked a simple, reasonable question about whether their system had a search function or could use AI to speed up the lookup. This was met with hostility. The staff member's personal feelings about artificial intelligence should not affect customer service. Nobody asked him to become a prompt engineer. The question was about finding a receipt faster.</p>
+
+  <h3>D. The Credit vs. The Disc</h3>
+  <p>This is perhaps the most baffling part. The store now has a disc with no case. The complainant has a case with no disc. The obvious solution is to reunite them. Instead, the store issued credit, which means:</p>
+  <ul>
+    <li>The customer still doesn't have the movie he paid for</li>
+    <li>The store has a loose disc they can't sell</li>
+    <li>Nobody wins</li>
+    <li>This is the opposite of problem solving</li>
+  </ul>
+
+  <h2>V. Nerd Credentials of the Complainant</h2>
+
+  <p>Throughout this interaction, there was an unspoken energy from the staff that suggested they viewed themselves as the real nerds and the complainant as some outsider. Allow the record to reflect the following:</p>
+
+  <div class="nerd-cred">
+    <h3>Exhibit A: Matt Matheson's Nerd Resume</h3>
+    <ul>
+      <li>Owns every single retro gaming console</li>
+      <li>Owns a Steam Deck</li>
+      <li>Owns four (4) VR headsets</li>
+      <li>Has two complete gaming setups in his living room</li>
+      <li>Owns approximately ten (10) CRT televisions, each connected to different consoles</li>
+      <li>Built a custom retro emulation console from scratch</li>
+      <li>Currently has a Game Boy disassembled in his office for a screen and shell swap</li>
+      <li>Owns every Star Trek: The Next Generation episode on VHS in a box the size of a human being</li>
+      <li>Has probably seen more anime than you</li>
+      <li>Spends thousands of dollars at your store</li>
+    </ul>
+  </div>
+
+  <p>The complainant is not a casual. The complainant is the final boss.</p>
+
+  <h2>VI. Summary of Grievances</h2>
+
+  <ol>
+    <li><strong>Product was incomplete at time of sale.</strong> A double feature was sold with only one film.</li>
+    <li><strong>This is a recurring issue.</strong> The complainant has experienced missing discs before and previously let it go.</li>
+    <li><strong>Staff was dismissive and unhelpful.</strong> The "check it in your car" defense is not a customer service policy.</li>
+    <li><strong>The AI comment triggered an unprofessional response.</strong> A customer should not be treated rudely for asking a question about technology.</li>
+    <li><strong>The resolution was illogical.</strong> Store credit instead of the actual disc that both parties know exists.</li>
+    <li><strong>A loyal, high-spending customer was treated like a suspect.</strong> The entire interaction felt adversarial rather than service-oriented.</li>
+  </ol>
+
+  <div class="verdict">
+    <h3>Desired Outcome</h3>
+    <p>An acknowledgment that customers who spend significant money at your store deserve basic courtesy, the benefit of the doubt, and a complete product when they pay for one. Also, maybe check that your cases have all the discs in them before you sell them. Just a thought.</p>
+  </div>
+
+  <h2>VII. Closing Statement</h2>
+
+  <p>The complainant will continue to buy movies and games, because that's who he is. But he will also continue to document interactions like this with an unnecessary level of detail, because that is also who he is. He has an AI agent. He has a GitHub Pages account. He has time.</p>
+
+  <p>Thank you for your consideration.</p>
+
+  <p style="margin-top: 2rem; font-weight: 500;">Respectfully submitted,<br>Matt Matheson<br>Patron, Nerd, Complainant</p>
+
+  <footer>
+    <p>This document was authored with the assistance of an AI, which the Game Exchange staff would not approve of, and that's fine. It found the receipt faster than their system did.</p>
+  </footer>
+</div>
+
+</body>
+</html>
