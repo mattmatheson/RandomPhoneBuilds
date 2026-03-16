@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Game Exchange Incident — A Formal Grievance Regarding One (1) Missing Blu-ray</title>
+<title>The Game X Change Incident — A Formal Grievance Regarding One (1) Missing Blu-ray</title>
 <link rel="icon" href="/RandomPhoneBuilds/favicon.ico" type="image/x-icon">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -14,6 +14,7 @@
     --text-primary: #1D1D1F;
     --text-secondary: #6E6E73;
     --divider: #E5E5E7;
+    --hunger-gold: #C5A55A;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,10 +29,72 @@
 
   .top-bar { height: 3px; background: var(--accent); }
 
+  /* Hunger Games Hero Banner */
+  .hero-banner {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 40%, #2a1a0a 100%);
+    padding: 3rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(197,165,90,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 50% 100%, rgba(196,32,32,0.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-banner .mockingjay {
+    font-size: 64px;
+    margin-bottom: 1rem;
+    display: block;
+    filter: grayscale(0.3);
+  }
+
+  .hero-banner h1 {
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--hunger-gold);
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-banner .subtitle {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .hero-banner .disc-count {
+    display: inline-block;
+    margin-top: 1.25rem;
+    padding: 6px 16px;
+    border: 1px solid rgba(197,165,90,0.3);
+    border-radius: 100px;
+    color: var(--hunger-gold);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    position: relative;
+    z-index: 1;
+  }
+
   .container {
     max-width: 720px;
     margin: 0 auto;
-    padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 4vw, 2rem) 4rem;
+    padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 4vw, 2rem) 4rem;
   }
 
   .back {
@@ -44,8 +107,6 @@
   }
   .back:hover { color: var(--accent); }
 
-  header { margin-bottom: 2.5rem; }
-
   .label {
     font-size: 0.7rem;
     font-weight: 600;
@@ -53,22 +114,6 @@
     letter-spacing: 0.12em;
     color: var(--accent);
     margin-bottom: 0.75rem;
-  }
-
-  h1 {
-    font-size: clamp(1.6rem, 4.5vw, 2.4rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.15;
-    margin-bottom: 0.75rem;
-  }
-
-  .scope {
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    font-weight: 300;
-    line-height: 1.6;
-    margin-bottom: 1rem;
   }
 
   .meta {
@@ -79,6 +124,11 @@
     border-bottom: 1px solid var(--divider);
     padding: 0.75rem 0;
     margin-bottom: 2rem;
+  }
+
+  .meta a {
+    color: var(--accent);
+    text-decoration: none;
   }
 
   h2 {
@@ -134,45 +184,107 @@
     margin-bottom: 0.5rem;
   }
 
-  .evidence-box p {
-    margin-bottom: 0.5rem;
-  }
+  .evidence-box p { margin-bottom: 0.5rem; }
 
-  .nerd-cred {
+  .spending-card {
     background: linear-gradient(135deg, #1a1a2e, #16213e);
     color: white;
     border-radius: 16px;
     padding: 2rem;
+    margin: 1.5rem 0;
+    text-align: center;
+  }
+
+  .spending-card .amount {
+    font-size: 3rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #C5A55A, #FFD700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .spending-card .amount-label {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.25rem;
+  }
+
+  .spending-card .amount-note {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+    margin-top: 0.75rem;
+    font-weight: 300;
+  }
+
+  .nerd-cred {
+    background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
+    color: white;
+    border-radius: 16px;
+    padding: 2rem;
     margin: 2rem 0;
+    border: 1px solid rgba(52,199,89,0.2);
   }
 
   .nerd-cred h3 {
-    color: #fff;
+    color: #34C759;
     margin-top: 0;
+    font-family: monospace;
+    letter-spacing: 0.05em;
+  }
+
+  .nerd-cred .section-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.35);
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .nerd-cred .section-label:first-of-type {
+    margin-top: 0.75rem;
+    border-top: none;
+    padding-top: 0;
   }
 
   .nerd-cred ul {
     list-style: none;
     padding: 0;
+    margin-bottom: 0;
   }
 
   .nerd-cred li {
     color: rgba(255,255,255,0.8);
-    padding: 0.4rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    font-size: 0.9rem;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 0.85rem;
+    font-family: monospace;
   }
 
-  .nerd-cred li:last-child {
-    border-bottom: none;
-  }
+  .nerd-cred li:last-child { border-bottom: none; }
 
   .nerd-cred li::before {
     content: '>';
     color: #34C759;
-    font-family: monospace;
     margin-right: 0.75rem;
     font-weight: 700;
+  }
+
+  .nerd-cred .boss-line {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(52,199,89,0.3);
+    color: #34C759;
+    font-family: monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
   }
 
   .timeline {
@@ -249,6 +361,18 @@
     text-align: center;
   }
 
+  .store-info {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+
+  .store-info strong { color: var(--text-primary); }
+
   footer {
     margin-top: 4rem;
     padding-top: 1.5rem;
@@ -260,6 +384,7 @@
 
   @media (max-width: 500px) {
     .nerd-cred { padding: 1.25rem; }
+    .spending-card .amount { font-size: 2.5rem; }
   }
 </style>
 </head>
@@ -267,23 +392,36 @@
 
 <div class="top-bar"></div>
 
+<!-- Hunger Games Hero -->
+<div class="hero-banner">
+  <span class="mockingjay">🏹</span>
+  <h1>The Odds Were Not in My Favor</h1>
+  <p class="subtitle">A formal grievance regarding one (1) missing Hunger Games Blu-ray disc purchased at Game X Change, 620 S Jefferson Ave, Cookeville, TN 38501</p>
+  <span class="disc-count">Discs Promised: 2 &nbsp;&bull;&nbsp; Discs Received: 1 &nbsp;&bull;&nbsp; Discs Missing: 1</span>
+</div>
+
 <div class="container">
   <a class="back" href="../">&larr; Random Phone Builds</a>
 
-  <header>
-    <p class="label">Formal Grievance</p>
-    <h1>The Game Exchange Incident</h1>
-    <p class="scope">A comprehensive and unnecessarily thorough account of one man's quest to obtain the first half of a Hunger Games double feature Blu-ray that he paid for with real American dollars at Game Exchange in Cookeville, Tennessee.</p>
-    <div class="meta">
-      Filed: March 16, 2026 &nbsp;|&nbsp; Location: Game Exchange, Cookeville, TN &nbsp;|&nbsp; Status: Unresolved (sort of)
-    </div>
-  </header>
+  <p class="label">Formal Grievance &mdash; Case No. GXC-2026-0316</p>
+
+  <div class="meta">
+    Filed: March 16, 2026 &nbsp;|&nbsp; Location: <a href="https://www.facebook.com/GXCCookeville/" target="_blank">Game X Change Cookeville</a>, 620 S Jefferson Ave, Cookeville, TN 38501 &nbsp;|&nbsp; (931) 854-1990 &nbsp;|&nbsp; Status: Unresolved
+  </div>
 
   <h2>I. Background & Patronage History</h2>
 
-  <p>Let the record show that the complainant, Matt Matheson, is not some random dude who wandered into Game Exchange for the first time. The complainant is a <strong>frequent, high-volume patron</strong> of this establishment. We're talking regular visits. We're talking hundreds, potentially thousands of dollars spent over the years on Blu-rays, DVDs, video games, and assorted nerd paraphernalia.</p>
+  <p>Let the record show that the complainant, Matt Matheson, is not some random dude who wandered into Game X Change for the first time. The complainant is a <strong>frequent, high-volume patron</strong> of this establishment. We're talking regular visits. Multiple times a month. For years.</p>
 
-  <p>On the visit in question, the complainant spent approximately <strong>$200 on Blu-ray movies alone</strong>. This was not a "let me grab one thing" trip. This was a haul. A cart full. A lifestyle purchase.</p>
+  <div class="spending-card">
+    <div class="amount">$3,000+</div>
+    <div class="amount-label">Estimated Lifetime Spend at Game X Change Cookeville</div>
+    <div class="amount-note">Based on a thorough review of bank statements and the undeniable evidence of the small movie store that now exists inside the complainant's home. Supplemental purchases have also been made at McKay's in Nashville, where, for the record, the customer service is excellent and the staff seems genuinely happy when someone walks in who loves movies and games.</div>
+  </div>
+
+  <p>The complainant has, through his patronage at this single location, accumulated a personal collection of movies and games that rivals the square footage of a small retail establishment. This is not hyperbole. His living room currently has two gaming setups, ten CRT televisions, and enough media to open a competing store. Most of it came from Game X Change.</p>
+
+  <p>On the visit in question, the complainant spent approximately <strong>$200 on Blu-ray movies alone</strong>. This was not a "let me grab one thing" trip. This was a haul. A lifestyle purchase. The kind of transaction that should make a store employee say "thank you" and mean it.</p>
 
   <h2>II. The Purchase in Question</h2>
 
@@ -298,15 +436,26 @@
 
   <div class="evidence-box">
     <div class="evidence-label">Key Detail</div>
-    <p>This is <strong>not the first time</strong> this has happened. The complainant has previously received cases with missing discs from this location and let it slide. This time, he chose to return.</p>
+    <p>This is <strong>not the first time</strong> this has happened. The complainant has previously received cases with missing discs from this location and let it slide. He absorbed the loss because he valued the relationship with the store. This time, with a clearly labeled double feature containing only half the feature, he chose to return.</p>
   </div>
 
-  <h2>III. The Return Visit — A Timeline of Events</h2>
+  <h2>III. A Note on Appearances</h2>
+
+  <p>The complainant would like the record to reflect something important. He is aware that when he walks into Game X Change wearing camouflage and work clothes, the staff may form certain assumptions. He does not look like the stereotypical "gamer." He looks like he just came from a deer stand or a job site. This is acknowledged.</p>
+
+  <p>However, as the following section will demonstrate in exhaustive detail, judging this man's nerd credentials based on his outerwear is like judging a book by its cover — which, ironically, is exactly what Game X Change does when they sell you a Blu-ray case without checking if the disc is inside.</p>
+
+  <h2>IV. The Return Visit — A Timeline of Events</h2>
+
+  <div class="store-info">
+    <strong>Location:</strong> Game X Change &bull; 620 S Jefferson Ave, Cookeville, TN 38501<br>
+    <strong>Hours:</strong> Mon-Sat 10am-9pm, Sun 12pm-6pm &bull; <strong>Phone:</strong> (931) 854-1990
+  </div>
 
   <div class="timeline">
     <div class="timeline-item">
       <div class="time">Arrival</div>
-      <div class="event">Complainant walks into Game Exchange, approaches counter, explains the situation calmly and clearly. "Hey, I bought this double feature the other day and it only had the second movie in it."</div>
+      <div class="event">Complainant walks into Game X Change, approaches counter, explains the situation calmly and clearly. "Hey, I bought this double feature the other day and it only had the second movie in it."</div>
     </div>
     <div class="timeline-item">
       <div class="time">Initial Response</div>
@@ -314,11 +463,11 @@
     </div>
     <div class="timeline-item">
       <div class="time">Receipt Request</div>
-      <div class="event">Staff asks for a receipt. Complainant does not have the receipt because <strong>receipts contain BPA which disrupts your endocrine system</strong> and he does not touch them. This is a well-documented health concern, not paranoia.</div>
+      <div class="event">Staff asks for a receipt. Complainant does not have the receipt because <strong>thermal receipt paper contains BPA, a known endocrine disruptor</strong>. He does not touch them. This is a well-documented health concern supported by peer-reviewed research, not paranoia.</div>
     </div>
     <div class="timeline-item">
       <div class="time">The Proof</div>
-      <div class="event">Complainant offers to verify the purchase another way. He pulls up an iMessage sent to a friend (Cortney) at the exact time of purchase showing a photo of ALL the movies he was buying. He shows this to staff.</div>
+      <div class="event">Complainant offers to verify the purchase another way. He pulls up an iMessage sent to a friend at the exact time of purchase showing a photo of ALL the movies he was buying, timestamped, while standing at the Game X Change counter. He shows this to staff.</div>
     </div>
     <div class="timeline-item">
       <div class="time">The Lookup</div>
@@ -326,90 +475,147 @@
     </div>
     <div class="timeline-item">
       <div class="time">The AI Comment</div>
-      <div class="event">Complainant innocently asks if there's a way to search or use AI to speed up the lookup. Staff member <strong>becomes visibly upset</strong>, declares he would "never use AI," and proceeds to be noticeably rude for the remainder of the interaction.</div>
+      <div class="event">Complainant innocently asks if there's a way to search for the transaction faster, perhaps using AI. Staff member <strong>becomes visibly upset</strong>, declares he would "never use AI," and proceeds to be noticeably rude for the remainder of the interaction. The irony of this will become apparent shortly.</div>
     </div>
     <div class="timeline-item">
       <div class="time">~10 Minutes Later</div>
-      <div class="event">Staff finally locates the order. Proceeds to read every single movie from the transaction and ask "did you buy this?" for each one. Every movie matches the photo the complainant already showed them when he walked in.</div>
+      <div class="event">Staff finally locates the order. Proceeds to read every single movie from the transaction and ask "did you buy this?" for each one. <strong>Every single movie matches the photo the complainant already showed them when he walked in.</strong> The photo they apparently chose to ignore.</div>
     </div>
     <div class="timeline-item">
       <div class="time">The Resolution</div>
-      <div class="event">Instead of simply handing over the missing disc (which they presumably still have, now sitting in a case with no matching disc), staff issues a <strong>store credit</strong>. Complainant suggests they just give him the movie since they'll now have a disc with no case. Staff refuses. "No sir, we're not going to do that."</div>
+      <div class="event">Instead of simply handing over the missing disc (which they presumably still have, now sitting in a case with no matching disc), staff issues a <strong>store credit</strong>. Complainant literally says: "You don't have to do that. Can you just give me the movie? You're gonna have a disc with no case now." Staff refuses. "No sir, we're not going to do that."</div>
     </div>
     <div class="timeline-item">
       <div class="time">Departure</div>
-      <div class="event">Complainant says "Thanks, have a good day" and leaves, because he has class.</div>
+      <div class="event">Complainant says "Thanks, have a good day" and leaves, because he was raised right.</div>
     </div>
   </div>
 
-  <h2>IV. Issues with the Staff Response</h2>
+  <h2>V. Issues with the Staff Response</h2>
 
   <h3>A. The "Check It In Your Car" Defense</h3>
-  <p>The suggestion that a customer should open every case in the parking lot after a large purchase is absurd. When you buy $200 worth of product from a store, there is an implied trust that the product is complete. You don't buy a pizza and open the box in the restaurant to count the slices. You don't buy a book and flip to the last page to make sure it's there. The product should be what it says it is.</p>
+  <p>The suggestion that a customer should open every case in the parking lot after a large purchase is absurd. When you buy $200 worth of product from a store, there is an implied trust that the product is complete. You don't buy a pizza and open the box in the restaurant to count the slices. You don't buy a book and flip to the last page to make sure it's there. You don't buy a double feature and pop open the case in the car to verify that the word "double" was used accurately. The product should be what it says it is.</p>
 
   <h3>B. The Receipt Situation</h3>
-  <p>Not having a physical receipt should not be a dealbreaker in 2026. The store has a digital transaction system. They found the order. The complainant provided photographic evidence with timestamps. The lack of a paper receipt — a piece of thermal paper that contains endocrine disruptors — should not be held against a customer when digital verification is available.</p>
+  <p>Not having a physical receipt should not be a dealbreaker in 2026. The store has a digital transaction system — they proved this by eventually finding the order. The complainant provided photographic evidence with timestamps. The lack of a paper receipt — a piece of thermal paper coated in chemicals that the European Union has literally restricted — should not be held against a customer when digital verification is available.</p>
 
   <h3>C. The AI Meltdown</h3>
-  <p>The complainant asked a simple, reasonable question about whether their system had a search function or could use AI to speed up the lookup. This was met with hostility. The staff member's personal feelings about artificial intelligence should not affect customer service. Nobody asked him to become a prompt engineer. The question was about finding a receipt faster.</p>
+  <p>The complainant asked a simple, reasonable question about whether their system had a search function or could use AI to speed up the lookup. This was met with hostility. The staff member's personal feelings about artificial intelligence should not affect customer service. Nobody asked him to become a prompt engineer. Nobody asked him to install ChatGPT. The question was: "Can you search for it faster?" That's it.</p>
+
+  <p>The additional irony here is that the complainant went home and had an AI write this entire legal-style grievance document, build it into a website, and publish it to the internet in about four minutes. The AI found the store's address, phone number, Facebook page, and hours faster than the staff found a receipt. So.</p>
 
   <h3>D. The Credit vs. The Disc</h3>
-  <p>This is perhaps the most baffling part. The store now has a disc with no case. The complainant has a case with no disc. The obvious solution is to reunite them. Instead, the store issued credit, which means:</p>
+  <p>This is perhaps the most baffling part. The store now has a disc with no case. The complainant has a case with no disc. The obvious, logical, elementary-school-level solution is to reunite them. Instead, the store issued credit, which means:</p>
   <ul>
     <li>The customer still doesn't have the movie he paid for</li>
     <li>The store has a loose disc they can't sell</li>
     <li>Nobody wins</li>
     <li>This is the opposite of problem solving</li>
+    <li>This would not pass a kindergarten logic test</li>
   </ul>
 
-  <h2>V. Nerd Credentials of the Complainant</h2>
+  <h2>VI. Nerd Credentials of the Complainant</h2>
 
-  <p>Throughout this interaction, there was an unspoken energy from the staff that suggested they viewed themselves as the real nerds and the complainant as some outsider. Allow the record to reflect the following:</p>
+  <p>Throughout this interaction, there was an unspoken energy from the staff — a certain condescension that suggested they viewed themselves as the gatekeepers of nerd culture and the complainant as some outsider in a camo jacket who accidentally wandered in from the parking lot of Rural King.</p>
+
+  <p>The complainant understands why this assumption was made. He does not dress like a stereotypical gamer. He looks like he hunts elk. He drives a truck. This is fair.</p>
+
+  <p>However. Allow the record to reflect the following.</p>
 
   <div class="nerd-cred">
-    <h3>Exhibit A: Matt Matheson's Nerd Resume</h3>
+    <h3>$ cat /home/matt/nerd_credentials.txt</h3>
+
+    <div class="section-label">PC Gaming</div>
     <ul>
-      <li>Owns every single retro gaming console</li>
-      <li>Owns a Steam Deck</li>
-      <li>Owns four (4) VR headsets</li>
-      <li>Has two complete gaming setups in his living room</li>
-      <li>Owns approximately ten (10) CRT televisions, each connected to different consoles</li>
-      <li>Built a custom retro emulation console from scratch</li>
-      <li>Currently has a Game Boy disassembled in his office for a screen and shell swap</li>
-      <li>Owns every Star Trek: The Next Generation episode on VHS in a box the size of a human being</li>
-      <li>Has probably seen more anime than you</li>
-      <li>Spends thousands of dollars at your store</li>
+      <li>Fully custom-built gaming PC — sourced, assembled, and tuned every component myself</li>
+      <li>Custom GPU and CPU tuning — overclocked, undervolted, benchmarked</li>
+      <li>Steam account is 20 years old. Twenty. Years.</li>
+      <li>Was playing Half-Life 2 on a custom PC at 10 years old</li>
+      <li>A disciple of Lord Gaben himself</li>
     </ul>
+
+    <div class="section-label">Console Collection</div>
+    <ul>
+      <li>Nintendo 64 (with original Zelda: Ocarina of Time cartridge)</li>
+      <li>Nintendo GameCube</li>
+      <li>Super Nintendo</li>
+      <li>Sega Genesis</li>
+      <li>Three (3) original Xboxes, modded</li>
+      <li>Multiple Xbox 360s and Xbox Ones</li>
+      <li>PlayStation 4 — jailbroken, because of course it is</li>
+      <li>Steam Deck</li>
+      <li>Custom-built retro emulation console (from scratch)</li>
+      <li>Mini handheld emulation devices</li>
+      <li>Game Boy currently disassembled in my office for a screen and shell swap</li>
+    </ul>
+
+    <div class="section-label">Game Library</div>
+    <ul>
+      <li>~75 PlayStation 2 games</li>
+      <li>~45 original Xbox games</li>
+      <li>~20+ Xbox 360 games</li>
+      <li>Tons of PlayStation 1 games</li>
+      <li>Handful of PS4 games</li>
+      <li>That's So Raven for Game Boy Advance. Yes. I own it. Put that on the record.</li>
+    </ul>
+
+    <div class="section-label">VR</div>
+    <ul>
+      <li>Four (4) VR headsets. Not one. Not two. Four.</li>
+    </ul>
+
+    <div class="section-label">CRT Collection & Setup</div>
+    <ul>
+      <li>Approximately ten (10) CRT televisions</li>
+      <li>Each connected to different retro consoles</li>
+      <li>Two complete gaming setups in the living room</li>
+      <li>Yes the whole living room is a museum</li>
+    </ul>
+
+    <div class="section-label">Media & Culture</div>
+    <ul>
+      <li>Every Star Trek: The Next Generation episode on VHS — housed in a box the size of a human being</li>
+      <li>Has probably seen more anime than you, your coworker, and your manager combined</li>
+      <li>Owns enough Blu-rays and DVDs to open a competing store (most purchased at Game X Change)</li>
+    </ul>
+
+    <div class="boss-line">// this is not a casual. this is the final boss.</div>
   </div>
 
-  <p>The complainant is not a casual. The complainant is the final boss.</p>
+  <p>The staff at Game X Change Cookeville looked at this man in his camouflage jacket and decided he wasn't one of them. They were wrong. He is more of them than they will ever be. He just doesn't need to prove it by working at a game store.</p>
 
-  <h2>VI. Summary of Grievances</h2>
+  <h2>VII. Summary of Grievances</h2>
 
   <ol>
-    <li><strong>Product was incomplete at time of sale.</strong> A double feature was sold with only one film.</li>
-    <li><strong>This is a recurring issue.</strong> The complainant has experienced missing discs before and previously let it go.</li>
-    <li><strong>Staff was dismissive and unhelpful.</strong> The "check it in your car" defense is not a customer service policy.</li>
-    <li><strong>The AI comment triggered an unprofessional response.</strong> A customer should not be treated rudely for asking a question about technology.</li>
-    <li><strong>The resolution was illogical.</strong> Store credit instead of the actual disc that both parties know exists.</li>
-    <li><strong>A loyal, high-spending customer was treated like a suspect.</strong> The entire interaction felt adversarial rather than service-oriented.</li>
+    <li><strong>Product was incomplete at time of sale.</strong> A double feature was sold with only one film. This is, by definition, not a double feature.</li>
+    <li><strong>This is a recurring issue.</strong> The complainant has experienced missing discs before and previously absorbed the loss to maintain a good relationship with the store.</li>
+    <li><strong>Staff was dismissive and unhelpful.</strong> The "check it in your car" defense is not customer service. It's blame-shifting.</li>
+    <li><strong>A customer was profiled based on appearance.</strong> The complainant was treated as an outsider despite being one of the store's most loyal and highest-spending customers.</li>
+    <li><strong>The AI comment triggered an unprofessional response.</strong> A customer should not be treated rudely for asking a question about technology. Especially at a technology store.</li>
+    <li><strong>The resolution was illogical.</strong> Store credit instead of the actual disc that both parties know exists somewhere in that building.</li>
+    <li><strong>A $3,000+ lifetime customer was treated like a suspect</strong> trying to pull off a Blu-ray heist. The Hunger Games disc 1 retails for approximately $4. This is not Ocean's Eleven.</li>
   </ol>
 
   <div class="verdict">
     <h3>Desired Outcome</h3>
-    <p>An acknowledgment that customers who spend significant money at your store deserve basic courtesy, the benefit of the doubt, and a complete product when they pay for one. Also, maybe check that your cases have all the discs in them before you sell them. Just a thought.</p>
+    <p>An acknowledgment from Game X Change Cookeville management that customers who spend significant money at your store deserve basic courtesy, the benefit of the doubt, and a complete product when they pay for one.</p>
+    <p style="margin-top: 1rem; font-size: 0.85rem;">Also, maybe check that your cases have all the discs in them before you sell them. You literally buy, sell, and trade discs. That's the whole job.</p>
   </div>
 
-  <h2>VII. Closing Statement</h2>
+  <h2>VIII. Closing Statement</h2>
 
-  <p>The complainant will continue to buy movies and games, because that's who he is. But he will also continue to document interactions like this with an unnecessary level of detail, because that is also who he is. He has an AI agent. He has a GitHub Pages account. He has time.</p>
+  <p>The complainant will probably continue to buy movies and games at Game X Change, because that's who he is and he has a problem. But he will also continue to document interactions like this with an absurd and unnecessary level of detail, because that is also who he is.</p>
 
-  <p>Thank you for your consideration.</p>
+  <p>He has an AI agent named Neo. He has a GitHub Pages account. He has a custom-built PC and 20 years of Steam history. He has a jailbroken PS4 and a That's So Raven Game Boy cartridge. He has ten CRT televisions in his living room and every episode of Star Trek: TNG on VHS. He has more nerd credentials in his camo jacket pocket than most people have in their entire Steam library.</p>
 
-  <p style="margin-top: 2rem; font-weight: 500;">Respectfully submitted,<br>Matt Matheson<br>Patron, Nerd, Complainant</p>
+  <p>And all he wanted was the first Hunger Games movie.</p>
+
+  <p>May the odds be ever in your favor.</p>
+
+  <p style="margin-top: 2rem; font-weight: 500;">Respectfully submitted,<br>Matt Matheson<br>Patron, Nerd, Complainant<br><span style="font-weight: 300; font-size: 0.85rem; color: var(--text-secondary);">Cookeville, Tennessee</span></p>
 
   <footer>
-    <p>This document was authored with the assistance of an AI, which the Game Exchange staff would not approve of, and that's fine. It found the receipt faster than their system did.</p>
+    <p>This document was authored with the assistance of an AI — the same technology the Game X Change staff member said he would "never use." The AI found the store's address, phone number, Facebook page, operating hours, and this receipt faster than their POS system did. No thermal paper was touched in the process.</p>
   </footer>
 </div>
 
