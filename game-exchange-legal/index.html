@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formal Demand Letter — Re: Incomplete Product, Game X Change Cookeville</title>
+<link rel="icon" href="/RandomPhoneBuilds/favicon.ico" type="image/x-icon">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500&display=swap');
+
+  :root {
+    --text: #1a1a1a;
+    --text-light: #555;
+    --border: #999;
+    --bg: #fff;
+    --seal: #8B0000;
+  }
+
+  @media print {
+    body { margin: 0; }
+    .no-print { display: none; }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Libre Baskerville', 'Times New Roman', Georgia, serif;
+    background: #e8e8e8;
+    color: var(--text);
+    line-height: 1.9;
+    -webkit-font-smoothing: auto;
+  }
+
+  .page {
+    max-width: 8.5in;
+    min-height: 11in;
+    margin: 2rem auto;
+    background: var(--bg);
+    padding: 1in 1.15in;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+    position: relative;
+  }
+
+  @media (max-width: 700px) {
+    .page {
+      margin: 0;
+      padding: 2rem 1.25rem;
+      box-shadow: none;
+      min-height: auto;
+    }
+  }
+
+  /* Letterhead */
+  .letterhead {
+    text-align: center;
+    border-bottom: 2px solid var(--text);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .letterhead .firm-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.15rem;
+  }
+
+  .letterhead .firm-tagline {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .letterhead .firm-address {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* Date & addressee block */
+  .date-block {
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    line-height: 1.7;
+  }
+
+  .date-block .date {
+    margin-bottom: 1rem;
+  }
+
+  .date-block .via {
+    font-style: italic;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+  }
+
+  /* RE line */
+  .re-line {
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+    padding: 0.5rem 0;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .re-line strong {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Body text */
+  .body-text {
+    font-size: 0.85rem;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .body-text p {
+    margin-bottom: 1rem;
+    text-indent: 2em;
+  }
+
+  .body-text p.no-indent {
+    text-indent: 0;
+  }
+
+  .body-text p:first-child {
+    text-indent: 0;
+  }
+
+  .section-heading {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 1.75rem;
+    margin-bottom: 0.75rem;
+    text-indent: 0;
+  }
+
+  .body-text ol, .body-text ul {
+    margin: 0.75rem 0 1rem 2.5em;
+    font-size: 0.85rem;
+  }
+
+  .body-text li {
+    margin-bottom: 0.5rem;
+    text-align: justify;
+  }
+
+  /* Exhibit box */
+  .exhibit {
+    border: 1px solid var(--border);
+    margin: 1.25rem 0;
+    padding: 1rem 1.25rem;
+    background: #fafafa;
+    page-break-inside: avoid;
+  }
+
+  .exhibit-header {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .exhibit ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .exhibit li {
+    font-size: 0.8rem;
+    padding: 0.2rem 0;
+    border-bottom: 1px dotted #ddd;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .exhibit li:last-child { border-bottom: none; }
+
+  /* Signature block */
+  .signature-block {
+    margin-top: 2.5rem;
+    page-break-inside: avoid;
+  }
+
+  .signature-block .closing {
+    font-size: 0.85rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .signature-line {
+    width: 250px;
+    border-top: 1px solid var(--text);
+    padding-top: 0.25rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .signature-title {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    font-style: italic;
+  }
+
+  /* Notary / seal area */
+  .notary-block {
+    margin-top: 2rem;
+    border: 1px solid var(--border);
+    padding: 1.25rem;
+    font-size: 0.75rem;
+    line-height: 1.7;
+    background: #fcfcfc;
+    position: relative;
+  }
+
+  .notary-block .notary-title {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.7rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .seal {
+    position: absolute;
+    right: 1.25rem;
+    top: 1rem;
+    width: 80px;
+    height: 80px;
+    border: 3px solid var(--seal);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    transform: rotate(-15deg);
+    opacity: 0.7;
+  }
+
+  .seal .seal-text {
+    font-size: 0.45rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--seal);
+    line-height: 1.3;
+  }
+
+  .seal .seal-star {
+    font-size: 1rem;
+    color: var(--seal);
+  }
+
+  /* Footer */
+  .page-footer {
+    margin-top: 2rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #ccc;
+    font-size: 0.6rem;
+    color: #999;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-style: italic;
+  }
+
+  /* CC block */
+  .cc-block {
+    margin-top: 1.5rem;
+    font-size: 0.75rem;
+    color: var(--text-light);
+  }
+
+  .cc-block strong {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.65rem;
+  }
+
+  /* Page 2 */
+  .page + .page { margin-top: 0.5rem; }
+
+  .stamp {
+    display: inline-block;
+    border: 2px solid var(--seal);
+    color: var(--seal);
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 0.2rem 0.6rem;
+    transform: rotate(-5deg);
+    opacity: 0.6;
+    margin-left: 1rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 -->
+<div class="page">
+
+  <div class="letterhead">
+    <div class="firm-name">Law Offices of Matheson & Associates</div>
+    <div class="firm-tagline">Consumer Protection &bull; Nerd Rights &bull; Disc Integrity</div>
+    <div class="firm-address">
+      Cookeville, Tennessee<br>
+      Tel: Unlisted &nbsp;&bull;&nbsp; Fax: Who Still Uses Fax<br>
+      counsel@definitely-a-real-law-firm.com
+    </div>
+  </div>
+
+  <div class="date-block">
+    <div class="date">March 16, 2026</div>
+    <div class="via">Via Facebook, Public Posting, and GitHub Pages</div>
+    <p class="no-indent" style="font-size: 0.85rem;">
+      Game X Change — Cookeville Location<br>
+      620 S. Jefferson Avenue<br>
+      Cookeville, Tennessee 38501<br>
+      (931) 854-1990
+    </p>
+  </div>
+
+  <div class="re-line">
+    <strong>Re:</strong> Formal Demand Regarding Incomplete Product — Hunger Games Double Feature Blu-ray; Failure to Provide Adequate Customer Service; General Nerd Disrespect
+    <span class="stamp">URGENT</span>
+  </div>
+
+  <div class="body-text">
+
+    <p class="no-indent">Dear Game X Change Cookeville Management and/or Ownership:</p>
+
+    <p>This letter is written on behalf of our client, <strong>Matt Matheson</strong> (hereinafter "the Complainant"), a longtime patron of your Cookeville, Tennessee retail establishment, regarding an incident occurring on or about March 14, 2026, and the subsequent return visit on March 16, 2026, during which the Complainant was sold an incomplete product and thereafter subjected to dismissive, adversarial, and frankly illogical customer service.</p>
+
+    <p>The Complainant has retained this office not because the matter rises to the level of formal litigation — it does not, and everyone involved knows this — but because he is a man who believes that when you are wronged over a $4 Blu-ray disc, the only proportionate response is a multi-page legal demand letter published to the internet. We respect this conviction.</p>
+
+    <p class="section-heading">I. Statement of Facts</p>
+
+    <p>On or about March 14, 2026, the Complainant entered Game X Change located at 620 S. Jefferson Avenue, Cookeville, Tennessee 38501, and purchased approximately Two Hundred Dollars ($200.00) worth of Blu-ray motion pictures. Among these purchases was one (1) <em>Hunger Games Double Feature</em> Blu-ray, marketed and sold as containing both <em>The Hunger Games</em> (2012) and <em>The Hunger Games: Catching Fire</em> (2013).</p>
+
+    <p>Upon returning to his residence and opening the aforementioned Blu-ray case, the Complainant discovered that the case contained only one (1) disc — specifically, the second film. The first disc was not present. The product labeled as a "double feature" was, in material fact, a single feature. The Complainant received fifty percent (50%) of the product for one hundred percent (100%) of the purchase price.</p>
+
+    <p>The Complainant notes for the record that this is <strong>not the first time</strong> he has received an incomplete product from this location. On prior occasions, the Complainant chose not to pursue the matter, absorbing the financial loss in the interest of maintaining a positive commercial relationship with the store. This forbearance should not be interpreted as acquiescence to a pattern of defective merchandise.</p>
+
+    <p class="section-heading">II. The Return Visit</p>
+
+    <p>On March 16, 2026, the Complainant returned to Game X Change to report the missing disc and request its replacement. What followed was a customer service interaction that can only be described as hostile, inefficient, and logically incoherent. The events are recounted as follows:</p>
+
+    <ol>
+      <li>The Complainant approached the counter and calmly explained the situation. Staff responded by suggesting that the Complainant should have inspected the product in his vehicle before departing the premises — effectively placing the burden of quality assurance on the consumer rather than the retailer.</li>
+
+      <li>Staff requested a receipt. The Complainant does not retain thermal paper receipts due to well-documented health concerns regarding Bisphenol A (BPA) exposure, a position supported by the European Chemicals Agency (ECHA) and multiple peer-reviewed studies. The Complainant instead offered a timestamped photograph sent via iMessage to a third party at the time of purchase, clearly depicting all items being purchased at the Game X Change counter.</li>
+
+      <li>Staff declined to accept the photographic evidence and instead attempted to locate the transaction in their point-of-sale system. Staff advised this process would be time-consuming. The Complainant asked whether the system supported a search function or whether artificial intelligence could expedite the process. This question — asked in good faith — prompted a staff member to become visibly agitated, declare that he would "never use AI," and maintain a hostile demeanor for the remainder of the interaction.</li>
+
+      <li>After approximately ten (10) minutes, staff located the transaction and proceeded to read each item aloud, asking the Complainant to confirm each purchase individually. Every item confirmed matched the photograph the Complainant had presented at the outset.</li>
+
+      <li>Rather than providing the missing disc — which, by logical necessity, must still be in the store's possession — staff issued store credit. The Complainant explicitly requested the disc itself, noting that the store would otherwise be left with an unsellable loose disc and the customer with an incomplete case. Staff refused, stating: "No sir, we're not going to do that."</li>
+    </ol>
+
+    <p class="section-heading">III. Financial Relationship & Patron History</p>
+
+    <p>The Complainant estimates that he has spent in excess of <strong>Three Thousand Dollars ($3,000.00)</strong> at Game X Change Cookeville over the past two (2) years alone. A review of the Complainant's personal collection — which includes a volume of media sufficient to operate a small retail establishment from his living room — substantiates this figure.</p>
+
+    <p>The Complainant notes that supplemental purchases have also been made at McKay's Used Books, CDs, Movies & Games in Nashville, Tennessee, where staff have historically demonstrated enthusiasm for the collector community and provided customer service consistent with industry standards.</p>
+
+    <p class="section-heading">IV. The Matter of Nerd Credentials</p>
+
+    <p>It has come to the attention of this office that during the aforementioned interaction, staff members exhibited a condescending demeanor toward the Complainant that suggested they did not consider him a legitimate member of the gaming and media enthusiast community. This assessment appears to have been based solely on the Complainant's outward appearance — specifically, his preference for camouflage outerwear.</p>
+
+    <p>This office submits the following inventory into evidence to dispel any such misconception:</p>
+
+    <div class="exhibit">
+      <div class="exhibit-header">Exhibit A — Complainant's Gaming & Media Credentials</div>
+      <ul>
+        <li><strong>PC Gaming:</strong> Fully custom-built gaming PC — every component sourced, assembled, and performance-tuned by the Complainant personally, including GPU and CPU overclocking and optimization</li>
+        <li><strong>Steam Account:</strong> Active for twenty (20) years; Complainant was playing Half-Life 2 on a custom-built PC at age ten (10)</li>
+        <li><strong>Console Collection:</strong> Nintendo 64 (w/ original Zelda: Ocarina of Time cartridge), GameCube, Super Nintendo, Sega Genesis, three (3) modded original Xboxes, multiple Xbox 360 and Xbox One consoles, one (1) jailbroken PlayStation 4, one (1) Steam Deck, one (1) custom-built retro emulation console, multiple handheld emulation devices</li>
+        <li><strong>Active Project:</strong> Game Boy currently disassembled in the Complainant's office for a screen and shell swap modification</li>
+        <li><strong>Virtual Reality:</strong> Four (4) VR headsets</li>
+        <li><strong>CRT Collection:</strong> Approximately ten (10) CRT televisions, each connected to a different retro console, with two (2) complete gaming setups in the living room</li>
+        <li><strong>Game Library:</strong> ~75 PS2 titles, ~45 original Xbox titles, ~20+ Xbox 360 titles, extensive PS1 library, PS4 titles, and one (1) copy of <em>That's So Raven</em> for Game Boy Advance</li>
+        <li><strong>Media Collection:</strong> Complete Star Trek: The Next Generation on VHS, housed in a container approximately the size of an adult human being; anime library exceeding reasonable estimation</li>
+      </ul>
+    </div>
+
+    <p>The Complainant is not, as staff may have assumed, a casual consumer who wandered in from an adjacent parking lot. The Complainant is, by any reasonable metric, among the most qualified media and gaming enthusiasts in the Upper Cumberland region. His camouflage jacket should not have been treated as evidence to the contrary.</p>
+
+    <p class="section-heading">V. Demands</p>
+
+    <p>The Complainant respectfully demands the following:</p>
+
+    <ol>
+      <li>A formal acknowledgment from store management that the customer service provided on March 16, 2026, was below acceptable standards.</li>
+      <li>Implementation of a quality assurance procedure to verify disc presence before sale of multi-disc products.</li>
+      <li>An understanding that loyal, high-spending customers deserve the benefit of the doubt when reporting a defective product — particularly when they arrive with photographic evidence.</li>
+      <li>A general reconsideration of the policy of judging customers by their outerwear.</li>
+    </ol>
+
+    <p class="section-heading">VI. Conclusion</p>
+
+    <p>This matter concerns a single Blu-ray disc with an approximate retail value of Four Dollars ($4.00). The Complainant is aware of this. Everyone is aware of this. The issue was never the disc. The issue is that a loyal customer walked into a store where he has spent thousands of dollars, presented clear evidence of a defective product, and was treated as though he were attempting to perpetrate a heist.</p>
+
+    <p>This is not <em>Ocean's Eleven</em>. This is a Hunger Games disc.</p>
+
+    <p>May the odds be ever in your favor.</p>
+
+    <div class="signature-block">
+      <div class="closing">Very truly yours,</div>
+      <div class="signature-line">Matt Matheson</div>
+      <div class="signature-title">Complainant, Pro Se<br>Patron &bull; Nerd &bull; Collector<br>Disciple of Lord Gaben</div>
+    </div>
+
+    <div class="cc-block">
+      <strong>cc:</strong><br>
+      Game X Change Cookeville Facebook Page<br>
+      Game X Change Corporate — gogamexchange.com<br>
+      The General Public, via GitHub Pages<br>
+      Anyone Who Has Ever Been Sold an Incomplete Product
+    </div>
+
+    <div class="notary-block">
+      <div class="seal">
+        <span class="seal-star">&#9733;</span>
+        <span class="seal-text">Certified<br>Nerd</span>
+      </div>
+      <div class="notary-title">Certification</div>
+      <p style="font-size: 0.75rem; margin-bottom: 0.5rem;">I, Matt Matheson, do hereby certify under penalty of losing my nerd card that the foregoing statements are true and accurate to the best of my knowledge, that my Steam account is in fact twenty years old, that I do in fact own <em>That's So Raven</em> for Game Boy Advance, and that all I wanted was the first Hunger Games movie.</p>
+      <p style="font-size: 0.75rem; margin-bottom: 0;">Executed this 16th day of March, 2026, in Cookeville, Tennessee.</p>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    This document was prepared with the assistance of artificial intelligence — the same technology that a Game X Change staff member declared he would "never use." The AI located the store's address, phone number, operating hours, and Facebook page in approximately 3 seconds. No thermal paper was harmed in this process. &nbsp;|&nbsp; mattmatheson.github.io/RandomPhoneBuilds/game-exchange-legal/
+  </div>
+
+</div>
+
+</body>
+</html>
