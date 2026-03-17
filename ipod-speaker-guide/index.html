@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>iPod Classic Speaker Guide — Every Dock & Speaker Worth Owning</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --accent-light: rgba(196, 32, 32, 0.08);
+    --bg: #FAFAFA;
+    --text: #1D1D1F;
+    --text-secondary: #6E6E73;
+    --card-bg: #FFFFFF;
+    --border: #E5E5E7;
+    --tag-dock: #C42020;
+    --tag-aux: #2D6AE0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, 'SF Pro Display', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  header {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 1.5rem;
+  }
+
+  header h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+  }
+
+  .scope {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .listen-controls {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  .listen-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.6rem 1.5rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .listen-btn:hover { opacity: 0.85; }
+
+  .voice-select, .speed-btn {
+    font-family: inherit;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: white;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .pro-tip {
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+  }
+
+  .pro-tip a {
+    color: var(--accent);
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .filter-bar {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 1.5rem 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.45rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: 2rem;
+    background: white;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn.active {
+    background: var(--text);
+    color: white;
+    border-color: var(--text);
+  }
+
+  .filter-btn:hover:not(.active) {
+    border-color: var(--text-secondary);
+  }
+
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 1.5rem 4rem;
+  }
+
+  section {
+    transition: all 0.3s ease;
+    padding: 0.25rem 0;
+  }
+
+  section.reading {
+    border-left: 3px solid var(--accent);
+    background: rgba(196, 32, 32, 0.04);
+    padding-left: 1rem;
+    border-radius: 4px;
+  }
+
+  .product-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    transition: box-shadow 0.2s;
+  }
+
+  .product-card:hover {
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+
+  .product-image {
+    width: 100%;
+    aspect-ratio: 16/10;
+    object-fit: contain;
+    background: #f5f5f5;
+    padding: 1rem;
+  }
+
+  .product-body {
+    padding: 1.25rem 1.5rem 1.5rem;
+  }
+
+  .product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .product-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+
+  .connection-tag {
+    flex-shrink: 0;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.65rem;
+    border-radius: 1rem;
+    color: white;
+  }
+
+  .connection-tag.dock { background: var(--tag-dock); }
+  .connection-tag.aux { background: var(--tag-aux); }
+
+  .product-desc {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    line-height: 1.55;
+  }
+
+  .product-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.15rem;
+  }
+
+  .feature-chip {
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 0.3rem 0.7rem;
+    background: var(--accent-light);
+    color: var(--accent);
+    border-radius: 1rem;
+  }
+
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .price-range {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .price-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .ebay-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: white;
+    background: var(--accent);
+    padding: 0.55rem 1.15rem;
+    border-radius: 2rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .ebay-link:hover { opacity: 0.85; }
+
+  .listings {
+    margin-top: 0.85rem;
+    padding-top: 0.85rem;
+  }
+
+  .listing-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.45rem 0;
+    font-size: 0.85rem;
+  }
+
+  .listing-item a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .listing-item a:hover { color: var(--accent); }
+
+  .listing-price {
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  /* Player bar */
+  .player-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(30, 30, 30, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: white;
+    padding: 0.65rem 1.25rem;
+    padding-bottom: calc(0.65rem + env(safe-area-inset-bottom));
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    z-index: 1000;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .player-bar.visible { transform: translateY(0); }
+
+  .player-bar button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.25rem;
+    flex-shrink: 0;
+  }
+
+  .player-section-title {
+    flex: 1;
+    font-size: 0.82rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0.8;
+  }
+
+  .player-bar .voice-select,
+  .player-bar .speed-btn {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.2);
+    color: white;
+    font-size: 0.78rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.6rem; }
+    .listen-controls { flex-direction: column; align-items: stretch; }
+    .listen-btn { width: 100%; text-align: center; }
+    .product-image { aspect-ratio: 4/3; }
+    .product-name { font-size: 1.15rem; }
+    .price-row { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+    .ebay-link { width: 100%; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>iPod Classic Speaker Guide</h1>
+  <p class="scope">Every dock, speaker, and sound system worth owning for the iPod Classic. Product info, photos, and current eBay listings — whether you're building a retro setup or hunting for nostalgia.</p>
+
+  <div class="listen-controls">
+    <button class="listen-btn" id="listenBtn">&#9654; Listen</button>
+    <select class="voice-select" id="voiceSelect"></select>
+    <button class="speed-btn" id="speedBtn">1x</button>
+  </div>
+  <p class="pro-tip">Pro tip: For a better voice, <a id="selectAllBtn">select all</a> then use iOS Speak Selection (Settings &gt; Accessibility &gt; Spoken Content).</p>
+</header>
+
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="dock">30-Pin Dock</button>
+  <button class="filter-btn" data-filter="aux">3.5mm / Aux</button>
+  <button class="filter-btn" data-filter="portable">Portable</button>
+</div>
+
+<main id="content">
+
+<!-- 1. Bose SoundDock -->
+<section data-tags="dock">
+<div class="product-card">
+  <img class="product-image" src="https://i.ebayimg.com/images/g/7CQAAeSwumFpDOLc/s-l1600.jpg" alt="Bose SoundDock" loading="lazy">
+  <div class="product-body">
+    <div class="product-header">
+      <h2 class="product-name">Bose SoundDock</h2>
+      <span class="connection-tag dock">30-Pin</span>
+    </div>
+    <p class="product-desc">The iconic desktop iPod speaker dock that defined the category. Rich, room-filling sound from a compact, elegant design with a built-in 30-pin dock connector on top. This was THE speaker in every dorm room from 2006-2008.</p>
+    <div class="product-features">
+      <span class="feature-chip">Room-filling sound</span>
+      <span class="feature-chip">Remote included</span>
+      <span class="feature-chip">Charges iPod</span>
+      <span class="feature-chip">Aux input</span>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-range">$75 – $160</div>
+        <div class="price-label">Current eBay range</div>
+      </div>
+      <a class="ebay-link" href="https://www.ebay.com/sch/i.html?_nkw=bose+sounddock+original+ipod&LH_BIN=1" target="_blank">Shop eBay &#8599;</a>
+    </div>
+    <div class="listings">
+      <div class="listing-item"><a href="https://www.ebay.com/itm/287172544177" target="_blank">White SoundDock bundle</a><span class="listing-price">$85</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/277786398168" target="_blank">Black SoundDock Series 1</a><span class="listing-price">$75</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/317027660609" target="_blank">In original box</a><span class="listing-price">$125</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- 2. JBL On Stage -->
+<section data-tags="dock">
+<div class="product-card">
+  <img class="product-image" src="https://i.ebayimg.com/images/g/q3oAAeSwibFpUUbJ/s-l1600.jpg" alt="JBL On Stage" loading="lazy">
+  <div class="product-body">
+    <div class="product-header">
+      <h2 class="product-name">JBL On Stage</h2>
+      <span class="connection-tag dock">30-Pin</span>
+    </div>
+    <p class="product-desc">A UFO/flying saucer-shaped iPod speaker dock with a distinctive circular design. The 30-pin connector sits in the center of the disc, projecting 360-degree sound in all directions.</p>
+    <div class="product-features">
+      <span class="feature-chip">360° sound</span>
+      <span class="feature-chip">Compact</span>
+      <span class="feature-chip">Iconic design</span>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-range">$19 – $100</div>
+        <div class="price-label">Current eBay range</div>
+      </div>
+      <a class="ebay-link" href="https://www.ebay.com/sch/i.html?_nkw=JBL+On+Stage+ipod+speaker&LH_BIN=1" target="_blank">Shop eBay &#8599;</a>
+    </div>
+    <div class="listings">
+      <div class="listing-item"><a href="https://www.ebay.com/itm/389457541322" target="_blank">JBL On Stage IIIP Black</a><span class="listing-price">$21</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/177963464029" target="_blank">JBL On Stage for 30-Pin</a><span class="listing-price">$35</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/157760441274" target="_blank">Micro III New In Box</a><span class="listing-price">$100</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- 3. Harman Kardon SoundSticks -->
+<section data-tags="aux">
+<div class="product-card">
+  <img class="product-image" src="https://i.ebayimg.com/images/g/HoAAAeSwBvRpombL/s-l1600.jpg" alt="Harman Kardon SoundSticks" loading="lazy">
+  <div class="product-body">
+    <div class="product-header">
+      <h2 class="product-name">Harman Kardon SoundSticks</h2>
+      <span class="connection-tag aux">3.5mm</span>
+    </div>
+    <p class="product-desc">Iconic transparent "jellyfish" speaker system with two satellite speakers and a subwoofer, all in clear polycarbonate. Part of MoMA's permanent design collection. Connects via headphone jack so it works with anything.</p>
+    <div class="product-features">
+      <span class="feature-chip">MoMA collection</span>
+      <span class="feature-chip">Subwoofer</span>
+      <span class="feature-chip">2.1 system</span>
+      <span class="feature-chip">Transparent design</span>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-range">$100 – $330</div>
+        <div class="price-label">Current eBay range</div>
+      </div>
+      <a class="ebay-link" href="https://www.ebay.com/sch/i.html?_nkw=harman+kardon+soundsticks&LH_BIN=1" target="_blank">Shop eBay &#8599;</a>
+    </div>
+    <div class="listings">
+      <div class="listing-item"><a href="https://www.ebay.com/itm/227235550454" target="_blank">SoundSticks III w/ power</a><span class="listing-price">$100</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/157706735451" target="_blank">SoundSticks II Open Box</a><span class="listing-price">$130</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/205831943879" target="_blank">SoundSticks 4 Bluetooth (new)</a><span class="listing-price">$330</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- 4. Altec Lansing inMotion -->
+<section data-tags="dock portable">
+<div class="product-card">
+  <img class="product-image" src="https://i.ebayimg.com/images/g/h80AAeSwsV9ps2fp/s-l1600.png" alt="Altec Lansing inMotion" loading="lazy">
+  <div class="product-body">
+    <div class="product-header">
+      <h2 class="product-name">Altec Lansing inMotion iM600</h2>
+      <span class="connection-tag dock">30-Pin</span>
+    </div>
+    <p class="product-desc">One of the first truly portable iPod speaker systems. The clamshell design folds shut for travel and opens to reveal a 30-pin dock with surprisingly powerful sound for its size. Built-in FM radio on the iM600.</p>
+    <div class="product-features">
+      <span class="feature-chip">Clamshell design</span>
+      <span class="feature-chip">FM radio</span>
+      <span class="feature-chip">Battery powered</span>
+      <span class="feature-chip">Charges iPod</span>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-range">$20 – $100</div>
+        <div class="price-label">Current eBay range</div>
+      </div>
+      <a class="ebay-link" href="https://www.ebay.com/sch/i.html?_nkw=altec+lansing+inmotion+ipod+speaker&LH_BIN=1" target="_blank">Shop eBay &#8599;</a>
+    </div>
+    <div class="listings">
+      <div class="listing-item"><a href="https://www.ebay.com/itm/168228277523" target="_blank">inMotion iM600</a><span class="listing-price">$23</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/188147014482" target="_blank">Vintage iM600</a><span class="listing-price">$30</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/188123207819" target="_blank">iM3C Open Box</a><span class="listing-price">$100</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- 5. iHome -->
+<section data-tags="dock">
+<div class="product-card">
+  <img class="product-image" src="https://i.ebayimg.com/images/g/rpIAAeSwH1Rptx~S/s-l1600.jpg" alt="iHome Alarm Clock Dock" loading="lazy">
+  <div class="product-body">
+    <div class="product-header">
+      <h2 class="product-name">iHome iH22 Alarm Clock Dock</h2>
+      <span class="connection-tag dock">30-Pin</span>
+    </div>
+    <p class="product-desc">The quintessential iPod alarm clock dock — a bedroom staple of the mid-2000s. Dual alarms, FM radio, and a 30-pin dock that charges your iPod overnight and wakes you up to your music.</p>
+    <div class="product-features">
+      <span class="feature-chip">Dual alarms</span>
+      <span class="feature-chip">FM radio</span>
+      <span class="feature-chip">Charges iPod</span>
+      <span class="feature-chip">Backlit LCD</span>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-range">$20 – $36</div>
+        <div class="price-label">Current eBay range</div>
+      </div>
+      <a class="ebay-link" href="https://www.ebay.com/sch/i.html?_nkw=ihome+ipod+alarm+clock+dock&LH_BIN=1" target="_blank">Shop eBay &#8599;</a>
+    </div>
+    <div class="listings">
+      <div class="listing-item"><a href="https://www.ebay.com/itm/389753325033" target="_blank">iHome iH22 Open Box</a><span class="listing-price">$30</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/127703528029" target="_blank">iH22 Dual Alarm</a><span class="listing-price">$33</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/188137426014" target="_blank">iHome iH9</a><span class="listing-price">$22</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- 6. Logitech mm32 -->
+<section data-tags="aux portable">
+<div class="product-card">
+  <img class="product-image" src="https://i.ebayimg.com/images/g/-AgAAeSwZ8VpEInQ/s-l1600.jpg" alt="Logitech mm32" loading="lazy">
+  <div class="product-body">
+    <div class="product-header">
+      <h2 class="product-name">Logitech mm32</h2>
+      <span class="connection-tag aux">3.5mm</span>
+    </div>
+    <p class="product-desc">Ultra-compact portable iPod speaker with a clean, minimalist wedge design. Connects via headphone jack so it works with any device. Battery powered and tiny enough to throw in a bag.</p>
+    <div class="product-features">
+      <span class="feature-chip">Ultra-compact</span>
+      <span class="feature-chip">Battery powered</span>
+      <span class="feature-chip">Remote included</span>
+      <span class="feature-chip">Travel-friendly</span>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-range">$8 – $22</div>
+        <div class="price-label">Current eBay range</div>
+      </div>
+      <a class="ebay-link" href="https://www.ebay.com/sch/i.html?_nkw=logitech+mm32+ipod+speaker&LH_BIN=1" target="_blank">Shop eBay &#8599;</a>
+    </div>
+    <div class="listings">
+      <div class="listing-item"><a href="https://www.ebay.com/itm/298103306460" target="_blank">Tested, works</a><span class="listing-price">$22</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/353443876705" target="_blank">Pre-owned</a><span class="listing-price">$14</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/206113123774" target="_blank">Budget option</a><span class="listing-price">$8</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- 7. iMainGo -->
+<section data-tags="aux portable">
+<div class="product-card">
+  <img class="product-image" src="https://i.ebayimg.com/images/g/Zn0AAOSwYMNnHYpf/s-l1600.jpg" alt="iMainGo" loading="lazy">
+  <div class="product-body">
+    <div class="product-header">
+      <h2 class="product-name">iMainGo Speaker Case</h2>
+      <span class="connection-tag aux">3.5mm</span>
+    </div>
+    <p class="product-desc">A protective iPod case with built-in speakers that opens like a book. Slide your iPod in, zip it shut for protection, or open it up for instant music. The original "speaker case" — still a clever design.</p>
+    <div class="product-features">
+      <span class="feature-chip">Case + speaker</span>
+      <span class="feature-chip">Book-style</span>
+      <span class="feature-chip">Zippered</span>
+      <span class="feature-chip">AAA batteries</span>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-range">$19 – $30</div>
+        <div class="price-label">Current eBay range</div>
+      </div>
+      <a class="ebay-link" href="https://www.ebay.com/sch/i.html?_nkw=imaingo+ipod+speaker+case&LH_BIN=1" target="_blank">Shop eBay &#8599;</a>
+    </div>
+    <div class="listings">
+      <div class="listing-item"><a href="https://www.ebay.com/itm/286129787458" target="_blank">Brand New sealed</a><span class="listing-price">$30</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/287037676795" target="_blank">New Old Stock</a><span class="listing-price">$19</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/396366706402" target="_blank">Open box</a><span class="listing-price">$20</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- 8. Bose SoundDock Portable -->
+<section data-tags="dock portable">
+<div class="product-card">
+  <img class="product-image" src="https://i.ebayimg.com/images/g/Yj0AAeSw6YBpq4cV/s-l1600.jpg" alt="Bose SoundDock Portable" loading="lazy">
+  <div class="product-body">
+    <div class="product-header">
+      <h2 class="product-name">Bose SoundDock Portable</h2>
+      <span class="connection-tag dock">30-Pin</span>
+    </div>
+    <p class="product-desc">The battery-powered version of the legendary SoundDock. Same signature Bose sound quality but with a rechargeable lithium-ion battery for true portability. Take the Bose experience anywhere.</p>
+    <div class="product-features">
+      <span class="feature-chip">Rechargeable</span>
+      <span class="feature-chip">Remote control</span>
+      <span class="feature-chip">Aux input</span>
+      <span class="feature-chip">Portable</span>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-range">$17 – $70</div>
+        <div class="price-label">Current eBay range</div>
+      </div>
+      <a class="ebay-link" href="https://www.ebay.com/sch/i.html?_nkw=bose+sounddock+portable+ipod&LH_BIN=1" target="_blank">Shop eBay &#8599;</a>
+    </div>
+    <div class="listings">
+      <div class="listing-item"><a href="https://www.ebay.com/itm/358254284359" target="_blank">With remote, working</a><span class="listing-price">$60</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/188166032771" target="_blank">Silver, pre-owned</a><span class="listing-price">$40</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/206116965445" target="_blank">No remote/cord</a><span class="listing-price">$17</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- 9. Griffin Amplifi -->
+<section data-tags="dock">
+<div class="product-card">
+  <img class="product-image" src="https://i.ebayimg.com/images/g/OE0AAeSwFK5poJSu/s-l1600.jpg" alt="Griffin Amplifi" loading="lazy">
+  <div class="product-body">
+    <div class="product-header">
+      <h2 class="product-name">Griffin Amplifi</h2>
+      <span class="connection-tag dock">30-Pin</span>
+    </div>
+    <p class="product-desc">A true 2.1 speaker system with a dedicated subwoofer and two satellite speakers, featuring a 30-pin iPod dock on top of the sub. A full hi-fi experience for iPod — this was the audiophile's choice.</p>
+    <div class="product-features">
+      <span class="feature-chip">2.1 system</span>
+      <span class="feature-chip">Subwoofer</span>
+      <span class="feature-chip">Satellite speakers</span>
+      <span class="feature-chip">Aux input</span>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-range">$30 – $85</div>
+        <div class="price-label">Current eBay range</div>
+      </div>
+      <a class="ebay-link" href="https://www.ebay.com/sch/i.html?_nkw=griffin+amplifi+ipod+speaker&LH_BIN=1" target="_blank">Shop eBay &#8599;</a>
+    </div>
+    <div class="listings">
+      <div class="listing-item"><a href="https://www.ebay.com/itm/127706840202" target="_blank">Pre-owned with aux</a><span class="listing-price">$30</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/298126759922" target="_blank">Desktop speaker system</a><span class="listing-price">$45</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/316505090930" target="_blank">Rare pristine LNIB</a><span class="listing-price">$85</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- 10. Kicker iK150 -->
+<section data-tags="dock">
+<div class="product-card">
+  <img class="product-image" src="https://i.ebayimg.com/images/g/5mYAAOSw4wBi5WXP/s-l1600.jpg" alt="Kicker iK150" loading="lazy">
+  <div class="product-body">
+    <div class="product-header">
+      <h2 class="product-name">Kicker iK150</h2>
+      <span class="connection-tag dock">30-Pin</span>
+    </div>
+    <p class="product-desc">A rugged iPod dock with alarm clock from the car audio brand Kicker. Known for punchy bass and loud output that outperforms its size — bringing car audio DNA to the desktop.</p>
+    <div class="product-features">
+      <span class="feature-chip">Car audio brand</span>
+      <span class="feature-chip">Heavy bass</span>
+      <span class="feature-chip">Alarm clock</span>
+      <span class="feature-chip">Loud</span>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-range">$39 – $346</div>
+        <div class="price-label">Current eBay range</div>
+      </div>
+      <a class="ebay-link" href="https://www.ebay.com/sch/i.html?_nkw=kicker+ik150+ipod+speaker&LH_BIN=1" target="_blank">Shop eBay &#8599;</a>
+    </div>
+    <div class="listings">
+      <div class="listing-item"><a href="https://www.ebay.com/itm/137082222980" target="_blank">iK150 White</a><span class="listing-price">$50</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/286094126414" target="_blank">iK501 tested</a><span class="listing-price">$59</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/397661608941" target="_blank">iK501 Never Used</a><span class="listing-price">$346</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- 11. Philips Fidelio -->
+<section data-tags="dock">
+<div class="product-card">
+  <img class="product-image" src="https://i.ebayimg.com/images/g/KLoAAOSw46dmJBZr/s-l1600.png" alt="Philips Fidelio" loading="lazy">
+  <div class="product-body">
+    <div class="product-header">
+      <h2 class="product-name">Philips Fidelio</h2>
+      <span class="connection-tag dock">30-Pin</span>
+    </div>
+    <p class="product-desc">Philips' premium audiophile-grade iPod docking speaker. Elegant wood and metal construction with high-fidelity drivers — designed to look as good as it sounds.</p>
+    <div class="product-features">
+      <span class="feature-chip">Audiophile-grade</span>
+      <span class="feature-chip">Premium build</span>
+      <span class="feature-chip">Wood + metal</span>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-range">$10 – $237</div>
+        <div class="price-label">Current eBay range</div>
+      </div>
+      <a class="ebay-link" href="https://www.ebay.com/sch/i.html?_nkw=philips+fidelio+ipod+dock+speaker&LH_BIN=1" target="_blank">Shop eBay &#8599;</a>
+    </div>
+    <div class="listings">
+      <div class="listing-item"><a href="https://www.ebay.com/itm/156175795734" target="_blank">SBD7500 Black working</a><span class="listing-price">$35</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/277407906946" target="_blank">SBD7500 pre-owned</a><span class="listing-price">$10</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/351793929645" target="_blank">DS9 Brand New</a><span class="listing-price">$237</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- 12. JBL On Tour -->
+<section data-tags="aux portable">
+<div class="product-card">
+  <img class="product-image" src="https://i.ebayimg.com/images/g/eQwAAeSwKrhpAP-w/s-l1600.png" alt="JBL On Tour" loading="lazy">
+  <div class="product-body">
+    <div class="product-header">
+      <h2 class="product-name">JBL On Tour</h2>
+      <span class="connection-tag aux">3.5mm</span>
+    </div>
+    <p class="product-desc">A compact, portable travel speaker from JBL that folds flat. The cylindrical design with flip-out speakers became a backpack essential. Surprisingly loud for its tiny size.</p>
+    <div class="product-features">
+      <span class="feature-chip">Fold-flat</span>
+      <span class="feature-chip">Battery powered</span>
+      <span class="feature-chip">Ultra-portable</span>
+      <span class="feature-chip">Universal</span>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-range">$7 – $90</div>
+        <div class="price-label">Current eBay range</div>
+      </div>
+      <a class="ebay-link" href="https://www.ebay.com/sch/i.html?_nkw=JBL+on+tour+ipod+portable+speaker&LH_BIN=1" target="_blank">Shop eBay &#8599;</a>
+    </div>
+    <div class="listings">
+      <div class="listing-item"><a href="https://www.ebay.com/itm/136670718738" target="_blank">White, with cable</a><span class="listing-price">$40</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/205988677046" target="_blank">On Stage II Sealed 2006</a><span class="listing-price">$90</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- 13. Memorex Mi3X -->
+<section data-tags="dock portable">
+<div class="product-card">
+  <img class="product-image" src="https://i.ebayimg.com/images/g/dAQAAeSwTThplk4i/s-l1600.jpg" alt="Memorex Mi3X MiniMove" loading="lazy">
+  <div class="product-body">
+    <div class="product-header">
+      <h2 class="product-name">Memorex Mi3X MiniMove</h2>
+      <span class="connection-tag dock">30-Pin</span>
+    </div>
+    <p class="product-desc">A portable boombox-style iPod dock with a handle on top for grabbing and going. FM radio, retro-modern aesthetic, and a remote control made it a dorm room and garage favorite.</p>
+    <div class="product-features">
+      <span class="feature-chip">Boombox style</span>
+      <span class="feature-chip">Carry handle</span>
+      <span class="feature-chip">FM radio</span>
+      <span class="feature-chip">Remote</span>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-range">$25 – $40</div>
+        <div class="price-label">Current eBay range</div>
+      </div>
+      <a class="ebay-link" href="https://www.ebay.com/sch/i.html?_nkw=memorex+mi3x+ipod+speaker+boombox&LH_BIN=1" target="_blank">Shop eBay &#8599;</a>
+    </div>
+    <div class="listings">
+      <div class="listing-item"><a href="https://www.ebay.com/itm/317896819592" target="_blank">Black with remote + power</a><span class="listing-price">$35</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/267420439395" target="_blank">Black with remote</a><span class="listing-price">$30</span></div>
+      <div class="listing-item"><a href="https://www.ebay.com/itm/406487274303" target="_blank">Silver edition</a><span class="listing-price">$30</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+</main>
+
+<!-- Player Bar -->
+<div class="player-bar" id="playerBar">
+  <button id="playerPlayPause">&#9654;</button>
+  <span class="player-section-title" id="playerTitle">—</span>
+  <select class="voice-select" id="playerVoice"></select>
+  <button class="speed-btn" id="playerSpeed">1x</button>
+  <button id="playerStop">&#9632;</button>
+</div>
+
+<script>
+// Filter
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('main section').forEach(s => {
+      if (filter === 'all' || (s.dataset.tags && s.dataset.tags.includes(filter))) {
+        s.style.display = '';
+      } else {
+        s.style.display = 'none';
+      }
+    });
+  });
+});
+
+// Select All
+document.getElementById('selectAllBtn').addEventListener('click', e => {
+  e.preventDefault();
+  const range = document.createRange();
+  range.selectNodeContents(document.getElementById('content'));
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+});
+
+// Speech
+const VOICE_WHITELIST = ['samantha','karen','daniel','moira','tessa','ava','allison','tom','aaron','nicky','evan','zoe','joelle','fiona','martha','arthur','google us english','google uk english'];
+let voices = [];
+let selectedVoice = null;
+let speeds = [0.8, 1, 1.2, 1.5];
+let speedIdx = 1;
+let isPlaying = false;
+let isPaused = false;
+let chunks = [];
+let chunkIdx = 0;
+let keepAlive = null;
+
+function loadVoices() {
+  voices = speechSynthesis.getVoices().filter(v => {
+    const n = v.name.toLowerCase();
+    return VOICE_WHITELIST.some(w => n.includes(w));
+  });
+  [document.getElementById('voiceSelect'), document.getElementById('playerVoice')].forEach(sel => {
+    sel.innerHTML = '';
+    voices.forEach((v, i) => {
+      const opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = v.name.replace(/\(.*\)/, '').trim();
+      sel.appendChild(opt);
+    });
+  });
+  if (voices.length) selectedVoice = voices[0];
+}
+
+speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
+
+function syncVoiceSelects(srcId) {
+  const val = document.getElementById(srcId).value;
+  document.getElementById('voiceSelect').value = val;
+  document.getElementById('playerVoice').value = val;
+  selectedVoice = voices[val];
+}
+
+document.getElementById('voiceSelect').onchange = function() { syncVoiceSelects('voiceSelect'); };
+document.getElementById('playerVoice').onchange = function() { syncVoiceSelects('playerVoice'); };
+
+function cycleSpeed(btn) {
+  speedIdx = (speedIdx + 1) % speeds.length;
+  const label = speeds[speedIdx] + 'x';
+  document.getElementById('speedBtn').textContent = label;
+  document.getElementById('playerSpeed').textContent = label;
+}
+
+document.getElementById('speedBtn').onclick = function() { cycleSpeed(this); };
+document.getElementById('playerSpeed').onclick = function() { cycleSpeed(this); };
+
+function buildChunks() {
+  chunks = [];
+  document.querySelectorAll('main section').forEach(sec => {
+    if (sec.style.display === 'none') return;
+    const name = sec.querySelector('.product-name');
+    const desc = sec.querySelector('.product-desc');
+    if (name) chunks.push({ el: sec, text: name.textContent, isHeading: true });
+    if (desc) chunks.push({ el: sec, text: desc.textContent, isHeading: false });
+  });
+}
+
+function showPlayer() {
+  document.getElementById('playerBar').classList.add('visible');
+}
+
+function hidePlayer() {
+  document.getElementById('playerBar').classList.remove('visible');
+}
+
+function highlightSection(el) {
+  document.querySelectorAll('section.reading').forEach(s => s.classList.remove('reading'));
+  if (el) {
+    el.classList.add('reading');
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function speakChunk() {
+  if (chunkIdx >= chunks.length) {
+    stopSpeech();
+    return;
+  }
+  const chunk = chunks[chunkIdx];
+  const utt = new SpeechSynthesisUtterance(chunk.text);
+  if (selectedVoice) utt.voice = selectedVoice;
+  utt.rate = chunk.isHeading ? speeds[speedIdx] * 0.9 : speeds[speedIdx];
+  if (chunk.isHeading) utt.pitch = 1.05;
+
+  highlightSection(chunk.el);
+  document.getElementById('playerTitle').textContent = chunk.el.querySelector('.product-name')?.textContent || '';
+
+  utt.onend = () => {
+    chunkIdx++;
+    const pause = chunk.isHeading ? 400 : 200;
+    setTimeout(speakChunk, pause);
+  };
+
+  speechSynthesis.speak(utt);
+}
+
+function startSpeech() {
+  speechSynthesis.cancel();
+  buildChunks();
+  chunkIdx = 0;
+  isPlaying = true;
+  isPaused = false;
+  document.getElementById('listenBtn').innerHTML = '&#9646;&#9646; Pause';
+  document.getElementById('playerPlayPause').innerHTML = '&#9646;&#9646;';
+  showPlayer();
+  keepAlive = setInterval(() => { if (isPlaying && !isPaused) speechSynthesis.resume(); }, 10000);
+  speakChunk();
+}
+
+function togglePause() {
+  if (isPaused) {
+    speechSynthesis.resume();
+    isPaused = false;
+    document.getElementById('listenBtn').innerHTML = '&#9646;&#9646; Pause';
+    document.getElementById('playerPlayPause').innerHTML = '&#9646;&#9646;';
+  } else {
+    speechSynthesis.pause();
+    isPaused = true;
+    document.getElementById('listenBtn').innerHTML = '&#9654; Resume';
+    document.getElementById('playerPlayPause').innerHTML = '&#9654;';
+  }
+}
+
+function stopSpeech() {
+  speechSynthesis.cancel();
+  isPlaying = false;
+  isPaused = false;
+  if (keepAlive) clearInterval(keepAlive);
+  document.getElementById('listenBtn').innerHTML = '&#9654; Listen';
+  document.getElementById('playerPlayPause').innerHTML = '&#9654;';
+  highlightSection(null);
+  hidePlayer();
+}
+
+document.getElementById('listenBtn').onclick = () => {
+  if (!isPlaying) startSpeech();
+  else togglePause();
+};
+
+document.getElementById('playerPlayPause').onclick = () => {
+  if (!isPlaying) startSpeech();
+  else togglePause();
+};
+
+document.getElementById('playerStop').onclick = stopSpeech;
+</script>
+</body>
+</html>
