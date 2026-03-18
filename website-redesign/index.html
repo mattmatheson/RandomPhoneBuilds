@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mattmatheson.com — Redesign Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --bg: #FAFAFA;
+    --text: #1D1D1F;
+    --text2: #6E6E73;
+    --divider: #E5E5E7;
+    --card: #FFFFFF;
+    --green: #34A853;
+    --red: #EA4335;
+    --yellow: #F9AB00;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 2rem) 4rem;
+  }
+
+  /* Header */
+  .eyebrow {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  h1 {
+    font-size: clamp(1.8rem, 4.5vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    color: var(--text2);
+    font-weight: 400;
+    margin-bottom: 2rem;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    font-size: 0.75rem;
+    color: var(--text2);
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .meta-row strong { color: var(--text); font-weight: 600; }
+
+  /* Sections */
+  section {
+    margin-bottom: 3rem;
+  }
+
+  h2 {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text2);
+    margin-bottom: 1.25rem;
+  }
+
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+
+  p, li {
+    font-size: 0.88rem;
+    color: #424245;
+    line-height: 1.75;
+  }
+
+  p + p { margin-top: 0.75rem; }
+
+  /* Score Cards */
+  .scores {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .score-card {
+    background: var(--card);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 1.25rem 1rem;
+    text-align: center;
+  }
+
+  .score-card .grade {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+
+  .score-card .label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .grade-red { color: var(--red); }
+  .grade-yellow { color: var(--yellow); }
+  .grade-green { color: var(--green); }
+
+  /* Issues */
+  .issue {
+    background: var(--card);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .issue .tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+  }
+
+  .tag-critical { background: #FDECEA; color: var(--red); }
+  .tag-warning { background: #FEF7E0; color: #B06D00; }
+  .tag-minor { background: #E8F5E9; color: #2E7D32; }
+
+  .issue h3 { font-size: 0.95rem; margin-bottom: 0.3rem; }
+  .issue p { font-size: 0.82rem; }
+
+  /* Sitemap */
+  .sitemap {
+    background: var(--card);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 1.5rem;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.78rem;
+    line-height: 2;
+    color: var(--text2);
+  }
+
+  .sitemap .page { color: var(--text); font-weight: 600; }
+  .sitemap .desc { color: var(--text2); font-weight: 400; }
+
+  /* Comparison Table */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .compare-table th {
+    text-align: left;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text2);
+    padding: 0.75rem 0.75rem;
+    border-bottom: 2px solid var(--divider);
+  }
+
+  .compare-table td {
+    padding: 0.65rem 0.75rem;
+    border-bottom: 1px solid var(--divider);
+    color: #424245;
+    vertical-align: top;
+  }
+
+  .compare-table tr:last-child td { border-bottom: none; }
+
+  .compare-table .highlight {
+    background: #F0FAF0;
+  }
+
+  .compare-table .rec {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--green);
+    display: inline-block;
+    margin-left: 0.4rem;
+    vertical-align: middle;
+  }
+
+  /* Direction Cards */
+  .direction-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .direction-card {
+    background: var(--card);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 1.25rem 1.25rem;
+  }
+
+  .direction-card h3 { font-size: 0.85rem; margin-bottom: 0.4rem; }
+  .direction-card p { font-size: 0.78rem; }
+
+  .direction-card .icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 1.5rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    background: var(--divider);
+    border-radius: 1px;
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -1.5rem;
+    top: 0.45rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+
+  .tl-item .day {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin-bottom: 0.15rem;
+  }
+
+  .tl-item h3 { font-size: 0.88rem; margin-bottom: 0.2rem; }
+  .tl-item p { font-size: 0.78rem; }
+
+  /* CTA */
+  .cta-box {
+    background: var(--text);
+    color: white;
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .cta-box h3 {
+    color: white;
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .cta-box p {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.82rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-box .actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .cta-box .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 980px;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .cta-box .btn-white { background: white; color: var(--text); }
+  .cta-box .btn-ghost { background: rgba(255,255,255,0.12); color: white; }
+
+  footer {
+    text-align: center;
+    padding: 2.5rem 0 1.5rem;
+    font-size: 0.65rem;
+    color: var(--text2);
+  }
+
+  @media (max-width: 600px) {
+    .scores { grid-template-columns: repeat(2, 1fr); }
+    .direction-grid { grid-template-columns: 1fr; }
+    .meta-row { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <p class="eyebrow">Website Redesign Brief</p>
+    <h1>mattmatheson.com</h1>
+    <p class="subtitle">Audit, recommendations, and launch plan for a portfolio site that actually converts.</p>
+    <div class="meta-row">
+      <span><strong>Current:</strong> Squarespace</span>
+      <span><strong>Target:</strong> Self-hosted (Vercel/Netlify)</span>
+      <span><strong>Timeline:</strong> This week</span>
+      <span><strong>Cost:</strong> $0/mo hosting</span>
+    </div>
+  </header>
+
+  <!-- Scores -->
+  <section>
+    <h2>Current Site Scorecard</h2>
+    <div class="scores">
+      <div class="score-card">
+        <div class="grade grade-red">D</div>
+        <div class="label">Portfolio</div>
+      </div>
+      <div class="score-card">
+        <div class="grade grade-red">F</div>
+        <div class="label">Video Reel</div>
+      </div>
+      <div class="score-card">
+        <div class="grade grade-yellow">C+</div>
+        <div class="label">Services</div>
+      </div>
+      <div class="score-card">
+        <div class="grade grade-green">B+</div>
+        <div class="label">Pricing</div>
+      </div>
+      <div class="score-card">
+        <div class="grade grade-red">F</div>
+        <div class="label">Social Proof</div>
+      </div>
+      <div class="score-card">
+        <div class="grade grade-yellow">C</div>
+        <div class="label">Contact/CTA</div>
+      </div>
+      <div class="score-card">
+        <div class="grade grade-red">D-</div>
+        <div class="label">SEO</div>
+      </div>
+      <div class="score-card">
+        <div class="grade grade-red">F</div>
+        <div class="label">About/Story</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Issues -->
+  <section>
+    <h2>Critical Issues</h2>
+
+    <div class="issue">
+      <span class="tag tag-critical">Critical</span>
+      <h3>No portfolio or work section</h3>
+      <p>A filmmaker's website without browsable work is a restaurant with no menu. Visitors see 4 GIFs and have nowhere to go deeper. No client names, no project context, no video embeds.</p>
+    </div>
+
+    <div class="issue">
+      <span class="tag tag-critical">Critical</span>
+      <h3>No video reel anywhere on the site</h3>
+      <p>You're selling video production and there is zero video playback on the entire site. A showreel should be the first thing people experience — autoplay hero, one click away, something.</p>
+    </div>
+
+    <div class="issue">
+      <span class="tag tag-critical">Critical</span>
+      <h3>No social proof</h3>
+      <p>No testimonials, no client logos, no "worked with" section. For a service business, trust signals are the difference between a bounce and a booking.</p>
+    </div>
+
+    <div class="issue">
+      <span class="tag tag-critical">Critical</span>
+      <h3>No about page or personal brand</h3>
+      <p>Clients hire people, not services. There's no face, no story, no "why Matt" on the site. Cookeville is a small market — personality and trust matter even more.</p>
+    </div>
+
+    <div class="issue">
+      <span class="tag tag-warning">Warning</span>
+      <h3>Homepage is a dead end</h3>
+      <p>Four GIF thumbnails all linking to the same /services page. No scroll depth, no narrative, no progressive disclosure. Someone lands and either clicks Book or bounces — no middle ground.</p>
+    </div>
+
+    <div class="issue">
+      <span class="tag tag-warning">Warning</span>
+      <h3>Every page has identical footer content</h3>
+      <p>Same 4 GIF thumbnails repeated on every page. Feels template-y and wastes screen real estate that could showcase different work.</p>
+    </div>
+
+    <div class="issue">
+      <span class="tag tag-minor">Minor</span>
+      <h3>Dead cart page, thin SEO, heavy GIFs on mobile</h3>
+      <p>Empty Squarespace commerce page is discoverable. Almost no indexable text for Google. GIF files are bandwidth-heavy on cellular.</p>
+    </div>
+  </section>
+
+  <!-- What's Working -->
+  <section>
+    <h2>What's Working (Keep These)</h2>
+
+    <div class="issue">
+      <span class="tag tag-minor">Keep</span>
+      <h3>Public pricing</h3>
+      <p>Bold, transparent, filters tire-kickers. Most competitors hide rates. This builds trust immediately and pre-qualifies leads. The budget dropdown on the contact form reinforces this.</p>
+    </div>
+
+    <div class="issue">
+      <span class="tag tag-minor">Keep</span>
+      <h3>Clear positioning</h3>
+      <p>"Filmmaker & Photographer / Commercial, Brand, Music+" — immediately communicates what you do and who you serve. Don't dilute this.</p>
+    </div>
+
+    <div class="issue">
+      <span class="tag tag-minor">Keep</span>
+      <h3>Three service verticals</h3>
+      <p>Production, Real Estate, Social — clean segmentation. Clients can self-select. The tiered social packages are well-structured.</p>
+    </div>
+  </section>
+
+  <!-- New Sitemap -->
+  <section>
+    <h2>Proposed Site Structure</h2>
+    <div class="sitemap">
+      <span class="page">/</span> <span class="desc">— Hero reel + portfolio highlights + testimonials + CTA</span><br>
+      <span class="page">/work</span> <span class="desc">— Portfolio grid, filterable (Commercial, Music, Real Estate, Social)</span><br>
+      <span class="page">/work/[project]</span> <span class="desc">— Individual project: video embed, BTS photos, client context</span><br>
+      <span class="page">/services</span> <span class="desc">— Three verticals with anchor links to rates</span><br>
+      <span class="page">/rates</span> <span class="desc">— All pricing on one page, clean and scannable</span><br>
+      <span class="page">/about</span> <span class="desc">— Bio, photo, gear, process, personality</span><br>
+      <span class="page">/contact</span> <span class="desc">— Form + Calendly embed for direct booking</span><br>
+      <span class="page">/gallery/[client]</span> <span class="desc">— Client delivery pages (like the Militarie Gun page)</span><br>
+    </div>
+  </section>
+
+  <!-- Design Direction -->
+  <section>
+    <h2>Design Direction</h2>
+    <div class="direction-grid">
+      <div class="direction-card">
+        <span class="icon">&#9724;</span>
+        <h3>Dark Theme</h3>
+        <p>Your work pops on black. Every top-tier filmmaker site goes dark — it's cinema, not corporate.</p>
+      </div>
+      <div class="direction-card">
+        <span class="icon">&#9654;</span>
+        <h3>Video-First Hero</h3>
+        <p>Full-bleed autoplay muted reel. Immediate impact. This is what you sell — lead with it.</p>
+      </div>
+      <div class="direction-card">
+        <span class="icon">&#9638;</span>
+        <h3>Grid Portfolio</h3>
+        <p>Hoverable thumbnails that play on hover. Click for project detail with full video + BTS photos.</p>
+      </div>
+      <div class="direction-card">
+        <span class="icon">&#9733;</span>
+        <h3>Social Proof Bar</h3>
+        <p>Client testimonials, logos if available, and an Instagram feed pulling from @mattmatheson.creative.</p>
+      </div>
+      <div class="direction-card">
+        <span class="icon">Aa</span>
+        <h3>Minimal Type</h3>
+        <p>Inter or similar. Huge whitespace. Let the work breathe. Swiss-grid inspired layouts.</p>
+      </div>
+      <div class="direction-card">
+        <span class="icon">&#8599;</span>
+        <h3>Sticky CTA</h3>
+        <p>Persistent "Book Today" button in nav. Never more than one click from conversion.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hosting -->
+  <section>
+    <h2>Hosting Comparison</h2>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Platform</th>
+          <th>Cost/mo</th>
+          <th>Pros</th>
+          <th>Cons</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight">
+          <td><strong>Vercel</strong> <span class="rec">Recommended</span></td>
+          <td>$0</td>
+          <td>Fastest CDN, git deploy, custom domain, SSL, edge network</td>
+          <td>Static/Jamstack (perfect for portfolio)</td>
+        </tr>
+        <tr class="highlight">
+          <td><strong>Netlify</strong> <span class="rec">Alt Pick</span></td>
+          <td>$0</td>
+          <td>Built-in forms, git deploy, similar to Vercel</td>
+          <td>Slightly slower edge</td>
+        </tr>
+        <tr>
+          <td>Cloudflare Pages</td>
+          <td>$0</td>
+          <td>Unlimited bandwidth, fastest DNS</td>
+          <td>Less tooling</td>
+        </tr>
+        <tr>
+          <td>GitHub Pages</td>
+          <td>$0</td>
+          <td>Already using it</td>
+          <td>No forms, limited features</td>
+        </tr>
+        <tr>
+          <td>DigitalOcean</td>
+          <td>$6</td>
+          <td>Full server, unlimited control</td>
+          <td>More to manage</td>
+        </tr>
+        <tr>
+          <td>Squarespace (current)</td>
+          <td>$16-27</td>
+          <td>Drag-and-drop editor</td>
+          <td>Generic, slow, expensive</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Timeline -->
+  <section>
+    <h2>This Week's Plan</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="day">Day 1 — Tue</div>
+        <h3>Gather inspiration + finalize design direction</h3>
+        <p>Pull 5-10 filmmaker sites you like. Lock in color, type, layout decisions.</p>
+      </div>
+      <div class="tl-item">
+        <div class="day">Day 2 — Wed</div>
+        <h3>Build homepage + hero reel</h3>
+        <p>Cut a 30-60s showreel. Build the homepage with hero video, portfolio highlights, testimonials, CTA.</p>
+      </div>
+      <div class="tl-item">
+        <div class="day">Day 3 — Thu</div>
+        <h3>Build portfolio + project pages</h3>
+        <p>Grid layout with filterable categories. Individual project pages with video embeds.</p>
+      </div>
+      <div class="tl-item">
+        <div class="day">Day 4 — Fri</div>
+        <h3>Services, rates, about, contact</h3>
+        <p>Migrate pricing content. Write about page. Set up contact form + booking.</p>
+      </div>
+      <div class="tl-item">
+        <div class="day">Day 5 — Sat</div>
+        <h3>Deploy + domain transfer</h3>
+        <p>Push to Vercel/Netlify. Point mattmatheson.com DNS. Test everything. Cancel Squarespace.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <h3>Ready to build this?</h3>
+    <p>Audit complete. Hosting is free. We can start tonight.</p>
+    <div class="actions">
+      <a href="https://drive.google.com/drive/folders/1rbXXEzIB4mEQyq2oDg8CGP8sZypyHPsz" target="_blank" class="btn btn-white">View Full Audit in Cortex</a>
+      <a href="https://www.mattmatheson.com" target="_blank" class="btn btn-ghost">Current Site</a>
+    </div>
+  </div>
+
+  <footer>
+    Built by Claude + Matt &mdash; March 2026
+  </footer>
+
+</div>
+</body>
+</html>
