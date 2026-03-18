@@ -4,665 +4,1146 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SoulCraft Coffee — Cookeville, TN</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  /* ============================================
+     SOULCRAFT COFFEE — QUIRKY CREATIVE EDITION
+     No straight lines. No boring. All soul.
+     ============================================ */
+
   :root {
-    --gold: #C4A265;
     --navy: #1B2438;
+    --gold: #C4A265;
+    --gold-light: #D4B87A;
     --cream: #F5F0E8;
-    --dark: #0D1117;
+    --espresso: #2C1810;
+    --robin-egg: #7EC8C8;
+    --warm-white: #FDF8F0;
+    --blush: #E8C4B8;
     --text: #2C2C2C;
-    --text-light: rgba(255,255,255,0.7);
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--dark);
-    color: white;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
+  @keyframes wobble {
+    0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+    25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+    50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; }
+    75% { border-radius: 60% 40% 60% 30% / 40% 50% 60% 50%; }
   }
 
-  /* Custom cursor */
-  .cursor {
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--gold);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.15s ease, opacity 0.15s ease;
-    mix-blend-mode: difference;
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-15px) rotate(1deg); }
+    50% { transform: translateY(-8px) rotate(-1deg); }
+    75% { transform: translateY(-20px) rotate(0.5deg); }
   }
 
-  .cursor.hover { transform: scale(2.5); opacity: 0.5; }
-
-  /* Preloader */
-  .preloader {
-    position: fixed;
-    inset: 0;
-    background: var(--navy);
-    z-index: 10000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 
-  .preloader.done { opacity: 0; visibility: hidden; pointer-events: none; }
-
-  .preloader .coffee-cup {
-    width: 60px;
-    height: 50px;
-    border: 3px solid var(--gold);
-    border-radius: 0 0 20px 20px;
-    position: relative;
-    animation: brewBounce 1s ease-in-out infinite;
-  }
-
-  .preloader .coffee-cup::after {
-    content: '';
-    position: absolute;
-    right: -18px;
-    top: 8px;
-    width: 12px;
-    height: 24px;
-    border: 3px solid var(--gold);
-    border-left: none;
-    border-radius: 0 10px 10px 0;
-  }
-
-  .preloader .steam {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 10px;
-  }
-
-  .preloader .steam span {
-    width: 3px;
-    height: 20px;
-    background: var(--gold);
-    border-radius: 2px;
-    animation: steam 1.2s ease-in-out infinite;
-    opacity: 0.6;
-  }
-
-  .preloader .steam span:nth-child(2) { animation-delay: 0.2s; height: 25px; }
-  .preloader .steam span:nth-child(3) { animation-delay: 0.4s; }
-
-  .preloader p {
-    margin-top: 1.5rem;
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    opacity: 0.8;
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-50% - 0.5rem)); }
   }
 
   @keyframes steam {
-    0%, 100% { transform: translateY(0) scaleY(1); opacity: 0.3; }
-    50% { transform: translateY(-10px) scaleY(1.3); opacity: 0.8; }
+    0% { transform: translateY(0) scaleX(1); opacity: 0; }
+    15% { opacity: 1; }
+    50% { transform: translateY(-40px) scaleX(1.4); opacity: 0.6; }
+    100% { transform: translateY(-80px) scaleX(2); opacity: 0; }
   }
 
-  @keyframes brewBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
+  @keyframes drip {
+    0% { transform: translateY(-100%); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(100vh); opacity: 0; }
   }
 
-  /* Nav */
-  nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    padding: 1.5rem 3rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background 0.4s ease, padding 0.4s ease;
+  @keyframes shake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-3deg); }
+    75% { transform: rotate(3deg); }
   }
 
-  nav.scrolled {
-    background: rgba(13,17,23,0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    padding: 1rem 3rem;
+  @keyframes grain {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-5%, -10%); }
+    30% { transform: translate(3%, -15%); }
+    50% { transform: translate(12%, 9%); }
+    70% { transform: translate(9%, 4%); }
+    90% { transform: translate(-1%, 7%); }
   }
 
-  .nav-logo {
-    height: 40px;
-    filter: brightness(0) invert(1);
-    transition: height 0.4s ease;
+  @keyframes blob-morph {
+    0%, 100% { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; }
+    25% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; }
+    50% { border-radius: 50% 50% 30% 70% / 55% 45% 55% 45%; }
+    75% { border-radius: 30% 70% 42% 58% / 70% 30% 45% 55%; }
   }
 
-  nav.scrolled .nav-logo { height: 32px; }
-
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
+  @keyframes slide-up {
+    from { transform: translateY(60px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
   }
 
-  .nav-links a {
-    color: var(--text-light);
-    text-decoration: none;
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: color 0.3s;
-    position: relative;
+  @keyframes ticker-reverse {
+    from { transform: translateX(calc(-50% - 0.5rem)); }
+    to { transform: translateX(0); }
   }
 
-  .nav-links a::after {
+  @keyframes pour {
+    0% { height: 0; opacity: 0; }
+    20% { opacity: 1; }
+    100% { height: 200px; opacity: 0.3; }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--warm-white);
+    color: var(--text);
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ctext y='24' font-size='24'%3E☕%3C/text%3E%3C/svg%3E") 16 16, auto;
+  }
+
+  /* ---- FILM GRAIN OVERLAY ---- */
+  body::before {
     content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: var(--gold);
-    transition: width 0.3s ease;
+    position: fixed;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    animation: grain 8s steps(10) infinite;
+    pointer-events: none;
+    z-index: 10000;
   }
 
-  .nav-links a:hover { color: var(--gold); }
-  .nav-links a:hover::after { width: 100%; }
-
-  .nav-cta {
-    padding: 0.5rem 1.2rem;
-    background: var(--gold);
-    color: var(--navy) !important;
-    border-radius: 4px;
-    font-weight: 600 !important;
+  .handwritten {
+    font-family: 'Caveat', cursive;
   }
 
-  .nav-cta::after { display: none !important; }
-  .nav-cta:hover { background: #D4B275 !important; color: var(--navy) !important; }
+  .serif {
+    font-family: 'Playfair Display', serif;
+  }
 
-  /* Hero */
+  /* ---- COFFEE DRIP DECORATIONS ---- */
+  .coffee-drip {
+    position: fixed;
+    width: 3px;
+    background: linear-gradient(to bottom, transparent, rgba(44, 24, 16, 0.15), transparent);
+    z-index: 0;
+    animation: drip 8s linear infinite;
+    pointer-events: none;
+  }
+
+  /* ==============================
+     HERO SECTION
+     ============================== */
   .hero {
-    height: 100vh;
-    position: relative;
+    min-height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
+    padding: 2rem;
+    background: var(--navy);
     overflow: hidden;
   }
 
-  .hero-bg {
+  .hero::before {
+    content: '';
     position: absolute;
     inset: 0;
-    background: url('https://images.squarespace-cdn.com/content/v1/623cbb433498e352e1cf82d6/0a85d81c-cd6c-4e83-b7bc-49e6f0f1ae84/Soul_Craft_Coffee_82.jpg') center/cover no-repeat;
-    transform: scale(1.1);
-    transition: transform 8s ease-out;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(196, 162, 101, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(126, 200, 200, 0.1) 0%, transparent 40%),
+      radial-gradient(ellipse at 50% 80%, rgba(232, 196, 184, 0.1) 0%, transparent 40%);
+    z-index: 1;
   }
 
-  .hero-bg.loaded { transform: scale(1); }
-
-  .hero-overlay {
+  /* Floating coffee beans */
+  .bean {
     position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(13,17,23,0.4) 0%, rgba(13,17,23,0.7) 50%, rgba(13,17,23,0.95) 100%);
+    font-size: 2rem;
+    opacity: 0.15;
+    animation: float 6s ease-in-out infinite;
+    z-index: 1;
+    pointer-events: none;
   }
+  .bean:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; font-size: 1.5rem; }
+  .bean:nth-child(2) { top: 20%; right: 10%; animation-delay: 1.5s; font-size: 2.5rem; }
+  .bean:nth-child(3) { bottom: 30%; left: 15%; animation-delay: 3s; }
+  .bean:nth-child(4) { bottom: 15%; right: 20%; animation-delay: 0.8s; font-size: 1.8rem; }
+  .bean:nth-child(5) { top: 50%; left: 50%; animation-delay: 2.2s; font-size: 1.2rem; }
+  .bean:nth-child(6) { top: 70%; right: 5%; animation-delay: 4s; font-size: 2rem; }
 
   .hero-content {
     position: relative;
     z-index: 2;
     text-align: center;
-    max-width: 800px;
-    padding: 0 2rem;
+    max-width: 900px;
   }
 
-  .hero-eyebrow {
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUp 0.8s ease forwards 0.5s;
+  .hero-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    padding: 0.4rem 1.5rem;
+    border-radius: 50px;
+    margin-bottom: 2rem;
+    transform: rotate(-3deg);
+    animation: shake 4s ease-in-out infinite;
   }
 
   .hero h1 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 8vw, 7rem);
-    font-weight: 900;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    color: var(--cream);
     line-height: 0.95;
+    margin-bottom: 0.5rem;
     letter-spacing: -0.02em;
-    opacity: 0;
-    transform: translateY(40px);
-    animation: fadeUp 1s ease forwards 0.7s;
   }
 
-  .hero h1 em {
-    font-style: italic;
+  .hero h1 .soul {
+    display: block;
     color: var(--gold);
+    font-style: italic;
+    transform: rotate(-2deg);
+    display: inline-block;
+  }
+
+  .hero h1 .craft {
     font-weight: 400;
+    font-style: italic;
+    opacity: 0.85;
   }
 
   .hero-sub {
-    font-size: 1.05rem;
-    font-weight: 300;
-    color: var(--text-light);
-    margin-top: 1.5rem;
-    line-height: 1.6;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUp 0.8s ease forwards 0.9s;
+    font-family: 'Caveat', cursive;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    color: var(--robin-egg);
+    margin: 1.5rem 0;
+    transform: rotate(1deg);
   }
 
-  .hero-buttons {
-    margin-top: 2.5rem;
-    display: flex;
+  .hero-location {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 1rem;
+  }
+
+  .hero-cta {
+    display: inline-flex;
     gap: 1rem;
-    justify-content: center;
+    margin-top: 2.5rem;
     flex-wrap: wrap;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUp 0.8s ease forwards 1.1s;
+    justify-content: center;
   }
 
   .btn {
-    padding: 0.85rem 2rem;
-    border-radius: 4px;
-    font-family: inherit;
-    font-size: 0.82rem;
+    display: inline-block;
+    padding: 1rem 2.2rem;
+    font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    font-size: 1rem;
     text-decoration: none;
+    border: none;
     cursor: pointer;
     transition: all 0.3s ease;
-    border: none;
+    position: relative;
   }
 
-  .btn-gold { background: var(--gold); color: var(--navy); }
-  .btn-gold:hover { background: #D4B275; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(196,162,101,0.3); }
-
-  .btn-outline { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); }
-  .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
-
-  .scroll-indicator {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 1.5s;
+  .btn-primary {
+    background: var(--gold);
+    color: var(--navy);
+    border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+    animation: wobble 8s ease-in-out infinite;
   }
 
-  .scroll-indicator .mouse {
-    width: 24px;
-    height: 38px;
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: scale(1.08) rotate(-2deg);
+    box-shadow: 0 8px 30px rgba(196, 162, 101, 0.4);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--cream);
     border: 2px solid rgba(255,255,255,0.3);
-    border-radius: 12px;
-    position: relative;
-    margin: 0 auto 8px;
+    border-radius: 40% 60% 50% 50% / 50% 40% 60% 50%;
+    animation: wobble 8s ease-in-out infinite;
+    animation-delay: -4s;
   }
 
-  .scroll-indicator .mouse::after {
-    content: '';
-    width: 3px;
-    height: 8px;
-    background: var(--gold);
-    border-radius: 2px;
+  .btn-outline:hover {
+    border-color: var(--robin-egg);
+    color: var(--robin-egg);
+    transform: scale(1.08) rotate(2deg);
+  }
+
+  /* Wobble blob behind hero */
+  .hero-blob {
     position: absolute;
-    top: 6px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(196,162,101,0.08) 0%, transparent 70%);
+    animation: blob-morph 12s ease-in-out infinite;
+    z-index: 0;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    animation: scrollDot 1.5s ease-in-out infinite;
+    transform: translate(-50%, -50%);
   }
 
-  .scroll-indicator span {
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.4);
+  /* Steam from cup decoration */
+  .steam-container {
+    position: absolute;
+    bottom: 5%;
+    right: 10%;
+    z-index: 2;
+    font-size: 4rem;
+    opacity: 0.3;
   }
 
-  @keyframes scrollDot {
-    0% { opacity: 1; transform: translateX(-50%) translateY(0); }
-    100% { opacity: 0; transform: translateX(-50%) translateY(12px); }
+  .steam-line {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    width: 2px;
+    height: 40px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    animation: steam 3s ease-out infinite;
   }
 
-  /* Marquee */
+  .steam-line:nth-child(1) { left: 40%; animation-delay: 0s; }
+  .steam-line:nth-child(2) { left: 50%; animation-delay: 0.5s; }
+  .steam-line:nth-child(3) { left: 60%; animation-delay: 1s; }
+
+  /* ==============================
+     MARQUEE TICKER
+     ============================== */
   .marquee-section {
-    padding: 1.5rem 0;
     background: var(--gold);
+    padding: 0.8rem 0;
     overflow: hidden;
+    transform: rotate(-1deg) scale(1.02);
+    margin: -1rem 0;
     position: relative;
+    z-index: 5;
   }
 
   .marquee-track {
     display: flex;
-    gap: 3rem;
-    animation: marquee 20s linear infinite;
+    gap: 1rem;
+    animation: marquee 25s linear infinite;
+    width: max-content;
+  }
+
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  .marquee-item {
     white-space: nowrap;
-  }
-
-  .marquee-track span {
     font-family: 'Playfair Display', serif;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: var(--navy);
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
 
-  .marquee-track .dot {
-    color: var(--navy);
-    opacity: 0.4;
+  .marquee-item .sep {
+    font-size: 1.5rem;
+    opacity: 0.5;
   }
 
-  @keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  /* Sections */
-  section {
-    padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem);
-  }
-
-  .section-eyebrow {
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1rem;
-  }
-
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.02em;
-  }
-
-  /* Story Section */
+  /* ==============================
+     STORY SECTION
+     ============================== */
   .story {
-    background: var(--cream);
-    color: var(--text);
+    padding: 8rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
     position: relative;
-    overflow: hidden;
   }
 
   .story-grid {
-    max-width: 1200px;
-    margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
   }
 
-  .story-text .section-title { color: var(--navy); }
-
-  .story-text p {
-    font-size: 0.92rem;
-    line-height: 1.8;
-    color: #555;
-    margin-bottom: 1rem;
-  }
-
-  .story-image {
+  .story-text {
     position: relative;
-    border-radius: 8px;
-    overflow: hidden;
-    aspect-ratio: 4/5;
   }
 
-  .story-image img {
+  .section-label {
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    color: var(--gold);
+    transform: rotate(-3deg);
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
+  .story h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    color: var(--espresso);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .story p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #5a5a5a;
+    margin-bottom: 1.2rem;
+  }
+
+  .story-visual {
+    position: relative;
+  }
+
+  .story-blob {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s ease;
+    aspect-ratio: 1;
+    background: var(--navy);
+    animation: blob-morph 10s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
   }
 
-  .story-image:hover img { transform: scale(1.05); }
-
-  .story-image .frame {
-    position: absolute;
-    inset: 12px;
-    border: 1px solid var(--gold);
-    border-radius: 4px;
-    pointer-events: none;
-    opacity: 0.6;
+  .story-blob-inner {
+    text-align: center;
+    padding: 3rem;
+    color: var(--cream);
+    z-index: 1;
   }
 
-  /* Values */
+  .story-blob-inner .year {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .story-blob-inner .caption {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+    color: var(--robin-egg);
+  }
+
+  /* Timeline dots */
+  .timeline {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 4rem;
+    flex-wrap: wrap;
+  }
+
+  .timeline-item {
+    text-align: center;
+    position: relative;
+  }
+
+  .timeline-dot {
+    width: 60px;
+    height: 60px;
+    background: var(--gold);
+    animation: wobble 6s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.8rem;
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+  }
+
+  .timeline-item:nth-child(2) .timeline-dot { animation-delay: -2s; background: var(--robin-egg); }
+  .timeline-item:nth-child(3) .timeline-dot { animation-delay: -4s; background: var(--blush); }
+  .timeline-item:nth-child(4) .timeline-dot { animation-delay: -1s; background: var(--gold); }
+
+  .timeline-item:hover .timeline-dot {
+    transform: scale(1.2) rotate(-5deg);
+  }
+
+  .timeline-label {
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    color: var(--espresso);
+    max-width: 120px;
+  }
+
+  /* ==============================
+     VALUES SECTION (sticker style)
+     ============================== */
   .values {
     background: var(--navy);
+    padding: 6rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transform: rotate(0.5deg);
+    margin: 2rem 0;
   }
 
-  .values-grid {
-    max-width: 1200px;
-    margin: 2rem auto 0;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+  .values::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(196,162,101,0.1) 0%, transparent 60%);
   }
 
-  .value-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    padding: 2rem 1.5rem;
+  .values h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--cream);
     text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .sticker-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .sticker {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: wobble 8s ease-in-out infinite;
     transition: all 0.4s ease;
+    cursor: default;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .sticker:nth-child(1) {
+    background: var(--gold);
+    color: var(--navy);
+    transform: rotate(-5deg);
+    animation-delay: 0s;
+  }
+
+  .sticker:nth-child(2) {
+    background: var(--robin-egg);
+    color: var(--navy);
+    transform: rotate(3deg);
+    animation-delay: -2s;
+  }
+
+  .sticker:nth-child(3) {
+    background: var(--blush);
+    color: var(--espresso);
+    transform: rotate(-2deg);
+    animation-delay: -4s;
+  }
+
+  .sticker:nth-child(4) {
+    background: var(--cream);
+    color: var(--navy);
+    transform: rotate(4deg);
+    animation-delay: -6s;
+  }
+
+  .sticker:hover {
+    transform: scale(1.15) rotate(0deg) !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    z-index: 10;
+  }
+
+  .sticker-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .sticker-text {
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  /* ==============================
+     MENU SECTION
+     ============================== */
+  .menu {
+    padding: 6rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .menu-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .menu h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    color: var(--espresso);
+  }
+
+  .menu-subtitle {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    color: var(--gold);
+    transform: rotate(1deg);
+    display: inline-block;
+    margin-top: 0.5rem;
+  }
+
+  /* Drink cards - wonky cards */
+  .drink-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .drink-card {
+    background: white;
+    padding: 2rem;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid transparent;
+    animation: wobble 12s ease-in-out infinite;
+  }
+
+  .drink-card:nth-child(odd) { animation-delay: -3s; }
+  .drink-card:nth-child(3n) { animation-delay: -7s; }
+
+  .drink-card:hover {
+    transform: translateY(-8px) rotate(-1deg);
+    border-color: var(--gold);
+    box-shadow: 8px 8px 0 var(--gold);
+  }
+
+  .drink-card .emoji {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .drink-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--espresso);
+    margin-bottom: 0.3rem;
+  }
+
+  .drink-card .desc {
+    font-size: 0.9rem;
+    color: #888;
+    line-height: 1.5;
+    margin-bottom: 0.8rem;
+  }
+
+  .drink-card .price {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .drink-tag {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--robin-egg);
+    color: var(--navy);
+    font-family: 'Caveat', cursive;
+    font-size: 0.85rem;
+    padding: 0.2rem 0.8rem;
+    transform: rotate(5deg);
+    border-radius: 50px;
+    font-weight: 700;
+  }
+
+  /* ==============================
+     EASY TIGER / SHOP SECTION
+     ============================== */
+  .shop {
+    background: var(--espresso);
+    padding: 6rem 2rem;
     position: relative;
     overflow: hidden;
   }
 
-  .value-card::before {
+  .shop::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 80% 20%, rgba(196,162,101,0.12) 0%, transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(126,200,200,0.08) 0%, transparent 50%);
+  }
+
+  .shop-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .shop-header .section-label {
+    color: var(--robin-egg);
+  }
+
+  .shop h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+
+  .shop-tagline {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    color: var(--gold);
+    transform: rotate(-1deg);
+    display: inline-block;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .product-card {
+    background: var(--warm-white);
+    border-radius: 0;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    animation: wobble 15s ease-in-out infinite;
+  }
+
+  .product-card:nth-child(2) { animation-delay: -5s; }
+  .product-card:nth-child(3) { animation-delay: -10s; }
+
+  .product-card:hover {
+    transform: scale(1.03) rotate(-1deg);
+    box-shadow: 12px 12px 0 var(--gold);
+  }
+
+  .product-img {
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-img img {
+    max-height: 240px;
+    width: auto;
+    object-fit: contain;
+    transition: all 0.5s ease;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
+  }
+
+  .product-card:hover .product-img img {
+    transform: scale(1.1) rotate(3deg);
+  }
+
+  .product-img .bg-blob {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: var(--gold);
+    opacity: 0.1;
+    animation: blob-morph 8s ease-in-out infinite;
+    z-index: 0;
+  }
+
+  .product-info {
+    padding: 1.5rem 2rem 2rem;
+  }
+
+  .product-origin {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--robin-egg);
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  .product-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--espresso);
+    margin-bottom: 0.5rem;
+  }
+
+  .product-notes {
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .product-desc {
+    font-size: 0.9rem;
+    color: #777;
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+  }
+
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .product-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--espresso);
+  }
+
+  .btn-shop {
+    background: var(--espresso);
+    color: var(--cream);
+    padding: 0.8rem 1.5rem;
+    border: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: wobble 10s ease-in-out infinite;
+    text-decoration: none;
+  }
+
+  .btn-shop:hover {
+    background: var(--gold);
+    color: var(--navy);
+    transform: scale(1.05) rotate(-2deg);
+    box-shadow: 4px 4px 0 var(--espresso);
+  }
+
+  .free-shipping {
+    text-align: center;
+    margin-top: 3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .free-shipping span {
+    background: var(--gold);
+    color: var(--navy);
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    font-weight: 700;
+    padding: 0.5rem 2rem;
+    display: inline-block;
+    transform: rotate(-2deg);
+    animation: shake 3s ease-in-out infinite;
+    border-radius: 60% 40% 50% 50% / 60% 30% 70% 40%;
+  }
+
+  /* ==============================
+     LOCATIONS
+     ============================== */
+  .locations {
+    padding: 6rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .locations-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .locations h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    color: var(--espresso);
+  }
+
+  .location-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+  }
+
+  .location-card {
+    background: white;
+    padding: 2.5rem;
+    position: relative;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    animation: wobble 14s ease-in-out infinite;
+  }
+
+  .location-card:nth-child(2) { animation-delay: -7s; }
+
+  .location-card:hover {
+    transform: translateY(-5px) rotate(-0.5deg);
+    box-shadow: 8px 8px 0 var(--gold);
+  }
+
+  .location-card::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--gold);
-    transform: scaleX(0);
-    transition: transform 0.4s ease;
-  }
-
-  .value-card:hover {
-    background: rgba(255,255,255,0.08);
-    transform: translateY(-4px);
-  }
-
-  .value-card:hover::before { transform: scaleX(1); }
-
-  .value-card .value-icon {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    display: block;
-  }
-
-  .value-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
-    color: var(--gold);
-  }
-
-  .value-card p {
-    font-size: 0.78rem;
-    line-height: 1.6;
-    color: var(--text-light);
-  }
-
-  /* Gallery */
-  .gallery-section {
-    background: var(--dark);
-    padding-bottom: 2rem;
-  }
-
-  .gallery-section .section-eyebrow,
-  .gallery-section .section-title {
-    text-align: center;
-  }
-
-  .photo-grid {
-    max-width: 1200px;
-    margin: 2rem auto 0;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 280px;
-    gap: 6px;
-  }
-
-  .photo-grid .photo {
-    overflow: hidden;
-    border-radius: 4px;
-    position: relative;
-    cursor: pointer;
-  }
-
-  .photo-grid .photo:nth-child(1) { grid-row: span 2; }
-  .photo-grid .photo:nth-child(4) { grid-column: span 2; }
-
-  .photo-grid .photo img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s ease, filter 0.3s ease;
-  }
-
-  .photo-grid .photo:hover img {
-    transform: scale(1.08);
-    filter: brightness(1.1);
-  }
-
-  .photo-grid .photo .photo-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(transparent 60%, rgba(0,0,0,0.6));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    display: flex;
-    align-items: flex-end;
-    padding: 1rem;
-  }
-
-  .photo-grid .photo:hover .photo-overlay { opacity: 1; }
-
-  .photo-overlay span {
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-  }
-
-  /* CTA */
-  .cta-section {
+    height: 4px;
     background: var(--gold);
+    border-radius: 0 0 50% 50%;
+  }
+
+  .location-card:nth-child(2)::after {
+    background: var(--robin-egg);
+  }
+
+  .location-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .location-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--espresso);
+    margin-bottom: 0.5rem;
+  }
+
+  .location-card .addr {
+    font-size: 0.95rem;
+    color: #888;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .location-detail {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--gold);
+    font-style: italic;
+    margin-bottom: 0.8rem;
+  }
+
+  .hours-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.3rem 1rem;
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  .hours-grid .day {
+    font-weight: 600;
+    color: var(--espresso);
+  }
+
+  /* ==============================
+     REVERSE MARQUEE
+     ============================== */
+  .marquee-section-2 {
+    background: var(--robin-egg);
+    padding: 0.8rem 0;
+    overflow: hidden;
+    transform: rotate(1deg) scale(1.02);
+    margin: -1rem 0;
+    position: relative;
+    z-index: 5;
+  }
+
+  .marquee-section-2 .marquee-track {
+    animation: ticker-reverse 20s linear infinite;
+  }
+
+  .marquee-section-2 .marquee-item {
+    color: var(--navy);
+  }
+
+  /* ==============================
+     SOCIAL / CONNECT
+     ============================== */
+  .connect {
+    background: var(--navy);
+    padding: 6rem 2rem;
     text-align: center;
     position: relative;
     overflow: hidden;
   }
 
-  .cta-section::before {
+  .connect::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231B2438' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background: radial-gradient(ellipse at 50% 50%, rgba(196,162,101,0.08) 0%, transparent 60%);
   }
 
-  .cta-content {
+  .connect h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--cream);
+    margin-bottom: 1rem;
     position: relative;
     z-index: 1;
-    max-width: 600px;
-    margin: 0 auto;
   }
 
-  .cta-section .section-eyebrow { color: var(--navy); opacity: 0.6; }
-
-  .cta-section .section-title {
-    color: var(--navy);
-    margin-bottom: 1rem;
-  }
-
-  .cta-section p {
-    color: var(--navy);
-    opacity: 0.7;
-    font-size: 0.92rem;
-    margin-bottom: 2rem;
-    line-height: 1.7;
-  }
-
-  .cta-section .btn-navy {
-    background: var(--navy);
+  .connect-sub {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
     color: var(--gold);
-    padding: 1rem 2.5rem;
-    font-size: 0.85rem;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 1;
+    transform: rotate(-1deg);
+    display: inline-block;
   }
 
-  .cta-section .btn-navy:hover {
-    background: #253352;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(27,36,56,0.3);
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 3rem;
   }
 
-  /* Footer */
-  .site-footer {
-    background: var(--navy);
-    padding: 3rem clamp(1.5rem, 5vw, 4rem);
+  .social-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 1.8rem;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: wobble 10s ease-in-out infinite;
+  }
+
+  .social-link:nth-child(1) { background: var(--gold); color: var(--navy); animation-delay: 0s; }
+  .social-link:nth-child(2) { background: var(--robin-egg); color: var(--navy); animation-delay: -2.5s; }
+  .social-link:nth-child(3) { background: var(--blush); color: var(--espresso); animation-delay: -5s; }
+  .social-link:nth-child(4) { background: var(--cream); color: var(--navy); animation-delay: -7.5s; }
+
+  .social-link:hover {
+    transform: scale(1.1) rotate(-3deg) !important;
+    box-shadow: 6px 6px 0 rgba(255,255,255,0.2);
+  }
+
+  .social-link .social-emoji {
+    font-size: 1.3rem;
+  }
+
+  .connect-info {
+    position: relative;
+    z-index: 1;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  .connect-info a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .connect-info a:hover {
+    text-decoration: underline;
+  }
+
+  /* ==============================
+     FOOTER
+     ============================== */
+  footer {
+    background: var(--espresso);
+    padding: 3rem 2rem;
     text-align: center;
+    position: relative;
   }
 
   .footer-logo {
-    height: 36px;
-    filter: brightness(0) invert(1);
-    opacity: 0.6;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-tagline {
+    font-family: 'Caveat', cursive;
+    font-size: 1.2rem;
+    color: var(--robin-egg);
     margin-bottom: 1.5rem;
   }
 
   .footer-links {
     display: flex;
-    gap: 2rem;
     justify-content: center;
-    margin-bottom: 1.5rem;
+    gap: 2rem;
     flex-wrap: wrap;
+    margin-bottom: 1.5rem;
   }
 
   .footer-links a {
-    color: rgba(255,255,255,0.4);
+    color: rgba(255,255,255,0.5);
     text-decoration: none;
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
+    font-size: 0.85rem;
     transition: color 0.3s;
   }
 
-  .footer-links a:hover { color: var(--gold); }
-
-  .footer-bottom {
-    font-size: 0.65rem;
-    color: rgba(255,255,255,0.25);
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(255,255,255,0.06);
+  .footer-links a:hover {
+    color: var(--gold);
   }
 
-  .footer-bottom a { color: rgba(255,255,255,0.35); text-decoration: none; }
+  .footer-copy {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.25);
+  }
 
-  /* Reveal animations */
+  /* ==============================
+     SCROLL ANIMATIONS
+     ============================== */
   .reveal {
     opacity: 0;
     transform: translateY(40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
   .reveal.visible {
@@ -670,313 +1151,546 @@
     transform: translateY(0);
   }
 
-  @keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-60px) rotate(-3deg);
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
-  /* Counter animation */
-  .counter-section {
-    background: var(--dark);
-    padding: 4rem 2rem;
+  .reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0) rotate(0deg);
   }
 
-  .counter-grid {
-    max-width: 900px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-    text-align: center;
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(60px) rotate(3deg);
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
-  .counter-item .number {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 700;
-    color: var(--gold);
-    margin-bottom: 0.25rem;
+  .reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0) rotate(0deg);
   }
 
-  .counter-item .label {
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-light);
-  }
-
-  /* Responsive */
+  /* ==============================
+     RESPONSIVE
+     ============================== */
   @media (max-width: 768px) {
-    .cursor { display: none; }
-    nav { padding: 1rem 1.5rem; }
-    nav.scrolled { padding: 0.75rem 1.5rem; }
-    .nav-links { display: none; }
-    .story-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .values-grid { grid-template-columns: repeat(2, 1fr); }
-    .photo-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 200px; }
-    .photo-grid .photo:nth-child(1) { grid-row: span 1; }
-    .photo-grid .photo:nth-child(4) { grid-column: span 1; }
-    .counter-grid { grid-template-columns: repeat(2, 1fr); }
+    .story-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .story-visual { order: -1; }
+
+    .sticker {
+      width: 120px;
+      height: 120px;
+    }
+
+    .sticker-icon { font-size: 2rem; }
+    .sticker-text { font-size: 1.1rem; }
+
+    .drink-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .product-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .location-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 12vw, 5rem);
+    }
+
+    .social-links {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .social-link {
+      width: 80%;
+      justify-content: center;
+    }
+
+    .timeline {
+      gap: 1.5rem;
+    }
+  }
+
+  /* ---- Scrollbar styling ---- */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--warm-white); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 50px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--espresso); }
+
+  /* ---- Selection styling ---- */
+  ::selection {
+    background: var(--gold);
+    color: var(--navy);
   }
 </style>
 </head>
 <body>
 
-<!-- Custom Cursor -->
-<div class="cursor" id="cursor"></div>
+<!-- Coffee drip decorations -->
+<div class="coffee-drip" style="left: 5%; height: 100px; animation-delay: 0s;"></div>
+<div class="coffee-drip" style="left: 25%; height: 60px; animation-delay: 2s;"></div>
+<div class="coffee-drip" style="right: 15%; height: 80px; animation-delay: 4s;"></div>
+<div class="coffee-drip" style="right: 35%; height: 50px; animation-delay: 6s;"></div>
 
-<!-- Preloader -->
-<div class="preloader" id="preloader">
-  <div class="steam"><span></span><span></span><span></span></div>
-  <div class="coffee-cup"></div>
-  <p>Brewing...</p>
-</div>
-
-<!-- Nav -->
-<nav id="nav">
-  <img class="nav-logo" src="https://images.squarespace-cdn.com/content/v1/623cbb433498e352e1cf82d6/af4a8cbf-3b3d-4d30-9577-fce3077341ad/Black+landscape_1588114422.png?format=500w" alt="SoulCraft">
-  <ul class="nav-links">
-    <li><a href="#story">Our Story</a></li>
-    <li><a href="#values">Values</a></li>
-    <li><a href="#gallery">Gallery</a></li>
-    <li><a href="#visit" class="nav-cta">Visit Us</a></li>
-  </ul>
-</nav>
-
-<!-- Hero -->
+<!-- ===================== HERO ===================== -->
 <section class="hero">
-  <div class="hero-bg" id="heroBg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <p class="hero-eyebrow">Cookeville, Tennessee &mdash; Est. 2019</p>
-    <h1>Love Coffee.<br><em>Love People.</em></h1>
-    <p class="hero-sub">Handcrafted drinks, locally roasted beans, and a community-first spirit — all inside a beautifully restored 1920s building on Cookeville's historic westside.</p>
-    <div class="hero-buttons">
-      <a href="https://soulcraftcoffee.square.site/" target="_blank" class="btn btn-gold">Order Online</a>
-      <a href="#story" class="btn btn-outline">Our Story</a>
-    </div>
+  <div class="hero-blob"></div>
+
+  <span class="bean">☕</span>
+  <span class="bean">🫘</span>
+  <span class="bean">☕</span>
+  <span class="bean">🫘</span>
+  <span class="bean">☕</span>
+  <span class="bean">🫘</span>
+
+  <div class="steam-container">
+    ☕
+    <div class="steam-line"></div>
+    <div class="steam-line"></div>
+    <div class="steam-line"></div>
   </div>
-  <div class="scroll-indicator">
-    <div class="mouse"></div>
-    <span>Scroll</span>
+
+  <div class="hero-content">
+    <div class="hero-badge">est. 2017 — Cookeville, TN</div>
+    <h1>
+      <span class="soul">Soul</span><span class="craft">Craft</span>
+    </h1>
+    <p class="hero-sub">Love Coffee, Love People ✦</p>
+    <p class="hero-location">Specialty Coffee · House-Made Pastries · Breakfast & Lunch</p>
+
+    <div class="hero-cta">
+      <a href="#menu" class="btn btn-primary">See the Menu</a>
+      <a href="#shop" class="btn btn-outline">Shop Coffee Beans</a>
+    </div>
   </div>
 </section>
 
-<!-- Marquee -->
+<!-- ===================== MARQUEE ===================== -->
 <div class="marquee-section">
   <div class="marquee-track">
-    <span>Locally Roasted</span><span class="dot">&bull;</span>
-    <span>Easy Tiger Coffee</span><span class="dot">&bull;</span>
-    <span>Handcrafted Daily</span><span class="dot">&bull;</span>
-    <span>Historic Westside</span><span class="dot">&bull;</span>
-    <span>Fresh Baked Poptarts</span><span class="dot">&bull;</span>
-    <span>Art Deco Vibes</span><span class="dot">&bull;</span>
-    <span>Everyone Welcome</span><span class="dot">&bull;</span>
-    <span>Locally Roasted</span><span class="dot">&bull;</span>
-    <span>Easy Tiger Coffee</span><span class="dot">&bull;</span>
-    <span>Handcrafted Daily</span><span class="dot">&bull;</span>
-    <span>Historic Westside</span><span class="dot">&bull;</span>
-    <span>Fresh Baked Poptarts</span><span class="dot">&bull;</span>
-    <span>Art Deco Vibes</span><span class="dot">&bull;</span>
-    <span>Everyone Welcome</span><span class="dot">&bull;</span>
+    <span class="marquee-item">Joy <span class="sep">✦</span></span>
+    <span class="marquee-item">Kindness <span class="sep">✦</span></span>
+    <span class="marquee-item">Love <span class="sep">✦</span></span>
+    <span class="marquee-item">Create <span class="sep">✦</span></span>
+    <span class="marquee-item">Coffee Perfection <span class="sep">✦</span></span>
+    <span class="marquee-item">Dare to Be Great <span class="sep">✦</span></span>
+    <span class="marquee-item">Not Just Coffee <span class="sep">✦</span></span>
+    <span class="marquee-item">Love Coffee Love People <span class="sep">✦</span></span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-item">Joy <span class="sep">✦</span></span>
+    <span class="marquee-item">Kindness <span class="sep">✦</span></span>
+    <span class="marquee-item">Love <span class="sep">✦</span></span>
+    <span class="marquee-item">Create <span class="sep">✦</span></span>
+    <span class="marquee-item">Coffee Perfection <span class="sep">✦</span></span>
+    <span class="marquee-item">Dare to Be Great <span class="sep">✦</span></span>
+    <span class="marquee-item">Not Just Coffee <span class="sep">✦</span></span>
+    <span class="marquee-item">Love Coffee Love People <span class="sep">✦</span></span>
   </div>
 </div>
 
-<!-- Counters -->
-<div class="counter-section">
-  <div class="counter-grid reveal">
-    <div class="counter-item">
-      <div class="number" data-target="2019">0</div>
-      <div class="label">Established</div>
-    </div>
-    <div class="counter-item">
-      <div class="number" data-target="100" data-suffix="+">0</div>
-      <div class="label">Year Old Building</div>
-    </div>
-    <div class="counter-item">
-      <div class="number" data-target="1000" data-suffix="s">0</div>
-      <div class="label">Drinks Served</div>
-    </div>
-    <div class="counter-item">
-      <div class="number" data-target="1">0</div>
-      <div class="label">Community</div>
-    </div>
-  </div>
-</div>
-
-<!-- Story -->
+<!-- ===================== STORY ===================== -->
 <section class="story" id="story">
   <div class="story-grid">
-    <div class="story-text reveal">
-      <p class="section-eyebrow">Our Story</p>
-      <h2 class="section-title">From a vintage camper<br>to the westside.</h2>
-      <p>SoulCraft is the passion project of Tyler and Anna Dunn — a young married couple who turned a love for coffee into a dream. Tyler used to buy vintage espresso machines off eBay in high school, rebuilding them and learning the craft from the inside out.</p>
-      <p>In 2017, they bought a vintage camper, converted it into a coffee trailer with a robin's egg blue finish, and started traveling around Cookeville on evenings and weekends. The little blue trailer quickly became the talk of the town.</p>
-      <p>The demand grew until they took a leap of faith — their entire life savings — to open a brick and mortar inside a 1920s building on the historic westside. Original hardwood floors, exposed brick, navy and gold art deco. In the summer of 2019, SoulCraft Coffee was born.</p>
+    <div class="story-text reveal-left">
+      <span class="section-label">The Origin Story</span>
+      <h2>From a Vintage Camper to Downtown</h2>
+      <p>It started with a robin's egg blue camper, a dream, and a whole lot of espresso. Tyler &amp; Anna Dunn converted a vintage trailer into a coffee shop on wheels — serving up specialty coffee at events, evenings, and weekends across Cookeville.</p>
+      <p>In 2019, they went all in. Every dollar they had went into transforming a 100-year-old photography studio on Broad Street into the downtown coffee shop Cookeville didn't know it needed — original hardwood floors, exposed brick walls, and that unmistakable navy &amp; gold art deco warmth.</p>
+      <p>Then came Easy Tiger Coffee Roasters. Then a second location behind Tennessee Tech. The dream kept growing — because when you love coffee and love people, good things happen.</p>
     </div>
-    <div class="story-image reveal">
-      <img src="https://images.squarespace-cdn.com/content/v1/623cbb433498e352e1cf82d6/ca1de550-9596-4ffc-bddf-b1f891619709/1B8A0358-2.jpeg" alt="SoulCraft Interior" loading="lazy">
-      <div class="frame"></div>
+    <div class="story-visual reveal-right">
+      <div class="story-blob">
+        <div class="story-blob-inner">
+          <div class="year">2017</div>
+          <div class="caption">where the dream began ☕</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline reveal">
+    <div class="timeline-item">
+      <div class="timeline-dot">2017</div>
+      <div class="timeline-label">Coffee trailer launches</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot">2019</div>
+      <div class="timeline-label">Downtown shop opens</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot">2020</div>
+      <div class="timeline-label">Easy Tiger roasting begins</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot">2024</div>
+      <div class="timeline-label">Campus location opens</div>
     </div>
   </div>
 </section>
 
-<!-- Values -->
-<section class="values" id="values">
-  <div style="max-width:1200px;margin:0 auto;">
-    <p class="section-eyebrow reveal">The SoulCraft Way</p>
-    <h2 class="section-title reveal">More than just coffee.</h2>
-    <div class="values-grid">
-      <div class="value-card reveal">
-        <span class="value-icon">&#9829;</span>
-        <h3>Joy</h3>
-        <p>A fun, welcoming atmosphere for both customers and staff. Good vibes are non-negotiable.</p>
+<!-- ===================== VALUES ===================== -->
+<section class="values">
+  <h2 class="reveal">What We're About</h2>
+  <div class="sticker-grid reveal">
+    <div class="sticker">
+      <span class="sticker-icon">✨</span>
+      <span class="sticker-text">Joy</span>
+    </div>
+    <div class="sticker">
+      <span class="sticker-icon">💛</span>
+      <span class="sticker-text">Kindness</span>
+    </div>
+    <div class="sticker">
+      <span class="sticker-icon">❤️</span>
+      <span class="sticker-text">Love</span>
+    </div>
+    <div class="sticker">
+      <span class="sticker-icon">🎨</span>
+      <span class="sticker-text">Create</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MENU ===================== -->
+<section class="menu" id="menu">
+  <div class="menu-header reveal">
+    <span class="section-label">What's Brewin'</span>
+    <h2>The Menu</h2>
+    <span class="menu-subtitle">signature drinks & seasonal favorites</span>
+  </div>
+
+  <div class="drink-grid">
+    <div class="drink-card reveal">
+      <div class="emoji">🍯</div>
+      <h3>Golden Bear Latte</h3>
+      <p class="desc">Espresso, milk, organic honey &amp; cinnamon. Warm like a Tennessee morning.</p>
+      <span class="price">$4.50 / $6.00</span>
+    </div>
+
+    <div class="drink-card reveal">
+      <div class="emoji">🥃</div>
+      <h3>Whiskey Caramel Latte</h3>
+      <p class="desc">Espresso pulled through house-made caramel sauce. Bold. Smooth. Dangerously good.</p>
+      <span class="price">$4.50 / $6.00</span>
+      <span class="drink-tag">fan fave</span>
+    </div>
+
+    <div class="drink-card reveal">
+      <div class="emoji">🍫</div>
+      <h3>Bourbon Barrel Mocha</h3>
+      <p class="desc">Espresso meets house-made mocha sauce. Rich, indulgent, no regrets.</p>
+      <span class="price">$4.50 / $6.00</span>
+    </div>
+
+    <div class="drink-card reveal">
+      <div class="emoji">🏇</div>
+      <h3>Race Horse</h3>
+      <p class="desc">House-made citrus coffee soda. Weird? Yes. Life-changing? Also yes.</p>
+      <span class="price">$4.50 / $6.00</span>
+      <span class="drink-tag">unique!</span>
+    </div>
+
+    <div class="drink-card reveal">
+      <div class="emoji">🇨🇺</div>
+      <h3>Cuban</h3>
+      <p class="desc">Espresso &amp; sweetened condensed milk. Simple. Perfect. Done.</p>
+      <span class="price">$4.50 / $6.00</span>
+    </div>
+
+    <div class="drink-card reveal">
+      <div class="emoji">🍵</div>
+      <h3>Matcha Latte</h3>
+      <p class="desc">Premium matcha whisked with your choice of milk. Clean energy, zero jitters.</p>
+      <span class="price">$4.00 / $5.00</span>
+    </div>
+
+    <div class="drink-card reveal">
+      <div class="emoji">❄️</div>
+      <h3>Winter Mint</h3>
+      <p class="desc">House vanilla, peppermint &amp; espresso. Like the holidays in a cup.</p>
+      <span class="price">$5.50 / $6.75</span>
+      <span class="drink-tag">seasonal ✨</span>
+    </div>
+
+    <div class="drink-card reveal">
+      <div class="emoji">🌶️</div>
+      <h3>Caney</h3>
+      <p class="desc">Mocha, cayenne &amp; peppermint. Spicy-sweet chaos in the best way.</p>
+      <span class="price">$5.50 / $6.75</span>
+      <span class="drink-tag">seasonal ✨</span>
+    </div>
+
+    <div class="drink-card reveal">
+      <div class="emoji">🍪</div>
+      <h3>Sugar Cookie Matcha</h3>
+      <p class="desc">Matcha, house sugar cookie syrup &amp; sweet cream cold foam. Dessert status.</p>
+      <span class="price">$5.75 / $7.00</span>
+      <span class="drink-tag">seasonal ✨</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== REVERSE MARQUEE ===================== -->
+<div class="marquee-section-2">
+  <div class="marquee-track">
+    <span class="marquee-item">House-Made Pastries <span class="sep">☕</span></span>
+    <span class="marquee-item">Breakfast Burritos <span class="sep">☕</span></span>
+    <span class="marquee-item">Buttermilk Biscuits <span class="sep">☕</span></span>
+    <span class="marquee-item">Open-Face Sandwiches <span class="sep">☕</span></span>
+    <span class="marquee-item">Easy Tiger Beans <span class="sep">☕</span></span>
+    <span class="marquee-item">Firepot Chai <span class="sep">☕</span></span>
+    <span class="marquee-item">House-Made Pastries <span class="sep">☕</span></span>
+    <span class="marquee-item">Breakfast Burritos <span class="sep">☕</span></span>
+    <span class="marquee-item">Buttermilk Biscuits <span class="sep">☕</span></span>
+    <span class="marquee-item">Open-Face Sandwiches <span class="sep">☕</span></span>
+    <span class="marquee-item">Easy Tiger Beans <span class="sep">☕</span></span>
+    <span class="marquee-item">Firepot Chai <span class="sep">☕</span></span>
+  </div>
+</div>
+
+<!-- ===================== EASY TIGER SHOP ===================== -->
+<section class="shop" id="shop">
+  <div class="shop-header">
+    <span class="section-label">Roasted In-House</span>
+    <h2>Easy Tiger Coffee Roasters</h2>
+    <span class="shop-tagline">#DareToBeGreat — shipped to your door 🐯</span>
+  </div>
+
+  <div class="product-grid">
+    <!-- RANGER -->
+    <div class="product-card reveal">
+      <div class="product-img" style="background: linear-gradient(135deg, #f5e6d3 0%, #e8d5c0 100%);">
+        <div class="bg-blob"></div>
+        <img src="https://images.squarespace-cdn.com/content/v1/66156606f995de4553676355/e5f6178e-3c4e-4a90-9049-0c670b6ef687/Ranger_Front.png" alt="Ranger Coffee Blend" loading="lazy">
       </div>
-      <div class="value-card reveal">
-        <span class="value-icon">&#10047;</span>
-        <h3>Kind</h3>
-        <p>Expect a friendly face who'll probably remember your favorite order. Kindness is a core belief.</p>
+      <div class="product-info">
+        <div class="product-origin">Flagship Blend · Espresso</div>
+        <h3>Ranger</h3>
+        <div class="product-notes">Dark Chocolate · Stone Fruit · Sugar Cane</div>
+        <p class="product-desc">Full-bodied and perfectly balanced. The one coffee they serve year-round — roast profile shifts with the seasons but the soul stays the same.</p>
+        <div class="product-footer">
+          <span class="product-price">$20</span>
+          <a href="https://www.easytigerroasting.com/shop/p/first-coffee-product-1" target="_blank" class="btn-shop">Grab a Bag →</a>
+        </div>
       </div>
-      <div class="value-card reveal">
-        <span class="value-icon">&#9733;</span>
-        <h3>Love</h3>
-        <p>"Love Coffee, Love People" hangs behind the bar. Everyone is welcome at SoulCraft. Period.</p>
+    </div>
+
+    <!-- RIO AMOJU -->
+    <div class="product-card reveal">
+      <div class="product-img" style="background: linear-gradient(135deg, #dce8d5 0%, #c8d9be 100%);">
+        <div class="bg-blob"></div>
+        <img src="https://images.squarespace-cdn.com/content/v1/66156606f995de4553676355/566cf935-22e4-4095-a415-1c82d345d825/RioAmoju_Front.png" alt="Rio Amoju Single Origin Peru" loading="lazy">
       </div>
-      <div class="value-card reveal">
-        <span class="value-icon">&#9998;</span>
-        <h3>Create</h3>
-        <p>From unique bakery flavors to perfectly crafted espresso, the creativity never stops.</p>
+      <div class="product-info">
+        <div class="product-origin">Single Origin · Peru · Washed</div>
+        <h3>Rio Amoju</h3>
+        <div class="product-notes">Milk Chocolate · Pecan · Dark Brown Sugar</div>
+        <p class="product-desc">Approachable doesn't have to mean boring. Perfect for your everyday enjoyment — drip it, pour it, love it.</p>
+        <div class="product-footer">
+          <span class="product-price">$21.75</span>
+          <a href="https://www.easytigerroasting.com/shop/p/rio-amoju" target="_blank" class="btn-shop">Grab a Bag →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- L-O-V-E -->
+    <div class="product-card reveal">
+      <div class="product-img" style="background: linear-gradient(135deg, #f0d5d5 0%, #e8c0c0 100%);">
+        <div class="bg-blob"></div>
+        <img src="https://images.squarespace-cdn.com/content/v1/66156606f995de4553676355/a1757df9-3c78-4208-897a-b1220dd057ba/1-1.jpg" alt="L-O-V-E Limited Edition El Salvador" loading="lazy">
+      </div>
+      <div class="product-info">
+        <div class="product-origin">Single Origin · El Salvador · Limited</div>
+        <h3>L-O-V-E</h3>
+        <div class="product-notes">Chocolate Covered Cherry · Cream</div>
+        <p class="product-desc">Limited drop. Cozy, warm, and romantic — like sharing your favorite mug with someone special. Get it before it's gone.</p>
+        <div class="product-footer">
+          <span class="product-price">$21.75</span>
+          <a href="https://www.easytigerroasting.com/shop/p/l-o-v-e" target="_blank" class="btn-shop">Grab a Bag →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="free-shipping reveal">
+    <span>🚚 Free shipping on orders over $40!</span>
+  </div>
+</section>
+
+<!-- ===================== LOCATIONS ===================== -->
+<section class="locations" id="locations">
+  <div class="locations-header reveal">
+    <span class="section-label">Come Hang</span>
+    <h2>Find Us</h2>
+  </div>
+
+  <div class="location-cards">
+    <div class="location-card reveal-left">
+      <div class="location-icon">🏛️</div>
+      <h3>Downtown</h3>
+      <p class="addr">43 W. Broad St.<br>Cookeville, TN 38501</p>
+      <p class="location-detail">The OG — 100-year-old building, exposed brick, original hardwood floors</p>
+      <div class="hours-grid">
+        <span class="day">Mon–Fri</span><span>7:00am – 5:00pm</span>
+        <span class="day">Saturday</span><span>8:00am – 5:00pm</span>
+        <span class="day">Sunday</span><span>Closed (resting our souls)</span>
+      </div>
+    </div>
+
+    <div class="location-card reveal-right">
+      <div class="location-icon">🎓</div>
+      <h3>Campus</h3>
+      <p class="addr">715 Mahler Ave.<br>Cookeville, TN 38501</p>
+      <p class="location-detail">Right behind Tennessee Tech's Oakley Hall — extra outlets, study vibes, lilac walls 💜</p>
+      <div class="hours-grid">
+        <span class="day">Mon–Fri</span><span>7:00am – 5:00pm</span>
+        <span class="day">Saturday</span><span>8:00am – 5:00pm</span>
+        <span class="day">Sunday</span><span>Closed (resting our souls)</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Gallery -->
-<section class="gallery-section" id="gallery">
-  <p class="section-eyebrow reveal">Inside SoulCraft</p>
-  <h2 class="section-title reveal">The Space</h2>
-  <div class="photo-grid">
-    <div class="photo reveal">
-      <img src="https://images.squarespace-cdn.com/content/v1/623cbb433498e352e1cf82d6/d9c13fe4-fd5a-41be-a34d-0f1787c4cfda/IMG_5356.jpeg" alt="SoulCraft" loading="lazy">
-      <div class="photo-overlay"><span>The Bar</span></div>
-    </div>
-    <div class="photo reveal">
-      <img src="https://images.squarespace-cdn.com/content/v1/623cbb433498e352e1cf82d6/2968ea5b-f641-4b9b-8879-102cfdc653f9/1B8A0085.jpeg" alt="SoulCraft" loading="lazy">
-      <div class="photo-overlay"><span>Anna & Tyler</span></div>
-    </div>
-    <div class="photo reveal">
-      <img src="https://images.squarespace-cdn.com/content/v1/623cbb433498e352e1cf82d6/cf3e1e14-911e-454e-a7ff-6b7b3779ab53/et+%40+campus+1.jpg" alt="SoulCraft" loading="lazy">
-      <div class="photo-overlay"><span>On Location</span></div>
-    </div>
-    <div class="photo reveal">
-      <img src="https://images.squarespace-cdn.com/content/v1/623cbb433498e352e1cf82d6/1648154068499-T7UJWLIZFCK559R05KYY/IMG_1163.jpeg" alt="SoulCraft" loading="lazy">
-      <div class="photo-overlay"><span>Circa 1920</span></div>
-    </div>
-    <div class="photo reveal">
-      <img src="https://images.squarespace-cdn.com/content/v1/623cbb433498e352e1cf82d6/1648157893176-O35K5CBZGUV8NGL24JHJ/1B8A9831%2B2.jpg" alt="SoulCraft" loading="lazy">
-      <div class="photo-overlay"><span>The Build</span></div>
-    </div>
+<!-- ===================== CONNECT ===================== -->
+<section class="connect" id="connect">
+  <span class="section-label reveal">Follow the Vibes</span>
+  <h2 class="reveal">Stay Connected</h2>
+  <span class="connect-sub reveal">we're way more fun on the internet too</span>
+
+  <div class="social-links reveal">
+    <a href="https://www.instagram.com/soulcraftcoffee/" target="_blank" class="social-link">
+      <span class="social-emoji">📸</span> @soulcraftcoffee
+    </a>
+    <a href="https://www.instagram.com/easytigerroasting/" target="_blank" class="social-link">
+      <span class="social-emoji">🐯</span> @easytigerroasting
+    </a>
+    <a href="https://www.facebook.com/soulcraftcoffee/" target="_blank" class="social-link">
+      <span class="social-emoji">👍</span> Facebook
+    </a>
+    <a href="https://www.tiktok.com/@soulcraftcoffee" target="_blank" class="social-link">
+      <span class="social-emoji">🎵</span> TikTok
+    </a>
+  </div>
+
+  <div class="connect-info reveal">
+    <p>📞 <a href="tel:9318540017">(931) 854-0017</a></p>
+    <p>✉️ <a href="mailto:soulcraftcoffee@gmail.com">soulcraftcoffee@gmail.com</a></p>
+    <p style="margin-top: 1rem;">
+      <a href="https://soulcraftcoffee.square.site/" target="_blank" style="color: var(--robin-egg);">Order Pickup / Delivery →</a>
+    </p>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-section" id="visit">
-  <div class="cta-content reveal">
-    <p class="section-eyebrow">Come See Us</p>
-    <h2 class="section-title">Your new<br>favorite spot.</h2>
-    <p>Find us on the historic westside of Cookeville. Fresh espresso, homemade poptarts, and good company — every single day.</p>
-    <a href="https://soulcraftcoffee.square.site/" target="_blank" class="btn btn-navy">Order Online</a>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer class="site-footer">
-  <img class="footer-logo" src="https://images.squarespace-cdn.com/content/v1/623cbb433498e352e1cf82d6/af4a8cbf-3b3d-4d30-9577-fce3077341ad/Black+landscape_1588114422.png?format=300w" alt="SoulCraft">
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="footer-logo">Soul<em>Craft</em></div>
+  <div class="footer-tagline">Love Coffee, Love People ☕</div>
   <div class="footer-links">
-    <a href="https://www.instagram.com/soulcraftcoffee/" target="_blank">Instagram</a>
-    <a href="https://www.facebook.com/soulcraftcoffee/" target="_blank">Facebook</a>
+    <a href="#menu">Menu</a>
+    <a href="#shop">Shop Beans</a>
+    <a href="#locations">Locations</a>
+    <a href="#connect">Contact</a>
     <a href="https://soulcraftcoffee.square.site/" target="_blank">Order Online</a>
-    <a href="https://www.soulcraftcoffee.com/contact-us" target="_blank">Contact</a>
   </div>
-  <div class="footer-bottom">
-    SoulCraft Coffee &mdash; Cookeville, TN<br>
-    <span style="margin-top:0.25rem;display:inline-block;">Mockup built by <a href="https://mattmatheson.github.io/RandomPhoneBuilds/">Matt Matheson</a> + Claude</span>
-  </div>
+  <div class="footer-copy">© 2026 SoulCraft Coffee & Easy Tiger Coffee Roasters — Cookeville, TN</div>
 </footer>
 
 <script>
-// Preloader
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    document.getElementById('preloader').classList.add('done');
-    document.getElementById('heroBg').classList.add('loaded');
-  }, 1800);
-});
+  // ---- Scroll reveal animations ----
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
 
-// Custom cursor
-const cursor = document.getElementById('cursor');
-document.addEventListener('mousemove', (e) => {
-  cursor.style.left = e.clientX - 10 + 'px';
-  cursor.style.top = e.clientY - 10 + 'px';
-});
-document.querySelectorAll('a, button, .photo, .value-card').forEach(el => {
-  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-});
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, i * 80);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
 
-// Nav scroll effect
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 80);
-});
+  revealEls.forEach(el => revealObserver.observe(el));
 
-// Scroll reveal
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// Counter animation
-let counterDone = false;
-const counterObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting && !counterDone) {
-      counterDone = true;
-      document.querySelectorAll('.number[data-target]').forEach(num => {
-        const target = parseInt(num.dataset.target);
-        const suffix = num.dataset.suffix || '';
-        const duration = 2000;
-        const start = performance.now();
-
-        function animate(now) {
-          const elapsed = now - start;
-          const progress = Math.min(elapsed / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          const current = Math.floor(eased * target);
-          num.textContent = current.toLocaleString() + (progress >= 1 ? suffix : '');
-          if (progress < 1) requestAnimationFrame(animate);
-        }
-        requestAnimationFrame(animate);
+  // ---- Parallax beans on scroll ----
+  const beans = document.querySelectorAll('.bean');
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        beans.forEach((bean, i) => {
+          const speed = 0.3 + (i * 0.1);
+          bean.style.transform = `translateY(${scrollY * speed * -0.3}px) rotate(${scrollY * 0.05 * (i % 2 === 0 ? 1 : -1)}deg)`;
+        });
+        ticking = false;
       });
+      ticking = true;
     }
   });
-}, { threshold: 0.5 });
 
-counterObserver.observe(document.querySelector('.counter-section'));
+  // ---- Fun cursor trail (coffee drops) ----
+  let lastDrop = 0;
+  document.addEventListener('mousemove', (e) => {
+    const now = Date.now();
+    if (now - lastDrop < 100) return;
+    lastDrop = now;
 
-// Parallax on hero
-window.addEventListener('scroll', () => {
-  const hero = document.querySelector('.hero-bg');
-  if (hero) {
-    const scroll = window.scrollY;
-    hero.style.transform = `scale(${1 + scroll * 0.0003}) translateY(${scroll * 0.3}px)`;
-  }
-});
+    const drop = document.createElement('div');
+    drop.style.cssText = `
+      position: fixed;
+      left: ${e.clientX}px;
+      top: ${e.clientY}px;
+      width: 6px;
+      height: 6px;
+      background: ${['#C4A265', '#7EC8C8', '#E8C4B8', '#2C1810'][Math.floor(Math.random() * 4)]};
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: all 0.8s ease;
+      opacity: 0.6;
+    `;
+    document.body.appendChild(drop);
+
+    requestAnimationFrame(() => {
+      drop.style.transform = `translateY(${20 + Math.random() * 30}px) scale(0)`;
+      drop.style.opacity = '0';
+    });
+
+    setTimeout(() => drop.remove(), 800);
+  });
+
+  // ---- Sticker hover sound effect (just visual bounce) ----
+  document.querySelectorAll('.sticker').forEach(s => {
+    s.addEventListener('mouseenter', () => {
+      s.style.transition = 'all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+    });
+  });
+
+  // ---- Drink card tilt on hover ----
+  document.querySelectorAll('.drink-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `perspective(600px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-8px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
 </script>
-
 </body>
 </html>
