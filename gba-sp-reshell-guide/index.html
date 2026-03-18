@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>GBA SP Reshell & IPS Screen Upgrade — Complete Visual Guide</title>
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --accent-glow: rgba(196, 32, 32, 0.15);
+    --accent-light: rgba(196, 32, 32, 0.08);
+    --bg: #FAFAFA;
+    --text: #1D1D1F;
+    --text-secondary: #6E6E73;
+    --card-bg: #FFFFFF;
+    --border: #E5E5E7;
+    --green: #34C759;
+    --orange: #FF9500;
+    --blue: #007AFF;
+    --purple: #AF52DE;
+    --yellow: #FFCC00;
+    --box-bg: #F2F2F7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, 'SF Pro Display', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    border-top: 3px solid var(--accent);
+  }
+
+  /* Hero */
+  .hero {
+    background: #1D1D1F;
+    color: #FAFAFA;
+    text-align: center;
+    padding: 80px 24px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 60% 40%, rgba(196, 32, 32, 0.12) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    max-width: 780px;
+    margin: 0 auto 16px;
+    position: relative;
+  }
+
+  .hero h1 span { color: var(--accent); }
+
+  .hero .scope {
+    color: #A1A1A6;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.6;
+  }
+
+  .hero .model-badge {
+    display: inline-block;
+    background: rgba(196, 32, 32, 0.2);
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 0.35rem 1rem;
+    border-radius: 2rem;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Your parts banner */
+  .your-parts {
+    max-width: 600px;
+    margin: 2rem auto 0;
+    text-align: left;
+  }
+
+  .your-parts-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .your-part-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 0.85rem 1.1rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .your-part-card .part-label {
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  .your-part-card .part-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+    background: rgba(52, 199, 89, 0.15);
+    color: var(--green);
+  }
+
+  /* Listen controls */
+  .listen-controls {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+    position: relative;
+  }
+
+  .listen-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.6rem 1.5rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .listen-btn:hover { opacity: 0.85; }
+
+  .voice-select, .speed-btn {
+    font-family: inherit;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 1rem;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    cursor: pointer;
+  }
+
+  .pro-tip {
+    color: #6E6E73;
+    font-size: 0.82rem;
+    font-style: italic;
+    position: relative;
+  }
+
+  .pro-tip a { color: var(--accent); cursor: pointer; text-decoration: underline; }
+
+  /* GBA SP SVG Diagram */
+  .gba-diagram {
+    max-width: 320px;
+    margin: 2rem auto 0;
+    position: relative;
+  }
+
+  .gba-diagram svg { width: 100%; height: auto; }
+
+  /* Navigation */
+  .nav-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250, 250, 250, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav-bar::-webkit-scrollbar { display: none; }
+
+  .nav-inner {
+    display: flex;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    gap: 0;
+  }
+
+  .nav-link {
+    flex-shrink: 0;
+    padding: 0.85rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .nav-link:hover, .nav-link.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* Main content */
+  main {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 1.5rem 6rem;
+  }
+
+  section {
+    padding: 3rem 0 1rem;
+    transition: all 0.3s ease;
+  }
+
+  section.reading {
+    border-left: 3px solid var(--accent);
+    background: rgba(196, 32, 32, 0.04);
+    padding-left: 1rem;
+    border-radius: 4px;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+    line-height: 1.15;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 2rem 0 0.75rem;
+  }
+
+  p { margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.95rem; }
+
+  /* Model comparison cards */
+  .model-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .model-card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    position: relative;
+    transition: all 0.2s;
+  }
+
+  .model-card:hover {
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    border-color: var(--accent);
+  }
+
+  .model-card .model-name {
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+
+  .model-card .model-year {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+  }
+
+  .model-card .model-detail {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 0.35rem;
+  }
+
+  .model-card .model-detail strong { color: var(--text); }
+
+  .model-badge-inline {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .badge-recommended { background: rgba(52, 199, 89, 0.12); color: var(--green); }
+  .badge-premium { background: rgba(175, 82, 222, 0.12); color: var(--purple); }
+
+  /* Tools & parts */
+  .parts-grid {
+    display: grid;
+    gap: 0.75rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .part-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    transition: all 0.2s;
+  }
+
+  .part-row:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+
+  .part-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .part-icon.tool { background: rgba(0, 122, 255, 0.1); }
+  .part-icon.part { background: rgba(196, 32, 32, 0.1); }
+  .part-icon.optional { background: rgba(255, 149, 0, 0.1); }
+
+  .part-info { flex: 1; min-width: 0; }
+  .part-name { font-size: 0.92rem; font-weight: 600; }
+  .part-desc { font-size: 0.8rem; color: var(--text-secondary); }
+  .part-price { font-size: 0.88rem; font-weight: 700; color: var(--accent); white-space: nowrap; }
+
+  /* Interactive screw map */
+  .screw-map {
+    position: relative;
+    max-width: 400px;
+    margin: 2rem auto;
+    cursor: pointer;
+  }
+
+  .screw-map svg { width: 100%; height: auto; }
+
+  .screw-dot {
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .screw-dot:hover { transform: scale(1.3); }
+
+  .screw-tooltip {
+    position: absolute;
+    background: var(--text);
+    color: white;
+    font-size: 0.78rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 8px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+    z-index: 10;
+  }
+
+  .screw-tooltip.visible { opacity: 1; }
+
+  /* Step-by-step */
+  .step-list {
+    counter-reset: step;
+    margin: 1.5rem 0;
+  }
+
+  .step {
+    position: relative;
+    padding: 1.25rem 1.25rem 1.25rem 4.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 0.75rem;
+    cursor: pointer;
+    transition: all 0.25s;
+    counter-increment: step;
+    overflow: hidden;
+  }
+
+  .step::before {
+    content: counter(step);
+    position: absolute;
+    left: 1.25rem;
+    top: 1.25rem;
+    width: 2rem;
+    height: 2rem;
+    background: var(--box-bg);
+    color: var(--text-secondary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.82rem;
+    font-weight: 700;
+    transition: all 0.25s;
+  }
+
+  .step.done::before {
+    background: var(--green);
+    color: white;
+    content: '\2713';
+  }
+
+  .step.active {
+    border-color: var(--accent);
+    box-shadow: 0 2px 16px rgba(196, 32, 32, 0.1);
+  }
+
+  .step.active::before {
+    background: var(--accent);
+    color: white;
+  }
+
+  .step-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.15rem;
+  }
+
+  .step-detail {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .step-warning {
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: rgba(255, 149, 0, 0.08);
+    border-left: 3px solid var(--orange);
+    border-radius: 0 6px 6px 0;
+    font-size: 0.8rem;
+    color: var(--orange);
+    font-weight: 500;
+  }
+
+  .step-diagram {
+    margin-top: 0.75rem;
+    max-width: 280px;
+  }
+
+  .step-diagram svg { width: 100%; height: auto; }
+
+  /* Phase headers */
+  .phase {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2.5rem 0 1rem;
+    padding: 0;
+  }
+
+  .phase-number {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .phase-number.p1 { background: rgba(0, 122, 255, 0.1); color: var(--blue); }
+  .phase-number.p2 { background: rgba(175, 82, 222, 0.1); color: var(--purple); }
+  .phase-number.p3 { background: rgba(196, 32, 32, 0.1); color: var(--accent); }
+  .phase-number.p4 { background: rgba(52, 199, 89, 0.1); color: var(--green); }
+  .phase-number.p5 { background: rgba(255, 149, 0, 0.1); color: var(--orange); }
+
+  /* Progress bar */
+  .progress-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--border);
+    z-index: 200;
+    display: none;
+  }
+
+  .progress-bar.visible { display: block; }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.3s;
+    width: 0%;
+  }
+
+  /* Animated cable diagram */
+  .cable-demo {
+    max-width: 320px;
+    margin: 1.5rem auto;
+    text-align: center;
+  }
+
+  .cable-demo svg { width: 100%; height: auto; }
+
+  .cable-demo .hint {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-style: italic;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+  }
+
+  @keyframes cable-slide {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(-6px); }
+    100% { transform: translateX(0); }
+  }
+
+  .anim-pulse { animation: pulse-glow 2s ease-in-out infinite; }
+  .anim-cable { animation: cable-slide 2.5s ease-in-out infinite; }
+
+  /* Callout boxes */
+  .callout {
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    margin: 1.25rem 0;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .callout.warning {
+    background: rgba(255, 149, 0, 0.08);
+    border-left: 3px solid var(--orange);
+    color: var(--text);
+  }
+
+  .callout.tip {
+    background: rgba(52, 199, 89, 0.08);
+    border-left: 3px solid var(--green);
+    color: var(--text);
+  }
+
+  .callout.danger {
+    background: rgba(196, 32, 32, 0.08);
+    border-left: 3px solid var(--accent);
+    color: var(--text);
+  }
+
+  .callout strong { font-weight: 700; }
+
+  /* Quick reference order */
+  .order-flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    margin: 1rem 0;
+  }
+
+  .order-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .order-arrow {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+  }
+
+  /* Screw reference table */
+  .screw-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0 1.5rem;
+    font-size: 0.85rem;
+  }
+
+  .screw-table th {
+    text-align: left;
+    font-weight: 700;
+    padding: 0.65rem 0.75rem;
+    border-bottom: 2px solid var(--text);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-secondary);
+  }
+
+  .screw-table td {
+    padding: 0.65rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+
+  .screw-table td:first-child { color: var(--text); font-weight: 500; }
+
+  .screw-type {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .screw-type.tri { background: rgba(0, 122, 255, 0.1); color: var(--blue); }
+  .screw-type.jis { background: rgba(175, 82, 222, 0.1); color: var(--purple); }
+
+  /* Source link */
+  .source-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    margin-top: 0.5rem;
+  }
+
+  .source-link:hover { text-decoration: underline; }
+
+  /* Screen feature list */
+  .screen-feature-list {
+    list-style: none;
+    margin-top: 0.75rem;
+  }
+
+  .screen-feature-list li {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    padding: 0.15rem 0;
+  }
+
+  .screen-feature-list li::before {
+    content: '\2713';
+    color: var(--green);
+    font-weight: 700;
+    margin-right: 0.4rem;
+  }
+
+  /* Player bar */
+  .player-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(30, 30, 30, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: white;
+    padding: 0.65rem 1.25rem;
+    padding-bottom: calc(0.65rem + env(safe-area-inset-bottom));
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    z-index: 1000;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .player-bar.visible { transform: translateY(0); }
+
+  .player-bar button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.25rem;
+    flex-shrink: 0;
+  }
+
+  .player-section-title {
+    flex: 1;
+    font-size: 0.82rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0.8;
+  }
+
+  .player-bar .voice-select,
+  .player-bar .speed-btn {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.2);
+    color: white;
+    font-size: 0.78rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .hero { padding: 60px 20px 40px; }
+    .hero h1 { font-size: 1.8rem; }
+    .model-cards { grid-template-columns: 1fr; }
+    .listen-controls { flex-direction: column; align-items: stretch; }
+    .listen-btn { width: 100%; text-align: center; }
+    section { padding: 2rem 0 0.5rem; }
+    h2 { font-size: 1.4rem; }
+    .step { padding-left: 3.75rem; }
+    .step::before { left: 1rem; }
+    .nav-link { padding: 0.75rem 0.65rem; font-size: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="model-badge">Hispeedido V5 + eXtremeRate Clear Black</div>
+  <h1>GBA SP <span>Reshell</span> & IPS Screen Upgrade</h1>
+  <p class="scope">Your parts are here. This is the step-by-step. Tap each step to check it off. Diagrams show you exactly what to do.</p>
+
+  <div class="listen-controls">
+    <button class="listen-btn" id="listenBtn">&#9654; Listen</button>
+    <select class="voice-select" id="voiceSelect"></select>
+    <button class="speed-btn" id="speedBtn">1x</button>
+  </div>
+  <p class="pro-tip">Pro tip: For a better voice, <a id="selectAllBtn">select all</a> then use iOS Speak Selection (Settings &gt; Accessibility &gt; Spoken Content).</p>
+
+  <!-- Your parts -->
+  <div class="your-parts">
+    <div class="your-parts-label">Your Parts</div>
+    <div class="your-part-card">
+      <span class="part-label">Hispeedido V5 Pre-Laminated IPS 3.0" &mdash; $74.90</span>
+      <span class="part-tag">Delivered</span>
+    </div>
+    <div class="your-part-card">
+      <span class="part-label">eXtremeRate Full Shell + Buttons (Clear Black) &mdash; $22.99</span>
+      <span class="part-tag">Delivered</span>
+    </div>
+  </div>
+
+  <!-- GBA SP Hero Diagram -->
+  <div class="gba-diagram">
+    <svg viewBox="0 0 240 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Screen half (top) -->
+      <rect x="30" y="10" width="180" height="140" rx="12" fill="#2A2A2E" stroke="#444" stroke-width="1.5"/>
+      <rect x="45" y="22" width="150" height="110" rx="4" fill="#1a1a2e"/>
+      <rect x="48" y="25" width="144" height="104" rx="2" fill="#0f3460">
+        <animate attributeName="fill" values="#0f3460;#16213e;#0f3460" dur="4s" repeatCount="indefinite"/>
+      </rect>
+      <text x="120" y="68" text-anchor="middle" fill="#e94560" font-size="10" font-weight="700" font-family="Inter, sans-serif">HISPEEDIDO V5</text>
+      <text x="120" y="82" text-anchor="middle" fill="#5C7AEA" font-size="7.5" font-family="Inter, sans-serif">pre-laminated &bull; touch brightness</text>
+      <text x="120" y="94" text-anchor="middle" fill="#5C7AEA" font-size="7.5" font-family="Inter, sans-serif">no solder &bull; no trim</text>
+
+      <!-- Hinge -->
+      <rect x="50" y="150" width="140" height="12" rx="6" fill="#3A3A3E" stroke="#555" stroke-width="1"/>
+      <circle cx="65" cy="156" r="4" fill="#555"/>
+      <circle cx="175" cy="156" r="4" fill="#555"/>
+
+      <!-- Bottom half (clear black tint) -->
+      <rect x="30" y="162" width="180" height="148" rx="12" fill="#1A1A1E" stroke="#444" stroke-width="1.5" opacity="0.85"/>
+      <!-- Clear black transparency hint -->
+      <rect x="30" y="162" width="180" height="148" rx="12" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
+
+      <!-- D-pad -->
+      <rect x="55" y="185" width="12" height="40" rx="2" fill="#111"/>
+      <rect x="41" y="199" width="40" height="12" rx="2" fill="#111"/>
+
+      <!-- A/B buttons -->
+      <circle cx="170" cy="195" r="9" fill="#111"/>
+      <circle cx="185" cy="210" r="9" fill="#111"/>
+      <text x="170" y="198" text-anchor="middle" fill="#444" font-size="7" font-weight="700" font-family="Inter, sans-serif">A</text>
+      <text x="185" y="213" text-anchor="middle" fill="#444" font-size="7" font-weight="700" font-family="Inter, sans-serif">B</text>
+
+      <!-- Start/Select -->
+      <rect x="90" y="245" width="25" height="6" rx="3" fill="#111"/>
+      <rect x="125" y="245" width="25" height="6" rx="3" fill="#111"/>
+      <text x="102" y="260" text-anchor="middle" fill="#444" font-size="5" font-family="Inter, sans-serif">SEL</text>
+      <text x="137" y="260" text-anchor="middle" fill="#444" font-size="5" font-family="Inter, sans-serif">START</text>
+
+      <!-- Speaker grille -->
+      <line x1="75" y1="275" x2="165" y2="275" stroke="#333" stroke-width="0.5"/>
+      <line x1="80" y1="279" x2="160" y2="279" stroke="#333" stroke-width="0.5"/>
+      <line x1="85" y1="283" x2="155" y2="283" stroke="#333" stroke-width="0.5"/>
+      <line x1="90" y1="287" x2="150" y2="287" stroke="#333" stroke-width="0.5"/>
+
+      <!-- Power LED -->
+      <circle cx="48" cy="172" r="3" fill="#34C759" opacity="0.8">
+        <animate attributeName="opacity" values="0.8;0.3;0.8" dur="3s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- eXtremeRate label -->
+      <text x="120" y="300" text-anchor="middle" fill="#555" font-size="6" font-weight="600" font-family="Inter, sans-serif" letter-spacing="0.1em">eXtremeRate CLEAR BLACK</text>
+    </svg>
+  </div>
+</div>
+
+<!-- Navigation -->
+<nav class="nav-bar" id="navBar">
+  <div class="nav-inner">
+    <a class="nav-link" href="#identify">Identify</a>
+    <a class="nav-link" href="#tools">Tools</a>
+    <a class="nav-link" href="#screws">Screws</a>
+    <a class="nav-link" href="#disassembly">Take Apart</a>
+    <a class="nav-link" href="#reassembly">Put Together</a>
+    <a class="nav-link" href="#pitfalls">Watch Out</a>
+  </div>
+</nav>
+
+<!-- Progress bar -->
+<div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+
+<main id="content">
+
+<!-- SECTION: Identify Your Model -->
+<section id="identify">
+  <h2>First: Which Model Do You Have?</h2>
+  <p>Flip your GBA SP over. The model number is on the back sticker. Your Hispeedido V5 and eXtremeRate shell work with both models.</p>
+
+  <div class="model-cards">
+    <div class="model-card">
+      <span class="model-badge-inline badge-recommended">Best to mod</span>
+      <div class="model-name">AGS-001</div>
+      <div class="model-year">Released 2003</div>
+      <div class="model-detail"><strong>Frontlit screen</strong> (light toggles on/off)</div>
+      <div class="model-detail">More common, cheaper to source</div>
+      <div class="model-detail">The Hispeedido V5 is a massive upgrade from this screen</div>
+    </div>
+    <div class="model-card">
+      <span class="model-badge-inline badge-premium">Already good</span>
+      <div class="model-name">AGS-101</div>
+      <div class="model-year">Released 2005</div>
+      <div class="model-detail"><strong>Backlit screen</strong> (brighter, better colors)</div>
+      <div class="model-detail">Less common, more expensive</div>
+      <div class="model-detail">V5 IPS still beats it &mdash; laminated, brighter, touch control</div>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <strong>Either model works.</strong> Same shell, same screws, same process. The eXtremeRate shell is designed for both IPS and standard LCD.
+  </div>
+</section>
+
+<!-- SECTION: Tools -->
+<section id="tools">
+  <h2>Tools You Need</h2>
+  <p>Your Hispeedido V5 kit is no-solder and no-trim (the eXtremeRate shell is IPS-ready). But you still need the right screwdrivers. GBA SP uses JIS screws &mdash; a regular Phillips will strip them.</p>
+
+  <h3>Required</h3>
+  <div class="parts-grid">
+    <div class="part-row">
+      <div class="part-icon tool">Y</div>
+      <div class="part-info">
+        <div class="part-name">Tri-point Y0 Screwdriver</div>
+        <div class="part-desc">For shell screws and screen bezel. Often mislabeled "tri-wing" on Amazon.</div>
+      </div>
+      <div class="part-price">$4&ndash;8</div>
+    </div>
+    <div class="part-row">
+      <div class="part-icon tool">+</div>
+      <div class="part-info">
+        <div class="part-name">JIS #00 Screwdriver (or iFixit PH00)</div>
+        <div class="part-desc">For battery cover, motherboard, and hinge cover. iFixit PH00 confirmed compatible.</div>
+      </div>
+      <div class="part-price">$5&ndash;10</div>
+    </div>
+    <div class="part-row">
+      <div class="part-icon tool">&mdash;</div>
+      <div class="part-info">
+        <div class="part-name">Plastic Spudger</div>
+        <div class="part-desc">Prying components, pushing connectors, hinge removal. No metal near ribbon cables.</div>
+      </div>
+      <div class="part-price">$3&ndash;5</div>
+    </div>
+    <div class="part-row">
+      <div class="part-icon tool">/\</div>
+      <div class="part-info">
+        <div class="part-name">Tweezers (straight + angled)</div>
+        <div class="part-desc">Button placement, ribbon cable handling, prying rubber screw covers.</div>
+      </div>
+      <div class="part-price">$5&ndash;8</div>
+    </div>
+  </div>
+
+  <h3>Nice to Have</h3>
+  <div class="parts-grid">
+    <div class="part-row">
+      <div class="part-icon optional">&#9632;</div>
+      <div class="part-info">
+        <div class="part-name">Magnetic Project Mat or Small Trays</div>
+        <div class="part-desc">16 tiny screws in 3 different sizes. You will lose one without organization.</div>
+      </div>
+    </div>
+    <div class="part-row">
+      <div class="part-icon optional">&#9650;</div>
+      <div class="part-info">
+        <div class="part-name">99% Isopropyl Alcohol + Cotton Swabs</div>
+        <div class="part-desc">Clean the screen and contacts before sealing everything up.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <strong>No soldering iron needed.</strong> Your Hispeedido V5 is a no-solder kit. Brightness is controlled via touch sensor on the screen &mdash; no wire to the motherboard required.
+  </div>
+</section>
+
+<!-- SECTION: Screw Reference -->
+<section id="screws">
+  <h2>Screw Map</h2>
+  <p>16 screws total. Two driver types. Three different lengths. Keep them in separate piles or you'll be guessing. Tap the dots below for details.</p>
+
+  <!-- Interactive screw diagram -->
+  <div class="screw-map" id="screwMap">
+    <svg viewBox="0 0 300 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Screen shell (back view) -->
+      <text x="150" y="20" text-anchor="middle" fill="var(--text-secondary)" font-size="10" font-weight="600" font-family="Inter, sans-serif">SCREEN SHELL (5 tri-point under rubber covers)</text>
+      <rect x="50" y="30" width="200" height="140" rx="12" fill="var(--card-bg)" stroke="var(--border)" stroke-width="1.5"/>
+      <!-- 5 screen bezel screws -->
+      <circle cx="80" cy="55" r="6" fill="var(--blue)" opacity="0.8" class="screw-dot" data-info="4.7mm tri-point (under rubber cover)"/>
+      <circle cx="220" cy="55" r="6" fill="var(--blue)" opacity="0.8" class="screw-dot" data-info="4.7mm tri-point (under rubber cover)"/>
+      <circle cx="80" cy="145" r="6" fill="var(--blue)" opacity="0.8" class="screw-dot" data-info="4.7mm tri-point (under rubber cover)"/>
+      <circle cx="220" cy="145" r="6" fill="var(--blue)" opacity="0.8" class="screw-dot" data-info="4.7mm tri-point (under rubber cover)"/>
+      <circle cx="150" cy="100" r="6" fill="var(--blue)" opacity="0.8" class="screw-dot" data-info="4.7mm tri-point (center, under rubber cover)"/>
+
+      <!-- Hinge area -->
+      <rect x="80" y="175" width="140" height="14" rx="7" fill="var(--box-bg)" stroke="var(--border)" stroke-width="1"/>
+      <text x="150" y="185" text-anchor="middle" fill="var(--text-secondary)" font-size="7" font-family="Inter, sans-serif">HINGE</text>
+      <!-- Hinge cover screw -->
+      <circle cx="100" cy="182" r="5" fill="var(--purple)" opacity="0.8" class="screw-dot" data-info="6.3mm JIS #00 (hinge cover — EASY TO FORGET!)"/>
+
+      <!-- Bottom shell (back view) -->
+      <text x="150" y="210" text-anchor="middle" fill="var(--text-secondary)" font-size="10" font-weight="600" font-family="Inter, sans-serif">BOTTOM SHELL (6 tri-point + 1 JIS battery)</text>
+      <rect x="50" y="220" width="200" height="200" rx="12" fill="var(--card-bg)" stroke="var(--border)" stroke-width="1.5"/>
+
+      <!-- 4 corner screws -->
+      <circle cx="75" cy="245" r="6" fill="var(--blue)" opacity="0.8" class="screw-dot" data-info="6.3mm tri-point (corner)"/>
+      <circle cx="225" cy="245" r="6" fill="var(--blue)" opacity="0.8" class="screw-dot" data-info="6.3mm tri-point (corner)"/>
+      <circle cx="75" cy="395" r="6" fill="var(--blue)" opacity="0.8" class="screw-dot" data-info="6.3mm tri-point (corner)"/>
+      <circle cx="225" cy="395" r="6" fill="var(--blue)" opacity="0.8" class="screw-dot" data-info="6.3mm tri-point (corner)"/>
+
+      <!-- 2 shorter tri-points -->
+      <circle cx="150" cy="255" r="6" fill="var(--blue)" opacity="0.7" class="screw-dot" data-info="4.6mm tri-point (above cartridge slot)"/>
+      <circle cx="150" cy="365" r="6" fill="var(--blue)" opacity="0.7" class="screw-dot" data-info="4.6mm tri-point (inside battery bay)"/>
+
+      <!-- Battery cover screw -->
+      <circle cx="150" cy="395" r="5" fill="var(--purple)" opacity="0.8" class="screw-dot" data-info="JIS #00 (battery cover)"/>
+
+      <!-- 3 motherboard screws (shown inside) -->
+      <text x="150" y="300" text-anchor="middle" fill="var(--text-secondary)" font-size="8" font-family="Inter, sans-serif">3x motherboard screws inside</text>
+      <circle cx="100" cy="310" r="4" fill="var(--purple)" opacity="0.5" class="screw-dot" data-info="4.1mm JIS #00 (motherboard)"/>
+      <circle cx="150" cy="310" r="4" fill="var(--purple)" opacity="0.5" class="screw-dot" data-info="4.1mm JIS #00 (motherboard)"/>
+      <circle cx="200" cy="310" r="4" fill="var(--purple)" opacity="0.5" class="screw-dot" data-info="4.1mm JIS #00 (motherboard)"/>
+
+      <!-- Legend -->
+      <circle cx="65" cy="432" r="5" fill="var(--blue)" opacity="0.8"/>
+      <text x="78" y="435" fill="var(--text-secondary)" font-size="9" font-family="Inter, sans-serif">Tri-point Y0 (11 total)</text>
+      <circle cx="190" cy="432" r="5" fill="var(--purple)" opacity="0.8"/>
+      <text x="203" y="435" fill="var(--text-secondary)" font-size="9" font-family="Inter, sans-serif">JIS #00 (5 total)</text>
+    </svg>
+    <div class="screw-tooltip" id="screwTooltip"></div>
+  </div>
+
+  <table class="screw-table">
+    <thead>
+      <tr><th>Location</th><th>Qty</th><th>Size</th><th>Driver</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Battery cover</td><td>1</td><td>Standard</td><td><span class="screw-type jis">JIS #00</span></td></tr>
+      <tr><td>Bottom shell (corners)</td><td>4</td><td>6.3mm</td><td><span class="screw-type tri">Tri-point Y0</span></td></tr>
+      <tr><td>Bottom shell (inner)</td><td>2</td><td>4.6mm</td><td><span class="screw-type tri">Tri-point Y0</span></td></tr>
+      <tr><td>Motherboard</td><td>3</td><td>4.1mm</td><td><span class="screw-type jis">JIS #00</span></td></tr>
+      <tr><td>Screen bezel (under rubbers)</td><td>5</td><td>4.7mm</td><td><span class="screw-type tri">Tri-point Y0</span></td></tr>
+      <tr><td>Hinge cover</td><td>1</td><td>6.3mm</td><td><span class="screw-type jis">JIS #00</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout warning">
+    <strong>The hinge cover screw</strong> is hidden near the ribbon cable. It's the most commonly forgotten screw during both teardown and reassembly. Burn this into your brain now.
+  </div>
+</section>
+
+<!-- SECTION: Disassembly -->
+<section id="disassembly">
+  <h2>Take It Apart</h2>
+  <p>Tap each step to check it off as you go. Green check means you're past it. Go slow with the ribbon cable &mdash; it has almost zero slack.</p>
+
+  <div class="phase">
+    <div class="phase-number p1">1</div>
+    <div class="phase-title">Battery & Bottom Shell</div>
+  </div>
+
+  <div class="step-list" id="disassemblySteps">
+    <div class="step">
+      <div class="step-title">Power off completely. Remove game cartridge.</div>
+      <div class="step-detail">Not sleep mode &mdash; fully off.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Remove battery cover screw (JIS #00)</div>
+      <div class="step-detail">Flip unit over. Push down firmly, twist slowly. This is the screw most likely to strip if you use the wrong driver.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Lift battery cover, pull battery out by the tab</div>
+      <div class="step-detail">Battery lifts from the left edge. Set both aside.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Remove 6 tri-point screws from bottom shell</div>
+      <div class="step-detail">4x 6.3mm in the recessed corners + 2x 4.6mm (one in the battery bay, one above the cartridge slot). These are two different lengths &mdash; separate piles.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Lift bottom shell straight up and set aside</div>
+      <div class="step-detail">If it sticks, you missed a screw. Don't force it.</div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-number p2">2</div>
+      <div class="phase-title">Motherboard Removal</div>
+    </div>
+
+    <div class="step">
+      <div class="step-title">Remove 3 motherboard screws (JIS #00, 4.1mm)</div>
+      <div class="step-detail">Smaller than shell screws. Third pile.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Lift off the power switch cover</div>
+      <div class="step-detail">It just sits on top. Note the notch orientation for later.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Gently flip the motherboard over the hinges</div>
+      <div class="step-detail">The screen ribbon cable is still connected underneath. DO NOT pull or yank. Just gently rotate the board over.</div>
+      <div class="step-warning">The ribbon cable has almost no slack. This is the #1 way people break their GBA SP. Go slow.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Remove buttons, silicone pads, speaker, and mesh</div>
+      <div class="step-detail">Lift out the 4 silicone pads. Remove A/B, D-pad, brightness, Start/Select. Lift out the speaker and its tiny circular mesh. Keep the OEM buttons &mdash; they often feel better than aftermarket.</div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-number p3">3</div>
+      <div class="phase-title">Disconnect Screen Cable</div>
+    </div>
+
+    <div class="step">
+      <div class="step-title">Prop unit at 90 degrees so cable has slack</div>
+      <div class="step-detail">Rest the motherboard so the ribbon cable isn't strained.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Unlock the connector latch with a spudger</div>
+      <div class="step-detail">Push the latch gently upward until it stops. Don't force past the stop point.</div>
+      <!-- Animated cable connector diagram -->
+      <div class="cable-demo">
+        <svg viewBox="0 0 240 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="60" y="30" width="120" height="40" rx="4" fill="var(--card-bg)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="120" y="55" text-anchor="middle" fill="var(--text-secondary)" font-size="9" font-family="Inter, sans-serif">CONNECTOR</text>
+          <rect x="70" y="28" width="100" height="6" rx="2" fill="var(--orange)">
+            <animate attributeName="y" values="28;22;28" dur="3s" repeatCount="indefinite"/>
+          </rect>
+          <text x="120" y="20" text-anchor="middle" fill="var(--orange)" font-size="8" font-weight="600" font-family="Inter, sans-serif">
+            LATCH (flip up to unlock)
+            <animate attributeName="y" values="20;14;20" dur="3s" repeatCount="indefinite"/>
+          </text>
+          <rect x="85" y="45" width="70" height="8" rx="1" fill="var(--text-secondary)" opacity="0.3" class="anim-cable"/>
+          <text x="120" y="85" text-anchor="middle" fill="var(--text-secondary)" font-size="8" font-family="Inter, sans-serif">ribbon cable slides out after unlocking</text>
+        </svg>
+        <p class="hint">The latch flips up. Don't pull the cable while it's locked.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-title">Slide ribbon cable out with tweezers</div>
+      <div class="step-detail">Should slide freely once the latch is open. Separate body from motherboard.</div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-number p4">4</div>
+      <div class="phase-title">Screen Shell Disassembly</div>
+    </div>
+
+    <div class="step">
+      <div class="step-title">Pry up 5 rubber screw covers from screen bezel</div>
+      <div class="step-detail">Use angled tweezers. These are brittle, but your eXtremeRate shell comes with new ones.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Remove 5 tri-point screws (4.7mm)</div>
+      <div class="step-detail">Fourth pile. These only go in the screen bezel.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Remove hinge cover screw (JIS #00, 6.3mm)</div>
+      <div class="step-detail">Close the GBA SP first. Hold the ribbon cable aside. This screw is easy to miss.</div>
+      <div class="step-warning">THE screw everyone forgets. If your GBA feels wobbly at the hinge later, you forgot this one.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Remove hinge cover, outer screen shell, and screen</div>
+      <div class="step-detail">Flip unit, lift off hinge cover, then outer shell. Thread the ribbon cable through the cutout. Gently pry the screen if it's stuck down.</div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-number p5">5</div>
+      <div class="phase-title">Hinge Removal</div>
+    </div>
+
+    <div class="step">
+      <div class="step-title">Push both hinges partially out with spudger</div>
+      <div class="step-detail">Push until they click/stop. Then fully open the shell halves.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Remove right hinge, slide off bezel, remove left hinge</div>
+      <div class="step-detail">Push right hinge out fully. Lift right side of bezel and pull right to slide off left hinge. Then push left hinge out.</div>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <strong>Disassembly complete.</strong> Take a photo of all your parts laid out. Now grab your eXtremeRate shell and Hispeedido V5 screen.
+  </div>
+</section>
+
+<!-- SECTION: Reassembly -->
+<section id="reassembly">
+  <h2>Put It Together</h2>
+  <p>Now the fun part. Your eXtremeRate shell is IPS-ready (no cutting needed) and the Hispeedido V5 is pre-laminated (no dust worries). This is a clean drop-in install.</p>
+
+  <h3>Quick Reference: Order of Operations</h3>
+  <div class="order-flow">
+    <span class="order-item">V5 screen into eXtremeRate shell</span>
+    <span class="order-arrow">&rarr;</span>
+    <span class="order-item">5 bezel screws</span>
+    <span class="order-arrow">&rarr;</span>
+    <span class="order-item">Rubber covers</span>
+    <span class="order-arrow">&rarr;</span>
+    <span class="order-item">Thread cable + hinges</span>
+    <span class="order-arrow">&rarr;</span>
+    <span class="order-item">Hinge cover screw</span>
+    <span class="order-arrow">&rarr;</span>
+    <span class="order-item">Connect ribbon to mobo</span>
+    <span class="order-arrow">&rarr;</span>
+    <span class="order-item">Speaker + buttons + pads</span>
+    <span class="order-arrow">&rarr;</span>
+    <span class="order-item">3 mobo screws</span>
+    <span class="order-arrow">&rarr;</span>
+    <span class="order-item">Power switch</span>
+    <span class="order-arrow">&rarr;</span>
+    <span class="order-item" style="background: rgba(52,199,89,0.1); border-color: var(--green);">TEST POWER ON</span>
+    <span class="order-arrow">&rarr;</span>
+    <span class="order-item">Bottom shell + 6 screws</span>
+    <span class="order-arrow">&rarr;</span>
+    <span class="order-item">Battery + cover</span>
+  </div>
+
+  <div class="step-list" id="reassemblySteps">
+    <div class="phase">
+      <div class="phase-number p1">1</div>
+      <div class="phase-title">V5 Screen into eXtremeRate Shell</div>
+    </div>
+
+    <div class="step">
+      <div class="step-title">Swap hinge caps if your V5 kit included new ones</div>
+      <div class="step-detail">Slide old caps off perpendicular to the hinge (may need force). New ones click on. Grooves ensure correct orientation.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Remove ALL protective films from the V5 screen</div>
+      <div class="step-detail">Both sides. The V5 is pre-laminated, so the lens is already bonded &mdash; no dust can get in. Clean with alcohol if needed. Make sure the foam pad on the back is attached.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Place V5 screen display-down into the inner eXtremeRate screen shell</div>
+      <div class="step-detail">Ribbon cable should point toward the hinge sockets. Twist/loop the cable once before routing.</div>
+      <div class="cable-demo">
+        <svg viewBox="0 0 240 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="10" width="200" height="80" rx="10" fill="var(--card-bg)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="120" y="35" text-anchor="middle" fill="var(--text-secondary)" font-size="9" font-family="Inter, sans-serif">V5 SCREEN (face down in shell)</text>
+          <path d="M120 55 L120 70 Q120 82 108 82 Q96 82 96 70 L96 60" stroke="var(--accent)" stroke-width="3" fill="none" stroke-linecap="round">
+            <animate attributeName="stroke-opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite"/>
+          </path>
+          <circle cx="96" cy="58" r="3" fill="var(--accent)"/>
+          <text x="75" y="105" fill="var(--accent)" font-size="8" font-weight="600" font-family="Inter, sans-serif">cable loops once</text>
+          <line x1="96" y1="58" x2="30" y2="58" stroke="var(--text-secondary)" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="40" y="52" fill="var(--text-secondary)" font-size="7" font-family="Inter, sans-serif">to hinge</text>
+        </svg>
+        <p class="hint">The cable must loop once before threading through the hinge channel.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-title">Place outer screen shell, install 5 tri-point screws (4.7mm)</div>
+      <div class="step-detail">Hold both halves firmly together, flip so screen faces up, then screw. Press in the 5 rubber covers from your eXtremeRate kit.</div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-number p2">2</div>
+      <div class="phase-title">Hinges & Body</div>
+    </div>
+
+    <div class="step">
+      <div class="step-title">Thread cable through body shell, install hinges</div>
+      <div class="step-detail">Slide screen assembly hinge sockets into the body. Push hinges halfway in (they'll stop). Open fully &mdash; you should hear/feel a satisfying click. Then push the rest of the way.</div>
+      <div class="step-warning">No click when opening/closing? Hinges are misaligned. Pull them out and redo.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Install hinge cover + its screw (JIS #00, 6.3mm)</div>
+      <div class="step-detail">Close the GBA SP. Position hinge cover with screw hole nearest the screen. Hold ribbon cable aside while tightening.</div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-number p3">3</div>
+      <div class="phase-title">Motherboard & Components</div>
+    </div>
+
+    <div class="step">
+      <div class="step-title">Reconnect the V5 screen ribbon cable</div>
+      <div class="step-detail">Open to 90 degrees. Make sure the connector latch is UNLOCKED (flipped up). Slide the V5 ribbon cable fully in with tweezers. HOLD the cable in place with tweezers while you push the latch closed.</div>
+      <div class="step-warning">The cable slides out on its own. You must hold it with tweezers the entire time you're locking the latch.</div>
+      <div class="cable-demo">
+        <svg viewBox="0 0 240 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="60" y="30" width="120" height="35" rx="4" fill="var(--card-bg)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="120" y="52" text-anchor="middle" fill="var(--text-secondary)" font-size="8" font-family="Inter, sans-serif">CONNECTOR</text>
+          <rect x="70" y="22" width="100" height="5" rx="2" fill="var(--green)"/>
+          <text x="120" y="18" text-anchor="middle" fill="var(--green)" font-size="7" font-weight="600" font-family="Inter, sans-serif">LATCH OPEN &#10003;</text>
+          <rect x="75" y="42" width="60" height="8" rx="1" fill="var(--accent)" opacity="0.6">
+            <animate attributeName="width" values="30;60;60" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.4;0.7;0.7" dur="2s" repeatCount="indefinite"/>
+          </rect>
+          <text x="120" y="78" text-anchor="middle" fill="var(--text-secondary)" font-size="7" font-family="Inter, sans-serif">slide in &rarr; hold with tweezers &rarr; lock latch down</text>
+        </svg>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-title">Flip motherboard back over hinges, install speaker</div>
+      <div class="step-detail">Place the tiny speaker mesh into the recess first, then the speaker (gold contacts facing up). Transfer the LED diffuser from old shell to eXtremeRate shell if it's not pre-installed.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Place buttons and silicone pads</div>
+      <div class="step-detail">A/B and brightness buttons are keyed &mdash; they only fit one way. Use your OEM buttons if they're in good shape (they usually feel better). Lay all 4 silicone pads over buttons. Lower motherboard onto the posts.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Install 3 motherboard screws (JIS #00, 4.1mm)</div>
+      <div class="step-detail">Make sure all posts align before tightening. Place power switch cover with notched side up.</div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-number p4">4</div>
+      <div class="phase-title">Test & Close Up</div>
+    </div>
+
+    <div class="step" style="border-color: var(--green);">
+      <div class="step-title" style="color: var(--green);">TEST: Insert battery and power on NOW</div>
+      <div class="step-detail">Do this BEFORE closing the bottom shell. Check: does the V5 screen display? Does the touch sensor brightness work? Do all buttons respond? Much easier to fix with the shell open.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Install shoulder buttons, then the eXtremeRate bottom shell</div>
+      <div class="step-detail">Transfer shoulder buttons from old shell (or use eXtremeRate's). Test button feel before screwing. Install 4x 6.3mm corner screws + 2x 4.6mm inner screws (tri-point).</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Battery, battery cover, final screw (JIS #00)</div>
+      <div class="step-detail">Insert battery at a downward angle. Slide cover tabs into cutouts. Tighten screw. Apply any replacement stickers from the eXtremeRate kit.</div>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <strong>You're done.</strong> Power on. That pre-laminated Hispeedido V5 in the clear black eXtremeRate shell is going to look incredible.
+  </div>
+</section>
+
+<!-- SECTION: Pitfalls -->
+<section id="pitfalls">
+  <h2>Watch Out For</h2>
+  <p>Everything that can go wrong and how to avoid it.</p>
+
+  <div class="callout danger">
+    <strong>The Ribbon Cable.</strong> Almost no slack. Never yank it. Support the screen whenever the cable is connected. When feeding through the hinge tunnel, go SLOW. During reassembly, hold it with tweezers while locking the latch &mdash; it slides out on its own.
+  </div>
+
+  <div class="callout warning">
+    <strong>Hinge Alignment.</strong> If hinges don't "click" when opening/closing, they're out of alignment. Remove and redo. Best method: shell closed, push halfway in, open fully (click), then push the rest.
+  </div>
+
+  <div class="callout warning">
+    <strong>Stripping Screws.</strong> GBA SP uses JIS screws. A regular Phillips WILL strip them. Use iFixit PH00 or JIS #00. Push down firmly while turning slowly.
+  </div>
+
+  <div class="callout warning">
+    <strong>The Hinge Cover Screw.</strong> Hidden near the ribbon cable. People forget this during both disassembly AND reassembly. If the hinge area feels loose, this is why.
+  </div>
+
+  <div class="callout tip">
+    <strong>Test Before Closing.</strong> Always power on before installing the bottom shell. If the V5 screen doesn't light up, reseat the ribbon cable. 90% of the time that's the fix.
+  </div>
+
+  <div class="callout tip">
+    <strong>Keep Your OEM Buttons.</strong> The eXtremeRate buttons are fine, but your original buttons and D-pad may feel better. Try both and pick what feels right.
+  </div>
+
+  <div class="callout tip">
+    <strong>Don't Forget the Speaker Mesh.</strong> Tiny circular mesh that sits under the speaker. Easy to lose. Without it, debris gets inside.</div>
+
+  <div class="callout tip">
+    <strong>Your V5 Has Touch Brightness.</strong> No need to solder a brightness wire. Just touch the sensor on the screen to cycle brightness levels. The touch pad location varies by kit &mdash; check the included instructions.</div>
+
+  <a class="source-link" href="https://www.youtube.com/watch?v=MU-bYtpe-Rk" target="_blank">Reference video on YouTube &#8599;</a>
+</section>
+
+</main>
+
+<!-- Player Bar -->
+<div class="player-bar" id="playerBar">
+  <button id="playerPlayPause">&#9654;</button>
+  <span class="player-section-title" id="playerTitle">&mdash;</span>
+  <select class="voice-select" id="playerVoice"></select>
+  <button class="speed-btn" id="playerSpeed">1x</button>
+  <button id="playerStop">&#9632;</button>
+</div>
+
+<script>
+// --- Step interactivity ---
+document.querySelectorAll('.step').forEach(step => {
+  step.addEventListener('click', () => {
+    if (step.classList.contains('done')) {
+      step.classList.remove('done');
+    } else {
+      step.classList.add('done');
+    }
+    updateProgress();
+  });
+});
+
+function updateProgress() {
+  const steps = document.querySelectorAll('.step');
+  const done = document.querySelectorAll('.step.done');
+  const pct = steps.length ? (done.length / steps.length) * 100 : 0;
+  const bar = document.getElementById('progressBar');
+  const fill = document.getElementById('progressFill');
+  if (done.length > 0) {
+    bar.classList.add('visible');
+    fill.style.width = pct + '%';
+  } else {
+    bar.classList.remove('visible');
+  }
+}
+
+// --- Screw map tooltips ---
+document.querySelectorAll('.screw-dot').forEach(dot => {
+  dot.addEventListener('mouseenter', e => {
+    const tooltip = document.getElementById('screwTooltip');
+    const map = document.getElementById('screwMap');
+    const rect = map.getBoundingClientRect();
+    const svg = map.querySelector('svg');
+    const svgRect = svg.getBoundingClientRect();
+    const cx = parseFloat(dot.getAttribute('cx'));
+    const cy = parseFloat(dot.getAttribute('cy'));
+    const viewBox = svg.viewBox.baseVal;
+    const x = (cx / viewBox.width) * svgRect.width + svgRect.left - rect.left;
+    const y = (cy / viewBox.height) * svgRect.height + svgRect.top - rect.top;
+    tooltip.textContent = dot.dataset.info;
+    tooltip.style.left = x + 'px';
+    tooltip.style.top = (y - 30) + 'px';
+    tooltip.classList.add('visible');
+  });
+  dot.addEventListener('mouseleave', () => {
+    document.getElementById('screwTooltip').classList.remove('visible');
+  });
+  dot.addEventListener('click', e => {
+    const tooltip = document.getElementById('screwTooltip');
+    if (tooltip.classList.contains('visible')) {
+      tooltip.classList.remove('visible');
+    } else {
+      dot.dispatchEvent(new Event('mouseenter'));
+    }
+  });
+});
+
+// --- Navigation active state ---
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+sections.forEach(s => observer.observe(s));
+
+// --- Select All ---
+document.getElementById('selectAllBtn').addEventListener('click', e => {
+  e.preventDefault();
+  const range = document.createRange();
+  range.selectNodeContents(document.getElementById('content'));
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+});
+
+// --- Speech ---
+const VOICE_WHITELIST = ['samantha','karen','daniel','moira','tessa','ava','allison','tom','aaron','nicky','evan','zoe','joelle','fiona','martha','arthur','google us english','google uk english'];
+let voices = [];
+let selectedVoice = null;
+let speeds = [0.8, 1, 1.2, 1.5];
+let speedIdx = 1;
+let isPlaying = false;
+let isPaused = false;
+let chunks = [];
+let chunkIdx = 0;
+let keepAlive = null;
+
+function loadVoices() {
+  voices = speechSynthesis.getVoices().filter(v => {
+    const n = v.name.toLowerCase();
+    return VOICE_WHITELIST.some(w => n.includes(w));
+  });
+  [document.getElementById('voiceSelect'), document.getElementById('playerVoice')].forEach(sel => {
+    sel.innerHTML = '';
+    voices.forEach((v, i) => {
+      const opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = v.name.replace(/\(.*\)/, '').trim();
+      sel.appendChild(opt);
+    });
+  });
+  if (voices.length) selectedVoice = voices[0];
+}
+
+speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
+
+function syncVoiceSelects(srcId) {
+  const val = document.getElementById(srcId).value;
+  document.getElementById('voiceSelect').value = val;
+  document.getElementById('playerVoice').value = val;
+  selectedVoice = voices[val];
+}
+
+document.getElementById('voiceSelect').onchange = function() { syncVoiceSelects('voiceSelect'); };
+document.getElementById('playerVoice').onchange = function() { syncVoiceSelects('playerVoice'); };
+
+function cycleSpeed() {
+  speedIdx = (speedIdx + 1) % speeds.length;
+  const label = speeds[speedIdx] + 'x';
+  document.getElementById('speedBtn').textContent = label;
+  document.getElementById('playerSpeed').textContent = label;
+}
+
+document.getElementById('speedBtn').onclick = cycleSpeed;
+document.getElementById('playerSpeed').onclick = cycleSpeed;
+
+function buildChunks() {
+  chunks = [];
+  document.querySelectorAll('main section').forEach(sec => {
+    const els = sec.querySelectorAll('h2, h3, p, .step-title, .step-detail, .callout, .part-name');
+    els.forEach(el => {
+      const text = el.textContent.trim();
+      if (!text) return;
+      const isHeading = el.matches('h2, h3');
+      chunks.push({ el: sec, text, isHeading });
+    });
+  });
+}
+
+function showPlayer() { document.getElementById('playerBar').classList.add('visible'); }
+function hidePlayer() { document.getElementById('playerBar').classList.remove('visible'); }
+
+function highlightSection(el) {
+  document.querySelectorAll('section.reading').forEach(s => s.classList.remove('reading'));
+  if (el) {
+    el.classList.add('reading');
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function speakChunk() {
+  if (chunkIdx >= chunks.length) { stopSpeech(); return; }
+  const chunk = chunks[chunkIdx];
+  const utt = new SpeechSynthesisUtterance(chunk.text);
+  if (selectedVoice) utt.voice = selectedVoice;
+  utt.rate = chunk.isHeading ? speeds[speedIdx] * 0.9 : speeds[speedIdx];
+  if (chunk.isHeading) utt.pitch = 1.05;
+  highlightSection(chunk.el);
+  const title = chunk.el.querySelector('h2');
+  document.getElementById('playerTitle').textContent = title ? title.textContent : '';
+  utt.onend = () => {
+    chunkIdx++;
+    setTimeout(speakChunk, chunk.isHeading ? 400 : 200);
+  };
+  speechSynthesis.speak(utt);
+}
+
+function startSpeech() {
+  speechSynthesis.cancel();
+  buildChunks();
+  chunkIdx = 0;
+  isPlaying = true;
+  isPaused = false;
+  document.getElementById('listenBtn').innerHTML = '&#9646;&#9646; Pause';
+  document.getElementById('playerPlayPause').innerHTML = '&#9646;&#9646;';
+  showPlayer();
+  keepAlive = setInterval(() => { if (isPlaying && !isPaused) speechSynthesis.resume(); }, 10000);
+  speakChunk();
+}
+
+function togglePause() {
+  if (isPaused) {
+    speechSynthesis.resume();
+    isPaused = false;
+    document.getElementById('listenBtn').innerHTML = '&#9646;&#9646; Pause';
+    document.getElementById('playerPlayPause').innerHTML = '&#9646;&#9646;';
+  } else {
+    speechSynthesis.pause();
+    isPaused = true;
+    document.getElementById('listenBtn').innerHTML = '&#9654; Resume';
+    document.getElementById('playerPlayPause').innerHTML = '&#9654;';
+  }
+}
+
+function stopSpeech() {
+  speechSynthesis.cancel();
+  isPlaying = false;
+  isPaused = false;
+  if (keepAlive) clearInterval(keepAlive);
+  document.getElementById('listenBtn').innerHTML = '&#9654; Listen';
+  document.getElementById('playerPlayPause').innerHTML = '&#9654;';
+  highlightSection(null);
+  hidePlayer();
+}
+
+document.getElementById('listenBtn').onclick = () => {
+  if (!isPlaying) startSpeech(); else togglePause();
+};
+document.getElementById('playerPlayPause').onclick = () => {
+  if (!isPlaying) startSpeech(); else togglePause();
+};
+document.getElementById('playerStop').onclick = stopSpeech;
+</script>
+</body>
+</html>
