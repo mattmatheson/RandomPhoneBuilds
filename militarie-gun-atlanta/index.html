@@ -252,6 +252,20 @@
     font-weight: 500;
   }
 
+  .loading-spinner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    font-weight: 500;
+    pointer-events: none;
+  }
+
+  .gallery-item img.loaded + .loading-spinner { display: none; }
+
   footer {
     text-align: center;
     padding: 2rem 0;
@@ -291,7 +305,7 @@
     <p class="venue">The Buckhead Theater &mdash; Atlanta, GA</p>
     <p class="date">March 18, 2024</p>
     <div class="actions">
-      <a href="https://drive.google.com/open?id=1rbXXEzIB4mEQyq2oDg8CGP8sZypyHPsz" target="_blank" id="driveBtn" class="btn btn-primary">
+      <a href="https://drive.google.com/drive/folders/1rbXXEzIB4mEQyq2oDg8CGP8sZypyHPsz" target="_blank" class="btn btn-primary">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Download from Google Drive
       </a>
@@ -322,31 +336,35 @@
 
 <script>
 const photos = [
-  "DSC02602-Edit.jpg",
-  "DSC02846-Edit.jpg",
-  "DSC02944-Edit.jpg",
-  "DSC03021-Edit.jpg",
-  "DSC03167.jpg",
-  "DSC03211-Edit.jpg",
-  "DSC03506.jpg",
-  "DSC03569.jpg",
-  "DSC03641-Edit.jpg",
-  "DSC03660-Edit.jpg",
-  "DSC03737-Edit.jpg",
-  "DSC03858.jpg",
-  "DSC03859.jpg",
-  "DSC04032.jpg",
-  "DSC04312.jpg",
-  "DSC04329.jpg",
-  "DSC04357.jpg",
-  "DSC04367-Edit.jpg",
-  "DSC04421-Edit.jpg"
+  { name: "DSC02602-Edit.jpg", id: "1Y_DWjdnuAM0iEZTYdoYu31MXmUMNNriv" },
+  { name: "DSC02846-Edit.jpg", id: "1b-BQY-pRfoiJa6gd7woc2-Izisaemfaz" },
+  { name: "DSC02944-Edit.jpg", id: "1hfjouOERwjZzeh-_weH4H5XFHsr8YFnV" },
+  { name: "DSC03021-Edit.jpg", id: "1u1z-2DwrMvERgnWSKFIrEFoDA5kfoMPJ" },
+  { name: "DSC03167.jpg",      id: "13jSNVJ24v7KILtAPi0mFfUU9OoIKBfue" },
+  { name: "DSC03211-Edit.jpg", id: "10wxHxWDqEF8ve_txiIiikxCAj2-IGfVG" },
+  { name: "DSC03506.jpg",      id: "1rGCQHnn0G59Zx8D2W4xyAnSgymlY8Yz2" },
+  { name: "DSC03569.jpg",      id: "1cTnfcA64OKhaZp8GsqIMC8jY5nV3S-9E" },
+  { name: "DSC03641-Edit.jpg", id: "13fTOXSQUAgYa1_Uj8qJMb2j6Znw7pA6r" },
+  { name: "DSC03660-Edit.jpg", id: "1rB8qa2IYURsuorvUQp9Sj4ePKuivgb1B" },
+  { name: "DSC03737-Edit.jpg", id: "1QEH6DfhbU6JnjQXJhpg8YRTbxqSQFSMq" },
+  { name: "DSC03858.jpg",      id: "1mYpb64Oxh9Vnq278-vhezxrImVMGMv2h" },
+  { name: "DSC03859.jpg",      id: "1Kq-S5b457UFOyR2QUKPuMi2gLfeIc0A6" },
+  { name: "DSC04032.jpg",      id: "1G6La_nLhIvYPLPBc1VkUDMHBFLppNPlE" },
+  { name: "DSC04312.jpg",      id: "1zTMSCd3uE1tKF9xbZShw69-TM7mTGBq8" },
+  { name: "DSC04329.jpg",      id: "1y2LmYEDvoHleG7mHpNhzXAVmw0ZuPccc" },
+  { name: "DSC04357.jpg",      id: "18qOqQTyfVabk7kWs_EzL5SyMZHi0u7c3" },
+  { name: "DSC04367-Edit.jpg", id: "1uy2wv8kXp90hk1ydX4I8eo3v6BvjjTPJ" },
+  { name: "DSC04421-Edit.jpg", id: "1myvfB2SekLbrs0CjeD1uDg2jFULMLmDk" }
 ];
 
-// Google Drive folder - photos served via Drive thumbnail API
-const DRIVE_FOLDER_URL = "https://drive.google.com/open?id=1rbXXEzIB4mEQyq2oDg8CGP8sZypyHPsz";
+function thumb(id, w) {
+  return `https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
+}
 
-// Build gallery from local preview thumbs (generated as data URIs or placeholder)
+function full(id) {
+  return `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
+}
+
 const gallery = document.getElementById('gallery');
 let currentIndex = 0;
 
@@ -354,30 +372,19 @@ photos.forEach((photo, i) => {
   const item = document.createElement('div');
   item.className = 'gallery-item';
   item.style.animationDelay = `${i * 0.03}s`;
-  // Use a colored placeholder since we can't serve images from GitHub Pages easily
-  const hue = (i * 19) % 360;
   item.innerHTML = `
-    <div style="width:100%;height:100%;background:linear-gradient(135deg, hsl(${hue},20%,15%), hsl(${(hue+40)%360},25%,10%));display:flex;align-items:center;justify-content:center;">
-      <span style="font-size:0.7rem;color:rgba(255,255,255,0.4);font-weight:600;">${photo.replace('.jpg','').replace('-Edit','')}</span>
-    </div>
-    <div class="overlay"><span>${photo}</span></div>
+    <img src="${thumb(photo.id, 800)}" alt="${photo.name}" loading="lazy" onload="this.classList.add('loaded')">
+    <div class="loading-spinner">Loading...</div>
+    <div class="overlay"><span>${photo.name}</span></div>
   `;
   item.onclick = () => openLightbox(i);
   gallery.appendChild(item);
 });
 
-// Update Drive button when link is set
-const driveBtn = document.getElementById('driveBtn');
-if (DRIVE_FOLDER_URL !== "DRIVE_LINK_PLACEHOLDER") {
-  driveBtn.href = DRIVE_FOLDER_URL;
-  driveBtn.target = "_blank";
-}
-
 function scrollToGallery() {
   document.getElementById('galleryAnchor').scrollIntoView({ behavior: 'smooth' });
 }
 
-// Lightbox - shows filename info (actual image viewing via Drive)
 function openLightbox(index) {
   currentIndex = index;
   const lb = document.getElementById('lightbox');
@@ -398,11 +405,9 @@ function navLightbox(dir) {
 
 function updateLightbox() {
   const img = document.getElementById('lightboxImg');
-  // Show placeholder with filename - actual downloads via Drive
-  const hue = (currentIndex * 19) % 360;
-  img.style.display = 'none';
-  img.parentElement.querySelector('.lightbox-counter').previousElementSibling || null;
-  document.getElementById('lightboxCounter').textContent = `${currentIndex + 1} / ${photos.length} — ${photos[currentIndex]}`;
+  img.src = full(photos[currentIndex].id);
+  img.alt = photos[currentIndex].name;
+  document.getElementById('lightboxCounter').textContent = `${currentIndex + 1} / ${photos.length} — ${photos[currentIndex].name}`;
 }
 
 function handleKeys(e) {
@@ -411,7 +416,6 @@ function handleKeys(e) {
   if (e.key === 'ArrowLeft') navLightbox(-1);
 }
 
-// Close lightbox on background click
 document.getElementById('lightbox').addEventListener('click', (e) => {
   if (e.target === e.currentTarget) closeLightbox();
 });
