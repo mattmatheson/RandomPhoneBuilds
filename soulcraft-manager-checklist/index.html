@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoulCraft Coffee — Weekly Manager Checklist</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1B2438;
+    --gold: #C4A265;
+    --gold-light: #D4B87A;
+    --cream: #F5F0E8;
+    --espresso: #2C1810;
+    --robin-egg: #7EC8C8;
+    --warm-white: #FDF8F0;
+    --blush: #E8C4B8;
+    --green: #4CAF50;
+    --green-light: #E8F5E9;
+    --red: #E53935;
+    --red-light: #FFEBEE;
+    --orange: #FF9800;
+    --orange-light: #FFF3E0;
+    --text: #2C2C2C;
+    --border: #E0D8CC;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--warm-white);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ---- HEADER ---- */
+  .header {
+    background: var(--navy);
+    padding: 1.5rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .header-brand h1 {
+    font-family: 'Playfair Display', serif;
+    color: var(--cream);
+    font-size: 1.4rem;
+  }
+
+  .header-brand h1 em { color: var(--gold); font-style: normal; }
+
+  .header-badge {
+    background: var(--gold);
+    color: var(--navy);
+    font-family: 'Caveat', cursive;
+    font-size: 0.85rem;
+    padding: 0.2rem 0.8rem;
+    border-radius: 50px;
+    font-weight: 700;
+  }
+
+  .header-week {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .week-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .week-nav button {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--cream);
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .week-nav button:hover { background: rgba(255,255,255,0.2); }
+
+  .week-label {
+    color: var(--cream);
+    font-size: 0.95rem;
+    text-align: center;
+    min-width: 200px;
+  }
+
+  .week-label .dates {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+    display: block;
+  }
+
+  /* ---- PROGRESS BAR ---- */
+  .progress-section {
+    max-width: 900px;
+    margin: 1.5rem auto 0;
+    padding: 0 2rem;
+  }
+
+  .progress-bar-outer {
+    background: var(--border);
+    border-radius: 50px;
+    height: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-bar-inner {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--robin-egg));
+    border-radius: 50px;
+    transition: width 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    min-width: 0;
+  }
+
+  .progress-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #888;
+  }
+
+  .progress-pct {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--espresso);
+  }
+
+  .progress-status {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+  }
+
+  .progress-status.behind { color: var(--red); }
+  .progress-status.ontrack { color: var(--orange); }
+  .progress-status.good { color: var(--green); }
+  .progress-status.done { color: var(--gold); }
+
+  /* ---- MAIN ---- */
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem 4rem;
+  }
+
+  /* ---- CATEGORY ---- */
+  .category {
+    margin-bottom: 2rem;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+
+  .category:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.5rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+  }
+
+  .category-header:hover {
+    background: rgba(196, 162, 101, 0.05);
+  }
+
+  .category-title {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .category-icon {
+    font-size: 1.5rem;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+
+  .category-title h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--espresso);
+  }
+
+  .category-title .cat-count {
+    font-size: 0.8rem;
+    color: #aaa;
+    font-weight: 400;
+  }
+
+  .category-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .cat-progress-bar {
+    width: 60px;
+    height: 6px;
+    background: var(--border);
+    border-radius: 50px;
+    overflow: hidden;
+  }
+
+  .cat-progress-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 50px;
+    transition: width 0.4s ease;
+  }
+
+  .cat-pct {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #888;
+    min-width: 36px;
+    text-align: right;
+  }
+
+  .category-toggle {
+    font-size: 1.2rem;
+    color: #ccc;
+    transition: transform 0.3s;
+    margin-left: 0.5rem;
+  }
+
+  .category.collapsed .category-toggle {
+    transform: rotate(-90deg);
+  }
+
+  .category-body {
+    padding: 0 1.5rem 1rem;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+  }
+
+  .category.collapsed .category-body {
+    max-height: 0 !important;
+    padding: 0 1.5rem;
+    opacity: 0;
+  }
+
+  /* ---- CHECKLIST ITEM ---- */
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    transition: all 0.2s;
+  }
+
+  .check-item:last-child { border-bottom: none; }
+
+  .check-item:hover {
+    background: rgba(196, 162, 101, 0.04);
+    margin: 0 -0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 8px;
+  }
+
+  .check-box {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    margin-top: 2px;
+    position: relative;
+  }
+
+  .check-box:hover {
+    border-color: var(--gold);
+    transform: scale(1.1);
+  }
+
+  .check-box.checked {
+    background: var(--green);
+    border-color: var(--green);
+    transform: scale(1);
+  }
+
+  .check-box.checked::after {
+    content: '✓';
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .check-box.checked + .check-content .check-label {
+    text-decoration: line-through;
+    color: #bbb;
+  }
+
+  .check-content {
+    flex: 1;
+  }
+
+  .check-label {
+    font-size: 0.95rem;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1.4;
+  }
+
+  .check-hint {
+    font-size: 0.78rem;
+    color: #aaa;
+    margin-top: 0.15rem;
+    line-height: 1.3;
+  }
+
+  .check-priority {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.15rem 0.5rem;
+    border-radius: 50px;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .priority-critical {
+    background: var(--red-light);
+    color: var(--red);
+  }
+
+  .priority-important {
+    background: var(--orange-light);
+    color: var(--orange);
+  }
+
+  .priority-standard {
+    background: var(--green-light);
+    color: var(--green);
+  }
+
+  /* ---- NOTES SECTION ---- */
+  .notes-section {
+    margin-top: 2rem;
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+  }
+
+  .notes-section h3 {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    color: var(--espresso);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .notes-textarea {
+    width: 100%;
+    min-height: 120px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+    background: var(--warm-white);
+    color: var(--text);
+  }
+
+  .notes-textarea:focus {
+    border-color: var(--gold);
+  }
+
+  .notes-textarea::placeholder {
+    color: #ccc;
+  }
+
+  /* ---- ACTION BAR ---- */
+  .action-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--navy);
+    padding: 1rem 2rem;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    z-index: 100;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+    flex-wrap: wrap;
+  }
+
+  .action-btn {
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .action-btn:hover { transform: translateY(-2px); }
+
+  .btn-submit {
+    background: var(--gold);
+    color: var(--navy);
+  }
+  .btn-submit:hover { background: var(--gold-light); }
+
+  .btn-print {
+    background: rgba(255,255,255,0.1);
+    color: var(--cream);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .btn-print:hover { background: rgba(255,255,255,0.2); }
+
+  .btn-reset {
+    background: rgba(229, 57, 53, 0.15);
+    color: var(--red);
+    border: 1px solid rgba(229, 57, 53, 0.2);
+  }
+  .btn-reset:hover { background: rgba(229, 57, 53, 0.25); }
+
+  .btn-export {
+    background: rgba(126, 200, 200, 0.15);
+    color: var(--robin-egg);
+    border: 1px solid rgba(126, 200, 200, 0.2);
+  }
+  .btn-export:hover { background: rgba(126, 200, 200, 0.25); }
+
+  /* ---- MANAGER BADGE ---- */
+  .manager-input {
+    max-width: 900px;
+    margin: 1.5rem auto 0;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .manager-input label {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+  }
+
+  .manager-input input, .manager-input select {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    background: white;
+    transition: border-color 0.2s;
+  }
+
+  .manager-input input:focus, .manager-input select:focus {
+    border-color: var(--gold);
+  }
+
+  /* ---- REVIEW MODE ---- */
+  .review-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+  }
+
+  .toggle-switch {
+    width: 44px;
+    height: 24px;
+    background: var(--border);
+    border-radius: 50px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .toggle-switch.active {
+    background: var(--gold);
+  }
+
+  .toggle-switch::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: left 0.3s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  }
+
+  .toggle-switch.active::after {
+    left: 22px;
+  }
+
+  .review-label {
+    font-size: 0.8rem;
+    color: #888;
+  }
+
+  /* ---- HISTORY PANEL ---- */
+  .history-panel {
+    display: none;
+    max-width: 900px;
+    margin: 1.5rem auto;
+    padding: 0 2rem;
+  }
+
+  .history-panel.visible { display: block; }
+
+  .history-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .history-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .history-info h4 {
+    font-size: 0.95rem;
+    color: var(--espresso);
+  }
+
+  .history-info .hist-meta {
+    font-size: 0.8rem;
+    color: #aaa;
+  }
+
+  .history-score {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .history-score.score-good { color: var(--green); }
+  .history-score.score-ok { color: var(--orange); }
+  .history-score.score-bad { color: var(--red); }
+
+  /* ---- TOAST ---- */
+  .toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--espresso);
+    color: var(--cream);
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    z-index: 200;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ---- PRINT STYLES ---- */
+  @media print {
+    .header { position: relative; }
+    .action-bar { display: none; }
+    .manager-input { display: none; }
+    .progress-section { break-after: avoid; }
+    .category { break-inside: avoid; page-break-inside: avoid; }
+    .check-box.checked { border: 2px solid black; }
+    .check-box.checked::after { color: black; }
+    body { background: white; }
+    .notes-textarea { border: 1px solid #ccc; }
+
+    .print-header {
+      display: block !important;
+      text-align: center;
+      padding: 1rem;
+      border-bottom: 2px solid var(--navy);
+      margin-bottom: 1rem;
+    }
+  }
+
+  .print-header { display: none; }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 640px) {
+    .header-inner { flex-direction: column; align-items: stretch; }
+    .header-brand { justify-content: center; }
+    .header-week { justify-content: center; }
+    .week-label { min-width: auto; }
+    .manager-input { flex-direction: column; align-items: stretch; }
+    .manager-input input { width: 100%; }
+    .action-bar { gap: 0.5rem; }
+    .action-btn { font-size: 0.78rem; padding: 0.6rem 1rem; }
+    .check-item { gap: 0.5rem; }
+    .category-progress { display: none; }
+  }
+
+  /* Spacer for fixed bottom bar */
+  .bottom-spacer { height: 80px; }
+</style>
+</head>
+<body>
+
+<div class="print-header">
+  <h1>SoulCraft Coffee — Weekly Manager Checklist</h1>
+  <p id="print-week-info"></p>
+  <p id="print-manager-info"></p>
+</div>
+
+<!-- ---- HEADER ---- -->
+<header class="header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <h1>Soul<em>Craft</em> Manager Checklist</h1>
+      <span class="header-badge">Weekly</span>
+    </div>
+    <div class="header-week">
+      <div class="week-nav">
+        <button onclick="changeWeek(-1)" title="Previous week">&#8249;</button>
+        <div class="week-label">
+          <span id="week-title">Week of Mar 17</span>
+          <span class="dates" id="week-dates">Mon Mar 17 – Sun Mar 23, 2026</span>
+        </div>
+        <button onclick="changeWeek(1)" title="Next week">&#8250;</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ---- MANAGER & LOCATION ---- -->
+<div class="manager-input">
+  <label>Manager:</label>
+  <input type="text" id="manager-name" placeholder="Your name" onchange="saveState()">
+  <label>Location:</label>
+  <select id="location" onchange="saveState()">
+    <option value="downtown">Downtown — 43 W. Broad St.</option>
+    <option value="campus">Campus — 715 Mahler Ave.</option>
+  </select>
+  <div class="review-toggle">
+    <span class="review-label">History</span>
+    <div class="toggle-switch" id="history-toggle" onclick="toggleHistory()"></div>
+  </div>
+</div>
+
+<!-- ---- PROGRESS ---- -->
+<div class="progress-section">
+  <div class="progress-bar-outer">
+    <div class="progress-bar-inner" id="progress-bar" style="width: 0%"></div>
+  </div>
+  <div class="progress-text">
+    <span class="progress-pct" id="progress-pct">0%</span>
+    <span id="items-count">0 / 0 items</span>
+    <span class="progress-status" id="progress-status">Not started</span>
+  </div>
+</div>
+
+<!-- ---- HISTORY PANEL ---- -->
+<div class="history-panel" id="history-panel"></div>
+
+<!-- ---- MAIN CHECKLIST ---- -->
+<main class="main" id="checklist-container"></main>
+
+<!-- ---- NOTES ---- -->
+<div class="main" style="padding-top: 0;">
+  <div class="notes-section">
+    <h3>📝 Manager Notes</h3>
+    <textarea class="notes-textarea" id="manager-notes" placeholder="Issues, callouts, things for upper management to know this week..." onchange="saveState()"></textarea>
+  </div>
+</div>
+
+<div class="bottom-spacer"></div>
+
+<!-- ---- ACTION BAR ---- -->
+<div class="action-bar">
+  <button class="action-btn btn-submit" onclick="submitChecklist()">✅ Submit Week</button>
+  <button class="action-btn btn-export" onclick="exportJSON()">📦 Export Data</button>
+  <button class="action-btn btn-print" onclick="window.print()">🖨️ Print</button>
+  <button class="action-btn btn-reset" onclick="resetChecklist()">↩️ Reset</button>
+</div>
+
+<!-- ---- TOAST ---- -->
+<div class="toast" id="toast"></div>
+
+<script>
+// =====================================================
+// SOULCRAFT MANAGER CHECKLIST — DATA & LOGIC
+// =====================================================
+
+const CHECKLIST = [
+  {
+    id: 'food-inventory',
+    title: 'Food & Beverage Inventory',
+    icon: '🥤',
+    color: '#E8F5E9',
+    items: [
+      { id: 'coffee-beans', label: 'Coffee bean stock levels checked', hint: 'All Easy Tiger varieties — Ranger, Rio Amoju, current seasonal', priority: 'critical' },
+      { id: 'milk-dairy', label: 'Milk & dairy inventory counted', hint: 'Whole, oat, almond — check expiration dates', priority: 'critical' },
+      { id: 'syrups-sauces', label: 'Syrups & sauces restocked', hint: 'House vanilla, caramel, mocha, white chocolate, seasonal syrups', priority: 'important' },
+      { id: 'baked-goods', label: 'Bakery ingredient stock checked', hint: 'Flour, butter, eggs, sugar — pastry & biscuit prep', priority: 'important' },
+      { id: 'produce', label: 'Fresh produce & perishables inspected', hint: 'Tomatoes, spinach, arugula, lemons, strawberries — check for spoilage', priority: 'critical' },
+      { id: 'proteins', label: 'Proteins & deli inventory', hint: 'Turkey, bacon, pulled chicken, eggs, cheese — freezer & fridge', priority: 'important' },
+      { id: 'condiments', label: 'Condiments & toppings stocked', hint: 'Honey, cinnamon, sweetened condensed milk, jams, aioli, mustard', priority: 'standard' },
+      { id: 'teas', label: 'Tea & matcha stock checked', hint: 'Italian Grey, Himalaya Mountain, Indian Rose Garden, Hibiscus Elixir, matcha', priority: 'standard' },
+      { id: 'order-placed', label: 'Weekly food & beverage order placed', hint: 'Submit to all vendors by Wednesday for Friday delivery', priority: 'critical' },
+    ]
+  },
+  {
+    id: 'paper-supplies',
+    title: 'Paper Products & Supplies',
+    icon: '📦',
+    color: '#FFF3E0',
+    items: [
+      { id: 'cups-hot', label: 'Hot cups (all sizes) stocked', hint: '8oz, 12oz, 16oz — check storage room', priority: 'critical' },
+      { id: 'cups-cold', label: 'Cold cups & lids stocked', hint: 'Clear cups, dome lids, flat lids', priority: 'critical' },
+      { id: 'sleeves', label: 'Cup sleeves stocked', hint: 'Branded sleeves count — reorder if below 2 weeks supply', priority: 'standard' },
+      { id: 'napkins', label: 'Napkins restocked', hint: 'Counter dispensers + backup stock', priority: 'standard' },
+      { id: 'straws', label: 'Straws & stirrers stocked', hint: 'Paper straws, wooden stirrers', priority: 'standard' },
+      { id: 'togo-bags', label: 'To-go bags & containers stocked', hint: 'Paper bags, food containers, sandwich wraps', priority: 'important' },
+      { id: 'receipt-paper', label: 'Receipt paper stocked (POS)', hint: 'Check all registers — keep 2 backup rolls each', priority: 'important' },
+      { id: 'restroom', label: 'Restroom supplies stocked', hint: 'Toilet paper, paper towels, soap, air freshener', priority: 'critical' },
+    ]
+  },
+  {
+    id: 'cleaning-maintenance',
+    title: 'Cleaning & Maintenance',
+    icon: '🧹',
+    color: '#E3F2FD',
+    items: [
+      { id: 'espresso-deep-clean', label: 'Espresso machine deep cleaned', hint: 'Backflush with cleaner, clean group heads, wipe steam wands', priority: 'critical' },
+      { id: 'grinder-clean', label: 'Grinders cleaned & calibrated', hint: 'Remove residual grounds, check grind consistency, adjust as needed', priority: 'critical' },
+      { id: 'brewer-clean', label: 'Brew equipment cleaned', hint: 'Batch brewer, pour-over stations, cold brew containers', priority: 'important' },
+      { id: 'fridge-temps', label: 'Refrigerator/freezer temps logged', hint: 'Must be 40°F or below (fridge), 0°F or below (freezer) — log daily', priority: 'critical' },
+      { id: 'surfaces-sanitize', label: 'All surfaces & counters deep sanitized', hint: 'Beyond daily wipe-down — full sanitizer protocol', priority: 'important' },
+      { id: 'floors-deep', label: 'Floors deep mopped', hint: 'Behind counters, under equipment, dining area', priority: 'standard' },
+      { id: 'bathrooms-deep', label: 'Bathrooms deep cleaned', hint: 'Full scrub — fixtures, mirrors, tile, grout', priority: 'important' },
+      { id: 'display-case', label: 'Display case cleaned & organized', hint: 'Glass cleaned, pastry trays wiped, labels updated', priority: 'standard' },
+      { id: 'drains-traps', label: 'Drains & drip trays cleaned', hint: 'Floor drains, machine drip trays, sink traps', priority: 'standard' },
+      { id: 'outdoor', label: 'Outdoor area tidied', hint: 'Patio furniture, sweep sidewalk, check signage', priority: 'standard' },
+    ]
+  },
+  {
+    id: 'equipment',
+    title: 'Equipment & Systems',
+    icon: '⚙️',
+    color: '#F3E5F5',
+    items: [
+      { id: 'espresso-maint', label: 'Espresso machine maintenance check', hint: 'Pressure, temp stability, any leaks or unusual sounds', priority: 'critical' },
+      { id: 'grinder-burrs', label: 'Grinder burr wear check', hint: 'Visual inspection — note hours since last burr change', priority: 'important' },
+      { id: 'pos-update', label: 'POS system updated & synced', hint: 'Square updates, menu prices correct, modifiers working', priority: 'important' },
+      { id: 'wifi-music', label: 'WiFi & music system working', hint: 'Test customer WiFi, check Sonos/speakers, adjust playlist', priority: 'standard' },
+      { id: 'hvac', label: 'HVAC / temperature comfortable', hint: 'Customer comfort check — thermostat set correctly', priority: 'standard' },
+      { id: 'lighting', label: 'All lighting functional', hint: 'Replace bulbs, check ambiance, signage lights', priority: 'standard' },
+    ]
+  },
+  {
+    id: 'staff',
+    title: 'Staff & Training',
+    icon: '👥',
+    color: '#E0F7FA',
+    items: [
+      { id: 'schedule', label: 'Next week schedule posted', hint: 'Published at least 5 days in advance — check for coverage gaps', priority: 'critical' },
+      { id: 'staff-meeting', label: 'Weekly team huddle held', hint: 'Quick standup — wins, concerns, upcoming events', priority: 'important' },
+      { id: 'training-progress', label: 'Training progress reviewed', hint: 'New hires on track? Anyone need more bar time?', priority: 'important' },
+      { id: 'uniform-check', label: 'Uniform & appearance compliance', hint: 'Aprons clean, name tags visible, dress code followed', priority: 'standard' },
+      { id: 'callouts', label: 'Callout & no-show log updated', hint: 'Document any absences, tardiness, pattern issues', priority: 'important' },
+      { id: 'feedback', label: 'Employee feedback collected', hint: 'Any concerns? Morale check? Recognition given?', priority: 'standard' },
+    ]
+  },
+  {
+    id: 'financial',
+    title: 'Financial & Admin',
+    icon: '💰',
+    color: '#FFF8E1',
+    items: [
+      { id: 'daily-sales', label: 'Daily sales reports reviewed', hint: 'Check each day vs. projections — note any anomalies', priority: 'critical' },
+      { id: 'cash-reconcile', label: 'Cash drawers reconciled', hint: 'All registers balanced — document any discrepancies', priority: 'critical' },
+      { id: 'tips', label: 'Tip distribution completed', hint: 'Calculate and distribute to team — keep records', priority: 'important' },
+      { id: 'labor-costs', label: 'Labor costs reviewed', hint: 'Hours vs. sales — are we within target %?', priority: 'important' },
+      { id: 'invoices', label: 'Vendor invoices processed', hint: 'Match POs to deliveries, flag discrepancies, submit for payment', priority: 'important' },
+      { id: 'bank-deposit', label: 'Bank deposit made', hint: 'Cash deposit per company policy — keep receipt', priority: 'critical' },
+    ]
+  },
+  {
+    id: 'marketing',
+    title: 'Marketing & Customer Experience',
+    icon: '📱',
+    color: '#FCE4EC',
+    items: [
+      { id: 'social-post', label: 'Social media content posted', hint: 'At least 2 posts/stories this week — @soulcraftcoffee', priority: 'important' },
+      { id: 'menu-boards', label: 'Menu boards accurate & updated', hint: 'Seasonal items added/removed, prices correct', priority: 'important' },
+      { id: 'online-reviews', label: 'Online reviews checked & responded', hint: 'Google, Yelp, Facebook — thank positives, address negatives', priority: 'standard' },
+      { id: 'customer-feedback', label: 'Customer feedback reviewed', hint: 'In-person comments, online mentions, complaint log', priority: 'standard' },
+      { id: 'merch-display', label: 'Retail & merchandise display refreshed', hint: 'Easy Tiger bags, branded merch, seasonal items front & center', priority: 'standard' },
+      { id: 'events', label: 'Upcoming events promoted', hint: 'Live music, pop-ups, community events — signage & social', priority: 'standard' },
+    ]
+  },
+  {
+    id: 'safety',
+    title: 'Safety & Compliance',
+    icon: '🛡️',
+    color: '#FFEBEE',
+    items: [
+      { id: 'temp-logs', label: 'Food safety temp logs complete', hint: 'All daily logs filled out — fridge, freezer, hot holding', priority: 'critical' },
+      { id: 'fire-extinguisher', label: 'Fire extinguisher check', hint: 'Pressure in green zone, pin intact, accessible, not expired', priority: 'critical' },
+      { id: 'first-aid', label: 'First aid kit stocked', hint: 'Bandages, burn cream, antiseptic — restock as needed', priority: 'important' },
+      { id: 'health-walk', label: 'Health code compliance walkthrough', hint: 'Self-inspect like the inspector is coming tomorrow', priority: 'important' },
+      { id: 'employee-health', label: 'Employee health screening documented', hint: 'Anyone sick? Cuts/burns covered? Handwashing observed?', priority: 'critical' },
+      { id: 'slip-hazards', label: 'Slip/trip hazard check', hint: 'Floor mats secure, spills cleaned, cords tucked, exits clear', priority: 'standard' },
+    ]
+  }
+];
+
+// ---- STATE MANAGEMENT ----
+let currentWeekOffset = 0;
+let state = {};
+
+function getWeekKey(offset = 0) {
+  const now = new Date();
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - now.getDay() + 1 + (offset * 7));
+  return monday.toISOString().slice(0, 10);
+}
+
+function getWeekDates(offset = 0) {
+  const now = new Date();
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - now.getDay() + 1 + (offset * 7));
+  const sunday = new Date(monday);
+  sunday.setDate(monday.getDate() + 6);
+
+  const fmt = (d) => d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  const year = monday.getFullYear();
+
+  return {
+    title: `Week of ${monday.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`,
+    range: `${fmt(monday)} – ${fmt(sunday)}, ${year}`,
+    key: monday.toISOString().slice(0, 10),
+    monday, sunday
+  };
+}
+
+function loadState() {
+  const key = `soulcraft-checklist-${getWeekKey(currentWeekOffset)}`;
+  const saved = localStorage.getItem(key);
+  if (saved) {
+    state = JSON.parse(saved);
+  } else {
+    state = {
+      weekKey: getWeekKey(currentWeekOffset),
+      manager: '',
+      location: 'downtown',
+      notes: '',
+      submitted: false,
+      submittedAt: null,
+      items: {}
+    };
+  }
+  // Apply to UI
+  document.getElementById('manager-name').value = state.manager || '';
+  document.getElementById('location').value = state.location || 'downtown';
+  document.getElementById('manager-notes').value = state.notes || '';
+}
+
+function saveState() {
+  state.manager = document.getElementById('manager-name').value;
+  state.location = document.getElementById('location').value;
+  state.notes = document.getElementById('manager-notes').value;
+  state.weekKey = getWeekKey(currentWeekOffset);
+  const key = `soulcraft-checklist-${state.weekKey}`;
+  localStorage.setItem(key, JSON.stringify(state));
+  updateProgress();
+}
+
+function toggleItem(itemId) {
+  if (state.submitted) {
+    showToast('This week has been submitted — view only');
+    return;
+  }
+  state.items[itemId] = !state.items[itemId];
+  saveState();
+  renderChecklist();
+}
+
+// ---- RENDERING ----
+function renderChecklist() {
+  const container = document.getElementById('checklist-container');
+  container.innerHTML = '';
+
+  CHECKLIST.forEach(cat => {
+    const checkedCount = cat.items.filter(i => state.items[i.id]).length;
+    const pct = Math.round((checkedCount / cat.items.length) * 100);
+    const collapsed = localStorage.getItem(`cat-collapsed-${cat.id}`) === 'true';
+
+    const catEl = document.createElement('div');
+    catEl.className = `category${collapsed ? ' collapsed' : ''}`;
+    catEl.innerHTML = `
+      <div class="category-header" onclick="toggleCategory('${cat.id}', this)">
+        <div class="category-title">
+          <div class="category-icon" style="background: ${cat.color}">${cat.icon}</div>
+          <div>
+            <h2>${cat.title} <span class="cat-count">(${checkedCount}/${cat.items.length})</span></h2>
+          </div>
+        </div>
+        <div class="category-progress">
+          <div class="cat-progress-bar"><div class="cat-progress-fill" style="width: ${pct}%; background: ${pct === 100 ? 'var(--green)' : pct > 50 ? 'var(--gold)' : 'var(--orange)'}"></div></div>
+          <span class="cat-pct">${pct}%</span>
+          <span class="category-toggle">▾</span>
+        </div>
+      </div>
+      <div class="category-body" style="max-height: ${collapsed ? '0' : '2000px'}; opacity: ${collapsed ? '0' : '1'}">
+        ${cat.items.map(item => {
+          const checked = state.items[item.id];
+          return `
+            <div class="check-item">
+              <div class="check-box ${checked ? 'checked' : ''}" onclick="toggleItem('${item.id}')"></div>
+              <div class="check-content" onclick="toggleItem('${item.id}')">
+                <div class="check-label">${item.label}</div>
+                <div class="check-hint">${item.hint}</div>
+              </div>
+              <span class="check-priority priority-${item.priority}">${item.priority}</span>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+    container.appendChild(catEl);
+  });
+
+  updateProgress();
+}
+
+function toggleCategory(catId, headerEl) {
+  const cat = headerEl.closest('.category');
+  const isCollapsed = cat.classList.toggle('collapsed');
+  localStorage.setItem(`cat-collapsed-${catId}`, isCollapsed);
+  const body = cat.querySelector('.category-body');
+  if (isCollapsed) {
+    body.style.maxHeight = '0';
+    body.style.opacity = '0';
+  } else {
+    body.style.maxHeight = '2000px';
+    body.style.opacity = '1';
+  }
+}
+
+function updateProgress() {
+  const totalItems = CHECKLIST.reduce((sum, cat) => sum + cat.items.length, 0);
+  const checkedItems = CHECKLIST.reduce((sum, cat) =>
+    sum + cat.items.filter(i => state.items[i.id]).length, 0);
+  const pct = totalItems > 0 ? Math.round((checkedItems / totalItems) * 100) : 0;
+
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('items-count').textContent = `${checkedItems} / ${totalItems} items`;
+
+  const statusEl = document.getElementById('progress-status');
+  if (state.submitted) {
+    statusEl.textContent = `Submitted ✓`;
+    statusEl.className = 'progress-status done';
+  } else if (pct === 0) {
+    statusEl.textContent = 'Not started';
+    statusEl.className = 'progress-status behind';
+  } else if (pct < 50) {
+    statusEl.textContent = 'In progress...';
+    statusEl.className = 'progress-status behind';
+  } else if (pct < 100) {
+    statusEl.textContent = 'Almost there!';
+    statusEl.className = 'progress-status ontrack';
+  } else {
+    statusEl.textContent = 'All done! Ready to submit';
+    statusEl.className = 'progress-status good';
+  }
+}
+
+function updateWeekDisplay() {
+  const info = getWeekDates(currentWeekOffset);
+  document.getElementById('week-title').textContent = info.title;
+  document.getElementById('week-dates').textContent = info.range;
+  document.getElementById('print-week-info').textContent = `${info.title} (${info.range})`;
+}
+
+function changeWeek(delta) {
+  currentWeekOffset += delta;
+  updateWeekDisplay();
+  loadState();
+  renderChecklist();
+  renderHistory();
+}
+
+// ---- ACTIONS ----
+function submitChecklist() {
+  const totalItems = CHECKLIST.reduce((sum, cat) => sum + cat.items.length, 0);
+  const checkedItems = CHECKLIST.reduce((sum, cat) =>
+    sum + cat.items.filter(i => state.items[i.id]).length, 0);
+
+  if (!state.manager) {
+    showToast('Please enter your name first!');
+    document.getElementById('manager-name').focus();
+    return;
+  }
+
+  if (checkedItems < totalItems) {
+    if (!confirm(`Only ${checkedItems}/${totalItems} items checked. Submit anyway?`)) return;
+  }
+
+  state.submitted = true;
+  state.submittedAt = new Date().toISOString();
+  saveState();
+  renderChecklist();
+  showToast(`Week submitted by ${state.manager}! ✅`);
+}
+
+function resetChecklist() {
+  if (!confirm('Reset ALL checkmarks for this week? This cannot be undone.')) return;
+  state.items = {};
+  state.submitted = false;
+  state.submittedAt = null;
+  saveState();
+  renderChecklist();
+  showToast('Checklist reset');
+}
+
+function exportJSON() {
+  // Gather all weeks
+  const allWeeks = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key.startsWith('soulcraft-checklist-')) {
+      allWeeks[key] = JSON.parse(localStorage.getItem(key));
+    }
+  }
+
+  // Build a readable report
+  const report = {
+    exportedAt: new Date().toISOString(),
+    exportedBy: state.manager || 'Unknown',
+    location: state.location,
+    weeks: allWeeks,
+    checklistTemplate: CHECKLIST.map(cat => ({
+      category: cat.title,
+      items: cat.items.map(i => ({ id: i.id, label: i.label, priority: i.priority }))
+    }))
+  };
+
+  const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `soulcraft-checklist-export-${new Date().toISOString().slice(0, 10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Checklist data exported!');
+}
+
+function toggleHistory() {
+  const toggle = document.getElementById('history-toggle');
+  toggle.classList.toggle('active');
+  const panel = document.getElementById('history-panel');
+  panel.classList.toggle('visible');
+  if (panel.classList.contains('visible')) {
+    renderHistory();
+  }
+}
+
+function renderHistory() {
+  const panel = document.getElementById('history-panel');
+  const weeks = [];
+
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key.startsWith('soulcraft-checklist-')) {
+      const data = JSON.parse(localStorage.getItem(key));
+      const totalItems = CHECKLIST.reduce((sum, cat) => sum + cat.items.length, 0);
+      const checkedItems = CHECKLIST.reduce((sum, cat) =>
+        sum + cat.items.filter(item => data.items && data.items[item.id]).length, 0);
+      const pct = Math.round((checkedItems / totalItems) * 100);
+      weeks.push({ key, data, pct, checkedItems, totalItems });
+    }
+  }
+
+  weeks.sort((a, b) => b.key.localeCompare(a.key));
+
+  if (weeks.length === 0) {
+    panel.innerHTML = '<p style="text-align:center;color:#aaa;padding:2rem;">No history yet — complete your first week!</p>';
+    return;
+  }
+
+  panel.innerHTML = weeks.map(w => {
+    const scoreClass = w.pct >= 80 ? 'score-good' : w.pct >= 50 ? 'score-ok' : 'score-bad';
+    const weekDate = w.data.weekKey || w.key.replace('soulcraft-checklist-', '');
+    const submitted = w.data.submitted ? '✅ Submitted' : '⏳ In progress';
+    const manager = w.data.manager || 'No name';
+    return `
+      <div class="history-card" onclick="jumpToWeek('${weekDate}')">
+        <div class="history-info">
+          <h4>Week of ${weekDate}</h4>
+          <span class="hist-meta">${manager} · ${submitted} · ${w.checkedItems}/${w.totalItems} items</span>
+        </div>
+        <span class="history-score ${scoreClass}">${w.pct}%</span>
+      </div>
+    `;
+  }).join('');
+}
+
+function jumpToWeek(weekKey) {
+  const now = new Date();
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - now.getDay() + 1);
+  const target = new Date(weekKey);
+  const diff = Math.round((target - monday) / (7 * 24 * 60 * 60 * 1000));
+  currentWeekOffset = diff;
+  updateWeekDisplay();
+  loadState();
+  renderChecklist();
+  showToast(`Viewing week of ${weekKey}`);
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// ---- INIT ----
+updateWeekDisplay();
+loadState();
+renderChecklist();
+</script>
+</body>
+</html>
