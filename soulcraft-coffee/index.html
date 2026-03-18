@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoulCraft Coffee — Cookeville, TN</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C4A265;
+    --navy: #1B2438;
+    --cream: #F5F0E8;
+    --dark: #0D1117;
+    --text: #2C2C2C;
+    --text-light: rgba(255,255,255,0.7);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--dark);
+    color: white;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    mix-blend-mode: difference;
+  }
+
+  .cursor.hover { transform: scale(2.5); opacity: 0.5; }
+
+  /* Preloader */
+  .preloader {
+    position: fixed;
+    inset: 0;
+    background: var(--navy);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+
+  .preloader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+
+  .preloader .coffee-cup {
+    width: 60px;
+    height: 50px;
+    border: 3px solid var(--gold);
+    border-radius: 0 0 20px 20px;
+    position: relative;
+    animation: brewBounce 1s ease-in-out infinite;
+  }
+
+  .preloader .coffee-cup::after {
+    content: '';
+    position: absolute;
+    right: -18px;
+    top: 8px;
+    width: 12px;
+    height: 24px;
+    border: 3px solid var(--gold);
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+  }
+
+  .preloader .steam {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .preloader .steam span {
+    width: 3px;
+    height: 20px;
+    background: var(--gold);
+    border-radius: 2px;
+    animation: steam 1.2s ease-in-out infinite;
+    opacity: 0.6;
+  }
+
+  .preloader .steam span:nth-child(2) { animation-delay: 0.2s; height: 25px; }
+  .preloader .steam span:nth-child(3) { animation-delay: 0.4s; }
+
+  .preloader p {
+    margin-top: 1.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.8;
+  }
+
+  @keyframes steam {
+    0%, 100% { transform: translateY(0) scaleY(1); opacity: 0.3; }
+    50% { transform: translateY(-10px) scaleY(1.3); opacity: 0.8; }
+  }
+
+  @keyframes brewBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.4s ease, padding 0.4s ease;
+  }
+
+  nav.scrolled {
+    background: rgba(13,17,23,0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 1rem 3rem;
+  }
+
+  .nav-logo {
+    height: 40px;
+    filter: brightness(0) invert(1);
+    transition: height 0.4s ease;
+  }
+
+  nav.scrolled .nav-logo { height: 32px; }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    padding: 0.5rem 1.2rem;
+    background: var(--gold);
+    color: var(--navy) !important;
+    border-radius: 4px;
+    font-weight: 600 !important;
+  }
+
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: #D4B275 !important; color: var(--navy) !important; }
+
+  /* Hero */
+  .hero {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('https://images.squarespace-cdn.com/content/v1/623cbb433498e352e1cf82d6/0a85d81c-cd6c-4e83-b7bc-49e6f0f1ae84/Soul_Craft_Coffee_82.jpg') center/cover no-repeat;
+    transform: scale(1.1);
+    transition: transform 8s ease-out;
+  }
+
+  .hero-bg.loaded { transform: scale(1); }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(13,17,23,0.4) 0%, rgba(13,17,23,0.7) 50%, rgba(13,17,23,0.95) 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+    padding: 0 2rem;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.8s ease forwards 0.5s;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeUp 1s ease forwards 0.7s;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: var(--text-light);
+    margin-top: 1.5rem;
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.8s ease forwards 0.9s;
+  }
+
+  .hero-buttons {
+    margin-top: 2.5rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.8s ease forwards 1.1s;
+  }
+
+  .btn {
+    padding: 0.85rem 2rem;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+  }
+
+  .btn-gold { background: var(--gold); color: var(--navy); }
+  .btn-gold:hover { background: #D4B275; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(196,162,101,0.3); }
+
+  .btn-outline { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.5s;
+  }
+
+  .scroll-indicator .mouse {
+    width: 24px;
+    height: 38px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 12px;
+    position: relative;
+    margin: 0 auto 8px;
+  }
+
+  .scroll-indicator .mouse::after {
+    content: '';
+    width: 3px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 2px;
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: scrollDot 1.5s ease-in-out infinite;
+  }
+
+  .scroll-indicator span {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  @keyframes scrollDot {
+    0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(12px); }
+  }
+
+  /* Marquee */
+  .marquee-section {
+    padding: 1.5rem 0;
+    background: var(--gold);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 3rem;
+    animation: marquee 20s linear infinite;
+    white-space: nowrap;
+  }
+
+  .marquee-track span {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    flex-shrink: 0;
+  }
+
+  .marquee-track .dot {
+    color: var(--navy);
+    opacity: 0.4;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Sections */
+  section {
+    padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem);
+  }
+
+  .section-eyebrow {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  /* Story Section */
+  .story {
+    background: var(--cream);
+    color: var(--text);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .story-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .story-text .section-title { color: var(--navy); }
+
+  .story-text p {
+    font-size: 0.92rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 1rem;
+  }
+
+  .story-image {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+  }
+
+  .story-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .story-image:hover img { transform: scale(1.05); }
+
+  .story-image .frame {
+    position: absolute;
+    inset: 12px;
+    border: 1px solid var(--gold);
+    border-radius: 4px;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  /* Values */
+  .values {
+    background: var(--navy);
+  }
+
+  .values-grid {
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .value-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .value-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+
+  .value-card:hover {
+    background: rgba(255,255,255,0.08);
+    transform: translateY(-4px);
+  }
+
+  .value-card:hover::before { transform: scaleX(1); }
+
+  .value-card .value-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .value-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: var(--gold);
+  }
+
+  .value-card p {
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: var(--text-light);
+  }
+
+  /* Gallery */
+  .gallery-section {
+    background: var(--dark);
+    padding-bottom: 2rem;
+  }
+
+  .gallery-section .section-eyebrow,
+  .gallery-section .section-title {
+    text-align: center;
+  }
+
+  .photo-grid {
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 280px;
+    gap: 6px;
+  }
+
+  .photo-grid .photo {
+    overflow: hidden;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .photo-grid .photo:nth-child(1) { grid-row: span 2; }
+  .photo-grid .photo:nth-child(4) { grid-column: span 2; }
+
+  .photo-grid .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease, filter 0.3s ease;
+  }
+
+  .photo-grid .photo:hover img {
+    transform: scale(1.08);
+    filter: brightness(1.1);
+  }
+
+  .photo-grid .photo .photo-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(transparent 60%, rgba(0,0,0,0.6));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem;
+  }
+
+  .photo-grid .photo:hover .photo-overlay { opacity: 1; }
+
+  .photo-overlay span {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  /* CTA */
+  .cta-section {
+    background: var(--gold);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231B2438' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .cta-section .section-eyebrow { color: var(--navy); opacity: 0.6; }
+
+  .cta-section .section-title {
+    color: var(--navy);
+    margin-bottom: 1rem;
+  }
+
+  .cta-section p {
+    color: var(--navy);
+    opacity: 0.7;
+    font-size: 0.92rem;
+    margin-bottom: 2rem;
+    line-height: 1.7;
+  }
+
+  .cta-section .btn-navy {
+    background: var(--navy);
+    color: var(--gold);
+    padding: 1rem 2.5rem;
+    font-size: 0.85rem;
+  }
+
+  .cta-section .btn-navy:hover {
+    background: #253352;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(27,36,56,0.3);
+  }
+
+  /* Footer */
+  .site-footer {
+    background: var(--navy);
+    padding: 3rem clamp(1.5rem, 5vw, 4rem);
+    text-align: center;
+  }
+
+  .footer-logo {
+    height: 36px;
+    filter: brightness(0) invert(1);
+    opacity: 0.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--gold); }
+
+  .footer-bottom {
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.25);
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-bottom a { color: rgba(255,255,255,0.35); text-decoration: none; }
+
+  /* Reveal animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Counter animation */
+  .counter-section {
+    background: var(--dark);
+    padding: 4rem 2rem;
+  }
+
+  .counter-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .counter-item .number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 0.25rem;
+  }
+
+  .counter-item .label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-light);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .cursor { display: none; }
+    nav { padding: 1rem 1.5rem; }
+    nav.scrolled { padding: 0.75rem 1.5rem; }
+    .nav-links { display: none; }
+    .story-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .values-grid { grid-template-columns: repeat(2, 1fr); }
+    .photo-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 200px; }
+    .photo-grid .photo:nth-child(1) { grid-row: span 1; }
+    .photo-grid .photo:nth-child(4) { grid-column: span 1; }
+    .counter-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+
+<!-- Preloader -->
+<div class="preloader" id="preloader">
+  <div class="steam"><span></span><span></span><span></span></div>
+  <div class="coffee-cup"></div>
+  <p>Brewing...</p>
+</div>
+
+<!-- Nav -->
+<nav id="nav">
+  <img class="nav-logo" src="https://images.squarespace-cdn.com/content/v1/623cbb433498e352e1cf82d6/af4a8cbf-3b3d-4d30-9577-fce3077341ad/Black+landscape_1588114422.png?format=500w" alt="SoulCraft">
+  <ul class="nav-links">
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#values">Values</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#visit" class="nav-cta">Visit Us</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Cookeville, Tennessee &mdash; Est. 2019</p>
+    <h1>Love Coffee.<br><em>Love People.</em></h1>
+    <p class="hero-sub">Handcrafted drinks, locally roasted beans, and a community-first spirit — all inside a beautifully restored 1920s building on Cookeville's historic westside.</p>
+    <div class="hero-buttons">
+      <a href="https://soulcraftcoffee.square.site/" target="_blank" class="btn btn-gold">Order Online</a>
+      <a href="#story" class="btn btn-outline">Our Story</a>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <div class="mouse"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span>Locally Roasted</span><span class="dot">&bull;</span>
+    <span>Easy Tiger Coffee</span><span class="dot">&bull;</span>
+    <span>Handcrafted Daily</span><span class="dot">&bull;</span>
+    <span>Historic Westside</span><span class="dot">&bull;</span>
+    <span>Fresh Baked Poptarts</span><span class="dot">&bull;</span>
+    <span>Art Deco Vibes</span><span class="dot">&bull;</span>
+    <span>Everyone Welcome</span><span class="dot">&bull;</span>
+    <span>Locally Roasted</span><span class="dot">&bull;</span>
+    <span>Easy Tiger Coffee</span><span class="dot">&bull;</span>
+    <span>Handcrafted Daily</span><span class="dot">&bull;</span>
+    <span>Historic Westside</span><span class="dot">&bull;</span>
+    <span>Fresh Baked Poptarts</span><span class="dot">&bull;</span>
+    <span>Art Deco Vibes</span><span class="dot">&bull;</span>
+    <span>Everyone Welcome</span><span class="dot">&bull;</span>
+  </div>
+</div>
+
+<!-- Counters -->
+<div class="counter-section">
+  <div class="counter-grid reveal">
+    <div class="counter-item">
+      <div class="number" data-target="2019">0</div>
+      <div class="label">Established</div>
+    </div>
+    <div class="counter-item">
+      <div class="number" data-target="100" data-suffix="+">0</div>
+      <div class="label">Year Old Building</div>
+    </div>
+    <div class="counter-item">
+      <div class="number" data-target="1000" data-suffix="s">0</div>
+      <div class="label">Drinks Served</div>
+    </div>
+    <div class="counter-item">
+      <div class="number" data-target="1">0</div>
+      <div class="label">Community</div>
+    </div>
+  </div>
+</div>
+
+<!-- Story -->
+<section class="story" id="story">
+  <div class="story-grid">
+    <div class="story-text reveal">
+      <p class="section-eyebrow">Our Story</p>
+      <h2 class="section-title">From a vintage camper<br>to the westside.</h2>
+      <p>SoulCraft is the passion project of Tyler and Anna Dunn — a young married couple who turned a love for coffee into a dream. Tyler used to buy vintage espresso machines off eBay in high school, rebuilding them and learning the craft from the inside out.</p>
+      <p>In 2017, they bought a vintage camper, converted it into a coffee trailer with a robin's egg blue finish, and started traveling around Cookeville on evenings and weekends. The little blue trailer quickly became the talk of the town.</p>
+      <p>The demand grew until they took a leap of faith — their entire life savings — to open a brick and mortar inside a 1920s building on the historic westside. Original hardwood floors, exposed brick, navy and gold art deco. In the summer of 2019, SoulCraft Coffee was born.</p>
+    </div>
+    <div class="story-image reveal">
+      <img src="https://images.squarespace-cdn.com/content/v1/623cbb433498e352e1cf82d6/ca1de550-9596-4ffc-bddf-b1f891619709/1B8A0358-2.jpeg" alt="SoulCraft Interior" loading="lazy">
+      <div class="frame"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Values -->
+<section class="values" id="values">
+  <div style="max-width:1200px;margin:0 auto;">
+    <p class="section-eyebrow reveal">The SoulCraft Way</p>
+    <h2 class="section-title reveal">More than just coffee.</h2>
+    <div class="values-grid">
+      <div class="value-card reveal">
+        <span class="value-icon">&#9829;</span>
+        <h3>Joy</h3>
+        <p>A fun, welcoming atmosphere for both customers and staff. Good vibes are non-negotiable.</p>
+      </div>
+      <div class="value-card reveal">
+        <span class="value-icon">&#10047;</span>
+        <h3>Kind</h3>
+        <p>Expect a friendly face who'll probably remember your favorite order. Kindness is a core belief.</p>
+      </div>
+      <div class="value-card reveal">
+        <span class="value-icon">&#9733;</span>
+        <h3>Love</h3>
+        <p>"Love Coffee, Love People" hangs behind the bar. Everyone is welcome at SoulCraft. Period.</p>
+      </div>
+      <div class="value-card reveal">
+        <span class="value-icon">&#9998;</span>
+        <h3>Create</h3>
+        <p>From unique bakery flavors to perfectly crafted espresso, the creativity never stops.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section class="gallery-section" id="gallery">
+  <p class="section-eyebrow reveal">Inside SoulCraft</p>
+  <h2 class="section-title reveal">The Space</h2>
+  <div class="photo-grid">
+    <div class="photo reveal">
+      <img src="https://images.squarespace-cdn.com/content/v1/623cbb433498e352e1cf82d6/d9c13fe4-fd5a-41be-a34d-0f1787c4cfda/IMG_5356.jpeg" alt="SoulCraft" loading="lazy">
+      <div class="photo-overlay"><span>The Bar</span></div>
+    </div>
+    <div class="photo reveal">
+      <img src="https://images.squarespace-cdn.com/content/v1/623cbb433498e352e1cf82d6/2968ea5b-f641-4b9b-8879-102cfdc653f9/1B8A0085.jpeg" alt="SoulCraft" loading="lazy">
+      <div class="photo-overlay"><span>Anna & Tyler</span></div>
+    </div>
+    <div class="photo reveal">
+      <img src="https://images.squarespace-cdn.com/content/v1/623cbb433498e352e1cf82d6/cf3e1e14-911e-454e-a7ff-6b7b3779ab53/et+%40+campus+1.jpg" alt="SoulCraft" loading="lazy">
+      <div class="photo-overlay"><span>On Location</span></div>
+    </div>
+    <div class="photo reveal">
+      <img src="https://images.squarespace-cdn.com/content/v1/623cbb433498e352e1cf82d6/1648154068499-T7UJWLIZFCK559R05KYY/IMG_1163.jpeg" alt="SoulCraft" loading="lazy">
+      <div class="photo-overlay"><span>Circa 1920</span></div>
+    </div>
+    <div class="photo reveal">
+      <img src="https://images.squarespace-cdn.com/content/v1/623cbb433498e352e1cf82d6/1648157893176-O35K5CBZGUV8NGL24JHJ/1B8A9831%2B2.jpg" alt="SoulCraft" loading="lazy">
+      <div class="photo-overlay"><span>The Build</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="visit">
+  <div class="cta-content reveal">
+    <p class="section-eyebrow">Come See Us</p>
+    <h2 class="section-title">Your new<br>favorite spot.</h2>
+    <p>Find us on the historic westside of Cookeville. Fresh espresso, homemade poptarts, and good company — every single day.</p>
+    <a href="https://soulcraftcoffee.square.site/" target="_blank" class="btn btn-navy">Order Online</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <img class="footer-logo" src="https://images.squarespace-cdn.com/content/v1/623cbb433498e352e1cf82d6/af4a8cbf-3b3d-4d30-9577-fce3077341ad/Black+landscape_1588114422.png?format=300w" alt="SoulCraft">
+  <div class="footer-links">
+    <a href="https://www.instagram.com/soulcraftcoffee/" target="_blank">Instagram</a>
+    <a href="https://www.facebook.com/soulcraftcoffee/" target="_blank">Facebook</a>
+    <a href="https://soulcraftcoffee.square.site/" target="_blank">Order Online</a>
+    <a href="https://www.soulcraftcoffee.com/contact-us" target="_blank">Contact</a>
+  </div>
+  <div class="footer-bottom">
+    SoulCraft Coffee &mdash; Cookeville, TN<br>
+    <span style="margin-top:0.25rem;display:inline-block;">Mockup built by <a href="https://mattmatheson.github.io/RandomPhoneBuilds/">Matt Matheson</a> + Claude</span>
+  </div>
+</footer>
+
+<script>
+// Preloader
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('preloader').classList.add('done');
+    document.getElementById('heroBg').classList.add('loaded');
+  }, 1800);
+});
+
+// Custom cursor
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', (e) => {
+  cursor.style.left = e.clientX - 10 + 'px';
+  cursor.style.top = e.clientY - 10 + 'px';
+});
+document.querySelectorAll('a, button, .photo, .value-card').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+});
+
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 80);
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Counter animation
+let counterDone = false;
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !counterDone) {
+      counterDone = true;
+      document.querySelectorAll('.number[data-target]').forEach(num => {
+        const target = parseInt(num.dataset.target);
+        const suffix = num.dataset.suffix || '';
+        const duration = 2000;
+        const start = performance.now();
+
+        function animate(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = Math.floor(eased * target);
+          num.textContent = current.toLocaleString() + (progress >= 1 ? suffix : '');
+          if (progress < 1) requestAnimationFrame(animate);
+        }
+        requestAnimationFrame(animate);
+      });
+    }
+  });
+}, { threshold: 0.5 });
+
+counterObserver.observe(document.querySelector('.counter-section'));
+
+// Parallax on hero
+window.addEventListener('scroll', () => {
+  const hero = document.querySelector('.hero-bg');
+  if (hero) {
+    const scroll = window.scrollY;
+    hero.style.transform = `scale(${1 + scroll * 0.0003}) translateY(${scroll * 0.3}px)`;
+  }
+});
+</script>
+
+</body>
+</html>
