@@ -223,6 +223,23 @@
     to { transform: rotate(360deg); }
   }
 
+  /* Pinned section */
+  .pinned {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 1.25rem 1rem 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .pinned .projects li + li {
+    border-top: 1px solid var(--divider);
+  }
+
+  .pinned .projects .title {
+    color: var(--accent);
+  }
+
   /* Mobile */
   @media (max-width: 500px) {
     .projects a {
@@ -247,6 +264,13 @@
     <span class="count" id="count"></span>
   </header>
 
+  <!-- Pinned: Client Portal -->
+  <div class="pinned" id="pinned">
+    <p class="label" style="margin-bottom:0.75rem; font-size:0.65rem;">Pinned — Client Portal</p>
+    <ul class="projects" id="pinned-list"></ul>
+  </div>
+
+  <p class="label" style="margin-top:2.5rem; margin-bottom:0.75rem; font-size:0.65rem;">All Builds</p>
   <ul class="projects" id="projects">
     <li class="state-msg" id="loading"><span class="loader"></span> Loading projects&hellip;</li>
   </ul>
@@ -262,6 +286,7 @@
   const REPO = 'mattmatheson/RandomPhoneBuilds';
   const API  = 'https://api.github.com/repos/' + REPO + '/contents/';
   const SKIP = new Set(['index.html', 'CLAUDE.md', 'README.md', 'LICENSE', '.gitignore', 'CNAME']);
+  const PINNED = ['militarie-gun-atlanta', 'delivery-board'];
 
   const listEl  = document.getElementById('projects');
   const countEl = document.getElementById('count');
@@ -333,12 +358,14 @@
 
     listEl.innerHTML = '';
 
-    projects.forEach(function (proj, i) {
+    var pinnedEl = document.getElementById('pinned-list');
+    var pinnedProjects = projects.filter(function (p) { return PINNED.indexOf(p.folder.name) !== -1; });
+    var otherProjects = projects.filter(function (p) { return PINNED.indexOf(p.folder.name) === -1; });
+
+    function buildItem(proj, i) {
       var li = document.createElement('li');
       li.style.animationDelay = (0.08 + i * 0.05) + 's';
-
       var displayName = prettify(proj.folder.name);
-
       li.innerHTML =
         '<a href="' + proj.folder.name + '/">' +
           '<span class="info">' +
@@ -349,9 +376,16 @@
             '<path d="M7 4l6 6-6 6"/>' +
           '</svg>' +
         '</a>';
+      return li;
+    }
 
-      listEl.appendChild(li);
-    });
+    if (pinnedProjects.length > 0) {
+      pinnedProjects.forEach(function (proj, i) { pinnedEl.appendChild(buildItem(proj, i)); });
+    } else {
+      document.getElementById('pinned').style.display = 'none';
+    }
+
+    otherProjects.forEach(function (proj, i) { listEl.appendChild(buildItem(proj, i)); });
   } catch (e) {
     // Fallback: if API fails (rate limit, etc.), show a static link
     listEl.innerHTML =
