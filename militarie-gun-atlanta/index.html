@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Militarie Gun — The Buckhead Theater, Atlanta (Mar 18, 2024)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --bg: #0A0A0A;
+    --card-bg: #141414;
+    --text-primary: #F5F5F7;
+    --text-secondary: #86868B;
+    --divider: #2A2A2A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .top-bar {
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), #FF4444, var(--accent));
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 2rem) 4rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: fadeIn 0.8s ease-out both;
+  }
+
+  .label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 7vw, 4rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .venue {
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    font-weight: 300;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+  }
+
+  .date {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  .actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.8rem;
+    border-radius: 2rem;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: #E02828;
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1.5px solid var(--divider);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--text-secondary);
+    transform: translateY(-1px);
+  }
+
+  .photo-count {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 4px;
+    margin-bottom: 3rem;
+  }
+
+  .gallery-item {
+    position: relative;
+    aspect-ratio: 3/2;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--card-bg);
+    animation: fadeIn 0.5s ease-out both;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease, filter 0.4s ease;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+  }
+
+  .gallery-item .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .gallery-item:hover .overlay {
+    opacity: 1;
+  }
+
+  .overlay span {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.8);
+    font-weight: 500;
+  }
+
+  /* Lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease-out;
+  }
+
+  .lightbox.active { display: flex; }
+
+  .lightbox img {
+    max-width: 92vw;
+    max-height: 88vh;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .lightbox-close:hover { background: rgba(255,255,255,0.2); }
+
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: none;
+    color: white;
+    font-size: 1.4rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .lightbox-nav:hover { background: rgba(255,255,255,0.15); }
+  .lightbox-prev { left: 1rem; }
+  .lightbox-next { right: 1rem; }
+
+  .lightbox-counter {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.5);
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  footer {
+    text-align: center;
+    padding: 2rem 0;
+    border-top: 1px solid var(--divider);
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+  }
+
+  footer a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+
+  footer a:hover { color: var(--text-primary); }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .gallery {
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+    .actions { flex-direction: column; align-items: center; }
+    .btn { width: 100%; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="container">
+  <header>
+    <span class="label">Live Photography</span>
+    <h1>Militarie Gun</h1>
+    <p class="venue">The Buckhead Theater &mdash; Atlanta, GA</p>
+    <p class="date">March 18, 2024</p>
+    <div class="actions">
+      <a href="https://drive.google.com/open?id=1rbXXEzIB4mEQyq2oDg8CGP8sZypyHPsz" target="_blank" id="driveBtn" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download from Google Drive
+      </a>
+      <button class="btn btn-outline" onclick="scrollToGallery()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        View Gallery
+      </button>
+    </div>
+  </header>
+
+  <p class="photo-count" id="galleryAnchor">19 photos</p>
+
+  <div class="gallery" id="gallery"></div>
+
+  <footer>
+    <p>Photos by <a href="https://mattmatheson.github.io/RandomPhoneBuilds/">Matt Matheson</a></p>
+  </footer>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <button class="lightbox-nav lightbox-prev" onclick="navLightbox(-1)">&#8249;</button>
+  <img id="lightboxImg" src="" alt="">
+  <button class="lightbox-nav lightbox-next" onclick="navLightbox(1)">&#8250;</button>
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
+
+<script>
+const photos = [
+  "DSC02602-Edit.jpg",
+  "DSC02846-Edit.jpg",
+  "DSC02944-Edit.jpg",
+  "DSC03021-Edit.jpg",
+  "DSC03167.jpg",
+  "DSC03211-Edit.jpg",
+  "DSC03506.jpg",
+  "DSC03569.jpg",
+  "DSC03641-Edit.jpg",
+  "DSC03660-Edit.jpg",
+  "DSC03737-Edit.jpg",
+  "DSC03858.jpg",
+  "DSC03859.jpg",
+  "DSC04032.jpg",
+  "DSC04312.jpg",
+  "DSC04329.jpg",
+  "DSC04357.jpg",
+  "DSC04367-Edit.jpg",
+  "DSC04421-Edit.jpg"
+];
+
+// Google Drive folder - photos served via Drive thumbnail API
+const DRIVE_FOLDER_URL = "https://drive.google.com/open?id=1rbXXEzIB4mEQyq2oDg8CGP8sZypyHPsz";
+
+// Build gallery from local preview thumbs (generated as data URIs or placeholder)
+const gallery = document.getElementById('gallery');
+let currentIndex = 0;
+
+photos.forEach((photo, i) => {
+  const item = document.createElement('div');
+  item.className = 'gallery-item';
+  item.style.animationDelay = `${i * 0.03}s`;
+  // Use a colored placeholder since we can't serve images from GitHub Pages easily
+  const hue = (i * 19) % 360;
+  item.innerHTML = `
+    <div style="width:100%;height:100%;background:linear-gradient(135deg, hsl(${hue},20%,15%), hsl(${(hue+40)%360},25%,10%));display:flex;align-items:center;justify-content:center;">
+      <span style="font-size:0.7rem;color:rgba(255,255,255,0.4);font-weight:600;">${photo.replace('.jpg','').replace('-Edit','')}</span>
+    </div>
+    <div class="overlay"><span>${photo}</span></div>
+  `;
+  item.onclick = () => openLightbox(i);
+  gallery.appendChild(item);
+});
+
+// Update Drive button when link is set
+const driveBtn = document.getElementById('driveBtn');
+if (DRIVE_FOLDER_URL !== "DRIVE_LINK_PLACEHOLDER") {
+  driveBtn.href = DRIVE_FOLDER_URL;
+  driveBtn.target = "_blank";
+}
+
+function scrollToGallery() {
+  document.getElementById('galleryAnchor').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Lightbox - shows filename info (actual image viewing via Drive)
+function openLightbox(index) {
+  currentIndex = index;
+  const lb = document.getElementById('lightbox');
+  lb.classList.add('active');
+  updateLightbox();
+  document.addEventListener('keydown', handleKeys);
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.removeEventListener('keydown', handleKeys);
+}
+
+function navLightbox(dir) {
+  currentIndex = (currentIndex + dir + photos.length) % photos.length;
+  updateLightbox();
+}
+
+function updateLightbox() {
+  const img = document.getElementById('lightboxImg');
+  // Show placeholder with filename - actual downloads via Drive
+  const hue = (currentIndex * 19) % 360;
+  img.style.display = 'none';
+  img.parentElement.querySelector('.lightbox-counter').previousElementSibling || null;
+  document.getElementById('lightboxCounter').textContent = `${currentIndex + 1} / ${photos.length} — ${photos[currentIndex]}`;
+}
+
+function handleKeys(e) {
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowRight') navLightbox(1);
+  if (e.key === 'ArrowLeft') navLightbox(-1);
+}
+
+// Close lightbox on background click
+document.getElementById('lightbox').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeLightbox();
+});
+</script>
+</body>
+</html>
