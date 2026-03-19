@@ -250,10 +250,76 @@
       white-space: normal;
     }
   }
+
+  /* Password gate */
+  #gate {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+  #gate.hidden { display: none; }
+  #gate h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  #gate form {
+    display: flex;
+    gap: 0.5rem;
+  }
+  #gate input[type="password"] {
+    font-family: inherit;
+    font-size: 0.95rem;
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--divider);
+    border-radius: 8px;
+    outline: none;
+    width: 220px;
+    transition: border-color 0.2s;
+  }
+  #gate input[type="password"]:focus {
+    border-color: var(--accent);
+  }
+  #gate button {
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.6rem 1.25rem;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  #gate button:hover { opacity: 0.85; }
+  #gate .error {
+    font-size: 0.8rem;
+    color: var(--accent);
+    min-height: 1.2em;
+  }
+  #main-content.locked { display: none; }
 </style>
 </head>
 <body>
 
+<!-- PASSWORD GATE -->
+<div id="gate">
+  <h2>Private</h2>
+  <form id="gate-form">
+    <input type="password" id="gate-pw" placeholder="Password" autocomplete="off" autofocus>
+    <button type="submit">Enter</button>
+  </form>
+  <p class="error" id="gate-error"></p>
+</div>
+
+<div id="main-content" class="locked">
 <div class="top-bar"></div>
 
 <div class="container">
@@ -282,6 +348,43 @@
 </div>
 
 <script>
+// Password gate
+(function() {
+  var HASH = '5e8cd03c99bc9d3c539629aab2df81c9beeecbc1d47a723a4f15f172d2646459';
+  var KEY = 'rpb_auth';
+  var gate = document.getElementById('gate');
+  var main = document.getElementById('main-content');
+
+  async function sha256(str) {
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+  }
+
+  function unlock() {
+    gate.classList.add('hidden');
+    main.classList.remove('locked');
+    localStorage.setItem(KEY, '1');
+  }
+
+  // Check if already authenticated
+  if (localStorage.getItem(KEY) === '1') {
+    unlock();
+  }
+
+  document.getElementById('gate-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    var pw = document.getElementById('gate-pw').value;
+    var h = await sha256(pw);
+    if (h === HASH) {
+      unlock();
+    } else {
+      document.getElementById('gate-error').textContent = 'Wrong password';
+      document.getElementById('gate-pw').value = '';
+      document.getElementById('gate-pw').focus();
+    }
+  });
+})();
+
 (async function () {
   const REPO = 'mattmatheson/RandomPhoneBuilds';
   const API  = 'https://api.github.com/repos/' + REPO + '/contents/';
@@ -396,5 +499,6 @@
 })();
 </script>
 
+</div><!-- /main-content -->
 </body>
 </html>
