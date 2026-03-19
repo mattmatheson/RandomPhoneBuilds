@@ -3,1361 +3,956 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sheriff Eddie Farris — Putnam County, Tennessee</title>
-    <meta name="description" content="Re-elect Sheriff Eddie Farris. Keeping Putnam County Safe — Yesterday, Today, and Tomorrow. FBI Academy Graduate. 35+ Years of Service.">
+    <title>Eddie Farris — Sheriff of Putnam County, Tennessee</title>
+    <meta name="description" content="Re-elect Sheriff Eddie Farris. Keeping Putnam County Safe — Yesterday, Today, and Tomorrow.">
     <link rel="icon" href="https://eddiefarris.com/wp-content/uploads/2025/08/cropped-Badge-32x32.png" sizes="32x32">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --navy: #0a1628;
-            --navy-light: #112240;
-            --navy-mid: #0d1d38;
-            --navy-surface: #162a4a;
-            --red: #bf0a30;
-            --red-dark: #9a0826;
-            --red-glow: rgba(191, 10, 48, 0.25);
-            --white: #ffffff;
+            --bg: #0c0c0c;
+            --bg-elevated: #141414;
+            --bg-surface: #1a1a1a;
+            --border: rgba(255,255,255,0.08);
+            --border-hover: rgba(255,255,255,0.15);
+            --text: #ffffff;
+            --text-secondary: rgba(255,255,255,0.65);
+            --text-muted: rgba(255,255,255,0.4);
             --gold: #c5a55a;
-            --gold-light: #d4b96e;
-            --gold-dim: rgba(197, 165, 90, 0.12);
-            --blue: #3c6eb5;
-            --text: #f0f0f0;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
-            --glass-bg: rgba(255, 255, 255, 0.06);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --glass-hover: rgba(255, 255, 255, 0.1);
-            --radius: 16px;
-            --transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --gold-dim: rgba(197,165,90,0.15);
+            --red: #bf0a30;
         }
 
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
         html { scroll-behavior: smooth; }
 
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--navy);
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
             color: var(--text);
             overflow-x: hidden;
-            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
         }
 
-        /* ===== SVG ICON SYSTEM ===== */
-        .icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
-            flex-shrink: 0;
-        }
-        .icon svg { width: 100%; height: 100%; }
-        .icon-lg { width: 32px; height: 32px; }
-        .icon-xl { width: 40px; height: 40px; }
-
-        /* ===== FLOATING NAVBAR ===== */
+        /* ===== NAV ===== */
         nav {
             position: fixed;
-            top: 1rem;
-            left: 1rem;
-            right: 1rem;
-            z-index: 1000;
-            padding: 0.75rem 1.5rem;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            align-items: center;
-            border-radius: 12px;
-            background: rgba(10, 22, 40, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            transition: all var(--transition);
+            padding: 0 2.5rem;
+            height: 60px;
+            background: rgba(12,12,12,0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s;
         }
 
-        nav.scrolled {
-            background: rgba(10, 22, 40, 0.92);
-            border-color: rgba(197, 165, 90, 0.15);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        .nav-brand {
+        .nav-left {
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 1rem;
         }
 
-        .nav-brand img {
-            height: 36px;
-            filter: brightness(1.1);
-        }
+        .nav-left img { height: 32px; }
 
-        .nav-brand span {
+        .nav-left span {
             font-family: 'Oswald', sans-serif;
-            font-weight: 600;
-            font-size: 1rem;
-            letter-spacing: 2px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            color: var(--gold);
+            color: var(--text);
         }
 
         .nav-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 0;
             list-style: none;
-            align-items: center;
+            height: 100%;
+            align-items: stretch;
         }
 
+        .nav-links li { display: flex; align-items: stretch; }
+
         .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 0 1.25rem;
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.78rem;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            font-weight: 500;
-            transition: color var(--transition);
+            font-weight: 400;
+            transition: color 0.2s;
+            border-bottom: 2px solid transparent;
             cursor: pointer;
         }
 
-        .nav-links a:hover, .nav-links a:focus { color: var(--gold); outline: none; }
-
-        .nav-cta {
-            background: var(--red) !important;
-            color: var(--white) !important;
-            padding: 0.45rem 1.1rem;
-            border-radius: 8px;
-            font-weight: 600 !important;
-            transition: background var(--transition), transform var(--transition) !important;
-            cursor: pointer;
+        .nav-links a:hover {
+            color: var(--text);
+            border-bottom-color: var(--text);
         }
-
-        .nav-cta:hover { background: var(--red-dark) !important; transform: translateY(-1px); }
 
         .mobile-toggle {
             display: none;
             background: none;
             border: none;
-            padding: 0.5rem;
+            color: var(--text);
             cursor: pointer;
-            color: var(--white);
+            padding: 0.5rem;
         }
 
         /* ===== HERO ===== */
         .hero {
             position: relative;
-            min-height: 100vh;
+            height: 100vh;
+            min-height: 600px;
             display: flex;
             align-items: center;
+            justify-content: center;
             overflow: hidden;
-            padding: 6rem 1.5rem 4rem;
         }
 
-        .hero-bg {
+        .hero-media {
             position: absolute;
             inset: 0;
-            background:
-                radial-gradient(ellipse at 20% 40%, rgba(191, 10, 48, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 60%, rgba(60, 110, 181, 0.08) 0%, transparent 50%),
-                linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 100%);
+            z-index: 0;
         }
 
-        /* Subtle animated accent line */
-        .hero-accent {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--red), var(--gold), var(--red));
-            background-size: 200% 100%;
-            animation: accentShift 8s ease-in-out infinite;
-        }
-
-        @keyframes accentShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .hero-inner {
-            position: relative;
-            z-index: 2;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .hero-text { max-width: 560px; }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--gold-dim);
-            border: 1px solid rgba(197, 165, 90, 0.25);
-            padding: 0.4rem 1.2rem;
-            border-radius: 100px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 1.5rem;
-            opacity: 0;
-            animation: fadeUp 0.6s ease 0.2s forwards;
-        }
-
-        .hero-title {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            font-size: clamp(3rem, 8vw, 6rem);
-            line-height: 0.92;
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
-            margin-bottom: 0.75rem;
-            opacity: 0;
-            animation: fadeUp 0.8s ease 0.4s forwards;
-        }
-
-        .hero-title .first-line {
-            display: block;
-            font-size: 0.38em;
-            font-weight: 500;
-            letter-spacing: 0.15em;
-            color: var(--gold);
-            margin-bottom: 0.25rem;
-        }
-
-        .hero-subtitle {
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 400;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            margin-bottom: 1.25rem;
-            opacity: 0;
-            animation: fadeUp 0.6s ease 0.6s forwards;
-        }
-
-        .hero-tagline {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 2rem;
-            opacity: 0;
-            animation: fadeUp 0.6s ease 0.8s forwards;
-        }
-
-        .hero-tagline strong { color: var(--text); }
-
-        .hero-ctas {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-            opacity: 0;
-            animation: fadeUp 0.6s ease 1s forwards;
-        }
-
-        .hero-photo {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            opacity: 0;
-            animation: fadeUp 1s ease 0.5s forwards;
-        }
-
-        .hero-photo img {
-            width: 100%;
-            max-width: 420px;
-            border-radius: var(--radius);
-            filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
-        }
-
-        .hero-photo::after {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            max-width: 424px;
-            width: calc(100% + 4px);
-            border-radius: calc(var(--radius) + 2px);
-            background: linear-gradient(135deg, var(--gold), transparent 50%, var(--red));
-            z-index: -1;
-            opacity: 0.4;
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== BUTTONS ===== */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.85rem 2rem;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 0.82rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            text-decoration: none;
-            transition: all var(--transition);
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn-primary {
-            background: var(--red);
-            color: var(--white);
-            box-shadow: 0 4px 24px var(--red-glow);
-        }
-
-        .btn-primary:hover {
-            background: var(--red-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px var(--red-glow);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--text);
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .btn-outline:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-            transform: translateY(-2px);
-        }
-
-        /* ===== TICKER ===== */
-        .ticker {
-            background: var(--red);
-            padding: 0.55rem 0;
-            overflow: hidden;
-        }
-
-        .ticker-track {
-            display: flex;
-            animation: ticker 35s linear infinite;
-            white-space: nowrap;
-        }
-
-        .ticker-item {
-            font-family: 'Oswald', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 500;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            padding: 0 2.5rem;
-            flex-shrink: 0;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .ticker-star { color: var(--gold); font-size: 0.7rem; }
-
-        @keyframes ticker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* ===== SECTIONS ===== */
-        .section {
-            padding: 5rem 1.5rem;
-            position: relative;
-        }
-
-        .section-inner {
-            max-width: 1120px;
-            margin: 0 auto;
-        }
-
-        .section-label {
-            font-family: 'Oswald', sans-serif;
-            font-size: 0.72rem;
-            font-weight: 500;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 0.5rem;
-        }
-
-        .section-heading {
-            font-family: 'Oswald', sans-serif;
-            font-size: clamp(1.8rem, 4vw, 3rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: -0.01em;
-            line-height: 1.1;
-            margin-bottom: 1rem;
-        }
-
-        .section-desc {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            max-width: 620px;
-            line-height: 1.7;
-        }
-
-        /* ===== GLASSMORPHISM CARDS ===== */
-        .glass {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius);
-            transition: all var(--transition);
-            cursor: pointer;
-        }
-
-        .glass:hover {
-            background: var(--glass-hover);
-            border-color: rgba(197, 165, 90, 0.25);
-            transform: translateY(-4px);
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
-        }
-
-        /* ===== STATS ===== */
-        .stats-section {
-            background: linear-gradient(135deg, var(--navy-light), var(--navy-mid));
-            border-top: 1px solid rgba(197, 165, 90, 0.1);
-            border-bottom: 1px solid rgba(197, 165, 90, 0.1);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 1px;
-        }
-
-        .stat-card {
-            text-align: center;
-            padding: 2.5rem 1rem;
-            position: relative;
-        }
-
-        .stat-card + .stat-card::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 25%;
-            bottom: 25%;
-            width: 1px;
-            background: rgba(197, 165, 90, 0.15);
-        }
-
-        .stat-number {
-            font-family: 'Oswald', sans-serif;
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: var(--gold);
-            line-height: 1;
-        }
-
-        .stat-suffix { font-size: 1.2rem; color: var(--gold-light); }
-
-        .stat-label {
-            font-size: 0.72rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-top: 0.4rem;
-        }
-
-        /* ===== ABOUT ===== */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 380px 1fr;
-            gap: 4rem;
-            align-items: start;
-            margin-top: 2.5rem;
-        }
-
-        .about-photo {
-            position: relative;
-            border-radius: var(--radius);
-            overflow: hidden;
-            border: 2px solid rgba(197, 165, 90, 0.3);
-            aspect-ratio: 3/4;
-        }
-
-        .about-photo img {
+        .hero-media img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: top;
+            object-position: center 20%;
         }
 
-        .credentials {
-            list-style: none;
-            margin-top: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
-
-        .credentials li {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.65rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            font-size: 0.9rem;
-            color: var(--text);
-        }
-
-        .credentials .icon { color: var(--gold); }
-
-        /* ===== TIMELINE ===== */
-        .timeline {
-            position: relative;
-            margin-top: 2.5rem;
-            padding-left: 2rem;
-        }
-
-        .timeline::before {
+        .hero-media::after {
             content: '';
             position: absolute;
-            left: 6px;
-            top: 8px;
-            bottom: 8px;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--red), var(--gold), var(--blue));
+            inset: 0;
+            background: linear-gradient(180deg,
+                rgba(12,12,12,0.3) 0%,
+                rgba(12,12,12,0.1) 40%,
+                rgba(12,12,12,0.6) 80%,
+                rgba(12,12,12,1) 100%
+            );
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero-eyebrow {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.3s forwards;
+        }
+
+        .hero-name {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            line-height: 0.9;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.5s forwards;
+        }
+
+        .hero-office {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: var(--text-secondary);
+            margin-top: 0.75rem;
+            letter-spacing: -0.3px;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.8s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== HORIZONTAL NAV STRIP ===== */
+        .nav-strip {
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .nav-strip::-webkit-scrollbar { display: none; }
+
+        .nav-strip-inner {
+            display: flex;
+            max-width: 1000px;
+            margin: 0 auto;
+            min-width: max-content;
+        }
+
+        .nav-strip a {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.75rem;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            text-decoration: none;
+            white-space: nowrap;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-strip a:hover { color: var(--text); }
+
+        /* ===== BODY TEXT ===== */
+        .text-section {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 3.5rem 2rem;
+        }
+
+        .text-section p {
+            font-size: 0.92rem;
+            line-height: 1.85;
+            color: var(--text-secondary);
+            text-align: justify;
+            margin-bottom: 1.25rem;
+        }
+
+        .text-section p:last-child { margin-bottom: 0; }
+
+        /* ===== CENTERED HEADING ===== */
+        .centered-block {
+            text-align: center;
+            padding: 3rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .centered-block h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .centered-block .subtitle {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+            letter-spacing: -0.3px;
+        }
+
+        /* ===== PRIORITIES ACCORDION ===== */
+        .priorities {
+            display: flex;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .priority-panel {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            transition: flex 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            min-width: 0;
+        }
+
+        .priority-panel:hover { flex: 3; }
+
+        .priority-panel img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .priority-panel:hover img { transform: scale(1.03); }
+
+        .priority-panel::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+            transition: background 0.3s;
+        }
+
+        .priority-panel:hover::after {
+            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%);
+        }
+
+        .priority-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            z-index: 2;
+        }
+
+        .priority-label h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1.3;
+        }
+
+        .priority-label .priority-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.4rem;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.4s ease, opacity 0.3s ease;
+            line-height: 1.5;
+        }
+
+        .priority-panel:hover .priority-desc {
+            max-height: 80px;
+            opacity: 1;
+        }
+
+        /* ===== DIVIDER ===== */
+        .divider {
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ===== CREDENTIALS SECTION ===== */
+        .credentials-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .credentials-photo {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            object-position: top;
             border-radius: 2px;
         }
 
-        .tl-item {
-            position: relative;
-            padding: 0 0 2.5rem 2rem;
+        .credentials-content h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.25rem;
         }
 
-        .tl-item:last-child { padding-bottom: 0; }
+        .credentials-content .subtitle {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
 
-        .tl-dot {
-            position: absolute;
-            left: -2rem;
-            top: 6px;
-            width: 14px;
-            height: 14px;
+        .credentials-content p {
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .cred-list {
+            list-style: none;
+            margin-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .cred-list li {
+            padding: 0.65rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .cred-list .dot {
+            width: 4px;
+            height: 4px;
             border-radius: 50%;
             background: var(--gold);
-            border: 3px solid var(--navy);
-            box-shadow: 0 0 0 2px var(--gold);
-            z-index: 1;
+            flex-shrink: 0;
         }
 
-        .tl-card {
-            padding: 1.25rem 1.5rem;
+        /* ===== TIMELINE ===== */
+        .timeline-section {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .tl-item {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 1.5rem;
+            padding: 1.25rem 0;
+            border-bottom: 1px solid var(--border);
         }
 
         .tl-year {
             font-family: 'Oswald', sans-serif;
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 2.5px;
-            color: var(--gold);
-            margin-bottom: 0.3rem;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            padding-top: 0.15rem;
         }
 
-        .tl-title {
+        .tl-body h4 {
             font-family: 'Oswald', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1rem;
+            font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.25rem;
         }
 
-        .tl-desc {
-            font-size: 0.88rem;
+        .tl-body p {
+            font-size: 0.85rem;
             color: var(--text-secondary);
             line-height: 1.6;
         }
 
-        /* ===== CARD GRIDS ===== */
-        .card-grid-3 {
+        /* ===== PHOTO STRIP ===== */
+        .photo-strip {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.25rem;
-            margin-top: 2.5rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
         }
 
-        .card-grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.25rem;
-            margin-top: 2.5rem;
-        }
-
-        .feature-card {
-            padding: 2rem;
-        }
-
-        .feature-card .card-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: var(--gold-dim);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.25rem;
-            color: var(--gold);
-        }
-
-        .feature-card .card-title {
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-card .card-text {
-            font-size: 0.88rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        /* ===== PHOTO GRID ===== */
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.25rem;
-            margin-top: 2.5rem;
-        }
-
-        .photo-card {
+        .photo-strip-item {
+            position: relative;
+            aspect-ratio: 4/3;
             overflow: hidden;
             cursor: pointer;
         }
 
-        .photo-card img {
+        .photo-strip-item img {
             width: 100%;
-            aspect-ratio: 4/3;
+            height: 100%;
             object-fit: cover;
-            display: block;
-            border-radius: var(--radius) var(--radius) 0 0;
             transition: transform 0.4s ease;
         }
 
-        .photo-card:hover img { transform: scale(1.03); }
+        .photo-strip-item:hover img { transform: scale(1.04); }
 
-        .photo-card .caption {
-            padding: 1rem 1.25rem;
-            background: var(--glass-bg);
-        }
-
-        .photo-card .caption-name {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 600;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .photo-card .caption-role {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            margin-top: 0.15rem;
-        }
-
-        /* ===== AWARDS ===== */
-        .awards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-            gap: 1rem;
-            margin-top: 2.5rem;
-        }
-
-        .award-card {
-            padding: 1.5rem 1rem;
-            text-align: center;
-        }
-
-        .award-card .card-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: var(--gold-dim);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 0.75rem;
-            color: var(--gold);
-        }
-
-        .award-card .award-name {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 600;
-            font-size: 0.78rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--gold);
-        }
-
-        .award-card .award-year {
-            font-size: 0.72rem;
-            color: var(--text-muted);
-            margin-top: 0.2rem;
-        }
-
-        /* ===== ENDORSEMENTS ===== */
-        .endorsement-card {
-            padding: 1.75rem;
-        }
-
-        .endorsement-card .quote {
-            font-size: 0.95rem;
-            line-height: 1.7;
-            color: var(--text);
-            margin-bottom: 1rem;
-            position: relative;
-            padding-left: 1.25rem;
-            font-style: italic;
-        }
-
-        .endorsement-card .quote::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            border-radius: 2px;
-            background: linear-gradient(to bottom, var(--gold), transparent);
-        }
-
-        .endorsement-card .endorser {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 600;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-            color: var(--gold);
-        }
-
-        .endorsement-card .endorser-role {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            margin-top: 0.15rem;
-        }
-
-        /* ===== PROGRAMS ===== */
-        .programs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 0.75rem;
-            margin-top: 2.5rem;
-        }
-
-        .program-chip {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.9rem 1.25rem;
-            cursor: pointer;
-        }
-
-        .program-chip .icon { color: var(--gold); }
-
-        .program-chip span {
-            font-weight: 500;
-            font-size: 0.85rem;
-        }
-
-        /* ===== BANNER ===== */
-        .banner {
-            background: var(--red);
-            text-align: center;
-            padding: 2.5rem 1.5rem;
-        }
-
-        .banner-text {
-            font-family: 'Oswald', sans-serif;
-            font-size: clamp(1.3rem, 3.5vw, 2rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .banner-sub {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.75);
-            margin-top: 0.4rem;
-        }
-
-        /* ===== VALUES ===== */
-        .values-row {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .value-tag {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: 'Oswald', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 500;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-        }
-
-        .value-tag::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--gold);
-        }
-
-        /* ===== CTA SECTION ===== */
-        .cta-section {
-            position: relative;
-            padding: 7rem 1.5rem;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .cta-section::before {
-            content: '';
+        .photo-strip-item .overlay {
             position: absolute;
             inset: 0;
-            background:
-                radial-gradient(ellipse at center, rgba(191, 10, 48, 0.15) 0%, transparent 60%),
-                linear-gradient(180deg, var(--navy), var(--navy-mid));
+            background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.8) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.25rem;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        .cta-content {
-            position: relative;
-            z-index: 2;
-            max-width: 640px;
-            margin: 0 auto;
-        }
+        .photo-strip-item:hover .overlay { opacity: 1; }
 
-        .cta-heading {
+        .overlay .name {
             font-family: 'Oswald', sans-serif;
-            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .overlay .role {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            margin-top: 0.15rem;
+        }
+
+        /* ===== ENDORSEMENT QUOTES ===== */
+        .quotes-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem 4rem;
+        }
+
+        .quote-item {
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quote-item:first-child { border-top: 1px solid var(--border); }
+
+        .quote-text {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+        }
+
+        .quote-attr {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        /* ===== PROGRAMS GRID ===== */
+        .programs-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .programs-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .program-cell {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            font-size: 0.82rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            transition: color 0.2s, background 0.2s;
+            cursor: default;
+        }
+
+        .program-cell:hover {
+            color: var(--text);
+            background: var(--bg-elevated);
+        }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            text-align: center;
+            padding: 5rem 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .cta-section h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(2rem, 5vw, 3rem);
             font-weight: 700;
             text-transform: uppercase;
-            line-height: 1.05;
-            margin-bottom: 1rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
         }
 
-        .cta-heading .highlight { color: var(--red); }
-
-        .cta-desc {
+        .cta-section .subtitle {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
             font-size: 1rem;
             color: var(--text-secondary);
             margin-bottom: 2rem;
-            line-height: 1.7;
         }
 
         .cta-buttons {
             display: flex;
-            gap: 0.75rem;
+            gap: 0;
             justify-content: center;
             flex-wrap: wrap;
         }
 
-        /* ===== DIVIDER ===== */
-        .star-divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            padding: 0.5rem 0;
+        .cta-btn {
+            padding: 0.9rem 2.5rem;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--text);
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+            cursor: pointer;
+            background: none;
         }
 
-        .star-divider::before, .star-divider::after {
-            content: '';
-            flex: 1;
-            max-width: 140px;
-            height: 1px;
-            background: linear-gradient(to right, transparent, rgba(197, 165, 90, 0.4), transparent);
+        .cta-btn:hover {
+            background: var(--text);
+            color: var(--bg);
         }
 
-        .star-divider svg { color: var(--gold); width: 16px; height: 16px; }
+        .cta-btn.primary {
+            background: var(--text);
+            color: var(--bg);
+        }
+
+        .cta-btn.primary:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+        }
 
         /* ===== FOOTER ===== */
         footer {
-            background: var(--navy-mid);
-            border-top: 1px solid rgba(197, 165, 90, 0.1);
-            padding: 3rem 1.5rem 2rem;
+            border-top: 1px solid var(--border);
+            padding: 3rem 2.5rem 2rem;
         }
 
         .footer-grid {
-            max-width: 1120px;
+            max-width: 1000px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
         }
 
         .footer-col h4 {
             font-family: 'Oswald', sans-serif;
-            font-size: 0.78rem;
-            letter-spacing: 3px;
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            color: var(--gold);
+            color: var(--text-muted);
             margin-bottom: 0.75rem;
         }
 
-        .footer-col p, .footer-col a {
-            font-size: 0.85rem;
+        .footer-col a {
+            display: block;
+            font-size: 0.82rem;
             color: var(--text-secondary);
             text-decoration: none;
-            line-height: 1.8;
-            transition: color var(--transition);
+            padding: 0.2rem 0;
+            transition: color 0.2s;
         }
 
-        .footer-col a:hover { color: var(--gold); }
+        .footer-col a:hover { color: var(--text); }
+
+        .footer-col p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
 
         .footer-bottom {
-            max-width: 1120px;
-            margin: 1.5rem auto 0;
+            max-width: 1000px;
+            margin: 2rem auto 0;
             padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-            text-align: center;
-            font-size: 0.72rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.7rem;
             color: var(--text-muted);
+            text-align: center;
+            letter-spacing: 0.5px;
         }
 
-        /* ===== SCROLL REVEAL ===== */
-        .reveal {
-            opacity: 0;
-            transform: translateY(32px);
-            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .reveal.vis { opacity: 1; transform: translateY(0); }
+        /* ===== FADE IN ===== */
+        .fade { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade.vis { opacity: 1; transform: translateY(0); }
 
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 900px) {
-            .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
-            .hero-text { max-width: 100%; }
-            .hero-ctas { justify-content: center; }
-            .hero-photo { order: -1; }
-            .hero-photo img { max-width: 280px; }
-            .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .about-photo { max-width: 320px; margin: 0 auto; }
-            .stats-grid { grid-template-columns: repeat(3, 1fr); }
-            .stat-card + .stat-card::before { display: none; }
-        }
-
-        @media (max-width: 640px) {
-            nav { top: 0.5rem; left: 0.5rem; right: 0.5rem; padding: 0.6rem 1rem; }
+        @media (max-width: 768px) {
+            nav { padding: 0 1.25rem; }
             .nav-links { display: none; }
             .nav-links.open {
                 display: flex;
                 flex-direction: column;
                 position: absolute;
-                top: calc(100% + 0.5rem);
+                top: 60px;
                 left: 0;
                 right: 0;
-                background: rgba(10, 22, 40, 0.96);
-                backdrop-filter: blur(20px);
-                border: 1px solid var(--glass-border);
-                border-radius: 12px;
-                padding: 1rem 1.5rem;
-                gap: 0.75rem;
+                background: rgba(12,12,12,0.97);
+                border-bottom: 1px solid var(--border);
+                padding: 0.5rem 0;
             }
+            .nav-links.open a { padding: 0.75rem 1.5rem; border-bottom: none; }
             .mobile-toggle { display: block; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .section { padding: 3.5rem 1rem; }
-            .card-grid-3 { grid-template-columns: 1fr; }
-            .photo-grid { grid-template-columns: repeat(2, 1fr); }
-            .awards-grid { grid-template-columns: repeat(2, 1fr); }
+            .credentials-section { grid-template-columns: 1fr; gap: 2rem; }
+            .credentials-photo { max-width: 280px; }
+            .priorities { flex-direction: column; height: auto; }
+            .priority-panel { height: 200px; }
+            .priority-panel:hover { flex: 1; }
+            .priority-desc { max-height: 60px !important; opacity: 1 !important; }
+            .photo-strip { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr; }
+            .tl-item { grid-template-columns: 60px 1fr; gap: 1rem; }
         }
     </style>
 </head>
 <body>
 
     <!-- NAV -->
-    <nav id="navbar">
-        <div class="nav-brand">
-            <img src="https://eddiefarris.com/wp-content/uploads/2025/08/Eddie-Farris-Logo.png" alt="Eddie Farris for Sheriff logo">
-            <span>Farris for Sheriff</span>
+    <nav>
+        <div class="nav-left">
+            <img src="https://eddiefarris.com/wp-content/uploads/2025/08/cropped-Badge-270x270.png" alt="Putnam County Sheriff badge">
+            <span>Eddie Farris</span>
         </div>
         <ul class="nav-links" id="navLinks">
             <li><a href="#about">About</a></li>
             <li><a href="#record">Record</a></li>
-            <li><a href="#platform">Platform</a></li>
+            <li><a href="#priorities">Priorities</a></li>
             <li><a href="#allies">Allies</a></li>
             <li><a href="#endorsements">Endorsements</a></li>
-            <li><a href="#contact" class="nav-cta">Support Eddie</a></li>
+            <li><a href="#contact">Support</a></li>
         </ul>
-        <button class="mobile-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Toggle navigation menu">
-            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        <button class="mobile-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 6h16M3 11h16M3 16h16"/></svg>
         </button>
     </nav>
 
     <!-- HERO -->
     <section class="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-accent"></div>
-        <div class="hero-inner">
-            <div class="hero-text">
-                <div class="hero-badge">
-                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                    Re-Elect Sheriff 2026
-                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                </div>
-                <h1 class="hero-title">
-                    <span class="first-line">Sheriff Eddie</span>
-                    FARRIS
-                </h1>
-                <p class="hero-subtitle">Putnam County, Tennessee</p>
-                <p class="hero-tagline">
-                    Keeping Putnam County Safe &mdash; Yesterday, Today, and Tomorrow.<br>
-                    <strong>Promises Made. Promises Kept.</strong>
-                </p>
-                <div class="hero-ctas">
-                    <a href="#platform" class="btn btn-primary">
-                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                        His Platform
-                    </a>
-                    <a href="#about" class="btn btn-outline">Meet the Sheriff</a>
-                </div>
-            </div>
-            <div class="hero-photo">
-                <img src="https://eddiefarris.com/wp-content/uploads/2025/08/Eddie-Photo-Circle-2.png" alt="Sheriff Eddie Farris in uniform">
-            </div>
+        <div class="hero-media">
+            <img src="https://eddiefarris.com/wp-content/uploads/2026/02/Background-2.png" alt="Sheriff Eddie Farris">
+        </div>
+        <div class="hero-content">
+            <p class="hero-eyebrow">Re-Elect Sheriff &middot; 2026</p>
+            <h1 class="hero-name">Eddie Farris</h1>
+            <p class="hero-office">Sheriff of Putnam County, Tennessee</p>
         </div>
     </section>
 
-    <!-- TICKER -->
-    <div class="ticker" role="marquee" aria-label="Achievements ticker">
-        <div class="ticker-track">
-            <span class="ticker-item"><span class="ticker-star">&#9733;</span>FBI National Academy Graduate</span>
-            <span class="ticker-item"><span class="ticker-star">&#9733;</span>35+ Years Law Enforcement</span>
-            <span class="ticker-item"><span class="ticker-star">&#9733;</span>ACRU Defender Award</span>
-            <span class="ticker-item"><span class="ticker-star">&#9733;</span>Tennessee Sheriffs' Association President</span>
-            <span class="ticker-item"><span class="ticker-star">&#9733;</span>TLEA Accredited Department</span>
-            <span class="ticker-item"><span class="ticker-star">&#9733;</span>HIDTA Case of the Year</span>
-            <span class="ticker-item"><span class="ticker-star">&#9733;</span>ETSU Baseball Captain</span>
-            <span class="ticker-item"><span class="ticker-star">&#9733;</span>10+ Years Clean Audits</span>
-            <span class="ticker-item"><span class="ticker-star">&#9733;</span>FBI National Academy Graduate</span>
-            <span class="ticker-item"><span class="ticker-star">&#9733;</span>35+ Years Law Enforcement</span>
-            <span class="ticker-item"><span class="ticker-star">&#9733;</span>ACRU Defender Award</span>
-            <span class="ticker-item"><span class="ticker-star">&#9733;</span>Tennessee Sheriffs' Association President</span>
-            <span class="ticker-item"><span class="ticker-star">&#9733;</span>TLEA Accredited Department</span>
-            <span class="ticker-item"><span class="ticker-star">&#9733;</span>HIDTA Case of the Year</span>
-            <span class="ticker-item"><span class="ticker-star">&#9733;</span>ETSU Baseball Captain</span>
-            <span class="ticker-item"><span class="ticker-star">&#9733;</span>10+ Years Clean Audits</span>
+    <!-- NAV STRIP -->
+    <div class="nav-strip">
+        <div class="nav-strip-inner">
+            <a href="#about">About</a>
+            <a href="#record">Record</a>
+            <a href="#priorities">Priorities</a>
+            <a href="#allies">Allies</a>
+            <a href="#endorsements">Endorsements</a>
+            <a href="#programs">Programs</a>
+            <a href="https://www.facebook.com/EddieFarrisforSheriff" target="_blank" rel="noopener">Facebook</a>
+            <a href="#contact">Contact</a>
         </div>
     </div>
 
-    <!-- STATS -->
-    <section class="stats-section section">
-        <div class="section-inner">
-            <div class="stats-grid">
-                <div class="stat-card reveal"><div class="stat-number"><span data-count="35">0</span><span class="stat-suffix">+</span></div><div class="stat-label">Years Serving</div></div>
-                <div class="stat-card reveal"><div class="stat-number"><span data-count="94">0</span></div><div class="stat-label">Sworn Deputies</div></div>
-                <div class="stat-card reveal"><div class="stat-number"><span data-count="80">0</span><span class="stat-suffix">K+</span></div><div class="stat-label">Citizens Protected</div></div>
-                <div class="stat-card reveal"><div class="stat-number"><span data-count="10">0</span><span class="stat-suffix">+</span></div><div class="stat-label">Clean Audits</div></div>
-                <div class="stat-card reveal"><div class="stat-number"><span data-count="3">0</span><span class="stat-suffix">x</span></div><div class="stat-label">TLEA Accredited</div></div>
+    <!-- INTRO TEXT -->
+    <div class="text-section fade">
+        <p>Under Sheriff Eddie Farris's leadership, Putnam County has become one of the most professionally run law enforcement agencies in the state of Tennessee &mdash; one of only a handful of sheriff's offices to achieve TLEA accreditation, and the first in the region to partner with federal agencies through the ICE 287(g) program.</p>
+        <p>A native son of Putnam County, Farris has spent more than 35 years in law enforcement, serving at every level from deputy to TBI Special Agent to FBI task force member before returning home to lead the department where his career began.</p>
+        <p>His administration has returned millions of budgeted funds to the general fund, delivered 10+ consecutive clean audits, and built the county's first training center and firearms range at zero cost to taxpayers &mdash; all while expanding community programs, modernizing equipment, and leading the response to some of the worst crises in Putnam County history.</p>
+    </div>
+
+    <!-- CENTERED NAME -->
+    <div class="centered-block fade">
+        <h2>Eddie Farris</h2>
+        <p class="subtitle">Sheriff of Putnam County, Tennessee</p>
+        <p style="margin-top:0.25rem;font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);">Keeping Putnam County Safe &mdash; Yesterday, Today, and Tomorrow</p>
+    </div>
+
+    <!-- PRIORITIES ACCORDION -->
+    <section id="priorities">
+        <div class="priorities">
+            <div class="priority-panel">
+                <img src="https://eddiefarris.com/wp-content/uploads/2025/08/DSC_0403-1024x683.jpg" alt="Law enforcement training">
+                <div class="priority-label">
+                    <h3>Exemplary Law Enforcement</h3>
+                    <p class="priority-desc">TLEA accredited. Professional policing at the highest national standards.</p>
+                </div>
+            </div>
+            <div class="priority-panel">
+                <img src="https://eddiefarris.com/wp-content/uploads/2025/08/sim.webp" alt="Training simulator">
+                <div class="priority-label">
+                    <h3>Tough on Drug Crime</h3>
+                    <p class="priority-desc">Former TBI Special Agent. HIDTA Case of the Year. Dismantling narcotics networks.</p>
+                </div>
+            </div>
+            <div class="priority-panel">
+                <img src="https://eddiefarris.com/wp-content/uploads/2025/08/thumbnail_IMG_8193-1-768x1024.jpg" alt="Community outreach">
+                <div class="priority-label">
+                    <h3>Protecting Our Schools</h3>
+                    <p class="priority-desc">Dedicated SROs in every Putnam County school. Keeping children safe.</p>
+                </div>
+            </div>
+            <div class="priority-panel">
+                <img src="https://eddiefarris.com/wp-content/uploads/2025/08/Farris_Trump-1.jpg" alt="Sheriff Farris with national leaders">
+                <div class="priority-label">
+                    <h3>Securing Borders at Home</h3>
+                    <p class="priority-desc">First in Tennessee to implement ICE 287(g). ACRU Defender Award.</p>
+                </div>
+            </div>
+            <div class="priority-panel">
+                <img src="https://eddiefarris.com/wp-content/uploads/2025/08/Sheriff-and-Congressman-Rose-1-rotated.jpg" alt="Community trust">
+                <div class="priority-label">
+                    <h3>Community Trust</h3>
+                    <p class="priority-desc">Citizen's Academy. Farm Watch. Coffee with the Sheriff. Faith &amp; family values.</p>
+                </div>
             </div>
         </div>
     </section>
+
+    <div class="divider"></div>
 
     <!-- ABOUT -->
-    <section class="section" id="about">
-        <div class="section-inner">
-            <div class="section-label reveal">About the Sheriff</div>
-            <h2 class="section-heading reveal">Born &amp; Raised in Putnam County</h2>
-            <div class="about-grid">
-                <div class="about-photo reveal">
-                    <img src="https://eddiefarris.com/wp-content/uploads/2025/08/Eddie-Photo-Circle-2.png" alt="Sheriff Eddie Farris portrait">
-                </div>
-                <div class="reveal">
-                    <p class="section-desc">
-                        A native son of Putnam County, Eddie Farris has dedicated his entire life to keeping this community safe. From his days as a deputy in 1989 to his current role as Sheriff, Eddie has built an unmatched career spanning local, state, and federal law enforcement.
-                    </p>
-                    <p class="section-desc" style="margin-top: 0.75rem;">
-                        A Cookeville High School standout who earned full scholarships in baseball and football, Eddie captained the ETSU baseball team and even signed a minor league free agency contract. But his true calling was protecting his community.
-                    </p>
-                    <ul class="credentials">
-                        <li>
-                            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></span>
-                            FBI National Academy Graduate &mdash; Quantico, Virginia
-                        </li>
-                        <li>
-                            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
-                            Tennessee Bureau of Investigation Special Agent
-                        </li>
-                        <li>
-                            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
-                            Tennessee Highway Patrol &mdash; Criminal Investigation
-                        </li>
-                        <li>
-                            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
-                            FBI "Safe Streets" Violent Crime Task Force
-                        </li>
-                        <li>
-                            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-                            President, Tennessee Sheriffs' Association (2021-22)
-                        </li>
-                        <li>
-                            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
-                            U.S. Department of Justice Trained
-                        </li>
-                    </ul>
-                </div>
+    <section id="about">
+        <div class="credentials-section">
+            <img class="credentials-photo fade" src="https://eddiefarris.com/wp-content/uploads/2025/08/Eddie-Photo-Circle-2.png" alt="Sheriff Eddie Farris portrait">
+            <div class="fade">
+                <h2>About Eddie Farris</h2>
+                <p class="subtitle">Born &amp; raised in Putnam County</p>
+                <p>A Cookeville High School standout who earned full scholarships in both baseball and football, Eddie captained the ETSU baseball team and signed a minor league free agency contract before answering his true calling: protecting his community.</p>
+                <p>With a Criminal Justice degree from East Tennessee State University and training from the FBI, DOJ, TBI, and THP, Eddie Farris brings credentials no other candidate can match.</p>
+                <ul class="cred-list">
+                    <li><span class="dot"></span>FBI National Academy Graduate &mdash; Quantico, Virginia</li>
+                    <li><span class="dot"></span>Tennessee Bureau of Investigation Special Agent</li>
+                    <li><span class="dot"></span>Tennessee Highway Patrol &mdash; Criminal Investigation Division</li>
+                    <li><span class="dot"></span>FBI "Safe Streets" Violent Crime Task Force</li>
+                    <li><span class="dot"></span>President, Tennessee Sheriffs' Association (2021-22)</li>
+                    <li><span class="dot"></span>U.S. Department of Justice Trained</li>
+                    <li><span class="dot"></span>Certified Law Enforcement Firearms Instructor &amp; Armorer</li>
+                    <li><span class="dot"></span>Member, Putnam County Beer Board</li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <!-- BANNER -->
-    <div class="banner">
-        <div class="banner-text">"Earning the Public's Trust, Every Day!"</div>
-        <div class="banner-sub">The motto of the Putnam County Sheriff's Office</div>
-    </div>
+    <div class="divider"></div>
 
     <!-- TIMELINE -->
-    <section class="section" id="record" style="background: linear-gradient(180deg, var(--navy), var(--navy-light), var(--navy));">
-        <div class="section-inner">
-            <div class="reveal" style="text-align: center; margin-bottom: 0.5rem;">
-                <div class="section-label" style="text-align: center;">Career Timeline</div>
-                <h2 class="section-heading" style="text-align: center;">35+ Years of Service</h2>
-            </div>
+    <section id="record">
+        <div class="centered-block fade">
+            <h2>Career</h2>
+            <p class="subtitle">35+ years of service</p>
+        </div>
+        <div class="timeline-section">
+            <div class="tl-item fade"><div class="tl-year">1989</div><div class="tl-body"><h4>Deputy Sheriff</h4><p>Began career under Sheriff Jerry Abston at the Putnam County Sheriff's Department.</p></div></div>
+            <div class="tl-item fade"><div class="tl-year">1992</div><div class="tl-body"><h4>First Jail Administrator</h4><p>First-ever administrator of the Putnam County Justice Center. Highest possible ratings.</p></div></div>
+            <div class="tl-item fade"><div class="tl-year">1995</div><div class="tl-body"><h4>THP Criminal Investigation</h4><p>Investigated homicides, narcotics, insurance fraud, weapons violations, internal affairs.</p></div></div>
+            <div class="tl-item fade"><div class="tl-year">2000</div><div class="tl-body"><h4>FBI National Academy &amp; Task Force</h4><p>Graduated Quantico. Selected for FBI "Safe Streets" &mdash; bank robberies, gang crimes, corruption.</p></div></div>
+            <div class="tl-item fade"><div class="tl-year">2004</div><div class="tl-body"><h4>Asst. Special Agent in Charge</h4><p>Led agents across Cookeville and Chattanooga for THP Criminal Investigation Division.</p></div></div>
+            <div class="tl-item fade"><div class="tl-year">2006-14</div><div class="tl-body"><h4>TBI Special Agent</h4><p>High-level narcotics, murder-for-hire, public corruption. HIDTA Case of the Year 2011. Undercover with FBI, DEA, ATF.</p></div></div>
+            <div class="tl-item fade"><div class="tl-year">2014-</div><div class="tl-body"><h4>Sheriff of Putnam County</h4><p>First TLEA accreditation. TSA President. SWAT, K-9, Aviation, SRO programs. Led tornado, COVID, presidential visit response.</p></div></div>
+        </div>
+    </section>
 
-            <div style="max-width: 700px; margin: 0 auto;">
-                <div class="timeline">
-                    <div class="tl-item reveal"><div class="tl-dot"></div><div class="tl-card glass"><div class="tl-year">1989</div><div class="tl-title">Deputy Sheriff</div><div class="tl-desc">Began his career under Sheriff Jerry Abston at the Putnam County Sheriff's Department.</div></div></div>
-                    <div class="tl-item reveal"><div class="tl-dot"></div><div class="tl-card glass"><div class="tl-year">1992</div><div class="tl-title">First Jail Administrator</div><div class="tl-desc">Became the first-ever Jail Administrator of the Putnam County Justice Center. Highest possible ratings for direct-supervision.</div></div></div>
-                    <div class="tl-item reveal"><div class="tl-dot"></div><div class="tl-card glass"><div class="tl-year">1995</div><div class="tl-title">THP Criminal Investigation</div><div class="tl-desc">Selected for Criminal Investigation Division. Investigated homicides, narcotics, insurance fraud, weapons violations, and internal affairs.</div></div></div>
-                    <div class="tl-item reveal"><div class="tl-dot"></div><div class="tl-card glass"><div class="tl-year">2000</div><div class="tl-title">FBI National Academy &amp; Task Force</div><div class="tl-desc">Graduated from the elite FBI National Academy, Quantico. Selected for FBI "Safe Streets" Violent Crime Task Force &mdash; bank robberies, gang crimes, corruption.</div></div></div>
-                    <div class="tl-item reveal"><div class="tl-dot"></div><div class="tl-card glass"><div class="tl-year">2004</div><div class="tl-title">Asst. Special Agent in Charge</div><div class="tl-desc">Promoted to lead agents across Cookeville and Chattanooga regions for THP Criminal Investigation Division.</div></div></div>
-                    <div class="tl-item reveal"><div class="tl-dot"></div><div class="tl-card glass"><div class="tl-year">2006 &mdash; 2014</div><div class="tl-title">TBI Special Agent</div><div class="tl-desc">Focused on dismantling high-level narcotic organizations. HIDTA Case of the Year 2011. Murder-for-hire, public corruption, undercover with FBI, DEA, ATF.</div></div></div>
-                    <div class="tl-item reveal"><div class="tl-dot"></div><div class="tl-card glass"><div class="tl-year">2014 &mdash; Present</div><div class="tl-title">Sheriff of Putnam County</div><div class="tl-desc">First-ever TLEA accreditation. President of Tennessee Sheriffs' Association. Built SWAT, K-9, Aviation, SRO, and community programs. Four deputies nominated to FBI National Academy.</div></div></div>
-                </div>
+    <div class="divider"></div>
+
+    <!-- ALLIES PHOTO STRIP -->
+    <section id="allies">
+        <div class="centered-block fade">
+            <h2>Standing with Leaders</h2>
+            <p class="subtitle">America First allies</p>
+        </div>
+        <div class="photo-strip">
+            <div class="photo-strip-item">
+                <img src="https://eddiefarris.com/wp-content/uploads/2025/08/Farris_Trump-1.jpg" alt="Sheriff Farris with President Trump">
+                <div class="overlay"><span class="name">President Donald Trump</span><span class="role">45th &amp; 47th President</span></div>
+            </div>
+            <div class="photo-strip-item">
+                <img src="https://eddiefarris.com/wp-content/uploads/2025/08/Sheriff-and-Kash-Patel-1024x837.jpg" alt="Sheriff Farris with FBI Director Kash Patel">
+                <div class="overlay"><span class="name">FBI Director Kash Patel</span><span class="role">Federal Bureau of Investigation</span></div>
+            </div>
+            <div class="photo-strip-item">
+                <img src="https://eddiefarris.com/wp-content/uploads/2025/08/farris_hagerty.jpg" alt="Sheriff Farris with Senator Hagerty">
+                <div class="overlay"><span class="name">Senator Bill Hagerty</span><span class="role">U.S. Senate, Tennessee</span></div>
+            </div>
+            <div class="photo-strip-item">
+                <img src="https://eddiefarris.com/wp-content/uploads/2025/08/John-Rose-TSA-final-1-1018x1024.jpg" alt="Sheriff Farris with Congressman Rose">
+                <div class="overlay"><span class="name">Congressman John Rose</span><span class="role">U.S. House, TN-6</span></div>
             </div>
         </div>
     </section>
 
-    <!-- AWARDS -->
-    <section class="section">
-        <div class="section-inner" style="text-align: center;">
-            <div class="section-label reveal" style="text-align: center;">Recognition</div>
-            <h2 class="section-heading reveal" style="text-align: center;">Awards &amp; Honors</h2>
-            <div class="awards-grid">
-                <div class="award-card glass reveal"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></div><div class="award-name">FBI National Academy</div><div class="award-year">Quantico, VA &mdash; 2000</div></div>
-                <div class="award-card glass reveal"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div><div class="award-name">ACRU Defender Award</div><div class="award-year">Col. Allen West &mdash; 2025</div></div>
-                <div class="award-card glass reveal"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="award-name">HIDTA Case of the Year</div><div class="award-year">Drug Enforcement &mdash; 2011</div></div>
-                <div class="award-card glass reveal"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div class="award-name">THP Outstanding Achievement</div><div class="award-year">Criminal Investigation</div></div>
-                <div class="award-card glass reveal"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="award-name">TLEA Accreditation</div><div class="award-year">2017, 2021, 2024</div></div>
-                <div class="award-card glass reveal"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="award-name">TSA President</div><div class="award-year">TN Sheriffs' Assoc. 2021-22</div></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PLATFORM -->
-    <section class="section" id="platform" style="background: linear-gradient(180deg, var(--navy), var(--navy-light));">
-        <div class="section-inner">
-            <div class="reveal">
-                <div class="section-label">His Platform</div>
-                <h2 class="section-heading">Standing for What Matters</h2>
-            </div>
-            <div class="card-grid-3">
-                <div class="feature-card glass reveal">
-                    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-                    <div class="card-title">Exemplary Law Enforcement</div>
-                    <div class="card-text">Professional, accredited policing at the highest national standards. PCSO is one of the few sheriff's offices in eastern Tennessee to achieve TLEA accreditation &mdash; maintained three times.</div>
-                </div>
-                <div class="feature-card glass reveal">
-                    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-                    <div class="card-title">Tough on Drug Crime</div>
-                    <div class="card-text">Former TBI Special Agent with HIDTA Case of the Year. Unmatched narcotics enforcement protecting families from drugs in the Upper Cumberland.</div>
-                </div>
-                <div class="feature-card glass reveal">
-                    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-                    <div class="card-title">Protecting Our Schools</div>
-                    <div class="card-text">Dedicated School Resource Officers in every Putnam County school. Our children deserve to learn in safety with trained deputies present every day.</div>
-                </div>
-                <div class="feature-card glass reveal">
-                    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div>
-                    <div class="card-title">Securing Borders at Home</div>
-                    <div class="card-text">First agency in Tennessee to implement ICE 287(g) Warrant Service Officer program. ACRU Defender Award for enforcing immigration law locally.</div>
-                </div>
-                <div class="feature-card glass reveal">
-                    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-                    <div class="card-title">Community Trust</div>
-                    <div class="card-text">Citizen's Academy, Coffee with the Sheriff, Farm Watch, Project Lifesaver &mdash; law enforcement works best when it works alongside the people it serves.</div>
-                </div>
-                <div class="feature-card glass reveal">
-                    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg></div>
-                    <div class="card-title">Faith &amp; Family Values</div>
-                    <div class="card-text">Rooted in faith, family, and community. Integrity, courage, compassion, professionalism, accountability, and respect &mdash; the core values of PCSO.</div>
-                </div>
-            </div>
-            <div class="values-row reveal" style="margin-top: 2.5rem;">
-                <span class="value-tag">Integrity</span>
-                <span class="value-tag">Courage</span>
-                <span class="value-tag">Compassion</span>
-                <span class="value-tag">Professionalism</span>
-                <span class="value-tag">Accountability</span>
-                <span class="value-tag">Respect</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- FISCAL & CRISIS -->
-    <section class="section">
-        <div class="section-inner">
-            <div class="reveal">
-                <div class="section-label">Proven Results</div>
-                <h2 class="section-heading">Fiscal Conservative. Crisis Leader.</h2>
-            </div>
-            <div class="card-grid-3">
-                <div class="feature-card glass reveal">
-                    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-                    <div class="card-title">Taxpayer Money Returned</div>
-                    <div class="card-text">Returned millions of budgeted funds to the general fund. 10+ consecutive clean audits from the Tennessee Comptroller's Office.</div>
-                </div>
-                <div class="feature-card glass reveal">
-                    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
-                    <div class="card-title">Built at Zero Cost</div>
-                    <div class="card-text">Built Putnam County's first Training Center and Firearms Range at no cost to taxpayers. Millions in federal grants and surplus equipment via 1033 program.</div>
-                </div>
-                <div class="feature-card glass reveal">
-                    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-                    <div class="card-title">Crisis Tested</div>
-                    <div class="card-text">Led response to the 2020 Super Tuesday Tornado (19 lives lost), 2015 Ice Storm, COVID-19 pandemic, and a Presidential Visit. Federal Disaster Declaration reimbursement secured.</div>
-                </div>
-                <div class="feature-card glass reveal">
-                    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-                    <div class="card-title">Jail Excellence</div>
-                    <div class="card-text">TCI Tier II accreditation and first-ever PREA compliance. Work release, GED, parenting classes, Celebrate Recovery, career certificate programs.</div>
-                </div>
-                <div class="feature-card glass reveal">
-                    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-                    <div class="card-title">Technology Upgrades</div>
-                    <div class="card-text">Body cameras, upgraded vehicles, body armor, dispatch, IT, patrol systems. Region's first and only Reality Based Scenario Training Center.</div>
-                </div>
-                <div class="feature-card glass reveal">
-                    <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-                    <div class="card-title">Federal Task Forces</div>
-                    <div class="card-text">Active with FBI Violent Crime, Joint Terrorism, ATF, DEA/HIDTA, U.S. Marshals Fugitive, and ICE 287(g). Federal resources protecting local families.</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- POLITICAL ALLIES -->
-    <section class="section" id="allies" style="background: linear-gradient(180deg, var(--navy-light), var(--navy));">
-        <div class="section-inner">
-            <div class="reveal" style="text-align: center;">
-                <div class="section-label" style="text-align: center;">Standing with Leaders</div>
-                <h2 class="section-heading" style="text-align: center;">America First Allies</h2>
-            </div>
-            <div class="photo-grid">
-                <div class="photo-card glass reveal">
-                    <img src="https://eddiefarris.com/wp-content/uploads/2025/08/Farris_Trump-1.jpg" alt="Sheriff Farris with President Donald Trump">
-                    <div class="caption"><div class="caption-name">President Donald Trump</div><div class="caption-role">45th &amp; 47th President of the United States</div></div>
-                </div>
-                <div class="photo-card glass reveal">
-                    <img src="https://eddiefarris.com/wp-content/uploads/2025/08/Sheriff-and-Kash-Patel-1024x837.jpg" alt="Sheriff Farris with FBI Director Kash Patel">
-                    <div class="caption"><div class="caption-name">FBI Director Kash Patel</div><div class="caption-role">Director, Federal Bureau of Investigation</div></div>
-                </div>
-                <div class="photo-card glass reveal">
-                    <img src="https://eddiefarris.com/wp-content/uploads/2025/08/farris_hagerty.jpg" alt="Sheriff Farris with Senator Bill Hagerty">
-                    <div class="caption"><div class="caption-name">U.S. Senator Bill Hagerty</div><div class="caption-role">United States Senate, Tennessee</div></div>
-                </div>
-                <div class="photo-card glass reveal">
-                    <img src="https://eddiefarris.com/wp-content/uploads/2025/08/John-Rose-TSA-final-1-1018x1024.jpg" alt="Sheriff Farris with Congressman John Rose">
-                    <div class="caption"><div class="caption-name">Congressman John Rose</div><div class="caption-role">U.S. House of Representatives, TN-6</div></div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="divider"></div>
 
     <!-- ENDORSEMENTS -->
-    <section class="section" id="endorsements">
-        <div class="section-inner">
-            <div class="reveal" style="text-align: center;">
-                <div class="section-label" style="text-align: center;">Endorsements</div>
-                <h2 class="section-heading" style="text-align: center;">Trusted by Leaders Across Tennessee</h2>
-            </div>
-            <div class="card-grid-2">
-                <div class="endorsement-card glass reveal"><div class="quote">Eddie Farris always answers the call to serve. He's my good friend and a great law enforcement leader for Putnam County.</div><div class="endorser">U.S. Senator Bill Hagerty</div><div class="endorser-role">United States Senate, Tennessee</div></div>
-                <div class="endorsement-card glass reveal"><div class="quote">Eddie Farris has done an outstanding job bringing community leaders together to protect our citizens from fraud and keep Putnam County safe.</div><div class="endorser">Senator Paul Bailey</div><div class="endorser-role">Tennessee State Senate</div></div>
-                <div class="endorsement-card glass reveal"><div class="quote">I've known Eddie since he started as a deputy. He's the most qualified and dedicated law enforcement officer Putnam County has ever had.</div><div class="endorser">Sheriff Jerry Abston (Ret.)</div><div class="endorser-role">Putnam County Sheriff, 1974-2002</div></div>
-                <div class="endorsement-card glass reveal"><div class="quote">He is a fine man, does a wonderful job as our sheriff. This county is much safer since he took office.</div><div class="endorser">Putnam County Citizens</div><div class="endorser-role">Community voices</div></div>
-                <div class="endorsement-card glass reveal"><div class="quote">Sheriff Farris deserves recognition for his cooperation with ICE through the 287(g) program, standing strong for the rule of law.</div><div class="endorser">Col. Allen West</div><div class="endorser-role">ACRU Executive Director</div></div>
-                <div class="endorsement-card glass reveal"><div class="quote">Eddie has earned the respect of sheriffs across the entire state of Tennessee. His leadership of the Tennessee Sheriffs' Association proved that.</div><div class="endorser">Sheriff Billy Glenn Smith (Ret.)</div><div class="endorser-role">Putnam County Sheriff, 1968-1974</div></div>
-            </div>
+    <section id="endorsements">
+        <div class="centered-block fade">
+            <h2>Endorsements</h2>
+            <p class="subtitle">Trusted by leaders across Tennessee</p>
+        </div>
+        <div class="quotes-section">
+            <div class="quote-item fade"><p class="quote-text">"Eddie Farris always answers the call to serve. He's my good friend and a great law enforcement leader for Putnam County."</p><p class="quote-attr">U.S. Senator Bill Hagerty &mdash; Tennessee</p></div>
+            <div class="quote-item fade"><p class="quote-text">"Eddie Farris has done an outstanding job bringing community leaders together to protect our citizens from fraud and keep Putnam County safe."</p><p class="quote-attr">Senator Paul Bailey &mdash; Tennessee State Senate</p></div>
+            <div class="quote-item fade"><p class="quote-text">"I've known Eddie since he started as a deputy. He's the most qualified and dedicated law enforcement officer Putnam County has ever had."</p><p class="quote-attr">Sheriff Jerry Abston (Ret.) &mdash; Putnam County, 1974-2002</p></div>
+            <div class="quote-item fade"><p class="quote-text">"Sheriff Farris deserves recognition for his cooperation with ICE through the 287(g) program, standing strong for the rule of law."</p><p class="quote-attr">Col. Allen West &mdash; ACRU Executive Director</p></div>
+            <div class="quote-item fade"><p class="quote-text">"He is a fine man, does a wonderful job as our sheriff. This county is much safer since he took office."</p><p class="quote-attr">Putnam County Citizens</p></div>
         </div>
     </section>
 
+    <div class="divider"></div>
+
     <!-- PROGRAMS -->
-    <section class="section" id="programs" style="background: var(--navy-light);">
-        <div class="section-inner">
-            <div class="reveal">
-                <div class="section-label">Community Programs</div>
-                <h2 class="section-heading">More Than a Badge &mdash; A Partnership</h2>
-                <p class="section-desc">Under Sheriff Farris's leadership, PCSO has launched and expanded programs that bring the department and community closer together.</p>
-            </div>
-            <div class="programs-grid">
-                <div class="program-chip glass reveal"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><span>SWAT Team</span></div>
-                <div class="program-chip glass reveal"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><span>K-9 Unit</span></div>
-                <div class="program-chip glass reveal"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg></span><span>Aviation &amp; Drone Unit</span></div>
-                <div class="program-chip glass reveal"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span><span>School Resource Officers</span></div>
-                <div class="program-chip glass reveal"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span><span>Farm Watch Program</span></div>
-                <div class="program-chip glass reveal"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span>Citizen's Academy</span></div>
-                <div class="program-chip glass reveal"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span>Senior Safety Patrol</span></div>
-                <div class="program-chip glass reveal"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><span>Project Lifesaver</span></div>
-                <div class="program-chip glass reveal"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span><span>Neighborhood Watch</span></div>
-                <div class="program-chip glass reveal"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span><span>Training Center &amp; Simulator</span></div>
-                <div class="program-chip glass reveal"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></span><span>Coffee with the Sheriff</span></div>
-                <div class="program-chip glass reveal"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span><span>Citizen's Resource Group</span></div>
+    <section id="programs">
+        <div class="centered-block fade">
+            <h2>Programs</h2>
+            <p class="subtitle">Established under Sheriff Farris</p>
+        </div>
+        <div class="programs-section">
+            <div class="programs-list">
+                <div class="program-cell">SWAT Team</div>
+                <div class="program-cell">K-9 Unit</div>
+                <div class="program-cell">Aviation &amp; Drone Unit</div>
+                <div class="program-cell">School Resource Officers</div>
+                <div class="program-cell">Farm Watch</div>
+                <div class="program-cell">Citizen's Academy</div>
+                <div class="program-cell">Senior Safety Patrol</div>
+                <div class="program-cell">Project Lifesaver</div>
+                <div class="program-cell">Neighborhood Watch</div>
+                <div class="program-cell">Training Center &amp; Simulator</div>
+                <div class="program-cell">Coffee with the Sheriff</div>
+                <div class="program-cell">Citizen's Resource Group</div>
+                <div class="program-cell">Warrant Wednesday</div>
+                <div class="program-cell">Motor/Traffic Unit</div>
+                <div class="program-cell">Work Release Program</div>
+                <div class="program-cell">287(g) ICE Partnership</div>
             </div>
         </div>
     </section>
 
     <!-- CTA -->
     <section class="cta-section" id="contact">
-        <div class="cta-content reveal">
-            <div class="star-divider" style="margin-bottom: 1.5rem;">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            </div>
-            <h2 class="cta-heading">Keep Putnam County<br><span class="highlight">Safe &amp; Strong</span></h2>
-            <p class="cta-desc">Re-elect Sheriff Eddie Farris in 2026. Support the leader who has spent 35+ years earning our trust, every single day.</p>
-            <div class="cta-buttons">
-                <a href="https://eddiefarris.com/donations/fundraising-campaign/" class="btn btn-primary" target="_blank" rel="noopener">
-                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-                    Donate Now
-                </a>
-                <a href="https://eddiefarris.com/contact/" class="btn btn-outline" target="_blank" rel="noopener">Request a Yard Sign</a>
-                <a href="https://www.facebook.com/EddieFarrisforSheriff" class="btn btn-outline" target="_blank" rel="noopener">Follow on Facebook</a>
-            </div>
-            <div class="star-divider" style="margin-top: 2.5rem;">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            </div>
+        <h2>Support Eddie Farris</h2>
+        <p class="subtitle">Promises Made. Promises Kept.</p>
+        <div class="cta-buttons">
+            <a href="https://eddiefarris.com/donations/fundraising-campaign/" class="cta-btn primary" target="_blank" rel="noopener">Donate</a>
+            <a href="https://eddiefarris.com/contact/" class="cta-btn" target="_blank" rel="noopener">Request a Yard Sign</a>
+            <a href="https://www.facebook.com/EddieFarrisforSheriff" class="cta-btn" target="_blank" rel="noopener">Facebook</a>
+            <a href="https://www.instagram.com/putnamsherifftn/" class="cta-btn" target="_blank" rel="noopener">Instagram</a>
         </div>
     </section>
 
@@ -1365,75 +960,48 @@
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
-                <h4>Sheriff's Office</h4>
+                <h4>About</h4>
+                <a href="#about">About the Sheriff</a>
+                <a href="#record">Career</a>
+                <a href="#endorsements">Endorsements</a>
+                <a href="#contact">Support</a>
+            </div>
+            <div class="footer-col">
+                <h4>Media</h4>
+                <a href="https://www.facebook.com/EddieFarrisforSheriff" target="_blank" rel="noopener">Facebook</a>
+                <a href="https://www.instagram.com/putnamsherifftn/" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://twitter.com/putnamsheriffTN" target="_blank" rel="noopener">X / Twitter</a>
+                <a href="https://www.youtube.com/@putnamcountytnsheriffsoffice" target="_blank" rel="noopener">YouTube</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
                 <p>421 East Spring Street<br>Cookeville, TN 38501<br>(931) 528-8484</p>
-            </div>
-            <div class="footer-col">
-                <h4>Follow Us</h4>
-                <p>
-                    <a href="https://www.facebook.com/EddieFarrisforSheriff" target="_blank" rel="noopener">Facebook</a><br>
-                    <a href="https://www.instagram.com/putnamsherifftn/" target="_blank" rel="noopener">Instagram</a><br>
-                    <a href="https://twitter.com/putnamsheriffTN" target="_blank" rel="noopener">X / Twitter</a><br>
-                    <a href="https://www.youtube.com/@putnamcountytnsheriffsoffice" target="_blank" rel="noopener">YouTube</a>
-                </p>
-            </div>
-            <div class="footer-col">
-                <h4>Quick Links</h4>
-                <p>
-                    <a href="https://eddiefarris.com/" target="_blank" rel="noopener">Campaign Website</a><br>
-                    <a href="https://putnamcountytnsheriff.gov/" target="_blank" rel="noopener">PCSO Official Site</a><br>
-                    <a href="https://putnamcountytnsheriff.gov/tip-line" target="_blank" rel="noopener">Tip Line</a>
-                </p>
+                <a href="https://eddiefarris.com/" target="_blank" rel="noopener" style="margin-top:0.5rem;">eddiefarris.com</a>
+                <a href="https://putnamcountytnsheriff.gov/" target="_blank" rel="noopener">putnamcountytnsheriff.gov</a>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>Paid for by the Committee to Re-Elect Eddie Farris, Sheriff &mdash; Putnam County, Tennessee</p>
-            <p style="margin-top: 0.4rem;">Website concept by Matt Matheson &amp; Neo</p>
+            Paid for by the Committee to Re-Elect Eddie Farris, Sheriff &mdash; Putnam County, Tennessee<br>
+            <span style="color:var(--text-muted);">Website concept by Matt Matheson</span>
         </div>
     </footer>
 
     <script>
-        // Navbar scroll
-        const nav = document.getElementById('navbar');
-        window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60), { passive: true });
-
         // Scroll reveal
-        const obs = new IntersectionObserver((entries) => {
+        const obs = new IntersectionObserver(entries => {
             entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
-        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-        // Counter animation
-        const cObs = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (!e.isIntersecting) return;
-                const t = +e.target.dataset.count, step = Math.max(1, t / 45);
-                let c = 0;
-                const id = setInterval(() => { c += step; if (c >= t) { e.target.textContent = t; clearInterval(id); } else e.target.textContent = Math.floor(c); }, 28);
-                cObs.unobserve(e.target);
-            });
-        }, { threshold: 0.5 });
-        document.querySelectorAll('[data-count]').forEach(el => cObs.observe(el));
+        }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+        document.querySelectorAll('.fade').forEach(el => obs.observe(el));
 
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(a => {
             a.addEventListener('click', e => {
                 e.preventDefault();
                 const t = document.querySelector(a.getAttribute('href'));
-                if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                if (t) { t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
                 document.getElementById('navLinks').classList.remove('open');
             });
         });
-
-        // Parallax hero
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) { requestAnimationFrame(() => {
-                const s = scrollY, h = document.querySelector('.hero-text');
-                if (h && s < innerHeight) { h.style.transform = `translateY(${s * 0.2}px)`; h.style.opacity = 1 - (s / innerHeight) * 0.5; }
-                ticking = false;
-            }); ticking = true; }
-        }, { passive: true });
     </script>
 </body>
 </html>
