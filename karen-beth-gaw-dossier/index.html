@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOSSIER // Karen Beth Gaw</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500&display=swap');
+
+        :root {
+            --bg: #0a0a0a;
+            --surface: #111111;
+            --surface-2: #1a1a1a;
+            --border: #222222;
+            --text: #fafafa;
+            --text-secondary: #888888;
+            --accent: #00ff88;
+            --accent-dim: #00ff8822;
+            --red: #ff4444;
+            --blue: #4488ff;
+            --gold: #ffaa00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ---- BOOT SEQUENCE OVERLAY ---- */
+        #boot-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #boot-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #boot-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--accent);
+            max-width: 600px;
+            width: 90%;
+            line-height: 1.8;
+        }
+
+        #boot-text .line {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: bootLine 0.3s ease forwards;
+        }
+
+        @keyframes bootLine {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .boot-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background: var(--accent);
+            animation: blink 0.6s step-end infinite;
+            vertical-align: middle;
+            margin-left: 4px;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* ---- SCANLINE EFFECT ---- */
+        .scanlines {
+            position: fixed;
+            inset: 0;
+            z-index: 9998;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 255, 136, 0.015) 2px,
+                rgba(0, 255, 136, 0.015) 4px
+            );
+        }
+
+        /* ---- HEADER ---- */
+        header {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        .header-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .classification {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeSlideUp 0.8s ease 0.2s forwards;
+            position: relative;
+            z-index: 1;
+        }
+
+        .classification::before,
+        .classification::after {
+            content: '///';
+            margin: 0 1rem;
+            color: var(--text-secondary);
+        }
+
+        .subject-name {
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 0.9;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeSlideUp 1s ease 0.5s forwards;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subject-name .first { color: var(--text-secondary); }
+        .subject-name .last {
+            background: linear-gradient(135deg, var(--accent), var(--blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subject-meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 1.5rem;
+            opacity: 0;
+            animation: fadeSlideUp 0.8s ease 0.8s forwards;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subject-meta span {
+            margin: 0 0.5rem;
+        }
+
+        .subject-meta .divider {
+            color: var(--accent);
+        }
+
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeSlideUp 0.8s ease 1.2s forwards;
+            z-index: 1;
+        }
+
+        .scroll-indicator span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .scroll-arrow {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { transform: scaleY(0.5); opacity: 0.3; }
+            50% { transform: scaleY(1); opacity: 1; }
+        }
+
+        /* ---- SECTIONS ---- */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .section-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--accent);
+            letter-spacing: 2px;
+            white-space: nowrap;
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--accent), transparent);
+        }
+
+        .section-title {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        /* ---- REVEAL ANIMATION ---- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ---- CARDS ---- */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 255, 136, 0.05);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .card-detail {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        /* ---- NAME EVOLUTION TIMELINE ---- */
+        .timeline {
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), var(--blue), var(--gold));
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 2rem;
+            padding: 1.5rem 0;
+            position: relative;
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 2px solid var(--bg);
+            position: relative;
+            top: 6px;
+            flex-shrink: 0;
+            z-index: 1;
+            box-shadow: 0 0 12px var(--accent-dim);
+            animation: dotPulse 2s ease-in-out infinite;
+        }
+
+        .timeline-dot.blue { background: var(--blue); box-shadow: 0 0 12px rgba(68, 136, 255, 0.3); }
+        .timeline-dot.gold { background: var(--gold); box-shadow: 0 0 12px rgba(255, 170, 0, 0.3); }
+
+        @keyframes dotPulse {
+            0%, 100% { box-shadow: 0 0 8px var(--accent-dim); }
+            50% { box-shadow: 0 0 20px var(--accent-dim); }
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-era {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--accent);
+            letter-spacing: 2px;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .timeline-context {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        /* ---- FAMILY TREE ---- */
+        .family-tree {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .family-row {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .family-member {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            min-width: 180px;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .family-member:hover {
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+
+        .family-member.primary {
+            border-color: var(--accent);
+            background: linear-gradient(135deg, var(--surface), var(--accent-dim));
+            box-shadow: 0 0 30px var(--accent-dim);
+        }
+
+        .family-member .relation {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .family-member .name {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .family-member .detail {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .tree-connector {
+            width: 2px;
+            height: 30px;
+            background: var(--border);
+            position: relative;
+        }
+
+        .tree-connector::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        /* ---- CAREER TIMELINE ---- */
+        .career-track {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .career-item {
+            display: flex;
+            align-items: stretch;
+            gap: 1.5rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .career-item::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--accent);
+            transform: scaleY(0);
+            transition: transform 0.4s ease;
+        }
+
+        .career-item:hover::after {
+            transform: scaleY(1);
+        }
+
+        .career-item:hover {
+            border-color: var(--accent);
+        }
+
+        .career-role {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .career-employer {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .career-period {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+        }
+
+        /* ---- STATS BAR ---- */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1px;
+            background: var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 3rem 0;
+        }
+
+        .stat {
+            background: var(--surface);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        /* ---- EDUCATION ---- */
+        .edu-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .edu-card .degree {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .edu-card .school {
+            color: var(--accent);
+            font-size: 1rem;
+            margin-top: 0.25rem;
+        }
+
+        .edu-card .years {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        /* ---- FLOATING PARTICLES ---- */
+        .particles {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% { opacity: 0; transform: translateY(100vh) scale(0); }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { opacity: 0; transform: translateY(-10vh) scale(1); }
+        }
+
+        /* ---- GLITCH TEXT ---- */
+        .glitch {
+            position: relative;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            animation: glitch1 3s infinite;
+            color: var(--red);
+            z-index: -1;
+        }
+
+        .glitch::after {
+            animation: glitch2 3s infinite;
+            color: var(--blue);
+            z-index: -2;
+        }
+
+        @keyframes glitch1 {
+            0%, 93%, 100% { transform: translate(0); }
+            94% { transform: translate(2px, -1px); }
+            95% { transform: translate(-2px, 1px); }
+            96% { transform: translate(0); }
+        }
+
+        @keyframes glitch2 {
+            0%, 93%, 100% { transform: translate(0); }
+            94% { transform: translate(-2px, 1px); }
+            95% { transform: translate(2px, -1px); }
+            96% { transform: translate(0); }
+        }
+
+        /* ---- TYPEWRITER ---- */
+        .typewriter {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--text-secondary);
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid var(--accent);
+            animation: typewriter 3s steps(44) 1s 1 normal both,
+                       blinkCaret 0.6s step-end infinite;
+            max-width: fit-content;
+            margin: 1rem auto;
+        }
+
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blinkCaret {
+            50% { border-color: transparent; }
+        }
+
+        /* ---- DATA MATRIX ---- */
+        .data-matrix {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.5rem 2rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .data-key {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 11px;
+        }
+
+        .data-value {
+            color: var(--text);
+        }
+
+        /* ---- FOOTER ---- */
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        footer .signature {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+        }
+
+        footer .love {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        /* ---- CORNER DECORATIONS ---- */
+        .corner-decor {
+            position: fixed;
+            z-index: 100;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--text-secondary);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .corner-decor.top-left {
+            top: 1rem;
+            left: 1rem;
+        }
+
+        .corner-decor.top-right {
+            top: 1rem;
+            right: 1rem;
+            text-align: right;
+        }
+
+        .corner-decor.bottom-left {
+            bottom: 1rem;
+            left: 1rem;
+        }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 600px) {
+            .section { padding: 4rem 1.25rem; }
+            .timeline-item { gap: 1rem; }
+            .family-member { min-width: 140px; padding: 1rem 1.25rem; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+            .data-matrix { font-size: 11px; gap: 0.5rem 1rem; padding: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BOOT SEQUENCE -->
+    <div id="boot-overlay">
+        <div id="boot-text"></div>
+    </div>
+
+    <!-- SCANLINES -->
+    <div class="scanlines"></div>
+
+    <!-- PARTICLES -->
+    <div class="particles" id="particles"></div>
+
+    <!-- CORNER DECORATIONS -->
+    <div class="corner-decor top-left">
+        <div id="clock"></div>
+        <div>LAT 36.1628 / LON -85.5016</div>
+    </div>
+    <div class="corner-decor top-right">
+        <div>CLEARANCE: FAMILY</div>
+        <div id="status-text">STATUS: ACTIVE</div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-grid"></div>
+        <div class="classification">CLASSIFIED DOSSIER</div>
+        <h1 class="subject-name">
+            <span class="first">Karen Beth</span><br>
+            <span class="last glitch" data-text="Gaw">Gaw</span>
+        </h1>
+        <div class="subject-meta">
+            <span>Cookeville, TN</span>
+            <span class="divider">//</span>
+            <span>Assistant Principal</span>
+            <span class="divider">//</span>
+            <span>Est. January 1963</span>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll to Decrypt</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </header>
+
+    <!-- SECTION: OVERVIEW -->
+    <section class="section">
+        <div class="section-header reveal">
+            <span class="section-number">01 //</span>
+            <span class="section-title">Subject Overview</span>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="stats-bar reveal">
+            <div class="stat">
+                <div class="stat-number" data-count="63">0</div>
+                <div class="stat-label">Years Active</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" data-count="3">0</div>
+                <div class="stat-label">Known Aliases</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" data-count="40">0</div>
+                <div class="stat-label">Years in Education</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">CHS</div>
+                <div class="stat-label">Class of '81</div>
+            </div>
+        </div>
+
+        <div class="data-matrix reveal">
+            <span class="data-key">Full Name</span>
+            <span class="data-value">Karen Beth Gaw</span>
+            <span class="data-key">Maiden Name</span>
+            <span class="data-value">Karen Beth Brown</span>
+            <span class="data-key">D.O.B.</span>
+            <span class="data-value">January 1963</span>
+            <span class="data-key">Location</span>
+            <span class="data-value">Cookeville, Tennessee</span>
+            <span class="data-key">Occupation</span>
+            <span class="data-value">Assistant Principal</span>
+            <span class="data-key">Employer</span>
+            <span class="data-value">Algood Elementary School / Putnam County Schools</span>
+            <span class="data-key">Gov Record</span>
+            <span class="data-value">Listed as "Karen Matheson-Gaw" in Putnam County School District payroll (2019-2020)</span>
+            <span class="data-key">Alma Mater</span>
+            <span class="data-value">Tennessee Technological University</span>
+        </div>
+    </section>
+
+    <!-- SECTION: NAME EVOLUTION -->
+    <section class="section">
+        <div class="section-header reveal">
+            <span class="section-number">02 //</span>
+            <span class="section-title">Identity Timeline</span>
+            <div class="section-line"></div>
+        </div>
+
+        <p class="reveal" style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.05rem;">
+            Three names. One extraordinary woman. Each chapter tells a story.
+        </p>
+
+        <div class="timeline">
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-era">1963 &mdash; ORIGIN</div>
+                    <div class="timeline-name">Karen Beth Brown</div>
+                    <div class="timeline-context">Born in Tennessee. The story begins.</div>
+                </div>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-dot blue"></div>
+                <div class="timeline-content">
+                    <div class="timeline-era" style="color: var(--blue);">CHAPTER II &mdash; MATHESON ERA</div>
+                    <div class="timeline-name">Karen Beth Matheson</div>
+                    <div class="timeline-context">Marriage to Charles Matheson. Mother of Matt. Building a family in Cookeville.</div>
+                </div>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-dot gold"></div>
+                <div class="timeline-content">
+                    <div class="timeline-era" style="color: var(--gold);">CHAPTER III &mdash; CURRENT</div>
+                    <div class="timeline-name">Karen Beth Gaw</div>
+                    <div class="timeline-context">The name she carries today. Assistant Principal. Community pillar.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: EDUCATION -->
+    <section class="section">
+        <div class="section-header reveal">
+            <span class="section-number">03 //</span>
+            <span class="section-title">Education Record</span>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="edu-card reveal">
+            <div class="degree">General Diploma</div>
+            <div class="school">Cookeville High School</div>
+            <div class="years">1977 &mdash; 1981</div>
+        </div>
+
+        <div class="edu-card reveal">
+            <div class="degree">Bachelor of Science &mdash; Early Childhood Education</div>
+            <div class="school">Tennessee Technological University</div>
+            <div class="years">Cookeville, Tennessee</div>
+        </div>
+
+        <div class="edu-card reveal">
+            <div class="degree">Master's Degree &mdash; Instructional Leadership</div>
+            <div class="school">Tennessee Technological University</div>
+            <div class="years">Advanced certification for school administration</div>
+        </div>
+    </section>
+
+    <!-- SECTION: CAREER -->
+    <section class="section">
+        <div class="section-header reveal">
+            <span class="section-number">04 //</span>
+            <span class="section-title">Career Trajectory</span>
+            <div class="section-line"></div>
+        </div>
+
+        <p class="reveal" style="color: var(--text-secondary); margin-bottom: 2rem;">
+            A career dedicated to shaping young minds in Putnam County.
+        </p>
+
+        <div class="career-track">
+            <div class="career-item reveal">
+                <div>
+                    <div class="career-role">Classroom Teacher</div>
+                    <div class="career-employer">Putnam County Schools</div>
+                    <div class="career-period">Early career &mdash; Where it all started</div>
+                </div>
+            </div>
+            <div class="career-item reveal">
+                <div>
+                    <div class="career-role">Teacher Evaluator</div>
+                    <div class="career-employer">Putnam County Schools</div>
+                    <div class="career-period">Transitioning into leadership</div>
+                </div>
+            </div>
+            <div class="career-item reveal">
+                <div>
+                    <div class="career-role">Assistant Principal</div>
+                    <div class="career-employer">Algood Elementary School &mdash; Home of the Braves</div>
+                    <div class="career-period">Current role &mdash; Leading a school community</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: FAMILY CONNECTIONS -->
+    <section class="section">
+        <div class="section-header reveal">
+            <span class="section-number">05 //</span>
+            <span class="section-title">Known Associates</span>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="family-tree reveal">
+            <div class="family-row">
+                <div class="family-member primary">
+                    <div class="relation">Subject</div>
+                    <div class="name">Karen Beth Gaw</div>
+                    <div class="detail">n&eacute;e Brown</div>
+                </div>
+            </div>
+
+            <div class="tree-connector"></div>
+
+            <div class="family-row">
+                <div class="family-member">
+                    <div class="relation">Son</div>
+                    <div class="name">Matt Matheson</div>
+                    <div class="detail">The one who built this page</div>
+                </div>
+                <div class="family-member">
+                    <div class="relation">Family</div>
+                    <div class="name">Tracy Fisk</div>
+                    <div class="detail">Cookeville, TN</div>
+                </div>
+            </div>
+
+            <div class="tree-connector"></div>
+
+            <div class="family-row">
+                <div class="family-member">
+                    <div class="relation">Associated</div>
+                    <div class="name">Charles Matheson</div>
+                    <div class="detail">Matheson family, Cookeville</div>
+                </div>
+                <div class="family-member">
+                    <div class="relation">Associated</div>
+                    <div class="name">Guynell Matheson</div>
+                    <div class="detail">Matheson family</div>
+                </div>
+                <div class="family-member">
+                    <div class="relation">Associated</div>
+                    <div class="name">Howard Gaw</div>
+                    <div class="detail">Gaw family, Cookeville</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: LOCATION INTEL -->
+    <section class="section">
+        <div class="section-header reveal">
+            <span class="section-number">06 //</span>
+            <span class="section-title">Location Intelligence</span>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="card-grid">
+            <div class="card reveal">
+                <div class="card-icon">🏫</div>
+                <div class="card-label">Primary Post</div>
+                <div class="card-value">Algood Elementary School</div>
+                <div class="card-detail">Home of the Braves &mdash; Putnam County School District, Algood, Tennessee</div>
+            </div>
+            <div class="card reveal">
+                <div class="card-icon">🏔️</div>
+                <div class="card-label">Home Base</div>
+                <div class="card-value">Cookeville, TN</div>
+                <div class="card-detail">Putnam County &mdash; The Upper Cumberland region. Lifelong resident.</div>
+            </div>
+            <div class="card reveal">
+                <div class="card-icon">🎓</div>
+                <div class="card-label">Alma Mater</div>
+                <div class="card-value">Tennessee Tech</div>
+                <div class="card-detail">Golden Eagles &mdash; Just up the road in Cookeville. BS + Master's degrees.</div>
+            </div>
+            <div class="card reveal">
+                <div class="card-icon">🏛️</div>
+                <div class="card-label">School District</div>
+                <div class="card-value">Putnam County Schools</div>
+                <div class="card-detail">Public school system serving students across Putnam County, Tennessee</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: FUN FACTS -->
+    <section class="section">
+        <div class="section-header reveal">
+            <span class="section-number">07 //</span>
+            <span class="section-title">Intelligence Summary</span>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="card-grid">
+            <div class="card reveal">
+                <div class="card-icon">👩‍🏫</div>
+                <div class="card-label">Career Span</div>
+                <div class="card-value">40+ Years in Education</div>
+                <div class="card-detail">From classroom teacher to evaluator to assistant principal. That's dedication you can't fake.</div>
+            </div>
+            <div class="card reveal">
+                <div class="card-icon">🐻</div>
+                <div class="card-label">School Mascot</div>
+                <div class="card-value">The Braves</div>
+                <div class="card-detail">Algood Elementary School &mdash; aesbraves.com</div>
+            </div>
+            <div class="card reveal">
+                <div class="card-icon">📋</div>
+                <div class="card-label">Public Record</div>
+                <div class="card-value">Government Salary Database</div>
+                <div class="card-detail">Found in Putnam County School District payroll records under "Karen Matheson-Gaw" (2019-2020)</div>
+            </div>
+            <div class="card reveal">
+                <div class="card-icon">🔗</div>
+                <div class="card-label">Deep Roots</div>
+                <div class="card-value">Born, Raised & Stayed</div>
+                <div class="card-detail">CHS '81 &rarr; Tennessee Tech &rarr; Putnam County Schools. A Cookeville lifer through and through.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="reveal">
+            <div style="font-size: 2rem; margin-bottom: 1rem;">🕶️</div>
+            <div class="love">Built with love by your son's AI agent</div>
+            <br>
+            <div class="signature">
+                DOSSIER COMPILED BY NEO // MARCH 2026<br>
+                <span style="color: var(--accent);">All information sourced from publicly available records</span><br><br>
+                &mdash;Neo (Matt's AI Agent) 🕶️
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ---- BOOT SEQUENCE ----
+        const bootLines = [
+            '> INITIALIZING NEO INTELLIGENCE SYSTEM...',
+            '> CONNECTING TO PUBLIC RECORDS DATABASE...',
+            '> QUERY: "Karen Beth Gaw" // Cookeville, TN',
+            '> CROSS-REFERENCING ALIASES: Brown, Matheson, Gaw',
+            '> SCANNING EDUCATION RECORDS... [FOUND]',
+            '> SCANNING EMPLOYMENT RECORDS... [FOUND]',
+            '> SCANNING FAMILY CONNECTIONS... [FOUND]',
+            '> BUILDING FAMILY TREE...',
+            '> COMPILING DOSSIER...',
+            '> ACCESS GRANTED ✓',
+            '',
+            '> Hello, Mrs. Gaw. We\'ve been expecting you.',
+        ];
+
+        const bootText = document.getElementById('boot-text');
+        const bootOverlay = document.getElementById('boot-overlay');
+
+        async function runBoot() {
+            for (let i = 0; i < bootLines.length; i++) {
+                const line = document.createElement('div');
+                line.className = 'line';
+                line.style.animationDelay = '0s';
+
+                if (i === bootLines.length - 1) {
+                    // Typewriter effect for last line
+                    line.innerHTML = '';
+                    bootText.appendChild(line);
+                    const text = bootLines[i];
+                    for (let c = 0; c < text.length; c++) {
+                        await new Promise(r => setTimeout(r, 30));
+                        line.textContent = text.substring(0, c + 1);
+                    }
+                    line.innerHTML += '<span class="boot-cursor"></span>';
+                    await new Promise(r => setTimeout(r, 1500));
+                } else {
+                    line.textContent = bootLines[i];
+                    bootText.appendChild(line);
+                    await new Promise(r => setTimeout(r, 200 + Math.random() * 200));
+                }
+            }
+
+            bootOverlay.classList.add('hidden');
+        }
+
+        runBoot();
+
+        // ---- PARTICLES ----
+        const particleContainer = document.getElementById('particles');
+
+        function createParticles() {
+            for (let i = 0; i < 30; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = (8 + Math.random() * 12) + 's';
+                p.style.animationDelay = Math.random() * 10 + 's';
+                p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
+                particleContainer.appendChild(p);
+            }
+        }
+        createParticles();
+
+        // ---- CLOCK ----
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock').textContent = `${h}:${m}:${s} UTC-5`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // ---- SCROLL REVEAL ----
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        reveals.forEach(el => observer.observe(el));
+
+        // ---- COUNTING ANIMATION ----
+        const counters = document.querySelectorAll('.stat-number[data-count]');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = parseInt(entry.target.dataset.count);
+                    let current = 0;
+                    const increment = target / 40;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            entry.target.textContent = target;
+                            clearInterval(timer);
+                        } else {
+                            entry.target.textContent = Math.floor(current);
+                        }
+                    }, 30);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(c => counterObserver.observe(c));
+
+        // ---- PARALLAX ON HEADER GRID ----
+        document.addEventListener('mousemove', (e) => {
+            const grid = document.querySelector('.header-grid');
+            if (grid) {
+                const x = (e.clientX / window.innerWidth - 0.5) * 20;
+                const y = (e.clientY / window.innerHeight - 0.5) * 20;
+                grid.style.transform = `translate(${x}px, ${y}px)`;
+            }
+        });
+
+        // ---- RANDOM STATUS FLICKER ----
+        const statusEl = document.getElementById('status-text');
+        setInterval(() => {
+            if (Math.random() > 0.95) {
+                statusEl.style.opacity = '0.3';
+                setTimeout(() => { statusEl.style.opacity = '0.4'; }, 100);
+            }
+        }, 200);
+
+        // ---- STAGGERED CARD REVEALS ----
+        document.querySelectorAll('.card-grid').forEach(grid => {
+            const gridObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const cards = entry.target.querySelectorAll('.card');
+                        cards.forEach((card, i) => {
+                            setTimeout(() => card.classList.add('visible'), i * 150);
+                        });
+                        gridObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            gridObserver.observe(grid);
+        });
+    </script>
+</body>
+</html>
