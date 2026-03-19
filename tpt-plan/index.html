@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TpT Game Plan — How We're Going to Sell Your Teaching Ideas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #C42020;
+            --accent-light: rgba(196, 32, 32, 0.08);
+            --bg: #FAFAFA;
+            --text: #1D1D1F;
+            --text-secondary: #6E6E73;
+            --card-bg: #FFFFFF;
+            --border: #E5E5E7;
+            --green: #2D8A4E;
+            --blue: #2563EB;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1D1D1F 0%, #2D2D30 100%);
+            color: white;
+            padding: 4rem 1.5rem 3rem;
+            text-align: center;
+        }
+
+        .hero .badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.35rem 1rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Listen button area */
+        .listen-area {
+            text-align: center;
+            padding: 1.5rem 0 0;
+        }
+
+        .listen-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.6rem 1.5rem;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .listen-btn:hover { opacity: 0.85; }
+
+        .voice-select, .speed-btn {
+            font-family: inherit;
+            font-size: 0.8rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 1rem;
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+            cursor: pointer;
+            margin-left: 0.4rem;
+        }
+
+        .pro-tip {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            margin-top: 0.8rem;
+            font-style: italic;
+        }
+        .pro-tip a { color: var(--accent); cursor: pointer; }
+
+        section {
+            padding: 2.5rem 0;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        section:last-of-type { border-bottom: none; }
+
+        section.reading {
+            border-left: 3px solid var(--accent);
+            background: rgba(196, 32, 32, 0.04);
+            padding-left: 1rem;
+            border-radius: 4px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        h2 .num {
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        .section-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 1.5rem 0 0.6rem;
+            color: var(--text);
+        }
+
+        p { margin-bottom: 1rem; color: var(--text); }
+
+        .highlight-box {
+            background: var(--accent-light);
+            border-left: 3px solid var(--accent);
+            padding: 1.2rem 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box p { margin-bottom: 0; }
+        .highlight-box strong { color: var(--accent); }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .card p { font-size: 0.95rem; margin-bottom: 0.5rem; }
+
+        .step-grid {
+            display: grid;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .step {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .step h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .step p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+
+        ul {
+            padding-left: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .money-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .money-table th {
+            text-align: left;
+            padding: 0.8rem;
+            border-bottom: 2px solid var(--border);
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .money-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .money-table tr:last-child td { border-bottom: none; }
+
+        .green { color: var(--green); font-weight: 600; }
+
+        .timeline {
+            position: relative;
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.65rem;
+            top: 0.5rem;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .timeline-item .week {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .timeline-item h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0.2rem 0 0.3rem;
+        }
+
+        .timeline-item p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .faq-item .q {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .faq-item .a {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #1D1D1F 0%, #2D2D30 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .cta-box h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cta-box p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+        }
+
+        .cta-box .checklist {
+            text-align: left;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        .cta-box .checklist li {
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 0.4rem;
+            list-style: none;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .cta-box .checklist li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Player bar */
+        .player-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(30, 30, 30, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: white;
+            padding: 0.8rem 1.2rem;
+            padding-bottom: calc(0.8rem + env(safe-area-inset-bottom));
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .player-bar.visible { transform: translateY(0); }
+
+        .player-bar button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.3rem;
+        }
+
+        .player-bar .section-title {
+            flex: 1;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .player-bar select {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.3rem 0.5rem;
+            font-size: 0.75rem;
+            font-family: inherit;
+        }
+
+        .player-bar .speed {
+            font-size: 0.75rem;
+            font-weight: 600;
+            opacity: 0.8;
+            cursor: pointer;
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            border-radius: 0.5rem;
+            padding: 0.3rem 0.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.7rem; }
+            .hero { padding: 3rem 1.5rem 2rem; }
+            h2 { font-size: 1.3rem; }
+            .listen-area { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+            .listen-btn { width: 100%; justify-content: center; }
+            .voice-select, .speed-btn { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="hero">
+    <div class="badge">The Game Plan</div>
+    <h1>How We're Going to Turn Your Teaching Ideas Into TpT Products</h1>
+    <p>A clear, simple plan for getting your lesson ideas out of your head and onto Teachers Pay Teachers — with AI doing all the heavy lifting.</p>
+</header>
+
+<main class="container">
+
+    <div class="listen-area">
+        <button class="listen-btn" id="listenBtn" onclick="toggleListen()">&#9654; Listen to this page</button>
+        <select class="voice-select" id="voiceSelect" onchange="selectedVoice=voices[this.selectedIndex]"></select>
+        <button class="speed-btn" id="speedBtn" onclick="cycleSpeed()">1x</button>
+        <p class="pro-tip">Pro tip: For a better voice on iPhone, <a onclick="selectAllContent()">select all</a> then use iOS Speak Selection (Settings &gt; Accessibility &gt; Spoken Content).</p>
+    </div>
+
+    <!-- SECTION 1: What is this? -->
+    <section id="s1">
+        <p class="section-subtitle">First things first</p>
+        <h2>What Is This Plan?</h2>
+
+        <p>You have years of teaching experience and a head full of great ideas — activities, worksheets, lesson plans, games, and strategies that actually work in a classroom.</p>
+
+        <p><strong>Teachers Pay Teachers</strong> (TpT) is a website where teachers sell those exact kinds of resources to other teachers. Over 7 million educators use it. Some sellers make a full-time income from it. Many make a nice side income of a few hundred to a few thousand dollars a month.</p>
+
+        <p>The problem? Turning your ideas into polished, professional products takes time and tech skills — designing layouts, formatting PDFs, writing descriptions, making thumbnails.</p>
+
+        <div class="highlight-box">
+            <p><strong>That's where this plan comes in.</strong> You share your ideas in the simplest way possible — a voice memo, a text message, or scribbles on paper. Matt and his AI assistant (Claude) handle everything else: designing the product, writing the listing, and getting it uploaded to your TpT store.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 2: What is Claude? -->
+    <section id="s2">
+        <p class="section-subtitle">The technology part (keep reading — it's simpler than you think)</p>
+        <h2>What Is Claude and How Does It Help?</h2>
+
+        <p>Claude is an AI assistant made by a company called Anthropic. Think of it like a very capable digital helper that can read, write, design, and create things on a computer.</p>
+
+        <p>Here's what matters for this project:</p>
+
+        <div class="step-grid">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h4>Claude can turn rough ideas into finished products</h4>
+                <p>You describe an activity in your own words. Claude creates a professional, print-ready PDF with clean layouts, clear instructions, and nice design — the kind of thing that looks like it took hours to make.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h4>Claude writes the store listings</h4>
+                <p>Every TpT product needs a title, description, and preview images. Claude writes compelling descriptions that help teachers find your product when they search. This is like the difference between a handwritten sign and a professional storefront.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h4>Claude designs the thumbnails</h4>
+                <p>The cover image is the first thing buyers see. Claude creates eye-catching, consistent thumbnails so your store looks professional and trustworthy from day one.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h4>Claude works fast</h4>
+                <p>What might take you a full weekend of computer work, Claude can do in minutes. That means we can produce more products in less time, and your ideas don't sit in a notebook collecting dust.</p>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <p><strong>The simple version:</strong> You are the expert. You know what teachers need because you've been in the classroom. Claude is the production team — the designer, writer, and formatter — that turns your expertise into sellable products. Matt is the project manager keeping it all moving.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 3: Your part -->
+    <section id="s3">
+        <p class="section-subtitle">What you actually have to do</p>
+        <h2>Your Part: <span style="color:var(--green)">15 Minutes Every Two Weeks</span></h2>
+
+        <p>This is designed so your part is as easy as possible. No computer skills needed. No software to learn. No accounts to manage.</p>
+
+        <h3>Pick whichever method feels natural:</h3>
+
+        <div class="step-grid">
+            <div class="card">
+                <h4>Option A: Voice Memo</h4>
+                <p>Open the voice memo app on your phone. Talk through your idea like you're telling a friend about it. Send it to Matt. Done.</p>
+            </div>
+            <div class="card">
+                <h4>Option B: Text Message</h4>
+                <p>Text Matt your idea. It doesn't have to be organized or pretty. Just get the idea out of your head and into a text.</p>
+            </div>
+            <div class="card">
+                <h4>Option C: Paper</h4>
+                <p>Write it down or sketch it out on paper. Matt snaps a photo. That's your contribution done.</p>
+            </div>
+        </div>
+
+        <h3>What to include (in your own words):</h3>
+        <ul>
+            <li><strong>The idea</strong> — What is it? A worksheet? A game? A set of task cards? A full lesson?</li>
+            <li><strong>Who's it for?</strong> — What grade level? What subject?</li>
+            <li><strong>What problem does it solve?</strong> — Why would another teacher want this? (Example: "Kids always zone out during fractions — this makes it a game so they actually pay attention.")</li>
+            <li><strong>How would you use it?</strong> — Walk us through how you'd use it in your classroom. This is the gold. This is your expertise talking.</li>
+        </ul>
+
+        <div class="highlight-box">
+            <p><strong>That's it.</strong> You don't upload anything. You don't design anything. You don't write product descriptions. You talk or text, and we handle the rest.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 4: What we build -->
+    <section id="s4">
+        <p class="section-subtitle">What you get back</p>
+        <h2>What Gets Created From Your Idea</h2>
+
+        <p>Every idea you send us comes back as a complete, ready-to-sell package:</p>
+
+        <ul>
+            <li><strong>The product itself</strong> — A professionally designed PDF (or PowerPoint/Google Slides file) with clean formatting, clear instructions, and answer keys where needed</li>
+            <li><strong>A store thumbnail</strong> — The eye-catching cover image that shoppers see when browsing TpT</li>
+            <li><strong>Preview pages</strong> — 4-6 sample pages so buyers can see what they're getting before they purchase</li>
+            <li><strong>A written listing</strong> — Title, description, and keywords optimized so teachers can find your product when they search</li>
+            <li><strong>A "thank you" page</strong> — Included in every product, asking buyers to leave a review (reviews are everything on TpT)</li>
+        </ul>
+
+        <p>Matt reviews everything before it goes live. You can review too if you want — but you don't have to.</p>
+    </section>
+
+    <!-- SECTION 5: What sells -->
+    <section id="s5">
+        <p class="section-subtitle">What the data says</p>
+        <h2>What Sells Best on TpT</h2>
+
+        <p>Not all products are equal. Here's what the most successful sellers focus on:</p>
+
+        <h3>Hottest Subjects</h3>
+        <ul>
+            <li><strong>Math (K-5)</strong> — The single biggest market on TpT</li>
+            <li><strong>ELA/Literacy (K-5)</strong> — Close second</li>
+            <li><strong>Social-Emotional Learning (SEL)</strong> — Growing fast, less competition</li>
+            <li><strong>Science and Social Studies</strong> — Steady demand</li>
+        </ul>
+
+        <h3>Product Types That Move</h3>
+        <ul>
+            <li><strong>Task card sets</strong> — Bite-sized practice activities ($3-5)</li>
+            <li><strong>Activity packets</strong> — Multi-page worksheet bundles ($3-8)</li>
+            <li><strong>Sub plans</strong> — Emergency substitute teacher plans ($5-30)</li>
+            <li><strong>Interactive notebooks</strong> — Cut-and-paste, foldable activities</li>
+            <li><strong>Games and escape rooms</strong> — Gamified learning is huge right now</li>
+            <li><strong>Bundles</strong> — Collections of related products at a discount ($15-50+)</li>
+        </ul>
+
+        <h3>Price Points</h3>
+        <table class="money-table">
+            <thead>
+                <tr><th>Product Type</th><th>Typical Price</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Single worksheet or activity</td><td>$1 – $3</td></tr>
+                <tr><td>Task card set</td><td>$3 – $5</td></tr>
+                <tr><td>Multi-page activity packet</td><td>$3 – $8</td></tr>
+                <tr><td>Sub plans</td><td>$5 – $30</td></tr>
+                <tr><td>Unit bundle</td><td>$10 – $20</td></tr>
+                <tr><td>Year-long bundle</td><td class="green">$50 – $100+</td></tr>
+            </tbody>
+        </table>
+
+        <p>The <strong>$3-5 range</strong> sees the most purchases. But the real money comes from bundling those smaller products into bigger packages later.</p>
+    </section>
+
+    <!-- SECTION 6: The money -->
+    <section id="s6">
+        <p class="section-subtitle">Let's talk numbers</p>
+        <h2>How the Money Works</h2>
+
+        <p>TpT takes a cut of every sale. There are two seller tiers:</p>
+
+        <table class="money-table">
+            <thead>
+                <tr><th></th><th>Basic (Free)</th><th>Premium ($59.95/yr)</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>You keep</strong></td><td>55% of each sale</td><td class="green">80% of each sale</td></tr>
+                <tr><td><strong>On a $5 product</strong></td><td>$2.45</td><td class="green">$4.00</td></tr>
+            </tbody>
+        </table>
+
+        <p>Premium pays for itself after about 39 sales. We should start with Premium.</p>
+
+        <h3>Realistic income over time</h3>
+        <table class="money-table">
+            <thead>
+                <tr><th>Products in Store</th><th>Estimated Monthly Income</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>10 products</td><td>$50 – $100</td></tr>
+                <tr><td>30 products</td><td>$200 – $500</td></tr>
+                <tr><td>50+ products with bundles</td><td class="green">$500 – $1,500+</td></tr>
+                <tr><td>100+ products (mature store)</td><td class="green">$1,500 – $5,000+</td></tr>
+            </tbody>
+        </table>
+
+        <p>These are realistic ranges, not guarantees. The key factor is <strong>volume</strong> — more products means more chances for teachers to find your store through search. Every product is like a little employee that works 24/7.</p>
+
+        <div class="highlight-box">
+            <p><strong>The math in our favor:</strong> Because Claude can produce products so quickly, we can build inventory much faster than a typical seller who's designing everything by hand. Most sellers take months to get to 30 products. We could get there in 15 weeks.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 7: The schedule -->
+    <section id="s7">
+        <p class="section-subtitle">The bi-weekly cadence</p>
+        <h2>The Schedule: Every Two Weeks</h2>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="week">Your Week (Days 1-3)</span>
+                <h4>You Send Your Idea</h4>
+                <p>Voice memo, text, or paper. Answer the 4 questions: What is it? Who's it for? What problem does it solve? How would you use it? That's your homework — 15 minutes max.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="week">Our Week (Days 4-10)</span>
+                <h4>We Build the Product</h4>
+                <p>Matt feeds your idea to Claude. Claude creates the product, thumbnail, preview, and listing. Matt reviews and polishes. You get a preview to look over if you want.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="week">Upload Day (Days 11-14)</span>
+                <h4>It Goes Live on TpT</h4>
+                <p>Matt uploads the finished product to your TpT store. You get a link to see it live. That's another product working for you around the clock.</p>
+            </div>
+        </div>
+
+        <p>This means <strong>2 new products per month</strong> at minimum. As we get into a rhythm, we might bump that to 3-4.</p>
+    </section>
+
+    <!-- SECTION 8: The ramp-up -->
+    <section id="s8">
+        <p class="section-subtitle">Getting started</p>
+        <h2>The First 8 Weeks</h2>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="week">Weeks 1-2</span>
+                <h4>Set Up Shop</h4>
+                <p>Create your TpT seller account (Premium). Pick your niche based on your experience. Design your store branding (name, logo, color scheme — Claude handles this). Create 1 free resource to attract your first followers and reviews.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="week">Weeks 3-4</span>
+                <h4>First Paid Product</h4>
+                <p>Your first real listing goes live. Price it at $3-5. We learn from the process and smooth out any kinks in the workflow.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="week">Weeks 5-6</span>
+                <h4>Build Momentum</h4>
+                <p>Two more products. Start to see a consistent store taking shape. All products share the same professional branding.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="week">Weeks 7-8</span>
+                <h4>First Bundle</h4>
+                <p>Take the individual products and bundle them into a discounted pack. Bundles are the highest-ticket items on TpT. This is where the income starts to compound.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 9: FAQ for Mom -->
+    <section id="s9">
+        <p class="section-subtitle">Common questions</p>
+        <h2>Things You Might Be Wondering</h2>
+
+        <div class="faq-item">
+            <p class="q">"Do I need to learn any software?"</p>
+            <p class="a">No. You don't need to open PowerPoint, Canva, or any design tool. Your only job is to share your ideas. We do everything else.</p>
+        </div>
+
+        <div class="faq-item">
+            <p class="q">"What if my idea isn't fully formed yet?"</p>
+            <p class="a">That's fine. Half-baked ideas are welcome. You can say "I have this thing I do with flashcards where..." and we'll shape it into a complete product. The rougher the idea, the more we can help.</p>
+        </div>
+
+        <div class="faq-item">
+            <p class="q">"Is the AI going to make it sound like a robot wrote it?"</p>
+            <p class="a">No. Claude is a tool, like a very fast graphic designer or assistant. The ideas, the teaching strategies, and the classroom experience are all yours. Claude just makes them look professional. Your voice and expertise are the product — Claude is the packaging.</p>
+        </div>
+
+        <div class="faq-item">
+            <p class="q">"Can I review everything before it goes live?"</p>
+            <p class="a">Absolutely. Nothing goes up without your approval. Matt will send you previews of every product. If something doesn't feel right or doesn't match how you'd actually use it in a classroom, we fix it.</p>
+        </div>
+
+        <div class="faq-item">
+            <p class="q">"How long until I start making money?"</p>
+            <p class="a">Most TpT sellers see their first sales within the first month. Consistent income ($200+/month) typically kicks in around 20-30 products. At our pace of 2 per month, that's roughly 10-15 months — but we might move faster than that.</p>
+        </div>
+
+        <div class="faq-item">
+            <p class="q">"What does it cost to start?"</p>
+            <p class="a">$59.95 per year for a TpT Premium seller account. That's it. Claude is already set up on Matt's computer. No other subscriptions or tools needed.</p>
+        </div>
+
+        <div class="faq-item">
+            <p class="q">"What if a product doesn't sell?"</p>
+            <p class="a">No risk. There's no cost per product and no inventory. If something doesn't sell, it just sits there. But even slow sellers add up over time — and we can always update or rebundle them.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 10: CTA -->
+    <section id="s10">
+        <div class="cta-box">
+            <h3>Ready to Start?</h3>
+            <p>Here's what we need to kick this off:</p>
+            <ul class="checklist">
+                <li>What grade(s) do you teach / have experience with?</li>
+                <li>What subject(s) are your strongest?</li>
+                <li>What's one idea you've been wanting to turn into something other teachers could use?</li>
+                <li>Set up a TpT seller account at teacherspayteachers.com</li>
+            </ul>
+        </div>
+
+        <p style="text-align:center; color: var(--text-secondary); font-size: 0.9rem; margin-top: 1.5rem;">Send your first idea whenever you're ready. Voice memo, text, or paper — we'll take it from there.</p>
+    </section>
+
+</main>
+
+<footer>
+    <p>Made by Matt &amp; Claude &mdash; March 2026</p>
+</footer>
+
+<!-- Player Bar -->
+<div class="player-bar" id="playerBar">
+    <button id="playPauseBtn" onclick="toggleListen()">&#9208;</button>
+    <span class="section-title" id="playerTitle">—</span>
+    <select id="playerVoice" onchange="selectedVoice=voices[this.selectedIndex];document.getElementById('voiceSelect').selectedIndex=this.selectedIndex"></select>
+    <button class="speed" id="playerSpeed" onclick="cycleSpeed()">1x</button>
+    <button onclick="stopListen()">&#9632;</button>
+</div>
+
+<script>
+// --- Listen Mode (Web Speech API) ---
+let voices = [];
+let selectedVoice = null;
+let isPlaying = false;
+let isPaused = false;
+let chunks = [];
+let chunkIndex = 0;
+let speeds = [0.8, 1, 1.2, 1.5];
+let speedIndex = 1;
+let keepAlive = null;
+
+const VOICE_WHITELIST = ['samantha','karen','daniel','moira','tessa','ava','allison','tom','aaron','nicky','evan','zoe','joelle','fiona','martha','arthur','google us english','google uk english'];
+
+function loadVoices() {
+    const all = speechSynthesis.getVoices();
+    voices = all.filter(v => {
+        const n = v.name.toLowerCase();
+        return VOICE_WHITELIST.some(w => n.includes(w));
+    });
+    if (!voices.length) voices = all.slice(0, 5);
+    const sel1 = document.getElementById('voiceSelect');
+    const sel2 = document.getElementById('playerVoice');
+    [sel1, sel2].forEach(sel => {
+        sel.innerHTML = '';
+        voices.forEach((v, i) => {
+            const o = document.createElement('option');
+            o.textContent = v.name.replace(/Microsoft |Google |Apple /g, '');
+            o.selected = i === 0;
+            sel.appendChild(o);
+        });
+    });
+    selectedVoice = voices[0] || null;
+}
+
+speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
+
+function buildChunks() {
+    chunks = [];
+    const sections = document.querySelectorAll('main section');
+    sections.forEach(sec => {
+        const els = sec.querySelectorAll('h2, h3, h4, p, li, .q, .a, td');
+        els.forEach(el => {
+            const text = el.textContent.trim();
+            if (!text) return;
+            const isHeading = /^H[2-4]$/.test(el.tagName);
+            chunks.push({ text, section: sec, isHeading, pauseAfter: isHeading ? 400 : 200 });
+        });
+    });
+}
+
+function highlightSection(sec) {
+    document.querySelectorAll('section.reading').forEach(s => s.classList.remove('reading'));
+    if (sec) {
+        sec.classList.add('reading');
+        sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+function speakChunk(i) {
+    if (i >= chunks.length) { stopListen(); return; }
+    chunkIndex = i;
+    const c = chunks[i];
+    highlightSection(c.section);
+    const h2 = c.section.querySelector('h2');
+    document.getElementById('playerTitle').textContent = h2 ? h2.textContent : '';
+
+    const u = new SpeechSynthesisUtterance(c.text);
+    if (selectedVoice) u.voice = selectedVoice;
+    u.rate = c.isHeading ? speeds[speedIndex] * 0.9 : speeds[speedIndex];
+    if (c.isHeading) u.pitch = 1.05;
+    u.onend = () => setTimeout(() => speakChunk(i + 1), c.pauseAfter);
+    speechSynthesis.speak(u);
+}
+
+function toggleListen() {
+    if (isPlaying && !isPaused) {
+        speechSynthesis.pause();
+        isPaused = true;
+        document.getElementById('listenBtn').innerHTML = '&#9654; Resume';
+        document.getElementById('playPauseBtn').innerHTML = '&#9654;';
+        return;
+    }
+    if (isPaused) {
+        speechSynthesis.resume();
+        isPaused = false;
+        document.getElementById('listenBtn').innerHTML = '&#9208; Pause';
+        document.getElementById('playPauseBtn').innerHTML = '&#9208;';
+        return;
+    }
+    // Start fresh
+    speechSynthesis.cancel();
+    buildChunks();
+    isPlaying = true;
+    isPaused = false;
+    document.getElementById('listenBtn').innerHTML = '&#9208; Pause';
+    document.getElementById('playPauseBtn').innerHTML = '&#9208;';
+    document.getElementById('playerBar').classList.add('visible');
+    keepAlive = setInterval(() => { if (isPlaying && !isPaused) speechSynthesis.resume(); }, 10000);
+    speakChunk(0);
+}
+
+function stopListen() {
+    speechSynthesis.cancel();
+    isPlaying = false;
+    isPaused = false;
+    clearInterval(keepAlive);
+    document.getElementById('listenBtn').innerHTML = '&#9654; Listen to this page';
+    document.getElementById('playerBar').classList.remove('visible');
+    document.querySelectorAll('section.reading').forEach(s => s.classList.remove('reading'));
+}
+
+function cycleSpeed() {
+    speedIndex = (speedIndex + 1) % speeds.length;
+    const label = speeds[speedIndex] + 'x';
+    document.getElementById('speedBtn').textContent = label;
+    document.getElementById('playerSpeed').textContent = label;
+}
+
+function selectAllContent() {
+    const range = document.createRange();
+    range.selectNodeContents(document.querySelector('main'));
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+}
+</script>
+
+</body>
+</html>
