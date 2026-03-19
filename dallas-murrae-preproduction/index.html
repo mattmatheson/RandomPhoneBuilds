@@ -264,6 +264,84 @@
             content: '→ ';
             color: #ff4444;
         }
+        .ai-banner {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border-bottom: 2px solid #ff4444;
+            padding: 20px 24px;
+            margin: -20px -20px 0 -20px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .ai-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff4444, #ff8844, #ff4444);
+        }
+        .ai-banner-tag {
+            display: inline-block;
+            background: #ff4444;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .ai-banner h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+        .ai-banner p {
+            font-size: 12.5px;
+            color: #b0b8c8;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+        .ai-banner p:last-child { margin-bottom: 0; }
+        .ai-banner strong { color: #e8e8e8; }
+        .ai-banner .step {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            margin-bottom: 6px;
+        }
+        .ai-banner .step-num {
+            background: rgba(255,68,68,0.2);
+            color: #ff4444;
+            font-size: 11px;
+            font-weight: 800;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .ai-banner .step p { margin-bottom: 0; }
+        .ai-banner-dismiss {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            background: none;
+            border: none;
+            color: #556;
+            font-size: 18px;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .ai-banner-dismiss:hover { color: #fff; }
         .footer {
             text-align: center;
             padding: 30px 0;
@@ -278,6 +356,19 @@
     </style>
 </head>
 <body>
+    <!-- AI DISCLAIMER BANNER -->
+    <div class="ai-banner" id="aiBanner">
+        <button class="ai-banner-dismiss" onclick="document.getElementById('aiBanner').style.display='none'" aria-label="Dismiss">&times;</button>
+        <div class="ai-banner-tag">AI-Generated Document</div>
+        <h3>This entire preproduction plan was built autonomously by an AI agent.</h3>
+        <p>Here's how it happened:</p>
+        <div class="step"><div class="step-num">1</div><p><strong>Matt took a phone call</strong> with the client, Dallas Murrae, to discuss the music video shoot. The audio from that call was captured on Matt's phone and forwarded to his laptop's AI agent (Neo).</p></div>
+        <div class="step"><div class="step-num">2</div><p><strong>The agent already knew who Dallas was</strong> from prior iMessage conversations on Matt's phone. It recognized this was a client call and understood the context — the shoot date, the venue, the concept, the budget — all from listening to the conversation.</p></div>
+        <div class="step"><div class="step-num">3</div><p><strong>The agent autonomously built this preproduction plan</strong> — the shot list, schedule, gear breakdown, wardrobe notes, venue research, crew contacts — formatted it as a self-hosted webpage, and pushed it live to Matt's GitHub Pages site.</p></div>
+        <div class="step"><div class="step-num">4</div><p><strong>Before sending it to the client, the agent asked Matt for permission.</strong> Once approved, the link was shared. No copy-pasting, no manual formatting, no templates. Just a phone call that turned into a production-ready document.</p></div>
+        <p style="margin-top: 12px; color: #778; font-size: 11.5px;"><em>This is what AI agents look like in 2026. Not chatbots — autonomous systems that listen, understand context, and take action on your behalf. The future of work isn't replacing people. It's giving every freelancer a full production office in their pocket.</em></p>
+    </div>
+
     <div class="header">
         <h1>Dallas Murrae</h1>
         <div class="subtitle">Music Video — Preproduction Plan</div>
