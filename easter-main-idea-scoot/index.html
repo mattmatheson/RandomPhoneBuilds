@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easter Main Idea Scoot - TCAP Prep 2nd Grade ELA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink: #F8BBD0;
+            --pink-dark: #E91E8C;
+            --lavender: #CE93D8;
+            --lavender-light: #F3E5F5;
+            --mint: #A5D6A7;
+            --mint-light: #E8F5E9;
+            --yellow: #FFF59D;
+            --yellow-dark: #F9A825;
+            --peach: #FFCCBC;
+            --sky: #B3E5FC;
+            --bg: #FAFAFA;
+            --text: #1D1D1F;
+            --text-secondary: #6E6E73;
+            --accent: #C42020;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* === HERO === */
+        .hero {
+            background: linear-gradient(135deg, #F3E5F5 0%, #FCE4EC 50%, #FFF8E1 100%);
+            padding: 3rem 1.5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50px; right: -50px;
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(233,30,140,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero .eggs {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .hero h1 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--pink-dark);
+            line-height: 1.2;
+            margin-bottom: 0.4rem;
+        }
+
+        .hero .subtitle {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #7B1FA2;
+            margin-bottom: 0.8rem;
+        }
+
+        .hero .details {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .hero .badge-row {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .hero .badge {
+            display: inline-block;
+            background: white;
+            border: 1px solid var(--pink);
+            color: var(--pink-dark);
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 2rem;
+        }
+
+        .container { max-width: 700px; margin: 0 auto; padding: 0 1.5rem; }
+
+        .section-header {
+            text-align: center;
+            padding: 2rem 0 1rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.4rem;
+            color: #7B1FA2;
+        }
+
+        .section-header p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        .print-note {
+            background: #FFF8E1;
+            border: 1px dashed var(--yellow-dark);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            margin: 1rem 0 1.5rem;
+        }
+
+        .print-note strong { color: var(--yellow-dark); }
+
+        /* === SCOOT CARDS === */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .scoot-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.2rem;
+            border: 3px solid;
+            position: relative;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .scoot-card:nth-child(4n+1) { border-color: var(--pink); background: linear-gradient(180deg, #FCE4EC 0%, white 30%); }
+        .scoot-card:nth-child(4n+2) { border-color: var(--lavender); background: linear-gradient(180deg, #F3E5F5 0%, white 30%); }
+        .scoot-card:nth-child(4n+3) { border-color: var(--mint); background: linear-gradient(180deg, #E8F5E9 0%, white 30%); }
+        .scoot-card:nth-child(4n+4) { border-color: var(--sky); background: linear-gradient(180deg, #E3F2FD 0%, white 30%); }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .card-number {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+            background: var(--pink-dark);
+            width: 2.2rem;
+            height: 2.2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scoot-card:nth-child(4n+2) .card-number { background: #7B1FA2; }
+        .scoot-card:nth-child(4n+3) .card-number { background: #2E7D32; }
+        .scoot-card:nth-child(4n+4) .card-number { background: #1565C0; }
+
+        .card-emoji { font-size: 1.5rem; }
+
+        .card-passage {
+            font-size: 0.82rem;
+            line-height: 1.6;
+            color: var(--text);
+            margin-bottom: 0.8rem;
+            flex: 1;
+        }
+
+        .card-question {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #7B1FA2;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-choices {
+            font-size: 0.78rem;
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        .card-choices span {
+            display: block;
+            padding: 0.15rem 0;
+        }
+
+        /* === ANSWER KEY === */
+        .answer-section {
+            background: linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 100%);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .answer-section h3 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.2rem;
+            color: #2E7D32;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .answer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.6rem;
+        }
+
+        .answer-item {
+            background: white;
+            border-radius: 10px;
+            padding: 0.6rem;
+            text-align: center;
+            border: 2px solid var(--mint);
+        }
+
+        .answer-item .num {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #2E7D32;
+        }
+
+        .answer-item .ans {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        /* === RECORDING SHEET === */
+        .recording-sheet {
+            background: white;
+            border: 3px solid var(--lavender);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .recording-sheet h3 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.2rem;
+            color: #7B1FA2;
+            text-align: center;
+            margin-bottom: 0.3rem;
+        }
+
+        .recording-sheet .name-line {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--lavender);
+            padding-bottom: 0.5rem;
+        }
+
+        .recording-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+        }
+
+        .recording-cell {
+            border: 2px solid var(--lavender);
+            border-radius: 10px;
+            padding: 0.8rem 0.4rem;
+            text-align: center;
+        }
+
+        .recording-cell .cell-num {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #7B1FA2;
+        }
+
+        .recording-cell .cell-blank {
+            display: block;
+            width: 100%;
+            height: 1.5rem;
+            border-bottom: 1.5px dashed #CE93D8;
+            margin-top: 0.3rem;
+        }
+
+        /* === THANK YOU === */
+        .thank-you {
+            background: linear-gradient(135deg, #FCE4EC 0%, #FFF8E1 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .thank-you h3 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.3rem;
+            color: var(--pink-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .thank-you p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.3rem;
+        }
+
+        .thank-you .stars { font-size: 1.8rem; margin: 0.8rem 0; }
+
+        /* === COVER === */
+        .cover-section {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid #E5E5E7;
+        }
+
+        .cover-section h3 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .canva-link {
+            display: inline-block;
+            background: #7B1FA2;
+            color: white;
+            text-decoration: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin: 0.5rem;
+            transition: opacity 0.2s;
+        }
+
+        .canva-link:hover { opacity: 0.85; }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* === PRINT STYLES === */
+        @media print {
+            body { background: white; }
+            .hero, .print-note, .section-header, .cover-section, footer, .listen-area, .player-bar, .thank-you { display: none; }
+            .cards-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+            .scoot-card { break-inside: avoid; page-break-inside: avoid; min-height: auto; border-width: 2px; }
+            .answer-section, .recording-sheet { break-inside: avoid; page-break-before: always; }
+            .container { max-width: 100%; padding: 0; }
+        }
+
+        @media (max-width: 550px) {
+            .cards-grid { grid-template-columns: 1fr; }
+            .answer-grid { grid-template-columns: repeat(3, 1fr); }
+            .recording-grid { grid-template-columns: repeat(3, 1fr); }
+            .hero h1 { font-size: 1.6rem; }
+        }
+
+        /* Listen styles */
+        .listen-area { text-align: center; padding: 1rem 0 0; }
+        .listen-btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: #7B1FA2; color: white; border: none; border-radius: 2rem;
+            padding: 0.6rem 1.5rem; font-family: inherit; font-size: 0.9rem;
+            font-weight: 600; cursor: pointer;
+        }
+        .voice-select, .speed-btn {
+            font-family: inherit; font-size: 0.8rem; padding: 0.4rem 0.8rem;
+            border-radius: 1rem; border: 1px solid #E5E5E7; background: white; cursor: pointer; margin-left: 0.4rem;
+        }
+        .pro-tip { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.8rem; font-style: italic; }
+        .pro-tip a { color: #7B1FA2; cursor: pointer; }
+        section.reading { border-left: 3px solid #7B1FA2; background: rgba(123,31,162,0.04); padding-left: 1rem; border-radius: 4px; transition: all 0.3s ease; }
+        .player-bar {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(30,30,30,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            color: white; padding: 0.8rem 1.2rem; padding-bottom: calc(0.8rem + env(safe-area-inset-bottom));
+            display: flex; align-items: center; gap: 0.8rem;
+            transform: translateY(100%); transition: transform 0.3s ease; z-index: 1000;
+        }
+        .player-bar.visible { transform: translateY(0); }
+        .player-bar button { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; padding: 0.3rem; }
+        .player-bar .section-title { flex: 1; font-size: 0.8rem; opacity: 0.7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .player-bar select { background: rgba(255,255,255,0.15); color: white; border: none; border-radius: 0.5rem; padding: 0.3rem 0.5rem; font-size: 0.75rem; font-family: inherit; }
+        .player-bar .speed { font-size: 0.75rem; font-weight: 600; opacity: 0.8; cursor: pointer; background: rgba(255,255,255,0.15); border: none; color: white; border-radius: 0.5rem; padding: 0.3rem 0.5rem; }
+    </style>
+</head>
+<body>
+
+<header class="hero">
+    <div class="eggs">&#x1F430; &#x1F95A; &#x1F338; &#x1F95A; &#x1F430;</div>
+    <h1>Easter Main Idea Scoot</h1>
+    <p class="subtitle">TCAP Prep &bull; 2nd Grade ELA</p>
+    <p class="details">Finding the Main Idea in Paragraphs</p>
+    <div class="badge-row">
+        <span class="badge">12 Task Cards</span>
+        <span class="badge">Answer Key</span>
+        <span class="badge">Recording Sheet</span>
+        <span class="badge">Print &amp; Go</span>
+    </div>
+</header>
+
+<main class="container">
+
+    <div class="listen-area">
+        <button class="listen-btn" id="listenBtn" onclick="toggleListen()">&#9654; Listen</button>
+        <select class="voice-select" id="voiceSelect" onchange="selectedVoice=voices[this.selectedIndex]"></select>
+        <button class="speed-btn" id="speedBtn" onclick="cycleSpeed()">1x</button>
+        <p class="pro-tip">Pro tip: <a onclick="selectAllContent()">Select all</a> then use iOS Speak Selection for a better voice.</p>
+    </div>
+
+    <div class="print-note">
+        <strong>&#x1F5A8; Print Tip:</strong> Print this page for ready-to-use cards! Cut along the card borders. Cards are designed to be posted around the room for a scoot activity.
+    </div>
+
+    <!-- SCOOT CARDS -->
+    <section id="s-cards">
+        <div class="section-header">
+            <h2>&#x1F95A; Scoot Cards &#x1F95A;</h2>
+            <p>Read each paragraph. Choose the best main idea.</p>
+        </div>
+
+        <div class="cards-grid">
+
+            <!-- Card 1 -->
+            <div class="scoot-card">
+                <div class="card-header">
+                    <div class="card-number">1</div>
+                    <span class="card-emoji">&#x1F430;</span>
+                </div>
+                <p class="card-passage">Rabbits are wonderful pets. They are soft and fun to hold. Rabbits can learn to come when you call their name. They need fresh hay, water, and a clean cage every day. Many families enjoy taking care of pet rabbits.</p>
+                <p class="card-question">What is the main idea?</p>
+                <div class="card-choices">
+                    <span><strong>A.</strong> Rabbits eat hay every day.</span>
+                    <span><strong>B.</strong> Rabbits make great pets.</span>
+                    <span><strong>C.</strong> Rabbits are soft and furry.</span>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="scoot-card">
+                <div class="card-header">
+                    <div class="card-number">2</div>
+                    <span class="card-emoji">&#x1F95A;</span>
+                </div>
+                <p class="card-passage">Decorating Easter eggs is a fun tradition. First, you hard-boil the eggs. Then, you dip them into cups of colorful dye. You can also use stickers, glitter, or crayons to make them special. Every egg looks different and beautiful!</p>
+                <p class="card-question">What is the main idea?</p>
+                <div class="card-choices">
+                    <span><strong>A.</strong> You need to boil eggs first.</span>
+                    <span><strong>B.</strong> Decorating Easter eggs is a fun activity.</span>
+                    <span><strong>C.</strong> Stickers make eggs look pretty.</span>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="scoot-card">
+                <div class="card-header">
+                    <div class="card-number">3</div>
+                    <span class="card-emoji">&#x1F33C;</span>
+                </div>
+                <p class="card-passage">Spring brings many changes outside. Flowers begin to bloom in gardens and fields. Baby birds hatch from their eggs in nests. The days get longer and warmer. People start spending more time outdoors.</p>
+                <p class="card-question">What is the main idea?</p>
+                <div class="card-choices">
+                    <span><strong>A.</strong> Baby birds hatch in spring.</span>
+                    <span><strong>B.</strong> Many things change when spring arrives.</span>
+                    <span><strong>C.</strong> People like to go outside.</span>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="scoot-card">
+                <div class="card-header">
+                    <div class="card-number">4</div>
+                    <span class="card-emoji">&#x1F423;</span>
+                </div>
+                <p class="card-passage">Baby chicks need special care when they are born. They must stay warm under a heat lamp. They drink water from a small dish. They eat tiny bits of special chick food. Without this care, baby chicks could get sick.</p>
+                <p class="card-question">What is the main idea?</p>
+                <div class="card-choices">
+                    <span><strong>A.</strong> Chicks drink from a small dish.</span>
+                    <span><strong>B.</strong> Heat lamps keep chicks warm.</span>
+                    <span><strong>C.</strong> Baby chicks need special care to stay healthy.</span>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="scoot-card">
+                <div class="card-header">
+                    <div class="card-number">5</div>
+                    <span class="card-emoji">&#x1F36B;</span>
+                </div>
+                <p class="card-passage">Chocolate is one of the most popular Easter treats. Stores fill their shelves with chocolate bunnies and eggs. Some chocolates have cream or caramel inside. Kids love finding chocolate in their Easter baskets. It is a sweet part of the holiday!</p>
+                <p class="card-question">What is the main idea?</p>
+                <div class="card-choices">
+                    <span><strong>A.</strong> Stores sell lots of candy.</span>
+                    <span><strong>B.</strong> Chocolate is a favorite Easter treat.</span>
+                    <span><strong>C.</strong> Some chocolates have caramel inside.</span>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="scoot-card">
+                <div class="card-header">
+                    <div class="card-number">6</div>
+                    <span class="card-emoji">&#x1F338;</span>
+                </div>
+                <p class="card-passage">Easter egg hunts are exciting for kids. Children search in the grass, behind trees, and under bushes. Some eggs have candy inside, and some have small toys. The person who finds the most eggs sometimes wins a prize. Everyone has a great time looking!</p>
+                <p class="card-question">What is the main idea?</p>
+                <div class="card-choices">
+                    <span><strong>A.</strong> Some eggs have toys inside.</span>
+                    <span><strong>B.</strong> Kids hide behind bushes.</span>
+                    <span><strong>C.</strong> Easter egg hunts are exciting and fun for kids.</span>
+                </div>
+            </div>
+
+            <!-- Card 7 -->
+            <div class="scoot-card">
+                <div class="card-header">
+                    <div class="card-number">7</div>
+                    <span class="card-emoji">&#x1F407;</span>
+                </div>
+                <p class="card-passage">Carrots are very good for you. They help your eyes stay strong and healthy. Carrots have vitamins that help your body grow. You can eat them raw, cooked, or even in soup. Rabbits are not the only ones who should eat carrots!</p>
+                <p class="card-question">What is the main idea?</p>
+                <div class="card-choices">
+                    <span><strong>A.</strong> Carrots are a healthy food to eat.</span>
+                    <span><strong>B.</strong> Rabbits love to eat carrots.</span>
+                    <span><strong>C.</strong> You can cook carrots in soup.</span>
+                </div>
+            </div>
+
+            <!-- Card 8 -->
+            <div class="scoot-card">
+                <div class="card-header">
+                    <div class="card-number">8</div>
+                    <span class="card-emoji">&#x1F3A8;</span>
+                </div>
+                <p class="card-passage">Easter baskets come in all shapes and sizes. Some are made of wicker and some are made of plastic. People fill them with candy, eggs, and small gifts. Many children wake up on Easter morning to find a basket waiting for them. Making an Easter basket is a lovely tradition.</p>
+                <p class="card-question">What is the main idea?</p>
+                <div class="card-choices">
+                    <span><strong>A.</strong> Baskets can be wicker or plastic.</span>
+                    <span><strong>B.</strong> Easter baskets are a special tradition.</span>
+                    <span><strong>C.</strong> Children wake up early on Easter.</span>
+                </div>
+            </div>
+
+            <!-- Card 9 -->
+            <div class="scoot-card">
+                <div class="card-header">
+                    <div class="card-number">9</div>
+                    <span class="card-emoji">&#x1F337;</span>
+                </div>
+                <p class="card-passage">Tulips are popular spring flowers. They come in many colors like red, yellow, pink, and purple. Tulips grow from bulbs that are planted in the fall. When spring comes, the bulbs sprout and beautiful flowers appear. Gardens look amazing with rows of colorful tulips.</p>
+                <p class="card-question">What is the main idea?</p>
+                <div class="card-choices">
+                    <span><strong>A.</strong> Tulips come in many colors.</span>
+                    <span><strong>B.</strong> You plant bulbs in the fall.</span>
+                    <span><strong>C.</strong> Tulips are beautiful spring flowers.</span>
+                </div>
+            </div>
+
+            <!-- Card 10 -->
+            <div class="scoot-card">
+                <div class="card-header">
+                    <div class="card-number">10</div>
+                    <span class="card-emoji">&#x1F425;</span>
+                </div>
+                <p class="card-passage">Ducks are fun to watch at the pond. They dip their heads under the water to find food. Baby ducks follow their mother in a straight line. Ducks have special feathers that keep them dry, even when they swim all day. You can often hear them quacking from far away!</p>
+                <p class="card-question">What is the main idea?</p>
+                <div class="card-choices">
+                    <span><strong>A.</strong> Ducks quack very loudly.</span>
+                    <span><strong>B.</strong> Ducks are interesting animals to watch.</span>
+                    <span><strong>C.</strong> Baby ducks walk in a line.</span>
+                </div>
+            </div>
+
+            <!-- Card 11 -->
+            <div class="scoot-card">
+                <div class="card-header">
+                    <div class="card-number">11</div>
+                    <span class="card-emoji">&#x1F31E;</span>
+                </div>
+                <p class="card-passage">Playing outside in spring is the best! You can ride your bike on the sidewalk. You can fly a kite when the wind blows. Some kids play tag or jump rope with friends. Spring weather makes it perfect for outdoor fun.</p>
+                <p class="card-question">What is the main idea?</p>
+                <div class="card-choices">
+                    <span><strong>A.</strong> Kids like to ride bikes.</span>
+                    <span><strong>B.</strong> Spring is a great time to play outside.</span>
+                    <span><strong>C.</strong> The wind blows kites in the air.</span>
+                </div>
+            </div>
+
+            <!-- Card 12 -->
+            <div class="scoot-card">
+                <div class="card-header">
+                    <div class="card-number">12</div>
+                    <span class="card-emoji">&#x1F490;</span>
+                </div>
+                <p class="card-passage">Many families have special meals together on Easter. Some cook a big ham or roast. Others make their favorite side dishes like mac and cheese or green beans. Everyone sits around the table together. Sharing a meal on Easter is a way to show love to your family.</p>
+                <p class="card-question">What is the main idea?</p>
+                <div class="card-choices">
+                    <span><strong>A.</strong> Ham is a popular Easter food.</span>
+                    <span><strong>B.</strong> Families share special meals on Easter to show love.</span>
+                    <span><strong>C.</strong> Mac and cheese is a good side dish.</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ANSWER KEY -->
+    <section id="s-answers">
+        <div class="answer-section">
+            <h3>&#x1F4DD; Answer Key</h3>
+            <div class="answer-grid">
+                <div class="answer-item"><div class="num">1</div><div class="ans">B</div></div>
+                <div class="answer-item"><div class="num">2</div><div class="ans">B</div></div>
+                <div class="answer-item"><div class="num">3</div><div class="ans">B</div></div>
+                <div class="answer-item"><div class="num">4</div><div class="ans">C</div></div>
+                <div class="answer-item"><div class="num">5</div><div class="ans">B</div></div>
+                <div class="answer-item"><div class="num">6</div><div class="ans">C</div></div>
+                <div class="answer-item"><div class="num">7</div><div class="ans">A</div></div>
+                <div class="answer-item"><div class="num">8</div><div class="ans">B</div></div>
+                <div class="answer-item"><div class="num">9</div><div class="ans">C</div></div>
+                <div class="answer-item"><div class="num">10</div><div class="ans">B</div></div>
+                <div class="answer-item"><div class="num">11</div><div class="ans">B</div></div>
+                <div class="answer-item"><div class="num">12</div><div class="ans">B</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RECORDING SHEET -->
+    <section id="s-recording">
+        <div class="recording-sheet">
+            <h3>&#x1F430; My Scoot Recording Sheet &#x1F430;</h3>
+            <div class="name-line">Name: ________________________________&nbsp;&nbsp;&nbsp;Date: ________________</div>
+            <div class="recording-grid">
+                <div class="recording-cell"><div class="cell-num">1</div><span class="cell-blank"></span></div>
+                <div class="recording-cell"><div class="cell-num">2</div><span class="cell-blank"></span></div>
+                <div class="recording-cell"><div class="cell-num">3</div><span class="cell-blank"></span></div>
+                <div class="recording-cell"><div class="cell-num">4</div><span class="cell-blank"></span></div>
+                <div class="recording-cell"><div class="cell-num">5</div><span class="cell-blank"></span></div>
+                <div class="recording-cell"><div class="cell-num">6</div><span class="cell-blank"></span></div>
+                <div class="recording-cell"><div class="cell-num">7</div><span class="cell-blank"></span></div>
+                <div class="recording-cell"><div class="cell-num">8</div><span class="cell-blank"></span></div>
+                <div class="recording-cell"><div class="cell-num">9</div><span class="cell-blank"></span></div>
+                <div class="recording-cell"><div class="cell-num">10</div><span class="cell-blank"></span></div>
+                <div class="recording-cell"><div class="cell-num">11</div><span class="cell-blank"></span></div>
+                <div class="recording-cell"><div class="cell-num">12</div><span class="cell-blank"></span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THANK YOU -->
+    <section id="s-thanks">
+        <div class="thank-you">
+            <h3>Thank You!</h3>
+            <p>Thank you so much for your purchase!</p>
+            <p>If you enjoyed this resource, I'd love a review.</p>
+            <div class="stars">&#11088;&#11088;&#11088;&#11088;&#11088;</div>
+            <p>Your feedback helps me create more resources for teachers like you!</p>
+        </div>
+    </section>
+
+    <!-- COVER DESIGNS -->
+    <section class="cover-section">
+        <h3>&#x1F3A8; TpT Cover Designs (Canva)</h3>
+        <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem;">Pick your favorite cover for the TpT listing:</p>
+        <a href="https://www.canva.com/d/Z1Y0QdzwMsdh6FZ" target="_blank" class="canva-link">Cover Option 1</a>
+        <a href="https://www.canva.com/d/k7-wXzxX6oZOg04" target="_blank" class="canva-link">Cover Option 2</a>
+        <a href="https://www.canva.com/d/WCw-RL4JZfHJvMZ" target="_blank" class="canva-link">Cover Option 3</a>
+        <a href="https://www.canva.com/d/dAQtn5W5XeFNZj5" target="_blank" class="canva-link">Cover Option 4</a>
+    </section>
+
+</main>
+
+<footer>
+    <p>Easter Main Idea Scoot &mdash; TCAP Prep &bull; 2nd Grade ELA</p>
+    <p style="margin-top:0.3rem;">Created by Beth &amp; Matt with Claude &mdash; March 2026</p>
+</footer>
+
+<!-- Player Bar -->
+<div class="player-bar" id="playerBar">
+    <button id="playPauseBtn" onclick="toggleListen()">&#9208;</button>
+    <span class="section-title" id="playerTitle"></span>
+    <select id="playerVoice" onchange="selectedVoice=voices[this.selectedIndex];document.getElementById('voiceSelect').selectedIndex=this.selectedIndex"></select>
+    <button class="speed" id="playerSpeed" onclick="cycleSpeed()">1x</button>
+    <button onclick="stopListen()">&#9632;</button>
+</div>
+
+<script>
+let voices=[],selectedVoice=null,isPlaying=false,isPaused=false,chunks=[],chunkIndex=0,speeds=[.8,1,1.2,1.5],speedIndex=1,keepAlive=null;
+const WL=['samantha','karen','daniel','moira','tessa','ava','allison','tom','aaron','nicky','evan','zoe','joelle','fiona','martha','arthur','google us english','google uk english'];
+function loadVoices(){const a=speechSynthesis.getVoices();voices=a.filter(v=>WL.some(w=>v.name.toLowerCase().includes(w)));if(!voices.length)voices=a.slice(0,5);['voiceSelect','playerVoice'].forEach(id=>{const s=document.getElementById(id);s.innerHTML='';voices.forEach((v,i)=>{const o=document.createElement('option');o.textContent=v.name.replace(/Microsoft |Google |Apple /g,'');o.selected=i===0;s.appendChild(o)})});selectedVoice=voices[0]||null}
+speechSynthesis.onvoiceschanged=loadVoices;loadVoices();
+function buildChunks(){chunks=[];document.querySelectorAll('main section').forEach(sec=>{sec.querySelectorAll('h2,h3,p,span,li,.card-passage,.card-question').forEach(el=>{const t=el.textContent.trim();if(t&&t.length>2)chunks.push({text:t,section:sec,isHeading:/^H[2-3]$/.test(el.tagName),pauseAfter:/^H[2-3]$/.test(el.tagName)?400:200})})})}
+function highlightSection(s){document.querySelectorAll('section.reading').forEach(x=>x.classList.remove('reading'));if(s){s.classList.add('reading');s.scrollIntoView({behavior:'smooth',block:'start'})}}
+function speakChunk(i){if(i>=chunks.length){stopListen();return}chunkIndex=i;const c=chunks[i];highlightSection(c.section);const h=c.section.querySelector('h2');document.getElementById('playerTitle').textContent=h?h.textContent:'';const u=new SpeechSynthesisUtterance(c.text);if(selectedVoice)u.voice=selectedVoice;u.rate=c.isHeading?speeds[speedIndex]*.9:speeds[speedIndex];if(c.isHeading)u.pitch=1.05;u.onend=()=>setTimeout(()=>speakChunk(i+1),c.pauseAfter);speechSynthesis.speak(u)}
+function toggleListen(){if(isPlaying&&!isPaused){speechSynthesis.pause();isPaused=true;document.getElementById('listenBtn').innerHTML='&#9654; Resume';document.getElementById('playPauseBtn').innerHTML='&#9654;';return}if(isPaused){speechSynthesis.resume();isPaused=false;document.getElementById('listenBtn').innerHTML='&#9208; Pause';document.getElementById('playPauseBtn').innerHTML='&#9208;';return}speechSynthesis.cancel();buildChunks();isPlaying=true;isPaused=false;document.getElementById('listenBtn').innerHTML='&#9208; Pause';document.getElementById('playPauseBtn').innerHTML='&#9208;';document.getElementById('playerBar').classList.add('visible');keepAlive=setInterval(()=>{if(isPlaying&&!isPaused)speechSynthesis.resume()},10000);speakChunk(0)}
+function stopListen(){speechSynthesis.cancel();isPlaying=false;isPaused=false;clearInterval(keepAlive);document.getElementById('listenBtn').innerHTML='&#9654; Listen';document.getElementById('playerBar').classList.remove('visible');document.querySelectorAll('section.reading').forEach(s=>s.classList.remove('reading'))}
+function cycleSpeed(){speedIndex=(speedIndex+1)%speeds.length;const l=speeds[speedIndex]+'x';document.getElementById('speedBtn').textContent=l;document.getElementById('playerSpeed').textContent=l}
+function selectAllContent(){const r=document.createRange();r.selectNodeContents(document.querySelector('main'));const s=window.getSelection();s.removeAllRanges();s.addRange(r)}
+</script>
+
+</body>
+</html>
