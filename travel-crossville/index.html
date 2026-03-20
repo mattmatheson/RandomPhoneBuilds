@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel Crossville — Tourism Video Series</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --bg: #FAFAFA;
+    --text: #1D1D1F;
+    --muted: #6E6E73;
+    --border: #E5E5E7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 4vw, 2rem) 4rem;
+  }
+
+  header { margin-bottom: 3rem; animation: fadeIn 0.6s ease-out both; }
+
+  .label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 0.4rem;
+  }
+
+  .meta { font-size: 0.95rem; color: var(--muted); }
+
+  .scope {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-top: 1rem;
+    line-height: 1.7;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.4rem;
+    border-radius: 980px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+  }
+
+  .btn-primary { background: var(--text); color: #fff; }
+  .btn-primary:hover { background: #000; }
+  .btn-secondary { background: #F5F5F7; color: var(--text); border: 1px solid var(--border); }
+  .btn-secondary:hover { background: #EDEDF0; }
+
+  .pill {
+    display: inline-block;
+    padding: 0.3rem 0.85rem;
+    background: #F5F5F7;
+    border-radius: 980px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--muted);
+    margin-top: 1rem;
+  }
+
+  .listen-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.6rem 1.5rem;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .listen-btn:hover { background: #a81b1b; }
+
+  .listen-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .voice-select, .speed-btn {
+    font-family: inherit;
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 980px;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .pro-tip {
+    font-size: 0.75rem;
+    color: #999;
+    font-style: italic;
+    margin-top: 0.5rem;
+  }
+
+  .pro-tip a { color: #999; }
+
+  section {
+    margin-bottom: 3rem;
+    padding: 0.5rem 0;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+
+  section.reading {
+    border-left: 3px solid var(--accent);
+    background: rgba(196, 32, 32, 0.04);
+    padding-left: 1rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.5rem;
+    color: var(--text);
+  }
+
+  p { margin-bottom: 0.8rem; font-size: 0.95rem; }
+
+  .info-box {
+    background: #F5F5F7;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+
+  .info-box strong { display: block; margin-bottom: 0.3rem; }
+
+  .timeline {
+    position: relative;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--border);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 1.2rem;
+    padding-left: 0.5rem;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -1.85rem;
+    top: 0.5rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+
+  .timeline-item.complete::before { background: #34C759; }
+  .timeline-item.active::before { background: var(--accent); }
+  .timeline-item.upcoming::before { background: var(--border); }
+
+  .timeline-date {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .timeline-text { font-size: 0.88rem; margin-top: 0.15rem; }
+
+  .status-badge {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 980px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .status-complete { background: #D1FAE5; color: #065F46; }
+  .status-priority { background: #FEE2E2; color: #991B1B; }
+  .status-upcoming { background: #F3F4F6; color: #6B7280; }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  .video-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: all 0.2s ease;
+  }
+
+  .video-card:hover { border-color: #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+
+  .video-card h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  .video-card p { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem; }
+
+  .location-list { list-style: none; padding: 0; }
+
+  .location-list li {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+
+  .location-list li:last-child { border-bottom: none; }
+
+  .location-list .loc-name { font-weight: 600; }
+  .location-list .loc-desc { color: var(--muted); font-size: 0.82rem; margin-top: 0.15rem; }
+
+  .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    margin: 1rem 0;
+  }
+
+  .schedule-table th {
+    text-align: left;
+    padding: 0.6rem 0.8rem;
+    font-weight: 600;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    border-bottom: 2px solid var(--border);
+  }
+
+  .schedule-table td {
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 0.75rem;
+    color: #ADADB0;
+    animation: fadeIn 0.6s ease-out 0.2s both;
+  }
+
+  footer a { color: #ADADB0; text-decoration: none; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Player bar */
+  .player-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(30, 30, 30, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: #fff;
+    padding: 0.7rem 1.2rem;
+    padding-bottom: calc(0.7rem + env(safe-area-inset-bottom));
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.78rem;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+  }
+
+  .player-bar.visible { transform: translateY(0); }
+
+  .player-bar button {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.78rem;
+    padding: 0.3rem 0.5rem;
+  }
+
+  .player-bar .now-playing {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: 0.7;
+  }
+
+  .player-bar select {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.72rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 600px) {
+    .listen-controls { flex-direction: column; align-items: stretch; }
+    .listen-btn { width: 100%; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<div class="container" id="content">
+  <header>
+    <span class="label">Client Project Brief</span>
+    <h1>Travel Crossville</h1>
+    <div class="meta">Tourism Video Series — Crossville, TN · explorecrossville.com</div>
+    <p class="scope">A four-part commercial video series for Travel Crossville promoting golf, outdoors, downtown life, and an overview of the Cumberland Plateau's premier destination. Client contact: PJ (+1 931-787-0551) via the Crossville Chamber / Convention & Visitors Bureau.</p>
+
+    <div class="pill">4 videos · 1 completed · 3 remaining</div>
+
+    <div class="actions">
+      <a href="https://explorecrossville.com" target="_blank" class="btn btn-primary">explorecrossville.com</a>
+      <a href="https://drive.google.com/drive/folders/1-ueZnU_61ompP-aTOTKjqtOtwfECuHVh" target="_blank" class="btn btn-secondary">Golf V1 Final Files</a>
+    </div>
+
+    <div class="listen-controls">
+      <button class="listen-btn" id="listenBtn" onclick="toggleListen()">▶ Listen</button>
+      <select class="voice-select" id="voiceSelect"></select>
+      <button class="speed-btn" id="speedBtn" onclick="cycleSpeed()">1x</button>
+    </div>
+    <p class="pro-tip">Pro tip: For a better voice, tap <a href="#" onclick="selectAllContent(); return false;">select all</a> below then use iOS Speak Selection (Settings > Accessibility > Spoken Content).</p>
+  </header>
+
+  <section id="sec-deliverables">
+    <h2>Deliverables</h2>
+    <div class="video-grid">
+      <div class="video-card">
+        <h4>Golf Commercial <span class="status-badge status-complete">Complete</span></h4>
+        <p>30-second commercial featuring Stonehenge, Golf Garage at Druid Hills, the Quarry, and Bear Trace at Cumberland Mountain. Logo end card with "Play the Plateau" and explorecrossville.com.</p>
+        <p>Delivered Mar 7. Nashville news station needed it by end of that week.</p>
+      </div>
+      <div class="video-card">
+        <h4>Outdoors Video <span class="status-badge status-priority">Priority</span></h4>
+        <p>Showcasing Cumberland Plateau outdoor attractions — state parks, lakes, waterfalls, hiking trails, the Obed Wild & Scenic River.</p>
+      </div>
+      <div class="video-card">
+        <h4>Downtown Life Video <span class="status-badge status-priority">Priority</span></h4>
+        <p>Capturing the vibe of downtown Crossville — restaurants, shops, Palace Theatre, Cumberland County Playhouse, wineries, breweries, local culture.</p>
+      </div>
+      <div class="video-card">
+        <h4>Overview Video <span class="status-badge status-upcoming">Upcoming</span></h4>
+        <p>Compilation overview combining highlights from all individual videos into a flagship piece for Travel Crossville marketing.</p>
+      </div>
+      <div class="video-card">
+        <h4>Golf V2 (Reshoot) <span class="status-badge status-upcoming">Later</span></h4>
+        <p>Redo of the golf video with greener courses, more courses, and the style from the Facebook reference PJ sent. Target: May when courses are at peak green.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="sec-priority">
+    <h2>Current Priority & Scheduling</h2>
+    <div class="info-box">
+      <strong>PJ's last message (Mar 20): "Any dates soon?"</strong>
+      You told him Mar 18 you'd send dates after scheduling at a coffee shop. He confirmed outdoor + overview are the priority — the other two can wait. He's wide open end of March and most of April (blocked Apr 12–16 only). He wants downtown and overview shot first since they're not weather-dependent.
+    </div>
+
+    <h3>Suggested Schedule</h3>
+    <table class="schedule-table">
+      <thead>
+        <tr><th>Shoot</th><th>Suggested Window</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Downtown + Overview B-Roll</strong></td>
+          <td>Late March (Mar 25–28)</td>
+          <td>Mostly indoors — restaurants, shops, Palace Theatre, Playhouse, breweries. Not weather dependent. PJ wants this done ASAP so it's off the table.</td>
+        </tr>
+        <tr>
+          <td><strong>Outdoors</strong></td>
+          <td>Early–Mid April (Apr 1–11)</td>
+          <td>Need good weather for this. State parks, lakes, hiking. April spring foliage will be filling in. Before PJ's blocked Apr 12–16.</td>
+        </tr>
+        <tr>
+          <td><strong>Golf V2 Reshoot</strong></td>
+          <td>Late April / May</td>
+          <td>PJ specifically said "the later in April the nicer the courses will look." May gives peak greens. He referenced a Facebook video as style guide for this one.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The overview video will be assembled from footage across all the other shoots, so no separate shoot date needed — just editing time after the outdoor shoot wraps.</p>
+  </section>
+
+  <section id="sec-timeline">
+    <h2>Project Timeline</h2>
+    <div class="timeline">
+      <div class="timeline-item complete">
+        <div class="timeline-date">Jan 26</div>
+        <div class="timeline-text">First contact — PJ reached out to confirm connection</div>
+      </div>
+      <div class="timeline-item complete">
+        <div class="timeline-date">Jan 30</div>
+        <div class="timeline-text">Met at the Chamber office — PJ gave Matt a tour around Crossville, scouted locations over lunch</div>
+      </div>
+      <div class="timeline-item complete">
+        <div class="timeline-date">Feb 6</div>
+        <div class="timeline-text">Second in-person meeting at the Chamber for project rundown</div>
+      </div>
+      <div class="timeline-item complete">
+        <div class="timeline-date">Feb 11</div>
+        <div class="timeline-text">Nathan Fontenot looped into group chat for golf scheduling / weather coordination</div>
+      </div>
+      <div class="timeline-item complete">
+        <div class="timeline-date">Feb 26–28</div>
+        <div class="timeline-text"><strong>Golf Shoot Days:</strong> Fri — Stonehenge (3:15), Golf Garage & Quarry (4:15). Sat — Bear Trace (after 1pm). PJ was in Knoxville for Dr appt, Nathan was on-site.</div>
+      </div>
+      <div class="timeline-item complete">
+        <div class="timeline-date">Mar 3–7</div>
+        <div class="timeline-text">Edit turnaround. Rough draft → feedback ("trim to 30s", remove Bear Trace clubhouse shot) → final files delivered. Nashville news station deadline met.</div>
+      </div>
+      <div class="timeline-item complete">
+        <div class="timeline-date">Mar 9</div>
+        <div class="timeline-text">PJ asked to get on schedule for end of month / early April for remaining commercials</div>
+      </div>
+      <div class="timeline-item complete">
+        <div class="timeline-date">Mar 11</div>
+        <div class="timeline-text">PJ shared Facebook reference video for Golf V2 vision. Confirmed availability — wide open end of March, all April except 12th–16th. Wants downtown/overview first.</div>
+      </div>
+      <div class="timeline-item active">
+        <div class="timeline-date">Mar 18–20</div>
+        <div class="timeline-text">PJ asking for dates. Matt said he'd send dates. Need to respond ASAP.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sec-research">
+    <h2>Crossville Research — Shot Locations</h2>
+
+    <h3>Golf Courses (Already Shot + Future)</h3>
+    <ul class="location-list">
+      <li>
+        <div class="loc-name">Stonehenge Golf Club — Fairfield Glade</div>
+        <div class="loc-desc">Ranked #2 in Golfweek's "Best Courses You Can Play in Tennessee." Scenic mountain course, already shot Feb 27.</div>
+      </li>
+      <li>
+        <div class="loc-name">Golf Garage at Druid Hills — Fairfield Glade</div>
+        <div class="loc-desc">Modern indoor/outdoor practice & training facility. Simulators, swing analysis, club fitting. Already shot Feb 27.</div>
+      </li>
+      <li>
+        <div class="loc-name">The Quarry — Fairfield Glade</div>
+        <div class="loc-desc">Adjacent to the Golf Garage. Already shot Feb 27.</div>
+      </li>
+      <li>
+        <div class="loc-name">Bear Trace at Cumberland Mountain</div>
+        <div class="loc-desc">Part of the Tennessee Golf Trail. One of the most popular Bear Trace courses. Already shot Feb 28. PJ didn't love the one-tee-to-clubhouse shot — reshoot opportunity for V2.</div>
+      </li>
+      <li>
+        <div class="loc-name">Druid Hills Golf Club</div>
+        <div class="loc-desc">The original Fairfield Glade course (1973). Highest point in the community — panoramic mountain views. Great for V2.</div>
+      </li>
+      <li>
+        <div class="loc-name">Dorchester Golf Club</div>
+        <div class="loc-desc">Features contrasting front/back nines. Potential for V2.</div>
+      </li>
+      <li>
+        <div class="loc-name">Heatherhurst Golf Club (The Brae & The Crag)</div>
+        <div class="loc-desc">Two courses — The Brae is the challenging one, The Crag is player-friendly with wide fairways. Potential for V2.</div>
+      </li>
+      <li>
+        <div class="loc-name">Lake Tansi Resort Golf Course</div>
+        <div class="loc-desc">Past People's Choice "Best Golf Course in Cumberland County." Hosted TN PGA Team Championship. Potential for V2.</div>
+      </li>
+    </ul>
+
+    <h3>Downtown Crossville — Video Locations</h3>
+    <ul class="location-list">
+      <li>
+        <div class="loc-name">Palace Theatre (est. 1938)</div>
+        <div class="loc-desc">Fully restored Art Deco community auditorium. Live music — jazz, blues, country, bluegrass, rock. Great exterior + interior shots.</div>
+      </li>
+      <li>
+        <div class="loc-name">Cumberland County Playhouse</div>
+        <div class="loc-desc">One of the 10 largest professional theaters in rural America, since 1965. Four stages, 350+ performances/year. 221 Tennessee Ave — heart of downtown.</div>
+      </li>
+      <li>
+        <div class="loc-name">Cumberland Homesteads Tower Museum</div>
+        <div class="loc-desc">Iconic octagonal stone tower (1937–38). FDR New Deal history. 50,000-gallon water tank, lookout platform at top. On the National Register. Stunning drone subject.</div>
+      </li>
+      <li>
+        <div class="loc-name">Stonehaus Winery</div>
+        <div class="loc-desc">Tennessee's only winery with statewide distribution. Award-winning wines, tastings, Wine & Paint nights. 2444 Genesis Rd.</div>
+      </li>
+      <li>
+        <div class="loc-name">Local Breweries</div>
+        <div class="loc-desc">Social Brew (downtown, 10 rotating taps), Swing On Brewing Company (golf-themed), Lilly Pad Hopyard Brewery (scenic views + hiking nearby), Calfkiller Brewing.</div>
+      </li>
+      <li>
+        <div class="loc-name">Downtown Shops & Restaurants</div>
+        <div class="loc-desc">Main Street area — local boutiques, eateries, coffee shops. Need to scout specific spots with PJ on shoot day.</div>
+      </li>
+    </ul>
+
+    <h3>Outdoors — Video Locations</h3>
+    <ul class="location-list">
+      <li>
+        <div class="loc-name">Cumberland Mountain State Park</div>
+        <div class="loc-desc">Built by the CCC in the 1930s. Byrd Lake, stone bridges, hiking trails through the plateau. Classic Tennessee state park.</div>
+      </li>
+      <li>
+        <div class="loc-name">Obed Wild & Scenic River</div>
+        <div class="loc-desc">Federally designated Wild & Scenic River. Deep gorge carved through the Cumberland Plateau. Kayaking, rock climbing, swimming holes. Dramatic cliff shots.</div>
+      </li>
+      <li>
+        <div class="loc-name">Lake Tansi</div>
+        <div class="loc-desc">Private lake community south of Crossville. Boating, fishing, lakefront homes.</div>
+      </li>
+      <li>
+        <div class="loc-name">Byrd Lake / Lake Holiday</div>
+        <div class="loc-desc">Smaller lakes on Crossville's outskirts. Scenic, quieter, good B-roll locations.</div>
+      </li>
+      <li>
+        <div class="loc-name">Cumberland Plateau Overlooks</div>
+        <div class="loc-desc">Crossville sits at ~1,900 feet on top of the Cumberland Plateau. Eastern and western escarpments offer dramatic overlook opportunities. Drone paradise.</div>
+      </li>
+      <li>
+        <div class="loc-name">Hiking Trails</div>
+        <div class="loc-desc">Cumberland Trail, Black Mountain trail system, state park trails. Spring wildflowers in April make for gorgeous footage.</div>
+      </li>
+    </ul>
+  </section>
+
+  <section id="sec-context">
+    <h2>About Crossville</h2>
+    <p>Crossville is the county seat of Cumberland County, Tennessee, sitting on top of the Cumberland Plateau at roughly 1,900 feet elevation. Known as the <strong>"Golf Capital of Tennessee"</strong> with 10+ courses in the immediate area (Fairfield Glade alone has 5 courses / 90 holes), it's also a gateway to serious outdoor recreation on the plateau.</p>
+    <p>The Cumberland Plateau is the largest timbered plateau in America. The Obed River carves a dramatic gorge north of town. The climate is moderated by the elevation — cooler summers than Nashville, real seasons, abundant rainfall (55+ inches/year), and enough snow to feel like winter.</p>
+    <p>The tagline is <strong>"Play the Plateau"</strong> with the website explorecrossville.com. The logo will include this tagline — PJ confirmed it goes at the end of each commercial with 5–7 seconds of screen time.</p>
+    <p>Travel Crossville is the tourism arm of the Crossville Chamber of Commerce / Convention & Visitors Bureau. PJ works there managing tourism marketing and content.</p>
+  </section>
+
+  <section id="sec-specs">
+    <h2>Production Notes</h2>
+    <div class="info-box">
+      <strong>Format:</strong> 30-second commercials (confirmed for golf, likely same for others).<br>
+      <strong>End Card:</strong> "Play the Plateau" logo + explorecrossville.com — 5–7 seconds at the end.<br>
+      <strong>Nashville News:</strong> Content may need to be repurposed for Nashville news station spots — quick turnaround expected.<br>
+      <strong>Golf V1 Feedback:</strong> PJ loved everything except the Bear Trace one-tee-to-clubhouse shot. Drone footage and Golf Garage clips were highlights.<br>
+      <strong>Golf V2 Style:</strong> PJ sent a Facebook reference video — "a mixture of this and the one you made." Target May for green greens.<br>
+      <strong>Reference Videos:</strong> PJ shared several YouTube/Facebook links for style reference early on (see conversation history).<br>
+      <strong>Nathan Fontenot:</strong> Helps coordinate golf course access and scheduling around weather. In group chat with PJ and Matt.
+    </div>
+  </section>
+
+  <section id="sec-links">
+    <h2>Reference Links</h2>
+    <ul class="location-list">
+      <li>
+        <div class="loc-name">Golf V1 Final Files</div>
+        <div class="loc-desc">https://drive.google.com/drive/folders/1-ueZnU_61ompP-aTOTKjqtOtwfECuHVh</div>
+      </li>
+      <li>
+        <div class="loc-name">PJ's Reference Videos</div>
+        <div class="loc-desc">
+          https://youtube.com/watch?v=84XqPc1AAlc<br>
+          https://youtube.com/watch?v=3PJK6C8AmUA<br>
+          https://youtu.be/PvAQVYrApU8<br>
+          https://www.facebook.com/share/v/1Gp7uFm8xh/ (Golf V2 style ref)
+        </div>
+      </li>
+      <li>
+        <div class="loc-name">Explore Crossville</div>
+        <div class="loc-desc">https://explorecrossville.com</div>
+      </li>
+    </ul>
+  </section>
+</div>
+
+<footer>
+  <p>Project brief by Matt Matheson · <a href="https://www.instagram.com/mattmatheson_" target="_blank">@mattmatheson_</a></p>
+</footer>
+
+<!-- Player Bar -->
+<div class="player-bar" id="playerBar">
+  <button id="playPauseBtn" onclick="toggleListen()">⏸</button>
+  <span class="now-playing" id="nowPlaying">—</span>
+  <select id="barVoiceSelect" class="voice-select" onchange="document.getElementById('voiceSelect').value=this.value; selectedVoice=this.value;"></select>
+  <button id="barSpeedBtn" onclick="cycleSpeed()">1x</button>
+  <button onclick="stopListen()">✕</button>
+</div>
+
+<script>
+// Speech synthesis
+const VOICE_WHITELIST = ['samantha','karen','daniel','moira','tessa','ava','allison','tom','aaron','nicky','evan','zoe','joelle','fiona','martha','arthur','google us english','google uk english'];
+let selectedVoice = '';
+let currentSpeed = 1;
+const speeds = [0.8, 1, 1.2, 1.5];
+let speedIndex = 1;
+let isPlaying = false;
+let isPaused = false;
+let utterances = [];
+let currentUtteranceIndex = 0;
+let keepAlive = null;
+
+function populateVoices() {
+  const voices = speechSynthesis.getVoices();
+  const sel1 = document.getElementById('voiceSelect');
+  const sel2 = document.getElementById('barVoiceSelect');
+  sel1.innerHTML = '';
+  sel2.innerHTML = '';
+  const filtered = voices.filter(v => VOICE_WHITELIST.some(w => v.name.toLowerCase().includes(w)));
+  filtered.forEach(v => {
+    const o1 = new Option(v.name, v.name);
+    const o2 = new Option(v.name, v.name);
+    sel1.add(o1);
+    sel2.add(o2);
+  });
+  if (filtered.length > 0) selectedVoice = filtered[0].name;
+}
+
+speechSynthesis.onvoiceschanged = populateVoices;
+populateVoices();
+
+document.getElementById('voiceSelect').onchange = function() {
+  selectedVoice = this.value;
+  document.getElementById('barVoiceSelect').value = this.value;
+};
+
+function cycleSpeed() {
+  speedIndex = (speedIndex + 1) % speeds.length;
+  currentSpeed = speeds[speedIndex];
+  document.getElementById('speedBtn').textContent = currentSpeed + 'x';
+  document.getElementById('barSpeedBtn').textContent = currentSpeed + 'x';
+}
+
+function getReadableElements() {
+  const sections = document.querySelectorAll('#content section');
+  const elements = [];
+  sections.forEach(sec => {
+    const children = sec.querySelectorAll('h2, h3, p, li, td, .timeline-text, .info-box');
+    children.forEach(el => {
+      const text = el.textContent.trim();
+      if (text) elements.push({ el, text, section: sec, isHeading: /^H[23]$/.test(el.tagName) });
+    });
+  });
+  return elements;
+}
+
+function toggleListen() {
+  if (isPlaying && !isPaused) {
+    speechSynthesis.pause();
+    isPaused = true;
+    document.getElementById('playPauseBtn').textContent = '▶';
+    document.getElementById('listenBtn').textContent = '▶ Resume';
+  } else if (isPaused) {
+    speechSynthesis.resume();
+    isPaused = false;
+    document.getElementById('playPauseBtn').textContent = '⏸';
+    document.getElementById('listenBtn').textContent = '⏸ Pause';
+  } else {
+    startReading();
+  }
+}
+
+function startReading() {
+  speechSynthesis.cancel();
+  const elements = getReadableElements();
+  if (!elements.length) return;
+  isPlaying = true;
+  isPaused = false;
+  currentUtteranceIndex = 0;
+  document.getElementById('playerBar').classList.add('visible');
+  document.getElementById('playPauseBtn').textContent = '⏸';
+  document.getElementById('listenBtn').textContent = '⏸ Pause';
+  keepAlive = setInterval(() => { if (isPlaying && !isPaused) speechSynthesis.resume(); }, 10000);
+  readElement(elements, 0);
+}
+
+function readElement(elements, i) {
+  if (i >= elements.length || !isPlaying) { stopListen(); return; }
+  currentUtteranceIndex = i;
+  const { el, text, section, isHeading } = elements[i];
+
+  // Highlight section
+  document.querySelectorAll('section.reading').forEach(s => s.classList.remove('reading'));
+  section.classList.add('reading');
+  section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  document.getElementById('nowPlaying').textContent = text.substring(0, 80) + (text.length > 80 ? '…' : '');
+
+  const voice = speechSynthesis.getVoices().find(v => v.name === selectedVoice);
+  const utt = new SpeechSynthesisUtterance(text);
+  if (voice) utt.voice = voice;
+  utt.rate = isHeading ? currentSpeed * 0.9 : currentSpeed;
+  if (isHeading) utt.pitch = 1.05;
+
+  utt.onend = () => {
+    const pause = isHeading ? 400 : 200;
+    setTimeout(() => readElement(elements, i + 1), pause);
+  };
+
+  speechSynthesis.speak(utt);
+}
+
+function stopListen() {
+  speechSynthesis.cancel();
+  isPlaying = false;
+  isPaused = false;
+  if (keepAlive) clearInterval(keepAlive);
+  document.getElementById('playerBar').classList.remove('visible');
+  document.getElementById('listenBtn').textContent = '▶ Listen';
+  document.querySelectorAll('section.reading').forEach(s => s.classList.remove('reading'));
+}
+
+function selectAllContent() {
+  const range = document.createRange();
+  range.selectNodeContents(document.getElementById('content'));
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+</script>
+</body>
+</html>
