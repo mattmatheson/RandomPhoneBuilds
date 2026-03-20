@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setting Up Claude Code on a Fresh Mac</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #C42020;
+            --bg: #FAFAFA;
+            --text: #1D1D1F;
+            --text-secondary: #6E6E73;
+            --card-bg: #F2F2F7;
+            --border: #E5E5E7;
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .hero {
+            background: var(--text);
+            color: var(--bg);
+            padding: 80px 24px 72px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            max-width: 720px;
+            margin: 0 auto 16px;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .scope {
+            font-size: 1.1rem;
+            color: #A1A1A6;
+            max-width: 560px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        /* Listen button */
+        .listen-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .listen-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.6rem 1.5rem;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .listen-btn:hover { opacity: 0.85; }
+
+        .voice-select, .speed-btn {
+            background: rgba(255,255,255,0.1);
+            color: #A1A1A6;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 2rem;
+            padding: 0.5rem 1rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .speed-btn:hover { background: rgba(255,255,255,0.15); }
+
+        .pro-tip {
+            font-size: 0.8rem;
+            color: #6E6E73;
+            margin-top: 16px;
+            font-style: italic;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pro-tip a {
+            color: #A1A1A6;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* Player bar */
+        .player-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(30, 30, 30, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 20px;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.35s ease;
+        }
+
+        .player-bar.visible {
+            transform: translateY(0);
+        }
+
+        .player-bar button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            font-family: inherit;
+        }
+
+        .player-bar .current-section {
+            flex: 1;
+            color: #ccc;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .player-bar .voice-select,
+        .player-bar .speed-btn {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+        }
+
+        /* Content */
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 56px 24px 100px;
+        }
+
+        section {
+            margin-bottom: 48px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        section.reading {
+            border-left: 3px solid var(--accent);
+            background: rgba(196, 32, 32, 0.04);
+            padding-left: 1rem;
+            border-radius: 4px;
+        }
+
+        .step-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 4px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 8px;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-size: 0.975rem;
+        }
+
+        .intro {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            line-height: 1.8;
+            border-left: 3px solid var(--accent);
+            padding-left: 20px;
+        }
+
+        ul, ol {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            padding-left: 24px;
+            font-size: 0.975rem;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Code blocks */
+        .code-block {
+            position: relative;
+            background: var(--text);
+            color: #E5E5E7;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 16px 0 20px;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .code-block code {
+            font-family: inherit;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #A1A1A6;
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            font-family: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: white;
+        }
+
+        .copy-btn.copied {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        /* Inline code */
+        code {
+            background: var(--card-bg);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.875em;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+        }
+
+        /* Info cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 16px 0;
+        }
+
+        .card.warning {
+            border-left: 3px solid #FF9500;
+            background: #FFFBF5;
+        }
+
+        .card.success {
+            border-left: 3px solid #34C759;
+            background: #F5FFF8;
+        }
+
+        .card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .card-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 6px;
+        }
+
+        .card.warning .card-label { color: #FF9500; }
+        .card.success .card-label { color: #34C759; }
+
+        /* Quick reference table */
+        .ref-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+
+        .ref-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.925rem;
+            color: var(--text-secondary);
+            vertical-align: top;
+        }
+
+        .ref-table td:first-child {
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+            font-size: 0.85rem;
+            color: var(--text);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .ref-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        @media (max-width: 600px) {
+            .hero { padding: 60px 20px 56px; }
+            .container { padding: 40px 20px 100px; }
+            .listen-controls { flex-direction: column; }
+            .listen-btn { width: 100%; }
+            .code-block { font-size: 0.8rem; padding: 16px 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="hero">
+    <h1>Setting Up <span>Claude Code</span> on a Fresh Mac</h1>
+    <p class="scope">Homebrew, Node.js, and Claude Code. Three commands on a brand new MacBook.</p>
+
+    <div class="listen-controls">
+        <button class="listen-btn" id="listenBtn" onclick="toggleListen()">Listen</button>
+        <select class="voice-select" id="voiceSelect"></select>
+        <button class="speed-btn" id="speedBtn" onclick="cycleSpeed()">1x</button>
+    </div>
+    <p class="pro-tip">Pro tip: For a better voice, <a onclick="selectAllContent()">select all</a> then use iOS Speak Selection (Settings &gt; Accessibility &gt; Spoken Content).</p>
+</header>
+
+<div class="container" id="mainContent">
+
+    <p class="intro">
+        Fresh MacBook, nothing installed? This guide walks you through every step: installing Homebrew (the Mac package manager), Node.js (the runtime Claude Code needs), and finally Claude Code itself. Copy-paste each command and you're done.
+    </p>
+
+    <section>
+        <div class="step-label">Step 1</div>
+        <h2>Open Terminal</h2>
+        <p>Press <strong>Command + Space</strong> to open Spotlight, type <strong>Terminal</strong>, and hit Enter. This is your command line -- where you'll paste everything below.</p>
+
+        <div class="card">
+            <p>Terminal lives in Applications &gt; Utilities &gt; Terminal. You can also search for it in Launchpad. It's just a text-based way to talk to your Mac.</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="step-label">Step 2</div>
+        <h2>Install Homebrew</h2>
+        <p>Homebrew is the package manager for macOS. It lets you install developer tools with simple commands instead of hunting for downloads. Paste this into Terminal and hit Enter:</p>
+
+        <div class="code-block"><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+
+        <p>It will ask for your Mac password (the one you use to log in). When you type it, nothing will appear on screen -- that's normal, it's just hidden. Type it and press Enter.</p>
+
+        <div class="card warning">
+            <div class="card-label">Important -- Don't skip this</div>
+            <p>When the install finishes, Homebrew will print a "Next steps" message with two commands you need to run. They look something like this:</p>
+        </div>
+
+        <div class="code-block"><code>echo >> ~/.zprofile
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv)"</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+
+        <p>Copy and paste those exact lines from your Terminal output (they may differ slightly). This adds Homebrew to your PATH so your Mac can find it.</p>
+
+        <h3>Verify it worked</h3>
+        <div class="code-block"><code>brew --version</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <p>You should see something like <code>Homebrew 4.x.x</code>. If you get "command not found," close Terminal, reopen it, and try again.</p>
+    </section>
+
+    <section>
+        <div class="step-label">Step 3</div>
+        <h2>Install Node.js</h2>
+        <p>Claude Code runs on Node.js. Install it through Homebrew with one command:</p>
+
+        <div class="code-block"><code>brew install node</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+
+        <p>This installs both Node.js and npm (Node Package Manager), which you'll use in the next step.</p>
+
+        <h3>Verify it worked</h3>
+        <div class="code-block"><code>node --version && npm --version</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+
+        <p>You should see two version numbers. Node should be v18 or higher (it will be if you just installed it). npm should be v9 or higher.</p>
+
+        <div class="card success">
+            <div class="card-label">That's the hard part done</div>
+            <p>Homebrew and Node.js are the only prerequisites. Everything else is one command.</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="step-label">Step 4</div>
+        <h2>Install Claude Code</h2>
+        <p>Now install Claude Code globally using npm:</p>
+
+        <div class="code-block"><code>npm install -g @anthropic-ai/claude-code</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+
+        <p>This downloads and installs the Claude Code CLI so you can run it from anywhere in Terminal.</p>
+
+        <div class="card warning">
+            <div class="card-label">Permission error?</div>
+            <p>If you see an EACCES error, run it with sudo instead:</p>
+        </div>
+
+        <div class="code-block"><code>sudo npm install -g @anthropic-ai/claude-code</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    </section>
+
+    <section>
+        <div class="step-label">Step 5</div>
+        <h2>Launch Claude Code</h2>
+        <p>You're installed. Start it up:</p>
+
+        <div class="code-block"><code>claude</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+
+        <p>The first time you run it, a browser window will open asking you to log in with your Anthropic account. Sign in and approve the connection. Once authenticated, you're dropped into Claude Code in your terminal.</p>
+
+        <div class="card">
+            <p>If you'd rather use an API key, set it as an environment variable instead:</p>
+        </div>
+
+        <div class="code-block"><code>export ANTHROPIC_API_KEY="your-key-here"</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+
+        <p>To make it persist across terminal sessions, add that line to your shell profile:</p>
+
+        <div class="code-block"><code>echo 'export ANTHROPIC_API_KEY="your-key-here"' >> ~/.zshrc</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+
+        <div class="card success">
+            <div class="card-label">You're in</div>
+            <p>That's it. Claude Code is running. Ask it anything, point it at a project folder, or just explore.</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>Quick Reference</h2>
+        <p>Handy commands once you're inside Claude Code:</p>
+
+        <table class="ref-table">
+            <tr><td>claude</td><td>Start Claude Code</td></tr>
+            <tr><td>claude --help</td><td>See all available options</td></tr>
+            <tr><td>/help</td><td>In-session help</td></tr>
+            <tr><td>/clear</td><td>Clear conversation context</td></tr>
+            <tr><td>/compact</td><td>Compress conversation to save context</td></tr>
+            <tr><td>/cost</td><td>Check session token usage</td></tr>
+            <tr><td>Ctrl+C</td><td>Cancel current action</td></tr>
+            <tr><td>Ctrl+D</td><td>Exit Claude Code</td></tr>
+        </table>
+    </section>
+
+    <section>
+        <h2>Troubleshooting</h2>
+
+        <h3>"command not found: brew"</h3>
+        <p>You missed the PATH step after installing Homebrew. Run the commands Homebrew printed under "Next steps," or close and reopen Terminal.</p>
+
+        <h3>"command not found: node"</h3>
+        <p>Close Terminal and reopen it, then try <code>node --version</code> again. If still nothing, run <code>brew install node</code> again.</p>
+
+        <h3>EACCES permission errors with npm</h3>
+        <p>Fix npm's default directory so you don't need sudo:</p>
+
+        <div class="code-block"><code>mkdir -p ~/.npm-global
+npm config set prefix '~/.npm-global'
+echo 'export PATH="$HOME/.npm-global/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+
+        <p>Then re-run the Claude Code install without sudo.</p>
+
+        <h3>Xcode Command Line Tools popup</h3>
+        <p>macOS might prompt you to install Xcode Command Line Tools during the Homebrew install. Click "Install" and wait for it to finish -- it's needed for compiling some packages. This can take a few minutes.</p>
+
+        <h3>Node version too old</h3>
+        <p>If you already had Node installed and it's below v18, update it:</p>
+
+        <div class="code-block"><code>brew upgrade node</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    </section>
+
+</div>
+
+<footer>
+    Built by Matt Matheson. Part of <a href="../">RandomPhoneBuilds</a>.
+</footer>
+
+<!-- Player bar -->
+<div class="player-bar" id="playerBar">
+    <button id="playerPlayPause" onclick="toggleListen()">&#x23F8;&#xFE0F;</button>
+    <span class="current-section" id="playerSectionTitle">--</span>
+    <select class="voice-select" id="playerVoiceSelect"></select>
+    <button class="speed-btn" id="playerSpeedBtn" onclick="cycleSpeed()">1x</button>
+    <button onclick="stopListen()">&#x23F9;&#xFE0F;</button>
+</div>
+
+<script>
+// === Copy to clipboard ===
+function copyCode(btn) {
+    const block = btn.parentElement;
+    const code = block.querySelector('code').textContent;
+    navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+            btn.textContent = 'Copy';
+            btn.classList.remove('copied');
+        }, 2000);
+    });
+}
+
+// === Select all content ===
+function selectAllContent() {
+    const container = document.getElementById('mainContent');
+    const range = document.createRange();
+    range.selectNodeContents(container);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+}
+
+// === Listen Mode (Web Speech API) ===
+const VOICE_WHITELIST = [
+    'samantha', 'karen', 'daniel', 'moira', 'tessa', 'ava', 'allison',
+    'tom', 'aaron', 'nicky', 'evan', 'zoe', 'joelle', 'fiona', 'martha', 'arthur'
+];
+
+let voices = [];
+let selectedVoice = null;
+let speeds = [0.8, 1, 1.2, 1.5];
+let speedIndex = 1;
+let isPlaying = false;
+let isPaused = false;
+let currentChunks = [];
+let currentChunkIndex = 0;
+let currentSectionIndex = 0;
+let keepAliveInterval = null;
+
+function isWhitelistedVoice(v) {
+    const name = v.name.toLowerCase();
+    if (VOICE_WHITELIST.some(w => name.includes(w))) return true;
+    if (name.includes('google us english') || name.includes('google uk english')) return true;
+    return false;
+}
+
+function populateVoices() {
+    voices = speechSynthesis.getVoices().filter(isWhitelistedVoice);
+    const selects = [document.getElementById('voiceSelect'), document.getElementById('playerVoiceSelect')];
+    selects.forEach(sel => {
+        sel.innerHTML = '';
+        voices.forEach((v, i) => {
+            const opt = document.createElement('option');
+            opt.value = i;
+            opt.textContent = v.name.replace(/\(.*\)/, '').trim();
+            sel.appendChild(opt);
+        });
+        sel.onchange = function() {
+            selectedVoice = voices[this.value];
+            selects.forEach(s => s.value = this.value);
+        };
+    });
+    if (voices.length > 0) {
+        const samantha = voices.findIndex(v => v.name.toLowerCase().includes('samantha'));
+        const idx = samantha >= 0 ? samantha : 0;
+        selectedVoice = voices[idx];
+        selects.forEach(s => s.value = idx);
+    }
+}
+
+speechSynthesis.onvoiceschanged = populateVoices;
+populateVoices();
+
+function cycleSpeed() {
+    speedIndex = (speedIndex + 1) % speeds.length;
+    const label = speeds[speedIndex] + 'x';
+    document.getElementById('speedBtn').textContent = label;
+    document.getElementById('playerSpeedBtn').textContent = label;
+}
+
+function getSections() {
+    return document.querySelectorAll('#mainContent section, #mainContent .intro');
+}
+
+function getChunksFromSection(section) {
+    const chunks = [];
+    const els = section.querySelectorAll('h2, h3, p, li');
+    els.forEach(el => {
+        const text = el.textContent.trim();
+        if (text) chunks.push({ text, tag: el.tagName.toLowerCase(), el });
+    });
+    return chunks;
+}
+
+function showPlayerBar() {
+    document.getElementById('playerBar').classList.add('visible');
+}
+
+function hidePlayerBar() {
+    document.getElementById('playerBar').classList.remove('visible');
+}
+
+function updatePlayerSection(text) {
+    document.getElementById('playerSectionTitle').textContent = text;
+}
+
+function highlightSection(section) {
+    getSections().forEach(s => s.classList.remove('reading'));
+    if (section) section.classList.add('reading');
+}
+
+function speakChunk(chunk, callback) {
+    const utter = new SpeechSynthesisUtterance(chunk.text);
+    if (selectedVoice) utter.voice = selectedVoice;
+
+    const isHeading = chunk.tag === 'h2' || chunk.tag === 'h3';
+    utter.rate = isHeading ? speeds[speedIndex] * 0.9 : speeds[speedIndex];
+    utter.pitch = isHeading ? 1.05 : 1;
+
+    utter.onend = () => {
+        const pause = isHeading ? 400 : 200;
+        setTimeout(callback, pause);
+    };
+
+    utter.onerror = (e) => {
+        if (e.error !== 'canceled') callback();
+    };
+
+    speechSynthesis.speak(utter);
+}
+
+function playNextChunk() {
+    if (!isPlaying || isPaused) return;
+
+    if (currentChunkIndex >= currentChunks.length) {
+        currentSectionIndex++;
+        const sections = getSections();
+        if (currentSectionIndex >= sections.length) {
+            stopListen();
+            return;
+        }
+        const section = sections[currentSectionIndex];
+        highlightSection(section);
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        currentChunks = getChunksFromSection(section);
+        currentChunkIndex = 0;
+
+        const heading = section.querySelector('h2, h3');
+        updatePlayerSection(heading ? heading.textContent : 'Reading...');
+
+        if (currentChunks.length === 0) {
+            playNextChunk();
+            return;
+        }
+    }
+
+    speakChunk(currentChunks[currentChunkIndex], () => {
+        currentChunkIndex++;
+        playNextChunk();
+    });
+}
+
+function startListen() {
+    const sections = getSections();
+    if (sections.length === 0) return;
+
+    isPlaying = true;
+    isPaused = false;
+    currentSectionIndex = 0;
+    currentChunkIndex = 0;
+
+    const section = sections[0];
+    highlightSection(section);
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    currentChunks = getChunksFromSection(section);
+
+    const heading = section.querySelector('h2, h3');
+    updatePlayerSection(heading ? heading.textContent : 'Reading...');
+
+    document.getElementById('listenBtn').textContent = 'Pause';
+    document.getElementById('playerPlayPause').textContent = '\u23F8\uFE0F';
+    showPlayerBar();
+
+    // Chrome keep-alive
+    keepAliveInterval = setInterval(() => {
+        if (speechSynthesis.speaking && !speechSynthesis.paused) {
+            speechSynthesis.resume();
+        }
+    }, 10000);
+
+    playNextChunk();
+}
+
+function toggleListen() {
+    if (!isPlaying) {
+        startListen();
+    } else if (isPaused) {
+        isPaused = false;
+        speechSynthesis.resume();
+        document.getElementById('listenBtn').textContent = 'Pause';
+        document.getElementById('playerPlayPause').textContent = '\u23F8\uFE0F';
+    } else {
+        isPaused = true;
+        speechSynthesis.pause();
+        document.getElementById('listenBtn').textContent = 'Resume';
+        document.getElementById('playerPlayPause').textContent = '\u25B6\uFE0F';
+    }
+}
+
+function stopListen() {
+    isPlaying = false;
+    isPaused = false;
+    speechSynthesis.cancel();
+    highlightSection(null);
+    hidePlayerBar();
+    document.getElementById('listenBtn').textContent = 'Listen';
+    if (keepAliveInterval) {
+        clearInterval(keepAliveInterval);
+        keepAliveInterval = null;
+    }
+}
+</script>
+
+</body>
+</html>
