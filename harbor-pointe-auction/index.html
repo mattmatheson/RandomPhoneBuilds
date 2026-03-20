@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Harbor Pointe Auction — Script Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --bg: #0A0A0A;
+    --card: #141414;
+    --border: #2A2A2A;
+    --text: #E8E8E8;
+    --muted: #888;
+    --selected: rgba(196, 32, 32, 0.15);
+    --selected-border: var(--accent);
+    --jj: #3B82F6;
+    --jeff: #10B981;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 80px;
+  }
+
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 1.5rem) 2rem;
+  }
+
+  header { margin-bottom: 2rem; }
+
+  .label {
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 0.3rem;
+  }
+
+  .meta { font-size: 0.85rem; color: var(--muted); }
+
+  .instructions {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    margin: 1.5rem 0;
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .instructions strong { color: var(--text); }
+
+  /* Speaker Toggle */
+  .speaker-toggle {
+    display: flex;
+    gap: 0;
+    margin: 1.5rem 0;
+    border-radius: 980px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    width: fit-content;
+  }
+
+  .speaker-btn {
+    padding: 0.6rem 1.5rem;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: var(--card);
+    color: var(--muted);
+  }
+
+  .speaker-btn.active-jj { background: var(--jj); color: #fff; }
+  .speaker-btn.active-jeff { background: var(--jeff); color: #fff; }
+
+  /* Script Sections */
+  .script-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .option {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.6rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .option:active { transform: scale(0.98); }
+
+  .option.selected {
+    border-color: var(--selected-border);
+    background: var(--selected);
+  }
+
+  .option.selected::before {
+    content: '✓';
+    position: absolute;
+    top: 0.8rem;
+    right: 1rem;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .option-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .option-text {
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: var(--text);
+  }
+
+  .option-text .speaker-name {
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.1rem 0.5rem;
+    border-radius: 4px;
+    margin-right: 0.3rem;
+    display: inline-block;
+  }
+
+  .speaker-jj { background: rgba(59,130,246,0.2); color: var(--jj); }
+  .speaker-jeff { background: rgba(16,185,129,0.2); color: var(--jeff); }
+
+  /* Preview */
+  .preview-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(20, 20, 20, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    padding: 0.8rem 1.2rem;
+    padding-bottom: calc(0.8rem + env(safe-area-inset-bottom));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+  }
+
+  .preview-count {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .preview-count strong { color: var(--text); }
+
+  .preview-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 980px;
+    padding: 0.5rem 1.2rem;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .preview-btn:hover { background: #a81b1b; }
+
+  .reset-btn {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 980px;
+    padding: 0.5rem 1rem;
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  /* Full Script Preview Overlay */
+  .preview-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 200;
+    overflow-y: auto;
+    padding: 2rem 1.5rem;
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom));
+  }
+
+  .preview-overlay.visible { display: block; }
+
+  .preview-overlay .close-btn {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    z-index: 210;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .preview-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .preview-content .preview-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .preview-content .script-line {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+  }
+
+  .preview-content .script-line .speaker-name {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    width: fit-content;
+  }
+
+  .teleprompter-note {
+    text-align: center;
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    padding: 0.8rem;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+  }
+
+  /* Research Section */
+  .research { margin-top: 4rem; }
+
+  .research h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .research h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.5rem;
+    color: var(--text);
+  }
+
+  .research p, .research li {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+  }
+
+  .research ul { padding-left: 1.2rem; }
+
+  .research .stat {
+    display: inline-block;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.5rem 0.8rem;
+    margin: 0.25rem;
+    font-size: 0.78rem;
+  }
+
+  .research .stat strong { color: var(--text); }
+
+  .stat-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.8rem 0;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 2rem 0;
+  }
+
+  footer {
+    margin-top: 3rem;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #444;
+  }
+
+  @media (max-width: 600px) {
+    .speaker-toggle { width: 100%; }
+    .speaker-btn { flex: 1; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="label">RECO Auction Team — Script Builder</div>
+    <h1>Harbor Pointe</h1>
+    <div class="meta">2-Acre Homesite · Center Hill Lake · Auction Apr 11 at 10 AM</div>
+  </header>
+
+  <div class="instructions">
+    <strong>How to use:</strong> Tap any block to select it. Build your script by choosing one option from each section. Hit "Preview Script" to see your final read. Tap the speaker toggle to assign JJ or Jeff. Screenshot the preview for your teleprompter.
+  </div>
+
+  <div class="speaker-toggle">
+    <button class="speaker-btn active-jj" onclick="setSpeaker('JJ', this)" id="btn-jj">JJ</button>
+    <button class="speaker-btn" onclick="setSpeaker('Jeff', this)" id="btn-jeff">Jeff</button>
+  </div>
+
+  <!-- HOOKS -->
+  <div class="script-section" data-section="hook">
+    <div class="section-label">Hook — Pick One</div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="hook">
+      <div class="option-label">A — The Know</div>
+      <div class="option-text">Some land you look at. Some land you walk onto and just know.</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="hook">
+      <div class="option-label">B — The Honest</div>
+      <div class="option-text">Two acres on Center Hill Lake. Year-round views. No catch.</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="hook">
+      <div class="option-label">C — The Question</div>
+      <div class="option-text">When's the last time you stood on a piece of land and didn't want to leave?</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="hook">
+      <div class="option-label">D — The Contrast</div>
+      <div class="option-text">Not suburban. Not remote. Two acres in the sweet spot.</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="hook">
+      <div class="option-label">E — The Direct</div>
+      <div class="option-text">Two acres inside Harbor Pointe just hit auction. Here's why it matters.</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="hook">
+      <div class="option-label">F — The Big Number</div>
+      <div class="option-text">Eighteen thousand acres of the clearest water in Tennessee. And two of those acres just became available.</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="hook">
+      <div class="option-label">G — The Feeling</div>
+      <div class="option-text">There's a difference between buying property and finding the place you actually want to be.</div>
+    </div>
+  </div>
+
+  <!-- PROPERTY INTRO -->
+  <div class="script-section" data-section="property">
+    <div class="section-label">Property — Pick One</div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="property">
+      <div class="option-label">A — Warm & Visual</div>
+      <div class="option-text">This is two acres inside Harbor Pointe — a gated ridgetop community overlooking Center Hill Lake. The views don't go away when the leaves come back. Year-round water. Total privacy.</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="property">
+      <div class="option-label">B — Facts Forward</div>
+      <div class="option-text">Two acres inside Harbor Pointe, a gated community in Silver Point, Tennessee. Ridgetop lot with panoramic lake views backing up to Corps of Engineers property. Private cove access with open water views.</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="property">
+      <div class="option-label">C — Short & Punchy</div>
+      <div class="option-text">Harbor Pointe. Gated. Ridgetop. Two acres of year-round lake views that back up to a six-thousand-acre state park.</div>
+    </div>
+  </div>
+
+  <!-- INFRASTRUCTURE -->
+  <div class="script-section" data-section="infra">
+    <div class="section-label">Infrastructure — Pick One</div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="infra">
+      <div class="option-label">A — Conversational</div>
+      <div class="option-text">The build site is level to gently rolling and everything's already at the road — water, electric, step septic, and fiber internet. You're not pioneering anything here. Just picking where the porch goes.</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="infra">
+      <div class="option-label">B — Quick</div>
+      <div class="option-text">Build-ready site. Water, electric, step septic, and fiber internet all at the road. Level to gentle roll. Seclusion without sacrifice.</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="infra">
+      <div class="option-label">C — Fiber Focus</div>
+      <div class="option-text">Here's the part that surprises people — fiber optic internet runs right to this lot. Water, electric, step septic too. Everything's at the road on a level-to-rolling build site. Work remote from the lake. That's real.</div>
+    </div>
+  </div>
+
+  <!-- LAKE & WATER -->
+  <div class="script-section" data-section="lake">
+    <div class="section-label">Lake & Water — Pick One</div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="lake">
+      <div class="option-label">A — The Sell</div>
+      <div class="option-text">Center Hill Lake is minutes away — over eighteen thousand acres of some of the cleanest water in Tennessee. Edgar Evins State Park is right next door with a three-hundred-slip marina. If you're a boat person, you already get it.</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="lake">
+      <div class="option-label">B — Lake + River</div>
+      <div class="option-text">Center Hill Lake is right there. Eighteen thousand acres, four hundred fifteen miles of shoreline, and water so clear they call it Tennessee's Emerald Gem. The Caney Fork River is minutes away too — one of the best trout fisheries in the Southeast. Over a hundred thousand fish stocked every year.</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="lake">
+      <div class="option-label">C — Lifestyle</div>
+      <div class="option-text">Launch your morning at Edgar Evins Marina. Fish the afternoon on Center Hill. Kayak the Caney Fork before dinner. This isn't a weekend getaway — this is Tuesday.</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="lake">
+      <div class="option-label">D — Short</div>
+      <div class="option-text">Center Hill Lake. Eighteen thousand acres. Four hundred fifteen miles of shoreline. One of the cleanest lakes in Tennessee. Minutes from your front door.</div>
+    </div>
+  </div>
+
+  <!-- OUTDOORS / AREA -->
+  <div class="script-section" data-section="outdoors">
+    <div class="section-label">Outdoors & Area — Pick One</div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="outdoors">
+      <div class="option-label">A — Waterfalls</div>
+      <div class="option-text">The Upper Cumberland has over a hundred and fifty waterfalls within forty miles. Fall Creek Falls, Burgess Falls, Cummins Falls, Rock Island — this area has more cascading water than almost anywhere in the country.</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="outdoors">
+      <div class="option-label">B — Broad Strokes</div>
+      <div class="option-text">The Upper Cumberland is waterfalls, trails, state parks, and more outdoor access than most people realize. You could spend years here and still be finding new spots.</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="outdoors">
+      <div class="option-label">C — Skip It</div>
+      <div class="option-text" style="color: var(--muted); font-style: italic;">(Skip this section — go straight to location/logistics)</div>
+    </div>
+  </div>
+
+  <!-- LOCATION / LOGISTICS -->
+  <div class="script-section" data-section="location">
+    <div class="section-label">Location & Logistics — Pick One</div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="location">
+      <div class="option-label">A — Full</div>
+      <div class="option-text">Cookeville and Smithville are a short drive. Nashville International Airport is just over an hour. You're connected without being crowded.</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="location">
+      <div class="option-label">B — With Color</div>
+      <div class="option-text">Smithville's right down the road — home of the Fiddlers' Jamboree. Cookeville's got Tennessee Tech, a hundred-plus restaurants, and Cummins Falls ten minutes from downtown. Nashville International is about an hour out.</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="location">
+      <div class="option-label">C — Minimal</div>
+      <div class="option-text">An hour from Nashville. Minutes from everything you need. Far enough from everything you don't.</div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="script-section" data-section="cta">
+    <div class="section-label">Call to Action — Pick One</div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="cta">
+      <div class="option-label">A — Standard</div>
+      <div class="option-text">This property sells at auction April 11th at 10 AM. Bid in person right here on the property or bid online at RECOAuctions.com. See you at the auction.</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="cta">
+      <div class="option-label">B — Urgency</div>
+      <div class="option-text">Lots like this in Harbor Pointe don't come around often. This one sells April 11th at 10 AM — live on-site or online at RECOAuctions.com. Don't just watch this one go.</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="cta">
+      <div class="option-label">C — Casual</div>
+      <div class="option-text">April 11th. 10 AM. Show up and bid right here at the property, or jump on RECOAuctions.com. Either way — see you there.</div>
+    </div>
+
+    <div class="option" onclick="toggleOption(this)" data-group="cta">
+      <div class="option-label">D — Tag Team</div>
+      <div class="option-text">This one sells April 11th, 10 AM. Come out to the property and bid live with us, or hop on RECOAuctions.com and bid from your couch. We'll be here. Come see it for yourself.</div>
+    </div>
+  </div>
+
+  <!-- RESEARCH -->
+  <div class="research" id="research">
+    <h2>Quick Reference — On-Set Research</h2>
+
+    <h3>Center Hill Lake — Stats</h3>
+    <div class="stat-grid">
+      <span class="stat"><strong>18,220</strong> acres</span>
+      <span class="stat"><strong>64</strong> miles long</span>
+      <span class="stat"><strong>415</strong> mi shoreline</span>
+      <span class="stat"><strong>190 ft</strong> deepest</span>
+      <span class="stat">Built <strong>1948</strong></span>
+      <span class="stat"><strong>31</strong> boat ramps</span>
+      <span class="stat"><strong>9</strong> marinas</span>
+      <span class="stat">"Tennessee's <strong>Emerald Gem</strong>"</span>
+    </div>
+
+    <h3>Harbor Pointe</h3>
+    <ul>
+      <li>Gated ridgetop community, Silver Point TN (DeKalb County)</li>
+      <li>~1 hour east of Nashville via I-40 East to exit 268</li>
+      <li>Lots back up to Corps of Engineers property / private cove</li>
+      <li>Underground utilities, paved roads, fiber optic</li>
+      <li>Connects directly into Edgar Evins State Park via trailhead</li>
+      <li>harborpointecenterhill.com</li>
+    </ul>
+
+    <h3>Edgar Evins State Park</h3>
+    <ul>
+      <li>6,000 acres along Center Hill Lake — adjacent to Harbor Pointe</li>
+      <li>300-slip full-service marina + Earl's Fish Camp restaurant</li>
+      <li>12 miles of trails across 7 routes</li>
+      <li>Split-level cabins overlooking water, pool access</li>
+      <li>Pontoon boat rides, kayak/canoe rentals</li>
+    </ul>
+
+    <h3>Caney Fork River</h3>
+    <ul>
+      <li>Cold dam-released water = one of the best trout fisheries in the SE</li>
+      <li>Rainbow, brown, and brook trout — TWRA stocks 100,000+ fish/year</li>
+      <li>Top fly fishing destination in the Southeast</li>
+      <li>Kayakers travel from across the region for the waterfalls and hydraulics</li>
+      <li>Below the dam: deep gorge + "Blue Hole" (walleye spawning site)</li>
+    </ul>
+
+    <h3>Upper Cumberland Waterfalls</h3>
+    <ul>
+      <li><strong>150+</strong> waterfalls within 40 miles of Cookeville</li>
+      <li><strong>Fall Creek Falls</strong> — 256 ft, one of tallest in eastern US (26,000-acre park)</li>
+      <li><strong>Burgess Falls</strong> — 130+ ft plunge, Sparta TN</li>
+      <li><strong>Cummins Falls</strong> — 75 ft, 10 min north of Cookeville</li>
+      <li><strong>Rock Island</strong> — Twin Falls, 80-ft drop (883 acres)</li>
+      <li><strong>Greeter Falls</strong> (Savage Gulf) — 15-ft upper + 50-ft lower into plunge pool</li>
+    </ul>
+
+    <h3>Nearby Towns</h3>
+    <ul>
+      <li><strong>Smithville</strong> — ~4,300 pop. County seat. Home of the Fiddlers' Jamboree (25,000+ spectators). Appalachian Center for Craft (TN Tech) overlooks Center Hill Lake.</li>
+      <li><strong>Cookeville</strong> — ~35,000 pop. Tennessee Tech University. 100+ restaurants. Cummins Falls 10 min from downtown. 4th fastest-growing micropolitan area in the US.</li>
+      <li><strong>Nashville BNA</strong> — ~58–60 miles, about 1 hour 9 min drive</li>
+    </ul>
+
+    <h3>RECO Auction Team</h3>
+    <ul>
+      <li><strong>JJ (Jerry Payne)</strong> — 7 years auctioneer experience</li>
+      <li><strong>Jeff Eddlemon</strong> — Principal auctioneer, 5 years real estate experience</li>
+      <li><strong>Eli Duncan</strong> — Tech specialist, auction planning & execution</li>
+      <li>RECO — The Real Estate Collective, 20 W Broad St, Cookeville TN</li>
+      <li>Principal Broker: Amber Flynn-Jared</li>
+      <li>letsgoreco.com · 931-559-9500</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h3>Script-Ready Lines (Steal These)</h3>
+    <ul>
+      <li>"Just over an hour from Nashville International Airport"</li>
+      <li>"Eighteen thousand acres of some of the clearest water in Tennessee"</li>
+      <li>"Four hundred fifteen miles of largely undeveloped shoreline"</li>
+      <li>"Gated community adjoining a six-thousand-acre state park with a three-hundred-slip marina"</li>
+      <li>"World-class trout fishing on the Caney Fork — over a hundred thousand fish stocked annually"</li>
+      <li>"Over a hundred and fifty waterfalls within forty miles"</li>
+      <li>"Fiber optic internet to the lot line — seclusion without sacrifice"</li>
+      <li>"You're not pioneering anything here. Just picking where the porch goes."</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p>Built for RECO Auction Team · The Real Estate Collective · letsgoreco.com</p>
+  </footer>
+</div>
+
+<!-- Preview Bar -->
+<div class="preview-bar">
+  <span class="preview-count"><strong id="selectedCount">0</strong> / 7 sections</span>
+  <div style="display:flex;gap:0.5rem;">
+    <button class="reset-btn" onclick="resetAll()">Reset</button>
+    <button class="preview-btn" onclick="showPreview()">Preview Script</button>
+  </div>
+</div>
+
+<!-- Preview Overlay -->
+<div class="preview-overlay" id="previewOverlay">
+  <button class="close-btn" onclick="hidePreview()">✕</button>
+  <div class="preview-content" id="previewContent"></div>
+</div>
+
+<script>
+let currentSpeaker = 'JJ';
+
+function setSpeaker(name, btn) {
+  currentSpeaker = name;
+  document.getElementById('btn-jj').className = 'speaker-btn' + (name === 'JJ' ? ' active-jj' : '');
+  document.getElementById('btn-jeff').className = 'speaker-btn' + (name === 'Jeff' ? ' active-jeff' : '');
+}
+
+function toggleOption(el) {
+  const group = el.dataset.group;
+  // Deselect others in same group
+  document.querySelectorAll(`.option[data-group="${group}"]`).forEach(o => {
+    if (o !== el) o.classList.remove('selected');
+  });
+  el.classList.toggle('selected');
+  updateCount();
+}
+
+function updateCount() {
+  const count = document.querySelectorAll('.option.selected').length;
+  document.getElementById('selectedCount').textContent = count;
+}
+
+function resetAll() {
+  document.querySelectorAll('.option.selected').forEach(o => o.classList.remove('selected'));
+  updateCount();
+}
+
+function showPreview() {
+  const selected = document.querySelectorAll('.option.selected');
+  if (selected.length === 0) return;
+
+  const overlay = document.getElementById('previewOverlay');
+  const content = document.getElementById('previewContent');
+
+  const speakerClass = currentSpeaker === 'JJ' ? 'speaker-jj' : 'speaker-jeff';
+  const sectionOrder = ['hook', 'property', 'infra', 'lake', 'outdoors', 'location', 'cta'];
+  const sectionLabels = {
+    hook: 'Hook',
+    property: 'Property',
+    infra: 'Infrastructure',
+    lake: 'Lake & Water',
+    outdoors: 'Outdoors',
+    location: 'Location',
+    cta: 'Call to Action'
+  };
+
+  let html = `<div class="teleprompter-note">📱 Screenshot this for your teleprompter</div>`;
+  html += `<div style="text-align:center;margin-bottom:2rem;">
+    <span class="speaker-name ${speakerClass}" style="display:inline-block;padding:0.3rem 1rem;border-radius:980px;font-size:0.8rem;">${currentSpeaker}</span>
+    <div style="font-size:0.7rem;color:var(--muted);margin-top:0.3rem;">Harbor Pointe · Apr 11 · 10 AM</div>
+  </div>`;
+
+  sectionOrder.forEach(group => {
+    const sel = document.querySelector(`.option.selected[data-group="${group}"]`);
+    if (sel) {
+      const text = sel.querySelector('.option-text').textContent.trim();
+      if (text.includes('Skip this section')) return;
+      html += `<div class="script-line">
+        <div class="preview-label">${sectionLabels[group]}</div>
+        ${text}
+      </div>`;
+    }
+  });
+
+  html += `<div style="text-align:center;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+    <div style="font-size:0.7rem;color:var(--muted);">RECO Auction Team · The Real Estate Collective</div>
+    <div style="font-size:0.65rem;color:#444;margin-top:0.3rem;">letsgoreco.com · RECOAuctions.com</div>
+  </div>`;
+
+  content.innerHTML = html;
+  overlay.classList.add('visible');
+  overlay.scrollTop = 0;
+}
+
+function hidePreview() {
+  document.getElementById('previewOverlay').classList.remove('visible');
+}
+</script>
+</body>
+</html>
