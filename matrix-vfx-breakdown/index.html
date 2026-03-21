@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Matrix Trilogy — VFX & Cinematography Breakdown</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--green:#00FF41;--green-dim:#00cc33;--green-glow:rgba(0,255,65,0.15);--green-subtle:rgba(0,255,65,0.06);--bg:#000;--card:#0a0f0a;--border:rgba(0,255,65,0.12);--text:#c8d6c0;--bright:#e0f0d8;--muted:#5a6e52;--accent:#00FF41;--dark-card:#060a06}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* Digital Rain Canvas */
+#rain{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:0.07;pointer-events:none}
+
+.container{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:0 clamp(1.25rem,4vw,2rem)}
+
+/* Hero */
+.hero{min-height:80vh;display:flex;flex-direction:column;justify-content:center;padding:4rem 0}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.65rem;font-weight:500;text-transform:uppercase;letter-spacing:0.2em;color:var(--green);margin-bottom:1.5rem;opacity:0.8}
+.hero h1{font-size:clamp(3rem,8vw,5.5rem);font-weight:900;letter-spacing:-0.04em;line-height:0.95;color:var(--green);text-shadow:0 0 60px rgba(0,255,65,0.3),0 0 120px rgba(0,255,65,0.1);margin-bottom:1rem}
+.hero h1 span{display:block;color:var(--bright);text-shadow:none;font-size:0.35em;font-weight:400;letter-spacing:0.02em;margin-top:0.8rem;line-height:1.4}
+.hero-meta{font-size:0.85rem;color:var(--muted);max-width:540px;line-height:1.8}
+.hero-stats{display:flex;gap:2rem;margin-top:2.5rem;flex-wrap:wrap}
+.hero-stat{text-align:left}
+.hero-stat .val{font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:700;color:var(--green);line-height:1}
+.hero-stat .lbl{font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:0.25rem}
+
+/* Nav Pills */
+.film-nav{position:sticky;top:0;z-index:50;background:rgba(0,0,0,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0.8rem 0;margin:0 calc(-1 * clamp(1.25rem,4vw,2rem))}
+.film-nav-inner{display:flex;gap:0.4rem;max-width:920px;margin:0 auto;padding:0 clamp(1.25rem,4vw,2rem);overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.film-nav-inner::-webkit-scrollbar{display:none}
+.film-pill{font-family:'JetBrains Mono',monospace;font-size:0.7rem;font-weight:500;padding:0.5rem 1rem;border-radius:980px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all 0.2s;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.film-pill:hover,.film-pill.active{border-color:var(--green);color:var(--green);background:var(--green-subtle)}
+
+/* Sections */
+.film-section{padding:5rem 0 3rem;border-top:1px solid var(--border)}
+.film-section:first-of-type{border-top:none}
+.section-number{font-family:'JetBrains Mono',monospace;font-size:0.6rem;font-weight:600;color:var(--green);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.75rem;opacity:0.7}
+.film-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;color:var(--bright);letter-spacing:-0.03em;margin-bottom:0.3rem}
+.film-year{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--green);margin-bottom:2rem}
+
+/* Content Blocks */
+.vfx-block{margin-bottom:3.5rem}
+.vfx-block h3{font-size:1.15rem;font-weight:700;color:var(--green);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.6rem}
+.vfx-block h3::before{content:'';width:3px;height:1.1em;background:var(--green);border-radius:2px;flex-shrink:0}
+.vfx-block h4{font-size:0.88rem;font-weight:600;color:var(--bright);margin:1.2rem 0 0.4rem;padding-left:0.9rem;border-left:1px solid var(--border)}
+.vfx-block p{font-size:0.9rem;margin-bottom:0.7rem}
+.vfx-block ul{list-style:none;padding:0;margin-bottom:1rem}
+.vfx-block li{padding:0.35rem 0 0.35rem 1.2rem;position:relative;font-size:0.88rem}
+.vfx-block li::before{content:'>';position:absolute;left:0;color:var(--green);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:0.7rem}
+
+/* Spec Cards */
+.spec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.6rem;margin:1rem 0}
+.spec-card{background:var(--dark-card);border:1px solid var(--border);border-radius:8px;padding:0.8rem 1rem}
+.spec-card .spec-val{font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:600;color:var(--green)}
+.spec-card .spec-lbl{font-size:0.68rem;color:var(--muted);margin-top:0.15rem}
+
+/* Tech Box */
+.tech-box{background:var(--dark-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin:1.5rem 0;font-size:0.85rem;line-height:1.8}
+.tech-box strong{color:var(--green)}
+.tech-box code{font-family:'JetBrains Mono',monospace;font-size:0.8em;background:rgba(0,255,65,0.08);padding:0.1em 0.4em;border-radius:3px;color:var(--green-dim)}
+
+/* Quote */
+.quote{border-left:2px solid var(--green);padding:1rem 1.5rem;margin:1.5rem 0;background:var(--green-subtle);border-radius:0 8px 8px 0;font-style:italic;font-size:0.9rem;color:var(--bright)}
+.quote cite{display:block;font-style:normal;font-size:0.75rem;color:var(--muted);margin-top:0.5rem}
+
+/* Impact Timeline */
+.impact-item{display:flex;gap:1rem;margin-bottom:1.2rem;align-items:flex-start}
+.impact-year{font-family:'JetBrains Mono',monospace;font-size:0.75rem;font-weight:600;color:var(--green);min-width:3.5rem;padding-top:0.15rem}
+.impact-text{font-size:0.85rem;flex:1}
+
+/* Personnel Table */
+.personnel{width:100%;border-collapse:collapse;margin:1rem 0;font-size:0.82rem}
+.personnel th{text-align:left;padding:0.5rem 0.8rem;font-family:'JetBrains Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--green);border-bottom:1px solid var(--border)}
+.personnel td{padding:0.5rem 0.8rem;border-bottom:1px solid rgba(0,255,65,0.06)}
+.personnel td:first-child{color:var(--muted);font-size:0.78rem}
+
+/* Listen Controls */
+.listen-area{display:flex;gap:0.5rem;align-items:center;margin:2rem 0;flex-wrap:wrap}
+.listen-btn{background:var(--green);color:#000;border:none;border-radius:980px;padding:0.6rem 1.5rem;font-family:inherit;font-size:0.8rem;font-weight:600;cursor:pointer}
+.listen-btn:hover{background:var(--green-dim)}
+.voice-select,.speed-btn{font-family:'JetBrains Mono',monospace;font-size:0.72rem;padding:0.4rem 0.8rem;border-radius:980px;border:1px solid var(--border);background:var(--dark-card);color:var(--text);cursor:pointer}
+.pro-tip{font-size:0.72rem;color:var(--muted);font-style:italic;margin-top:0.5rem}
+.pro-tip a{color:var(--muted)}
+
+/* Player bar */
+.player-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(0,10,0,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);color:var(--text);padding:0.7rem 1.2rem;padding-bottom:calc(0.7rem + env(safe-area-inset-bottom));display:flex;align-items:center;gap:0.6rem;font-size:0.78rem;transform:translateY(100%);transition:transform 0.3s ease;z-index:100}
+.player-bar.visible{transform:translateY(0)}
+.player-bar button{background:none;border:none;color:var(--green);cursor:pointer;font-family:inherit;font-size:0.78rem;padding:0.3rem 0.5rem}
+.player-bar .now-playing{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;opacity:0.7}
+.player-bar select{background:rgba(0,255,65,0.1);border:1px solid var(--border);color:var(--green);font-family:'JetBrains Mono',monospace;font-size:0.68rem;padding:0.2rem 0.4rem;border-radius:4px}
+
+section.reading{border-left:3px solid var(--green);background:var(--green-subtle);padding-left:1rem;border-radius:4px;transition:all 0.3s ease}
+
+footer{padding:4rem 0 3rem;text-align:center;font-size:0.7rem;color:var(--muted);border-top:1px solid var(--border);margin-top:4rem}
+footer a{color:var(--green-dim);text-decoration:none}
+
+@media(max-width:600px){
+  .hero-stats{gap:1.5rem}
+  .spec-grid{grid-template-columns:1fr 1fr}
+  .listen-area{flex-direction:column;align-items:stretch}
+  .listen-btn{text-align:center}
+}
+</style>
+</head>
+<body>
+<canvas id="rain"></canvas>
+
+<div class="container">
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">// VFX & Cinematography Breakdown</div>
+    <h1>THE MATRIX<span>How the Wachowskis, John Gaeta & Bill Pope<br>rewrote the rules of visual effects</span></h1>
+    <p class="hero-meta">A technical deep-dive into the VFX, cinematography, and practical effects across all three Matrix films — written for DPs, VFX editors, and anyone who's ever wondered how they actually did it.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="val">120</div><div class="lbl">Cameras in Bullet Time Rig</div></div>
+      <div class="hero-stat"><div class="val">$363M</div><div class="lbl">Combined Budget</div></div>
+      <div class="hero-stat"><div class="val">4,000</div><div class="lbl">Squibs in Lobby Scene</div></div>
+      <div class="hero-stat"><div class="val">2,500+</div><div class="lbl">VFX Shots (Trilogy)</div></div>
+    </div>
+
+    <div class="listen-area">
+      <button class="listen-btn" id="listenBtn" onclick="toggleListen()">&#9654; Listen</button>
+      <select class="voice-select" id="voiceSelect"></select>
+      <button class="speed-btn" id="speedBtn" onclick="cycleSpeed()">1x</button>
+    </div>
+    <p class="pro-tip">Pro tip: For a better voice, tap <a href="#" onclick="selectAllContent();return false;">select all</a> then use iOS Speak Selection.</p>
+  </div>
+
+  <!-- NAV -->
+  <nav class="film-nav">
+    <div class="film-nav-inner">
+      <a href="#matrix1" class="film-pill active">The Matrix</a>
+      <a href="#matrix2" class="film-pill">Reloaded</a>
+      <a href="#matrix3" class="film-pill">Revolutions</a>
+      <a href="#cinematography" class="film-pill">Cinematography</a>
+      <a href="#legacy" class="film-pill">Legacy</a>
+      <a href="#crew" class="film-pill">Key Crew</a>
+    </div>
+  </nav>
+
+  <!-- ===================== THE MATRIX (1999) ===================== -->
+  <div class="film-section" id="matrix1">
+    <div class="section-number">01 // Film One</div>
+    <div class="film-title">The Matrix</div>
+    <div class="film-year">1999 · $63M Budget · Manex Visual Effects</div>
+
+    <section class="vfx-block">
+      <h3>Bullet Time</h3>
+      <p>The shot that changed cinema. John Gaeta and his team at Manex Visual Effects invented a technique that froze time while the camera orbited freely around the action — something no physical camera could do.</p>
+
+      <h4>The Rig</h4>
+      <div class="spec-grid">
+        <div class="spec-card"><div class="spec-val">120</div><div class="spec-lbl">Nikon still cameras</div></div>
+        <div class="spec-card"><div class="spec-val">2</div><div class="spec-lbl">Photo-Sonics high-speed film cameras</div></div>
+        <div class="spec-card"><div class="spec-val">Laser</div><div class="spec-lbl">Motion-controlled pointing system for alignment</div></div>
+        <div class="spec-card"><div class="spec-val">Green Screen</div><div class="spec-lbl">Full surround behind curved camera track</div></div>
+      </div>
+
+      <h4>The Process</h4>
+      <ul>
+        <li><strong>Pre-visualization:</strong> The team blocked out the action with still cameras, scanned images into a computer, and mapped the virtual camera path through 3D space</li>
+        <li><strong>Photography:</strong> 120 still cameras placed along the computed arc, each capturing one frame of the action. Fired sequentially (for slow-mo orbit) or simultaneously (for frozen time)</li>
+        <li><strong>Interpolation:</strong> Early optical flow algorithms generated intermediate frames between each still photo to smooth the motion — this is what made the orbit feel fluid rather than jumpy</li>
+        <li><strong>Photogrammetry:</strong> George Borshukov created 3D models of environments from photographs used as texture maps — a technique called image-based rendering</li>
+        <li><strong>Compositing:</strong> Actor footage (shot on green screen with wire rigs) composited into the photogrammetric backgrounds</li>
+      </ul>
+
+      <div class="tech-box">
+        <strong>Render Farm:</strong> 32 Dell Precision 410 systems with Dual Pentium II/450 processors running <code>FreeBSD</code>. Manex's existing SGI infrastructure couldn't handle the 3D-intensive sequences. They bought the Dell systems on a Wednesday and had them rendering in production by Saturday. The Academy later awarded Manex a Technical Achievement Oscar specifically for the image-based rendering system.
+      </div>
+
+      <p>The iconic rooftop dodge — Keanu Reeves suspended on wires, arching backward — was shot with the full 120-camera rig surrounding him. The final composite merged still photography, wire-removed actor footage, CG bullets with visible air-ripple trails, and the photogrammetric rooftop environment. The rig was designed and manufactured by Frank Gallego's team at Innovation Arts.</p>
+    </section>
+
+    <section class="vfx-block">
+      <h3>The Lobby Shootout</h3>
+      <p>Four minutes of screen time. Ten days to shoot. A masterclass in practical effects pushed to the absolute limit.</p>
+      <ul>
+        <li><strong>4,000 squibs</strong> wired into the walls and columns — a full week of prep just for the first hallway run</li>
+        <li>Each take took <strong>half a day to execute</strong>. If actors missed marks, the set had to be completely re-rigged (another full day)</li>
+        <li>Actors performed with <strong>their eyes closed</strong> during parts of the choreography because detonating squibs made it impossible to see — they counted their steps</li>
+        <li>Key slow-motion shot at <strong>300fps</strong> on Photo-Sonics cameras, requiring <strong>4 additional stops of light</strong> compared to standard 24fps</li>
+        <li>Marble columns shredding was practical — rigged with squibs and breakaway materials, debris enhanced in post</li>
+        <li>Bill Pope had to light the entire massive set to accommodate both normal and high-speed photography in the same sequences</li>
+      </ul>
+      <div class="quote">"The first hallway run with gunfire required a full week of prep just for the special-effects team to lay in the squibs. Each take took half a day to execute."<cite>— Production notes, The Matrix (1999)</cite></div>
+    </section>
+
+    <section class="vfx-block">
+      <h3>The Helicopter Crash & Glass Ripple</h3>
+      <ul>
+        <li>A <strong>full-scale helicopter prop</strong> was physically shipped to Sydney from the US — no working propellers (added as CG in post)</li>
+        <li>A <strong>quarter-scale miniature helicopter</strong> was built for the crash sequence</li>
+        <li>The glass wall was wired with <strong>concentric rings of explosives</strong> triggered sequentially from center outward, creating the expanding wave of shattering glass</li>
+        <li>The visible ripple distortion before the glass breaks was <strong>created digitally by Dfilm</strong></li>
+        <li>SFX supervisor Steve Courtley's pyro team (Paul Gorrie, Leo Henry) did extensive R&D — miniature pyrotechnics behave very differently from full-scale explosions</li>
+        <li>Final shot composited: miniature crash + practical glass explosion + digital ripple + CG additions + live-action actor footage</li>
+      </ul>
+    </section>
+
+    <section class="vfx-block">
+      <h3>The Mirror Scene</h3>
+      <p>Created by Dfilm — a team of approximately 12 artists and one producer. What looks like liquid simulation was actually done with no simulation software at all.</p>
+      <ul>
+        <li>The team <strong>filmed actual liquids running down glass planes</strong> and studied the leading edge behavior</li>
+        <li>These practical liquid references were used as the basis for the digital effect</li>
+        <li>Rotomation created realistic edges; mattes were converted into geometry in some cases</li>
+        <li>Body tracking was done <strong>DIY-style</strong> — locking onto whatever body part was most critical at each moment, without modern motion-capture</li>
+        <li>The dark room setting and lower resolution of 1999 projection helped hide imperfections</li>
+      </ul>
+      <div class="quote">"The weirdness progresses at exactly the right rate — that's the Wachowskis' precise direction."<cite>— Dfilm team, on why the mirror effect still holds up</cite></div>
+    </section>
+
+    <section class="vfx-block">
+      <h3>The Digital Rain</h3>
+      <p>Designed by Simon Whiteley at Animal Logic. One of the most recognizable visual motifs in cinema history.</p>
+      <ul>
+        <li>Whiteley <strong>scanned characters from his wife's Japanese cookbooks</strong> — mirrored half-width katakana chosen for their "very nice simple strokes"</li>
+        <li>Combined with reversed Western Latin letters and Arabic numerals</li>
+        <li>Vertical cascade inspired by Japanese vertical writing direction</li>
+        <li>Green hue chosen to evoke <strong>old IBM monochrome CRT monitors</strong></li>
+        <li>Whiteley created a <strong>custom typeface</strong> specifically for the film</li>
+      </ul>
+    </section>
+
+    <section class="vfx-block">
+      <h3>Wire Work & Martial Arts</h3>
+      <p>Choreographer Yuen Woo-ping — the legendary Hong Kong martial arts director behind Drunken Master and Iron Monkey — agreed to work on the film on one strict condition: the principal cast must train directly with him, no shortcuts, no stunt doubles for the main fight choreography.</p>
+      <ul>
+        <li>Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss, and Hugo Weaving trained <strong>nearly every day from October 1997 to March 1998</strong> — approximately 4 months</li>
+        <li>Reeves was recovering from a <strong>two-level cervical spine fusion</strong> that had begun causing leg paralysis. He couldn't kick for 2 of the 4 training months but insisted on training anyway and requested training on his days off</li>
+        <li>Wire removal was done <strong>frame-by-frame</strong> in post — rotomatting, motion tracking, paint/clone work</li>
+        <li>Yuen brought practical wire techniques from Hong Kong cinema tradition — harnesses connected to steel wires controlled by wire teams for wall runs, superhuman jumps, mid-air freezes</li>
+      </ul>
+    </section>
+
+    <section class="vfx-block">
+      <h3>The Woman in the Red Dress</h3>
+      <p>The Wachowskis hired real identical twins and triplets from across Sydney to populate the crowd. Within the narrative, Mouse programmed the simulation hastily — copy-pasting character models rather than creating unique individuals. The duplicated extras are a literal representation of duplicated code. A narrative-consistent design choice and a hidden easter egg.</p>
+    </section>
+  </div>
+
+  <!-- ===================== RELOADED (2003) ===================== -->
+  <div class="film-section" id="matrix2">
+    <div class="section-number">02 // Film Two</div>
+    <div class="film-title">The Matrix Reloaded</div>
+    <div class="film-year">2003 · $150M Budget · ESC Entertainment · Shot simultaneously with Revolutions</div>
+
+    <section class="vfx-block">
+      <h3>The Burly Brawl — Neo vs. 100 Agent Smiths</h3>
+      <p>The sequence that pushed virtual cinematography from concept to reality. For the first time in film history, photoreal digital humans fought alongside their real counterparts in an extended action sequence. It was groundbreaking — and it was also the moment the industry learned exactly how hard that is.</p>
+
+      <h4>How They Built 100 Smiths</h4>
+      <ul>
+        <li><strong>~50 physical actors</strong> wearing prosthetic masks cast from Hugo Weaving's face, with prosthetic hair and features</li>
+        <li><strong>Full mannequins</strong> built from body casts of Weaving for foreground close shots</li>
+        <li><strong>Digital doubles</strong> created via Universal Capture (UCap) — a proprietary system developed at ESC Entertainment</li>
+        <li><strong>Split-screen photography</strong> for scenes requiring fewer Smiths in close interaction</li>
+        <li>Digital doubles given subtle individual variations to avoid uncanny uniformity</li>
+      </ul>
+
+      <h4>Universal Capture (UCap)</h4>
+      <div class="tech-box">
+        ESC Entertainment developed UCap specifically for the Matrix sequels. The system used an array of <strong>high-definition cameras surrounding the actor's face</strong>, capturing texture, lighting, and expression at extremely high resolution from multiple angles simultaneously. Unlike traditional motion capture (which tracks dots), UCap sampled the <strong>actual appearance</strong> of the face — every pore, wrinkle, and subtle skin movement. This data was then mapped onto CG body geometry driven by full-body motion capture. The result was the most detailed digital human face ever attempted in film at that time.
+      </div>
+
+      <p>The sequence transitions seamlessly (in theory) from real actors to full CG — the Wachowskis wanted the camera to never cut, orbiting freely as Neo fights an ever-growing crowd. In practice, the CG Smiths occasionally dipped into uncanny valley territory, particularly in wide shots where the digital bodies moved with slightly too-smooth weight distribution. But the ambition was staggering — this was 2003, three years before Pirates of the Caribbean's Davy Jones and six years before Avatar.</p>
+    </section>
+
+    <section class="vfx-block">
+      <h3>The Freeway Chase</h3>
+      <p>Arguably the greatest practical action sequence ever filmed. The production built what they needed from scratch — because what they needed didn't exist.</p>
+
+      <div class="spec-grid">
+        <div class="spec-card"><div class="spec-val">1.5 mi</div><div class="spec-lbl">Freeway set built from scratch</div></div>
+        <div class="spec-card"><div class="spec-val">3 months</div><div class="spec-lbl">Construction time</div></div>
+        <div class="spec-card"><div class="spec-val">$2.5M</div><div class="spec-lbl">Estimated set cost</div></div>
+        <div class="spec-card"><div class="spec-val">Demolished</div><div class="spec-lbl">After filming — recycled materials</div></div>
+      </div>
+
+      <ul>
+        <li>Built at the decommissioned <strong>Naval Air Station Alameda</strong> in California — a 1.5-mile loop of freeway with real concrete walls, lane markings, overpasses, and on/off ramps</li>
+        <li>Real cars crashed at real speeds. The semi-truck flip was <strong>practical</strong> — a nitrogen cannon launched the cab</li>
+        <li>Carrie-Anne Moss did her own motorcycle riding for Trinity's against-traffic sequence</li>
+        <li>Multiple camera cars, roof-mounted rigs, and helicopter shots for coverage</li>
+        <li>CGI used primarily for set extensions (sky, background city), Agent morphing effects, and specific impossible stunts</li>
+        <li>The freeway set was demolished after filming and materials were recycled</li>
+      </ul>
+
+      <div class="quote">"We built a mile and a half of freeway. We crashed real cars. We flipped a real truck. If you're going to spend $300 million on two movies, you might as well build a freeway."<cite>— Production notes, The Matrix Reloaded</cite></div>
+    </section>
+
+    <section class="vfx-block">
+      <h3>The Chateau Fight</h3>
+      <p>Neo versus the Merovingian's henchmen in a lavish two-story foyer. Pure Yuen Woo-ping showcasing — weapons pulled from the walls (swords, tridents, spears, flails, staffs, dual hooks, spiked clubs), wire work punctuated with wide shots and slow-motion.</p>
+      <ul>
+        <li>The epic wide shot — all performers fighting from one side of the foyer to the other, Neo jumping from second floor to first — was achieved with extensive wire rigs and careful camera choreography</li>
+        <li>Actors performed their own fights (per Yuen's requirement), with four months of additional martial arts training for the sequels</li>
+        <li>Bill Pope lit the set with strong shafts of light through large windows — rigged two large lamps on a pulley system behind white cyc with an elaborate set of greenbeds and motorized platforms</li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- ===================== REVOLUTIONS (2003) ===================== -->
+  <div class="film-section" id="matrix3">
+    <div class="section-number">03 // Film Three</div>
+    <div class="film-title">The Matrix Revolutions</div>
+    <div class="film-year">2003 · $150M Budget · World's first simultaneous global release</div>
+
+    <section class="vfx-block">
+      <h3>The Super Burly Brawl — Rain Fight</h3>
+      <p>The final confrontation between Neo and Smith. Shot almost entirely as a CG sequence once the characters take flight, with rain as both a narrative element and a massive technical challenge.</p>
+      <ul>
+        <li>Live-action plates of Keanu Reeves and Hugo Weaving shot on a massive rain rig for close-ups and dialogue</li>
+        <li>Flight sequences and high-impact moments were <strong>fully CG characters</strong> using UCap facial data on motion-captured bodies</li>
+        <li>Rain simulation required custom fluid dynamics — each raindrop had to interact with the characters, the environment, and light correctly</li>
+        <li>The crater impact shots — Neo and Smith slamming into the ground, creating massive shockwave craters — were full CG environments with practical rain elements composited on top</li>
+        <li>The final light explosion was a combination of practical lighting effects on set and extensive CG particle work</li>
+      </ul>
+    </section>
+
+    <section class="vfx-block">
+      <h3>The Siege of Zion — Dock Battle</h3>
+      <p>The largest-scale VFX sequence in the trilogy. Thousands of sentinels swarm through a breach in Zion's dock while human soldiers fight back in APU mechs. Almost none of this was practical.</p>
+      <ul>
+        <li><strong>APU Mechs:</strong> Full-scale practical cockpits were built for actor close-ups, mounted on hydraulic gimbal rigs. Everything beyond the cockpit was CG — the legs, arms, ammunition feeds, and surrounding environment</li>
+        <li><strong>Sentinel Swarms:</strong> Rendering thousands of individual sentinels with tentacles, each reflecting light and interacting with the environment. ESC developed proprietary crowd simulation tools</li>
+        <li>The breach sequence — sentinels pouring through the ceiling — required custom particle and fluid simulation for the metallic swarm behavior</li>
+        <li>Full CG environment for the Zion dock, with practical lighting references shot on the cockpit sets used to match CG lighting</li>
+      </ul>
+    </section>
+
+    <section class="vfx-block">
+      <h3>Machine City & Deus Ex Machina</h3>
+      <ul>
+        <li>The Machine City was an entirely CG environment — massive towers of machines extending into infinity, with swarms of sentinels forming the landscape</li>
+        <li>The <strong>Deus Ex Machina</strong> — the machine god face — was created from thousands of tiny machines swarming together to form a human-like face. Each individual machine was modeled and animated</li>
+        <li>The approach through the machine city (Neo and Trinity in the hovercraft) combined practical cockpit footage with full CG environments and volumetric lighting</li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- ===================== CINEMATOGRAPHY ===================== -->
+  <div class="film-section" id="cinematography">
+    <div class="section-number">04 // The Eye</div>
+    <div class="film-title">Bill Pope, ASC</div>
+    <div class="film-year">Cinematographer · All Three Films</div>
+
+    <section class="vfx-block">
+      <h3>Camera Package</h3>
+      <div class="spec-grid">
+        <div class="spec-card"><div class="spec-val">Pan-Arri 435</div><div class="spec-lbl">Primary camera</div></div>
+        <div class="spec-card"><div class="spec-val">Panaflex Platinum</div><div class="spec-lbl">Pope's workhorse</div></div>
+        <div class="spec-card"><div class="spec-val">Panastar</div><div class="spec-lbl">High-speed capable</div></div>
+        <div class="spec-card"><div class="spec-val">Photo-Sonics</div><div class="spec-lbl">300fps high-speed</div></div>
+      </div>
+      <ul>
+        <li><strong>Lenses:</strong> Panavision Primo prime lenses (spherical). Shot in Super 35 at 2.35:1</li>
+        <li>Pope wanted anamorphic but chose Super 35 for two reasons: too many cameras in use simultaneously to source enough anamorphic glass, and the massive sets would have required impractical amounts of light to achieve proper anamorphic stop</li>
+        <li>Digital VFX was too early-stage in 1999 to accurately map anamorphic lens aberrations onto CGI elements</li>
+        <li><strong>Sequels added:</strong> ARRIFLEX 435 ES, Panavision Panaflex Millennium XL</li>
+      </ul>
+    </section>
+
+    <section class="vfx-block">
+      <h3>Film Stocks</h3>
+      <ul>
+        <li><strong>Kodak Vision 200T 5274</strong> — Day exteriors and VFX plates (finer grain, better compositing)</li>
+        <li><strong>Kodak Vision 500T 5279</strong> — All interiors</li>
+      </ul>
+      <div class="quote">"I like the look of 79, and I like to see a little grain."<cite>— Bill Pope, ASC</cite></div>
+    </section>
+
+    <section class="vfx-block">
+      <h3>The Color Philosophy</h3>
+      <p>The Matrix trilogy's color system is one of the most deliberate in film history. Three worlds, three palettes — each carrying specific narrative weight.</p>
+      <ul>
+        <li><strong>Inside the Matrix — Green:</strong> Desaturated, green-tinted. Blues actively eliminated. Sets physically painted green. Tungsten lighting and Kino Flos with green gels. Evokes CRT monitors, digital artificiality, sickness</li>
+        <li><strong>Real World (Nebuchadnezzar) — Blue:</strong> Cool blue tones, more saturated. Cold, harsh, but authentic</li>
+        <li><strong>Zion — Gold/Amber:</strong> Warm earth tones representing true humanity. Space lights for ambiance, checkerboarded Dinos and Dinettes on Condors for atmospheric shafts</li>
+      </ul>
+
+      <div class="tech-box">
+        <strong>Color Grading:</strong> The original 1999 film was <strong>timed optically</strong> (photochemical) — not digitally. The green tint was achieved through set design, lighting, lens filtration, and optical timing. The sequels used a <strong>Digital Intermediate (DI)</strong> pipeline for greater control. Various home video releases have controversially shifted the color timing, with some versions appearing far more aggressively green than the original theatrical presentation.
+      </div>
+
+      <div class="quote">"Bill Pope is the kind of cinematographer who really enjoys using black on the screen. There's a certain compositional power in having deep, dark blacks."<cite>— The Wachowskis</cite></div>
+    </section>
+  </div>
+
+  <!-- ===================== LEGACY ===================== -->
+  <div class="film-section" id="legacy">
+    <div class="section-number">05 // The Ripple Effect</div>
+    <div class="film-title">Cultural & Industry Impact</div>
+    <div class="film-year">How The Matrix Changed Everything</div>
+
+    <section class="vfx-block">
+      <h3>Virtual Cinematography</h3>
+      <p>John Gaeta coined the term "Virtual Cinematography" in 1999 — a filmmaking methodology where characters, locations, and events can all exist as digital elements, with a virtual camera unconstrained by physics moving through digital space along any path, at any speed.</p>
+      <p>This concept evolved across the trilogy:</p>
+      <ul>
+        <li><strong>1999:</strong> Semi-virtual — real photography assembled into virtual camera moves, with photogrammetric backgrounds</li>
+        <li><strong>2003:</strong> Full virtual — Universal Capture + full-body motion capture + CG environments. Every element digital. The camera exists only in software</li>
+      </ul>
+      <p>This directly influenced the development of performance capture pipelines used in Avatar, Planet of the Apes, and modern game cinematics. The concept of a camera that exists only in software became foundational to LED volume stages (The Mandalorian's "Volume"), real-time engines (Unreal), and modern virtual production.</p>
+    </section>
+
+    <section class="vfx-block">
+      <h3>Who Copied Bullet Time</h3>
+      <p>Within two years of The Matrix's release, bullet time appeared everywhere — to the point of becoming a punchline. John Gaeta himself said Charlie's Angels (2000) "irked them because it was so blatant."</p>
+      <div class="impact-item"><div class="impact-year">2000</div><div class="impact-text"><strong>Charlie's Angels</strong> — direct bullet time copies, even more overt in the sequel</div></div>
+      <div class="impact-item"><div class="impact-year">2000</div><div class="impact-text"><strong>Scary Movie</strong> — parodied the rooftop dodge shot-for-shot</div></div>
+      <div class="impact-item"><div class="impact-year">2001</div><div class="impact-text"><strong>Shrek</strong> — Princess Fiona does a Trinity mid-air freeze kick</div></div>
+      <div class="impact-item"><div class="impact-year">2001</div><div class="impact-text"><strong>Swordfish</strong> — 360-degree camera orbit around an explosion</div></div>
+      <div class="impact-item"><div class="impact-year">2001</div><div class="impact-text"><strong>Max Payne</strong> (game) — turned bullet time into a gameplay mechanic, spawning an entire genre</div></div>
+      <div class="impact-item"><div class="impact-year">2002</div><div class="impact-text"><strong>Clockstoppers</strong> — entire film built around the concept</div></div>
+      <div class="impact-item"><div class="impact-year">2003</div><div class="impact-text"><strong>X-Men 2</strong> — Quicksilver-style speed effects</div></div>
+      <div class="impact-item"><div class="impact-year">2014</div><div class="impact-text"><strong>X-Men: Days of Future Past</strong> — Quicksilver kitchen scene, spiritual descendant of bullet time</div></div>
+      <div class="impact-item"><div class="impact-year">2018+</div><div class="impact-text"><strong>Spider-Verse</strong> — stylized bullet time as artistic expression, not just spectacle</div></div>
+    </section>
+
+    <section class="vfx-block">
+      <h3>The Bigger Legacy</h3>
+      <p>Beyond bullet time, The Matrix fundamentally shifted how Hollywood thought about action cinematography:</p>
+      <ul>
+        <li><strong>Hong Kong action in Hollywood:</strong> Yuen Woo-ping went on to choreograph Kill Bill and Crouching Tiger Hidden Dragon. Wire work became standard in blockbusters</li>
+        <li><strong>Digital humans:</strong> The Burly Brawl's UCap technology was the direct ancestor of the performance capture used for Gollum, Davy Jones, Thanos, and every modern CG character</li>
+        <li><strong>Green/blue screen compositing:</strong> The Matrix normalized massive green screen stages and proved audiences would accept heavily composited imagery if the story justified it</li>
+        <li><strong>The "cool" factor in VFX:</strong> Before The Matrix, VFX was primarily about making things look real (Jurassic Park). The Matrix proved VFX could be a stylistic choice — a way to make things look impossibly cool</li>
+        <li><strong>Virtual production:</strong> Gaeta's virtual cinematography concept is the philosophical ancestor of ILM StageCraft, Unreal Engine virtual production, and the entire LED volume revolution</li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- ===================== KEY CREW ===================== -->
+  <div class="film-section" id="crew">
+    <div class="section-number">06 // The Architects</div>
+    <div class="film-title">Key Personnel</div>
+    <div class="film-year">The people who built the Matrix</div>
+
+    <section class="vfx-block">
+      <table class="personnel">
+        <thead><tr><th>Role</th><th>Name</th></tr></thead>
+        <tbody>
+          <tr><td>Directors</td><td>The Wachowskis</td></tr>
+          <tr><td>VFX Supervisor</td><td>John Gaeta (Academy Award winner)</td></tr>
+          <tr><td>Cinematographer</td><td>Bill Pope, ASC</td></tr>
+          <tr><td>Martial Arts Choreographer</td><td>Yuen Woo-ping</td></tr>
+          <tr><td>SFX Supervisor</td><td>Steve Courtley</td></tr>
+          <tr><td>Digital Rain Designer</td><td>Simon Whiteley (Animal Logic)</td></tr>
+          <tr><td>Bullet Time Rig Fabrication</td><td>Frank Gallego (Innovation Arts)</td></tr>
+          <tr><td>Photogrammetry / IBR</td><td>George Borshukov</td></tr>
+          <tr><td>Mirror / Spoon VFX</td><td>Dfilm (12 artists)</td></tr>
+          <tr><td>VFX Studio (Film 1)</td><td>Manex Visual Effects, Alameda CA</td></tr>
+          <tr><td>VFX Studio (Films 2-3)</td><td>ESC Entertainment (successor to Manex)</td></tr>
+          <tr><td>Gaffer</td><td>Reg Garside</td></tr>
+          <tr><td>Pyrotechnicians</td><td>Paul Gorrie, Leo Henry</td></tr>
+          <tr><td>Render Farm OS</td><td>FreeBSD on 32x Dell Precision 410 Dual P-II/450</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</div>
+
+<footer>
+  <p>Research & design by Matt Matheson<br><a href="https://www.instagram.com/mattmatheson_">@mattmatheson_</a></p>
+</footer>
+
+<!-- Player Bar -->
+<div class="player-bar" id="playerBar">
+  <button id="playPauseBtn" onclick="toggleListen()">&#9208;</button>
+  <span class="now-playing" id="nowPlaying">-</span>
+  <select id="barVoiceSelect" onchange="document.getElementById('voiceSelect').value=this.value;selectedVoice=this.value;"></select>
+  <button id="barSpeedBtn" onclick="cycleSpeed()">1x</button>
+  <button onclick="stopListen()">&#10005;</button>
+</div>
+
+<script>
+// ===== Digital Rain =====
+const canvas=document.getElementById('rain'),ctx=canvas.getContext('2d');
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
+resizeCanvas();window.addEventListener('resize',resizeCanvas);
+const chars='アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFZ';
+const fontSize=14,columns=Math.floor(canvas.width/fontSize);
+const drops=Array(columns).fill(1);
+function drawRain(){
+  ctx.fillStyle='rgba(0,0,0,0.05)';ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle='#00FF41';ctx.font=fontSize+'px monospace';
+  for(let i=0;i<drops.length;i++){
+    const char=chars[Math.floor(Math.random()*chars.length)];
+    ctx.fillText(char,i*fontSize,drops[i]*fontSize);
+    if(drops[i]*fontSize>canvas.height&&Math.random()>0.975)drops[i]=0;
+    drops[i]++;
+  }
+}
+setInterval(drawRain,45);
+
+// ===== Nav Pill Active State =====
+const pills=document.querySelectorAll('.film-pill');
+const sections=document.querySelectorAll('.film-section');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      pills.forEach(p=>p.classList.remove('active'));
+      const id=e.target.id;
+      const pill=document.querySelector(`.film-pill[href="#${id}"]`);
+      if(pill)pill.classList.add('active');
+    }
+  });
+},{threshold:0.15,rootMargin:'-80px 0px -60% 0px'});
+sections.forEach(s=>observer.observe(s));
+
+pills.forEach(p=>p.addEventListener('click',e=>{
+  e.preventDefault();
+  const target=document.querySelector(p.getAttribute('href'));
+  if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+}));
+
+// ===== Speech Synthesis =====
+const VOICE_WHITELIST=['samantha','karen','daniel','moira','tessa','ava','allison','tom','aaron','nicky','evan','zoe','joelle','fiona','martha','arthur','google us english','google uk english'];
+let selectedVoice='',currentSpeed=1,speedIndex=1,isPlaying=false,isPaused=false,keepAlive=null;
+const speeds=[0.8,1,1.2,1.5];
+
+function populateVoices(){
+  const voices=speechSynthesis.getVoices();
+  const sel1=document.getElementById('voiceSelect'),sel2=document.getElementById('barVoiceSelect');
+  sel1.innerHTML='';sel2.innerHTML='';
+  const filtered=voices.filter(v=>VOICE_WHITELIST.some(w=>v.name.toLowerCase().includes(w)));
+  filtered.forEach(v=>{sel1.add(new Option(v.name,v.name));sel2.add(new Option(v.name,v.name))});
+  if(filtered.length>0)selectedVoice=filtered[0].name;
+}
+speechSynthesis.onvoiceschanged=populateVoices;populateVoices();
+document.getElementById('voiceSelect').onchange=function(){selectedVoice=this.value;document.getElementById('barVoiceSelect').value=this.value};
+
+function cycleSpeed(){speedIndex=(speedIndex+1)%speeds.length;currentSpeed=speeds[speedIndex];document.getElementById('speedBtn').textContent=currentSpeed+'x';document.getElementById('barSpeedBtn').textContent=currentSpeed+'x'}
+
+function getReadableElements(){
+  const secs=document.querySelectorAll('.film-section section, .hero');
+  const elements=[];
+  secs.forEach(sec=>{
+    sec.querySelectorAll('h3,h4,p,li,.quote,.tech-box,.impact-text').forEach(el=>{
+      const text=el.textContent.trim();
+      if(text)elements.push({el,text,section:sec.closest('.film-section')||sec,isHeading:/^H[34]$/.test(el.tagName)});
+    });
+  });
+  return elements;
+}
+
+function toggleListen(){
+  if(isPlaying&&!isPaused){speechSynthesis.pause();isPaused=true;document.getElementById('playPauseBtn').textContent='\u25B6';document.getElementById('listenBtn').textContent='\u25B6 Resume'}
+  else if(isPaused){speechSynthesis.resume();isPaused=false;document.getElementById('playPauseBtn').textContent='\u23F8';document.getElementById('listenBtn').textContent='\u23F8 Pause'}
+  else{startReading()}
+}
+
+function startReading(){
+  speechSynthesis.cancel();
+  const elements=getReadableElements();if(!elements.length)return;
+  isPlaying=true;isPaused=false;
+  document.getElementById('playerBar').classList.add('visible');
+  document.getElementById('playPauseBtn').textContent='\u23F8';
+  document.getElementById('listenBtn').textContent='\u23F8 Pause';
+  keepAlive=setInterval(()=>{if(isPlaying&&!isPaused)speechSynthesis.resume()},10000);
+  readElement(elements,0);
+}
+
+function readElement(elements,i){
+  if(i>=elements.length||!isPlaying){stopListen();return}
+  const{el,text,section,isHeading}=elements[i];
+  document.querySelectorAll('section.reading').forEach(s=>s.classList.remove('reading'));
+  if(section)section.scrollIntoView({behavior:'smooth',block:'start'});
+  document.getElementById('nowPlaying').textContent=text.substring(0,80)+(text.length>80?'\u2026':'');
+  const voice=speechSynthesis.getVoices().find(v=>v.name===selectedVoice);
+  const utt=new SpeechSynthesisUtterance(text);
+  if(voice)utt.voice=voice;
+  utt.rate=isHeading?currentSpeed*0.9:currentSpeed;
+  if(isHeading)utt.pitch=1.05;
+  utt.onend=()=>{setTimeout(()=>readElement(elements,i+1),isHeading?400:200)};
+  speechSynthesis.speak(utt);
+}
+
+function stopListen(){
+  speechSynthesis.cancel();isPlaying=false;isPaused=false;
+  if(keepAlive)clearInterval(keepAlive);
+  document.getElementById('playerBar').classList.remove('visible');
+  document.getElementById('listenBtn').textContent='\u25B6 Listen';
+  document.querySelectorAll('section.reading').forEach(s=>s.classList.remove('reading'));
+}
+
+function selectAllContent(){
+  const range=document.createRange();range.selectNodeContents(document.querySelector('.container'));
+  const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);
+}
+</script>
+</body>
+</html>
