@@ -250,7 +250,7 @@ footer a{color:var(--green-dim);text-decoration:none}
 
     <section class="vfx-block">
       <h3>The Burly Brawl — Neo vs. 100 Agent Smiths</h3>
-      <p>The sequence that pushed virtual cinematography from concept to reality. For the first time in film history, photoreal digital humans fought alongside their real counterparts in an extended action sequence. It was groundbreaking — and it was also the moment the industry learned exactly how hard that is.</p>
+      <p>The sequence that pushed virtual cinematography from concept to reality. <strong>$40 million</strong> and <strong>27 days of filming</strong> for one scene. For the first time in film history, photoreal digital humans fought alongside their real counterparts in an extended action sequence. It was groundbreaking — and it was also the moment the industry learned exactly how hard that is.</p>
 
       <h4>How They Built 100 Smiths</h4>
       <ul>
@@ -263,7 +263,7 @@ footer a{color:var(--green-dim);text-decoration:none}
 
       <h4>Universal Capture (UCap)</h4>
       <div class="tech-box">
-        ESC Entertainment developed UCap specifically for the Matrix sequels. The system used an array of <strong>high-definition cameras surrounding the actor's face</strong>, capturing texture, lighting, and expression at extremely high resolution from multiple angles simultaneously. Unlike traditional motion capture (which tracks dots), UCap sampled the <strong>actual appearance</strong> of the face — every pore, wrinkle, and subtle skin movement. This data was then mapped onto CG body geometry driven by full-body motion capture. The result was the most detailed digital human face ever attempted in film at that time.
+        ESC Entertainment developed UCap specifically for the Matrix sequels. The rig: <strong>8 infrared cameras + 3 HD Sony/Panavision HDW-F900 cameras</strong> surrounding the actor's face, with <strong>~70 retroreflective markers</strong> tracked via optical flow and photogrammetry. Unlike traditional motion capture (which tracks dots), UCap sampled the <strong>actual appearance</strong> of the face — every pore, wrinkle, and subtle skin movement at extremely high resolution from multiple angles simultaneously. This data was then mapped onto CG body geometry driven by full-body motion capture. The result was the most detailed digital human face ever attempted in film. UCap won an <strong>Academy Technical Achievement Award in 2015</strong> — twelve years after it was first used.
       </div>
 
       <p>The sequence transitions seamlessly (in theory) from real actors to full CG — the Wachowskis wanted the camera to never cut, orbiting freely as Neo fights an ever-growing crowd. In practice, the CG Smiths occasionally dipped into uncanny valley territory, particularly in wide shots where the digital bodies moved with slightly too-smooth weight distribution. But the ambition was staggering — this was 2003, three years before Pirates of the Caribbean's Davy Jones and six years before Avatar.</p>
@@ -325,7 +325,7 @@ footer a{color:var(--green-dim);text-decoration:none}
       <h3>The Siege of Zion — Dock Battle</h3>
       <p>The largest-scale VFX sequence in the trilogy. Thousands of sentinels swarm through a breach in Zion's dock while human soldiers fight back in APU mechs. Almost none of this was practical.</p>
       <ul>
-        <li><strong>APU Mechs:</strong> Full-scale practical cockpits were built for actor close-ups, mounted on hydraulic gimbal rigs. Everything beyond the cockpit was CG — the legs, arms, ammunition feeds, and surrounding environment</li>
+        <li><strong>APU Mechs:</strong> Full-scale practical cockpits built on a <strong>six-axis motion base</strong> for actor close-ups. Everything beyond the cockpit was CG. Each of the 100 APUs had <strong>~2,000 mirrored surfaces</strong> and <strong>12GB of texture maps</strong>. The render cycle took <strong>five weeks</strong></li>
         <li><strong>Sentinel Swarms:</strong> Rendering thousands of individual sentinels with tentacles, each reflecting light and interacting with the environment. ESC developed proprietary crowd simulation tools</li>
         <li>The breach sequence — sentinels pouring through the ceiling — required custom particle and fluid simulation for the metallic swarm behavior</li>
         <li>Full CG environment for the Zion dock, with practical lighting references shot on the cockpit sets used to match CG lighting</li>
@@ -336,7 +336,7 @@ footer a{color:var(--green-dim);text-decoration:none}
       <h3>Machine City & Deus Ex Machina</h3>
       <ul>
         <li>The Machine City was an entirely CG environment — massive towers of machines extending into infinity, with swarms of sentinels forming the landscape</li>
-        <li>The <strong>Deus Ex Machina</strong> — the machine god face — was created from thousands of tiny machines swarming together to form a human-like face. Each individual machine was modeled and animated</li>
+        <li>The <strong>Deus Ex Machina</strong> — the machine god face — was created from <strong>30,000 particle-driven insect-machines</strong> swarming together to form a baby's face (modeled after the Wachowskis' nephew)</li>
         <li>The approach through the machine city (Neo and Trinity in the hovercraft) combined practical cockpit footage with full CG environments and volumetric lighting</li>
       </ul>
     </section>
@@ -429,7 +429,7 @@ footer a{color:var(--green-dim);text-decoration:none}
         <li><strong>Digital humans:</strong> The Burly Brawl's UCap technology was the direct ancestor of the performance capture used for Gollum, Davy Jones, Thanos, and every modern CG character</li>
         <li><strong>Green/blue screen compositing:</strong> The Matrix normalized massive green screen stages and proved audiences would accept heavily composited imagery if the story justified it</li>
         <li><strong>The "cool" factor in VFX:</strong> Before The Matrix, VFX was primarily about making things look real (Jurassic Park). The Matrix proved VFX could be a stylistic choice — a way to make things look impossibly cool</li>
-        <li><strong>Virtual production:</strong> Gaeta's virtual cinematography concept is the philosophical ancestor of ILM StageCraft, Unreal Engine virtual production, and the entire LED volume revolution</li>
+        <li><strong>Virtual production:</strong> Gaeta's virtual cinematography concept is the direct ancestor of ILM StageCraft, Unreal Engine virtual production, and the entire LED volume revolution. <strong>Kim Libreri</strong>, who helped develop UCap for the Matrix, went on to become CTO of Epic Games — directly connecting the Matrix's virtual cinematography lineage to modern real-time rendering in Unreal Engine</li>
       </ul>
     </section>
   </div>
@@ -457,7 +457,11 @@ footer a{color:var(--green-dim);text-decoration:none}
           <tr><td>VFX Studio (Films 2-3)</td><td>ESC Entertainment (successor to Manex)</td></tr>
           <tr><td>Gaffer</td><td>Reg Garside</td></tr>
           <tr><td>Pyrotechnicians</td><td>Paul Gorrie, Leo Henry</td></tr>
-          <tr><td>Render Farm OS</td><td>FreeBSD on 32x Dell Precision 410 Dual P-II/450</td></tr>
+          <tr><td>Render Farm (Film 1)</td><td>FreeBSD on 32x Dell Precision 410 Dual P-II/450</td></tr>
+          <tr><td>Render Farm (Films 2-3)</td><td>2,000+ Dell CPUs on Windows 2000, 70TB storage, mental ray rendering</td></tr>
+          <tr><td>Custom Tools (Films 2-3)</td><td>200+ custom Maya/Shake plugins, 300+ artists at peak</td></tr>
+          <tr><td>Total VFX Shots (Films 2-3)</td><td>~3,900 shots combined</td></tr>
+          <tr><td>UCap to Epic Games</td><td>Kim Libreri (UCap developer) became CTO of Epic Games</td></tr>
         </tbody>
       </table>
     </section>
