@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlayStation Controllers on Windows — The Complete Guide</title>
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --accent: #C42020;
+            --bg: #FAFAFA;
+            --text: #1D1D1F;
+            --secondary: #6E6E73;
+            --border: #E5E5E7;
+            --card-bg: #F2F2F7;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .hero {
+            background: var(--text);
+            color: var(--bg);
+            padding: 80px 24px 72px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            max-width: 720px;
+            margin: 0 auto 16px;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero .scope {
+            font-size: 1.1rem;
+            color: #A1A1A6;
+            max-width: 560px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 56px 24px 80px;
+        }
+
+        .intro {
+            font-size: 1.15rem;
+            color: var(--secondary);
+            margin-bottom: 48px;
+            line-height: 1.8;
+            border-left: 3px solid var(--accent);
+            padding-left: 20px;
+        }
+
+        section {
+            margin-bottom: 48px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .section-number {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 24px 0 8px;
+            letter-spacing: -0.01em;
+        }
+
+        section p {
+            color: var(--secondary);
+            margin-bottom: 16px;
+            font-size: 0.975rem;
+        }
+
+        section ul, section ol {
+            color: var(--secondary);
+            font-size: 0.975rem;
+            margin-bottom: 16px;
+            padding-left: 20px;
+        }
+
+        section li {
+            margin-bottom: 8px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .tag.gold { background: #B8860B; }
+        .tag.blue { background: #0071E3; }
+        .tag.green { background: #34C759; }
+        .tag.purple { background: #7B61FF; }
+
+        .specs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+            margin-bottom: 16px;
+        }
+
+        .spec {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .spec-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #A1A1A6;
+            margin-bottom: 4px;
+        }
+
+        .spec-value {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .callout {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 20px 0;
+        }
+
+        .callout p {
+            color: var(--text);
+            font-size: 0.95rem;
+            margin-bottom: 0;
+            font-style: italic;
+        }
+
+        .callout .attribution {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            margin-top: 8px;
+            font-style: normal;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .comparison-card h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .comparison-card li {
+            font-size: 0.85rem;
+            color: var(--secondary);
+            padding: 4px 0;
+        }
+
+        .stat-row {
+            display: flex;
+            gap: 16px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            padding: 20px 12px;
+            background: var(--card-bg);
+            border-radius: 12px;
+        }
+
+        .stat .number {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: -0.02em;
+        }
+
+        .stat .label {
+            font-size: 0.75rem;
+            color: var(--secondary);
+            margin-top: 4px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            border-top: 1px solid var(--border);
+            color: #A1A1A6;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 480px) {
+            .hero { padding: 56px 20px 48px; }
+            .container { padding: 40px 20px 60px; }
+            .specs { grid-template-columns: 1fr 1fr; }
+            .comparison { grid-template-columns: 1fr; }
+            .stat-row { flex-direction: column; }
+        }
+
+        /* ── Listen Mode — header controls ── */
+        .listen-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .listen-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.6rem 1.5rem;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.1s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .listen-btn:hover { background: #a01a1a; }
+        .listen-btn:active { transform: scale(0.97); }
+        .listen-btn.paused { background: #6E6E73; }
+
+        .voice-select {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.8rem;
+            padding: 0.45rem 0.75rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 2rem;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            cursor: pointer;
+            max-width: 180px;
+        }
+
+        .speed-btn {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.4rem 0.75rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 2rem;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .speed-btn:active { background: rgba(255,255,255,0.15); }
+
+        /* ── Sticky bottom player bar ── */
+        .listen-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(29, 29, 31, 0.95);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            color: #fff;
+            padding: 12px 20px;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 9999;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            box-shadow: 0 -2px 20px rgba(0,0,0,0.15);
+        }
+
+        .listen-bar.visible {
+            transform: translateY(0);
+        }
+
+        .listen-bar .bar-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: var(--accent);
+            color: #fff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .listen-bar .bar-btn.paused { background: #6E6E73; }
+
+        .listen-bar .bar-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .listen-bar .bar-title {
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .listen-bar .bar-section {
+            font-size: 0.7rem;
+            color: #A1A1A6;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .listen-bar .bar-voice {
+            font-size: 0.75rem;
+            padding: 6px 10px;
+            border-radius: 2rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            max-width: 120px;
+        }
+
+        .listen-bar .bar-speed {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 6px 10px;
+            border-radius: 2rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            flex-shrink: 0;
+        }
+
+        .listen-bar .bar-stop {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: transparent;
+            color: #fff;
+            font-size: 0.9rem;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* ── Pro tip banner ── */
+        .listen-tip {
+            margin-top: 0.75rem;
+            font-size: 0.78rem;
+            color: #A1A1A6;
+            font-weight: 300;
+            line-height: 1.5;
+        }
+
+        .listen-tip strong {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .select-all-btn {
+            display: inline;
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-family: inherit;
+            font-size: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0;
+            text-decoration: underline;
+            text-decoration-color: rgba(196, 32, 32, 0.3);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        section.reading {
+            border-left: 3px solid var(--accent);
+            background: rgba(196, 32, 32, 0.04);
+            padding-left: 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .select-section-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 4px 12px;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+        .select-section-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(196, 32, 32, 0.04);
+        }
+        .select-section-btn:active { transform: scale(0.96); }
+        .select-section-btn.selected {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(196, 32, 32, 0.06);
+        }
+
+        body.listening { padding-bottom: 80px; }
+
+        @media (max-width: 480px) {
+            .listen-controls { flex-direction: column; align-items: stretch; }
+            .listen-btn { width: 100%; justify-content: center; }
+            .voice-select { max-width: 100%; }
+            .listen-bar .bar-voice { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="hero">
+    <h1>PlayStation Controllers on <span>Windows</span></h1>
+    <p class="scope">Why your DualShock or DualSense doesn't just work on PC, every driver and tool that fixes it, and best practices for gaming with PlayStation controllers on Windows.</p>
+    <div class="listen-controls">
+      <button class="listen-btn" id="listenBtn" aria-label="Listen to article">&#9654; Listen</button>
+      <select class="voice-select" id="voiceSelect" aria-label="Choose voice"></select>
+      <button class="speed-btn" id="speedBtn" aria-label="Playback speed">1x</button>
+    </div>
+    <p class="listen-tip">
+      Want a better voice? On iPhone, <button class="select-all-btn" id="selectAllBtn">tap here to select the article text</button>, then tap <strong>Speak</strong> in the popup menu. It uses your phone's premium voices (enable in Settings &gt; Accessibility &gt; Spoken Content &gt; Speak Selection).
+    </p>
+    <p class="listen-tip">
+      On Mac, click <strong>Select Section</strong> next to any heading, then right-click and choose <strong>Speech &gt; Start Speaking</strong>. macOS will read just that section using your system voice (set in System Settings &gt; Accessibility &gt; Spoken Content).
+    </p>
+</header>
+
+<main class="container" id="content">
+    <p class="intro">
+        You plug in your PlayStation controller, fire up a game, and nothing happens. No inputs, no button prompts, nothing. The game doesn't even know it's there. This is one of the most common frustrations in PC gaming, and it's been going on for almost 20 years. Here's why it happens and every tool you need to fix it.
+    </p>
+
+    <!-- Section 1: The Problem -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">01</span>
+            <h2>XInput vs. DirectInput</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag">The Problem</span>
+        </div>
+        <p>
+            Windows gaming standardized around Microsoft's XInput API in 2005, built specifically for the Xbox 360 controller layout. XInput assumes a fixed controller: two sticks, two triggers, bumpers, ABXY, D-pad, Start and Back. It's simple, consistent, and what nearly every modern PC game implements.
+        </p>
+        <p>
+            PlayStation controllers use DirectInput, the older, more flexible API that supports arbitrary button counts and axes. DirectInput was deprecated with Windows Vista. When a modern game only implements XInput &mdash; which is most of them &mdash; it simply doesn't see your PlayStation controller. Even when a game does support DirectInput, it'll show Xbox button prompts, making the experience confusing.
+        </p>
+        <div class="comparison">
+            <div class="comparison-card">
+                <h4>XInput (Xbox Standard)</h4>
+                <ul>
+                    <li>Fixed 10-button layout + D-pad</li>
+                    <li>Separate trigger axes (0&ndash;255)</li>
+                    <li>Built-in vibration support</li>
+                    <li>Hot-plug support</li>
+                    <li>Near-universal game support</li>
+                </ul>
+            </div>
+            <div class="comparison-card">
+                <h4>DirectInput (PlayStation)</h4>
+                <ul>
+                    <li>Up to 128 buttons</li>
+                    <li>Triggers may share one axis</li>
+                    <li>Vibration is device-dependent</li>
+                    <li>Limited hot-plug</li>
+                    <li>Support declining in new titles</li>
+                </ul>
+            </div>
+        </div>
+        <p>
+            The fix used by every third-party tool is emulation: software intercepts the PlayStation controller's DirectInput signals and presents a virtual Xbox 360 or Xbox One controller via XInput. The game thinks an Xbox controller is connected. Problem solved &mdash; in theory. In practice, you need the right tool for your controller and to avoid a few common pitfalls.
+        </p>
+    </section>
+
+    <!-- Section 2: DS4Windows -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">02</span>
+            <h2>DS4Windows</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag green">Free &middot; Open Source</span>
+        </div>
+        <p>
+            The gold standard. DS4Windows remaps your PlayStation controller into a virtual Xbox 360 or Xbox One controller via the ViGEmBus driver. Windows and all games see a standard XInput device. It supports DualShock 3, DualShock 4, DualSense, Nintendo Switch Pro Controllers, and Joy-Cons.
+        </p>
+        <div class="specs">
+            <div class="spec">
+                <div class="spec-label">Price</div>
+                <div class="spec-value">Free</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Controllers</div>
+                <div class="spec-value">DS3, DS4, DualSense</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Latest</div>
+                <div class="spec-value">v3.3.3</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Source</div>
+                <div class="spec-value">GitHub</div>
+            </div>
+        </div>
+        <p>
+            Setup is straightforward: download, extract, run it. On first launch it installs the required ViGEmBus driver and optionally HidHide (more on that in a minute). Connect your controller via USB or Bluetooth and DS4Windows picks it up automatically.
+        </p>
+        <h3>Key Features</h3>
+        <ul>
+            <li>Full button remapping and rebinding (keyboard, mouse, joystick)</li>
+            <li>Per-game automatic profile switching</li>
+            <li>Gyro/motion sensor mapping to mouse or right stick</li>
+            <li>Touchpad configuration (left/right click zones, mouse emulation)</li>
+            <li>Lightbar color customization</li>
+            <li>Sensitivity curves and dead zone adjustment</li>
+            <li>Macro support</li>
+        </ul>
+        <div class="callout">
+            <p>"DS4Windows has been the answer for DualShock 4 on PC since 2014. It just works. Install it, connect your controller, game."</p>
+            <div class="attribution">-- r/pcgaming consensus</div>
+        </div>
+        <p>
+            The one limitation: DualSense adaptive trigger and haptic feedback support is basic compared to DualSenseX. If you're on a PS5 controller and want the full haptic experience, see the next section.
+        </p>
+    </section>
+
+    <!-- Section 3: DualSenseX -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">03</span>
+            <h2>DualSenseX (DSX)</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag blue">PS5 Specialist</span>
+        </div>
+        <p>
+            Purpose-built for the PS5 DualSense controller, DualSenseX unlocks features that generic tools can't fully support. The free GitHub version (v1.4.9) is discontinued; the actively maintained version is on Steam for about $10.
+        </p>
+        <h3>What Sets It Apart</h3>
+        <ul>
+            <li>20 different Adaptive Trigger modes</li>
+            <li>Full haptic feedback over USB (basic rumble over Bluetooth)</li>
+            <li>Emulation modes: Xbox 360, DualShock 4, or DualSense passthrough</li>
+            <li>RGB lightbar customization</li>
+            <li>Import game developer controller scripts via text file</li>
+            <li>Bluetooth audio support (beta)</li>
+        </ul>
+        <p>
+            If you own a DualSense and want adaptive triggers in games that support them &mdash; like Returnal, Alan Wake 2, or the Resident Evil remakes &mdash; DualSenseX is the tool that actually delivers that experience on PC.
+        </p>
+    </section>
+
+    <!-- Section 4: Steam Input -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">04</span>
+            <h2>Steam's Built-In Support</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag gold">Zero Install</span>
+        </div>
+        <p>
+            If you play games through Steam, you might not need anything else. Steam Input is Valve's comprehensive controller management system, and it handles PlayStation controllers natively. Since late 2023, Steam officially identifies, configures, and provides API support for DualShock and DualSense controllers.
+        </p>
+        <h3>How to Enable</h3>
+        <ol>
+            <li>Open Steam &gt; Settings &gt; Controller &gt; General Controller Settings</li>
+            <li>Check "PlayStation Configuration Support"</li>
+            <li>Connect your controller via USB or Bluetooth</li>
+            <li>Customize per-game via the Steam overlay</li>
+        </ol>
+        <h3>What You Get</h3>
+        <ul>
+            <li>Automatic controller detection and XInput translation</li>
+            <li>PlayStation button prompts in compatible games</li>
+            <li>Full gyro configuration for aiming</li>
+            <li>Touchpad remapping</li>
+            <li>Community-shared controller configurations for thousands of games</li>
+            <li>DualSense adaptive trigger and haptic support in select titles</li>
+        </ul>
+        <div class="callout">
+            <p>"For most people who play through Steam, just enabling PlayStation Configuration Support is the entire solution. No extra software needed."</p>
+        </div>
+        <p>
+            The limitation: it only works for games launched through Steam. If you're playing through Epic, GOG, Battle.net, or standalone launchers, you'll need DS4Windows or another tool. You can add non-Steam games to your library as a workaround, but it's not always reliable.
+        </p>
+    </section>
+
+    <!-- Section 5: The Supporting Cast -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">05</span>
+            <h2>The Supporting Cast</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag purple">Drivers &amp; Tools</span>
+        </div>
+
+        <h3>ViGEmBus</h3>
+        <p>
+            The foundational layer. ViGEmBus is a Windows kernel-mode driver that creates virtual Xbox 360 and Xbox One controllers. DS4Windows, DualSenseX, and many other tools depend on it to present emulated XInput devices. The original project was archived in November 2023 due to a trademark issue, but it still works fine. A community fork by LizardByte is available on GitHub for future patches. Don't download ViGEmBus from random sites claiming to have newer versions &mdash; only use the official GitHub release or the LizardByte fork.
+        </p>
+
+        <h3>HidHide</h3>
+        <p>
+            Solves the double input problem. When DS4Windows creates a virtual Xbox controller, your game might see both the real PlayStation controller (DirectInput) and the virtual one (XInput), causing doubled inputs or erratic behavior. HidHide is a kernel-mode filter driver that selectively hides controllers from applications. You whitelist DS4Windows so it can still see the real controller, and hide it from everything else.
+        </p>
+        <div class="callout">
+            <p>"If you're using DS4Windows and your character is spinning in circles or every input registers twice, you need HidHide. It's usually the first thing to install after DS4Windows itself."</p>
+        </div>
+
+        <h3>ReWASD</h3>
+        <p>
+            The paid power-user option (~$40 lifetime for 3 PCs). ReWASD goes far beyond simple XInput translation: single/double/triple-press actions, button combos, up to 10 mapping layers per profile, virtual gyroscope emulation, and keyboard/mouse-to-controller translation. Supports 100+ gamepads. Worth it if you need advanced remapping across multiple controller types.
+        </p>
+
+        <h3>DsHidMini</h3>
+        <p>
+            The modern, recommended driver for DualShock 3 (PS3) controllers. Replaces the ancient, unmaintained SCPToolkit. Supports DS1, DS2 (via adapters), DS3, and Navigation Controllers over USB and Bluetooth. For Bluetooth, you'll also need the BthPS3 driver from the same developer. The DS3 uses a non-standard Bluetooth protocol &mdash; regular Windows pairing doesn't work. You must connect via USB first to register the controller.
+        </p>
+
+        <h3>JoyShockMapper</h3>
+        <p>
+            Specializes in gyro aiming and flick stick controls. Converts DS4, DualSense, Joy-Con, and Switch Pro Controller motion input into keyboard and mouse input. Features real-world calibration for consistent sensitivity across games. The go-to tool for players who want gyro aiming in games that don't natively support it.
+        </p>
+
+        <h3>InputMapper</h3>
+        <p>
+            An older alternative to DS4Windows. Still functional but updates are rare and DualSense support is limited. The community widely considers it outdated. Only worth using if you already have working configurations that you don't want to migrate.
+        </p>
+    </section>
+
+    <!-- Section 6: Connection Methods -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">06</span>
+            <h2>USB vs. Bluetooth vs. Adapters</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag">Connection</span>
+        </div>
+        <div class="comparison">
+            <div class="comparison-card">
+                <h4>USB (Wired)</h4>
+                <ul>
+                    <li>Most reliable, zero drops</li>
+                    <li>Audio passthrough works (3.5mm jack)</li>
+                    <li>Full haptic feedback (DualSense)</li>
+                    <li>Charges while playing</li>
+                    <li>Simplest setup &mdash; plug and play</li>
+                    <li>DualSense speaker + mic work</li>
+                </ul>
+            </div>
+            <div class="comparison-card">
+                <h4>Bluetooth (Wireless)</h4>
+                <ul>
+                    <li>Wireless freedom</li>
+                    <li>DS4 can be faster than USB in some tests</li>
+                    <li>No audio passthrough (3.5mm disabled)</li>
+                    <li>DualSense: basic rumble only, no HD haptics</li>
+                    <li>Built-in PC Bluetooth often unreliable</li>
+                    <li>Pairing can be finicky</li>
+                </ul>
+            </div>
+        </div>
+        <p>
+            If using Bluetooth, invest in a quality external USB Bluetooth adapter (5.0 or newer). Built-in laptop and motherboard Bluetooth is often terrible &mdash; weak signal, Wi-Fi interference, inconsistent latency. TP-Link and ASUS make solid dedicated adapters for around $15.
+        </p>
+        <h3>Hardware Adapters</h3>
+        <p>
+            The 8BitDo USB Wireless Adapter pairs with PlayStation controllers and presents them as XInput devices at the hardware level. No software needed. Claimed latency around 2.95ms. It's a clean solution if you want to skip software emulation entirely. Sony's DUALSHOCK 4 USB Wireless Adaptor is discontinued but still findable secondhand and provides a reliable wireless connection for the DS4.
+        </p>
+    </section>
+
+    <!-- Section 7: Controller-Specific Notes -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">07</span>
+            <h2>Controller-by-Controller Breakdown</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag blue">Per Controller</span>
+        </div>
+
+        <h3>DualShock 3 (PS3) &mdash; Hard Mode</h3>
+        <p>
+            The hardest PlayStation controller to get working on PC. It uses a non-standard Bluetooth protocol that Windows cannot pair with natively. You need DsHidMini (plus BthPS3 for wireless). Must be connected via USB first to register. The analog pressure-sensitive face buttons are supported by DsHidMini but ignored by most PC games. Remove SCPToolkit completely before installing DsHidMini if you have it.
+        </p>
+
+        <h3>DualShock 4 (PS4) &mdash; Best Supported</h3>
+        <p>
+            The most mature ecosystem. DS4Windows has supported it since 2014. Standard Bluetooth pairing works perfectly. Gyro, touchpad, lightbar, and rumble are all fully supported through DS4Windows or Steam. Two hardware revisions exist (CUH-ZCT1 and CUH-ZCT2) but both work identically with all software. This is the easiest PlayStation controller to use on PC.
+        </p>
+
+        <h3>DualSense (PS5) &mdash; Best Features</h3>
+        <p>
+            Full adaptive trigger support via DualSenseX and Steam Input. HD haptics work over USB only &mdash; Bluetooth downgrades to basic rumble. The PlayStation Accessories app on Windows handles firmware updates and DualSense Edge customization (dead zones, trigger ranges, profiles). USB-C connection. Well-supported and getting better with every Steam update.
+        </p>
+
+        <div class="specs">
+            <div class="spec">
+                <div class="spec-label">DS3 Difficulty</div>
+                <div class="spec-value">Hard</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">DS3 Tool</div>
+                <div class="spec-value">DsHidMini</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">DS4 Difficulty</div>
+                <div class="spec-value">Easy</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">DS4 Tool</div>
+                <div class="spec-value">DS4Windows</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">DualSense Difficulty</div>
+                <div class="spec-value">Easy</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">DualSense Tool</div>
+                <div class="spec-value">DSX / Steam</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 8: Best Practices -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">08</span>
+            <h2>Best Practices</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag gold">Do This</span>
+        </div>
+
+        <h3>Avoid Double Input</h3>
+        <p>
+            The most common issue. Your game detects both the real PlayStation controller and the virtual Xbox controller. Solutions in order of reliability:
+        </p>
+        <ol>
+            <li><strong>Install HidHide</strong> &mdash; the permanent, system-wide fix. Whitelist DS4Windows/DSX, hide the real controller from everything else.</li>
+            <li><strong>Steam's "Hide Device" option</strong> &mdash; in Settings &gt; Controller, hide specific controllers from non-Steam apps.</li>
+            <li><strong>DS4Windows "Hide DS4 Controller" toggle</strong> &mdash; built-in but less reliable than HidHide.</li>
+            <li><strong>Disable Steam Input per-game</strong> if using DS4Windows &mdash; they will conflict if both are active.</li>
+        </ol>
+
+        <h3>Don't Stack Emulation Tools</h3>
+        <p>
+            Pick one: DS4Windows or Steam Input or DualSenseX. Running multiple emulation tools simultaneously creates phantom controllers, doubled inputs, and configuration conflicts. If a game natively supports your PlayStation controller, disable emulation for that game entirely to get proper PlayStation prompts and features.
+        </p>
+
+        <h3>Audio Passthrough</h3>
+        <p>
+            Both the DS4 and DualSense have a 3.5mm headphone jack that works as a Windows audio device &mdash; but only over USB. Over Bluetooth, the jack is completely non-functional. The DualSense's built-in speaker and microphone also only work over USB. DualSenseX has a beta Bluetooth audio feature, but it's experimental.
+        </p>
+
+        <h3>Touchpad and Gyro</h3>
+        <p>
+            Don't ignore these. DS4Windows and Steam Input both let you map the touchpad to mouse movement, clicks, or custom actions. Gyro aiming through Steam Input or JoyShockMapper is genuinely competitive &mdash; it's a middle ground between stick and mouse that many players swear by once they try it. Gyro works over both USB and Bluetooth.
+        </p>
+
+        <h3>Battery Management</h3>
+        <ul>
+            <li><strong>DualSense:</strong> ~12 hours battery. USB-C charging.</li>
+            <li><strong>DualShock 4:</strong> ~4&ndash;8 hours. Micro-USB. Notoriously short battery life.</li>
+            <li><strong>DualShock 3:</strong> ~15&ndash;20 hours. Mini-USB. Batteries degrade with age.</li>
+        </ul>
+        <p>
+            DS4Windows shows battery level in the UI and can display low-battery notifications. Avoid leaving controllers plugged in 24/7 when fully charged.
+        </p>
+
+        <h3>Keep Firmware Updated</h3>
+        <p>
+            Use the PlayStation Accessories app on Windows to update DualSense and DualSense Edge firmware. Recent updates have added multi-device Bluetooth pairing and stability improvements. For DS4Windows and DualSenseX, check for app updates regularly &mdash; DS4Windows updates through GitHub, DSX updates through Steam automatically.
+        </p>
+    </section>
+
+    <!-- Section 9: Native Support -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">09</span>
+            <h2>Games That Just Work</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag green">No Extra Software</span>
+        </div>
+        <p>
+            A growing number of PC games recognize PlayStation controllers natively &mdash; correct button prompts, adaptive triggers, haptics, no emulation needed. If your game is on this list, you might not need any of the tools above.
+        </p>
+
+        <h3>Sony First-Party PC Ports</h3>
+        <ul>
+            <li>God of War / God of War Ragnarok</li>
+            <li>Horizon Zero Dawn / Horizon Forbidden West</li>
+            <li>Marvel's Spider-Man Remastered / Miles Morales</li>
+            <li>The Last of Us Part I</li>
+            <li>Uncharted: Legacy of Thieves Collection</li>
+            <li>Ghost of Tsushima</li>
+            <li>Returnal</li>
+            <li>Ratchet &amp; Clank: Rift Apart</li>
+            <li>Helldivers 2</li>
+            <li>Death Stranding / Director's Cut</li>
+        </ul>
+
+        <h3>Third-Party with DualSense Features</h3>
+        <ul>
+            <li>Alan Wake 2</li>
+            <li>Resident Evil Village / RE4 Remake</li>
+            <li>Final Fantasy VII Remake / Rebirth</li>
+            <li>Call of Duty: Modern Warfare II/III / Black Ops 6</li>
+            <li>Hogwarts Legacy</li>
+            <li>Assassin's Creed Mirage / Valhalla</li>
+            <li>Dying Light 2</li>
+            <li>No Man's Sky</li>
+            <li>Metro Exodus Enhanced Edition</li>
+            <li>F1 23/24</li>
+        </ul>
+
+        <h3>PlayStation Button Prompts Only</h3>
+        <ul>
+            <li>Elden Ring</li>
+            <li>Final Fantasy XIV</li>
+            <li>Tekken 8</li>
+            <li>Street Fighter 6</li>
+        </ul>
+
+        <p>
+            For the most comprehensive and up-to-date list, PCGamingWiki maintains a DualSense compatibility database with columns for button prompts, haptic feedback, adaptive triggers, and lightbar support.
+        </p>
+    </section>
+
+    <!-- Section 10: Quick Reference -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">10</span>
+            <h2>Quick Reference</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag">TL;DR</span>
+        </div>
+        <p>
+            If you play through Steam: enable PlayStation Configuration Support in Steam settings. Done. That handles everything for Steam games.
+        </p>
+        <p>
+            If you play non-Steam games with a DS4: install DS4Windows + HidHide. Takes five minutes. Covers everything.
+        </p>
+        <p>
+            If you play non-Steam games with a DualSense and want adaptive triggers: get DualSenseX on Steam. Worth the $10.
+        </p>
+        <p>
+            If you have a DualShock 3: install DsHidMini and BthPS3. It's more work, but it's the only reliable modern option.
+        </p>
+        <p>
+            If you don't want to install anything: get an 8BitDo USB Wireless Adapter. Hardware-level XInput emulation, no software required.
+        </p>
+        <div class="callout">
+            <p>"The PlayStation controller on Windows ecosystem is way better than it was five years ago. Between Steam Input and DS4Windows, there's really no excuse for it not working anymore. The days of janky workarounds are over."</p>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>PlayStation Controllers on Windows &middot; Research &middot; 2026</p>
+</footer>
+
+<!-- Sticky listen bar -->
+<div class="listen-bar" id="listenBar">
+  <button class="bar-btn" id="barPlayPause" aria-label="Play/Pause">&#9654;</button>
+  <div class="bar-info">
+    <div class="bar-title" id="barTitle">Listening</div>
+    <div class="bar-section" id="barSection"></div>
+  </div>
+  <select class="bar-voice" id="barVoice" aria-label="Voice"></select>
+  <button class="bar-speed" id="barSpeed" aria-label="Speed">1x</button>
+  <button class="bar-stop" id="barStop" aria-label="Stop">&#9632;</button>
+</div>
+
+<script>
+(function() {
+  var btn = document.getElementById('listenBtn');
+  var voiceSelect = document.getElementById('voiceSelect');
+  var speedBtn = document.getElementById('speedBtn');
+  var selectAllBtn = document.getElementById('selectAllBtn');
+  var bar = document.getElementById('listenBar');
+  var barPlayPause = document.getElementById('barPlayPause');
+  var barTitle = document.getElementById('barTitle');
+  var barSection = document.getElementById('barSection');
+  var barVoice = document.getElementById('barVoice');
+  var barSpeed = document.getElementById('barSpeed');
+  var barStop = document.getElementById('barStop');
+
+  if (selectAllBtn) {
+    selectAllBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      var container = document.querySelector('.container') || document.querySelector('main') || document.body;
+      var range = document.createRange();
+      range.selectNodeContents(container);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    });
+  }
+
+  if (!btn || !('speechSynthesis' in window)) {
+    if (btn) btn.parentElement.style.display = 'none';
+    return;
+  }
+
+  var synth = window.speechSynthesis;
+  var sections = Array.from(document.querySelectorAll('main section'));
+  var currentIndex = -1;
+  var state = 'stopped';
+  var voice = null;
+  var speeds = [0.8, 1, 1.2, 1.5];
+  var speedLabels = ['0.8x', '1x', '1.2x', '1.5x'];
+  var speedIdx = 1;
+
+  var goodVoices = [
+    'samantha', 'karen', 'daniel', 'moira', 'tessa',
+    'ava', 'allison', 'tom', 'aaron', 'nicky', 'evan',
+    'zoe', 'joelle', 'fiona', 'martha', 'arthur',
+    'google us english', 'google uk english'
+  ];
+
+  function isGoodVoice(v) {
+    var name = v.name.toLowerCase();
+    for (var i = 0; i < goodVoices.length; i++) {
+      if (name.indexOf(goodVoices[i]) !== -1) return true;
+    }
+    return false;
+  }
+
+  function voiceScore(v) {
+    var name = v.name.toLowerCase();
+    if (/premium/.test(name)) return 100;
+    if (/enhanced/.test(name)) return 80;
+    if (/samantha|karen|daniel/.test(name)) return 60;
+    if (/ava|allison|tom|aaron|zoe|fiona/.test(name)) return 50;
+    if (/google/.test(name)) return 40;
+    return 20;
+  }
+
+  function getCuratedVoices() {
+    var all = synth.getVoices().filter(function(v) {
+      return v.lang && v.lang.startsWith('en') && isGoodVoice(v);
+    });
+    all.sort(function(a, b) { return voiceScore(b) - voiceScore(a); });
+    if (!all.length) {
+      all = synth.getVoices().filter(function(v) {
+        return v.lang && v.lang.startsWith('en');
+      }).slice(0, 4);
+    }
+    return all;
+  }
+
+  function populateSelect(selectEl, voices) {
+    selectEl.innerHTML = '';
+    voices.forEach(function(v, i) {
+      var opt = document.createElement('option');
+      opt.textContent = v.name.replace(/Google |Microsoft |Apple /i, '');
+      opt.value = i;
+      selectEl.appendChild(opt);
+    });
+  }
+
+  function populateVoiceList() {
+    var voices = getCuratedVoices();
+    if (!voices.length) return;
+    populateSelect(voiceSelect, voices);
+    populateSelect(barVoice, voices);
+    voice = voices[0];
+  }
+
+  populateVoiceList();
+  synth.addEventListener('voiceschanged', populateVoiceList);
+  synth.cancel();
+
+  function syncVoice(fromSelect) {
+    var voices = getCuratedVoices();
+    var idx = parseInt(fromSelect.value);
+    voice = voices[idx] || voices[0];
+    if (fromSelect === voiceSelect) barVoice.value = fromSelect.value;
+    else voiceSelect.value = fromSelect.value;
+    if (state === 'playing') { synth.cancel(); speakSection(currentIndex); }
+  }
+
+  voiceSelect.addEventListener('change', function() { syncVoice(voiceSelect); });
+  barVoice.addEventListener('change', function() { syncVoice(barVoice); });
+
+  function cycleSpeed() {
+    speedIdx = (speedIdx + 1) % speeds.length;
+    speedBtn.textContent = speedLabels[speedIdx];
+    barSpeed.textContent = speedLabels[speedIdx];
+    if (state === 'playing') { synth.cancel(); speakSection(currentIndex); }
+  }
+
+  speedBtn.addEventListener('click', cycleSpeed);
+  barSpeed.addEventListener('click', cycleSpeed);
+
+  function showBar() {
+    bar.classList.add('visible');
+    document.body.classList.add('listening');
+  }
+
+  function hideBar() {
+    bar.classList.remove('visible');
+    document.body.classList.remove('listening');
+  }
+
+  function updateBar(isPlaying) {
+    barPlayPause.innerHTML = isPlaying ? '&#9208;' : '&#9654;';
+    barPlayPause.classList.toggle('paused', !isPlaying);
+    barTitle.textContent = isPlaying ? 'Now Playing' : 'Paused';
+    if (currentIndex >= 0 && currentIndex < sections.length) {
+      var h = sections[currentIndex].querySelector('h2');
+      barSection.textContent = h ? h.textContent : ('Section ' + (currentIndex + 1));
+    }
+  }
+
+  function clearHighlight() {
+    sections.forEach(function(s) { s.classList.remove('reading'); });
+  }
+
+  function highlight(idx) {
+    clearHighlight();
+    if (idx >= 0 && idx < sections.length) {
+      sections[idx].classList.add('reading');
+      sections[idx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function updateBtn(label, icon) {
+    btn.innerHTML = icon + ' ' + label;
+  }
+
+  function getChunks(section) {
+    var chunks = [];
+    var els = section.querySelectorAll('h2, h3, h4, p, li, .callout p, .stat .label');
+    if (!els.length) {
+      var t = section.textContent.trim();
+      if (t) chunks.push({ text: t, isHeading: false });
+      return chunks;
+    }
+    var seen = new Set();
+    els.forEach(function(el) {
+      var t = el.textContent.trim();
+      if (!t || seen.has(t)) return;
+      seen.add(t);
+      var tag = el.tagName.toLowerCase();
+      chunks.push({ text: t, isHeading: /^h[2-4]$/.test(tag) });
+    });
+    return chunks;
+  }
+
+  var currentChunks = [];
+  var currentChunkIdx = 0;
+
+  function speakSection(idx) {
+    if (idx >= sections.length) { stop(); return; }
+    currentIndex = idx;
+    highlight(idx);
+    updateBar(true);
+    currentChunks = getChunks(sections[idx]);
+    currentChunkIdx = 0;
+    speakNextChunk();
+  }
+
+  function speakNextChunk() {
+    if (currentChunkIdx >= currentChunks.length) {
+      if (state === 'playing') {
+        setTimeout(function() {
+          if (state === 'playing') speakSection(currentIndex + 1);
+        }, 600);
+      }
+      return;
+    }
+
+    var chunk = currentChunks[currentChunkIdx];
+    var utter = new SpeechSynthesisUtterance(chunk.text);
+    utter.rate = speeds[speedIdx] * (chunk.isHeading ? 0.9 : 1.0);
+    utter.pitch = chunk.isHeading ? 1.05 : 1.0;
+    if (voice) utter.voice = voice;
+
+    utter.onend = function() {
+      if (state !== 'playing') return;
+      currentChunkIdx++;
+      var delay = chunk.isHeading ? 400 : 200;
+      setTimeout(function() {
+        if (state === 'playing') speakNextChunk();
+      }, delay);
+    };
+
+    utter.onerror = function(e) {
+      if (e.error !== 'canceled') {
+        currentChunkIdx++;
+        if (state === 'playing') speakNextChunk();
+      }
+    };
+
+    synth.cancel();
+    synth.speak(utter);
+  }
+
+  function play() {
+    state = 'playing';
+    updateBtn('Pause', '&#9208;');
+    btn.classList.remove('paused');
+    showBar();
+    updateBar(true);
+    speakSection(currentIndex < 0 ? 0 : currentIndex);
+  }
+
+  function pause() {
+    state = 'paused';
+    synth.pause();
+    updateBtn('Resume', '&#9654;');
+    btn.classList.add('paused');
+    updateBar(false);
+  }
+
+  function resume() {
+    state = 'playing';
+    synth.resume();
+    updateBtn('Pause', '&#9208;');
+    btn.classList.remove('paused');
+    updateBar(true);
+  }
+
+  function stop() {
+    state = 'stopped';
+    synth.cancel();
+    currentIndex = -1;
+    currentChunks = [];
+    currentChunkIdx = 0;
+    clearHighlight();
+    updateBtn('Listen', '&#9654;');
+    btn.classList.remove('paused');
+    hideBar();
+  }
+
+  btn.addEventListener('click', function() {
+    if (state === 'stopped') play();
+    else if (state === 'playing') pause();
+    else if (state === 'paused') resume();
+  });
+
+  barPlayPause.addEventListener('click', function() {
+    if (state === 'playing') pause();
+    else if (state === 'paused') resume();
+    else play();
+  });
+
+  barStop.addEventListener('click', stop);
+
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden && state === 'playing') pause();
+  });
+
+  var keepAlive;
+  var origPlay = play;
+  play = function() {
+    origPlay();
+    keepAlive = setInterval(function() {
+      if (synth.speaking && !synth.paused) synth.resume();
+    }, 10000);
+  };
+  var origStop = stop;
+  stop = function() {
+    clearInterval(keepAlive);
+    origStop();
+  };
+
+window.selectSection = function(btn) {
+    var section = btn.closest('section') || btn.parentElement.parentElement;
+    var range = document.createRange();
+    range.selectNodeContents(section);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    document.querySelectorAll('.select-section-btn').forEach(function(b) { b.classList.remove('selected'); b.textContent = 'Select Section'; });
+    btn.classList.add('selected');
+    btn.textContent = 'Selected!';
+    setTimeout(function() { btn.textContent = 'Select Section'; btn.classList.remove('selected'); }, 2000);
+};
+})();
+</script>
+
+</body>
+</html>
