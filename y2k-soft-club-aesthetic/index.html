@@ -7,7 +7,7 @@
 <link rel="icon" href="../favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after {
             margin: 0;
@@ -16,37 +16,105 @@
         }
 
         :root {
-            --accent: #C42020;
-            --bg: #FAFAFA;
-            --text: #1D1D1F;
-            --secondary: #6E6E73;
-            --border: #E5E5E7;
-            --card-bg: #F2F2F7;
+            --accent: #C4888A;
+            --bg: #1A1A1A;
+            --text: #D4CFC7;
+            --secondary: #8E9196;
+            --border: #333333;
+            --card-bg: #242424;
+            --highlight: #C49B3E;
+            --cool: #5B7B9A;
         }
 
         body {
-            font-family: 'Inter', -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+            font-family: 'DM Sans', -apple-system, system-ui, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.7;
+            font-size: 15px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
+        /* ── Film grain overlay ── */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* ── Vignette ── */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 9997;
+            background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.4) 100%);
+        }
+
+        /* ── Hero ── */
         .hero {
-            background: var(--text);
-            color: var(--bg);
-            padding: 80px 24px 72px;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            padding: 80px 24px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 0;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(0.4) brightness(0.3) contrast(1.1);
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(180deg, rgba(26,26,26,0.3) 0%, rgba(26,26,26,0.6) 60%, rgba(26,26,26,1) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 720px;
+        }
+
+        .hero-eyebrow {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            margin-bottom: 20px;
         }
 
         .hero h1 {
-            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.2rem, 5.5vw, 3.6rem);
             font-weight: 700;
-            letter-spacing: -0.03em;
-            line-height: 1.15;
-            max-width: 720px;
-            margin: 0 auto 16px;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            color: var(--text);
+            margin-bottom: 20px;
+            text-shadow: 0 2px 40px rgba(0,0,0,0.5);
         }
 
         .hero h1 span {
@@ -54,13 +122,16 @@
         }
 
         .hero .scope {
-            font-size: 1.1rem;
-            color: #A1A1A6;
+            font-size: 0.95rem;
+            color: var(--secondary);
             max-width: 560px;
             margin: 0 auto;
             font-weight: 400;
+            line-height: 1.7;
+            text-shadow: 0 1px 10px rgba(0,0,0,0.3);
         }
 
+        /* ── Container ── */
         .container {
             max-width: 720px;
             margin: 0 auto;
@@ -68,17 +139,18 @@
         }
 
         .intro {
-            font-size: 1.15rem;
+            font-size: 1rem;
             color: var(--secondary);
-            margin-bottom: 48px;
+            margin-bottom: 56px;
             line-height: 1.8;
-            border-left: 3px solid var(--accent);
+            border-left: 3px solid var(--highlight);
             padding-left: 20px;
         }
 
+        /* ── Sections ── */
         section {
-            margin-bottom: 48px;
-            padding-bottom: 48px;
+            margin-bottom: 56px;
+            padding-bottom: 56px;
             border-bottom: 1px solid var(--border);
         }
 
@@ -92,12 +164,13 @@
             display: flex;
             align-items: baseline;
             gap: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
         .section-number {
-            font-size: 0.75rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.7rem;
             font-weight: 600;
             color: var(--accent);
             text-transform: uppercase;
@@ -105,27 +178,34 @@
         }
 
         section h2 {
-            font-size: 1.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
             font-weight: 700;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.04em;
+            color: var(--text);
         }
 
         section h3 {
-            font-size: 1.1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
             font-weight: 600;
-            margin: 24px 0 8px;
-            letter-spacing: -0.01em;
+            margin: 28px 0 10px;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+            font-size: 0.7rem;
         }
 
         section p {
             color: var(--secondary);
             margin-bottom: 16px;
-            font-size: 0.975rem;
+            font-size: 0.92rem;
         }
 
         section ul, section ol {
             color: var(--secondary);
-            font-size: 0.975rem;
+            font-size: 0.92rem;
             margin-bottom: 16px;
             padding-left: 20px;
         }
@@ -134,23 +214,106 @@
             margin-bottom: 8px;
         }
 
-        .tag {
-            display: inline-block;
-            background: var(--accent);
-            color: #fff;
-            font-size: 0.7rem;
-            font-weight: 600;
-            padding: 3px 10px;
-            border-radius: 100px;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
+        code {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.85em;
+            background: rgba(196,136,138,0.1);
+            color: var(--accent);
+            padding: 2px 6px;
+            border-radius: 3px;
         }
 
-        .tag.gold { background: #B8860B; }
-        .tag.blue { background: #0071E3; }
-        .tag.green { background: #34C759; }
-        .tag.purple { background: #7B61FF; }
+        /* ── Tags ── */
+        .tag {
+            display: inline-block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            background: transparent;
+        }
 
+        .tag.gold { border-color: var(--highlight); color: var(--highlight); }
+        .tag.blue { border-color: var(--cool); color: var(--cool); }
+        .tag.green { border-color: #5A8A6A; color: #5A8A6A; }
+        .tag.purple { border-color: #8B7BB5; color: #8B7BB5; }
+
+        /* ── Images ── */
+        .img-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            margin: 24px -40px;
+        }
+
+        .img-wrapper img {
+            width: 100%;
+            display: block;
+            filter: saturate(0.7) contrast(1.05);
+        }
+
+        .img-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,0.08) 2px,
+                rgba(0,0,0,0.08) 4px
+            );
+            pointer-events: none;
+        }
+
+        /* ── Color Swatches ── */
+        .color-swatches {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .swatch {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .swatch-color {
+            height: 72px;
+            width: 100%;
+        }
+
+        .swatch-label {
+            background: var(--card-bg);
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .swatch-label .swatch-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .swatch-label .swatch-hex {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.75rem;
+            color: var(--secondary);
+            margin-top: 2px;
+        }
+
+        /* ── Spec Cards ── */
         .specs {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -161,64 +324,74 @@
 
         .spec {
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 8px;
             padding: 16px;
+            border: 1px solid var(--border);
         }
 
         .spec-label {
-            font-size: 0.7rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.6rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #A1A1A6;
-            margin-bottom: 4px;
+            letter-spacing: 0.12em;
+            color: var(--secondary);
+            margin-bottom: 6px;
         }
 
         .spec-value {
-            font-size: 0.95rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.88rem;
             font-weight: 600;
             color: var(--text);
         }
 
+        /* ── Callout ── */
         .callout {
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 4px;
             padding: 20px 24px;
-            margin: 20px 0;
+            margin: 24px 0;
+            border-left: 3px solid var(--highlight);
         }
 
         .callout p {
             color: var(--text);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             margin-bottom: 0;
             font-style: italic;
+            line-height: 1.7;
         }
 
         .callout .attribution {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--secondary);
             margin-top: 8px;
             font-style: normal;
         }
 
+        /* ── Comparison Cards ── */
         .comparison {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
+            gap: 12px;
             margin: 20px 0;
         }
 
         .comparison-card {
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 8px;
             padding: 20px;
+            border: 1px solid var(--border);
         }
 
         .comparison-card h4 {
-            font-size: 0.85rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
             font-weight: 600;
             margin-bottom: 12px;
-            letter-spacing: -0.01em;
+            letter-spacing: -0.02em;
+            color: var(--text);
         }
 
         .comparison-card ul {
@@ -228,14 +401,20 @@
         }
 
         .comparison-card li {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--secondary);
             padding: 4px 0;
+            border-bottom: 1px solid rgba(51,51,51,0.5);
         }
 
+        .comparison-card li:last-child {
+            border-bottom: none;
+        }
+
+        /* ── Stats ── */
         .stat-row {
             display: flex;
-            gap: 16px;
+            gap: 12px;
             margin: 20px 0;
             flex-wrap: wrap;
         }
@@ -246,36 +425,55 @@
             text-align: center;
             padding: 20px 12px;
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
         }
 
         .stat .number {
-            font-size: 1.6rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--accent);
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
         }
 
         .stat .label {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--secondary);
             margin-top: 4px;
         }
 
+        /* ── Halftone divider ── */
+        .halftone-divider {
+            height: 6px;
+            margin: 0 -40px;
+            background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+            background-size: 6px 6px;
+            opacity: 0.5;
+        }
+
+        /* ── Footer ── */
         footer {
             text-align: center;
             padding: 40px 24px;
             border-top: 1px solid var(--border);
-            color: #A1A1A6;
-            font-size: 0.8rem;
+            color: var(--secondary);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
         }
 
-        @media (max-width: 480px) {
-            .hero { padding: 56px 20px 48px; }
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            .hero { min-height: 85vh; padding: 60px 20px; }
             .container { padding: 40px 20px 60px; }
             .specs { grid-template-columns: 1fr 1fr; }
             .comparison { grid-template-columns: 1fr; }
             .stat-row { flex-direction: column; }
+            .color-swatches { grid-template-columns: repeat(2, 1fr); }
+            .img-wrapper { margin: 20px -20px; }
+            section h3 { font-size: 0.65rem; }
         }
 
         /* ── Listen Mode — header controls ── */
@@ -293,48 +491,49 @@
             align-items: center;
             gap: 0.5rem;
             background: var(--accent);
-            color: #fff;
+            color: #1A1A1A;
             border: none;
             border-radius: 2rem;
             padding: 0.6rem 1.5rem;
-            font-family: 'Inter', -apple-system, sans-serif;
-            font-size: 0.9rem;
-            font-weight: 500;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
             cursor: pointer;
             transition: background 0.2s ease, transform 0.1s ease;
             -webkit-tap-highlight-color: transparent;
+            letter-spacing: 0.04em;
         }
 
-        .listen-btn:hover { background: #a01a1a; }
+        .listen-btn:hover { background: #b37577; }
         .listen-btn:active { transform: scale(0.97); }
-        .listen-btn.paused { background: #6E6E73; }
+        .listen-btn.paused { background: var(--secondary); }
 
         .voice-select {
-            font-family: 'Inter', -apple-system, sans-serif;
-            font-size: 0.8rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.75rem;
             padding: 0.45rem 0.75rem;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(212,207,199,0.15);
             border-radius: 2rem;
-            background: rgba(255,255,255,0.1);
-            color: #fff;
+            background: rgba(212,207,199,0.06);
+            color: var(--text);
             cursor: pointer;
             max-width: 180px;
         }
 
         .speed-btn {
-            font-family: 'Inter', -apple-system, sans-serif;
-            font-size: 0.75rem;
-            font-weight: 500;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
             padding: 0.4rem 0.75rem;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(212,207,199,0.15);
             border-radius: 2rem;
-            background: rgba(255,255,255,0.1);
-            color: #fff;
+            background: rgba(212,207,199,0.06);
+            color: var(--text);
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
         }
 
-        .speed-btn:active { background: rgba(255,255,255,0.15); }
+        .speed-btn:active { background: rgba(212,207,199,0.12); }
 
         /* ── Sticky bottom player bar ── */
         .listen-bar {
@@ -342,10 +541,10 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(29, 29, 31, 0.95);
+            background: rgba(26, 26, 26, 0.95);
             -webkit-backdrop-filter: blur(20px);
             backdrop-filter: blur(20px);
-            color: #fff;
+            color: var(--text);
             padding: 12px 20px;
             padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
             display: flex;
@@ -354,7 +553,8 @@
             z-index: 9999;
             transform: translateY(100%);
             transition: transform 0.3s ease;
-            box-shadow: 0 -2px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 -2px 20px rgba(0,0,0,0.3);
+            border-top: 1px solid var(--border);
         }
 
         .listen-bar.visible {
@@ -367,7 +567,7 @@
             border-radius: 50%;
             border: none;
             background: var(--accent);
-            color: #fff;
+            color: #1A1A1A;
             font-size: 1.1rem;
             cursor: pointer;
             flex-shrink: 0;
@@ -377,7 +577,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        .listen-bar .bar-btn.paused { background: #6E6E73; }
+        .listen-bar .bar-btn.paused { background: var(--secondary); }
 
         .listen-bar .bar-info {
             flex: 1;
@@ -385,40 +585,43 @@
         }
 
         .listen-bar .bar-title {
-            font-size: 0.8rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem;
             font-weight: 500;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            color: var(--text);
         }
 
         .listen-bar .bar-section {
-            font-size: 0.7rem;
-            color: #A1A1A6;
+            font-size: 0.65rem;
+            color: var(--secondary);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
         .listen-bar .bar-voice {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             padding: 6px 10px;
             border-radius: 2rem;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(212,207,199,0.15);
             background: transparent;
-            color: #fff;
+            color: var(--text);
             cursor: pointer;
             max-width: 120px;
         }
 
         .listen-bar .bar-speed {
-            font-size: 0.7rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.65rem;
             font-weight: 600;
             padding: 6px 10px;
             border-radius: 2rem;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(212,207,199,0.15);
             background: transparent;
-            color: #fff;
+            color: var(--text);
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
             flex-shrink: 0;
@@ -428,9 +631,9 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(212,207,199,0.15);
             background: transparent;
-            color: #fff;
+            color: var(--text);
             font-size: 0.9rem;
             cursor: pointer;
             flex-shrink: 0;
@@ -443,14 +646,14 @@
         /* ── Pro tip banner ── */
         .listen-tip {
             margin-top: 0.75rem;
-            font-size: 0.78rem;
-            color: #A1A1A6;
+            font-size: 0.72rem;
+            color: var(--secondary);
             font-weight: 300;
             line-height: 1.5;
         }
 
         .listen-tip strong {
-            color: #fff;
+            color: var(--text);
             font-weight: 500;
         }
 
@@ -465,13 +668,13 @@
             cursor: pointer;
             padding: 0;
             text-decoration: underline;
-            text-decoration-color: rgba(196, 32, 32, 0.3);
+            text-decoration-color: rgba(196, 136, 138, 0.3);
             -webkit-tap-highlight-color: transparent;
         }
 
         section.reading {
             border-left: 3px solid var(--accent);
-            background: rgba(196, 32, 32, 0.04);
+            background: rgba(196, 136, 138, 0.04);
             padding-left: 1rem;
             border-radius: 4px;
             transition: all 0.3s ease;
@@ -483,10 +686,10 @@
             gap: 4px;
             background: none;
             border: 1px solid var(--border);
-            border-radius: 100px;
+            border-radius: 2px;
             padding: 4px 12px;
-            font-family: 'Inter', -apple-system, sans-serif;
-            font-size: 0.7rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.6rem;
             font-weight: 500;
             color: var(--secondary);
             cursor: pointer;
@@ -494,17 +697,19 @@
             -webkit-tap-highlight-color: transparent;
             vertical-align: middle;
             margin-left: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
         }
         .select-section-btn:hover {
             border-color: var(--accent);
             color: var(--accent);
-            background: rgba(196, 32, 32, 0.04);
+            background: rgba(196, 136, 138, 0.06);
         }
         .select-section-btn:active { transform: scale(0.96); }
         .select-section-btn.selected {
             border-color: var(--accent);
             color: var(--accent);
-            background: rgba(196, 32, 32, 0.06);
+            background: rgba(196, 136, 138, 0.08);
         }
 
         body.listening { padding-bottom: 80px; }
@@ -520,19 +725,25 @@
 <body>
 
 <header class="hero">
-    <h1>The Y2K <span>Process</span></h1>
-    <p class="scope">Why early 2000s visuals had a quality that modern digital can't touch — and it wasn't the cameras, the film, or the fonts. It was every step of the production chain losing a little data along the way.</p>
-    <div class="listen-controls">
-      <button class="listen-btn" id="listenBtn" aria-label="Listen to article">&#9654; Listen</button>
-      <select class="voice-select" id="voiceSelect" aria-label="Choose voice"></select>
-      <button class="speed-btn" id="speedBtn" aria-label="Playback speed">1x</button>
+    <div class="hero-bg">
+        <img src="https://images.unsplash.com/photo-1661793422829-e1f648ab4a15?w=1400&q=80" alt="CRT monitor glow">
     </div>
-    <p class="listen-tip">
-      Want a better voice? On iPhone, <button class="select-all-btn" id="selectAllBtn">tap here to select the article text</button>, then tap <strong>Speak</strong> in the popup menu. It uses your phone's premium voices (enable in Settings &gt; Accessibility &gt; Spoken Content &gt; Speak Selection).
-    </p>
-    <p class="listen-tip">
-      On Mac, click <strong>Select Section</strong> next to any heading, then right-click and choose <strong>Speech &gt; Start Speaking</strong>. macOS will read just that section using your system voice (set in System Settings &gt; Accessibility &gt; Spoken Content).
-    </p>
+    <div class="hero-content">
+        <div class="hero-eyebrow">Process / Aesthetics / 2002</div>
+        <h1>The Y2K <span>Process</span></h1>
+        <p class="scope">Why early 2000s visuals had a quality that modern digital can't touch — and it wasn't the cameras, the film, or the fonts. It was every step of the production chain losing a little data along the way.</p>
+        <div class="listen-controls">
+          <button class="listen-btn" id="listenBtn" aria-label="Listen to article">&#9654; Listen</button>
+          <select class="voice-select" id="voiceSelect" aria-label="Choose voice"></select>
+          <button class="speed-btn" id="speedBtn" aria-label="Playback speed">1x</button>
+        </div>
+        <p class="listen-tip">
+          Want a better voice? On iPhone, <button class="select-all-btn" id="selectAllBtn">tap here to select the article text</button>, then tap <strong>Speak</strong> in the popup menu. It uses your phone's premium voices (enable in Settings &gt; Accessibility &gt; Spoken Content &gt; Speak Selection).
+        </p>
+        <p class="listen-tip">
+          On Mac, click <strong>Select Section</strong> next to any heading, then right-click and choose <strong>Speech &gt; Start Speaking</strong>. macOS will read just that section using your system voice (set in System Settings &gt; Accessibility &gt; Spoken Content).
+        </p>
+    </div>
 </header>
 
 <main class="container">
@@ -548,6 +759,9 @@
             <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <span class="tag">The Aesthetic</span>
         </div>
+        <div class="img-wrapper">
+            <img src="https://images.unsplash.com/photo-1570288162349-2fc04f7d4e39?w=900&q=80" alt="Dark club interior with moody lighting" loading="lazy">
+        </div>
         <p>
             Forget the hot pink and chrome that mainstream culture tells you was "Y2K." The Consumer Aesthetics Research Institute (CARI) identified something far more interesting: a visual language they called Gen X Soft Club. It showed up everywhere from roughly 1997 to 2004. Muted earth tones. Cool blues, greens, and greys. Blurry photography that looked like it was shot through gauze. Urban typography influenced by subway signage and industrial wayfinding. Lomo cameras and cross-processed film giving everything a teal-and-orange color shift. Bleach bypass treatments crushing the blacks and desaturating the life out of images in the most beautiful way possible.
         </p>
@@ -561,33 +775,53 @@
         <p>
             The color world of Gen X Soft Club wasn't random. It was a specific, recurring set of tones that showed up across magazines, album art, club flyers, and fashion campaigns. These weren't chosen by committee — they emerged from the production processes of the era. Film stocks, print limitations, and CRT displays all biased toward this range.
         </p>
-        <div class="specs">
-            <div class="spec">
-                <div class="spec-label">Dusty Rose</div>
-                <div class="spec-value">#C4888A</div>
+        <div class="color-swatches">
+            <div class="swatch">
+                <div class="swatch-color" style="background: #C4888A;"></div>
+                <div class="swatch-label">
+                    <div class="swatch-name">Dusty Rose</div>
+                    <div class="swatch-hex">#C4888A</div>
+                </div>
             </div>
-            <div class="spec">
-                <div class="spec-label">Mustard</div>
-                <div class="spec-value">#C49B3E</div>
+            <div class="swatch">
+                <div class="swatch-color" style="background: #C49B3E;"></div>
+                <div class="swatch-label">
+                    <div class="swatch-name">Mustard</div>
+                    <div class="swatch-hex">#C49B3E</div>
+                </div>
             </div>
-            <div class="spec">
-                <div class="spec-label">Dark Green</div>
-                <div class="spec-value">#3A5A40</div>
+            <div class="swatch">
+                <div class="swatch-color" style="background: #3A5A40;"></div>
+                <div class="swatch-label">
+                    <div class="swatch-name">Dark Green</div>
+                    <div class="swatch-hex">#3A5A40</div>
+                </div>
             </div>
-            <div class="spec">
-                <div class="spec-label">Cool Grey</div>
-                <div class="spec-value">#8E9196</div>
+            <div class="swatch">
+                <div class="swatch-color" style="background: #8E9196;"></div>
+                <div class="swatch-label">
+                    <div class="swatch-name">Cool Grey</div>
+                    <div class="swatch-hex">#8E9196</div>
+                </div>
             </div>
-            <div class="spec">
-                <div class="spec-label">Deep Red</div>
-                <div class="spec-value">#8B2E2E</div>
+            <div class="swatch">
+                <div class="swatch-color" style="background: #8B2E2E;"></div>
+                <div class="swatch-label">
+                    <div class="swatch-name">Deep Red</div>
+                    <div class="swatch-hex">#8B2E2E</div>
+                </div>
             </div>
-            <div class="spec">
-                <div class="spec-label">Muted Blue</div>
-                <div class="spec-value">#5B7B9A</div>
+            <div class="swatch">
+                <div class="swatch-color" style="background: #5B7B9A;"></div>
+                <div class="swatch-label">
+                    <div class="swatch-name">Muted Blue</div>
+                    <div class="swatch-hex">#5B7B9A</div>
+                </div>
             </div>
         </div>
     </section>
+
+    <div class="halftone-divider"></div>
 
     <!-- Section 2: The Pre-Press Pipeline -->
     <section>
@@ -596,6 +830,9 @@
             <h2>The Pre-Press Pipeline</h2>
             <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <span class="tag gold">Print</span>
+        </div>
+        <div class="img-wrapper">
+            <img src="https://images.unsplash.com/photo-1625820104062-387167dd655b?w=900&q=80" alt="Printing press machinery" loading="lazy">
         </div>
         <p>
             Here's the journey a photograph took from camera to magazine page in 2002. Every single step lost data. Every step added character. Understanding this pipeline is the key to understanding why the era looked the way it did.
@@ -650,6 +887,9 @@
             <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <span class="tag blue">Video</span>
         </div>
+        <div class="img-wrapper">
+            <img src="https://images.unsplash.com/photo-1591416221988-609f63445c88?w=900&q=80" alt="Vintage video camera" loading="lazy">
+        </div>
         <p>
             The early digital video era was defined by CCD sensors, and they had a fundamentally different character than the CMOS sensors in everything today. CCD (charge-coupled device) sensors read the entire frame at once — a global shutter — which gave motion a different quality than the rolling shutters of modern CMOS chips. But the bigger difference was color science.
         </p>
@@ -690,6 +930,8 @@
         </p>
     </section>
 
+    <div class="halftone-divider"></div>
+
     <!-- Section 4: Everything Was Graded for CRTs -->
     <section>
         <div class="section-header">
@@ -697,6 +939,9 @@
             <h2>Everything Was Graded for CRTs</h2>
             <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <span class="tag">Display</span>
+        </div>
+        <div class="img-wrapper">
+            <img src="https://images.unsplash.com/photo-1573399054516-90665ecc44be?w=900&q=80" alt="CRT monitor display" loading="lazy">
         </div>
         <p>
             Here's something almost nobody talks about: every piece of video content created before roughly 2007 was graded, color-corrected, and approved on CRT monitors. And CRTs don't show the same image as LED/LCD panels. The physics are completely different.
@@ -727,6 +972,9 @@
             <h2>Typography Had Texture</h2>
             <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <span class="tag purple">Type</span>
+        </div>
+        <div class="img-wrapper">
+            <img src="https://images.unsplash.com/photo-1517404215738-15263e9f9178?w=900&q=80" alt="Typography and letterforms" loading="lazy">
         </div>
         <p>
             The transition from phototypesetting to digital type happened across the 1990s, and by 2000 the industry had moved through PostScript Type 1 fonts, into TrueType, and was starting to adopt OpenType. But the rendering of those fonts on screen was dramatically different from what we see today.
@@ -765,6 +1013,8 @@
         </p>
     </section>
 
+    <div class="halftone-divider"></div>
+
     <!-- Section 6: The Print-and-Rescan Technique -->
     <section>
         <div class="section-header">
@@ -772,6 +1022,9 @@
             <h2>The Print-and-Rescan Technique</h2>
             <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <span class="tag green">Technique</span>
+        </div>
+        <div class="img-wrapper">
+            <img src="https://images.unsplash.com/photo-1706790608604-5aa0ae29d413?w=900&q=80" alt="Halftone print texture" loading="lazy">
         </div>
         <p>
             This is where theory meets practice. The print-and-rescan technique is the single most effective way to introduce authentic analog degradation into digital footage. The concept is simple: take your digital image, make it physical, then digitize it again. The round trip through the physical world introduces every kind of imperfection that digital processing can only approximate.
@@ -872,6 +1125,8 @@
         </p>
     </section>
 
+    <div class="halftone-divider"></div>
+
     <!-- Section 8: Post-Production That Actually Works -->
     <section>
         <div class="section-header">
@@ -879,6 +1134,9 @@
             <h2>Post-Production That Actually Works</h2>
             <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <span class="tag gold">Grading</span>
+        </div>
+        <div class="img-wrapper">
+            <img src="https://images.unsplash.com/photo-1640100921962-1086f92e7a59?w=900&q=80" alt="Film and analog equipment" loading="lazy">
         </div>
         <p>
             Physical techniques are the gold standard, but not every project has the time or budget for 2,000 hand prints. Here's what actually works in DaVinci Resolve and Premiere Pro to push your footage toward the Y2K zone — not as a replacement for process-based work, but as a complement.
@@ -943,6 +1201,9 @@
             <h2>Why Modern Attempts Fail</h2>
             <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
             <span class="tag">The Problem</span>
+        </div>
+        <div class="img-wrapper">
+            <img src="https://images.unsplash.com/photo-1570402211808-cfef7aa6e806?w=900&q=80" alt="Texture and noise" loading="lazy">
         </div>
         <p>
             Most attempts to recreate Y2K-era visuals fail. They fail because they treat the aesthetic as a filter to be applied rather than a process to be followed. Here are the four specific reasons:
