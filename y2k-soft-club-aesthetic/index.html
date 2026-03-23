@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Y2K Process — Why Early 2000s Visuals Had Soul</title>
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --accent: #C42020;
+            --bg: #FAFAFA;
+            --text: #1D1D1F;
+            --secondary: #6E6E73;
+            --border: #E5E5E7;
+            --card-bg: #F2F2F7;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .hero {
+            background: var(--text);
+            color: var(--bg);
+            padding: 80px 24px 72px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            max-width: 720px;
+            margin: 0 auto 16px;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero .scope {
+            font-size: 1.1rem;
+            color: #A1A1A6;
+            max-width: 560px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 56px 24px 80px;
+        }
+
+        .intro {
+            font-size: 1.15rem;
+            color: var(--secondary);
+            margin-bottom: 48px;
+            line-height: 1.8;
+            border-left: 3px solid var(--accent);
+            padding-left: 20px;
+        }
+
+        section {
+            margin-bottom: 48px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .section-number {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 24px 0 8px;
+            letter-spacing: -0.01em;
+        }
+
+        section p {
+            color: var(--secondary);
+            margin-bottom: 16px;
+            font-size: 0.975rem;
+        }
+
+        section ul, section ol {
+            color: var(--secondary);
+            font-size: 0.975rem;
+            margin-bottom: 16px;
+            padding-left: 20px;
+        }
+
+        section li {
+            margin-bottom: 8px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .tag.gold { background: #B8860B; }
+        .tag.blue { background: #0071E3; }
+        .tag.green { background: #34C759; }
+        .tag.purple { background: #7B61FF; }
+
+        .specs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+            margin-bottom: 16px;
+        }
+
+        .spec {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .spec-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #A1A1A6;
+            margin-bottom: 4px;
+        }
+
+        .spec-value {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .callout {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 20px 0;
+        }
+
+        .callout p {
+            color: var(--text);
+            font-size: 0.95rem;
+            margin-bottom: 0;
+            font-style: italic;
+        }
+
+        .callout .attribution {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            margin-top: 8px;
+            font-style: normal;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .comparison-card h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .comparison-card li {
+            font-size: 0.85rem;
+            color: var(--secondary);
+            padding: 4px 0;
+        }
+
+        .stat-row {
+            display: flex;
+            gap: 16px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            padding: 20px 12px;
+            background: var(--card-bg);
+            border-radius: 12px;
+        }
+
+        .stat .number {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: -0.02em;
+        }
+
+        .stat .label {
+            font-size: 0.75rem;
+            color: var(--secondary);
+            margin-top: 4px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            border-top: 1px solid var(--border);
+            color: #A1A1A6;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 480px) {
+            .hero { padding: 56px 20px 48px; }
+            .container { padding: 40px 20px 60px; }
+            .specs { grid-template-columns: 1fr 1fr; }
+            .comparison { grid-template-columns: 1fr; }
+            .stat-row { flex-direction: column; }
+        }
+
+        /* ── Listen Mode — header controls ── */
+        .listen-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .listen-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.6rem 1.5rem;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.1s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .listen-btn:hover { background: #a01a1a; }
+        .listen-btn:active { transform: scale(0.97); }
+        .listen-btn.paused { background: #6E6E73; }
+
+        .voice-select {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.8rem;
+            padding: 0.45rem 0.75rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 2rem;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            cursor: pointer;
+            max-width: 180px;
+        }
+
+        .speed-btn {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.4rem 0.75rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 2rem;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .speed-btn:active { background: rgba(255,255,255,0.15); }
+
+        /* ── Sticky bottom player bar ── */
+        .listen-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(29, 29, 31, 0.95);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            color: #fff;
+            padding: 12px 20px;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 9999;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            box-shadow: 0 -2px 20px rgba(0,0,0,0.15);
+        }
+
+        .listen-bar.visible {
+            transform: translateY(0);
+        }
+
+        .listen-bar .bar-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: var(--accent);
+            color: #fff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .listen-bar .bar-btn.paused { background: #6E6E73; }
+
+        .listen-bar .bar-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .listen-bar .bar-title {
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .listen-bar .bar-section {
+            font-size: 0.7rem;
+            color: #A1A1A6;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .listen-bar .bar-voice {
+            font-size: 0.75rem;
+            padding: 6px 10px;
+            border-radius: 2rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            max-width: 120px;
+        }
+
+        .listen-bar .bar-speed {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 6px 10px;
+            border-radius: 2rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            flex-shrink: 0;
+        }
+
+        .listen-bar .bar-stop {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: transparent;
+            color: #fff;
+            font-size: 0.9rem;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* ── Pro tip banner ── */
+        .listen-tip {
+            margin-top: 0.75rem;
+            font-size: 0.78rem;
+            color: #A1A1A6;
+            font-weight: 300;
+            line-height: 1.5;
+        }
+
+        .listen-tip strong {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .select-all-btn {
+            display: inline;
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-family: inherit;
+            font-size: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0;
+            text-decoration: underline;
+            text-decoration-color: rgba(196, 32, 32, 0.3);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        section.reading {
+            border-left: 3px solid var(--accent);
+            background: rgba(196, 32, 32, 0.04);
+            padding-left: 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .select-section-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 4px 12px;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+        .select-section-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(196, 32, 32, 0.04);
+        }
+        .select-section-btn:active { transform: scale(0.96); }
+        .select-section-btn.selected {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(196, 32, 32, 0.06);
+        }
+
+        body.listening { padding-bottom: 80px; }
+
+        @media (max-width: 480px) {
+            .listen-controls { flex-direction: column; align-items: stretch; }
+            .listen-btn { width: 100%; justify-content: center; }
+            .voice-select { max-width: 100%; }
+            .listen-bar .bar-voice { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="hero">
+    <h1>The Y2K <span>Process</span></h1>
+    <p class="scope">Why early 2000s visuals had a quality that modern digital can't touch — and it wasn't the cameras, the film, or the fonts. It was every step of the production chain losing a little data along the way.</p>
+    <div class="listen-controls">
+      <button class="listen-btn" id="listenBtn" aria-label="Listen to article">&#9654; Listen</button>
+      <select class="voice-select" id="voiceSelect" aria-label="Choose voice"></select>
+      <button class="speed-btn" id="speedBtn" aria-label="Playback speed">1x</button>
+    </div>
+    <p class="listen-tip">
+      Want a better voice? On iPhone, <button class="select-all-btn" id="selectAllBtn">tap here to select the article text</button>, then tap <strong>Speak</strong> in the popup menu. It uses your phone's premium voices (enable in Settings &gt; Accessibility &gt; Spoken Content &gt; Speak Selection).
+    </p>
+    <p class="listen-tip">
+      On Mac, click <strong>Select Section</strong> next to any heading, then right-click and choose <strong>Speech &gt; Start Speaking</strong>. macOS will read just that section using your system voice (set in System Settings &gt; Accessibility &gt; Spoken Content).
+    </p>
+</header>
+
+<main class="container">
+    <p class="intro">
+        You've seen it. That warmth in a 2002 magazine spread. The way text sat on a page in an old Dazed &amp; Confused issue. The feel of a MiniDV music video that no amount of LUTs can recreate. It's not nostalgia — it's a technical reality. The organic quality of Y2K-era visuals came from the production process itself, not from effects applied at the end. Every step of the chain introduced specific degradations that gave the final image its character. Here's what actually happened, why it mattered, and how to bring it back.
+    </p>
+
+    <!-- Section 1: The Gen X Soft Club -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">01</span>
+            <h2>The Gen X Soft Club</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag">The Aesthetic</span>
+        </div>
+        <p>
+            Forget the hot pink and chrome that mainstream culture tells you was "Y2K." The Consumer Aesthetics Research Institute (CARI) identified something far more interesting: a visual language they called Gen X Soft Club. It showed up everywhere from roughly 1997 to 2004. Muted earth tones. Cool blues, greens, and greys. Blurry photography that looked like it was shot through gauze. Urban typography influenced by subway signage and industrial wayfinding. Lomo cameras and cross-processed film giving everything a teal-and-orange color shift. Bleach bypass treatments crushing the blacks and desaturating the life out of images in the most beautiful way possible.
+        </p>
+        <p>
+            This was the visual world of The Face, i-D, Dazed &amp; Confused, Wallpaper*, and Nylon. It was the look of late-night Channel 4 graphics and early Vice Magazine. Mark Hunter — The Cobrasnake — would define an entire generation's party photography with direct flash, red eyes, and blown-out skin tones against dark club backgrounds. It wasn't polished. It wasn't supposed to be.
+        </p>
+        <p>
+            The album art tells the same story. Daft Punk's Discovery had that soft anime warmth. Basement Jaxx's Rooty and Remedy were hypercolor but grainy, like a Xerox of a painting. N.E.R.D.'s In Search Of had that bleached-out, desaturated cool. Kanye's College Dropout — the Dropout Bear rendered in a style that felt deliberately lo-fi for 2004. None of this looked "clean" in the way we understand clean now. It had texture.
+        </p>
+        <h3>The Palette</h3>
+        <p>
+            The color world of Gen X Soft Club wasn't random. It was a specific, recurring set of tones that showed up across magazines, album art, club flyers, and fashion campaigns. These weren't chosen by committee — they emerged from the production processes of the era. Film stocks, print limitations, and CRT displays all biased toward this range.
+        </p>
+        <div class="specs">
+            <div class="spec">
+                <div class="spec-label">Dusty Rose</div>
+                <div class="spec-value">#C4888A</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Mustard</div>
+                <div class="spec-value">#C49B3E</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Dark Green</div>
+                <div class="spec-value">#3A5A40</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Cool Grey</div>
+                <div class="spec-value">#8E9196</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Deep Red</div>
+                <div class="spec-value">#8B2E2E</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Muted Blue</div>
+                <div class="spec-value">#5B7B9A</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: The Pre-Press Pipeline -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">02</span>
+            <h2>The Pre-Press Pipeline</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag gold">Print</span>
+        </div>
+        <p>
+            Here's the journey a photograph took from camera to magazine page in 2002. Every single step lost data. Every step added character. Understanding this pipeline is the key to understanding why the era looked the way it did.
+        </p>
+        <h3>Film to Scanner</h3>
+        <p>
+            A photographer shot on film — Fuji Superia, Kodak Portra, maybe Ilford HP5 for black and white. The developed negatives or transparencies went to a prepress house, where a skilled operator loaded them into a drum scanner. The HELL ChromaGraph 3800 or the Heidelberg TANGO were the industry standards. The film was mounted on an acrylic drum with oil to eliminate Newton rings, and a photomultiplier tube read the image point by point. These scanners were extraordinary machines — $100,000+ — but they still introduced their own noise signature and tonal interpretation.
+        </p>
+        <h3>CMYK Conversion</h3>
+        <p>
+            The scanned RGB image then had to be converted to CMYK for printing. This is an inherently lossy operation. The CMYK gamut is smaller than RGB — you physically cannot reproduce certain blues, greens, and saturated reds with cyan, magenta, yellow, and black ink on paper. Colors that fall outside the printable gamut get compressed or clipped. Every image that went through this conversion lost some vibrancy, some range. The highlights softened. The shadows filled in.
+        </p>
+        <h3>Retouching and Layout</h3>
+        <p>
+            Retouching happened in Photoshop 5, 6, or 7 — always in 8-bit color because the machines couldn't handle 16-bit files at production speeds. The retoucher was working on a 1024x768 CRT monitor, often uncalibrated or calibrated with a basic hardware puck. They couldn't see the full gamut of their own file. Layout happened in QuarkXPress (or, by 2002-2003, InDesign was gaining ground). Type was set. Images were placed at their final resolution.
+        </p>
+        <h3>Film Output and Plate-Making</h3>
+        <p>
+            The finished layout was output to an imagesetter — a device that exposed high-resolution film at 2400-3600 DPI using a laser. This film was then used to burn offset printing plates. The halftone screen — typically 133 to 175 lines per inch for magazine work — converted the continuous-tone image into a pattern of dots. Large dots in dark areas, tiny dots in highlights. This is where the image stopped being a photograph and became a mechanical reproduction.
+        </p>
+        <h3>The Press</h3>
+        <p>
+            On the offset press, ink meets paper and physics takes over. Dot gain — the spreading of halftone dots as ink hits paper — adds roughly 23% to midtone values. A 50% dot on film becomes a 73% dot on paper. Shadows fill in, highlights get heavier, and the overall effect is a compression of dynamic range that gives printed images their characteristic warmth and softness.
+        </p>
+        <div class="stat-row">
+            <div class="stat">
+                <div class="number">~23%</div>
+                <div class="label">Midtone dot gain on press</div>
+            </div>
+            <div class="stat">
+                <div class="number">133–175</div>
+                <div class="label">Lines per inch halftone screen</div>
+            </div>
+            <div class="stat">
+                <div class="number">40</div>
+                <div class="label">Drum scans per shift (skilled operator)</div>
+            </div>
+        </div>
+        <div class="callout">
+            <p>"There was no generic RGB and no generic CMYK. Color values only represented a particular color when associated with a specific ICC profile, and in many early workflows, no ICC profiles were used at all."</p>
+        </div>
+        <p>
+            The cumulative effect of all these steps: softer edges, compressed dynamic range, slightly shifted colors, and a visible halftone structure that gave the image a physicality. You weren't looking at a photo — you were looking at ink on paper that had been through six different lossy transformations. Each one took something away, and what was left had soul.
+        </p>
+    </section>
+
+    <!-- Section 3: CCD Sensors & MiniDV -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">03</span>
+            <h2>CCD Sensors &amp; MiniDV</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag blue">Video</span>
+        </div>
+        <p>
+            The early digital video era was defined by CCD sensors, and they had a fundamentally different character than the CMOS sensors in everything today. CCD (charge-coupled device) sensors read the entire frame at once — a global shutter — which gave motion a different quality than the rolling shutters of modern CMOS chips. But the bigger difference was color science.
+        </p>
+        <p>
+            The color filter array (CFA) dye formulations used in CCD sensors were different from what came later with CMOS. The spectral response curves were broader and less precise, which in practice meant colors bled into each other slightly. Reds were warmer. Blues had more character. Skin tones had a quality that people describe as "video-like" in a way that's become almost extinct. The dynamic range was severely limited — 6 to 7 stops compared to 12 to 15 in a modern cinema camera — which meant the camera was making decisions about exposure that couldn't be undone in post. Highlights clipped hard. Shadows went to black. The image was committed.
+        </p>
+        <p>
+            Noise floors were higher, too. In anything less than ideal lighting, you'd see a gentle, organic noise pattern that added texture to every frame. Modern cameras are essentially noiseless at the ISOs where CCDs were struggling.
+        </p>
+        <h3>MiniDV Format</h3>
+        <div class="specs">
+            <div class="spec">
+                <div class="spec-label">Resolution</div>
+                <div class="spec-value">720×480</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Color</div>
+                <div class="spec-value">4:1:1 (NTSC)</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Compression</div>
+                <div class="spec-value">DCT ~25 Mbps</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Dynamic Range</div>
+                <div class="spec-value">~6–7 stops</div>
+            </div>
+        </div>
+        <h3>The Cameras</h3>
+        <p>
+            The workhorses of the era were the Sony PD-150 and VX-1000, the Canon XL-1 and XL-2, and the Panasonic DVX-100. The VX-1000 essentially created skateboard video culture. The PD-150 was the documentary filmmaker's default. The DVX-100 was the first prosumer camera to offer 24p (well, 24p advanced — a pulldown technique) and became the indie film standard overnight.
+        </p>
+        <p>
+            MiniDV was interlaced — 480i, meaning 60 fields per second rather than 30 progressive frames. On a CRT, this looked silky smooth. Each field only contained half the vertical resolution, and the CRT's phosphor persistence blended them together naturally. On a modern progressive display, those interlaced fields create combing artifacts — horizontal lines through any moving object. This is why old DV footage looks "wrong" on modern screens even when the resolution shouldn't be the issue. The temporal characteristics were designed for a display technology that no longer exists.
+        </p>
+        <p>
+            As filmmaker Garret Harkawik observed, early digital video produced "bizarre and sometimes garish images" — and that strangeness is exactly what makes the era visually distinctive. The limitations weren't bugs. They were the medium's personality.
+        </p>
+    </section>
+
+    <!-- Section 4: Everything Was Graded for CRTs -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">04</span>
+            <h2>Everything Was Graded for CRTs</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag">Display</span>
+        </div>
+        <p>
+            Here's something almost nobody talks about: every piece of video content created before roughly 2007 was graded, color-corrected, and approved on CRT monitors. And CRTs don't show the same image as LED/LCD panels. The physics are completely different.
+        </p>
+        <h3>Phosphor Color Science</h3>
+        <p>
+            CRT displays created color by firing electron beams at phosphor coatings on the inside of the glass. Broadcast monitors used SMPTE-C phosphors — a specific standard with defined red, green, and blue primary chromaticities. Consumer TVs used P22 phosphors, which were different again. Within the P22 designation alone, there were at least 7 different zinc-sulfide formulations from various manufacturers, each with slightly different spectral characteristics.
+        </p>
+        <p>
+            The red phosphor had to work the hardest. Red phosphors were the least efficient, which is why the red gun was always pushed harder and why red bloomed and smeared more than other colors on a CRT. This gave warm tones a subtle glow that was actually a limitation of the display — but colorists graded into it, using it as a feature.
+        </p>
+        <h3>Gamma and Persistence</h3>
+        <p>
+            CRT gamma was approximately 2.4 — darker than the 2.2 gamma standard used for modern displays. Content graded on a 2.4 gamma display with the expectation that it would be viewed on 2.4 gamma displays looks lifted and washed out on a 2.2 gamma LCD. The shadow detail that was carefully placed on a CRT gets shifted into the midtones on a flat panel.
+        </p>
+        <p>
+            Phosphor persistence — the time it takes for the phosphor to stop glowing after being excited by the electron beam — created a subtle temporal smoothing effect. Fast-moving bright objects left brief afterimages. This was essentially a natural motion blur built into the display itself, and it contributed to the "smooth" quality of CRT video that progressive LCD panels can't replicate.
+        </p>
+        <p>
+            When content that was graded on CRT phosphors is viewed on modern LED panels, the color relationships shift. Blues move toward purple. Warm tones lose their glow. The careful balance a colorist achieved on their Sony BVM is disrupted by the fundamentally different light-emission characteristics of an LCD backlight filtered through liquid crystal. This is why old footage looks "different" even when it's been perfectly preserved — the display it was made for no longer exists.
+        </p>
+    </section>
+
+    <!-- Section 5: Typography Had Texture -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">05</span>
+            <h2>Typography Had Texture</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag purple">Type</span>
+        </div>
+        <p>
+            The transition from phototypesetting to digital type happened across the 1990s, and by 2000 the industry had moved through PostScript Type 1 fonts, into TrueType, and was starting to adopt OpenType. But the rendering of those fonts on screen was dramatically different from what we see today.
+        </p>
+        <h3>Anti-Aliasing Was Primitive</h3>
+        <p>
+            Mac OS 9 had basic anti-aliasing that smoothed text edges with a handful of grey pixels. Windows XP had essentially no anti-aliasing at all for screen text — fonts were rendered as hard, aliased bitmaps below a certain size. Compare this to modern subpixel rendering systems like ClearType (Windows) and Core Text (macOS), which exploit the RGB subpixel structure of LCD panels to achieve approximately 3x the horizontal resolution for text rendering. Modern text is impossibly smooth compared to the era.
+        </p>
+        <p>
+            This means even if you choose the exact right font from 2002, rendering it on a modern system produces a fundamentally different result. The edges are too clean. The weight distribution is too even. The "texture" that came from imprecise rendering — the slight roughness, the occasional pixel that didn't quite land right — is gone. Text in the Y2K era had a physical quality, almost like it was printed on screen rather than projected.
+        </p>
+        <h3>Period-Accurate Fonts</h3>
+        <div class="specs">
+            <div class="spec">
+                <div class="spec-label">Sans-Serif</div>
+                <div class="spec-value">Helvetica Neue, Futura, DIN</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Industrial</div>
+                <div class="spec-value">Bank Gothic, Eurostile, Interstate</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Machine</div>
+                <div class="spec-value">OCR-A, OCR-B</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Digital</div>
+                <div class="spec-value">Pixel fonts (Mini 7, Silkscreen)</div>
+            </div>
+        </div>
+        <p>
+            Tight tracking, all-caps, small sizes. That was the formula. DIN and Interstate showed up on every nightclub flyer and magazine masthead. Bank Gothic and Eurostile screamed "future" in a way that felt earnest rather than ironic. OCR-A and OCR-B — fonts designed to be read by machines — became design staples precisely because they looked mechanical. And pixel fonts like Mini 7 and Silkscreen were everywhere on the web and in Flash-based design, embracing the screen's grid rather than fighting it.
+        </p>
+        <p>
+            The text rendering difference is one of the most overlooked aspects of Y2K visual recreation. You can nail the color palette, the grain, the blur, the format — but if your typography is rendered with modern subpixel smoothing, the whole thing reads as contemporary. The text gives it away.
+        </p>
+    </section>
+
+    <!-- Section 6: The Print-and-Rescan Technique -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">06</span>
+            <h2>The Print-and-Rescan Technique</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag green">Technique</span>
+        </div>
+        <p>
+            This is where theory meets practice. The print-and-rescan technique is the single most effective way to introduce authentic analog degradation into digital footage. The concept is simple: take your digital image, make it physical, then digitize it again. The round trip through the physical world introduces every kind of imperfection that digital processing can only approximate.
+        </p>
+        <h3>The Basic Workflow</h3>
+        <ol>
+            <li>Export your video as an image sequence. In Premiere Pro: File &gt; Export &gt; Media, choose TIFF or PNG Sequence. Or use FFmpeg: <code>ffmpeg -i input.mp4 frame%04d.png</code></li>
+            <li>Print each frame on a laser printer. A Brother HL-L2350DW costs about $100 and prints at roughly $0.03 per page in toner. For a 30-second clip at 12fps, that's 360 prints — about $11 in toner.</li>
+            <li>Optional but powerful: photocopy the prints. Each generation of photocopying increases contrast, adds toner artifacts, shifts registration slightly, and degrades fine detail. Five to ten generations produces extreme degradation — chunky blacks, blown highlights, visible scan-line artifacts from the copier's optics.</li>
+            <li>Scan the prints (or photocopies) on a flatbed scanner. An Epson V600 (~$230) at 600+ DPI in TIFF format gives you a clean, high-resolution capture of all the physical artifacts. Scan at 2400 DPI if you want to see individual toner particles.</li>
+            <li>Reimport the image sequence into Premiere or After Effects. Set the frame rate to match your project (or go lower — 12fps gives a stop-motion quality).</li>
+        </ol>
+        <h3>Variations</h3>
+        <p>
+            The basic laser-print-and-scan is just the starting point. The creative possibilities expand dramatically with different physical processes:
+        </p>
+        <ul>
+            <li>Risograph printing — Hiromu Oka created animation for NHK's Hodo Station news program using risograph prints, combining multiple ink layers on 6 different paper types at A3 format. The registration errors between ink passes create a vibrating, alive quality that no plugin can touch.</li>
+            <li>Cyanotype — Edd Carr hand-prints cyanotype images using UV light and iron-salt-coated paper. His music videos involve 5,000+ individual prints, each exposed, developed, and dried before scanning. The blue-and-white tonal range, the paper texture, the inconsistencies between exposures — it's unmistakable.</li>
+            <li>Thermal/receipt paper — the image fades, yellows, and distorts in beautiful ways.</li>
+            <li>Newsprint — absorbent paper means massive dot gain and ink spread.</li>
+            <li>Transparency film — print on clear acetate, then backlight and photograph.</li>
+            <li>Physical manipulation — crumple the prints, fold them, splash coffee on them, drag them across a wet surface. Each treatment adds unique, unrepeatable artifacts.</li>
+        </ul>
+        <h3>Notable Projects</h3>
+        <div class="comparison">
+            <div class="comparison-card">
+                <h4>Said The Whale "UnAmerican"</h4>
+                <ul>
+                    <li>2,250 laser prints</li>
+                    <li>Re-photographed with Dragonframe</li>
+                    <li>12fps stop-motion style</li>
+                    <li>$680 total budget</li>
+                </ul>
+            </div>
+            <div class="comparison-card">
+                <h4>Deftones "Cut Hands" (Edd Carr)</h4>
+                <ul>
+                    <li>2,100+ hand-printed cyanotypes</li>
+                    <li>12 hours/day printing</li>
+                    <li>UV exposure per frame</li>
+                    <li>Blue-white tonal range</li>
+                </ul>
+            </div>
+        </div>
+        <div class="callout">
+            <p>Hiromu Oka's NHK Hodo Station segments used risograph animation on 6 different paper types at A3 format — the registration errors between ink passes created a vibrating, alive quality that became the segment's visual signature.</p>
+        </div>
+        <h3>Equipment</h3>
+        <div class="specs">
+            <div class="spec">
+                <div class="spec-label">Printer</div>
+                <div class="spec-value">Brother laser (~$100)</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Scanner</div>
+                <div class="spec-value">Epson V600 (~$230)</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Scan DPI</div>
+                <div class="spec-value">600–2400</div>
+            </div>
+            <div class="spec">
+                <div class="spec-label">Format</div>
+                <div class="spec-value">TIFF (lossless)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 7: CRT Shooting & Projection -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">07</span>
+            <h2>CRT Shooting &amp; Projection</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag green">Technique</span>
+        </div>
+        <p>
+            Another physical-world technique: display your footage (or titles, or graphics) on a CRT monitor and re-film it. The CRT adds phosphor glow, scan lines, barrel distortion, and color shift — all in-camera, all real, all reacting to your lighting and camera settings in ways that plugins cannot simulate.
+        </p>
+        <h3>CRT Filming</h3>
+        <p>
+            The key technical consideration is matching your camera's shutter speed to the CRT's refresh rate. For NTSC (60Hz), you need a shutter speed at or near 1/60th of a second — faster shutters will capture the scan line as a visible dark band rolling through the frame. At the matched speed, you get the full image with natural phosphor bloom, slight barrel distortion at the edges, and the characteristic glow where bright areas bleed into surrounding phosphors.
+        </p>
+        <p>
+            Shoot your titles this way. Display white text on black on a CRT and film it — the text will have soft, glowing edges and visible scan-line texture that no font rendering or After Effects preset can match. Film close enough and you'll see the individual RGB phosphor triads that make up each pixel.
+        </p>
+        <h3>Projection Techniques</h3>
+        <p>
+            Projecting footage onto physical surfaces creates another layer of analog interaction. Rear projection — projecting from behind a translucent screen — was a staple of music video production. DP Justin Jones uses rear projection extensively for artists like Zayn and Wiz Khalifa, projecting video loops and graphics behind and around performers to create in-camera composites that feel tangible in a way that green-screen composites never do.
+        </p>
+        <p>
+            Front projection onto subjects, walls, and fabric creates composites where the projected image wraps around three-dimensional forms. Project through haze or fog and you get volumetric light — the beam itself becomes visible, creating depth in the space between projector and surface.
+        </p>
+        <h3>Video Feedback</h3>
+        <p>
+            Point a camera at a monitor displaying the camera's own output. The resulting feedback loop — first explored as art by Nam June Paik in the 1960s — creates swirling, recursive, psychedelic imagery that responds to camera movement, zoom, and the physical properties of both the camera and the display. It's infinitely variable, completely analog in behavior, and produces results that are genuinely impossible to replicate with software. Every frame is unique because the system is chaotic — tiny changes in angle or zoom produce wildly different patterns.
+        </p>
+    </section>
+
+    <!-- Section 8: Post-Production That Actually Works -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">08</span>
+            <h2>Post-Production That Actually Works</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag gold">Grading</span>
+        </div>
+        <p>
+            Physical techniques are the gold standard, but not every project has the time or budget for 2,000 hand prints. Here's what actually works in DaVinci Resolve and Premiere Pro to push your footage toward the Y2K zone — not as a replacement for process-based work, but as a complement.
+        </p>
+        <h3>The Digital Approach</h3>
+        <ol>
+            <li>Reduce resolution. Deliver at 720p, not 4K. Better yet, downscale to 480p and upscale back with a basic bilinear filter — you'll lose detail in exactly the ways the era lost detail.</li>
+            <li>Compress dynamic range. Lift your shadows — don't let anything go to true black. Pull your highlights down — nothing should clip to pure white. You want the flat, compressed look of a CCD sensor with 6 stops of range.</li>
+            <li>Shift white balance warm and add green to midtones. CCD sensors ran warm, and fluorescent lighting (everywhere in the 2000s) added green. Push your color temp to 5800-6200K and add a touch of green in the midtone hue offset.</li>
+            <li>Desaturate selectively. Pull red and orange saturation down. Boost blue and cyan slightly. This mimics the bleach bypass look and the CMYK gamut compression of print.</li>
+            <li>Add chroma blur. Simulate 4:1:1 color subsampling by blurring just the chrominance channel. In Resolve, you can do this with the Color Warper or by extracting to YCbCr, blurring Cb/Cr, and recombining.</li>
+            <li>Real halftone conversion. For print-style graphics, use Photoshop: Image &gt; Mode &gt; Grayscale, then Image &gt; Mode &gt; Bitmap &gt; Halftone Screen. Set the frequency to 45-85 LPI and choose round dots. This creates actual halftone patterns, not a simulation.</li>
+            <li>Film grain — done right. The grain must have irregular particle sizes, exposure-dependent intensity (more grain in shadows, less in highlights), and non-grid distribution. Most grain plugins fail at this.</li>
+        </ol>
+        <h3>Bleach Bypass Recipe</h3>
+        <p>
+            Bleach bypass was a film processing technique where the bleach step was skipped, leaving silver halide in the print along with the color dyes. The result: desaturated color, increased contrast, and a metallic quality. To approximate it digitally:
+        </p>
+        <ul>
+            <li>Desaturate 40–60%</li>
+            <li>Increase contrast significantly — push the S-curve hard</li>
+            <li>Create a high-contrast grayscale version and overlay it at 30–50% opacity</li>
+            <li>Crush the blacks — bring the shadow point up from 0 to around 10-15</li>
+            <li>Add aggressive grain — larger particle size than normal</li>
+        </ul>
+        <div class="callout">
+            <p>"Film grain has irregular particle sizes and random distribution. Digital noise is a uniform grid of square pixels. Adding uniform noise to clean digital footage does not replicate grain."</p>
+        </div>
+        <h3>In-Camera Filtration</h3>
+        <p>
+            The fastest way to get closer to the era's look is to degrade the image before it hits the sensor. Diffusion filters reduce contrast, add halation around highlights, and soften fine detail — all optically, in a way that interacts with the scene rather than being uniformly applied in post.
+        </p>
+        <div class="comparison">
+            <div class="comparison-card">
+                <h4>Tiffen Black Pro-Mist</h4>
+                <ul>
+                    <li>Halation-style bloom around highlights</li>
+                    <li>Mimics classic film look</li>
+                    <li>Strengths from 1/8 to 2</li>
+                    <li>1/4 is the sweet spot for most work</li>
+                </ul>
+            </div>
+            <div class="comparison-card">
+                <h4>Tiffen Glimmerglass</h4>
+                <ul>
+                    <li>Softer contrast without heavy diffusion</li>
+                    <li>BGG1 = "leave it on always" strength</li>
+                    <li>More subtle than Pro-Mist</li>
+                    <li>Reduces modern digital sharpness</li>
+                </ul>
+            </div>
+        </div>
+        <p>
+            The Moment CineBloom offers a similar effect to the Pro-Mist with a different bloom character — worth testing if you're already in the Moment lens ecosystem. The point isn't which specific filter you use. The point is that optical degradation before the sensor captures an image is categorically different from digital degradation applied after.
+        </p>
+    </section>
+
+    <!-- Section 9: Why Modern Attempts Fail -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">09</span>
+            <h2>Why Modern Attempts Fail</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag">The Problem</span>
+        </div>
+        <p>
+            Most attempts to recreate Y2K-era visuals fail. They fail because they treat the aesthetic as a filter to be applied rather than a process to be followed. Here are the four specific reasons:
+        </p>
+        <h3>1. Digital Clarity</h3>
+        <p>
+            Modern cameras resolve too much. A 45-megapixel sensor captures individual pores, dust particles, fabric weave, and surface textures that simply weren't visible in the era. Even after adding grain and blur, the underlying detail peeks through. The image has too much information. Y2K cameras captured less information at the source — you can't subtract detail as effectively as you can fail to capture it in the first place.
+        </p>
+        <h3>2. Font Rendering</h3>
+        <p>
+            As covered in the typography section, modern subpixel rendering produces text that is impossibly smooth by 2002 standards. Using Helvetica Neue in your graphic doesn't make it look Y2K if the rendering is 2024-era Core Text at Retina resolution. The text needs texture — aliased edges, visible pixel structure, rendering artifacts.
+        </p>
+        <h3>3. Color Science</h3>
+        <p>
+            Modern sensors have too much dynamic range and too clean a color pipeline. 14+ stops of range means you're capturing detail in shadows and highlights that would have been pure black or clipped white on a CCD. The color transforms are mathematically precise in ways that CCD color science was not — the slight inaccuracies and spectral crossover of CCD sensors gave their images character that clean CMOS pipelines don't have.
+        </p>
+        <h3>4. Process vs. Filters</h3>
+        <p>
+            This is the fundamental problem. People add effects at the end of a clean digital pipeline. They shoot on a modern camera, edit in a modern NLE, grade on a modern monitor, and then apply a "vintage" LUT or grain overlay as the last step. The underlying signal is too clean. The effects sit on top rather than being baked in.
+        </p>
+        <div class="callout">
+            <p>"This is like recording a symphony on a Neumann U87 in a treated room, then putting a 'cassette tape' plugin on the master bus. The plugin can approximate some characteristics, but the fundamental signal path is too clean. The solution is to change the process at every stage."</p>
+        </div>
+        <p>
+            The Y2K look wasn't created in one step. It was the accumulation of dozens of small degradations across an entire production pipeline. Recreating it means degrading the signal at multiple points in your own pipeline — not just at the end.
+        </p>
+    </section>
+
+    <!-- Section 10: Start Here -->
+    <section>
+        <div class="section-header">
+            <span class="section-number">10</span>
+            <h2>Start Here</h2>
+            <button class="select-section-btn" onclick="selectSection(this)">Select Section</button>
+            <span class="tag">TL;DR</span>
+        </div>
+        <p>
+            You don't need to do everything at once. Here's the quick-start checklist — pick a few and start experimenting:
+        </p>
+        <ul>
+            <li>Order a Tiffen Black Pro-Mist 1/4 (~$50–80) or a Glimmerglass. Screw it on and leave it on. Instant reduction in modern digital harshness.</li>
+            <li>Source a CRT monitor. Thrift stores, Facebook Marketplace, eBay — Sony Trinitron if you can find one. Use it for titles, graphics, or as a projection source.</li>
+            <li>Get a cheap laser printer for print-and-rescan. A Brother laser printer runs about $100. Print your frames, photocopy them a few generations, scan them back in. The round trip IS the effect.</li>
+            <li>Deliver at 720p or lower, not 4K. Resolution is the enemy of this aesthetic. Downscale early in your pipeline, not as a last step.</li>
+            <li>Grade with compressed dynamic range. Lift shadows, pull highlights, warm white balance, add green to midtones. Think flat, warm, slightly dirty.</li>
+            <li>Use period-accurate fonts rendered at low resolution with no anti-aliasing. Helvetica Neue, DIN, Interstate, Bank Gothic. Tight tracking, all caps. Render at 72 DPI and scale up — let the pixels show.</li>
+            <li>Print your graphics, scan them back in. Even if you're not doing frame-by-frame video, printing a title card on a laser printer and scanning it adds more authentic texture than any Photoshop filter.</li>
+            <li>For music videos: export frames as an image sequence, print them, optionally photocopy for extra degradation, scan them on a flatbed, reimport. Budget about $0.03 per frame in toner for laser printing.</li>
+        </ul>
+        <div class="callout">
+            <p>"The look came from the process. Change the process, and the look follows."</p>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>Y2K Process Research &middot; 2026</p>
+</footer>
+
+<!-- Sticky listen bar -->
+<div class="listen-bar" id="listenBar">
+  <button class="bar-btn" id="barPlayPause" aria-label="Play/Pause">&#9654;</button>
+  <div class="bar-info">
+    <div class="bar-title" id="barTitle">Listening</div>
+    <div class="bar-section" id="barSection"></div>
+  </div>
+  <select class="bar-voice" id="barVoice" aria-label="Voice"></select>
+  <button class="bar-speed" id="barSpeed" aria-label="Speed">1x</button>
+  <button class="bar-stop" id="barStop" aria-label="Stop">&#9632;</button>
+</div>
+
+<script>
+(function() {
+  var btn = document.getElementById('listenBtn');
+  var voiceSelect = document.getElementById('voiceSelect');
+  var speedBtn = document.getElementById('speedBtn');
+  var selectAllBtn = document.getElementById('selectAllBtn');
+  var bar = document.getElementById('listenBar');
+  var barPlayPause = document.getElementById('barPlayPause');
+  var barTitle = document.getElementById('barTitle');
+  var barSection = document.getElementById('barSection');
+  var barVoice = document.getElementById('barVoice');
+  var barSpeed = document.getElementById('barSpeed');
+  var barStop = document.getElementById('barStop');
+
+  // ── Select All for iOS Speak Selection ──
+  if (selectAllBtn) {
+    selectAllBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      var container = document.querySelector('.container') || document.querySelector('main') || document.body;
+      var range = document.createRange();
+      range.selectNodeContents(container);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    });
+  }
+
+  if (!btn || !('speechSynthesis' in window)) {
+    if (btn) btn.parentElement.style.display = 'none';
+    return;
+  }
+
+  var synth = window.speechSynthesis;
+  var sections = Array.from(document.querySelectorAll('main section'));
+  var currentIndex = -1;
+  var state = 'stopped';
+  var voice = null;
+  var speeds = [0.8, 1, 1.2, 1.5];
+  var speedLabels = ['0.8x', '1x', '1.2x', '1.5x'];
+  var speedIdx = 1;
+
+  // ── Curated voice whitelist ──
+  var goodVoices = [
+    'samantha', 'karen', 'daniel', 'moira', 'tessa',
+    'ava', 'allison', 'tom', 'aaron', 'nicky', 'evan',
+    'zoe', 'joelle', 'fiona', 'martha', 'arthur',
+    'google us english', 'google uk english'
+  ];
+
+  function isGoodVoice(v) {
+    var name = v.name.toLowerCase();
+    for (var i = 0; i < goodVoices.length; i++) {
+      if (name.indexOf(goodVoices[i]) !== -1) return true;
+    }
+    return false;
+  }
+
+  function voiceScore(v) {
+    var name = v.name.toLowerCase();
+    if (/premium/.test(name)) return 100;
+    if (/enhanced/.test(name)) return 80;
+    if (/samantha|karen|daniel/.test(name)) return 60;
+    if (/ava|allison|tom|aaron|zoe|fiona/.test(name)) return 50;
+    if (/google/.test(name)) return 40;
+    return 20;
+  }
+
+  function getCuratedVoices() {
+    var all = synth.getVoices().filter(function(v) {
+      return v.lang && v.lang.startsWith('en') && isGoodVoice(v);
+    });
+    all.sort(function(a, b) { return voiceScore(b) - voiceScore(a); });
+    if (!all.length) {
+      all = synth.getVoices().filter(function(v) {
+        return v.lang && v.lang.startsWith('en');
+      }).slice(0, 4);
+    }
+    return all;
+  }
+
+  function populateSelect(selectEl, voices) {
+    selectEl.innerHTML = '';
+    voices.forEach(function(v, i) {
+      var opt = document.createElement('option');
+      opt.textContent = v.name.replace(/Google |Microsoft |Apple /i, '');
+      opt.value = i;
+      selectEl.appendChild(opt);
+    });
+  }
+
+  function populateVoiceList() {
+    var voices = getCuratedVoices();
+    if (!voices.length) return;
+    populateSelect(voiceSelect, voices);
+    populateSelect(barVoice, voices);
+    voice = voices[0];
+  }
+
+  populateVoiceList();
+  synth.addEventListener('voiceschanged', populateVoiceList);
+  synth.cancel();
+
+  function syncVoice(fromSelect) {
+    var voices = getCuratedVoices();
+    var idx = parseInt(fromSelect.value);
+    voice = voices[idx] || voices[0];
+    if (fromSelect === voiceSelect) barVoice.value = fromSelect.value;
+    else voiceSelect.value = fromSelect.value;
+    if (state === 'playing') { synth.cancel(); speakSection(currentIndex); }
+  }
+
+  voiceSelect.addEventListener('change', function() { syncVoice(voiceSelect); });
+  barVoice.addEventListener('change', function() { syncVoice(barVoice); });
+
+  function cycleSpeed() {
+    speedIdx = (speedIdx + 1) % speeds.length;
+    speedBtn.textContent = speedLabels[speedIdx];
+    barSpeed.textContent = speedLabels[speedIdx];
+    if (state === 'playing') { synth.cancel(); speakSection(currentIndex); }
+  }
+
+  speedBtn.addEventListener('click', cycleSpeed);
+  barSpeed.addEventListener('click', cycleSpeed);
+
+  // ── Sticky bar ──
+  function showBar() {
+    bar.classList.add('visible');
+    document.body.classList.add('listening');
+  }
+
+  function hideBar() {
+    bar.classList.remove('visible');
+    document.body.classList.remove('listening');
+  }
+
+  function updateBar(isPlaying) {
+    barPlayPause.innerHTML = isPlaying ? '&#9208;' : '&#9654;';
+    barPlayPause.classList.toggle('paused', !isPlaying);
+    barTitle.textContent = isPlaying ? 'Now Playing' : 'Paused';
+    if (currentIndex >= 0 && currentIndex < sections.length) {
+      var h = sections[currentIndex].querySelector('h2');
+      barSection.textContent = h ? h.textContent : ('Section ' + (currentIndex + 1));
+    }
+  }
+
+  function clearHighlight() {
+    sections.forEach(function(s) { s.classList.remove('reading'); });
+  }
+
+  function highlight(idx) {
+    clearHighlight();
+    if (idx >= 0 && idx < sections.length) {
+      sections[idx].classList.add('reading');
+      sections[idx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function updateBtn(label, icon) {
+    btn.innerHTML = icon + ' ' + label;
+  }
+
+  // ── Chunk-based reading ──
+  function getChunks(section) {
+    var chunks = [];
+    var els = section.querySelectorAll('h2, h3, h4, p, li, .callout p, .stat .label');
+    if (!els.length) {
+      var t = section.textContent.trim();
+      if (t) chunks.push({ text: t, isHeading: false });
+      return chunks;
+    }
+    var seen = new Set();
+    els.forEach(function(el) {
+      var t = el.textContent.trim();
+      if (!t || seen.has(t)) return;
+      seen.add(t);
+      var tag = el.tagName.toLowerCase();
+      chunks.push({ text: t, isHeading: /^h[2-4]$/.test(tag) });
+    });
+    return chunks;
+  }
+
+  var currentChunks = [];
+  var currentChunkIdx = 0;
+
+  function speakSection(idx) {
+    if (idx >= sections.length) { stop(); return; }
+    currentIndex = idx;
+    highlight(idx);
+    updateBar(true);
+    currentChunks = getChunks(sections[idx]);
+    currentChunkIdx = 0;
+    speakNextChunk();
+  }
+
+  function speakNextChunk() {
+    if (currentChunkIdx >= currentChunks.length) {
+      if (state === 'playing') {
+        setTimeout(function() {
+          if (state === 'playing') speakSection(currentIndex + 1);
+        }, 600);
+      }
+      return;
+    }
+
+    var chunk = currentChunks[currentChunkIdx];
+    var utter = new SpeechSynthesisUtterance(chunk.text);
+    utter.rate = speeds[speedIdx] * (chunk.isHeading ? 0.9 : 1.0);
+    utter.pitch = chunk.isHeading ? 1.05 : 1.0;
+    if (voice) utter.voice = voice;
+
+    utter.onend = function() {
+      if (state !== 'playing') return;
+      currentChunkIdx++;
+      var delay = chunk.isHeading ? 400 : 200;
+      setTimeout(function() {
+        if (state === 'playing') speakNextChunk();
+      }, delay);
+    };
+
+    utter.onerror = function(e) {
+      if (e.error !== 'canceled') {
+        currentChunkIdx++;
+        if (state === 'playing') speakNextChunk();
+      }
+    };
+
+    synth.cancel();
+    synth.speak(utter);
+  }
+
+  function play() {
+    state = 'playing';
+    updateBtn('Pause', '&#9208;');
+    btn.classList.remove('paused');
+    showBar();
+    updateBar(true);
+    speakSection(currentIndex < 0 ? 0 : currentIndex);
+  }
+
+  function pause() {
+    state = 'paused';
+    synth.pause();
+    updateBtn('Resume', '&#9654;');
+    btn.classList.add('paused');
+    updateBar(false);
+  }
+
+  function resume() {
+    state = 'playing';
+    synth.resume();
+    updateBtn('Pause', '&#9208;');
+    btn.classList.remove('paused');
+    updateBar(true);
+  }
+
+  function stop() {
+    state = 'stopped';
+    synth.cancel();
+    currentIndex = -1;
+    currentChunks = [];
+    currentChunkIdx = 0;
+    clearHighlight();
+    updateBtn('Listen', '&#9654;');
+    btn.classList.remove('paused');
+    hideBar();
+  }
+
+  btn.addEventListener('click', function() {
+    if (state === 'stopped') play();
+    else if (state === 'playing') pause();
+    else if (state === 'paused') resume();
+  });
+
+  barPlayPause.addEventListener('click', function() {
+    if (state === 'playing') pause();
+    else if (state === 'paused') resume();
+    else play();
+  });
+
+  barStop.addEventListener('click', stop);
+
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden && state === 'playing') pause();
+  });
+
+  // Chrome keep-alive
+  var keepAlive;
+  var origPlay = play;
+  play = function() {
+    origPlay();
+    keepAlive = setInterval(function() {
+      if (synth.speaking && !synth.paused) synth.resume();
+    }, 10000);
+  };
+  var origStop = stop;
+  stop = function() {
+    clearInterval(keepAlive);
+    origStop();
+  };
+
+// ── Select Section for macOS Speak ──
+window.selectSection = function(btn) {
+    var section = btn.closest('section') || btn.parentElement.parentElement;
+    var range = document.createRange();
+    range.selectNodeContents(section);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    document.querySelectorAll('.select-section-btn').forEach(function(b) { b.classList.remove('selected'); b.textContent = 'Select Section'; });
+    btn.classList.add('selected');
+    btn.textContent = 'Selected!';
+    setTimeout(function() { btn.textContent = 'Select Section'; btn.classList.remove('selected'); }, 2000);
+};
+})();
+</script>
+
+</body>
+</html>
