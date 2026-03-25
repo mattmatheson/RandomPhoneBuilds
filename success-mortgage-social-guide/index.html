@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Media Best Practices — Success Mortgage</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --bg: #FAFAFA;
+    --text: #1D1D1F;
+    --secondary: #6E6E73;
+    --border: #E5E5EA;
+    --card: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 2rem) 8rem;
+  }
+
+  /* Header */
+  header { margin-bottom: 3rem; animation: fadeIn 0.5s ease-out both; }
+
+  .eyebrow {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+  }
+
+  .scope {
+    font-size: 1.05rem;
+    color: var(--secondary);
+    font-weight: 400;
+    max-width: 540px;
+    line-height: 1.5;
+  }
+
+  /* Listen controls */
+  .listen-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-listen {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.6rem 1.4rem;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-listen:hover { background: #a81a1a; }
+
+  .btn-speed {
+    display: inline-flex;
+    align-items: center;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 2rem;
+    padding: 0.55rem 1rem;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    transition: border-color 0.2s;
+    min-width: 58px;
+    justify-content: center;
+  }
+  .btn-speed:hover { border-color: var(--accent); }
+
+  .voice-select {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 2rem;
+    padding: 0.55rem 1rem;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    outline: none;
+    max-width: 160px;
+  }
+
+  .pro-tip {
+    font-size: 0.75rem;
+    color: #86868B;
+    margin-top: 0.75rem;
+    line-height: 1.5;
+  }
+  .pro-tip a, .select-all-btn {
+    color: var(--accent);
+    text-decoration: none;
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 2.5rem 0;
+  }
+
+  /* Sections */
+  section {
+    margin-bottom: 2.5rem;
+    padding: 1.75rem;
+    background: var(--card);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease-out both;
+  }
+
+  section.reading {
+    border-left: 3px solid var(--accent);
+    background: rgba(196, 32, 32, 0.03);
+    padding-left: calc(1.75rem - 2px);
+    border-radius: 16px;
+  }
+
+  .section-platform {
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+    color: var(--text);
+  }
+
+  .step-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .step-list li {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.1rem;
+  }
+
+  .step-content strong {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+  }
+
+  .step-content p, .step-content span {
+    font-size: 0.88rem;
+    color: var(--secondary);
+    line-height: 1.5;
+  }
+
+  /* Warning box */
+  .warning-box {
+    background: #FFF8F0;
+    border: 1px solid #FFD4A0;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-top: 1.25rem;
+    font-size: 0.84rem;
+    color: #7A4A00;
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+
+  .warning-box .icon { flex-shrink: 0; font-size: 1rem; }
+
+  /* Why it matters callout */
+  .why-box {
+    background: #F5F5F7;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-top: 1.25rem;
+    font-size: 0.84rem;
+    color: var(--secondary);
+    line-height: 1.5;
+  }
+  .why-box strong { color: var(--text); }
+
+  /* Path notation */
+  .path {
+    display: inline-block;
+    background: #F0F0F5;
+    border-radius: 6px;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.8rem;
+    font-family: "SF Mono", "Monaco", monospace;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    font-size: 0.78rem;
+    color: #86868B;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  /* Sticky player bar */
+  #player-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(20, 20, 20, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 0.75rem 1.25rem;
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 100;
+  }
+  #player-bar.visible { transform: translateY(0); }
+
+  .player-btn {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.12);
+    border: none; border-radius: 50%;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .player-btn:hover { background: rgba(255,255,255,0.2); }
+
+  #player-section-title {
+    flex: 1;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.75);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  #player-voice {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 1rem;
+    padding: 0.35rem 0.75rem;
+    font-family: inherit;
+    font-size: 0.72rem;
+    color: white;
+    max-width: 120px;
+    cursor: pointer;
+  }
+
+  #player-speed {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 1rem;
+    padding: 0.35rem 0.75rem;
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    min-width: 48px;
+    text-align: center;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 500px) {
+    .btn-listen { width: 100%; justify-content: center; }
+    .voice-select { max-width: 100%; width: 100%; }
+    #player-voice { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="main-content">
+
+  <header>
+    <span class="eyebrow">Success Mortgage · Social Media</span>
+    <h1>Posting Best Practices</h1>
+    <p class="scope">How to get the most out of professionally produced content on Instagram and Facebook — preserving quality and color from delivery to publish.</p>
+
+    <div class="listen-controls">
+      <button class="btn-listen" id="btn-listen" onclick="togglePlay()">
+        <span id="listen-icon">▶</span> Listen
+      </button>
+      <select class="voice-select" id="voice-select" onchange="changeVoice()"></select>
+      <button class="btn-speed" id="btn-speed" onclick="cycleSpeed()">1x</button>
+    </div>
+
+    <p class="pro-tip">
+      Pro tip: For a better voice, tap <button class="select-all-btn" onclick="selectAll()">select all</button> then use iOS Speak Selection
+      <span style="white-space:nowrap">(Settings → Accessibility → Spoken Content → Speak Selection).</span>
+    </p>
+  </header>
+
+  <div class="divider"></div>
+
+  <!-- INSTAGRAM -->
+  <section id="s-ig-setup">
+    <span class="section-platform">Instagram</span>
+    <h2>Turn On High Quality Uploads</h2>
+    <ol class="step-list">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Open Instagram and go to your profile</strong>
+          <span>Tap the profile icon in the bottom right corner.</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Open Settings</strong>
+          <span>Tap the three lines (≡) in the top right, then tap <em>Settings and privacy</em>.</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Find Data Usage & Media Quality</strong>
+          <span>Search for <em>Data usage</em> or navigate to <span class="path">Account → Data usage and media quality</span>.</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <strong>Enable "Upload at Highest Quality"</strong>
+          <span>Toggle this ON. This tells Instagram to upload the full resolution file instead of compressing it before it even hits their servers.</span>
+        </div>
+      </li>
+    </ol>
+    <div class="why-box">
+      <strong>Why this matters:</strong> Instagram compresses uploads by default to save bandwidth. With this toggle off, your professionally produced video or photo gets degraded before anyone even sees it. Turn it on once and leave it on.
+    </div>
+  </section>
+
+  <section id="s-ig-workflow">
+    <span class="section-platform">Instagram</span>
+    <h2>The Right Way to Post Every Time</h2>
+    <ol class="step-list">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Always post from an iPhone</strong>
+          <span>Instagram's iOS app uses a higher quality video encoder than Android or desktop. This is a documented difference — iOS produces a measurably better result for the same file.</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Connect to Wi-Fi before posting</strong>
+          <span>Even with high quality uploads enabled, Instagram may throttle file size on cellular. Always post over Wi-Fi to ensure the full file transfers without restrictions.</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Save the original from Google Drive to your Camera Roll first</strong>
+          <span>Open Google Drive → find your delivered file → tap the three dots → <em>Download</em>. Wait for it to fully save to your Camera Roll before opening Instagram.</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <strong>Post directly from the Camera Roll</strong>
+          <span>Never share directly from Google Drive to Instagram. Always go through the Camera Roll — this ensures Instagram reads the native file, not a re-encoded stream.</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <strong>Do not apply any filters or edits in Instagram</strong>
+          <span>Your content has already been professionally color graded. Any filter — even "Normal" with adjustments — re-processes the image. Post it as delivered.</span>
+        </div>
+      </li>
+    </ol>
+    <div class="warning-box">
+      <span class="icon">⚠️</span>
+      <span>Never screenshot a video or re-export from your phone's editing app and post that. Always start with the original file from Google Drive. Every generation of re-saving loses quality.</span>
+    </div>
+  </section>
+
+  <section id="s-ig-story">
+    <span class="section-platform">Instagram</span>
+    <h2>Reels vs. Feed vs. Stories</h2>
+    <ol class="step-list">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Post video as a Reel, not a Feed video</strong>
+          <span>Reels get significantly more algorithmic reach than standard feed videos. If it's a video, it should almost always go up as a Reel.</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Also share your Reel to your Story</strong>
+          <span>After posting a Reel, tap <em>Share to Story</em>. This gives your existing followers a second touchpoint and drives them back to the Reel to boost its play count.</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Write a real caption — don't leave it blank</strong>
+          <span>Instagram uses captions for indexing and search. A few sentences describing what the video is about — and who it's for — helps it reach the right people.</span>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FACEBOOK -->
+  <section id="s-fb-advantage">
+    <span class="section-platform">Facebook · Ads Manager</span>
+    <h2>Turn Off Advantage+ Creative Color Enhancement</h2>
+    <p style="font-size:0.9rem; color:var(--secondary); margin-bottom:1.25rem; line-height:1.5;">Meta automatically applies color and brightness adjustments to your ads through a feature called <strong style="color:var(--text)">Advantage+ Creative</strong>. For professionally produced content, this needs to be turned off — it will undo your color grade.</p>
+    <ol class="step-list">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Open Ads Manager and go to your ad</strong>
+          <span>Navigate to the <em>Ad</em> level (not Campaign or Ad Set) — this setting only lives at the individual ad level.</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Find the Advantage+ Creative section</strong>
+          <span>Scroll down in the ad editor until you see the <em>Advantage+ Creative</em> panel. It may be expanded or collapsed.</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Locate "Adjust Brightness and Contrast"</strong>
+          <span>Inside Advantage+ Creative, find the toggle labeled <em>Adjust brightness and contrast</em>. Turn this <strong style="color:var(--text)">OFF</strong>.</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <strong>Disable all other Advantage+ Creative enhancements</strong>
+          <span>While you're there, turn off everything else in that section — music, text overlays, image templates. None of these should be applied to finished professional content.</span>
+        </div>
+      </li>
+    </ol>
+    <div class="warning-box">
+      <span class="icon">⚠️</span>
+      <span>Meta turns Advantage+ Creative ON by default for every new ad. You have to manually disable it every time you create a new ad. It does not remember your preference.</span>
+    </div>
+    <div class="why-box">
+      <strong>Why this matters:</strong> Meta applies these adjustments per-viewer — different people see different brightness and color variations of your ad. Your video has already been graded with intention. Letting Meta re-grade it is like handing a finished painting to someone and asking them to touch it up.
+    </div>
+  </section>
+
+  <section id="s-fb-general">
+    <span class="section-platform">Facebook · General</span>
+    <h2>Facebook Posting Best Practices</h2>
+    <ol class="step-list">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Upload video files directly — don't share YouTube or external links</strong>
+          <span>Facebook heavily suppresses posts that link offsite. Upload the video file natively to Facebook for full reach.</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Save to Camera Roll first, same as Instagram</strong>
+          <span>The same rule applies — download the original from Google Drive, save to Camera Roll, then upload from there. Never share directly from Drive.</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Post on Facebook from a desktop browser when possible</strong>
+          <span>Unlike Instagram, Facebook's desktop uploader handles large video files more reliably and gives you more control over thumbnail selection and caption formatting.</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <strong>Select a strong thumbnail before publishing</strong>
+          <span>Facebook lets you choose or upload a custom thumbnail. Pick a clear, high-quality frame — this is what people see before they press play.</span>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <div class="divider"></div>
+
+  <footer>
+    Content produced by <a href="https://mattmatheson.github.io/RandomPhoneBuilds/">Matt Matheson</a>
+  </footer>
+
+</div><!-- /container -->
+
+<!-- Sticky Player Bar -->
+<div id="player-bar">
+  <button class="player-btn" id="player-play-btn" onclick="togglePlay()">▶</button>
+  <span id="player-section-title">Ready</span>
+  <select id="player-voice" onchange="changeVoiceFromPlayer()"></select>
+  <button id="player-speed" onclick="cycleSpeed()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:1rem;padding:0.35rem 0.75rem;font-family:inherit;font-size:0.72rem;font-weight:700;color:white;cursor:pointer;min-width:48px;text-align:center;">1x</button>
+  <button class="player-btn" onclick="stopReading()" title="Stop">■</button>
+</div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────────────
+const speeds = [0.8, 1, 1.2, 1.5];
+let speedIndex = 1;
+let isPlaying = false;
+let isPaused = false;
+let chunks = [];
+let chunkIndex = 0;
+let currentSection = null;
+let keepAliveInterval = null;
+const VOICE_WHITELIST = ['samantha','karen','daniel','moira','tessa','ava','allison','tom','aaron','nicky','evan','zoe','joelle','fiona','martha','arthur','google us english','google uk english'];
+
+// ── Voice setup ────────────────────────────────────────────────────────────
+let voices = [];
+function loadVoices() {
+  voices = speechSynthesis.getVoices().filter(v =>
+    VOICE_WHITELIST.some(w => v.name.toLowerCase().includes(w))
+  );
+  const selects = [document.getElementById('voice-select'), document.getElementById('player-voice')];
+  selects.forEach(sel => {
+    if (!sel) return;
+    sel.innerHTML = '';
+    voices.forEach((v, i) => {
+      const opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = v.name.replace('(en_US)','').replace('(en-US)','').trim();
+      sel.appendChild(opt);
+    });
+  });
+}
+speechSynthesis.addEventListener('voiceschanged', loadVoices);
+loadVoices();
+
+function getSelectedVoice() {
+  const sel = document.getElementById('voice-select');
+  return voices[parseInt(sel?.value || 0)] || voices[0];
+}
+function changeVoice() {
+  document.getElementById('player-voice').value = document.getElementById('voice-select').value;
+}
+function changeVoiceFromPlayer() {
+  document.getElementById('voice-select').value = document.getElementById('player-voice').value;
+}
+
+// ── Speed ──────────────────────────────────────────────────────────────────
+function cycleSpeed() {
+  speedIndex = (speedIndex + 1) % speeds.length;
+  const label = speeds[speedIndex] + 'x';
+  document.getElementById('btn-speed').textContent = label;
+  document.getElementById('player-speed').textContent = label;
+}
+
+// ── Build chunk list ───────────────────────────────────────────────────────
+function buildChunks() {
+  chunks = [];
+  const sections = document.querySelectorAll('section');
+  sections.forEach(sec => {
+    const elements = sec.querySelectorAll('h2, strong, p, span:not(.section-platform):not(.step-num), li');
+    let sectionTitle = sec.querySelector('h2')?.textContent || '';
+    let addedSection = false;
+    elements.forEach(el => {
+      const text = el.textContent.trim();
+      if (!text || text.length < 3) return;
+      if (!addedSection) { chunks.push({ text: '', section: sec, title: sectionTitle, isSectionStart: true }); addedSection = true; }
+      const isHeading = el.tagName === 'H2' || el.tagName === 'H3';
+      chunks.push({ text, section: sec, title: sectionTitle, isHeading });
+    });
+  });
+  // dedupe blanks and very short
+  chunks = chunks.filter(c => c.text.length > 2 || c.isSectionStart);
+}
+
+// ── Playback ───────────────────────────────────────────────────────────────
+function speak(chunk, onDone) {
+  if (chunk.isSectionStart) { onDone(); return; }
+  const utt = new SpeechSynthesisUtterance(chunk.text);
+  utt.voice = getSelectedVoice();
+  utt.rate = chunk.isHeading ? speeds[speedIndex] * 0.9 : speeds[speedIndex];
+  utt.pitch = chunk.isHeading ? 1.05 : 1.0;
+  utt.onend = () => { setTimeout(onDone, chunk.isHeading ? 400 : 200); };
+  utt.onerror = () => onDone();
+  speechSynthesis.speak(utt);
+}
+
+function advance() {
+  if (!isPlaying || isPaused) return;
+  if (chunkIndex >= chunks.length) { stopReading(); return; }
+
+  const chunk = chunks[chunkIndex];
+
+  // Section transition
+  if (chunk.section !== currentSection) {
+    if (currentSection) currentSection.classList.remove('reading');
+    currentSection = chunk.section;
+    currentSection.classList.add('reading');
+    currentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('player-section-title').textContent = chunk.title;
+  }
+
+  chunkIndex++;
+  speak(chunk, advance);
+}
+
+function startReading() {
+  speechSynthesis.cancel();
+  buildChunks();
+  chunkIndex = 0;
+  isPlaying = true;
+  isPaused = false;
+  showPlayerBar();
+  setPlayIcon('⏸');
+  keepAliveInterval = setInterval(() => { if (isPlaying && !isPaused) speechSynthesis.resume(); }, 10000);
+  advance();
+}
+
+function togglePlay() {
+  if (!isPlaying) { startReading(); return; }
+  if (isPaused) {
+    isPaused = false;
+    speechSynthesis.resume();
+    setPlayIcon('⏸');
+  } else {
+    isPaused = true;
+    speechSynthesis.pause();
+    setPlayIcon('▶');
+  }
+}
+
+function stopReading() {
+  isPlaying = false;
+  isPaused = false;
+  speechSynthesis.cancel();
+  clearInterval(keepAliveInterval);
+  if (currentSection) { currentSection.classList.remove('reading'); currentSection = null; }
+  hidePlayerBar();
+  setPlayIcon('▶');
+  document.getElementById('listen-icon').textContent = '▶';
+}
+
+function setPlayIcon(icon) {
+  document.getElementById('listen-icon').textContent = icon === '⏸' ? '⏸' : '▶';
+  document.getElementById('player-play-btn').textContent = icon;
+}
+
+function showPlayerBar() { document.getElementById('player-bar').classList.add('visible'); }
+function hidePlayerBar() { document.getElementById('player-bar').classList.remove('visible'); }
+
+// ── Select all ─────────────────────────────────────────────────────────────
+function selectAll() {
+  const range = document.createRange();
+  range.selectNodeContents(document.getElementById('main-content'));
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+</script>
+</body>
+</html>
