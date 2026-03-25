@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel Crossville — Pre-Production Brief (April Shoots)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --bg: #FAFAFA;
+    --text: #1D1D1F;
+    --muted: #6E6E73;
+    --border: #E5E5E7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 4vw, 2rem) 6rem;
+  }
+
+  header { margin-bottom: 3rem; animation: fadeIn 0.6s ease-out both; }
+
+  .label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 0.4rem;
+  }
+
+  .meta { font-size: 0.95rem; color: var(--muted); }
+
+  .scope {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-top: 1rem;
+    line-height: 1.7;
+    max-width: 640px;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 0.3rem 0.85rem;
+    background: #F5F5F7;
+    border-radius: 980px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--muted);
+    margin-top: 1rem;
+    margin-right: 0.4rem;
+  }
+
+  .listen-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .listen-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.6rem 1.5rem;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .listen-btn:hover { background: #a81b1b; }
+
+  .voice-select, .speed-btn {
+    font-family: inherit;
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 980px;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .pro-tip { font-size: 0.75rem; color: #999; font-style: italic; margin-top: 0.5rem; }
+  .pro-tip a, .pro-tip button { color: #999; background: none; border: none; font-family: inherit; font-size: inherit; cursor: pointer; font-style: italic; padding: 0; }
+
+  section {
+    margin-bottom: 3rem;
+    padding: 0.5rem 0;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease-out both;
+  }
+
+  section.reading {
+    border-left: 3px solid var(--accent);
+    background: rgba(196, 32, 32, 0.04);
+    padding-left: 1rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.75rem;
+    color: var(--text);
+  }
+
+  p { margin-bottom: 0.8rem; font-size: 0.95rem; }
+
+  .info-box {
+    background: #F5F5F7;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin: 1rem 0;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .info-box strong { display: block; margin-bottom: 0.3rem; font-size: 0.9rem; }
+
+  /* Two-column to-do layout */
+  .todo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin: 1rem 0;
+  }
+
+  @media (max-width: 620px) { .todo-grid { grid-template-columns: 1fr; } }
+
+  .todo-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem;
+  }
+
+  .todo-card h4 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .todo-card h4 span {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+
+  .todo-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    margin-bottom: 0.85rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .todo-item:last-child { margin-bottom: 0; }
+
+  .todo-check {
+    flex-shrink: 0;
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    margin-top: 0.1rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem;
+    transition: all 0.15s ease;
+  }
+
+  .todo-check.urgent { border-color: var(--accent); }
+  .todo-check.done { background: #34C759; border-color: #34C759; color: white; }
+
+  .todo-item.urgent .todo-text { color: var(--text); }
+  .todo-item .todo-text { color: #3a3a3c; }
+  .todo-item .todo-sub { display: block; font-size: 0.78rem; color: var(--muted); margin-top: 0.15rem; }
+
+  .badge {
+    display: inline-block;
+    padding: 0.1rem 0.5rem;
+    border-radius: 980px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    vertical-align: middle;
+    margin-left: 0.3rem;
+  }
+  .badge-red { background: #FEE2E2; color: #991B1B; }
+  .badge-green { background: #D1FAE5; color: #065F46; }
+  .badge-gray { background: #F3F4F6; color: #6B7280; }
+
+  /* Schedule */
+  .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    margin: 1rem 0;
+  }
+  .schedule-table th {
+    text-align: left;
+    padding: 0.6rem 0.8rem;
+    font-weight: 600;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    border-bottom: 2px solid var(--border);
+  }
+  .schedule-table td {
+    padding: 0.65rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .schedule-table tr:last-child td { border-bottom: none; }
+
+  /* Shot list */
+  .shot-list { list-style: none; padding: 0; }
+
+  .shot-item {
+    display: flex;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .shot-item:last-child { border-bottom: none; }
+
+  .shot-num {
+    flex-shrink: 0;
+    width: 24px; height: 24px;
+    background: #F0F0F5;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--muted);
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 0.1rem;
+  }
+
+  .shot-name { font-weight: 600; font-size: 0.9rem; }
+  .shot-desc { font-size: 0.82rem; color: var(--muted); margin-top: 0.15rem; line-height: 1.5; }
+
+  /* Location list */
+  .location-list { list-style: none; padding: 0; }
+  .location-list li { padding: 0.8rem 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+  .location-list li:last-child { border-bottom: none; }
+  .loc-name { font-weight: 600; }
+  .loc-desc { color: var(--muted); font-size: 0.82rem; margin-top: 0.15rem; }
+
+  /* Availability */
+  .avail-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.88rem;
+  }
+  .avail-row:last-child { border-bottom: none; }
+  .avail-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .avail-green { background: #34C759; }
+  .avail-red { background: #FF3B30; }
+  .avail-yellow { background: #FF9500; }
+
+  footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 0.75rem;
+    color: #ADADB0;
+  }
+  footer a { color: #ADADB0; text-decoration: none; }
+
+  .player-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(30, 30, 30, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: #fff;
+    padding: 0.7rem 1.2rem;
+    padding-bottom: calc(0.7rem + env(safe-area-inset-bottom));
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.78rem;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+  }
+  .player-bar.visible { transform: translateY(0); }
+  .player-bar button { background: none; border: none; color: #fff; cursor: pointer; font-family: inherit; font-size: 0.78rem; padding: 0.3rem 0.5rem; }
+  .player-bar .now-playing { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; opacity: 0.7; }
+  .player-bar select { background: rgba(255,255,255,0.15); border: none; color: #fff; font-family: inherit; font-size: 0.72rem; padding: 0.2rem 0.4rem; border-radius: 4px; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+<div class="container" id="content">
+
+  <header>
+    <span class="label">Travel Crossville · Pre-Production Brief</span>
+    <h1>April Shoot Plan</h1>
+    <div class="meta">Call recap + to-dos · March 25, 2026</div>
+    <p class="scope">Summary of the pre-production call with PJ. Tentative shoot window: April 7–9. Three videos remaining — outdoors, downtown, and golf refresh. All three could be knocked out in three days if logistics are tight.</p>
+    <span class="pill">3 shoots remaining</span>
+    <span class="pill">April 7–9 tentative</span>
+    <span class="pill">All 3 in 3 days</span>
+
+    <div class="listen-controls">
+      <button class="listen-btn" id="listenBtn" onclick="toggleListen()">▶ Listen</button>
+      <select class="voice-select" id="voiceSelect"></select>
+      <button class="speed-btn" id="speedBtn" onclick="cycleSpeed()">1x</button>
+    </div>
+    <p class="pro-tip">Pro tip: For a better voice, tap <button onclick="selectAllContent()">select all</button> then use iOS Speak Selection (Settings → Accessibility → Spoken Content).</p>
+  </header>
+
+  <!-- TO-DOS -->
+  <section id="sec-todos">
+    <h2>To-Dos</h2>
+    <div class="todo-grid">
+
+      <div class="todo-card">
+        <h4><span style="background:#C42020"></span>Matt</h4>
+
+        <div class="todo-item">
+          <div class="todo-check urgent" onclick="toggleCheck(this)"></div>
+          <div>
+            <span class="todo-text">Send PJ a shot list <span class="badge badge-red">Today/Tomorrow</span></span>
+            <span class="todo-sub">Outdoor/nature video + downtown overview. He asked for it directly on the call so he can reach out to locations and plan logistics.</span>
+          </div>
+        </div>
+
+        <div class="todo-item">
+          <div class="todo-check urgent" onclick="toggleCheck(this)"></div>
+          <div>
+            <span class="todo-text">Talk to Nathan about the outdoor & golf shoot</span>
+            <span class="todo-sub">Confirm he's available April 7–9. Nathan was the on-site coordinator for the golf shoot — need him again for nature locations and potentially golf V2.</span>
+          </div>
+        </div>
+
+        <div class="todo-item">
+          <div class="todo-check" onclick="toggleCheck(this)"></div>
+          <div>
+            <span class="todo-text">Find 2–3 people for talent</span>
+            <span class="todo-sub">Need actors for: restaurant scenes at Poor House (eating, holding drinks), and walking-through shots at the War Memorial. Ask friends, wives, anyone willing. Same people in different clothes can double for multiple spots.</span>
+          </div>
+        </div>
+
+        <div class="todo-item">
+          <div class="todo-check" onclick="toggleCheck(this)"></div>
+          <div>
+            <span class="todo-text">Book lighting guy for restaurant interiors</span>
+            <span class="todo-sub">Indoor shots at Poor House definitely need him. Confirm his schedule around April 7–9 before locking dates.</span>
+          </div>
+        </div>
+
+        <div class="todo-item">
+          <div class="todo-check" onclick="toggleCheck(this)"></div>
+          <div>
+            <span class="todo-text">Find a back porch location for outro shot</span>
+            <span class="todo-sub">Two people sitting with morning coffee. Cinematic, serene. Could be anyone's house — just needs to feel like a Cumberland Plateau morning.</span>
+          </div>
+        </div>
+
+        <div class="todo-item">
+          <div class="todo-check" onclick="toggleCheck(this)"></div>
+          <div>
+            <span class="todo-text">Confirm April 7, 8, 9 and lock the schedule</span>
+            <span class="todo-sub">Once Nathan + lighting guy are confirmed, send PJ final dates. He's blocking his schedule around those three days.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="todo-card">
+        <h4><span style="background:#34C759"></span>PJ</h4>
+
+        <div class="todo-item">
+          <div class="todo-check urgent" onclick="toggleCheck(this)"></div>
+          <div>
+            <span class="todo-text">Talk to Poor House owners <span class="badge badge-red">Today</span></span>
+            <span class="todo-sub">He has a lunch meeting with them today. Goal: get approval to come in at 10am before they open, block the restaurant for a couple of plates and interior shots.</span>
+          </div>
+        </div>
+
+        <div class="todo-item">
+          <div class="todo-check" onclick="toggleCheck(this)"></div>
+          <div>
+            <span class="todo-text">Plan shoot day logistics</span>
+            <span class="todo-sub">PJ's job is to set up the schedule so it flows — one location after another. He said he can get all 3 shoots done in 3 days if the logistics are tight. He'll handle coordinating with all the venues.</span>
+          </div>
+        </div>
+
+        <div class="todo-item">
+          <div class="todo-check" onclick="toggleCheck(this)"></div>
+          <div>
+            <span class="todo-text">Block April 7, 8, 9 on his calendar</span>
+            <span class="todo-sub">He said weekdays work better for him. He'll be more hands-on this time — on location to talk to business owners and keep things moving.</span>
+          </div>
+        </div>
+
+        <div class="todo-item">
+          <div class="todo-check" onclick="toggleCheck(this)"></div>
+          <div>
+            <span class="todo-text">Coordinate Cahoots access</span>
+            <span class="todo-sub">Cahoots boutique is one of the confirmed downtown locations. PJ to reach out and confirm they're okay with a film crew.</span>
+          </div>
+        </div>
+
+        <div class="todo-item">
+          <div class="todo-check" onclick="toggleCheck(this)"></div>
+          <div>
+            <span class="todo-text">Confirm Palace Theater + Playhouse access</span>
+            <span class="todo-sub">Even just exterior shots or a 2-second interior — need to check if crew access is possible during those dates.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCHEDULE -->
+  <section id="sec-schedule">
+    <h2>Proposed Shoot Schedule</h2>
+    <div class="info-box">
+      <strong>Tentative dates: April 7, 8, 9 (Mon–Wed)</strong>
+      PJ said he thinks all three shoots can get knocked out in three days if logistics are set up right — one spot after another. Matt to call it if he needs more time.
+    </div>
+
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th>Video</th>
+          <th>Locations</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Day 1</strong><br><span style="font-size:0.78rem;color:var(--muted)">Apr 7</span></td>
+          <td>Downtown</td>
+          <td>Poor House (10am, before open), Cahoots, War Memorial Museum, Palace Theater, Cumberland County Playhouse, Courthouse</td>
+          <td>Start at Poor House before they open. Lighting guy needed for interior restaurant shots. Talent needed for restaurant + walkthrough shots.</td>
+        </tr>
+        <tr>
+          <td><strong>Day 2</strong><br><span style="font-size:0.78rem;color:var(--muted)">Apr 8</span></td>
+          <td>Outdoors / Nature</td>
+          <td>Cumberland Mountain State Park, Fairfield Glade trails, waterfall locations, plateau overlook, back porch outro</td>
+          <td>Weather dependent. Nathan needed. Start early — want golden hour for the back porch outro shot.</td>
+        </tr>
+        <tr>
+          <td><strong>Day 3</strong><br><span style="font-size:0.78rem;color:var(--muted)">Apr 9</span></td>
+          <td>Golf Refresh / Overflow</td>
+          <td>TBD with Nathan — target greener courses than Feb shoot</td>
+          <td>Early April courses won't be peak green yet — use for B-roll and angles. Full Golf V2 reshoot can wait until May for peak green.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Matt's Blocked Dates (April)</h3>
+    <div class="avail-row"><div class="avail-dot avail-red"></div><span><strong>Apr 11–12</strong> — Music video shoot. Cannot move.</span></div>
+    <div class="avail-row"><div class="avail-dot avail-red"></div><span><strong>Apr 14–15</strong> — Tax season, losing his mind. PJ is out of town anyway.</span></div>
+    <div class="avail-row"><div class="avail-dot avail-red"></div><span><strong>Apr 18</strong> — Saturday, wedding.</span></div>
+    <div class="avail-row"><div class="avail-dot avail-red"></div><span><strong>Apr 24–25</strong> — Wedding.</span></div>
+    <div class="avail-row"><div class="avail-dot avail-green"></div><span><strong>Apr 7–9</strong> — Tentatively blocked for Crossville. Pending Nathan + lighting guy confirmation.</span></div>
+  </section>
+
+  <!-- OUTDOOR SHOT LIST -->
+  <section id="sec-outdoor-shots">
+    <h2>Shot List — Outdoor / Nature Video</h2>
+    <p><em>Vibe: Peaceful. Serene. "Come here, relax and get away." — PJ's words verbatim. 30 seconds. Cinematic bookend structure.</em></p>
+
+    <h3>Opening Sequence — Cinematic Establishing</h3>
+    <ul class="shot-list">
+      <li class="shot-item">
+        <div class="shot-num">1</div>
+        <div>
+          <div class="shot-name">Wide drone — plateau reveal</div>
+          <div class="shot-desc">Open on a slow drone pull-back from the Cumberland Plateau edge, revealing the scale of the landscape. Morning light. Misty gorge if possible.</div>
+        </div>
+      </li>
+      <li class="shot-item">
+        <div class="shot-num">2</div>
+        <div>
+          <div class="shot-name">Tree canopy / trail entrance</div>
+          <div class="shot-desc">Low, slow push through the beginning of a trail into the woods. Light breaking through the canopy. Sets the tone.</div>
+        </div>
+      </li>
+      <li class="shot-item">
+        <div class="shot-num">3</div>
+        <div>
+          <div class="shot-name">Waterfall — static wide + slow push</div>
+          <div class="shot-desc">Cumberland Mountain State Park or Obed River area. Long exposure-style motion blur if using ND filter. Both a wide establishing shot and a tighter closeup of water over rocks.</div>
+        </div>
+      </li>
+    </ul>
+
+    <h3>Nature B-Roll</h3>
+    <ul class="shot-list">
+      <li class="shot-item">
+        <div class="shot-num">4</div>
+        <div>
+          <div class="shot-name">Hiking trail — hikers in frame</div>
+          <div class="shot-desc">Two people walking away from camera down a trail. Natural, not posed. Use Nathan or talent. Shot from behind, sunlight in front of them.</div>
+        </div>
+      </li>
+      <li class="shot-item">
+        <div class="shot-num">5</div>
+        <div>
+          <div class="shot-name">Lake / water reflection</div>
+          <div class="shot-desc">Byrd Lake or Lake Holiday. Still water, reflection of trees. Either drone overhead or tripod at water level with a wide angle.</div>
+        </div>
+      </li>
+      <li class="shot-item">
+        <div class="shot-num">6</div>
+        <div>
+          <div class="shot-name">Wildlife / nature detail</div>
+          <div class="shot-desc">Wildflowers (April bloom), moss on rocks, birds, whatever shows up. Macro or tight shots for texture variety in the edit.</div>
+        </div>
+      </li>
+      <li class="shot-item">
+        <div class="shot-num">7</div>
+        <div>
+          <div class="shot-name">Plateau overlook — drone wide</div>
+          <div class="shot-desc">Drone shot from a plateau escarpment looking out over the valley. The scale shot. Crossville sits at ~1,900 feet — use that elevation.</div>
+        </div>
+      </li>
+      <li class="shot-item">
+        <div class="shot-num">8</div>
+        <div>
+          <div class="shot-name">Fairfield Glade area trails</div>
+          <div class="shot-desc">Wooded trail shots. Mix of tight path shots and wider shots where trees frame the background. Good backup location if state park doesn't cooperate.</div>
+        </div>
+      </li>
+    </ul>
+
+    <h3>Outro — Cinematic Human Moment</h3>
+    <ul class="shot-list">
+      <li class="shot-item">
+        <div class="shot-num">9</div>
+        <div>
+          <div class="shot-name">Back porch — two people, morning coffee <span class="badge badge-red">Key shot</span></div>
+          <div class="shot-desc">PJ specifically called this one out. Two people sitting on a back porch in the morning, tipping coffee, relaxed. Feels like a retreat. Needs the right porch — trees in background, soft morning light. Find a location that reads Cumberland Plateau, not suburban.</div>
+        </div>
+      </li>
+      <li class="shot-item">
+        <div class="shot-num">10</div>
+        <div>
+          <div class="shot-name">Logo end card — "Play the Plateau"</div>
+          <div class="shot-desc">5–7 seconds. explorecrossville.com. Same as Golf V1 end card treatment.</div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- DOWNTOWN SHOT LIST -->
+  <section id="sec-downtown-shots">
+    <h2>Shot List — Downtown Video</h2>
+    <p><em>Confirmed locations from the call. PJ wants exterior shots of downtown spots that he can also use externally / separately.</em></p>
+
+    <h3>Confirmed Locations</h3>
+    <ul class="location-list">
+      <li>
+        <div class="loc-name">Poor House Restaurant <span class="badge badge-red">Needs lighting guy</span></div>
+        <div class="loc-desc">Interior restaurant shots — PJ coordinating with owners for 10am pre-open access. Two plates of food made for camera. Restaurant blocked off just for the shoot. Need talent here for eating/drinking shots.</div>
+      </li>
+      <li>
+        <div class="loc-name">Cahoots Boutique</div>
+        <div class="loc-desc">Boutique-style shopping. Interior and exterior. Lifestyle shots — browsing, shopping, carrying bags. PJ to confirm access.</div>
+      </li>
+      <li>
+        <div class="loc-name">War Memorial Museum</div>
+        <div class="loc-desc">Historic + serious. Exterior architectural shots. Talent walking through the frame — same people from restaurant in different clothes. Good for one or two solid shots, not a main feature.</div>
+      </li>
+      <li>
+        <div class="loc-name">Palace Theater (est. 1938)</div>
+        <div class="loc-desc">Even just a 2-second shot — PJ's words. Art Deco exterior is iconic. Marquee if showing anything. Quick but important for the downtown feeling.</div>
+      </li>
+      <li>
+        <div class="loc-name">Cumberland County Playhouse</div>
+        <div class="loc-desc">One of the largest professional rural theaters in the country. Exterior + lobby if accessible. Strong architectural shot.</div>
+      </li>
+      <li>
+        <div class="loc-name">Courthouse</div>
+        <div class="loc-desc">"Beautiful" per PJ. One small shot — classic downtown anchor. Exterior only.</div>
+      </li>
+    </ul>
+
+    <h3>Talent Notes</h3>
+    <div class="info-box">
+      Matt is sourcing talent — friends, wives, whoever's willing. PJ said he'd find people if he had to, but prefers Matt handles it. Plan: use the same 2–3 people at restaurant shots, then put them in different clothes for War Memorial walkthrough shots. Keep it natural — not stiff or posed.
+    </div>
+  </section>
+
+  <!-- GOLF -->
+  <section id="sec-golf">
+    <h2>Golf — Where Things Stand</h2>
+    <p>The original golf commercial is complete and delivered. Two more golf things to think about:</p>
+
+    <h3>Golf Refresh (Day 3 / April)</h3>
+    <div class="info-box">
+      PJ mentioned a golf refresh — more courses, greener fairways. Early April won't be peak green yet, so Day 3 is more about getting new angles and B-roll that couldn't be captured in February (better light, more coverage). Talk to Nathan about what's worth shooting in early April vs. waiting for May.
+    </div>
+
+    <h3>Golf V2 Full Reshoot (May) <span class="badge badge-gray">Later</span></h3>
+    <div class="info-box">
+      The real Golf V2 — styled after the Facebook reference PJ sent. Greener courses, more courses, new visual approach. Target late April or May when fairways are at peak green. Nathan coordinates course access. No rush on this one.
+    </div>
+  </section>
+
+  <!-- LOGISTICS -->
+  <section id="sec-logistics">
+    <h2>Logistics Notes</h2>
+
+    <h3>Key People</h3>
+    <ul class="location-list">
+      <li>
+        <div class="loc-name">PJ — Travel Crossville</div>
+        <div class="loc-desc">Client. On-site for all shoots this time around. Handles venue coordination, business owner relationships, logistics. +1 931-787-0551.</div>
+      </li>
+      <li>
+        <div class="loc-name">Nathan Fontenot</div>
+        <div class="loc-desc">On-site coordinator — was on the ground for the golf shoot while PJ was in Knoxville. Needs to be looped in ASAP for April dates and outdoor location scouting.</div>
+      </li>
+      <li>
+        <div class="loc-name">Lighting Guy (TBD)</div>
+        <div class="loc-desc">Required for interior restaurant shots at Poor House. Matt needs to confirm his availability for April 7–9 before locking dates.</div>
+      </li>
+      <li>
+        <div class="loc-name">Talent (TBD)</div>
+        <div class="loc-desc">2–3 people needed. Restaurant shots + War Memorial walkthrough. Matt sourcing from his network. Different outfits to double as different scenes.</div>
+      </li>
+    </ul>
+
+    <h3>Poor House Restaurant — Shoot Plan</h3>
+    <div class="info-box">
+      PJ is pitching to owners today at lunch. Plan: arrive at 10am before they open at 11. Restaurant blocked off for filming. They make 1–2 plates of hero food for camera. Talent eats and holds drinks. Get interior ambiance shots, food close-ups, people at the table. In and out before lunch rush.
+    </div>
+  </section>
+
+  <footer>
+    <p>Travel Crossville project brief by Matt Matheson · <a href="https://mattmatheson.github.io/RandomPhoneBuilds/travel-crossville/">Full Project Brief →</a></p>
+  </footer>
+
+</div>
+
+<!-- Player Bar -->
+<div class="player-bar" id="playerBar">
+  <button id="playPauseBtn" onclick="toggleListen()">⏸</button>
+  <span class="now-playing" id="nowPlaying">—</span>
+  <select id="barVoiceSelect" class="voice-select" onchange="document.getElementById('voiceSelect').value=this.value; selectedVoice=this.value;"></select>
+  <button id="barSpeedBtn" onclick="cycleSpeed()">1x</button>
+  <button onclick="stopListen()">✕</button>
+</div>
+
+<script>
+// ── To-do checkboxes ──────────────────────────────────────────────────────
+function toggleCheck(el) {
+  el.classList.toggle('done');
+  if (el.classList.contains('done')) el.textContent = '✓';
+  else el.textContent = '';
+}
+
+// ── Speech ────────────────────────────────────────────────────────────────
+const VOICE_WHITELIST = ['samantha','karen','daniel','moira','tessa','ava','allison','tom','aaron','nicky','evan','zoe','joelle','fiona','martha','arthur','google us english','google uk english'];
+let selectedVoice = '';
+let currentSpeed = 1;
+const speeds = [0.8, 1, 1.2, 1.5];
+let speedIndex = 1;
+let isPlaying = false;
+let isPaused = false;
+let keepAlive = null;
+
+function populateVoices() {
+  const voices = speechSynthesis.getVoices();
+  const sel1 = document.getElementById('voiceSelect');
+  const sel2 = document.getElementById('barVoiceSelect');
+  sel1.innerHTML = ''; sel2.innerHTML = '';
+  const filtered = voices.filter(v => VOICE_WHITELIST.some(w => v.name.toLowerCase().includes(w)));
+  filtered.forEach(v => {
+    sel1.add(new Option(v.name, v.name));
+    sel2.add(new Option(v.name, v.name));
+  });
+  if (filtered.length > 0) selectedVoice = filtered[0].name;
+}
+speechSynthesis.onvoiceschanged = populateVoices;
+populateVoices();
+
+document.getElementById('voiceSelect').onchange = function() {
+  selectedVoice = this.value;
+  document.getElementById('barVoiceSelect').value = this.value;
+};
+
+function cycleSpeed() {
+  speedIndex = (speedIndex + 1) % speeds.length;
+  currentSpeed = speeds[speedIndex];
+  document.getElementById('speedBtn').textContent = currentSpeed + 'x';
+  document.getElementById('barSpeedBtn').textContent = currentSpeed + 'x';
+}
+
+function getReadableElements() {
+  const sections = document.querySelectorAll('#content section');
+  const elements = [];
+  sections.forEach(sec => {
+    sec.querySelectorAll('h2, h3, p, .todo-text, .shot-name, .shot-desc, .loc-name, .loc-desc, .info-box, .avail-row').forEach(el => {
+      const text = el.textContent.trim();
+      if (text && text.length > 3) elements.push({ el, text, section: sec, isHeading: /^H[23]$/.test(el.tagName) });
+    });
+  });
+  return elements;
+}
+
+function toggleListen() {
+  if (isPlaying && !isPaused) {
+    speechSynthesis.pause(); isPaused = true;
+    document.getElementById('playPauseBtn').textContent = '▶';
+    document.getElementById('listenBtn').textContent = '▶ Resume';
+  } else if (isPaused) {
+    speechSynthesis.resume(); isPaused = false;
+    document.getElementById('playPauseBtn').textContent = '⏸';
+    document.getElementById('listenBtn').textContent = '⏸ Pause';
+  } else { startReading(); }
+}
+
+function startReading() {
+  speechSynthesis.cancel();
+  const elements = getReadableElements();
+  if (!elements.length) return;
+  isPlaying = true; isPaused = false;
+  document.getElementById('playerBar').classList.add('visible');
+  document.getElementById('playPauseBtn').textContent = '⏸';
+  document.getElementById('listenBtn').textContent = '⏸ Pause';
+  keepAlive = setInterval(() => { if (isPlaying && !isPaused) speechSynthesis.resume(); }, 10000);
+  readElement(elements, 0);
+}
+
+function readElement(elements, i) {
+  if (i >= elements.length || !isPlaying) { stopListen(); return; }
+  const { el, text, section, isHeading } = elements[i];
+  document.querySelectorAll('section.reading').forEach(s => s.classList.remove('reading'));
+  section.classList.add('reading');
+  section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById('nowPlaying').textContent = text.substring(0, 80) + (text.length > 80 ? '…' : '');
+  const voice = speechSynthesis.getVoices().find(v => v.name === selectedVoice);
+  const utt = new SpeechSynthesisUtterance(text);
+  if (voice) utt.voice = voice;
+  utt.rate = isHeading ? currentSpeed * 0.9 : currentSpeed;
+  if (isHeading) utt.pitch = 1.05;
+  utt.onend = () => setTimeout(() => readElement(elements, i + 1), isHeading ? 400 : 200);
+  speechSynthesis.speak(utt);
+}
+
+function stopListen() {
+  speechSynthesis.cancel();
+  isPlaying = false; isPaused = false;
+  if (keepAlive) clearInterval(keepAlive);
+  document.getElementById('playerBar').classList.remove('visible');
+  document.getElementById('listenBtn').textContent = '▶ Listen';
+  document.querySelectorAll('section.reading').forEach(s => s.classList.remove('reading'));
+}
+
+function selectAllContent() {
+  const range = document.createRange();
+  range.selectNodeContents(document.getElementById('content'));
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+</script>
+</body>
+</html>
