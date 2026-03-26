@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subaru Outback — Vehicle & Loan History</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent: #C42020;
+      --bg: #FAFAFA;
+      --card-bg: #FFFFFF;
+      --text-primary: #1D1D1F;
+      --text-secondary: #6E6E73;
+      --divider: #E5E5E7;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 100px;
+    }
+
+    .header {
+      background: #1D1D1F;
+      color: #fff;
+      padding: 48px 24px 36px;
+    }
+
+    .header-inner { max-width: 680px; margin: 0 auto; }
+
+    .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .scope {
+      font-size: 15px;
+      color: #999;
+      margin-bottom: 20px;
+    }
+
+    .listen-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    #listenBtn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 2rem;
+      padding: 0.55rem 1.4rem;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    #speedBtn {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border: none;
+      border-radius: 2rem;
+      padding: 0.55rem 1rem;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    #voiceSelect {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border: none;
+      border-radius: 2rem;
+      padding: 0.55rem 1rem;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      max-width: 160px;
+    }
+
+    #voiceSelect option { color: #000; }
+
+    .pro-tip {
+      font-size: 11px;
+      color: #666;
+      margin-top: 10px;
+    }
+
+    #selectAllBtn {
+      color: var(--accent);
+      background: none;
+      border: none;
+      font-size: 11px;
+      font-family: inherit;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+    }
+
+    main {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 16px;
+    }
+
+    section {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 22px 20px;
+      margin-bottom: 16px;
+      border: 1px solid var(--divider);
+      transition: all 0.3s ease;
+    }
+
+    section.reading {
+      border-left: 3px solid var(--accent);
+      background: rgba(196, 32, 32, 0.04);
+      padding-left: 1rem;
+      border-radius: 4px;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .row:last-child { border-bottom: none; }
+
+    .row-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      flex: 1;
+    }
+
+    .row-value {
+      font-size: 13px;
+      font-weight: 600;
+      text-align: right;
+      flex: 1;
+    }
+
+    .highlight-box {
+      background: #f0faf5;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 14px;
+    }
+
+    .highlight-box .h-label {
+      font-size: 11px;
+      color: #27ae60;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .highlight-box .h-val {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .timeline { display: flex; flex-direction: column; }
+
+    .event {
+      display: flex;
+      gap: 14px;
+      position: relative;
+    }
+
+    .event:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 34px;
+      bottom: 0;
+      width: 2px;
+      background: var(--divider);
+    }
+
+    .dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .dot-a { background: #e8f4fd; }
+    .dot-b { background: #fef9e7; }
+    .dot-c { background: #fde8e8; }
+    .dot-d { background: #eafaf1; }
+
+    .ev-body { padding-bottom: 22px; flex: 1; }
+
+    .ev-date { font-size: 11px; color: var(--text-secondary); margin-bottom: 2px; }
+    .ev-title { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+    .ev-detail { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+    .note {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-style: italic;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    /* Player bar */
+    #playerBar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(30, 30, 30, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 12px 20px;
+      padding-bottom: calc(12px + env(safe-area-inset-bottom));
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+      z-index: 100;
+    }
+
+    #playerBar.visible { transform: translateY(0); }
+
+    .player-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #playPauseBtn, #stopBtn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 0 4px;
+      flex-shrink: 0;
+    }
+
+    #nowPlaying {
+      flex: 1;
+      font-size: 13px;
+      color: #ccc;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    #barSpeedBtn {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    #barVoiceSelect {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 4px 8px;
+      font-size: 12px;
+      font-family: inherit;
+      cursor: pointer;
+      max-width: 110px;
+      flex-shrink: 0;
+    }
+
+    #barVoiceSelect option { color: #000; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="label">Tax Reference Document</div>
+    <h1>2013 Subaru Outback</h1>
+    <p class="scope">Vehicle purchase, original financing, and refinance history — compiled from Gmail, March 2026.</p>
+
+    <div class="listen-row">
+      <button id="listenBtn">▶ Listen</button>
+      <select id="voiceSelect"><option>Loading voices…</option></select>
+      <button id="speedBtn">1x</button>
+    </div>
+    <p class="pro-tip">
+      Pro tip: For a better voice, <button id="selectAllBtn">select all</button> then use iOS Speak Selection (Settings › Accessibility › Spoken Content › Speak Selection).
+    </p>
+  </div>
+</div>
+
+<main id="mainContent">
+
+  <section id="s-purchase">
+    <div class="section-title">Purchase Details</div>
+    <div class="row"><span class="row-label">Vehicle</span><span class="row-value">2013 Subaru Outback</span></div>
+    <div class="row"><span class="row-label">Seller</span><span class="row-value">Carvana</span></div>
+    <div class="row"><span class="row-label">Order Number</span><span class="row-value">#4111233</span></div>
+    <div class="row"><span class="row-label">Order Confirmed</span><span class="row-value">January 7, 2020</span></div>
+    <div class="row"><span class="row-label">Pickup Date</span><span class="row-value">January 9, 2020</span></div>
+    <div class="row"><span class="row-label">Pickup Location</span><span class="row-value">4270 Kenilwood Dr., Nashville TN 37204</span></div>
+  </section>
+
+  <section id="s-original">
+    <div class="section-title">Original Financing</div>
+    <div class="row"><span class="row-label">Lender</span><span class="row-value">Capital One Auto</span></div>
+    <div class="row"><span class="row-label">Loan Start</span><span class="row-value">~January 2020</span></div>
+    <div class="row"><span class="row-label">Payoff Balance at Refinance</span><span class="row-value">$11,304.16</span></div>
+    <p class="note">Capital One confirmed as original lender via multiple "loyal customer" auto emails beginning mid-2021. Original welcome/account email not found in Gmail — may need a loan history statement from Capital One directly for exact original loan amount, APR, and start date.</p>
+  </section>
+
+  <section id="s-refi">
+    <div class="section-title">Refinance — via RateGenius → Credit Union 1</div>
+    <div class="row"><span class="row-label">Refinance Broker</span><span class="row-value">RateGenius</span></div>
+    <div class="row"><span class="row-label">Application ID</span><span class="row-value">#6728900</span></div>
+    <div class="row"><span class="row-label">Application Submitted</span><span class="row-value">March 25, 2022</span></div>
+    <div class="row"><span class="row-label">Approved</span><span class="row-value">March 25, 2022</span></div>
+    <div class="row"><span class="row-label">Documents Sent to Matt</span><span class="row-value">March 28, 2022</span></div>
+    <div class="row"><span class="row-label">Documents Returned</span><span class="row-value">April 4, 2022</span></div>
+    <div class="row"><span class="row-label">Loan Funded</span><span class="row-value">April 22, 2022</span></div>
+    <div class="row"><span class="row-label">New Lender</span><span class="row-value">Credit Union 1</span></div>
+    <div class="row"><span class="row-label">First Payment Due</span><span class="row-value">May 24, 2022</span></div>
+  </section>
+
+  <section id="s-terms">
+    <div class="section-title">New Loan Terms (Credit Union 1)</div>
+    <div class="row"><span class="row-label">Payoff of Capital One Loan</span><span class="row-value">$11,304.16</span></div>
+    <div class="row"><span class="row-label">Interest Rate</span><span class="row-value">3.75%</span></div>
+    <div class="row"><span class="row-label">Loan Term</span><span class="row-value">60 months</span></div>
+    <div class="row"><span class="row-label">Monthly Payment</span><span class="row-value">$228.56</span></div>
+    <div class="row"><span class="row-label">Down Payment</span><span class="row-value">$0.00</span></div>
+    <div class="row"><span class="row-label">GAP Insurance Added</span><span class="row-value">$575.00</span></div>
+    <div class="highlight-box">
+      <div class="h-label">Estimated Monthly Savings vs. Old Loan</div>
+      <div class="h-val">~$64 – $75 / month</div>
+    </div>
+  </section>
+
+  <section id="s-timeline">
+    <div class="section-title">Full Timeline</div>
+    <div class="timeline">
+
+      <div class="event">
+        <div class="dot dot-a">🚗</div>
+        <div class="ev-body">
+          <div class="ev-date">January 7, 2020</div>
+          <div class="ev-title">Purchased from Carvana</div>
+          <div class="ev-detail">Order #4111233 confirmed via email. Pickup scheduled at Nashville, TN on January 9, 2020.</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="dot dot-b">🏦</div>
+        <div class="ev-body">
+          <div class="ev-date">~January 2020</div>
+          <div class="ev-title">Original Loan — Capital One Auto</div>
+          <div class="ev-detail">Financed through Capital One at the time of Carvana purchase. Original APR and exact loan amount to be confirmed via Capital One records.</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="dot dot-c">📋</div>
+        <div class="ev-body">
+          <div class="ev-date">March 4, 2022</div>
+          <div class="ev-title">Caribou Refi Attempt — Did Not Complete</div>
+          <div class="ev-detail">Applied through Caribou auto refinancing platform on March 4, 2022. Account was created but no funded loan resulted from this application.</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="dot dot-c">📝</div>
+        <div class="ev-body">
+          <div class="ev-date">March 25, 2022</div>
+          <div class="ev-title">RateGenius Application Submitted & Approved</div>
+          <div class="ev-detail">Application #6728900 submitted and approved same day. Old Capital One loan payoff balance: $11,304.16.</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="dot dot-c">✍️</div>
+        <div class="ev-body">
+          <div class="ev-date">March 28 – April 13, 2022</div>
+          <div class="ev-title">Documents Signed & Finalized</div>
+          <div class="ev-detail">Loan documents sent March 28, returned April 4. Final required items resolved by April 13. RateGenius loan specialists: Georgia Granger and Isaiah Flores.</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="dot dot-d">✅</div>
+        <div class="ev-body">
+          <div class="ev-date">April 22, 2022</div>
+          <div class="ev-title">Refinance Funded — Credit Union 1</div>
+          <div class="ev-detail">New loan live. RateGenius sent payoff check to Capital One to close old loan. First payment to Credit Union 1 due May 24, 2022. Terms: 3.75% interest · 60 months · $228.56/mo.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="s-notes">
+    <div class="section-title">Notes for Drew / Tax Reference</div>
+    <div class="row"><span class="row-label">Tax Years Affected</span><span class="row-value">2020, 2021, 2022+</span></div>
+    <div class="row"><span class="row-label">Original Lender (2020–Apr 2022)</span><span class="row-value">Capital One Auto</span></div>
+    <div class="row"><span class="row-label">Refinance Lender (Apr 2022 onward)</span><span class="row-value">Credit Union 1 (via RateGenius)</span></div>
+    <div class="row"><span class="row-label">Payoff Balance at Refi</span><span class="row-value">$11,304.16</span></div>
+    <div class="row"><span class="row-label">RateGenius App ID</span><span class="row-value">#6728900</span></div>
+    <p class="note">If auto loan interest is deductible (e.g., vehicle used for business), request annual interest statements from both Capital One (for 2020–2022) and Credit Union 1 (for 2022 onward). Original Capital One loan welcome email not in Gmail — contact Capital One directly for original loan amount and APR.</p>
+  </section>
+
+</main>
+
+<!-- Sticky player bar -->
+<div id="playerBar">
+  <div class="player-inner">
+    <button id="playPauseBtn">⏸</button>
+    <span id="nowPlaying">Playing…</span>
+    <select id="barVoiceSelect"></select>
+    <button id="barSpeedBtn">1x</button>
+    <button id="stopBtn">⏹</button>
+  </div>
+</div>
+
+<script>
+  // ─── Voice setup ───────────────────────────────────────────────────────────
+  const WHITELIST = ['samantha','karen','daniel','moira','tessa','ava','allison','tom','aaron','nicky','evan','zoe','joelle','fiona','martha','arthur','google us english','google uk english'];
+  let voices = [];
+
+  function loadVoices() {
+    const all = speechSynthesis.getVoices();
+    voices = all.filter(v => WHITELIST.some(w => v.name.toLowerCase().includes(w)));
+    if (!voices.length) voices = all.slice(0, 5);
+
+    [voiceSelect, barVoiceSelect].forEach(sel => {
+      sel.innerHTML = '';
+      voices.forEach((v, i) => {
+        const o = document.createElement('option');
+        o.value = i;
+        o.textContent = v.name.replace('com.apple.ttsbundle.', '').replace('-compact','');
+        sel.appendChild(o);
+      });
+    });
+  }
+
+  speechSynthesis.onvoiceschanged = loadVoices;
+  loadVoices();
+
+  // ─── Speed ─────────────────────────────────────────────────────────────────
+  const speeds = [0.8, 1, 1.2, 1.5];
+  let speedIdx = 1;
+
+  function cycleSpeed() {
+    speedIdx = (speedIdx + 1) % speeds.length;
+    const label = speeds[speedIdx] + 'x';
+    speedBtn.textContent = label;
+    barSpeedBtn.textContent = label;
+  }
+
+  speedBtn.addEventListener('click', cycleSpeed);
+  barSpeedBtn.addEventListener('click', cycleSpeed);
+
+  // ─── TTS engine ────────────────────────────────────────────────────────────
+  const sections = Array.from(document.querySelectorAll('main section'));
+  const sectionTitles = sections.map(s => (s.querySelector('.section-title') || {}).textContent || '');
+
+  let chunks = [];
+  let chunkIdx = 0;
+  let isPlaying = false;
+  let isPaused = false;
+  let resumeInterval = null;
+
+  function getVoice() {
+    const idx = parseInt(voiceSelect.value) || 0;
+    return voices[idx] || null;
+  }
+
+  function buildChunks() {
+    chunks = [];
+    sections.forEach((sec, si) => {
+      const els = sec.querySelectorAll('.section-title, .row, .ev-title, .ev-date, .ev-detail, .h-label, .h-val, .note, p');
+      els.forEach(el => {
+        const text = el.textContent.trim();
+        if (!text) return;
+        const isHeading = el.matches('.section-title, .ev-title, h2, h3');
+        chunks.push({ text, section: sec, sectionTitle: sectionTitles[si], isHeading });
+      });
+    });
+  }
+
+  function speakChunk(idx) {
+    if (idx >= chunks.length) { stopPlayback(); return; }
+
+    const chunk = chunks[idx];
+    chunkIdx = idx;
+
+    // Highlight section
+    sections.forEach(s => s.classList.remove('reading'));
+    chunk.section.classList.add('reading');
+    if (idx === 0 || chunks[idx - 1]?.section !== chunk.section) {
+      chunk.section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    nowPlaying.textContent = chunk.sectionTitle;
+
+    const utt = new SpeechSynthesisUtterance(chunk.text);
+    utt.voice = getVoice();
+    utt.rate = chunk.isHeading ? speeds[speedIdx] * 0.9 : speeds[speedIdx];
+    utt.pitch = chunk.isHeading ? 1.05 : 1;
+
+    const pause = chunk.isHeading ? 400 : 200;
+
+    utt.onend = () => {
+      setTimeout(() => {
+        if (isPlaying && !isPaused) speakChunk(idx + 1);
+      }, pause);
+    };
+
+    speechSynthesis.speak(utt);
+  }
+
+  function startPlayback() {
+    buildChunks();
+    chunkIdx = 0;
+    isPlaying = true;
+    isPaused = false;
+    playPauseBtn.textContent = '⏸';
+    playerBar.classList.add('visible');
+
+    // Chrome keep-alive
+    resumeInterval = setInterval(() => {
+      if (isPlaying && !isPaused) speechSynthesis.resume();
+    }, 10000);
+
+    speakChunk(0);
+  }
+
+  function stopPlayback() {
+    speechSynthesis.cancel();
+    isPlaying = false;
+    isPaused = false;
+    clearInterval(resumeInterval);
+    playerBar.classList.remove('visible');
+    sections.forEach(s => s.classList.remove('reading'));
+    playPauseBtn.textContent = '▶';
+    listenBtn.textContent = '▶ Listen';
+  }
+
+  function togglePause() {
+    if (!isPlaying) return;
+    if (isPaused) {
+      speechSynthesis.resume();
+      isPaused = false;
+      playPauseBtn.textContent = '⏸';
+    } else {
+      speechSynthesis.pause();
+      isPaused = true;
+      playPauseBtn.textContent = '▶';
+    }
+  }
+
+  listenBtn.addEventListener('click', () => {
+    if (isPlaying) { stopPlayback(); listenBtn.textContent = '▶ Listen'; }
+    else { listenBtn.textContent = '⏹ Stop'; startPlayback(); }
+  });
+
+  playPauseBtn.addEventListener('click', togglePause);
+  stopBtn.addEventListener('click', stopPlayback);
+
+  // Keep voice selects in sync
+  voiceSelect.addEventListener('change', () => { barVoiceSelect.value = voiceSelect.value; });
+  barVoiceSelect.addEventListener('change', () => { voiceSelect.value = barVoiceSelect.value; });
+
+  // Select all
+  selectAllBtn.addEventListener('click', () => {
+    const range = document.createRange();
+    range.selectNodeContents(document.getElementById('mainContent'));
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  });
+</script>
+
+</body>
+</html>
