@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Straight — Matt's Finance Overview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent: #C42020;
+      --green: #1a9e5c;
+      --yellow: #c47d00;
+      --bg: #FAFAFA;
+      --card: #FFFFFF;
+      --text: #1D1D1F;
+      --muted: #6E6E73;
+      --divider: #E5E5E7;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 100px;
+    }
+
+    .header {
+      background: #1D1D1F;
+      color: #fff;
+      padding: 48px 24px 36px;
+    }
+
+    .header-inner { max-width: 680px; margin: 0 auto; }
+
+    .back {
+      display: inline-block;
+      font-size: 12px;
+      color: #666;
+      text-decoration: none;
+      margin-bottom: 20px;
+    }
+
+    .back:hover { color: #fff; }
+
+    .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 6px;
+    }
+
+    .scope {
+      font-size: 15px;
+      color: #999;
+      margin-bottom: 24px;
+    }
+
+    /* Listen controls */
+    .listen-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    #listenBtn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 2rem;
+      padding: 0.55rem 1.4rem;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    #speedBtn {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border: none;
+      border-radius: 2rem;
+      padding: 0.55rem 1rem;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    #voiceSelect {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border: none;
+      border-radius: 2rem;
+      padding: 0.55rem 1rem;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      max-width: 160px;
+    }
+
+    #voiceSelect option { color: #000; }
+
+    .pro-tip {
+      font-size: 11px;
+      color: #666;
+      margin-top: 10px;
+    }
+
+    #selectAllBtn {
+      color: var(--accent);
+      background: none;
+      border: none;
+      font-size: 11px;
+      font-family: inherit;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+    }
+
+    /* Summary bar */
+    .summary-bar {
+      background: #111;
+      padding: 20px 24px;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .summary-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .stat { flex: 1; min-width: 120px; }
+
+    .stat-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 3px;
+    }
+
+    .stat-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .stat-value.red { color: #e05252; }
+    .stat-value.yellow { color: #f0c040; }
+
+    main {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 16px;
+    }
+
+    .section-header {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 28px 0 12px;
+    }
+
+    .section-header:first-child { margin-top: 0; }
+
+    /* Debt cards */
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      border: 1px solid var(--divider);
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .card.reading {
+      border-left: 3px solid var(--accent);
+      background: rgba(196, 32, 32, 0.03);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .icon-red    { background: rgba(196,32,32,0.1); }
+    .icon-yellow { background: rgba(196,125,0,0.1); }
+    .icon-blue   { background: rgba(0,100,200,0.1); }
+    .icon-gray   { background: rgba(100,100,100,0.1); }
+
+    .card-title-group { flex: 1; }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .card-subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    .card-amount {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .amount-value {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .amount-value.bad { color: var(--accent); }
+    .amount-value.ok  { color: var(--yellow); }
+    .amount-value.unknown { color: var(--muted); font-size: 14px; }
+
+    .amount-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .card-body {
+      padding: 0 18px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--divider);
+      font-size: 13px;
+    }
+
+    .row:last-child { border-bottom: none; }
+
+    .row-label { color: var(--muted); }
+    .row-value { font-weight: 600; text-align: right; }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    .pill-red    { background: rgba(196,32,32,0.1);  color: var(--accent); }
+    .pill-yellow { background: rgba(196,125,0,0.1);  color: var(--yellow); }
+    .pill-green  { background: rgba(26,158,92,0.1);  color: var(--green);  }
+    .pill-gray   { background: rgba(100,100,100,0.1); color: #666; }
+
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+    .alert-box {
+      background: rgba(196,32,32,0.06);
+      border: 1px solid rgba(196,32,32,0.2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin: 12px 0;
+      font-size: 12px;
+      color: #a01818;
+      line-height: 1.5;
+    }
+
+    .info-box {
+      background: rgba(196,125,0,0.06);
+      border: 1px solid rgba(196,125,0,0.2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin: 12px 0;
+      font-size: 12px;
+      color: #8a5800;
+      line-height: 1.5;
+    }
+
+    .note-box {
+      background: #f5f5f7;
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin: 12px 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-style: italic;
+    }
+
+    /* Player bar */
+    #playerBar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(30, 30, 30, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 12px 20px;
+      padding-bottom: calc(12px + env(safe-area-inset-bottom));
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+      z-index: 100;
+    }
+
+    #playerBar.visible { transform: translateY(0); }
+
+    .player-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #playPauseBtn, #stopBtn {
+      background: none; border: none; color: #fff;
+      font-size: 20px; cursor: pointer; padding: 0 4px; flex-shrink: 0;
+    }
+
+    #nowPlaying {
+      flex: 1; font-size: 13px; color: #ccc;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+
+    #barSpeedBtn {
+      background: rgba(255,255,255,0.15); color: #fff; border: none;
+      border-radius: 20px; padding: 4px 10px; font-size: 12px;
+      font-weight: 600; font-family: inherit; cursor: pointer; flex-shrink: 0;
+    }
+
+    #barVoiceSelect {
+      background: rgba(255,255,255,0.15); color: #fff; border: none;
+      border-radius: 20px; padding: 4px 8px; font-size: 12px;
+      font-family: inherit; cursor: pointer; max-width: 110px; flex-shrink: 0;
+    }
+
+    #barVoiceSelect option { color: #000; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <a class="back" href="../">← Random Phone Builds</a>
+    <div class="label">Personal Finance</div>
+    <h1>Getting Straight</h1>
+    <p class="scope">A living overview of debts, taxes, and financial obligations — for Drew and anyone else who needs the picture fast.</p>
+
+    <div class="listen-row">
+      <button id="listenBtn">▶ Listen</button>
+      <select id="voiceSelect"><option>Loading…</option></select>
+      <button id="speedBtn">1x</button>
+    </div>
+    <p class="pro-tip">
+      Pro tip: For a better voice, <button id="selectAllBtn">select all</button> then use iOS Speak Selection (Settings › Accessibility › Spoken Content).
+    </p>
+  </div>
+</div>
+
+<!-- Summary bar -->
+<div class="summary-bar">
+  <div class="summary-inner">
+    <div class="stat">
+      <div class="stat-label">Known Debt</div>
+      <div class="stat-value red">~$11,300</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">IRS Status</div>
+      <div class="stat-value yellow">Active</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Open Items</div>
+      <div class="stat-value">4</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Last Updated</div>
+      <div class="stat-value" style="font-size:15px;color:#888;">March 2026</div>
+    </div>
+  </div>
+</div>
+
+<main id="mainContent">
+
+  <!-- TAXES -->
+  <div class="section-header">Taxes</div>
+
+  <section class="card" id="card-irs">
+    <div class="card-header">
+      <div class="card-icon icon-red">🏛️</div>
+      <div class="card-title-group">
+        <div class="card-title">IRS — Unfiled Taxes</div>
+        <div class="card-subtitle">Multiple years · Working with Drew</div>
+      </div>
+      <div class="card-amount">
+        <div class="amount-value unknown">Active</div>
+        <div class="amount-label">Project</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row"><span class="row-label">Status</span><span class="row-value"><span class="status-pill pill-red"><span class="dot"></span>Actively Resolving</span></span></div>
+      <div class="row"><span class="row-label">Years Affected</span><span class="row-value">3+ years unfiled</span></div>
+      <div class="row"><span class="row-label">IRS Payments Found</span><span class="row-value">$26,720.07</span></div>
+      <div class="row"><span class="row-label">Bank Statements Processed</span><span class="row-value">144 statements OCR'd</span></div>
+      <div class="row"><span class="row-label">IRS Action</span><span class="row-value">Forced $1K seizure — April 2025</span></div>
+      <div class="row"><span class="row-label">CPA / Point of Contact</span><span class="row-value">Drew</span></div>
+      <div class="alert-box">⚠️ IRS is actively collecting. This is the highest-priority item. All supporting documents are being compiled.</div>
+    </div>
+  </section>
+
+  <!-- CREDIT CARDS -->
+  <div class="section-header">Credit Cards</div>
+
+  <section class="card" id="card-discover">
+    <div class="card-header">
+      <div class="card-icon icon-yellow">💳</div>
+      <div class="card-title-group">
+        <div class="card-title">Discover Card</div>
+        <div class="card-subtitle">Ending in 0029</div>
+      </div>
+      <div class="card-amount">
+        <div class="amount-value bad">$5,528.64</div>
+        <div class="amount-label">Balance</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row"><span class="row-label">Status</span><span class="row-value"><span class="status-pill pill-yellow"><span class="dot"></span>Carrying Balance</span></span></div>
+      <div class="row"><span class="row-label">Statement Balance</span><span class="row-value">$5,528.64</span></div>
+      <div class="row"><span class="row-label">Minimum Payment</span><span class="row-value">$121.00</span></div>
+      <div class="row"><span class="row-label">Payment Due</span><span class="row-value">April 7, 2026</span></div>
+      <div class="row"><span class="row-label">Statement Date</span><span class="row-value">March 10, 2026</span></div>
+      <div class="info-box">Paying minimums only means this will grow. Goal: find a path to pay this down aggressively once taxes and loans are stabilized.</div>
+    </div>
+  </section>
+
+  <!-- AUTO & LOANS -->
+  <div class="section-header">Auto & Loans</div>
+
+  <section class="card" id="card-cu1">
+    <div class="card-header">
+      <div class="card-icon icon-blue">🚗</div>
+      <div class="card-title-group">
+        <div class="card-title">Credit Union 1 — Auto Loan</div>
+        <div class="card-subtitle">2013 Subaru Outback · Loan ending 35L1</div>
+      </div>
+      <div class="card-amount">
+        <div class="amount-value ok">~$2,700</div>
+        <div class="amount-label">Remaining</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row"><span class="row-label">Status</span><span class="row-value"><span class="status-pill pill-yellow"><span class="dot"></span>In Good Standing</span></span></div>
+      <div class="row"><span class="row-label">Estimated Balance</span><span class="row-value">~$2,700</span></div>
+      <div class="row"><span class="row-label">Monthly Payment</span><span class="row-value">$217.95</span></div>
+      <div class="row"><span class="row-label">Interest Rate</span><span class="row-value">3.75%</span></div>
+      <div class="row"><span class="row-label">Original Loan Term</span><span class="row-value">60 months (Apr 2022)</span></div>
+      <div class="row"><span class="row-label">Refinanced Via</span><span class="row-value">RateGenius · App #6728900</span></div>
+      <div class="row"><span class="row-label">Lender Phone</span><span class="row-value">800-293-6860</span></div>
+      <div class="row"><span class="row-label">Lender Website</span><span class="row-value">creditunion1.org</span></div>
+      <div class="note-box">Almost done. At this payoff amount it could make sense to just knock it out in one shot. Full history in Subaru Outback — Vehicle & Loan History doc.</div>
+    </div>
+  </section>
+
+  <section class="card" id="card-carfix">
+    <div class="card-header">
+      <div class="card-icon icon-gray">🔧</div>
+      <div class="card-title-group">
+        <div class="card-title">Carfix Transmission Loan</div>
+        <div class="card-subtitle">Lender unknown — needs investigation</div>
+      </div>
+      <div class="card-amount">
+        <div class="amount-value bad">~$3,000</div>
+        <div class="amount-label">Balance</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row"><span class="row-label">Status</span><span class="row-value"><span class="status-pill pill-red"><span class="dot"></span>Interest Only — Needs Action</span></span></div>
+      <div class="row"><span class="row-label">Original Amount</span><span class="row-value">~$3,000</span></div>
+      <div class="row"><span class="row-label">Repair Shop</span><span class="row-value">Carfix</span></div>
+      <div class="row"><span class="row-label">Repair Type</span><span class="row-value">Transmission</span></div>
+      <div class="row"><span class="row-label">Lender</span><span class="row-value">⚠️ Unknown — not found in Gmail</span></div>
+      <div class="row"><span class="row-label">Payment Status</span><span class="row-value">Paying interest only</span></div>
+      <div class="alert-box">⚠️ Paying interest only means the principal isn't moving. Need to identify the lender — check bank statements or call Carfix directly to find who they used for financing. This could also be a point-of-sale lender like Snap Finance, EasyPay, or GreenSky that doesn't send email confirmations.</div>
+    </div>
+  </section>
+
+  <!-- RESOLVED -->
+  <div class="section-header">Resolved ✓</div>
+
+  <section class="card" id="card-bridgecrest">
+    <div class="card-header">
+      <div class="card-icon icon-gray">✅</div>
+      <div class="card-title-group">
+        <div class="card-title">Bridgecrest — Original Car Loan</div>
+        <div class="card-subtitle">Carvana's finance arm · Paid off May 2022</div>
+      </div>
+      <div class="card-amount">
+        <div class="amount-value" style="color:var(--green);">$0</div>
+        <div class="amount-label">Paid Off</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row"><span class="row-label">Status</span><span class="row-value"><span class="status-pill pill-green"><span class="dot"></span>Satisfied</span></span></div>
+      <div class="row"><span class="row-label">Paid Off</span><span class="row-value">May 9, 2022</span></div>
+      <div class="row"><span class="row-label">How</span><span class="row-value">Refinanced via RateGenius → Credit Union 1</span></div>
+      <div class="row"><span class="row-label">Payoff Balance</span><span class="row-value">$11,304.16</span></div>
+      <div class="note-box">Title released. Bridgecrest confirmed paid contract via email. RateGenius sent the payoff check on your behalf.</div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Player bar -->
+<div id="playerBar">
+  <div class="player-inner">
+    <button id="playPauseBtn">⏸</button>
+    <span id="nowPlaying">Playing…</span>
+    <select id="barVoiceSelect"></select>
+    <button id="barSpeedBtn">1x</button>
+    <button id="stopBtn">⏹</button>
+  </div>
+</div>
+
+<script>
+  const WHITELIST = ['samantha','karen','daniel','moira','tessa','ava','allison','tom','aaron','nicky','evan','zoe','joelle','fiona','martha','arthur','google us english','google uk english'];
+  let voices = [];
+
+  function loadVoices() {
+    const all = speechSynthesis.getVoices();
+    voices = all.filter(v => WHITELIST.some(w => v.name.toLowerCase().includes(w)));
+    if (!voices.length) voices = all.slice(0, 5);
+    [voiceSelect, barVoiceSelect].forEach(sel => {
+      sel.innerHTML = '';
+      voices.forEach((v, i) => {
+        const o = document.createElement('option');
+        o.value = i;
+        o.textContent = v.name.replace('com.apple.ttsbundle.','').replace('-compact','');
+        sel.appendChild(o);
+      });
+    });
+  }
+
+  speechSynthesis.onvoiceschanged = loadVoices;
+  loadVoices();
+
+  const speeds = [0.8, 1, 1.2, 1.5];
+  let speedIdx = 1;
+  function cycleSpeed() {
+    speedIdx = (speedIdx + 1) % speeds.length;
+    const l = speeds[speedIdx] + 'x';
+    speedBtn.textContent = l; barSpeedBtn.textContent = l;
+  }
+  speedBtn.addEventListener('click', cycleSpeed);
+  barSpeedBtn.addEventListener('click', cycleSpeed);
+
+  const cards = Array.from(document.querySelectorAll('section.card'));
+  let chunks = [], chunkIdx = 0, isPlaying = false, isPaused = false, resumeInterval = null;
+
+  function getVoice() { return voices[parseInt(voiceSelect.value) || 0] || null; }
+
+  function buildChunks() {
+    chunks = [];
+    cards.forEach(card => {
+      const title = card.querySelector('.card-title')?.textContent?.trim() || '';
+      const els = card.querySelectorAll('.card-title, .card-subtitle, .row, .alert-box, .info-box, .note-box');
+      els.forEach(el => {
+        const text = el.textContent.trim();
+        if (!text) return;
+        const isHeading = el.matches('.card-title');
+        chunks.push({ text, card, sectionTitle: title, isHeading });
+      });
+    });
+  }
+
+  function speakChunk(idx) {
+    if (idx >= chunks.length) { stopPlayback(); return; }
+    const chunk = chunks[idx];
+    chunkIdx = idx;
+    cards.forEach(c => c.classList.remove('reading'));
+    chunk.card.classList.add('reading');
+    if (idx === 0 || chunks[idx-1]?.card !== chunk.card) {
+      chunk.card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    nowPlaying.textContent = chunk.sectionTitle;
+    const utt = new SpeechSynthesisUtterance(chunk.text);
+    utt.voice = getVoice();
+    utt.rate = chunk.isHeading ? speeds[speedIdx] * 0.9 : speeds[speedIdx];
+    utt.pitch = chunk.isHeading ? 1.05 : 1;
+    const pause = chunk.isHeading ? 400 : 200;
+    utt.onend = () => { setTimeout(() => { if (isPlaying && !isPaused) speakChunk(idx + 1); }, pause); };
+    speechSynthesis.speak(utt);
+  }
+
+  function startPlayback() {
+    buildChunks(); chunkIdx = 0; isPlaying = true; isPaused = false;
+    playPauseBtn.textContent = '⏸';
+    playerBar.classList.add('visible');
+    resumeInterval = setInterval(() => { if (isPlaying && !isPaused) speechSynthesis.resume(); }, 10000);
+    speakChunk(0);
+  }
+
+  function stopPlayback() {
+    speechSynthesis.cancel(); isPlaying = false; isPaused = false;
+    clearInterval(resumeInterval);
+    playerBar.classList.remove('visible');
+    cards.forEach(c => c.classList.remove('reading'));
+    playPauseBtn.textContent = '▶';
+    listenBtn.textContent = '▶ Listen';
+  }
+
+  function togglePause() {
+    if (!isPlaying) return;
+    if (isPaused) { speechSynthesis.resume(); isPaused = false; playPauseBtn.textContent = '⏸'; }
+    else { speechSynthesis.pause(); isPaused = true; playPauseBtn.textContent = '▶'; }
+  }
+
+  listenBtn.addEventListener('click', () => {
+    if (isPlaying) { stopPlayback(); listenBtn.textContent = '▶ Listen'; }
+    else { listenBtn.textContent = '⏹ Stop'; startPlayback(); }
+  });
+  playPauseBtn.addEventListener('click', togglePause);
+  stopBtn.addEventListener('click', stopPlayback);
+  voiceSelect.addEventListener('change', () => { barVoiceSelect.value = voiceSelect.value; });
+  barVoiceSelect.addEventListener('change', () => { voiceSelect.value = barVoiceSelect.value; });
+
+  selectAllBtn.addEventListener('click', () => {
+    const range = document.createRange();
+    range.selectNodeContents(document.getElementById('mainContent'));
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  });
+</script>
+
+</body>
+</html>
