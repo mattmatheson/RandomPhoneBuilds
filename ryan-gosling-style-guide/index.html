@@ -35,7 +35,7 @@
   .top-bar { height: 3px; background: var(--accent); }
 
   .container {
-    max-width: 720px;
+    max-width: 780px;
     margin: 0 auto;
     padding: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 4vw, 2rem) 4rem;
   }
@@ -223,9 +223,7 @@
     line-height: 1.65;
   }
 
-  li strong {
-    color: var(--text-primary);
-  }
+  li strong { color: var(--text-primary); }
 
   /* Cards */
   .card {
@@ -250,74 +248,134 @@
 
   .card p { font-size: 0.88rem; }
 
-  /* Photo grid */
-  .photo-grid {
+  /* IMAGE GALLERY GRID */
+  .img-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 0.75rem;
-    margin: 1rem 0;
+    margin: 1.25rem 0;
   }
 
-  .photo-card {
+  .img-grid.large {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+
+  .img-grid.two-col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .img-card {
     background: var(--card-bg);
     border: 1px solid var(--divider);
     border-radius: 10px;
     overflow: hidden;
-    text-align: center;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .img-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
   }
 
-  .photo-card img {
+  .img-card img {
     width: 100%;
     aspect-ratio: 3/4;
     object-fit: cover;
     display: block;
+    background: #eee;
   }
 
-  .photo-card .caption {
-    padding: 0.6rem 0.75rem;
-    font-size: 0.78rem;
+  .img-card.landscape img {
+    aspect-ratio: 16/10;
+  }
+
+  .img-card.square img {
+    aspect-ratio: 1/1;
+  }
+
+  .img-card .cap {
+    padding: 0.5rem 0.65rem;
+    font-size: 0.72rem;
     color: var(--text-secondary);
     font-weight: 500;
+    line-height: 1.4;
   }
 
-  /* Links */
-  a {
-    color: var(--accent);
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-  a:hover { opacity: 0.7; }
-
-  .source-link {
-    font-size: 0.82rem;
-    display: inline-block;
-    margin-top: 0.25rem;
+  /* Full-width feature image */
+  .feature-img {
+    width: 100%;
+    border-radius: 12px;
+    margin: 1.25rem 0;
+    overflow: hidden;
+    border: 1px solid var(--divider);
   }
 
-  /* Iconic looks */
+  .feature-img img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .feature-img .cap {
+    padding: 0.6rem 1rem;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    background: var(--card-bg);
+  }
+
+  /* Hair card with image */
+  .hair-card {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 1rem 0;
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    align-items: start;
+  }
+
+  .hair-card img {
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    object-fit: cover;
+  }
+
+  .hair-card .hair-info {
+    padding: 1.1rem 1.25rem;
+  }
+
+  .hair-card h4 {
+    margin-top: 0;
+    text-transform: none;
+    font-size: 1rem;
+    color: var(--text-primary);
+    letter-spacing: normal;
+  }
+
+  .hair-card p { font-size: 0.88rem; }
+
+  /* Iconic look card with image */
   .look-card {
     background: var(--card-bg);
     border: 1px solid var(--divider);
     border-radius: 12px;
-    padding: 1.25rem;
+    overflow: hidden;
     margin: 0.75rem 0;
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    align-items: start;
   }
 
-  .look-number {
-    flex-shrink: 0;
-    width: 32px;
-    height: 32px;
-    background: var(--accent);
-    color: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 0.85rem;
+  .look-card img {
+    width: 100%;
+    height: 100%;
+    min-height: 180px;
+    object-fit: cover;
+  }
+
+  .look-info {
+    padding: 1rem 1.25rem;
   }
 
   .look-info h4 {
@@ -331,6 +389,27 @@
   .look-info p {
     font-size: 0.88rem;
     margin-bottom: 0;
+  }
+
+  .look-number {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 28px;
+    height: 28px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.78rem;
+    z-index: 2;
+  }
+
+  .look-img-wrap {
+    position: relative;
   }
 
   /* Principle cards */
@@ -391,6 +470,20 @@
     height: 1px;
     background: var(--divider);
     margin: 2.5rem 0;
+  }
+
+  /* Links */
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  a:hover { opacity: 0.7; }
+
+  .source-link {
+    font-size: 0.82rem;
+    display: inline-block;
+    margin-top: 0.25rem;
   }
 
   /* Bottom player */
@@ -459,41 +552,24 @@
     flex-shrink: 0;
   }
 
-  /* Footer */
-  .sources-section {
-    margin-top: 3rem;
-  }
-
-  .sources-section h2 {
-    font-size: 1.1rem;
-  }
-
-  .sources-section ul {
-    list-style: none;
-    margin-left: 0;
-    padding: 0;
-  }
-
-  .sources-section li {
-    margin-bottom: 0.4rem;
-    font-size: 0.82rem;
-    color: var(--text-secondary);
-  }
-
-  .sources-section a {
-    color: var(--text-secondary);
-  }
+  /* Sources */
+  .sources-section { margin-top: 3rem; }
+  .sources-section h2 { font-size: 1.1rem; }
+  .sources-section ul { list-style: none; margin-left: 0; padding: 0; }
+  .sources-section li { margin-bottom: 0.4rem; font-size: 0.82rem; color: var(--text-secondary); }
+  .sources-section a { color: var(--text-secondary); }
   .sources-section a:hover { color: var(--accent); }
 
   /* Mobile */
   @media (max-width: 600px) {
-    .listen-controls {
-      flex-direction: column;
-      align-items: stretch;
-    }
+    .listen-controls { flex-direction: column; align-items: stretch; }
     .btn-listen { width: 100%; text-align: center; }
-    .look-card { flex-direction: column; }
-    .photo-grid { grid-template-columns: 1fr 1fr; }
+    .img-grid { grid-template-columns: repeat(2, 1fr); }
+    .img-grid.large { grid-template-columns: repeat(2, 1fr); }
+    .hair-card { grid-template-columns: 1fr; }
+    .hair-card img { min-height: 240px; }
+    .look-card { grid-template-columns: 1fr; }
+    .look-card img { min-height: 240px; }
   }
 
   @keyframes fadeInUp {
@@ -521,6 +597,12 @@
   <p class="pro-tip">Pro tip: For a better voice, tap <a id="selectAllBtn">select all</a> then use iOS Speak Selection (Settings &gt; Accessibility &gt; Spoken Content &gt; Speak Selection).</p>
 </header>
 
+<!-- HERO IMAGE -->
+<div class="feature-img">
+  <img src="https://www.insidehook.com/wp-content/uploads/2017/10/RyanGosling_Hea_1507251525.jpg" alt="Ryan Gosling iconic jacket looks">
+  <div class="cap">Ryan Gosling's most iconic outerwear moments &mdash; from Drive to Blade Runner</div>
+</div>
+
 <!-- TOC -->
 <nav class="toc">
   <h3>Contents</h3>
@@ -542,6 +624,17 @@
 <section id="stylist">
   <h2>1. His Stylist &mdash; Mark Avery</h2>
 
+  <div class="img-grid two-col">
+    <div class="img-card landscape">
+      <img src="https://cdn.sanity.io/images/vxy259ii/production/1fc66bd636af3995eb3878c84533dd6ebec690f4-660x440.jpg" alt="Ryan Gosling casual bomber and jeans">
+      <div class="cap">Avery's signature move: suede bomber, white tee, slim jeans, boots. Timeless.</div>
+    </div>
+    <div class="img-card landscape">
+      <img src="https://cdn.sanity.io/images/vxy259ii/production/07aed7248ff2e1b872a072ab71e7e9b3d480a8b1-660x440.jpg" alt="Ryan Gosling city style">
+      <div class="cap">City-chic: navy chinos, striped shirt, brown brogues, tortoiseshell sunglasses</div>
+    </div>
+  </div>
+
   <p><strong>Mark Avery</strong> has been Gosling's stylist since around 2015. He started as a set costumer and evolved into Gosling's personal stylist and creative consultant. Avery recently launched his own workwear-inspired collection called <strong>Avery Ranch</strong>, rooted in classic silhouettes: canvas jackets, structured shirts, durable pants, and trucker hats.</p>
 
   <div class="highlight">
@@ -558,6 +651,11 @@
 
   <p>The core message: Gosling's look is deliberately un-trendy. Denim jackets, straight-fit jeans, boots, aviators, a pendant necklace. Stuff any non-celebrity can pull off. The magic is in the fit and the restraint.</p>
 
+  <div class="feature-img">
+    <img src="https://cdn.sanity.io/images/vxy259ii/production/51900b50326fad8750c35f15dee9bb5308b6b7ca-660x440.jpg" alt="Ryan Gosling travel style">
+    <div class="cap">Travel style: charcoal jeans, pale grey tee, brown shoes. The Avery uniform in action.</div>
+  </div>
+
   <p class="source-link"><a href="https://jakewoolf.substack.com/p/ryan-goslings-stylist-mark-avery" target="_blank">Jake Woolf interview with Mark Avery</a> &middot; <a href="https://huckberry.com/journal/posts/interview-mark-avery-ryan-gosling-s-stylist" target="_blank">Huckberry interview</a></p>
 </section>
 
@@ -566,6 +664,63 @@
   <h2>2. Glasses &amp; Sunglasses</h2>
 
   <p>Gosling cycles through a handful of heritage eyewear brands. He gravitates toward warm tortoiseshell tones, keyhole bridges, and classic shapes &mdash; nothing flashy, nothing trendy.</p>
+
+  <div class="img-grid">
+    <div class="img-card">
+      <img src="https://www.lunigal.com/images/stars/ryan_gosling-233.jpg" alt="Ryan Gosling Persol PO0714">
+      <div class="cap">Persol PO0714 &mdash; the signature folding pair</div>
+    </div>
+    <div class="img-card">
+      <img src="https://www.lunigal.com/images/stars/ryan_gosling-235.jpg" alt="Ryan Gosling Persol PO0649">
+      <div class="cap">Persol PO0649 &mdash; classic pilot shape</div>
+    </div>
+    <div class="img-card">
+      <img src="https://www.lunigal.com/images/stars/ryan_gosling-234.jpg" alt="Ryan Gosling Persol 2994S">
+      <div class="cap">Persol 2994S &mdash; wayfarer style</div>
+    </div>
+    <div class="img-card">
+      <img src="https://www.lunigal.com/images/stars/ryan_gosling-1689.jpg" alt="Ryan Gosling gold aviators">
+      <div class="cap">Randolph aviators &mdash; gold frame street style</div>
+    </div>
+  </div>
+
+  <div class="img-grid">
+    <div class="img-card">
+      <img src="https://www.sunglassesid.com/sites/default/files/upload/sighting/american-optical-original-pilot-ryan-gosling-the-fall-guy-1.jpg" alt="Ryan Gosling American Optical Fall Guy">
+      <div class="cap">American Optical Original Pilot &mdash; The Fall Guy ($65!)</div>
+    </div>
+    <div class="img-card">
+      <img src="https://www.sunglassesid.com/sites/default/files/upload/sighting/Selina-Optique-Money-2-Ryan-Gosling-Drive.jpg" alt="Ryan Gosling sunglasses Drive">
+      <div class="cap">Selima Optique Money 2 &mdash; Drive</div>
+    </div>
+    <div class="img-card">
+      <img src="https://www.sunglassesid.com/sites/default/files/upload/sighting/Ryan-Gosling-sunglasses-Crazy-Stupid-Love.jpg" alt="Ryan Gosling sunglasses Crazy Stupid Love">
+      <div class="cap">Selima Optique Chad &mdash; Crazy, Stupid, Love</div>
+    </div>
+    <div class="img-card">
+      <img src="https://www.lunigal.com/images/stars/ryan_gosling-73.jpg" alt="Ryan Gosling Barton Perreira">
+      <div class="cap">Barton Perreira Gilbert &mdash; prescription glasses</div>
+    </div>
+  </div>
+
+  <div class="img-grid">
+    <div class="img-card">
+      <img src="https://www.mouqy.com/wp-content/uploads/2023/05/ryan-gold-aviators-sleek-touch.jpg" alt="Ryan Gosling gold aviators">
+      <div class="cap">Gold aviators with sweater vest &mdash; off-duty cool</div>
+    </div>
+    <div class="img-card">
+      <img src="https://www.mouqy.com/wp-content/uploads/2023/05/ryan-stylish-scholar-look.jpg" alt="Ryan Gosling tortoiseshell frames">
+      <div class="cap">Tortoiseshell frames &mdash; the "stylish scholar" look</div>
+    </div>
+    <div class="img-card">
+      <img src="https://www.mouqy.com/wp-content/uploads/2023/05/round-frames-geeky-chic.jpg" alt="Ryan Gosling round frames">
+      <div class="cap">Thick round frames &mdash; Cannes 2011 "geek chic"</div>
+    </div>
+    <div class="img-card">
+      <img src="https://www.mouqy.com/wp-content/uploads/2023/05/ryan-rectangular-glasses-serious-character.jpg" alt="Ryan Gosling rectangular glasses">
+      <div class="cap">Metal rectangular frames &mdash; All Good Things</div>
+    </div>
+  </div>
 
   <div class="table-wrap">
     <table>
@@ -592,13 +747,13 @@
 
   <h3>Budget Eyewear Alternatives</h3>
   <ul>
-    <li><strong>American Optical Original Pilot ($65&ndash;$80)</strong> &mdash; literally what he wears in <em>The Fall Guy</em>. One of the best deals in eyewear. Same company that made glasses for NASA astronauts.</li>
+    <li><strong>American Optical Original Pilot ($65&ndash;$80)</strong> &mdash; literally what he wears in <em>The Fall Guy</em>. Same company that made glasses for NASA astronauts.</li>
     <li><strong>Warby Parker ($95&ndash;$195)</strong> &mdash; they have Gregory Peck-style round frames at a fraction of Oliver Peoples pricing.</li>
     <li><strong>MVMT Sunglasses ($60&ndash;$120)</strong> &mdash; aviator and keyhole bridge styles available.</li>
     <li><strong>Knockaround/Blenders ($25&ndash;$50)</strong> &mdash; cheap aviators for the look without the investment.</li>
   </ul>
 
-  <p class="source-link"><a href="https://www.opticabassol.com/en-us/blogs/news/meet-ryan-goslings-favorite-glasses" target="_blank">Bassol Optic: Gosling's glasses</a> &middot; <a href="https://www.bantonframeworks.co.uk/blogs/eyewear-icons/ryan-gosling-glasses" target="_blank">Banton Frameworks breakdown</a></p>
+  <p class="source-link"><a href="https://www.opticabassol.com/en-us/blogs/news/meet-ryan-goslings-favorite-glasses" target="_blank">Bassol Optic</a> &middot; <a href="https://www.bantonframeworks.co.uk/blogs/eyewear-icons/ryan-gosling-glasses" target="_blank">Banton Frameworks</a> &middot; <a href="https://www.lunigal.com/celebrities/ryan_gosling.htm" target="_blank">Lunigal</a> &middot; <a href="https://www.mouqy.com/blog/ryan-gosling-glasses/" target="_blank">Mouqy</a></p>
 </section>
 
 <!-- ====== 3. HAIR ====== -->
@@ -607,36 +762,76 @@
 
   <p>Gosling has naturally fine, straight hair &mdash; which is actually ideal for his signature looks because fine hair holds shape well without getting heavy or poofy. If you have similar hair, you're already halfway there.</p>
 
+  <!-- Overview collage -->
+  <div class="feature-img">
+    <img src="https://www.thefashionisto.com/wp-content/uploads/2023/09/Ryan-Gosling-Haircuts.jpg" alt="Ryan Gosling haircuts through the years">
+    <div class="cap">Every major Ryan Gosling haircut from 2004 to 2023 &mdash; notice how the silhouette stays consistent even as the styling changes</div>
+  </div>
+
   <h3>Signature Looks by Era</h3>
 
-  <div class="card">
-    <h4>Drive (2011)</h4>
-    <p>Textured Ivy League variation. Natural and effortless. About 2 inches on top, scissor-cut sides. Matte finish. This is the "I just woke up looking this good" cut.</p>
+  <div class="hair-card">
+    <img src="https://www.thefashionisto.com/wp-content/uploads/2023/09/Ryan-Gosling-Drive-2011-Scorpion-Jacket.jpg" alt="Ryan Gosling Drive haircut">
+    <div class="hair-info">
+      <h4>Drive (2011)</h4>
+      <p>Textured Ivy League variation. Natural and effortless. About 2 inches on top, scissor-cut sides. Matte finish. This is the "I just woke up looking this good" cut.</p>
+    </div>
   </div>
 
-  <div class="card">
-    <h4>Crazy, Stupid, Love (2011)</h4>
-    <p>Slicked side part with length at the fringe. The "transformation" haircut from the movie. Gentleman's cut meets Ivy League &mdash; side part, tapered sides, pomade for hold.</p>
+  <div class="hair-card">
+    <img src="https://www.thefashionisto.com/wp-content/uploads/2023/09/Ryan-Gosling-Comb-Over-Hair-2011.jpg" alt="Ryan Gosling Crazy Stupid Love hair">
+    <div class="hair-info">
+      <h4>Crazy, Stupid, Love (2011)</h4>
+      <p>Slicked side part with length at the fringe. The "transformation" haircut from the movie. Gentleman's cut meets Ivy League &mdash; side part, tapered sides, pomade for hold.</p>
+    </div>
   </div>
 
-  <div class="card">
-    <h4>La La Land (2016)</h4>
-    <p>70s-inspired slick back, 4&ndash;5 inches on top. Water-based pomade for the shine. Very retro-romantic.</p>
+  <div class="hair-card">
+    <img src="https://www.thefashionisto.com/wp-content/uploads/2023/09/Ryan-Gosling-Emma-Stone-La-La-Land-2016.jpg" alt="Ryan Gosling La La Land hair">
+    <div class="hair-info">
+      <h4>La La Land (2016)</h4>
+      <p>70s-inspired slick back, 4&ndash;5 inches on top. Water-based pomade for the shine. Very retro-romantic.</p>
+    </div>
   </div>
 
-  <div class="card">
-    <h4>Blade Runner 2049 (2017)</h4>
-    <p>Heavily textured crop, about 2 inches on top. Matte finish. Minimal effort, maximum cool. Probably his most wearable everyday look.</p>
+  <div class="hair-card">
+    <img src="https://www.thefashionisto.com/wp-content/uploads/2023/09/Ryan-Gosling-Blade-Runner-2049-Haircut.jpg" alt="Ryan Gosling Blade Runner 2049 hair">
+    <div class="hair-info">
+      <h4>Blade Runner 2049 (2017)</h4>
+      <p>Heavily textured crop, about 2 inches on top. Matte finish. Minimal effort, maximum cool. Probably his most wearable everyday look.</p>
+    </div>
   </div>
 
-  <div class="card">
-    <h4>Barbie / Awards Season (2023&ndash;24)</h4>
-    <p>Highlighted, softly textured, side-swept. Warmer blonde tones. A more relaxed, lived-in version of the Crazy Stupid Love style.</p>
+  <div class="hair-card">
+    <img src="https://www.thefashionisto.com/wp-content/uploads/2023/09/Ryan-Gosling-Barbie-2023-Haircut.jpg" alt="Ryan Gosling Barbie hair">
+    <div class="hair-info">
+      <h4>Barbie / Ken (2023)</h4>
+      <p>Platinum blonde curtains/fringe. The full Ken transformation. Obviously don't do this unless you're being paid millions, but the texture and length are instructive.</p>
+    </div>
   </div>
 
-  <div class="card">
-    <h4>First Man (2018)</h4>
-    <p>Military-adjacent buzz/crew hybrid. The shortest he's gone. No-maintenance, no-product territory.</p>
+  <div class="hair-card">
+    <img src="https://www.thefashionisto.com/wp-content/uploads/2023/09/Ryan-Gosling-Barbie-Premiere-2023-Coral-Suit.jpg" alt="Ryan Gosling Barbie premiere natural hair">
+    <div class="hair-info">
+      <h4>Barbie Press Tour (2023)</h4>
+      <p>Highlighted, softly textured, side-swept. Warmer blonde tones. A more relaxed, lived-in version of the CSL style. This is the one to copy if you want highlights.</p>
+    </div>
+  </div>
+
+  <div class="hair-card">
+    <img src="https://www.thefashionisto.com/wp-content/uploads/2023/09/Ryan-Gosling-The-Notebook-Hair-2004.jpg" alt="Ryan Gosling Notebook hair">
+    <div class="hair-info">
+      <h4>The Notebook (2004)</h4>
+      <p>Long, untamed shaggy locks. The full romantic lead. Requires 6+ months of growth and a willingness to let it do its thing.</p>
+    </div>
+  </div>
+
+  <div class="hair-card">
+    <img src="https://www.thefashionisto.com/wp-content/uploads/2023/09/Ryan-Gosling-Semi-Buzz-Cut-2018.jpg" alt="Ryan Gosling First Man buzz cut">
+    <div class="hair-info">
+      <h4>First Man (2018)</h4>
+      <p>Military-adjacent buzz/crew hybrid. The shortest he's gone. No-maintenance, no-product territory. Good if you want to reset and grow out fresh.</p>
+    </div>
   </div>
 
   <h3>What to Tell Your Barber</h3>
@@ -689,7 +884,7 @@
     <p><strong>The fine-hair Gosling routine:</strong> Towel-dry hair until slightly damp. Hit roots with sea salt spray. Blow-dry on medium heat while running fingers through (not a brush &mdash; you want texture, not smoothness). Rub a dime-sized amount of matte clay between palms until warm, then work through the top and sides. Done. Under 5 minutes.</p>
   </div>
 
-  <p class="source-link"><a href="https://regalgentleman.com/blogs/blog/ryan-gosling-haircut" target="_blank">Regal Gentleman: Gosling haircuts</a> &middot; <a href="https://cuttersyard.com/how-to-get-the-ryan-gosling-haircut-4-classic-looks/" target="_blank">Cutters Yard: 4 classic looks</a> &middot; <a href="https://www.primermagazine.com/2013/learn/the-haircut-ryan-gosling" target="_blank">Primer Magazine guide</a></p>
+  <p class="source-link"><a href="https://www.thefashionisto.com/people/ryan-gosling-haircut/" target="_blank">The Fashionisto</a> &middot; <a href="https://regalgentleman.com/blogs/blog/ryan-gosling-haircut" target="_blank">Regal Gentleman</a> &middot; <a href="https://cuttersyard.com/how-to-get-the-ryan-gosling-haircut-4-classic-looks/" target="_blank">Cutters Yard</a></p>
 </section>
 
 <!-- ====== 4. CLOTHING ====== -->
@@ -698,6 +893,36 @@
 
   <h3>Suits &amp; Tailoring</h3>
   <p>Primary brand: <strong>Gucci (custom).</strong> Also spotted in Tom Ford and Prada. But the brand matters way less than the fit.</p>
+
+  <div class="img-grid large">
+    <div class="img-card">
+      <img src="https://www.thefashionisto.com/wp-content/uploads/2024/03/Ryan-Gosling-Gucci-2024-Oscars.jpg" alt="Ryan Gosling Oscars 2024 black Gucci suit">
+      <div class="cap">2024 Oscars &mdash; black Gucci with beaded embroidered trim</div>
+    </div>
+    <div class="img-card">
+      <img src="https://www.thefashionisto.com/wp-content/uploads/2024/03/Ryan-Gosling-Im-Just-Ken-2024-Oscars-Pink-Suit-Gucci.jpg" alt="Ryan Gosling pink Gucci suit Oscars">
+      <div class="cap">2024 Oscars &mdash; crystal-encrusted pink Gucci for "I'm Just Ken"</div>
+    </div>
+    <div class="img-card">
+      <img src="https://www.redcarpet-fashionawards.com/wp-content/uploads/2024/05/Ryan-Gosling-Wore-Gucci-To-The-Fall-Guy-LA-Premiere.jpg" alt="Ryan Gosling mint green Gucci suit">
+      <div class="cap">Fall Guy premiere &mdash; custom mint green Gucci</div>
+    </div>
+  </div>
+
+  <div class="img-grid large">
+    <div class="img-card">
+      <img src="https://www.redcarpet-fashionawards.com/wp-content/uploads/2024/01/Ryan-Gosling-Wore-Gucci-To-The-2024-Golden-Globe-Awards.jpg" alt="Ryan Gosling Golden Globes 2024">
+      <div class="cap">Golden Globes 2024 &mdash; black Gucci with white piping detail</div>
+    </div>
+    <div class="img-card">
+      <img src="https://www.redcarpet-fashionawards.com/wp-content/uploads/2023/07/Ryan-Gosling-Wore-Gucci-To-The-Barbie-World-Premiere.jpg" alt="Ryan Gosling Barbie premiere pink suit">
+      <div class="cap">Barbie LA premiere &mdash; pastel pink Gucci with "E" pendant</div>
+    </div>
+    <div class="img-card">
+      <img src="https://www.insidehook.com/wp-content/uploads/2017/10/TheBigShort_Inl_1507251844.jpg" alt="Ryan Gosling Big Short suit">
+      <div class="cap">The Big Short &mdash; glen plaid suit as Deutsche Bank trader</div>
+    </div>
+  </div>
 
   <h4>What Makes His Suits Work</h4>
   <ul>
@@ -708,18 +933,25 @@
     <li><strong>Details:</strong> Piping on lapels, tonal embroidery, jewel-tone velvets for awards season.</li>
   </ul>
 
-  <h4>Notable Suits</h4>
-  <ul>
-    <li>Custom black Gucci wool suit with metallic beaded hand-embroidered trim (2024 Oscars red carpet)</li>
-    <li>Crystal-encrusted hot pink Gucci suit (2024 Oscars "I'm Just Ken" performance)</li>
-    <li>Custom mint green Gucci suit (<em>The Fall Guy</em> premiere)</li>
-    <li>Velvet suits in deep jewel tones for awards season</li>
-  </ul>
-
   <hr>
 
   <h3>Casual Wear &mdash; The Gosling Uniform</h3>
   <p>This is where you'll actually dress like him day-to-day. His casual wardrobe is shockingly simple.</p>
+
+  <div class="img-grid large">
+    <div class="img-card">
+      <img src="https://ozfdx7shad13z5yn.public.blob.vercel-storage.com/outfits/ryan-gosling-s-casual-urban-weekend-look.jpg" alt="Ryan Gosling casual urban look">
+      <div class="cap">The Gosling casual uniform: black jacket, grey henley, dark jeans, boots</div>
+    </div>
+    <div class="img-card">
+      <img src="https://ozfdx7shad13z5yn.public.blob.vercel-storage.com/outfits/ryan-gosling-texture-rich-urban-casual-statement.jpg" alt="Ryan Gosling layered casual look">
+      <div class="cap">Layered: wine V-neck, wool jacket, chinos, pendant necklace</div>
+    </div>
+    <div class="img-card">
+      <img src="https://madison-to-melrose.com/wp-content/uploads/2023/08/ryan-gosling-style-2023.jpg" alt="Ryan Gosling 2023 street style">
+      <div class="cap">2023 street style &mdash; denim jacket, white tee baseline</div>
+    </div>
+  </div>
 
   <h4>T-Shirts</h4>
   <p>Plain white fitted tees, black tees, striped tees, henley shirts. No graphics, no logos. A well-fitting plain white tee is doing more work than any designer piece.</p>
@@ -738,26 +970,46 @@
 
   <hr>
 
-  <h3>Outerwear</h3>
+  <h3>Outerwear &mdash; The Iconic Jackets</h3>
 
-  <div class="card">
-    <h4>Bomber Jackets</h4>
-    <p>His most film-iconic category. The white satin <strong>scorpion-embroidered bomber from Drive</strong> is one of the most recognized movie jackets of all time. Designed by Erin Benach, inspired by 1950s Korean War souvenir jackets. In real life, he gravitates toward simple MA-1 style bombers in navy and olive.</p>
+  <div class="feature-img">
+    <img src="https://www.insidehook.com/wp-content/uploads/2017/10/Drive_Inline1_1507252123.jpg" alt="Ryan Gosling Drive scorpion jacket">
+    <div class="cap">The scorpion bomber from Drive (2011) &mdash; one of the most recognized movie jackets of all time. Designed by Erin Benach, inspired by 1950s Korean War souvenir jackets.</div>
+  </div>
+
+  <div class="img-grid large">
+    <div class="img-card">
+      <img src="https://www.insidehook.com/wp-content/uploads/2017/10/Bladerunner_Inl_1507252070.jpg" alt="Ryan Gosling Blade Runner 2049 coat">
+      <div class="cap">Blade Runner 2049 &mdash; Tom Ford shearling-collar coat</div>
+    </div>
+    <div class="img-card">
+      <img src="https://www.insidehook.com/wp-content/uploads/2017/10/PlaceBeyondTheP_1507251962.jpg" alt="Ryan Gosling Place Beyond the Pines red jacket">
+      <div class="cap">Place Beyond the Pines &mdash; fire-engine red leather</div>
+    </div>
+    <div class="img-card">
+      <img src="https://www.insidehook.com/wp-content/uploads/2017/10/TheNiceGuys_Inl_1507251689.jpg" alt="Ryan Gosling Nice Guys white leather jacket">
+      <div class="cap">The Nice Guys &mdash; white leather with 70s collar</div>
+    </div>
+  </div>
+
+  <div class="img-grid large">
+    <div class="img-card">
+      <img src="https://www.insidehook.com/wp-content/uploads/2017/10/BlueValentine_I_1507252010.jpg" alt="Ryan Gosling Blue Valentine Honda jacket">
+      <div class="cap">Blue Valentine &mdash; vintage Honda racing zip-up</div>
+    </div>
+    <div class="img-card">
+      <img src="https://www.insidehook.com/wp-content/uploads/2017/10/CrazyStupidLove_1507251911.jpg" alt="Ryan Gosling CSL white bomber">
+      <div class="cap">Crazy, Stupid, Love &mdash; pristine white leather bomber</div>
+    </div>
+    <div class="img-card">
+      <img src="https://www.insidehook.com/wp-content/uploads/2017/10/TheNotebook_Inl_1507251573.jpg" alt="Ryan Gosling Notebook casual layers">
+      <div class="cap">The Notebook &mdash; casual layered warmth</div>
+    </div>
   </div>
 
   <div class="card">
-    <h4>Leather Jackets</h4>
-    <p>Black leather in personal life. The blood-red leather jacket from <em>The Place Beyond the Pines</em> is another cultural landmark. For everyday, a plain black leather biker or racer jacket is the move.</p>
-  </div>
-
-  <div class="card">
-    <h4>Long Coats</h4>
-    <p>The <em>Blade Runner 2049</em> Officer K coat: distressed cotton, quilted lining, shearling collar and lapels, hook-and-eye waist closure. Dystopian meets timeless. Replicas exist from several makers.</p>
-  </div>
-
-  <div class="card">
-    <h4>Pilot/Bomber Jackets</h4>
-    <p>Stand-up collar bombers are a recurring personal favorite. He gravitates toward anything that reads "1960s test pilot" &mdash; clean, functional, masculine without being aggressive.</p>
+    <h4>What to Buy for Real Life</h4>
+    <p>His movie jackets are iconic but impractical. For everyday, Gosling gravitates toward simple MA-1 bombers in navy and olive, black leather biker jackets, and stand-up collar bombers that read "1960s test pilot." The real-life jacket is always quieter than the movie version.</p>
   </div>
 
   <hr>
@@ -773,7 +1025,7 @@
       <tbody>
         <tr><td><strong>Work boots</strong></td><td>Red Wing 1907 Heritage</td><td>$300&ndash;$350</td><td>His go-to. Moc toe, copper rough &amp; tough leather. He even talks about them in <em>The Gray Man</em>.</td></tr>
         <tr><td><strong>Combat boots</strong></td><td>Dr. Martens 1460</td><td>$130&ndash;$170</td><td>Classic 8-eye boot. Works with everything from jeans to suits.</td></tr>
-        <tr><td><strong>Suede boots</strong></td><td>Red Wing (various)</td><td>$250&ndash;$350</td><td>He has several pairs. Suede adds texture without being loud.</td></tr>
+        <tr><td><strong>Suede boots</strong></td><td>Red Wing (various)</td><td>$250&ndash;$350</td><td>Suede adds texture without being loud.</td></tr>
         <tr><td><strong>Dress shoes</strong></td><td>Gucci loafers (custom)</td><td>$800+</td><td>Only for premieres and red carpets.</td></tr>
       </tbody>
     </table>
@@ -785,10 +1037,39 @@
 
   <hr>
 
-  <h3>Accessories</h3>
+  <h3>Watches &amp; Accessories</h3>
 
-  <h4>Watches</h4>
-  <p>Gosling has been a <strong>TAG Heuer brand ambassador since 2021.</strong> He also collects vintage pieces.</p>
+  <h4>TAG Heuer (Brand Ambassador Since 2021)</h4>
+
+  <div class="img-grid large">
+    <div class="img-card landscape">
+      <img src="https://timeandtidewatches.com/wp-content/uploads/2024/03/Ryan_Gosling_Fall_Guy_TAG_Heuer_Carrera_Desktop-1750x986.jpg" alt="Ryan Gosling TAG Heuer Fall Guy">
+      <div class="cap">TAG Heuer Carrera Glassbox in The Fall Guy</div>
+    </div>
+    <div class="img-card landscape">
+      <img src="https://timeandtidewatches.com/wp-content/uploads/2023/07/ryan_gosling_barbie_tag_heuer_feature.webp" alt="Ryan Gosling pink TAG Heuer Barbie">
+      <div class="cap">Pink TAG Heuer Carrera Date 36mm at Barbie premiere</div>
+    </div>
+  </div>
+
+  <div class="img-grid">
+    <div class="img-card square">
+      <img src="https://timeandtidewatches.com/wp-content/uploads/2023/03/tag-heuer-carrera-chronograph-glassbox-black-dial-wrist.jpg" alt="TAG Heuer Carrera Glassbox on wrist">
+      <div class="cap">Carrera Glassbox Chronograph 39mm &mdash; ~$7,500</div>
+    </div>
+    <div class="img-card square">
+      <img src="https://timeandtidewatches.com/wp-content/uploads/2023/06/TAG_Heuer_Carrera_Date_36mm_pink-copy.jpg" alt="TAG Heuer Carrera pink dial">
+      <div class="cap">Carrera Date 36mm pink dial &mdash; ~$4,000</div>
+    </div>
+    <div class="img-card square">
+      <img src="https://magazine.tagheuer.com/wp-content/uploads/2023/10/05-cbs2240.fc8319_close_up-copie.jpg" alt="TAG Heuer unique piece">
+      <div class="cap">One-off Carrera Chronograph for red carpet</div>
+    </div>
+    <div class="img-card square">
+      <img src="https://www.tagheuer.com/on/demandware.static/-/Sites-tagheuer-master/default/dwe5a354a1/TAG_Heuer_Carrera/CBS2210.FC6534/CBS2210.FC6534_Soldier.png" alt="TAG Heuer Carrera product shot">
+      <div class="cap">Carrera CBS2210 &mdash; the exact Fall Guy watch</div>
+    </div>
+  </div>
 
   <div class="table-wrap">
     <table>
@@ -801,18 +1082,28 @@
         <tr><td>TAG Heuer Connected Calibre E5 45mm</td><td>~$1,650</td><td>Smartwatch (most accessible TAG)</td></tr>
         <tr><td>TAG Heuer Carrera Date 36mm (pink dial)</td><td>~$4,000</td><td>Barbie press tour</td></tr>
         <tr><td>Rolex Air-King 5500 (vintage)</td><td>$3,000&ndash;$5,000</td><td>Personal collection</td></tr>
-        <tr><td>Rolex Bubble Back ref. 3372</td><td>$5,000+</td><td>Vintage gold</td></tr>
         <tr><td>Rolex Submariner Date ref. 16610</td><td>$9,000+</td><td>Personal collection</td></tr>
         <tr><td>Omega Speedmaster ref. 105.012</td><td>$15,000+</td><td>Worn in <em>First Man</em></td></tr>
       </tbody>
     </table>
   </div>
 
-  <h4>Other Accessories</h4>
+  <h4>Necklace &mdash; His Most Consistent Accessory</h4>
+
+  <div class="img-grid two-col">
+    <div class="img-card">
+      <img src="https://img.huffingtonpost.com/asset/59d7790c2d00009717308f95.jpeg" alt="Ryan Gosling gold dog tag necklace">
+      <div class="cap">Signature gold dog-tag pendant &mdash; a tribute to his dog George</div>
+    </div>
+    <div class="img-card">
+      <img src="https://www.thefashionisto.com/wp-content/uploads/2024/03/Ryan-Gosling-Oscars-Ken-Performance-Pink-Suit-Gucci-003.jpg" alt="Ryan Gosling Oscars performance accessories">
+      <div class="cap">Oscars: pink Gucci, TAG Heuer Plasma Diamant, sunglasses</div>
+    </div>
+  </div>
+
   <ul>
-    <li><strong>Pendant necklaces:</strong> Simple chain with a small pendant. One of his most consistent accessories. Never chunky or flashy.</li>
+    <li><strong>Pendant necklaces:</strong> Simple chain with a small pendant. His gold dog-tag necklace is a tribute to his late dog George. Never chunky or flashy.</li>
     <li><strong>Minimal rings:</strong> Occasionally, nothing stacked or loud.</li>
-    <li><strong>Aviator sunglasses:</strong> See the glasses section above.</li>
     <li><strong>The rule:</strong> One watch, maybe a necklace, nothing more. Never stacks multiple statements (except the legendary Barbie triple-wrist TAG moment, which was intentionally absurd).</li>
   </ul>
 </section>
@@ -822,7 +1113,10 @@
   <h2>5. Key Iconic Looks</h2>
 
   <div class="look-card">
-    <div class="look-number">1</div>
+    <div class="look-img-wrap">
+      <div class="look-number">1</div>
+      <img src="https://www.insidehook.com/wp-content/uploads/2017/10/Drive_Inline1_1507252123.jpg" alt="Drive scorpion jacket">
+    </div>
     <div class="look-info">
       <h4>Drive (2011) &mdash; The Scorpion Jacket</h4>
       <p>White satin scorpion-embroidered bomber, henley underneath, dark jeans, boots. Launched a thousand Halloween costumes and an entire replica jacket industry. The jacket that proved a single bold piece over simple basics is all you need.</p>
@@ -830,7 +1124,10 @@
   </div>
 
   <div class="look-card">
-    <div class="look-number">2</div>
+    <div class="look-img-wrap">
+      <div class="look-number">2</div>
+      <img src="https://www.insidehook.com/wp-content/uploads/2017/10/CrazyStupidLove_1507251911.jpg" alt="Crazy Stupid Love wardrobe">
+    </div>
     <div class="look-info">
       <h4>Crazy, Stupid, Love (2011) &mdash; The Makeover</h4>
       <p>Fitted V-neck sweaters, slim suits, leather shoes. This movie's wardrobe became the literal template for every "dress better" article of the 2010s. The scene where he takes Steve Carell shopping is essentially a style tutorial.</p>
@@ -838,7 +1135,10 @@
   </div>
 
   <div class="look-card">
-    <div class="look-number">3</div>
+    <div class="look-img-wrap">
+      <div class="look-number">3</div>
+      <img src="https://www.insidehook.com/wp-content/uploads/2017/10/PlaceBeyondTheP_1507251962.jpg" alt="Place Beyond the Pines">
+    </div>
     <div class="look-info">
       <h4>The Place Beyond the Pines (2012)</h4>
       <p>Bleached blonde hair, blood-red leather jacket, chain, motorcycle boots. Raw and dangerous. The polar opposite of his usual refinement &mdash; proof he can pull off anything.</p>
@@ -846,15 +1146,21 @@
   </div>
 
   <div class="look-card">
-    <div class="look-number">4</div>
+    <div class="look-img-wrap">
+      <div class="look-number">4</div>
+      <img src="https://www.lunigal.com/images/stars/ryan_gosling-233.jpg" alt="La La Land Persol sunglasses">
+    </div>
     <div class="look-info">
       <h4>La La Land (2016) &mdash; Retro Romance</h4>
-      <p>Persol PO0714 folding sunglasses, casual button-downs, slim trousers, loafers. Retro-romantic LA cool. The color palette here &mdash; warm earth tones, cream, rust &mdash; is peak Gosling territory.</p>
+      <p>Persol PO0714 folding sunglasses, casual button-downs, slim trousers, loafers. Retro-romantic LA cool. The color palette &mdash; warm earth tones, cream, rust &mdash; is peak Gosling territory.</p>
     </div>
   </div>
 
   <div class="look-card">
-    <div class="look-number">5</div>
+    <div class="look-img-wrap">
+      <div class="look-number">5</div>
+      <img src="https://www.insidehook.com/wp-content/uploads/2017/10/Bladerunner_Inl_1507252070.jpg" alt="Blade Runner 2049 coat">
+    </div>
     <div class="look-info">
       <h4>Blade Runner 2049 (2017) &mdash; Officer K</h4>
       <p>The shearling-collar long coat over minimalist base layers. Dystopian meets timeless. This coat alone spawned a cottage industry of replicas and inspired a wave of shearling-collar outerwear.</p>
@@ -862,34 +1168,67 @@
   </div>
 
   <div class="look-card">
-    <div class="look-number">6</div>
+    <div class="look-img-wrap">
+      <div class="look-number">6</div>
+      <img src="https://static0.srcdn.com/wordpress/wp-content/uploads/2023/05/barbie-plaid-bike-riding.jpg" alt="Ken Barbie bike outfit">
+    </div>
     <div class="look-info">
-      <h4>Barbie Press Tour (2023)</h4>
-      <p>Pink tones, Ken-energy trucker hats, playful takes on his usual silhouettes. Self-aware and fun without abandoning his core aesthetic. Proved you can be silly and stylish simultaneously.</p>
+      <h4>Barbie (2023) &mdash; Peak Ken Energy</h4>
+      <p>Pink plaid, sailor stripes, ski suits, space suits. The entire Barbie wardrobe was maximalist camp played with a straight face. Self-aware and fun without abandoning craft.</p>
     </div>
   </div>
 
   <div class="look-card">
-    <div class="look-number">7</div>
+    <div class="look-img-wrap">
+      <div class="look-number">7</div>
+      <img src="https://www.thefashionisto.com/wp-content/uploads/2024/03/Ryan-Gosling-Gucci-2024-Oscars.jpg" alt="Oscars 2024 red carpet">
+    </div>
     <div class="look-info">
       <h4>2024 Oscars &mdash; Red Carpet</h4>
-      <p>Custom black Gucci suit with beaded embroidered trim. Hot pink socks as a subtle Barbie nod. The detail-in-the-details approach &mdash; the outfit reads classic from a distance but rewards a closer look.</p>
+      <p>Custom black Gucci suit with beaded embroidered trim. Hot pink socks as a subtle Barbie nod. The detail-in-the-details approach &mdash; reads classic from a distance, rewards a closer look.</p>
     </div>
   </div>
 
   <div class="look-card">
-    <div class="look-number">8</div>
+    <div class="look-img-wrap">
+      <div class="look-number">8</div>
+      <img src="https://www.thefashionisto.com/wp-content/uploads/2024/03/Ryan-Gosling-Im-Just-Ken-2024-Oscars-Pink-Suit-Gucci.jpg" alt="I'm Just Ken Oscars performance">
+    </div>
     <div class="look-info">
-      <h4>2024 Oscars &mdash; "I'm Just Ken" Performance</h4>
-      <p>Crystal-encrusted hot pink Gucci suit, Barbie sunglasses. A Marilyn Monroe "Diamonds Are a Girl's Best Friend" homage. One of the most memorable Oscars fashion moments in recent history. The suit that proved menswear has no limits.</p>
+      <h4>2024 Oscars &mdash; "I'm Just Ken"</h4>
+      <p>Crystal-encrusted hot pink Gucci suit, matching gloves, Barbie sunglasses. A Marilyn Monroe "Diamonds Are a Girl's Best Friend" homage. One of the most memorable Oscars fashion moments in recent history.</p>
     </div>
   </div>
 
   <div class="look-card">
-    <div class="look-number">9</div>
+    <div class="look-img-wrap">
+      <div class="look-number">9</div>
+      <img src="https://cdn.sanity.io/images/vxy259ii/production/1fc66bd636af3995eb3878c84533dd6ebec690f4-660x440.jpg" alt="Everyday street style">
+    </div>
     <div class="look-info">
       <h4>Everyday Street Style &mdash; The Uniform</h4>
-      <p>White tee or henley, dark straight-fit jeans, denim jacket or leather jacket, Red Wing boots, aviators, pendant necklace. This is what he wears when nobody's paying him to wear something. This is the look to copy.</p>
+      <p>White tee or henley, dark straight-fit jeans, denim jacket or leather jacket, Red Wing boots, aviators, pendant necklace. This is what he wears when nobody's paying him. This is the look to copy.</p>
+    </div>
+  </div>
+
+  <!-- More Ken outfits gallery -->
+  <h3>Bonus: Ken Costume Gallery from Barbie</h3>
+  <div class="img-grid">
+    <div class="img-card">
+      <img src="https://static0.srcdn.com/wordpress/wp-content/uploads/2023/12/ryan-gosling-dancing-to-i-m-just-ken-in-barbie.jpg" alt="Ken I'm Just Ken dance">
+      <div class="cap">"I'm Just Ken" dance number</div>
+    </div>
+    <div class="img-card">
+      <img src="https://static0.srcdn.com/wordpress/wp-content/uploads/2023/05/barbie-pink-striped-boating-outfit.jpg" alt="Ken striped boating outfit">
+      <div class="cap">Pink-and-white striped sailor</div>
+    </div>
+    <div class="img-card">
+      <img src="https://static0.srcdn.com/wordpress/wp-content/uploads/2023/05/barbie-ski-suit.jpg" alt="Ken ski suit">
+      <div class="cap">Pink ski suit with fluffy boots</div>
+    </div>
+    <div class="img-card">
+      <img src="https://static0.srcdn.com/wordpress/wp-content/uploads/2023/05/barbie-space-suit.jpg" alt="Ken space suit">
+      <div class="cap">Ken in space &mdash; because why not</div>
     </div>
   </div>
 </section>
@@ -908,8 +1247,8 @@
       <tbody>
         <tr><td><strong>SuitSupply</strong></td><td>$400&ndash;$800</td><td>Best value for the Gosling slim-but-not-skinny fit. Half-canvas construction, great fabrics.</td></tr>
         <tr><td><strong>Spier &amp; Mackay</strong></td><td>$300&ndash;$500</td><td>Half-canvas construction at entry-level prices. Incredible value. Online only.</td></tr>
-        <tr><td><strong>Zara</strong></td><td>$150&ndash;$300</td><td>Trendy cuts that approximate designer silhouettes. Get them tailored for $50&ndash;$80 and they punch way above their weight.</td></tr>
-        <tr><td><strong>H&amp;M Premium</strong></td><td>$100&ndash;$200</td><td>Passable for occasional wear. Again, tailoring is the secret weapon.</td></tr>
+        <tr><td><strong>Zara</strong></td><td>$150&ndash;$300</td><td>Trendy cuts that approximate designer silhouettes. Get them tailored for $50&ndash;$80.</td></tr>
+        <tr><td><strong>H&amp;M Premium</strong></td><td>$100&ndash;$200</td><td>Passable for occasional wear. Tailoring is the secret weapon.</td></tr>
       </tbody>
     </table>
   </div>
@@ -943,7 +1282,7 @@
         <tr><td><strong>Levi's Trucker Jacket</strong></td><td>$80&ndash;$100</td><td>The definitive denim jacket. Literally what he wears.</td></tr>
         <tr><td><strong>Alpha Industries MA-1 Bomber</strong></td><td>~$150</td><td>Classic bomber silhouette. The civilian version of what inspired the Drive jacket.</td></tr>
         <tr><td><strong>Schott NYC</strong></td><td>$300&ndash;$700</td><td>Leather jackets with the right vintage edge. American-made since 1913.</td></tr>
-        <tr><td><strong>ASOS / Zara</strong></td><td>$50&ndash;$150</td><td>Budget bombers and leather-look jackets for testing the style before investing.</td></tr>
+        <tr><td><strong>ASOS / Zara</strong></td><td>$50&ndash;$150</td><td>Budget bombers and leather-look jackets for testing the style.</td></tr>
       </tbody>
     </table>
   </div>
@@ -955,7 +1294,7 @@
         <tr><th>Brand</th><th>Price</th><th>Notes</th></tr>
       </thead>
       <tbody>
-        <tr><td><strong>Red Wing Heritage</strong></td><td>$300&ndash;$350</td><td>Not an alternative &mdash; this IS what he wears. Reasonable for boots that last a decade.</td></tr>
+        <tr><td><strong>Red Wing Heritage</strong></td><td>$300&ndash;$350</td><td>Not an alternative &mdash; this IS what he wears. Boots that last a decade.</td></tr>
         <tr><td><strong>Thursday Boot Company</strong></td><td>~$200</td><td>Similar aesthetic at a lower price point. Great entry-level heritage boots.</td></tr>
         <tr><td><strong>Dr. Martens 1460</strong></td><td>$130&ndash;$170</td><td>Another boot he actually wears.</td></tr>
         <tr><td><strong>Clarks Desert Boots</strong></td><td>$100&ndash;$150</td><td>Captures the casual-refined boot vibe for less.</td></tr>
@@ -974,6 +1313,21 @@
         <tr><td><strong>Seiko Presage</strong></td><td>$300&ndash;$500</td><td>Dress watch quality at a fraction of TAG Heuer.</td></tr>
         <tr><td><strong>Orient Bambino</strong></td><td>$120&ndash;$180</td><td>Classic dress watch, excellent value. Looks like $1,000.</td></tr>
         <tr><td><strong>Casio Edifice</strong></td><td>$100&ndash;$200</td><td>Chronograph looks similar to the Carrera.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Eyewear</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Brand</th><th>Price</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>American Optical Original Pilot</strong></td><td>$65&ndash;$80</td><td>Literally what he wears in The Fall Guy. NASA heritage.</td></tr>
+        <tr><td><strong>Warby Parker</strong></td><td>$95&ndash;$195</td><td>Gregory Peck-style round frames available.</td></tr>
+        <tr><td><strong>MVMT Sunglasses</strong></td><td>$60&ndash;$120</td><td>Aviator and keyhole bridge styles.</td></tr>
+        <tr><td><strong>Knockaround / Blenders</strong></td><td>$25&ndash;$50</td><td>Cheap aviators for testing the look.</td></tr>
       </tbody>
     </table>
   </div>
@@ -1012,7 +1366,7 @@
     <div class="principle-num">04</div>
     <div>
       <h3>Slightly Elongated Silhouette</h3>
-      <p>At 6 feet with a moderate build, Gosling dresses to maintain a sleek vertical line. Jackets hit right at the hip &mdash; never longer. No harsh horizontal breaks (like a tucked shirt with a contrasting belt into contrasting pants). Monochromatic or tonal outfits extend the line and make you look taller and leaner. If you're around the same build, this is the single easiest trick to steal.</p>
+      <p>At 6 feet with a moderate build, Gosling dresses to maintain a sleek vertical line. Jackets hit right at the hip &mdash; never longer. No harsh horizontal breaks. Monochromatic or tonal outfits extend the line and make you look taller and leaner. If you're around the same build, this is the single easiest trick to steal.</p>
     </div>
   </div>
 
@@ -1020,7 +1374,7 @@
     <div class="principle-num">05</div>
     <div>
       <h3>The "Dramatic Classic" Framework</h3>
-      <p>Style analysts classify Gosling as a "dramatic classic" body type &mdash; a harmonious middle ground that benefits from garments that are restrained, well-fitted, slightly elongated, and crisp. Neither boxy nor ultra-slim. The ideal is <strong>balance, unity, and sleekness with a touch of angular sophistication.</strong> In practice: structured shoulders, clean lines, no excess fabric, no ultra-tight fits.</p>
+      <p>Style analysts classify Gosling as a "dramatic classic" body type &mdash; a harmonious middle ground that benefits from garments that are restrained, well-fitted, slightly elongated, and crisp. Neither boxy nor ultra-slim. The ideal is <strong>balance, unity, and sleekness with a touch of angular sophistication.</strong></p>
     </div>
   </div>
 
@@ -1028,7 +1382,7 @@
     <div class="principle-num">06</div>
     <div>
       <h3>Timelessness Over Trends</h3>
-      <p>The Mark Avery test: <strong>could this photo be from 1965, 1985, or 2025?</strong> If yes, it works. Gosling avoids anything that screams a specific year. No loud logos, no fast-fashion trends, no streetwear hype pieces. His wardrobe from 10 years ago still looks current because he never chased what was "in." If you're building a wardrobe from scratch, buy things that pass this test and you'll never waste money on clothes that expire.</p>
+      <p>The Mark Avery test: <strong>could this photo be from 1965, 1985, or 2025?</strong> If yes, it works. Gosling avoids anything that screams a specific year. No loud logos, no fast-fashion trends, no streetwear hype pieces. His wardrobe from 10 years ago still looks current because he never chased what was "in."</p>
     </div>
   </div>
 
@@ -1036,7 +1390,7 @@
     <div class="principle-num">07</div>
     <div>
       <h3>Confidence to Play</h3>
-      <p>Despite the "timeless" baseline, Gosling is not afraid of pink suits, triple-stacked watches, or scorpion jackets when the context calls for it. The foundation of basics gives him room to take risks without looking costumey. Once you have the fundamentals down &mdash; the fit, the palette, the restraint &mdash; you've earned the right to break the rules when it's fun.</p>
+      <p>Despite the "timeless" baseline, Gosling is not afraid of pink suits, triple-stacked watches, or scorpion jackets when the context calls for it. The foundation of basics gives him room to take risks without looking costumey. Once you have the fundamentals down, you've earned the right to break the rules when it's fun.</p>
     </div>
   </div>
 </section>
@@ -1047,35 +1401,34 @@
   <ul>
     <li><a href="https://jakewoolf.substack.com/p/ryan-goslings-stylist-mark-avery" target="_blank">Mark Avery Interview &mdash; Jake Woolf/Substack</a></li>
     <li><a href="https://huckberry.com/journal/posts/interview-mark-avery-ryan-gosling-s-stylist" target="_blank">Mark Avery Interview &mdash; Huckberry</a></li>
-    <li><a href="https://www.wideopencountry.com/all-about-stylist-mark-avery/" target="_blank">Mark Avery &mdash; Wide Open Country</a></li>
     <li><a href="https://huckberry.com/journal/posts/5-style-items-to-literally-dress-like-ryan-gosling" target="_blank">5 Pieces to Dress Like Gosling &mdash; Huckberry</a></li>
     <li><a href="https://www.opticabassol.com/en-us/blogs/news/meet-ryan-goslings-favorite-glasses" target="_blank">Gosling Glasses &mdash; Bassol Optic</a></li>
     <li><a href="https://www.bantonframeworks.co.uk/blogs/eyewear-icons/ryan-gosling-glasses" target="_blank">Gosling Glasses &mdash; Banton Frameworks</a></li>
     <li><a href="https://www.lunigal.com/celebrities/ryan_gosling.htm" target="_blank">Gosling Glasses &mdash; Lunigal</a></li>
-    <li><a href="https://www.sunglassesid.com/sightings/american-optical-original-pilot-ryan-gosling-fall-guy" target="_blank">American Optical in The Fall Guy</a></li>
+    <li><a href="https://www.mouqy.com/blog/ryan-gosling-glasses/" target="_blank">Gosling Glasses Evolution &mdash; Mouqy</a></li>
+    <li><a href="https://www.sunglassesid.com/celebrities/ryan-gosling" target="_blank">Gosling Sunglasses ID &mdash; SunglassesID</a></li>
+    <li><a href="https://www.thefashionisto.com/people/ryan-gosling-haircut/" target="_blank">Gosling Haircuts &mdash; The Fashionisto</a></li>
     <li><a href="https://regalgentleman.com/blogs/blog/ryan-gosling-haircut" target="_blank">Gosling Haircuts &mdash; Regal Gentleman</a></li>
-    <li><a href="https://cuttersyard.com/how-to-get-the-ryan-gosling-haircut-4-classic-looks/" target="_blank">4 Classic Gosling Looks &mdash; Cutters Yard</a></li>
-    <li><a href="https://www.primermagazine.com/2013/learn/the-haircut-ryan-gosling" target="_blank">The Haircut &mdash; Primer Magazine</a></li>
-    <li><a href="https://manforhimself.com/mens-hairstyles/ryan-gosling-highlighted-softly-textured-hairstyle/" target="_blank">Gosling Highlighted Hair &mdash; Man For Himself</a></li>
+    <li><a href="https://cuttersyard.com/how-to-get-the-ryan-gosling-haircut-4-classic-looks/" target="_blank">4 Classic Looks &mdash; Cutters Yard</a></li>
+    <li><a href="https://manforhimself.com/mens-hairstyles/ryan-gosling-highlighted-softly-textured-hairstyle/" target="_blank">Highlighted Hair &mdash; Man For Himself</a></li>
     <li><a href="https://www.fashionbeans.com/article/ryan-gosling-style/" target="_blank">How to Dress Like Gosling &mdash; FashionBeans</a></li>
-    <li><a href="https://www.tatlerasia.com/style/fashion/how-to-wear-a-suit-ryan-gosling-guide" target="_blank">Gosling Suits &mdash; Tatler Asia</a></li>
-    <li><a href="https://andreemilio.com/2025/04/30/ryan-gosling-suit-style-guide/" target="_blank">Gosling Suit Style Guide &mdash; Andre Emilio</a></li>
+    <li><a href="https://www.insidehook.com/style/ryan-goslings-10-most-iconic-movie-jackets-ranked" target="_blank">10 Most Iconic Jackets &mdash; InsideHook</a></li>
+    <li><a href="https://time.com/4974300/ryan-gosling-jackets/" target="_blank">Gosling Jackets &mdash; TIME</a></li>
     <li><a href="https://www.hollywoodreporter.com/lifestyle/style/ryan-gosling-oscars-red-carpet-2024-look-1235847690/" target="_blank">2024 Oscars Look &mdash; Hollywood Reporter</a></li>
     <li><a href="https://robbreport.com/style/fashion/ryan-gosling-gucci-suit-fall-guy-premiere-1235602152/" target="_blank">Mint Gucci Suit &mdash; Robb Report</a></li>
-    <li><a href="https://www.thegentlemansjournal.com/article/6-style-tips-can-take-ryan-gosling/" target="_blank">6 Style Tips &mdash; Gentleman's Journal</a></li>
+    <li><a href="https://www.redcarpet-fashionawards.com/2024/05/01/ryan-gosling-wore-gucci-to-the-fall-guy-la-premiere/" target="_blank">Fall Guy Premiere &mdash; Red Carpet Fashion Awards</a></li>
     <li><a href="https://www.thegentlemansjournal.com/article/style-steal-ryan-gosling/" target="_blank">Style Steal &mdash; Gentleman's Journal</a></li>
     <li><a href="https://thealignedlover.com/understanding-ryan-goslings-style-mens-silhouette-analysis/" target="_blank">Silhouette Analysis &mdash; The Aligned Lover</a></li>
     <li><a href="https://manofmany.com/culture/ryan-gosling-watches-collection" target="_blank">Watch Collection &mdash; Man of Many</a></li>
     <li><a href="https://timeandtidewatches.com/tag-heuer-ryan-gosling-the-fall-guy/" target="_blank">TAG Heuer Carrera &mdash; Time and Tide</a></li>
-    <li><a href="https://www.jomashop.com/blog/articles/ryan-goslings-tag-heuer-collection" target="_blank">TAG Heuer Collection &mdash; Jomashop</a></li>
     <li><a href="https://www.tagheuer.com/us/en/partnerships/ryan-gosling.html" target="_blank">TAG Heuer Ambassador Page</a></li>
-    <li><a href="https://robbreport.com/style/watch-collector/ryan-gosling-tag-heuer-carrera-to-barbie-press-1234862288/" target="_blank">Pink TAG Heuer &mdash; Robb Report</a></li>
+    <li><a href="https://screenrant.com/barbie-movie-ken-ryan-gosling-costumes-ranked/" target="_blank">16 Ken Costumes Ranked &mdash; Screen Rant</a></li>
+    <li><a href="https://famousoutfits.com/celebrities/ryan-gosling/" target="_blank">Ryan Gosling Outfits &mdash; Famous Outfits</a></li>
+    <li><a href="https://www.soulrevolver.com/products/blade-runner-dystopian" target="_blank">Blade Runner 2049 Coat Replica &mdash; Soul Revolver</a></li>
+    <li><a href="https://www.levi.com/US/en_US/blog/article/levis-x-mark-avery-501-day" target="_blank">Levi's x Mark Avery 501 Day</a></li>
+    <li><a href="https://www.huffpost.com/entry/ryan-goslings-necklace-holds-a-very-special-meaning_n_59d777d5e4b046f5ad979b8e" target="_blank">Gosling's Necklace Meaning &mdash; HuffPost</a></li>
     <li><a href="https://www.soletopia.com/2012/10/ryan-gosling-beckham-drakes-red-wing-1907-heritage-boots/" target="_blank">Red Wing 1907 Boots &mdash; Soletopia</a></li>
     <li><a href="https://footwearnews.com/shop/boots/ryan-gosling-birthday-shoe-style-455087/" target="_blank">Shoe Style &mdash; Footwear News</a></li>
-    <li><a href="https://www.insidehook.com/style/ryan-goslings-10-most-iconic-movie-jackets-ranked" target="_blank">10 Most Iconic Jackets &mdash; InsideHook</a></li>
-    <li><a href="https://www.soulrevolver.com/products/blade-runner-dystopian" target="_blank">Blade Runner 2049 Coat Replica &mdash; Soul Revolver</a></li>
-    <li><a href="https://time.com/4974300/ryan-gosling-jackets/" target="_blank">Gosling Jackets &mdash; TIME</a></li>
-    <li><a href="https://www.levi.com/US/en_US/blog/article/levis-x-mark-avery-501-day" target="_blank">Levi's x Mark Avery 501 Day</a></li>
   </ul>
 </section>
 
@@ -1094,7 +1447,6 @@
 
 <script>
 (function() {
-  // ── Voice whitelist ──
   const VOICE_WHITELIST = [
     'samantha','karen','daniel','moira','tessa','ava','allison',
     'tom','aaron','nicky','evan','zoe','joelle','fiona','martha','arthur'
@@ -1108,7 +1460,6 @@
     return false;
   }
 
-  // ── State ──
   let voices = [];
   let selectedVoice = null;
   let speeds = [0.8, 1, 1.2, 1.5];
@@ -1120,7 +1471,6 @@
   let currentSection = null;
   let keepAlive = null;
 
-  // ── DOM ──
   const listenBtn = document.getElementById('listenBtn');
   const voiceSelect = document.getElementById('voiceSelect');
   const speedBtn = document.getElementById('speedBtn');
@@ -1132,7 +1482,6 @@
   const stopBtn = document.getElementById('stopBtn');
   const selectAllBtn = document.getElementById('selectAllBtn');
 
-  // ── Populate voices ──
   function loadVoices() {
     voices = speechSynthesis.getVoices().filter(isGoodVoice);
     [voiceSelect, playerVoice].forEach(sel => {
@@ -1144,7 +1493,6 @@
         sel.appendChild(opt);
       });
     });
-    // Default to Samantha
     const samIdx = voices.findIndex(v => v.name.toLowerCase().includes('samantha'));
     if (samIdx > -1) {
       voiceSelect.value = samIdx;
@@ -1155,11 +1503,9 @@
   speechSynthesis.onvoiceschanged = loadVoices;
   loadVoices();
 
-  // Sync voice selects
   voiceSelect.addEventListener('change', () => { playerVoice.value = voiceSelect.value; });
   playerVoice.addEventListener('change', () => { voiceSelect.value = playerVoice.value; });
 
-  // ── Speed ──
   function cycleSpeed() {
     speedIdx = (speedIdx + 1) % speeds.length;
     speedBtn.textContent = speeds[speedIdx] + 'x';
@@ -1168,12 +1514,11 @@
   speedBtn.addEventListener('click', cycleSpeed);
   playerSpeedBtn.addEventListener('click', cycleSpeed);
 
-  // ── Build chunks ──
   function buildChunks() {
     chunks = [];
     const sections = document.querySelectorAll('#mainContent > section');
     sections.forEach(sec => {
-      const els = sec.querySelectorAll('h2, h3, h4, p, li, blockquote, td');
+      const els = sec.querySelectorAll('h2, h3, h4, p, li, blockquote');
       els.forEach(el => {
         const text = el.textContent.trim();
         if (!text) return;
@@ -1183,7 +1528,6 @@
     });
   }
 
-  // ── Highlight section ──
   function highlightSection(sec) {
     if (currentSection && currentSection !== sec) {
       currentSection.classList.remove('reading');
@@ -1195,36 +1539,28 @@
     currentSection = sec;
   }
 
-  // ── Speak chunk ──
   function speakChunk() {
     if (chunkIdx >= chunks.length) {
       stopPlayback();
       return;
     }
-
     const chunk = chunks[chunkIdx];
     const utter = new SpeechSynthesisUtterance(chunk.text);
-
     const vi = parseInt(playerVoice.value || voiceSelect.value || 0);
     if (voices[vi]) utter.voice = voices[vi];
-
     const rate = speeds[speedIdx];
     utter.rate = chunk.isHeading ? rate * 0.9 : rate;
     if (chunk.isHeading) utter.pitch = 1.05;
-
     highlightSection(chunk.section);
     nowPlaying.textContent = chunk.section ? chunk.section.querySelector('h2')?.textContent || '' : '';
-
     utter.onend = function() {
       chunkIdx++;
       const delay = chunk.isHeading ? 400 : 200;
       setTimeout(speakChunk, delay);
     };
-
     speechSynthesis.speak(utter);
   }
 
-  // ── Start ──
   function startPlayback() {
     buildChunks();
     chunkIdx = 0;
@@ -1236,7 +1572,6 @@
     speakChunk();
   }
 
-  // ── Stop ──
   function stopPlayback() {
     speechSynthesis.cancel();
     isPlaying = false;
@@ -1249,7 +1584,6 @@
     listenBtn.textContent = 'Listen';
   }
 
-  // ── Toggle ──
   function togglePlayPause() {
     if (!isPlaying) { startPlayback(); return; }
     if (isPaused) {
@@ -1269,7 +1603,6 @@
   playPauseBtn.addEventListener('click', togglePlayPause);
   stopBtn.addEventListener('click', stopPlayback);
 
-  // ── Select all ──
   selectAllBtn.addEventListener('click', (e) => {
     e.preventDefault();
     const range = document.createRange();
