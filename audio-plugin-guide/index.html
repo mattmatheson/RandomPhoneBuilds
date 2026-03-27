@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build. Ship. Sell. — Audio Plugins for Logic Pro</title>
+  <style>
+    :root {
+      --black: #000;
+      --white: #fff;
+      --grey-100: #f5f5f7;
+      --grey-300: #d2d2d7;
+      --grey-500: #86868b;
+      --grey-700: #3a3a3c;
+      --grey-900: #1c1c1e;
+      --accent: #0066ff;
+      --accent-light: #409cff;
+      --font: -apple-system, "SF Pro Display", "SF Pro Text", BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+      --mono: "SF Mono", "Fira Code", "Fira Mono", ui-monospace, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 56px;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .nav-logo {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--grey-700);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--black); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 120px 80px 80px;
+      background: var(--black);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 60% 50%, rgba(0,102,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .hero-headline {
+      font-size: clamp(72px, 10vw, 140px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 0.92;
+      color: var(--white);
+      max-width: 900px;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s 0.35s forwards;
+    }
+
+    .hero-headline em {
+      font-style: normal;
+      color: var(--accent-light);
+    }
+
+    .hero-sub {
+      font-size: 21px;
+      font-weight: 300;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.6);
+      max-width: 560px;
+      margin-bottom: 56px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s 0.5s forwards;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 500;
+      padding: 14px 28px;
+      border-radius: 980px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.65s forwards;
+    }
+    .hero-cta:hover { background: #0052cc; transform: scale(1.02); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 48px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero-scroll span {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+      animation: scrollPulse 2s infinite;
+    }
+
+    /* SECTION BASE */
+    section {
+      padding: 120px 80px;
+    }
+
+    .section-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .section-headline {
+      font-size: clamp(40px, 5vw, 72px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      max-width: 800px;
+      margin-bottom: 24px;
+    }
+
+    .section-body {
+      font-size: 19px;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--grey-700);
+      max-width: 600px;
+    }
+
+    /* STACK SECTION */
+    .stack {
+      background: var(--grey-100);
+    }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 80px;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .stack-card {
+      background: var(--white);
+      padding: 56px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stack-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .stack-card:hover::before { transform: scaleX(1); }
+
+    .stack-number {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--grey-300);
+      margin-bottom: 24px;
+    }
+
+    .stack-name {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      margin-bottom: 12px;
+    }
+
+    .stack-role {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .stack-desc {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--grey-700);
+    }
+
+    .stack-tag {
+      display: inline-block;
+      margin-top: 24px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 4px;
+      background: var(--grey-100);
+      color: var(--grey-500);
+    }
+
+    /* DELAY SECTION */
+    .delay-section {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .delay-section .section-headline { color: var(--white); }
+    .delay-section .section-body { color: rgba(255,255,255,0.55); }
+
+    .signal-diagram {
+      margin-top: 80px;
+      position: relative;
+    }
+
+    .signal-flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 60px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .signal-node {
+      flex-shrink: 0;
+      background: var(--grey-900);
+      border: 1px solid var(--grey-700);
+      border-radius: 12px;
+      padding: 20px 24px;
+      text-align: center;
+      min-width: 120px;
+      position: relative;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .signal-node:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .signal-node.highlight {
+      border-color: var(--accent);
+      background: rgba(0,102,255,0.1);
+    }
+
+    .signal-node-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--grey-500);
+      margin-bottom: 6px;
+    }
+
+    .signal-node-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .signal-arrow {
+      flex-shrink: 0;
+      width: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 20px;
+      position: relative;
+    }
+
+    .signal-arrow::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      right: 20px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+
+    .feedback-loop {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      padding: 32px 48px;
+      border: 1px dashed rgba(255,255,255,0.1);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.02);
+      margin-bottom: 60px;
+    }
+
+    .feedback-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--grey-500);
+      margin-right: 16px;
+    }
+
+    .param-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .param-card {
+      background: var(--grey-900);
+      padding: 32px;
+      border: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    .param-card:hover { border-color: var(--accent); }
+
+    .param-value {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--accent-light);
+      margin-bottom: 4px;
+    }
+
+    .param-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .param-desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.5;
+    }
+
+    /* CODE SNIPPET */
+    .code-block {
+      background: var(--grey-900);
+      border: 1px solid var(--grey-700);
+      border-radius: 16px;
+      padding: 40px;
+      margin-top: 60px;
+      overflow-x: auto;
+    }
+
+    .code-title {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--grey-500);
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--grey-700);
+    }
+
+    pre {
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.8;
+      color: #e2e8f0;
+    }
+
+    .kw { color: #ff79c6; }
+    .fn { color: #8be9fd; }
+    .str { color: #f1fa8c; }
+    .cm { color: #6272a4; }
+    .num { color: #bd93f9; }
+    .type { color: #50fa7b; }
+
+    /* ROADMAP */
+    .roadmap {
+      background: var(--white);
+    }
+
+    .timeline {
+      margin-top: 80px;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 28px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--grey-300);
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 48px;
+      margin-bottom: 64px;
+      position: relative;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+    .timeline-item.visible { opacity: 1; transform: translateX(0); }
+
+    .timeline-dot {
+      flex-shrink: 0;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--black);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      position: relative;
+      z-index: 1;
+    }
+
+    .timeline-dot.done { background: var(--accent); }
+    .timeline-dot.active {
+      background: var(--black);
+      box-shadow: 0 0 0 4px rgba(0,102,255,0.2);
+    }
+
+    .timeline-content { flex: 1; padding-top: 12px; }
+
+    .timeline-week {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .timeline-title {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .timeline-desc {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--grey-500);
+    }
+
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .tag {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 4px;
+      background: var(--grey-100);
+      color: var(--grey-700);
+      font-family: var(--mono);
+    }
+
+    /* NUMBERS */
+    .numbers {
+      background: var(--grey-100);
+    }
+
+    .numbers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 80px;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .number-card {
+      background: var(--white);
+      padding: 56px 48px;
+    }
+
+    .number-big {
+      font-size: clamp(56px, 7vw, 96px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--black);
+      margin-bottom: 12px;
+    }
+
+    .number-unit {
+      color: var(--accent);
+    }
+
+    .number-label {
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+    }
+
+    .number-desc {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--grey-500);
+    }
+
+    /* RESOURCES */
+    .resources {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .resources .section-headline { color: var(--white); }
+    .resources .section-eyebrow { color: var(--accent-light); }
+    .resources .section-body { color: rgba(255,255,255,0.55); }
+
+    .resource-list {
+      margin-top: 64px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .resource-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      padding: 40px;
+      background: var(--grey-900);
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.2s;
+    }
+    .resource-item:hover { background: rgba(0,102,255,0.1); }
+
+    .resource-icon {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--grey-700);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .resource-name {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .resource-url {
+      font-size: 13px;
+      color: var(--accent-light);
+      margin-bottom: 8px;
+      font-family: var(--mono);
+    }
+
+    .resource-desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.5;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--black);
+      border-top: 1px solid var(--grey-900);
+      padding: 48px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-brand {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .footer-note {
+      font-size: 13px;
+      color: var(--grey-500);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.8; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      section { padding: 80px 24px; }
+      .hero { padding: 100px 24px 80px; }
+      .stack-grid { grid-template-columns: 1fr; }
+      .param-grid { grid-template-columns: repeat(2, 1fr); }
+      .numbers-grid { grid-template-columns: 1fr; }
+      .resource-list { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 16px; align-items: flex-start; padding: 40px 24px; }
+    }
+
+    @media (max-width: 600px) {
+      .param-grid { grid-template-columns: 1fr; }
+    }
+
+    /* WAVEFORM ANIMATION */
+    .waveform {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 32px;
+    }
+    .wave-bar {
+      width: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      animation: wave 1.2s ease-in-out infinite;
+    }
+    .wave-bar:nth-child(1) { animation-delay: 0s; height: 40%; }
+    .wave-bar:nth-child(2) { animation-delay: 0.1s; height: 60%; }
+    .wave-bar:nth-child(3) { animation-delay: 0.2s; height: 100%; }
+    .wave-bar:nth-child(4) { animation-delay: 0.3s; height: 80%; }
+    .wave-bar:nth-child(5) { animation-delay: 0.4s; height: 55%; }
+    .wave-bar:nth-child(6) { animation-delay: 0.5s; height: 90%; }
+    .wave-bar:nth-child(7) { animation-delay: 0.6s; height: 70%; }
+    .wave-bar:nth-child(8) { animation-delay: 0.7s; height: 45%; }
+
+    @keyframes wave {
+      0%, 100% { transform: scaleY(0.4); }
+      50% { transform: scaleY(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Audio Plugin Guide</a>
+    <ul class="nav-links">
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="#delay">The Delay</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+      <li><a href="#numbers">Numbers</a></li>
+      <li><a href="#resources">Resources</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Audio Plugin Development for Logic Pro</p>
+    <h1 class="hero-headline">Build.<br><em>Ship.</em><br>Sell.</h1>
+    <p class="hero-sub">A complete guide to building commercial audio plugins for Logic Pro — from zero to your first sale.</p>
+    <a href="#stack" class="hero-cta">
+      See the stack
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section class="stack" id="stack">
+    <p class="section-eyebrow fade-in">The Technology</p>
+    <h2 class="section-headline fade-in">The tools professionals use.</h2>
+    <p class="section-body fade-in">Three pieces of software. That's all you need to build a professional-grade audio plugin and sell it to every Logic Pro, Ableton, and Pro Tools user on earth.</p>
+
+    <div class="stack-grid fade-in">
+      <div class="stack-card">
+        <div class="stack-number">01</div>
+        <div class="stack-name">JUCE</div>
+        <div class="stack-role">The Framework</div>
+        <p class="stack-desc">The industry-standard C++ framework for audio software. Used by Waves, Native Instruments, iZotope — basically everyone. Write once, export to AU, VST3, and AAX simultaneously. Has everything built in: knobs, sliders, meters, DSP math, and a full plugin hosting environment for testing.</p>
+        <span class="stack-tag">juce.com</span>
+      </div>
+
+      <div class="stack-card">
+        <div class="stack-number">02</div>
+        <div class="stack-name">C++</div>
+        <div class="stack-role">The Language</div>
+        <p class="stack-desc">Real-time audio demands real-time performance. C++ is the only language that gives you the speed to process audio buffers at 44,100+ samples per second without a single dropout. JUCE handles most of the hard parts — you just write the DSP math that makes your plugin sound unique.</p>
+        <span class="stack-tag">Industry standard</span>
+      </div>
+
+      <div class="stack-card">
+        <div class="stack-number">03</div>
+        <div class="stack-name">Xcode</div>
+        <div class="stack-role">The Build System</div>
+        <p class="stack-desc">Apple's free IDE is required to compile Audio Units for Logic Pro. JUCE's Projucer tool generates the Xcode project automatically — you mostly just use Xcode to build, debug, and sign your plugin. Apple notarization is required for macOS Ventura+ users to install your plugin without security warnings.</p>
+        <span class="stack-tag">Free on Mac App Store</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE DELAY -->
+  <section class="delay-section" id="delay">
+    <p class="section-eyebrow fade-in">Case Study: The Delay Plugin</p>
+    <h2 class="section-headline fade-in">Simple concept.<br>Infinite depth.</h2>
+    <p class="section-body fade-in">A delay plugin is the perfect first commercial plugin. The DSP is clean and learnable, but the design space — tapes, filters, modulation, stereo spread — is deep enough to build something genuinely original.</p>
+
+    <div class="signal-diagram fade-in">
+      <p style="font-size:12px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--grey-500); margin-bottom:24px;">Signal Flow</p>
+      <div class="signal-flow">
+        <div class="signal-node">
+          <div class="signal-node-label">Input</div>
+          <div class="signal-node-name">Audio In</div>
+        </div>
+        <div class="signal-arrow">→</div>
+        <div class="signal-node highlight">
+          <div class="signal-node-label">Core DSP</div>
+          <div class="signal-node-name">Circular Buffer</div>
+        </div>
+        <div class="signal-arrow">→</div>
+        <div class="signal-node">
+          <div class="signal-node-label">Read Head</div>
+          <div class="signal-node-name">Delay Tap</div>
+        </div>
+        <div class="signal-arrow">→</div>
+        <div class="signal-node">
+          <div class="signal-node-label">Blend</div>
+          <div class="signal-node-name">Wet/Dry Mix</div>
+        </div>
+        <div class="signal-arrow">→</div>
+        <div class="signal-node">
+          <div class="signal-node-label">Output</div>
+          <div class="signal-node-name">Audio Out</div>
+        </div>
+      </div>
+
+      <div class="feedback-loop">
+        <span class="feedback-label">Feedback Loop</span>
+        <div class="waveform">
+          <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+          <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+          <div class="wave-bar"></div><div class="wave-bar"></div>
+        </div>
+        <span style="font-size:13px; color:rgba(255,255,255,0.4);">Delayed signal re-enters the buffer at reduced gain — creating repeating echoes that decay naturally</span>
+      </div>
+    </div>
+
+    <div class="param-grid fade-in">
+      <div class="param-card">
+        <div class="param-value">500<span class="param-unit" style="font-size:24px; color:var(--grey-500);">ms</span></div>
+        <div class="param-name">Delay Time</div>
+        <div class="param-desc">How far back in the circular buffer to read. Sync to host BPM for musical results.</div>
+      </div>
+      <div class="param-card">
+        <div class="param-value">40<span class="param-unit" style="font-size:24px; color:var(--grey-500);">%</span></div>
+        <div class="param-name">Feedback</div>
+        <div class="param-desc">Fraction of delayed signal that feeds back into the buffer. Higher = more repeats.</div>
+      </div>
+      <div class="param-card">
+        <div class="param-value">50<span class="param-unit" style="font-size:24px; color:var(--grey-500);">%</span></div>
+        <div class="param-name">Wet/Dry Mix</div>
+        <div class="param-desc">Blend of delayed vs. original signal. 0% = no effect. 100% = full wet.</div>
+      </div>
+      <div class="param-card">
+        <div class="param-value">+</div>
+        <div class="param-name">Bonus Params</div>
+        <div class="param-desc">LFO modulation, filter in feedback path, stereo ping-pong, tape flutter. These are what make it special.</div>
+      </div>
+    </div>
+
+    <div class="code-block fade-in">
+      <div class="code-title">Core DSP — Circular Buffer Delay (C++ / JUCE)</div>
+      <pre><span class="cm">// Inside processBlock() — called 44,100+ times per second</span>
+<span class="kw">void</span> <span class="fn">processBlock</span>(juce::AudioBuffer&lt;<span class="type">float</span>&gt;&amp; buffer, juce::MidiBuffer&amp;)
+{
+    <span class="kw">auto</span> totalNumSamples = buffer.<span class="fn">getNumSamples</span>();
+
+    <span class="kw">for</span> (<span class="type">int</span> sample = <span class="num">0</span>; sample &lt; totalNumSamples; ++sample)
+    {
+        <span class="type">float</span> inputSample = buffer.<span class="fn">getSample</span>(<span class="num">0</span>, sample);
+
+        <span class="cm">// Read delayed sample from circular buffer</span>
+        <span class="type">float</span> delayedSample = delayBuffer[readPos];
+
+        <span class="cm">// Write input + feedback into buffer</span>
+        delayBuffer[writePos] = inputSample + (delayedSample * feedbackAmount);
+
+        <span class="cm">// Mix dry and wet signals</span>
+        <span class="type">float</span> output = (inputSample * dryMix) + (delayedSample * wetMix);
+        buffer.<span class="fn">setSample</span>(<span class="num">0</span>, sample, output);
+
+        <span class="cm">// Advance buffer positions (wrap around)</span>
+        writePos = (writePos + <span class="num">1</span>) % bufferSize;
+        readPos  = (readPos  + <span class="num">1</span>) % bufferSize;
+    }
+}</pre>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section class="roadmap" id="roadmap">
+    <p class="section-eyebrow fade-in">The Plan</p>
+    <h2 class="section-headline fade-in">Zero to first sale in 8 weeks.</h2>
+    <p class="section-body fade-in">A realistic, week-by-week path from first download to plugin on sale. No shortcuts — but no wasted steps either.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot done">1–2</div>
+        <div class="timeline-content">
+          <div class="timeline-week">Weeks 1–2</div>
+          <div class="timeline-title">Environment Setup & JUCE Basics</div>
+          <div class="timeline-desc">Download Xcode, download JUCE, generate your first plugin project with Projucer. Build a simple gain plugin that compiles and loads in Logic Pro. Understand the audio buffer model and the processBlock() loop.</div>
+          <div class="timeline-tags">
+            <span class="tag">Xcode</span>
+            <span class="tag">JUCE Projucer</span>
+            <span class="tag">AU Plugin</span>
+            <span class="tag">processBlock()</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot done">3–4</div>
+        <div class="timeline-content">
+          <div class="timeline-week">Weeks 3–4</div>
+          <div class="timeline-title">Delay DSP Implementation</div>
+          <div class="timeline-desc">Build the circular buffer, implement delay time, feedback, and wet/dry mix. Add BPM sync. Test with actual audio in Logic Pro. This is the core of your product — get it sounding right before touching the GUI.</div>
+          <div class="timeline-tags">
+            <span class="tag">Circular Buffer</span>
+            <span class="tag">Feedback</span>
+            <span class="tag">BPM Sync</span>
+            <span class="tag">DSP Math</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot active">5–6</div>
+        <div class="timeline-content">
+          <div class="timeline-week">Weeks 5–6</div>
+          <div class="timeline-title">GUI Design & Differentiation</div>
+          <div class="timeline-desc">Design your plugin's look in JUCE. Custom knobs, a waveform visualizer, maybe an X/Y pad. Add what makes your delay unique — a filter in the feedback path, stereo ping-pong, or tape flutter via LFO modulation. This is your brand.</div>
+          <div class="timeline-tags">
+            <span class="tag">JUCE Graphics</span>
+            <span class="tag">Custom Knobs</span>
+            <span class="tag">LFO</span>
+            <span class="tag">UI Design</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot">7–8</div>
+        <div class="timeline-content">
+          <div class="timeline-week">Weeks 7–8</div>
+          <div class="timeline-title">Ship It</div>
+          <div class="timeline-desc">Apple notarize your binary (required since macOS Ventura). Set up Gumroad for instant indie sales — then apply to Plugin Boutique for wider reach. Write a product page, record a demo video, price it at $29–$49. You're in business.</div>
+          <div class="timeline-tags">
+            <span class="tag">Apple Notarize</span>
+            <span class="tag">Gumroad</span>
+            <span class="tag">Plugin Boutique</span>
+            <span class="tag">$29–$49</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NUMBERS -->
+  <section class="numbers" id="numbers">
+    <p class="section-eyebrow fade-in">The Market</p>
+    <h2 class="section-headline fade-in">The numbers are real.</h2>
+    <p class="section-body fade-in">The audio plugin market is growing and indie developers are winning. You don't need to be Waves to make serious money with the right niche.</p>
+
+    <div class="numbers-grid fade-in">
+      <div class="number-card">
+        <div class="number-big">$3.5<span class="number-unit">B</span></div>
+        <div class="number-label">Global Plugin Market</div>
+        <div class="number-desc">Projected market size by 2027. Dominated by indie developers and small studios — not just big names.</div>
+      </div>
+      <div class="number-card">
+        <div class="number-big">$29<span class="number-unit">–</span>$79</div>
+        <div class="number-label">Sweet Spot Pricing</div>
+        <div class="number-desc">What focused, well-designed delay plugins sell for on Plugin Boutique and Gumroad. Volume is achievable at this range.</div>
+      </div>
+      <div class="number-card">
+        <div class="number-big">70<span class="number-unit">%</span></div>
+        <div class="number-label">Your Revenue Share</div>
+        <div class="number-desc">Gumroad takes ~10%. Plugin Boutique ~30%. Selling direct from your own site? Keep everything.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESOURCES -->
+  <section class="resources" id="resources">
+    <p class="section-eyebrow fade-in">Level Up</p>
+    <h2 class="section-headline fade-in">Where to learn.</h2>
+    <p class="section-body fade-in">The audio dev community is small and extremely generous. These are the resources that actually matter.</p>
+
+    <div class="resource-list fade-in">
+      <a href="https://www.theaudioprogrammer.com" target="_blank" class="resource-item">
+        <div class="resource-icon">🎧</div>
+        <div>
+          <div class="resource-name">The Audio Programmer</div>
+          <div class="resource-url">theaudioprogrammer.com</div>
+          <div class="resource-desc">YouTube channel with 200+ JUCE tutorials. Tutorial 16 is specifically about building a delay plugin from scratch. The best free resource available.</div>
+        </div>
+      </a>
+
+      <a href="https://juce.com/learn/tutorials/" target="_blank" class="resource-item">
+        <div class="resource-icon">📖</div>
+        <div>
+          <div class="resource-name">JUCE Official Tutorials</div>
+          <div class="resource-url">juce.com/learn/tutorials</div>
+          <div class="resource-desc">Official step-by-step tutorials from JUCE. Covers getting started through advanced DSP. Free. Start here after the first YouTube video.</div>
+        </div>
+      </a>
+
+      <a href="https://www.pluginboutique.com" target="_blank" class="resource-item">
+        <div class="resource-icon">🛒</div>
+        <div>
+          <div class="resource-name">Plugin Boutique</div>
+          <div class="resource-url">pluginboutique.com</div>
+          <div class="resource-desc">The largest dedicated plugin marketplace. Requires product submission and approval. 70/30 revenue split. Huge audience. Apply when your plugin is polished.</div>
+        </div>
+      </a>
+
+      <a href="https://gumroad.com" target="_blank" class="resource-item">
+        <div class="resource-icon">💸</div>
+        <div>
+          <div class="resource-name">Gumroad</div>
+          <div class="resource-url">gumroad.com</div>
+          <div class="resource-desc">Best for indie launches. Upload, price, share. Accepts AU/VST zip files. Great for early adopters, beta pricing, and email list building before the big marketplace.</div>
+        </div>
+      </a>
+
+      <a href="https://forum.juce.com" target="_blank" class="resource-item">
+        <div class="resource-icon">💬</div>
+        <div>
+          <div class="resource-name">JUCE Forum</div>
+          <div class="resource-url">forum.juce.com</div>
+          <div class="resource-desc">Active community of audio developers. Ask anything. Most questions are already answered. Indie devs, pro engineers, and JUCE staff all hang out here.</div>
+        </div>
+      </a>
+
+      <a href="https://developer.apple.com/xcode/" target="_blank" class="resource-item">
+        <div class="resource-icon">🔨</div>
+        <div>
+          <div class="resource-name">Xcode + Notarization</div>
+          <div class="resource-url">developer.apple.com</div>
+          <div class="resource-desc">Apple's $99/yr developer program is required for notarizing your plugin for macOS distribution. Required since Ventura. One-time setup, then automated in your build pipeline.</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">Matt Matheson Creative</div>
+    <div class="footer-note">Built with AI. Shipped with intention. — Cookeville, TN</div>
+  </footer>
+
+  <script>
+    // Intersection Observer for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.fade-in, .timeline-item').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Stagger timeline items
+    document.querySelectorAll('.timeline-item').forEach((item, i) => {
+      item.style.transitionDelay = `${i * 0.1}s`;
+    });
+  </script>
+
+</body>
+</html>
