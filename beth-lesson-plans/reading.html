@@ -87,6 +87,29 @@
     background: rgba(255,255,255,0.18);
   }
   .header-fields input[type="date"] { color-scheme: dark; }
+  .header-fields select {
+    padding: 0.6rem 0.75rem;
+    border: 2px solid rgba(255,255,255,0.25);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    backdrop-filter: blur(4px);
+    transition: border-color 0.2s, background 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+  }
+  .header-fields select:focus {
+    outline: none;
+    border-color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.18);
+  }
+  .header-fields select option {
+    background: #2d3748;
+    color: #fff;
+  }
 
   /* Main container */
   .container {
@@ -418,7 +441,75 @@
   <h1>&#128218; AES Common Lesson Plan</h1>
   <p>Algood Elementary School &mdash; Home of the Braves</p>
   <div class="header-fields">
-    <label>Teacher <input type="text" placeholder="Your name"></label>
+    <label>Teacher <select>
+        <option value="">— Select Teacher —</option>
+        <option>Natalee Allen</option>
+        <option>Beth Anderson</option>
+        <option>Heather Arnold</option>
+        <option>Ashley Bialochowski</option>
+        <option>Laura Brown</option>
+        <option>Melody Bunch</option>
+        <option>Nikita Burnell</option>
+        <option>Kathryn Burnsides</option>
+        <option>Sabrina Cagle</option>
+        <option>Elisha Cade</option>
+        <option>Patience Cannon</option>
+        <option>Sheila Chaffin</option>
+        <option>Samantha Cobble</option>
+        <option>Tracie Craighead</option>
+        <option>Tammy Curry</option>
+        <option>Wendy Davis</option>
+        <option>Alexis Dean</option>
+        <option>Ariel Denning</option>
+        <option>Jody Deweese</option>
+        <option>Amy Fowler</option>
+        <option>Jessica Garrett</option>
+        <option>Melissa Greer</option>
+        <option>Kim Grider</option>
+        <option>Dana Griggs</option>
+        <option>Michelle Haggard</option>
+        <option>Vickie Hargis</option>
+        <option>Rachel Harris</option>
+        <option>Nancy Hawkins</option>
+        <option>Julianna Hotchkiss</option>
+        <option>Kaitie Hutton</option>
+        <option>Jessica M. Jackson</option>
+        <option>Cecilia Jenkins</option>
+        <option>Keisha Johnson</option>
+        <option>Leanne Johnson</option>
+        <option>Riley Kidd</option>
+        <option>Kimberly Stephenson</option>
+        <option>Erin Lynch</option>
+        <option>John Manier</option>
+        <option>Monica Mayer</option>
+        <option>Jill McCulley</option>
+        <option>Kelsey Mott</option>
+        <option>Samantha Murphy</option>
+        <option>Lindsay Null</option>
+        <option>Stephanie Oliver</option>
+        <option>Glenda Phillips</option>
+        <option>Kellie Phillips</option>
+        <option>Nancy Pointer</option>
+        <option>Dustin Reels</option>
+        <option>Caleb Reese</option>
+        <option>Brian Rohr</option>
+        <option>Julia Sanderson</option>
+        <option>Robin Smith</option>
+        <option>Robin Williams</option>
+        <option>Heather Swingler</option>
+        <option>Kelsey Talkington</option>
+        <option>Katherine Thomas</option>
+        <option>Jessica Thompson</option>
+        <option>Olivia Tiebout</option>
+        <option>Kyle Townsend</option>
+        <option>Harley Walker</option>
+        <option>Ashley Walton</option>
+        <option>Kylee West</option>
+        <option>Sandy West</option>
+        <option>Jill Williams</option>
+        <option>Mollie Wolfe</option>
+        <option>Hunter Zanardi</option>
+      </select></label>
     <label>Subject <input type="text" placeholder="e.g., Math"></label>
     <label>Grade <input type="text" placeholder="e.g., 3rd"></label>
     <label>Date <input type="date"></label>
