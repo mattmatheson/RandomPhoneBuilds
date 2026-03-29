@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beth's Lesson Plan System — Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8f9fb;
+            color: #1e293b;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d6a9f 60%, #4a90c4 100%);
+            color: white;
+            padding: 3rem 1.5rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.4rem;
+        }
+
+        .header p {
+            font-size: 1.05rem;
+            font-weight: 400;
+            opacity: 0.85;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .intro {
+            background: white;
+            border-radius: 12px;
+            padding: 1.75rem 2rem;
+            margin: -1.5rem auto 2.5rem;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            font-size: 1rem;
+            color: #374151;
+            line-height: 1.75;
+            max-width: 960px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        @media (min-width: 700px) {
+            .cards {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .header h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem 1.5rem 1.5rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-top: 4px solid transparent;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .card--reading { border-top-color: #3b82f6; }
+        .card--math    { border-top-color: #8b5cf6; }
+        .card--portal  { border-top-color: #10b981; }
+
+        .card__icon {
+            font-size: 2.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .card__title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+        }
+
+        .card__desc {
+            font-size: 0.9rem;
+            color: #64748b;
+            line-height: 1.65;
+            flex: 1;
+            margin-bottom: 1.25rem;
+        }
+
+        .card__btn {
+            display: inline-block;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            color: white;
+            transition: opacity 0.15s ease;
+        }
+
+        .card__btn:hover { opacity: 0.88; }
+
+        .card--reading .card__btn { background: #3b82f6; }
+        .card--math    .card__btn { background: #8b5cf6; }
+        .card--portal  .card__btn { background: #10b981; }
+
+        .next {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            margin-bottom: 2.5rem;
+        }
+
+        .next h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #1e293b;
+        }
+
+        .next p {
+            font-size: 0.95rem;
+            color: #374151;
+            margin-bottom: 0.75rem;
+        }
+
+        .next ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .next ul li {
+            padding: 0.35rem 0;
+            font-size: 0.95rem;
+            color: #475569;
+        }
+
+        .next ul li::before {
+            content: "•";
+            color: #3b82f6;
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>AES Lesson Plan System</h1>
+        <p>Interactive Demo for Beth</p>
+    </div>
+
+    <div class="container">
+        <div class="intro">
+            Hey Mom! Here's a preview of what we can build for your teachers. These are interactive mock-ups — click any link below to see how each piece would work. Teachers would fill out their lesson plans digitally, and you'd have your own portal to review everything in one place. No more paper shuffling!
+        </div>
+
+        <div class="cards">
+            <div class="card card--reading">
+                <div class="card__icon">📖</div>
+                <div class="card__title">Reading Lesson Plan</div>
+                <div class="card__desc">This is the interactive version of your AES Common Lesson Plan. Teachers can type directly into every field, then save as PDF or submit directly to you.</div>
+                <a href="reading.html" class="card__btn">View Reading Plan →</a>
+            </div>
+
+            <div class="card card--math">
+                <div class="card__icon">🔢</div>
+                <div class="card__title">Math Lesson Plan (TN TEAM)</div>
+                <div class="card__desc">Based on the TN TEAM Math template with all the TEAM Look-Fors built in. Fully interactive with checkboxes, text fields, and the instructional sequence table.</div>
+                <a href="math.html" class="card__btn">View Math Plan →</a>
+            </div>
+
+            <div class="card card--portal">
+                <div class="card__icon">📊</div>
+                <div class="card__title">Your Review Portal</div>
+                <div class="card__desc">This is what YOUR side would look like. See all submitted lesson plans in one dashboard — filter by teacher, grade, or subject. Sort by date, review status, and more. No more digging through emails!</div>
+                <a href="portal.html" class="card__btn">View Portal →</a>
+            </div>
+        </div>
+
+        <div class="next">
+            <h2>What's Next?</h2>
+            <p>Once you like the design, we can:</p>
+            <ul>
+                <li>Deploy this on a real website with your school branding</li>
+                <li>Set up teacher accounts so each person logs in and submits</li>
+                <li>Add email notifications when new plans are submitted</li>
+                <li>Export reports for TEAM evaluations</li>
+                <li>Whatever else you need!</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">Built with ❤️ by Matt &amp; Claude</div>
+
+</body>
+</html>

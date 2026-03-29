@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AES Lesson Plan Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f1f3f6;color:#1e293b;min-height:100vh}
+
+/* Header */
+.header{background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);color:#fff;padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem}
+.header-left h1{font-size:1.5rem;font-weight:700;letter-spacing:-.02em}
+.header-left p{font-size:.85rem;color:#94a3b8;margin-top:.15rem}
+.header-right{font-size:.85rem;color:#cbd5e1;display:flex;align-items:center;gap:.5rem}
+.header-right .avatar{width:34px;height:34px;border-radius:50%;background:#3b82f6;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.8rem;color:#fff}
+
+/* Container */
+.container{max-width:1200px;margin:0 auto;padding:1.5rem}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.stat-card{background:#fff;border-radius:10px;padding:1.25rem 1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.06);border-left:4px solid;display:flex;flex-direction:column;gap:.25rem;transition:transform .15s}
+.stat-card:hover{transform:translateY(-2px)}
+.stat-card.blue{border-color:#3b82f6}
+.stat-card.yellow{border-color:#f59e0b}
+.stat-card.green{border-color:#22c55e}
+.stat-card.red{border-color:#ef4444}
+.stat-label{font-size:.78rem;color:#64748b;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+.stat-value{font-size:1.75rem;font-weight:700}
+
+/* Filters */
+.filters{background:#fff;border-radius:10px;padding:1.25rem 1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:1.5rem;display:flex;flex-wrap:wrap;gap:.75rem;align-items:flex-end}
+.filter-group{display:flex;flex-direction:column;gap:.3rem;flex:1;min-width:150px}
+.filter-group label{font-size:.72rem;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em}
+.filter-group input,.filter-group select{padding:.55rem .75rem;border:1px solid #e2e8f0;border-radius:6px;font-family:inherit;font-size:.85rem;color:#1e293b;background:#fff;transition:border-color .15s}
+.filter-group input:focus,.filter-group select:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.12)}
+
+/* Table */
+.table-wrap{background:#fff;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden}
+.table-header-bar{padding:1rem 1.5rem;border-bottom:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center}
+.table-header-bar h2{font-size:1.05rem;font-weight:600}
+.result-count{font-size:.8rem;color:#64748b}
+table{width:100%;border-collapse:collapse}
+thead th{text-align:left;padding:.75rem 1rem;font-size:.75rem;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid #e2e8f0;cursor:pointer;user-select:none;white-space:nowrap;transition:color .15s}
+thead th:hover{color:#1e293b}
+thead th .sort-arrow{margin-left:.25rem;font-size:.65rem;opacity:.4}
+thead th.active .sort-arrow{opacity:1;color:#3b82f6}
+tbody tr{border-bottom:1px solid #f1f5f9;transition:background .1s}
+tbody tr:nth-child(even){background:#f8fafc}
+tbody tr:hover{background:#eff6ff}
+tbody td{padding:.75rem 1rem;font-size:.88rem}
+.badge{display:inline-block;padding:.2rem .65rem;border-radius:20px;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.badge.pending{background:#fef9c3;color:#92400e}
+.badge.reviewed{background:#dcfce7;color:#166534}
+.badge.flagged{background:#fee2e2;color:#991b1b}
+.btn-view{padding:.35rem .85rem;border:none;border-radius:6px;background:#3b82f6;color:#fff;font-family:inherit;font-size:.78rem;font-weight:600;cursor:pointer;transition:background .15s}
+.btn-view:hover{background:#2563eb}
+
+/* Empty state */
+.empty-state{text-align:center;padding:3rem 1rem;color:#94a3b8}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:1000;padding:1rem;animation:fadeIn .2s}
+.modal-overlay.active{display:flex}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{background:#fff;border-radius:12px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:slideUp .25s ease}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{padding:1.25rem 1.5rem;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center}
+.modal-header h3{font-size:1.1rem;font-weight:700}
+.modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:#94a3b8;padding:.25rem;line-height:1;transition:color .15s}
+.modal-close:hover{color:#1e293b}
+.modal-body{padding:1.5rem}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem}
+.detail-item{display:flex;flex-direction:column;gap:.2rem}
+.detail-item .label{font-size:.72rem;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em}
+.detail-item .value{font-size:.9rem;font-weight:500}
+.detail-full{grid-column:1/-1}
+.section-divider{border:none;border-top:1px solid #e2e8f0;margin:1.25rem 0}
+.note-area{width:100%;padding:.75rem;border:1px solid #e2e8f0;border-radius:8px;font-family:inherit;font-size:.88rem;resize:vertical;min-height:80px;transition:border-color .15s}
+.note-area:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.12)}
+.modal-actions{display:flex;gap:.75rem;margin-top:1.25rem;flex-wrap:wrap}
+.btn-review{padding:.6rem 1.25rem;border:none;border-radius:8px;background:#22c55e;color:#fff;font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;transition:background .15s}
+.btn-review:hover{background:#16a34a}
+.btn-flag{padding:.6rem 1.25rem;border:none;border-radius:8px;background:#ef4444;color:#fff;font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;transition:background .15s}
+.btn-flag:hover{background:#dc2626}
+.btn-secondary{padding:.6rem 1.25rem;border:1px solid #e2e8f0;border-radius:8px;background:#fff;color:#64748b;font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .15s}
+.btn-secondary:hover{background:#f8fafc;color:#1e293b}
+.toast{position:fixed;bottom:2rem;right:2rem;background:#0f172a;color:#fff;padding:.85rem 1.25rem;border-radius:8px;font-size:.85rem;font-weight:500;z-index:1100;transform:translateY(100px);opacity:0;transition:all .3s ease}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* Responsive */
+@media(max-width:900px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .detail-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .header{padding:1rem}
+  .container{padding:1rem}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat-value{font-size:1.4rem}
+  table{font-size:.82rem}
+  thead th,tbody td{padding:.6rem .65rem}
+  .filters{gap:.5rem}
+  .filter-group{min-width:120px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <h1>AES Lesson Plan Portal</h1>
+    <p>Principal Dashboard</p>
+  </div>
+  <div class="header-right">
+    <span>Beth Gaw, Principal</span>
+    <div class="avatar">BG</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="stats">
+    <div class="stat-card blue"><span class="stat-label">Total Submissions</span><span class="stat-value" id="statTotal">24</span></div>
+    <div class="stat-card yellow"><span class="stat-label">Pending Review</span><span class="stat-value" id="statPending">8</span></div>
+    <div class="stat-card green"><span class="stat-label">Reviewed</span><span class="stat-value" id="statReviewed">14</span></div>
+    <div class="stat-card red"><span class="stat-label">Flagged</span><span class="stat-value" id="statFlagged">2</span></div>
+  </div>
+
+  <div class="filters">
+    <div class="filter-group" style="flex:1.5">
+      <label>Search Teacher</label>
+      <input type="text" id="searchInput" placeholder="Search by name...">
+    </div>
+    <div class="filter-group">
+      <label>Grade</label>
+      <select id="filterGrade">
+        <option value="">All Grades</option>
+        <option value="K">K</option>
+        <option value="1st">1st</option>
+        <option value="2nd">2nd</option>
+        <option value="3rd">3rd</option>
+        <option value="4th">4th</option>
+        <option value="5th">5th</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Subject</label>
+      <select id="filterSubject">
+        <option value="">All Subjects</option>
+        <option value="Reading">Reading</option>
+        <option value="Math">Math</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Status</label>
+      <select id="filterStatus">
+        <option value="">All Statuses</option>
+        <option value="Pending">Pending</option>
+        <option value="Reviewed">Reviewed</option>
+        <option value="Flagged">Flagged</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Sort By</label>
+      <select id="sortSelect">
+        <option value="date-desc">Date Submitted &ndash; Newest</option>
+        <option value="date-asc">Date Submitted &ndash; Oldest</option>
+        <option value="name-asc">Teacher Name A&ndash;Z</option>
+        <option value="name-desc">Teacher Name Z&ndash;A</option>
+        <option value="grade-asc">Grade</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <div class="table-header-bar">
+      <h2>Submissions</h2>
+      <span class="result-count" id="resultCount"></span>
+    </div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead>
+          <tr>
+            <th data-sort="teacher">Teacher Name <span class="sort-arrow">&#9650;</span></th>
+            <th data-sort="grade">Grade <span class="sort-arrow">&#9650;</span></th>
+            <th data-sort="subject">Subject <span class="sort-arrow">&#9650;</span></th>
+            <th data-sort="title">Lesson Title <span class="sort-arrow">&#9650;</span></th>
+            <th data-sort="date">Date Submitted <span class="sort-arrow">&#9650;</span></th>
+            <th data-sort="status">Status <span class="sort-arrow">&#9650;</span></th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+    <div class="empty-state" id="emptyState" style="display:none">No submissions match your filters.</div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">Lesson Plan Details</h3>
+      <button class="modal-close" id="modalClose">&times;</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+const data = [
+  { id:1, teacher:"Sarah Johnson", grade:"2nd", subject:"Reading", title:"Main Idea & Details", date:"2026-03-28", status:"Reviewed", standard:"RI.2.2", objective:"Students will identify the main idea and supporting details in an informational text.", summary:"Students read a nonfiction passage about animal habitats, highlight the main idea in yellow and supporting details in blue, then complete a graphic organizer." },
+  { id:2, teacher:"Michael Torres", grade:"4th", subject:"Math", title:"Multi-Digit Multiplication", date:"2026-03-28", status:"Pending", standard:"4.NBT.B.5", objective:"Students will multiply multi-digit numbers using the standard algorithm.", summary:"Teacher models the area model for 3-digit by 1-digit multiplication, students practice with manipulatives, then transition to the standard algorithm with guided practice." },
+  { id:3, teacher:"Ashley Williams", grade:"K", subject:"Reading", title:"Letter Sound Recognition", date:"2026-03-27", status:"Reviewed", standard:"RF.K.3", objective:"Students will identify letter sounds for B, D, and G.", summary:"Circle time with letter sound songs, followed by center rotations: magnetic letters, sound sorting mats, and interactive whiteboard matching game." },
+  { id:4, teacher:"David Chen", grade:"3rd", subject:"Math", title:"Fractions on a Number Line", date:"2026-03-27", status:"Flagged", standard:"3.NF.A.2", objective:"Students will place fractions on a number line and compare fractions with the same denominator.", summary:"Using paper strip number lines, students fold and label fractions, then place fraction cards in order. Lesson closes with a partner comparison activity." },
+  { id:5, teacher:"Jennifer Smith", grade:"1st", subject:"Reading", title:"Sequencing Events", date:"2026-03-26", status:"Reviewed", standard:"RL.1.2", objective:"Students will retell a story by sequencing its beginning, middle, and end.", summary:"Shared reading of 'The Very Hungry Caterpillar,' students cut and paste sequencing cards, then draw and label their own three-part sequence." },
+  { id:6, teacher:"Robert Brown", grade:"5th", subject:"Math", title:"Volume of Rectangular Prisms", date:"2026-03-26", status:"Pending", standard:"5.MD.C.5", objective:"Students will calculate the volume of rectangular prisms using the formula V = l x w x h.", summary:"Students build rectangular prisms from unit cubes, record dimensions and volume, then derive the formula through guided discovery and apply it to real-world problems." },
+  { id:7, teacher:"Emily Davis", grade:"2nd", subject:"Math", title:"Adding Three-Digit Numbers", date:"2026-03-25", status:"Reviewed", standard:"2.NBT.B.7", objective:"Students will add three-digit numbers with and without regrouping.", summary:"Number talk warm-up, teacher modeling with base-ten blocks on document camera, followed by partner practice with dry-erase boards and independent worksheet." },
+  { id:8, teacher:"Lisa Anderson", grade:"K", subject:"Reading", title:"Rhyming Words", date:"2026-03-25", status:"Reviewed", standard:"RF.K.2a", objective:"Students will recognize and produce rhyming words.", summary:"Rhyming read-aloud with 'Sheep in a Jeep,' thumbs up/thumbs down rhyming game, followed by rhyming picture sort at centers." },
+  { id:9, teacher:"James Wilson", grade:"3rd", subject:"Reading", title:"Text Features & Structures", date:"2026-03-24", status:"Pending", standard:"RI.3.5", objective:"Students will use text features to locate information and determine the structure of an informational text.", summary:"Text feature scavenger hunt with nonfiction books, students create a text features anchor chart in small groups, then read a passage identifying cause-and-effect structure." },
+  { id:10, teacher:"Maria Garcia", grade:"4th", subject:"Reading", title:"Author's Purpose", date:"2026-03-24", status:"Reviewed", standard:"RI.4.8", objective:"Students will identify the author's purpose and explain how it shapes the text.", summary:"Students analyze three short texts (persuade, inform, entertain), sort them by purpose with evidence, then write a paragraph explaining the purpose of a fourth text." },
+  { id:11, teacher:"Thomas Lee", grade:"1st", subject:"Math", title:"Place Value to 100", date:"2026-03-23", status:"Pending", standard:"1.NBT.B.2", objective:"Students will represent two-digit numbers as tens and ones using place value charts.", summary:"Students use snap cubes to build numbers, record tens and ones on place value mats, then play 'Race to 100' dice game with a partner." },
+  { id:12, teacher:"Amanda Taylor", grade:"5th", subject:"Reading", title:"Comparing Themes Across Texts", date:"2026-03-23", status:"Reviewed", standard:"RL.5.9", objective:"Students will compare and contrast themes and topics across two literary texts.", summary:"Students read two short stories with similar themes, complete a double-bubble thinking map, then write a comparative paragraph using text evidence from both stories." },
+  { id:13, teacher:"Chris Martinez", grade:"3rd", subject:"Math", title:"Telling Time to the Minute", date:"2026-03-22", status:"Flagged", standard:"3.MD.A.1", objective:"Students will tell and write time to the nearest minute using analog and digital clocks.", summary:"Mini-lesson on counting minutes by fives and ones, students practice with individual clocks, followed by a 'Time Around the Room' activity matching analog to digital." }
+];
+
+const gradeOrder = {"K":0,"1st":1,"2nd":2,"3rd":3,"4th":4,"5th":5};
+let currentSort = {key:"date", dir:"desc"};
+let filtered = [...data];
+
+const $ = id => document.getElementById(id);
+const tbody = $("tableBody");
+const overlay = $("modalOverlay");
+
+function badgeHTML(status) {
+  return `<span class="badge ${status.toLowerCase()}">${status}</span>`;
+}
+
+function applyFilters() {
+  const search = $("searchInput").value.toLowerCase();
+  const grade = $("filterGrade").value;
+  const subject = $("filterSubject").value;
+  const status = $("filterStatus").value;
+
+  filtered = data.filter(d =>
+    (!search || d.teacher.toLowerCase().includes(search)) &&
+    (!grade || d.grade === grade) &&
+    (!subject || d.subject === subject) &&
+    (!status || d.status === status)
+  );
+  applySort();
+}
+
+function applySort() {
+  const val = $("sortSelect").value;
+  let key, dir;
+  if (val === "date-desc") { key="date"; dir="desc"; }
+  else if (val === "date-asc") { key="date"; dir="asc"; }
+  else if (val === "name-asc") { key="teacher"; dir="asc"; }
+  else if (val === "name-desc") { key="teacher"; dir="desc"; }
+  else if (val === "grade-asc") { key="grade"; dir="asc"; }
+  currentSort = {key, dir};
+  sortAndRender();
+}
+
+function sortAndRender() {
+  const {key, dir} = currentSort;
+  filtered.sort((a, b) => {
+    let va = a[key], vb = b[key];
+    if (key === "grade") { va = gradeOrder[va]; vb = gradeOrder[vb]; }
+    if (va < vb) return dir === "asc" ? -1 : 1;
+    if (va > vb) return dir === "asc" ? 1 : -1;
+    return 0;
+  });
+  render();
+}
+
+function render() {
+  if (filtered.length === 0) {
+    tbody.innerHTML = "";
+    $("emptyState").style.display = "block";
+  } else {
+    $("emptyState").style.display = "none";
+    tbody.innerHTML = filtered.map(d => `
+      <tr>
+        <td>${d.teacher}</td>
+        <td>${d.grade}</td>
+        <td>${d.subject}</td>
+        <td>${d.title}</td>
+        <td>${d.date}</td>
+        <td>${badgeHTML(d.status)}</td>
+        <td><button class="btn-view" onclick="openModal(${d.id})">View</button></td>
+      </tr>
+    `).join("");
+  }
+  $("resultCount").textContent = `${filtered.length} of ${data.length} submissions`;
+
+  // Update header sort indicators
+  document.querySelectorAll("thead th[data-sort]").forEach(th => {
+    const key = th.dataset.sort;
+    const arrow = th.querySelector(".sort-arrow");
+    if (key === currentSort.key) {
+      th.classList.add("active");
+      arrow.textContent = currentSort.dir === "asc" ? "\u25B2" : "\u25BC";
+    } else {
+      th.classList.remove("active");
+      arrow.textContent = "\u25B2";
+    }
+  });
+}
+
+// Column header sorting
+document.querySelectorAll("thead th[data-sort]").forEach(th => {
+  th.addEventListener("click", () => {
+    const key = th.dataset.sort;
+    if (currentSort.key === key) {
+      currentSort.dir = currentSort.dir === "asc" ? "desc" : "asc";
+    } else {
+      currentSort = {key, dir:"asc"};
+    }
+    // Sync dropdown if applicable
+    const sel = $("sortSelect");
+    if (key === "date" && currentSort.dir === "desc") sel.value = "date-desc";
+    else if (key === "date" && currentSort.dir === "asc") sel.value = "date-asc";
+    else if (key === "teacher" && currentSort.dir === "asc") sel.value = "name-asc";
+    else if (key === "teacher" && currentSort.dir === "desc") sel.value = "name-desc";
+    else if (key === "grade") sel.value = "grade-asc";
+    else sel.value = "";
+    sortAndRender();
+  });
+});
+
+// Modal
+function openModal(id) {
+  const d = data.find(x => x.id === id);
+  if (!d) return;
+  $("modalTitle").textContent = d.title;
+  $("modalBody").innerHTML = `
+    <div class="detail-grid">
+      <div class="detail-item"><span class="label">Teacher</span><span class="value">${d.teacher}</span></div>
+      <div class="detail-item"><span class="label">Grade</span><span class="value">${d.grade}</span></div>
+      <div class="detail-item"><span class="label">Subject</span><span class="value">${d.subject}</span></div>
+      <div class="detail-item"><span class="label">Date Submitted</span><span class="value">${d.date}</span></div>
+      <div class="detail-item"><span class="label">Standard</span><span class="value">${d.standard}</span></div>
+      <div class="detail-item"><span class="label">Status</span><span class="value">${badgeHTML(d.status)}</span></div>
+      <div class="detail-item detail-full"><span class="label">Objective</span><span class="value">${d.objective}</span></div>
+      <div class="detail-item detail-full"><span class="label">Lesson Summary</span><span class="value">${d.summary}</span></div>
+    </div>
+    <hr class="section-divider">
+    <label class="label" style="font-size:.72rem;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:.4rem">Principal Notes</label>
+    <textarea class="note-area" id="noteArea" placeholder="Add a note for this teacher..."></textarea>
+    <div class="modal-actions">
+      <button class="btn-review" onclick="markStatus(${d.id},'Reviewed')">Mark as Reviewed</button>
+      <button class="btn-flag" onclick="markStatus(${d.id},'Flagged')">Flag for Follow-up</button>
+      <button class="btn-secondary" onclick="closeModal()">Close</button>
+    </div>
+  `;
+  overlay.classList.add("active");
+}
+
+function closeModal() { overlay.classList.remove("active"); }
+$("modalClose").addEventListener("click", closeModal);
+overlay.addEventListener("click", e => { if (e.target === overlay) closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+
+function markStatus(id, newStatus) {
+  const d = data.find(x => x.id === id);
+  if (d) {
+    d.status = newStatus;
+    applyFilters();
+    updateStats();
+    closeModal();
+    showToast(`"${d.title}" marked as ${newStatus.toLowerCase()}.`);
+  }
+}
+
+function updateStats() {
+  $("statTotal").textContent = data.length;
+  $("statPending").textContent = data.filter(d => d.status === "Pending").length;
+  $("statReviewed").textContent = data.filter(d => d.status === "Reviewed").length;
+  $("statFlagged").textContent = data.filter(d => d.status === "Flagged").length;
+}
+
+function showToast(msg) {
+  const t = $("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2500);
+}
+
+// Wire up filter inputs
+$("searchInput").addEventListener("input", applyFilters);
+$("filterGrade").addEventListener("change", applyFilters);
+$("filterSubject").addEventListener("change", applyFilters);
+$("filterStatus").addEventListener("change", applyFilters);
+$("sortSelect").addEventListener("change", applySort);
+
+// Initial render
+applyFilters();
+updateStats();
+</script>
+</body>
+</html>

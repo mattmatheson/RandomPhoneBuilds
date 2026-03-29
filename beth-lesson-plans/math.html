@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TN TEAM Math Lesson Plan Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f0f2f5;
+  color: #2d3748;
+  line-height: 1.6;
+  padding-bottom: 80px;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #4a6cf7 0%, #7c3aed 50%, #a855f7 100%);
+  color: #fff;
+  padding: 32px 24px 28px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 160px; height: 160px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50%;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -30px; left: 20px;
+  width: 100px; height: 100px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+}
+.header h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+  position: relative;
+}
+.header .subtitle {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  font-weight: 500;
+  position: relative;
+}
+.header-icon {
+  font-size: 2.2rem;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* Header fields */
+.header-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  max-width: 800px;
+  margin: 16px auto 0;
+  position: relative;
+}
+.header-fields label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+  display: block;
+  margin-bottom: 4px;
+}
+.header-fields input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  backdrop-filter: blur(4px);
+  transition: border-color 0.2s;
+}
+.header-fields input::placeholder { color: rgba(255,255,255,0.5); }
+.header-fields input:focus {
+  outline: none;
+  border-color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.22);
+}
+
+/* Main container */
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 20px 16px;
+}
+
+/* Sections */
+.section {
+  border-radius: 16px;
+  padding: 24px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+  position: relative;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.section-badge {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a202c;
+}
+
+/* Section colors */
+.section-1 { background: #eff6ff; }
+.section-1 .section-badge { background: #4a6cf7; }
+
+.section-2 { background: #fff7ed; }
+.section-2 .section-badge { background: #f97316; }
+
+.section-3 { background: #f1f5f9; }
+.section-3 .section-badge { background: #64748b; }
+
+.section-4 { background: #f5f3ff; }
+.section-4 .section-badge { background: #8b5cf6; }
+
+.section-5 { background: #fdf2f8; }
+.section-5 .section-badge { background: #ec4899; }
+
+.section-6 { background: #f9fafb; border: 1px solid #e5e7eb; }
+.section-6 .section-badge { background: #6b7280; }
+
+/* Form elements */
+label.field-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+input[type="text"], textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  background: #fff;
+  color: #2d3748;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  margin-bottom: 14px;
+}
+input[type="text"]:focus, textarea:focus {
+  outline: none;
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.12);
+}
+textarea { resize: vertical; min-height: 80px; }
+textarea::placeholder, input::placeholder { color: #a0aec0; }
+
+/* TEAM Look-Fors */
+.team-lookfors {
+  background: #fefce8;
+  border: 1.5px solid #fde68a;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-top: 8px;
+}
+.team-lookfors-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #92400e;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.team-lookfors-title::before {
+  content: '\2705';
+  font-size: 0.9rem;
+}
+.team-lookfors label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #78350f;
+  cursor: pointer;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+.team-lookfors input[type="checkbox"] {
+  margin-top: 3px;
+  width: 16px; height: 16px;
+  accent-color: #16a34a;
+  flex-shrink: 0;
+}
+
+/* Layout helpers */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.field-group { margin-bottom: 14px; }
+
+/* Standards & Objective sidebar layout */
+.standards-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 20px;
+}
+
+/* Table */
+.inst-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.inst-table th {
+  background: #3b5998;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 12px 14px;
+  text-align: left;
+}
+.inst-table td {
+  background: #fff;
+  padding: 4px;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: top;
+}
+.inst-table tr:last-child td { border-bottom: none; }
+.inst-table td:first-child {
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: #4a5568;
+  padding: 12px 14px;
+  width: 140px;
+  background: #f8fafc;
+  vertical-align: middle;
+}
+.inst-table textarea {
+  margin-bottom: 0;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  min-height: 60px;
+  background: transparent;
+}
+.inst-table textarea:focus {
+  background: #fff;
+  border-color: #7c3aed;
+}
+
+/* Thinking types */
+.thinking-type {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+  background: #fff;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #e9d5ff;
+}
+.thinking-type input[type="checkbox"] {
+  margin-top: 3px;
+  width: 18px; height: 18px;
+  accent-color: #8b5cf6;
+  flex-shrink: 0;
+}
+.thinking-type .type-content { flex: 1; }
+.thinking-type .type-label {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: #5b21b6;
+  margin-bottom: 4px;
+}
+.thinking-type input[type="text"] {
+  margin-bottom: 0;
+  font-size: 0.85rem;
+  padding: 8px 12px;
+  border-color: #ddd6fe;
+}
+
+/* Resources */
+.resource-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.resource-row input[type="checkbox"] {
+  width: 18px; height: 18px;
+  accent-color: #6b7280;
+  flex-shrink: 0;
+}
+.resource-row input[type="text"] {
+  margin-bottom: 0;
+  flex: 1;
+}
+.btn-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: #e5e7eb;
+  color: #374151;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 4px;
+}
+.btn-add:hover { background: #d1d5db; }
+
+/* Bottom buttons */
+.bottom-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+.btn {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn:active { transform: scale(0.97); }
+.btn-print {
+  background: linear-gradient(135deg, #4a6cf7, #7c3aed);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(124,58,237,0.3);
+}
+.btn-print:hover { box-shadow: 0 6px 20px rgba(124,58,237,0.4); }
+.btn-submit {
+  background: linear-gradient(135deg, #16a34a, #059669);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(22,163,74,0.3);
+}
+.btn-submit:hover { box-shadow: 0 6px 20px rgba(22,163,74,0.4); }
+
+/* Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px 32px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  animation: modalIn 0.3s ease;
+}
+@keyframes modalIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.modal-icon { font-size: 3rem; margin-bottom: 12px; display: block; }
+.modal h2 { font-size: 1.3rem; margin-bottom: 8px; color: #1a202c; }
+.modal p { color: #64748b; font-size: 0.9rem; margin-bottom: 20px; }
+.modal .btn-close {
+  padding: 10px 28px;
+  background: #4a6cf7;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header h1 { font-size: 1.3rem; }
+  .header-fields { grid-template-columns: 1fr; gap: 8px; }
+  .standards-layout { grid-template-columns: 1fr; }
+  .two-col { grid-template-columns: 1fr; }
+  .inst-table { display: block; }
+  .inst-table thead { display: none; }
+  .inst-table tbody, .inst-table tr, .inst-table td { display: block; width: 100%; }
+  .inst-table td:first-child {
+    background: #e2e8f0;
+    border-radius: 8px 8px 0 0;
+    padding: 8px 12px;
+    width: 100%;
+  }
+  .inst-table td { padding: 4px 8px; }
+  .inst-table tr { margin-bottom: 8px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .section { padding: 18px 14px; }
+}
+
+/* Print */
+@media print {
+  body { background: #fff; padding: 0; }
+  .header { background: #4a6cf7 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .section { box-shadow: none; break-inside: avoid; border: 1px solid #ddd; }
+  .bottom-actions, .btn-add { display: none !important; }
+  .team-lookfors { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .inst-table th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .section-badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  textarea, input[type="text"] { border: 1px solid #ccc !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <span class="header-icon">&#x1F4D0;</span>
+  <h1>TN TEAM Math Lesson Plan Template</h1>
+  <p class="subtitle">Standards-Aligned Planning for Meaningful Math Instruction</p>
+  <div class="header-fields">
+    <div>
+      <label>Teacher Name</label>
+      <input type="text" placeholder="Enter name">
+    </div>
+    <div>
+      <label>Grade</label>
+      <input type="text" placeholder="e.g., Kindergarten">
+    </div>
+    <div>
+      <label>Date</label>
+      <input type="text" placeholder="MM/DD/YYYY">
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Section 1: Standards & Objective -->
+  <div class="section section-1">
+    <div class="section-header">
+      <div class="section-badge">1</div>
+      <div class="section-title">Standards &amp; Objective</div>
+    </div>
+    <div class="standards-layout">
+      <div>
+        <label class="field-label">State Standards</label>
+        <input type="text" placeholder="e.g., TN K.MD.1 — Describe and compare measurable attributes">
+
+        <label class="field-label">Lesson Objective &ndash; Student Friendly</label>
+        <textarea placeholder="Students will be able to..."></textarea>
+
+        <label class="field-label">Success Criteria</label>
+        <textarea placeholder="I can... statements"></textarea>
+      </div>
+      <div>
+        <div class="team-lookfors">
+          <div class="team-lookfors-title">TEAM Look-Fors</div>
+          <label><input type="checkbox"> Objective measurable &amp; student-friendly</label>
+          <label><input type="checkbox"> Aligned to state standard</label>
+          <label><input type="checkbox"> Students can articulate the objective</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: Building on Prior Knowledge -->
+  <div class="section section-2">
+    <div class="section-header">
+      <div class="section-badge">2</div>
+      <div class="section-title">Building on Prior Knowledge</div>
+    </div>
+    <textarea rows="4" placeholder="Review previous activities, connect to real-life examples..."></textarea>
+    <div class="team-lookfors">
+      <div class="team-lookfors-title">TEAM Look-Fors</div>
+      <label><input type="checkbox"> Activates prior knowledge</label>
+      <label><input type="checkbox"> Builds toward new learning</label>
+    </div>
+  </div>
+
+  <!-- Section 3: Instructional Sequence -->
+  <div class="section section-3">
+    <div class="section-header">
+      <div class="section-badge">3</div>
+      <div class="section-title">Instructional Sequence</div>
+    </div>
+    <table class="inst-table">
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th>Teacher Action</th>
+          <th>Student Thinking / Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Opening</td>
+          <td><textarea placeholder="Introduce the lesson, pose a question..."></textarea></td>
+          <td><textarea placeholder="What are students doing/thinking?"></textarea></td>
+        </tr>
+        <tr>
+          <td>Model</td>
+          <td><textarea placeholder="Demonstrate the skill or concept..."></textarea></td>
+          <td><textarea placeholder="Students observe, ask questions..."></textarea></td>
+        </tr>
+        <tr>
+          <td>Guided Practice</td>
+          <td><textarea placeholder="Work through examples together..."></textarea></td>
+          <td><textarea placeholder="Students practice with support..."></textarea></td>
+        </tr>
+        <tr>
+          <td>Independent Practice</td>
+          <td><textarea placeholder="Monitor and support as needed..."></textarea></td>
+          <td><textarea placeholder="Students work independently..."></textarea></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="team-lookfors">
+      <div class="team-lookfors-title">TEAM Look-Fors</div>
+      <label><input type="checkbox"> Activities sequenced from simple &rarr; complex</label>
+      <label><input type="checkbox"> Students actively engaged in thinking</label>
+      <label><input type="checkbox"> Teacher models, supports, and releases responsibility</label>
+      <label><input type="checkbox"> Builds toward new learning</label>
+    </div>
+  </div>
+
+  <!-- Section 4: Student Thinking -->
+  <div class="section section-4">
+    <div class="section-header">
+      <div class="section-badge">4</div>
+      <div class="section-title">Student Thinking</div>
+    </div>
+    <p style="font-size:0.85rem; color:#6b7280; margin-bottom:14px;">Types of thinking lessons can target:</p>
+
+    <div class="thinking-type">
+      <input type="checkbox">
+      <div class="type-content">
+        <div class="type-label">Analytical</div>
+        <input type="text" placeholder="Compare, analyze, number lines">
+      </div>
+    </div>
+    <div class="thinking-type">
+      <input type="checkbox">
+      <div class="type-content">
+        <div class="type-label">Practical</div>
+        <input type="text" placeholder="Apply to real objects">
+      </div>
+    </div>
+    <div class="thinking-type">
+      <input type="checkbox">
+      <div class="type-content">
+        <div class="type-label">Creative</div>
+        <input type="text" placeholder="Design activities, scavenger hunts">
+      </div>
+    </div>
+    <div class="thinking-type">
+      <input type="checkbox">
+      <div class="type-content">
+        <div class="type-label">Research-Based</div>
+        <input type="text" placeholder="Record and interpret data">
+      </div>
+    </div>
+
+    <div class="team-lookfors" style="margin-top:16px;">
+      <div class="team-lookfors-title">TEAM Look-Fors</div>
+      <label><input type="checkbox"> Scaffolds for struggling learners</label>
+      <label><input type="checkbox"> Extensions for advanced learners</label>
+      <label><input type="checkbox"> Differentiation visible in student work</label>
+    </div>
+  </div>
+
+  <!-- Section 5: Differentiation -->
+  <div class="section section-5">
+    <div class="section-header">
+      <div class="section-badge">5</div>
+      <div class="section-title">Differentiation</div>
+    </div>
+    <label class="field-label">Support for Struggling Learners</label>
+    <textarea rows="4" placeholder="Use visual models, small guided groups..."></textarea>
+    <div class="team-lookfors">
+      <div class="team-lookfors-title">TEAM Look-Fors</div>
+      <label><input type="checkbox"> Aligned to objective</label>
+      <label><input type="checkbox"> Evidence of student thinking</label>
+    </div>
+  </div>
+
+  <!-- Section 6: Resources -->
+  <div class="section section-6">
+    <div class="section-header">
+      <div class="section-badge">6</div>
+      <div class="section-title">Resources</div>
+    </div>
+    <div id="resource-list">
+      <div class="resource-row">
+        <input type="checkbox">
+        <input type="text" placeholder="Resource name or description">
+      </div>
+      <div class="resource-row">
+        <input type="checkbox">
+        <input type="text" placeholder="Resource name or description">
+      </div>
+      <div class="resource-row">
+        <input type="checkbox">
+        <input type="text" placeholder="Resource name or description">
+      </div>
+    </div>
+    <button class="btn-add" onclick="addResource()">+ Add Resource</button>
+  </div>
+
+  <!-- Bottom Actions -->
+  <div class="bottom-actions">
+    <button class="btn btn-print" onclick="window.print()">Preview &amp; Save as PDF</button>
+    <button class="btn btn-submit" onclick="showModal()">Submit to Principal</button>
+  </div>
+
+</div>
+
+<!-- Success Modal -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal">
+    <span class="modal-icon">&#x2705;</span>
+    <h2>Submitted Successfully!</h2>
+    <p>Your lesson plan has been sent to your principal for review. You'll receive confirmation shortly.</p>
+    <button class="btn-close" onclick="closeModal()">Done</button>
+  </div>
+</div>
+
+<script>
+function addResource() {
+  const list = document.getElementById('resource-list');
+  const row = document.createElement('div');
+  row.className = 'resource-row';
+  row.innerHTML = '<input type="checkbox"><input type="text" placeholder="Resource name or description">';
+  list.appendChild(row);
+}
+
+function showModal() {
+  document.getElementById('successModal').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('successModal').classList.remove('active');
+}
+
+document.getElementById('successModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+</script>
+</body>
+</html>

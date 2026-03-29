@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AES Common Lesson Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #f0f2f5;
+    color: #2d3748;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Header Banner */
+  .header {
+    background: linear-gradient(135deg, #1a2a6c, #2a5298, #1e8c7f);
+    color: #fff;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 70%, rgba(255,255,255,0.06) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(255,255,255,0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .header h1 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.25rem;
+    position: relative;
+  }
+  .header p {
+    font-size: 0.95rem;
+    opacity: 0.85;
+    position: relative;
+  }
+
+  /* Header fields row */
+  .header-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+    max-width: 900px;
+    margin: 1.25rem auto 0;
+    position: relative;
+  }
+  .header-fields label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.9;
+  }
+  .header-fields input {
+    padding: 0.6rem 0.75rem;
+    border: 2px solid rgba(255,255,255,0.25);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    backdrop-filter: blur(4px);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .header-fields input::placeholder { color: rgba(255,255,255,0.5); }
+  .header-fields input:focus {
+    outline: none;
+    border-color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.18);
+  }
+  .header-fields input[type="date"] { color-scheme: dark; }
+
+  /* Main container */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  /* Section cards */
+  .section-card {
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+    border: 1px solid rgba(255,255,255,0.6);
+  }
+  .section-card.s1 { background: linear-gradient(135deg, #fff5ee, #ffe8d6, #ffecd2); }
+  .section-card.s2 { background: linear-gradient(135deg, #e8f4fd, #d6eaf8, #dceefb); }
+  .section-card.s3 { background: linear-gradient(135deg, #e8fae5, #d4edda, #e2f5de); }
+  .section-card.s4 { background: linear-gradient(135deg, #fef9e7, #fdf2c5, #fef5d4); }
+  .section-card.s5 { background: linear-gradient(135deg, #fde8ee, #fad0dc, #fce4ec); }
+  .section-card.s6 { background: linear-gradient(135deg, #fde2d8, #fad4c4, #fce8df); }
+
+  /* Section header with badge */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 1rem;
+    color: #fff;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  .s1 .badge { background: linear-gradient(135deg, #e67e22, #f39c12); }
+  .s2 .badge { background: linear-gradient(135deg, #2980b9, #3498db); }
+  .s3 .badge { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+  .s4 .badge { background: linear-gradient(135deg, #f39c12, #e67e22); }
+  .s5 .badge { background: linear-gradient(135deg, #e74c8a, #e91e93); }
+  .s6 .badge { background: linear-gradient(135deg, #e74c3c, #e98b6d); }
+
+  .section-header h2 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: #2d3748;
+  }
+
+  /* Form elements */
+  .field { margin-bottom: 1rem; }
+  .field:last-child { margin-bottom: 0; }
+  .field label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 0.35rem;
+    color: #4a5568;
+  }
+  .field input,
+  .field textarea {
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    border: 2px solid rgba(0,0,0,0.08);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.75);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: #2d3748;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+  .field textarea { resize: vertical; min-height: 80px; }
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: #5b9bd5;
+    box-shadow: 0 0 0 3px rgba(91,155,213,0.15);
+    background: #fff;
+  }
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: #a0aec0;
+    font-style: italic;
+  }
+
+  /* Lesson Flow phase rows */
+  .phase {
+    background: rgba(255,255,255,0.55);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 0.85rem;
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .phase:last-child { margin-bottom: 0; }
+  .phase-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .phase-head .phase-label {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #4a5568;
+  }
+  .phase-head .time-input {
+    width: 80px;
+    padding: 0.4rem 0.5rem;
+    border: 2px solid rgba(0,0,0,0.08);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.8);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    text-align: center;
+    color: #2d3748;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .phase-head .time-input:focus {
+    outline: none;
+    border-color: #f39c12;
+    box-shadow: 0 0 0 3px rgba(243,156,18,0.15);
+    background: #fff;
+  }
+  .phase-head .time-input::placeholder { color: #a0aec0; font-style: italic; }
+  .phase textarea {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 2px solid rgba(0,0,0,0.06);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.7);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    resize: vertical;
+    min-height: 70px;
+    color: #2d3748;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+  .phase textarea:focus {
+    outline: none;
+    border-color: #f39c12;
+    box-shadow: 0 0 0 3px rgba(243,156,18,0.15);
+    background: #fff;
+  }
+  .phase textarea::placeholder { color: #a0aec0; font-style: italic; }
+
+  /* Differentiation sub-sections */
+  .diff-group {
+    background: rgba(255,255,255,0.5);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .diff-group:last-child { margin-bottom: 0; }
+  .diff-group h3 {
+    font-size: 0.88rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    color: #4a5568;
+  }
+  .diff-group textarea {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 2px solid rgba(0,0,0,0.06);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.7);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    resize: vertical;
+    min-height: 65px;
+    color: #2d3748;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+  .diff-group textarea:focus {
+    outline: none;
+    border-color: #e74c8a;
+    box-shadow: 0 0 0 3px rgba(231,76,138,0.12);
+    background: #fff;
+  }
+  .diff-group textarea::placeholder { color: #a0aec0; font-style: italic; }
+
+  /* Buttons */
+  .actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+  .btn {
+    padding: 0.85rem 2rem;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-pdf {
+    background: linear-gradient(135deg, #2980b9, #3498db);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(41,128,185,0.35);
+  }
+  .btn-pdf:hover { box-shadow: 0 6px 20px rgba(41,128,185,0.45); filter: brightness(1.05); }
+  .btn-submit {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(39,174,96,0.35);
+  }
+  .btn-submit:hover { box-shadow: 0 6px 20px rgba(39,174,96,0.45); filter: brightness(1.05); }
+
+  /* Modal overlay */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    animation: modalIn 0.3s ease;
+  }
+  @keyframes modalIn {
+    from { transform: scale(0.9) translateY(20px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+  }
+  .modal .check-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+    font-size: 2rem;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(39,174,96,0.3);
+  }
+  .modal h3 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+  }
+  .modal p {
+    color: #718096;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+  .modal .btn-close {
+    padding: 0.65rem 2rem;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #2980b9, #3498db);
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: filter 0.15s;
+  }
+  .modal .btn-close:hover { filter: brightness(1.08); }
+
+  /* Print styles */
+  @media print {
+    body { background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .actions { display: none !important; }
+    .modal-overlay { display: none !important; }
+    .header { padding: 1.25rem 1rem; }
+    .header-fields input {
+      border-color: rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.2);
+    }
+    .section-card { box-shadow: none; break-inside: avoid; page-break-inside: avoid; margin-bottom: 0.75rem; padding: 1rem; }
+    .container { padding: 0.75rem 0.5rem; }
+    .field input, .field textarea, .phase textarea, .diff-group textarea, .phase-head .time-input {
+      border-color: rgba(0,0,0,0.12);
+      background: rgba(255,255,255,0.9);
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .header h1 { font-size: 1.5rem; }
+    .header-fields { grid-template-columns: 1fr 1fr; }
+    .section-card { padding: 1.15rem; }
+    .badge { width: 32px; height: 32px; font-size: 0.9rem; }
+    .section-header h2 { font-size: 1.05rem; }
+    .actions { flex-direction: column; align-items: stretch; }
+    .btn { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header Banner -->
+<header class="header">
+  <h1>&#128218; AES Common Lesson Plan</h1>
+  <p>Auburntown Elementary School</p>
+  <div class="header-fields">
+    <label>Teacher <input type="text" placeholder="Your name"></label>
+    <label>Subject <input type="text" placeholder="e.g., Math"></label>
+    <label>Grade <input type="text" placeholder="e.g., 3rd"></label>
+    <label>Date <input type="date"></label>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Section 1: Lesson Title & Objective -->
+  <div class="section-card s1">
+    <div class="section-header">
+      <div class="badge">1</div>
+      <h2>Lesson Title &amp; Objective</h2>
+    </div>
+    <div class="field">
+      <label>Lesson Title</label>
+      <input type="text" placeholder="Enter lesson title">
+    </div>
+    <div class="field">
+      <label>Objective</label>
+      <textarea rows="3" placeholder="Students will be able to..."></textarea>
+    </div>
+  </div>
+
+  <!-- Section 2: Standards & Assessment -->
+  <div class="section-card s2">
+    <div class="section-header">
+      <div class="badge">2</div>
+      <h2>Standards &amp; Assessment</h2>
+    </div>
+    <div class="field">
+      <label>Standards</label>
+      <input type="text" placeholder="e.g., CCSS.MATH.CONTENT.3.OA.1">
+    </div>
+    <div class="field">
+      <label>Formative Assessment</label>
+      <input type="text" placeholder="e.g., exit tickets, thumbs up/down">
+    </div>
+    <div class="field">
+      <label>Summative Assessment</label>
+      <input type="text" placeholder="e.g., quiz, project, worksheet">
+    </div>
+    <div class="field">
+      <label>Success Criteria</label>
+      <input type="text" placeholder="Students can demonstrate...">
+    </div>
+  </div>
+
+  <!-- Section 3: Materials Needed -->
+  <div class="section-card s3">
+    <div class="section-header">
+      <div class="badge">3</div>
+      <h2>Materials Needed</h2>
+    </div>
+    <div class="field">
+      <textarea rows="4" placeholder="List materials, manipulatives, tech, resources..."></textarea>
+    </div>
+  </div>
+
+  <!-- Section 4: Lesson Flow -->
+  <div class="section-card s4">
+    <div class="section-header">
+      <div class="badge">4</div>
+      <h2>Lesson Flow</h2>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head">
+        <span class="phase-label">1. Hook / Warm-Up</span>
+        <input type="text" class="time-input" placeholder="5 min">
+      </div>
+      <textarea rows="3" placeholder="Engage students..."></textarea>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head">
+        <span class="phase-label">2. Direct Instruction (I Do)</span>
+        <input type="text" class="time-input" placeholder="15 min">
+      </div>
+      <textarea rows="3" placeholder="Model and explain..."></textarea>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head">
+        <span class="phase-label">3. Guided Practice (We Do)</span>
+        <input type="text" class="time-input" placeholder="10 min">
+      </div>
+      <textarea rows="3" placeholder="Practice together with support..."></textarea>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head">
+        <span class="phase-label">4. Independent Practice (You Do)</span>
+        <input type="text" class="time-input" placeholder="15 min">
+      </div>
+      <textarea rows="3" placeholder="Students work independently..."></textarea>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head">
+        <span class="phase-label">5. Closure</span>
+        <input type="text" class="time-input" placeholder="5 min">
+      </div>
+      <textarea rows="3" placeholder="Wrap up, review, reflect..."></textarea>
+    </div>
+  </div>
+
+  <!-- Section 5: Differentiation -->
+  <div class="section-card s5">
+    <div class="section-header">
+      <div class="badge">5</div>
+      <h2>Differentiation</h2>
+    </div>
+
+    <div class="diff-group">
+      <h3>Below Level &mdash; Supports</h3>
+      <textarea rows="3" placeholder="Modified notes, manipulatives, small group support..."></textarea>
+    </div>
+
+    <div class="diff-group">
+      <h3>On Level &mdash; Core Task</h3>
+      <textarea rows="3" placeholder="Standard grade-level task..."></textarea>
+    </div>
+
+    <div class="diff-group">
+      <h3>Above Level &mdash; Extensions</h3>
+      <textarea rows="3" placeholder="Enrichment, challenge problems, deeper exploration..."></textarea>
+    </div>
+  </div>
+
+  <!-- Section 6: Post-Lesson Reflection -->
+  <div class="section-card s6">
+    <div class="section-header">
+      <div class="badge">6</div>
+      <h2>Post-Lesson Reflection</h2>
+    </div>
+    <div class="field">
+      <textarea rows="5" placeholder="What went well? What would you change? Next steps?"></textarea>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="actions">
+    <button class="btn btn-pdf" onclick="window.print()">&#128424; Preview &amp; Save as PDF</button>
+    <button class="btn btn-submit" onclick="showSubmitModal()">&#9989; Submit to Principal</button>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div class="modal-overlay" id="submitModal">
+  <div class="modal">
+    <div class="check-icon">&#10003;</div>
+    <h3>Submitted Successfully!</h3>
+    <p>Lesson plan submitted successfully!<br>Mrs. Gaw will receive your plan.</p>
+    <button class="btn-close" onclick="closeModal()">Got It</button>
+  </div>
+</div>
+
+<script>
+  function showSubmitModal() {
+    document.getElementById('submitModal').classList.add('show');
+  }
+  function closeModal() {
+    document.getElementById('submitModal').classList.remove('show');
+  }
+  document.getElementById('submitModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
+
+</body>
+</html>
