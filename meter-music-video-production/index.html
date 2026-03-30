@@ -250,6 +250,53 @@
             color: var(--muted);
             margin-top: 4px;
         }
+        /* Frame galleries */
+        .frame-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin: 20px 0 24px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .frame-gallery.two-col {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .frame-gallery img {
+            width: 100%;
+            aspect-ratio: 16/10;
+            object-fit: cover;
+            display: block;
+            border-radius: 6px;
+            cursor: zoom-in;
+            transition: transform 0.2s;
+        }
+        .frame-gallery img:hover {
+            transform: scale(1.03);
+        }
+        .frame-gallery .frame-caption {
+            font-size: 11px;
+            color: var(--muted);
+            text-align: center;
+            padding: 4px 2px 0;
+            line-height: 1.3;
+        }
+        .frame-gallery .frame-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .frame-section-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            margin: 24px 0 8px;
+        }
+        @media (max-width: 520px) {
+            .frame-gallery { grid-template-columns: repeat(2, 1fr); }
+        }
+
         .footer {
             text-align: center;
             padding: 40px 0 20px;
@@ -434,6 +481,70 @@
                 <p><strong>Primary Reference:</strong> <a href="https://youtu.be/2CfQJ5DsHHU" style="color: var(--accent);">Baxter — "Television"</a> (Warner Records, late 90s)</p>
                 <p>This video is 85% of the target aesthetic for Day 1. Matt sent it directly to Paul (gaffer) with: <em>"going for this kind of vibe"</em> and <em>"focus on the dark blue y2k stuff from that Baxter video."</em></p>
             </div>
+
+            <p class="frame-section-label">The Teal Corridor — The Shot</p>
+            <div class="frame-gallery">
+                <div class="frame-item">
+                    <img src="frames/baxter-teal-corridor.jpg" alt="Teal corridor with fluorescent tubes">
+                    <div class="frame-caption">Fluorescent tubes on walls — teal wash, infinite vanishing point</div>
+                </div>
+                <div class="frame-item">
+                    <img src="frames/baxter-low-angle-corridor.jpg" alt="Low angle corridor tracking">
+                    <div class="frame-caption">Low-angle tracking — following subject down corridor</div>
+                </div>
+                <div class="frame-item">
+                    <img src="frames/baxter-dark-hallway.jpg" alt="Dark hallway with figure">
+                    <div class="frame-caption">Figure silhouetted at end of corridor — deep blue, metal surfaces</div>
+                </div>
+            </div>
+
+            <p class="frame-section-label">Close-Up Portraits — Blue Light on Faces</p>
+            <div class="frame-gallery">
+                <div class="frame-item">
+                    <img src="frames/baxter-portrait-closeup.jpg" alt="Lead singer close-up">
+                    <div class="frame-caption">Shallow DoF, corridor as bokeh — face lit by tube glow</div>
+                </div>
+                <div class="frame-item">
+                    <img src="frames/baxter-portrait-intense.jpg" alt="Intense portrait">
+                    <div class="frame-caption">Direct-to-camera intensity — shadows unfilled, ghostly skin</div>
+                </div>
+                <div class="frame-item">
+                    <img src="frames/baxter-portrait-emotion.jpg" alt="Emotional portrait">
+                    <div class="frame-caption">Emotional close-up — dark background, face is the only light</div>
+                </div>
+            </div>
+
+            <p class="frame-section-label">Performance + Set Pieces</p>
+            <div class="frame-gallery">
+                <div class="frame-item">
+                    <img src="frames/baxter-band-white.jpg" alt="Band in white clothing">
+                    <div class="frame-caption">Band in white — institutional, clothing picks up the teal cast</div>
+                </div>
+                <div class="frame-item">
+                    <img src="frames/baxter-industrial-room.jpg" alt="Industrial room performance">
+                    <div class="frame-caption">Tiled industrial room — white tile, electrical panels, grit</div>
+                </div>
+                <div class="frame-item">
+                    <img src="frames/baxter-band-performance.jpg" alt="Band performing">
+                    <div class="frame-caption">Band performance — tile walls, exposed wiring, overhead tubes</div>
+                </div>
+            </div>
+
+            <div class="frame-gallery">
+                <div class="frame-item">
+                    <img src="frames/baxter-platform-lights.jpg" alt="Underground platform">
+                    <div class="frame-caption">Platform — overhead fluorescent strips, columns, vast darkness</div>
+                </div>
+                <div class="frame-item">
+                    <img src="frames/baxter-crt-television.jpg" alt="CRT television set piece">
+                    <div class="frame-caption">CRT on rolling cart — practical glow against concrete</div>
+                </div>
+                <div class="frame-item">
+                    <img src="frames/baxter-crt-pan.jpg" alt="CRT televisions panning">
+                    <div class="frame-caption">Multiple CRTs — the "Television" motif. Source these if possible.</div>
+                </div>
+            </div>
+
             <ul>
                 <li><strong>Color:</strong> Deep teal/cyan-blue — everything drenched in cold blue-green. The teal comes from fluorescent tubes mounted on walls. No warm tones.</li>
                 <li><strong>Lighting:</strong> 100% practical/motivated. Paul's 8 tube set mounted along subway car walls, set to cyan/teal. Flickering is key — Matt specifically wants that unsettling flicker. Fog/haze critical to catch tube light and create volume.</li>
@@ -448,6 +559,67 @@
                 <p><strong>Primary Reference:</strong> <a href="https://www.youtube.com/watch?v=vjVkXlxsO8Q" style="color: var(--accent);">Linkin Park — "Papercut"</a> (Official HD, 2000)</p>
                 <p>The living room performance scenes are the template. Matt told Paul: <em>"Linkin park video is mostly for the second location the next day."</em></p>
             </div>
+
+            <p class="frame-section-label">The Living Room — Warm Practicals + Band Performance</p>
+            <div class="frame-gallery">
+                <div class="frame-item">
+                    <img src="frames/papercut-wide-room.jpg" alt="Wide room shot with all members">
+                    <div class="frame-caption">Wide room — wallpaper, lamps, chandeliers, band scattered. THE composition.</div>
+                </div>
+                <div class="frame-item">
+                    <img src="frames/papercut-room-wallpaper.jpg" alt="Room with wallpaper pattern">
+                    <div class="frame-caption">Wallpaper pattern, ornate decor — the space IS the production design</div>
+                </div>
+                <div class="frame-item">
+                    <img src="frames/papercut-living-room-band.jpg" alt="Band in living room">
+                    <div class="frame-caption">Band casually positioned — DJ, tartan pants, couch, table lamp glow</div>
+                </div>
+            </div>
+
+            <p class="frame-section-label">Intimate Moments + Close-Ups</p>
+            <div class="frame-gallery">
+                <div class="frame-item">
+                    <img src="frames/papercut-guitar-couch.jpg" alt="Guitar on couch">
+                    <div class="frame-caption">Acoustic guitar on leather couch — chill, warm, intimate. Start here.</div>
+                </div>
+                <div class="frame-item">
+                    <img src="frames/papercut-couch-closeup.jpg" alt="Close-up on couch">
+                    <div class="frame-caption">Medium close-up — leather Chesterfield, shallow DoF, warm tones</div>
+                </div>
+                <div class="frame-item">
+                    <img src="frames/papercut-band-sitting.jpg" alt="Band sitting casually">
+                    <div class="frame-caption">Band sitting — painting, chandelier, wallpaper. Casual energy.</div>
+                </div>
+            </div>
+
+            <p class="frame-section-label">Camera Techniques to Steal</p>
+            <div class="frame-gallery">
+                <div class="frame-item">
+                    <img src="frames/papercut-extreme-closeup.jpg" alt="Extreme close-up profile">
+                    <div class="frame-caption">ECU profile — fill the frame with the face. Shallow DoF, warm.</div>
+                </div>
+                <div class="frame-item">
+                    <img src="frames/papercut-motion-blur.jpg" alt="Motion blur whip pan">
+                    <div class="frame-caption">Whip pan motion blur — the blur IS the transition. Shoot these intentionally.</div>
+                </div>
+                <div class="frame-item">
+                    <img src="frames/papercut-face-glass.jpg" alt="Face through glass">
+                    <div class="frame-caption">Face through frosted surface — ghostly, eerie. Use for transitions.</div>
+                </div>
+            </div>
+
+            <p class="frame-section-label">Energy Escalation + Dark Contrast</p>
+            <div class="frame-gallery two-col">
+                <div class="frame-item">
+                    <img src="frames/papercut-wide-dark.jpg" alt="Wide room darker">
+                    <div class="frame-caption">Same room, darker — energy peaks, lights dim, chaos builds</div>
+                </div>
+                <div class="frame-item">
+                    <img src="frames/baxter-teal-corridor.jpg" alt="Teal corridor contrast">
+                    <div class="frame-caption">Flash-cut to Day 1 world — the cold/warm intercut is the visual thesis</div>
+                </div>
+            </div>
+
             <ul>
                 <li><strong>Color:</strong> Warm amber/golden — table lamps create a warm base. Slight desaturation but overall warm-neutral. Vintage quality with milky shadows.</li>
                 <li><strong>Lighting:</strong> Multiple table lamps scattered around the living room as primary light source. Evening/night, lamps only, no studio lighting. The lamps light faces from low/side angles — unusual shadow patterns. Keep it warm but not bright.</li>
