@@ -18,6 +18,7 @@ Follow these steps exactly:
 - Put the HTML file(s) inside as `index.html` (and any supporting files)
 - The HTML should be fully self-contained (inline CSS, no external dependencies beyond Google Fonts or CDN links)
 - Give the `<title>` tag a clear, descriptive name — the homepage reads it and displays it automatically
+- **REQUIRED:** Add a `<meta name="published" content="YYYY-MM-DD">` tag in the `<head>` with today's date. The homepage sorts projects by this date (newest first) and displays it on each card. Without it, the project sorts to the bottom.
 
 ### 3. Commit and push to main
 ```
