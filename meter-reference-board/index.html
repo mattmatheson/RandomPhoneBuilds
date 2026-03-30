@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>METER — Visual Reference Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --red: #C42020;
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface-raised: #181818;
+    --border: #222222;
+    --text: #e8e8e8;
+    --text-muted: #888888;
+    --text-dim: #555555;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Lightbox ── */
+  .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    cursor: zoom-out;
+  }
+  .lightbox-overlay.active { opacity: 1; pointer-events: all; }
+  .lightbox-overlay img {
+    max-width: 90vw;
+    max-height: 88vh;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 20px 80px rgba(0,0,0,0.6);
+  }
+  .lightbox-caption {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-align: center;
+    max-width: 600px;
+  }
+  .lightbox-close {
+    position: fixed;
+    top: 20px;
+    right: 28px;
+    color: #666;
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: color 0.2s;
+    z-index: 1001;
+    font-weight: 300;
+  }
+  .lightbox-close:hover { color: #fff; }
+
+  /* ── Layout ── */
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  section {
+    padding: 64px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  section:last-of-type { border-bottom: none; }
+
+  /* ── Header ── */
+  .header {
+    padding: 80px 0 64px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    position: relative;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+  }
+  .header h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+  }
+  .header h1 span { color: var(--red); }
+  .header .subtitle {
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    color: var(--text-muted);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .header .subtitle strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* ── Section Headings ── */
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .section-note {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    max-width: 780px;
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  /* ── Image Cards ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  }
+  .card img {
+    width: 100%;
+    display: block;
+    cursor: zoom-in;
+  }
+  .card .card-caption {
+    padding: 12px 16px;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 0.01em;
+  }
+  .card .card-caption strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ── Band Identity Grid ── */
+  .band-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 768px) {
+    .band-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── Location Scout ── */
+  .location-single {
+    max-width: 680px;
+  }
+  .location-single img {
+    border-radius: 8px 8px 0 0;
+  }
+
+  /* ── Masonry Grid ── */
+  .masonry {
+    columns: 5;
+    column-gap: 16px;
+  }
+  .masonry .card {
+    break-inside: avoid;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 1100px) { .masonry { columns: 4; } }
+  @media (max-width: 860px)  { .masonry { columns: 3; } }
+  @media (max-width: 600px)  { .masonry { columns: 2; } }
+
+  /* ── GIF Grid ── */
+  .gif-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 768px) {
+    .gif-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .gif-grid { grid-template-columns: 1fr; }
+  }
+  .gif-grid .card img { aspect-ratio: 16/10; object-fit: cover; }
+
+  /* ── Takeaways ── */
+  .takeaways {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    border-radius: 6px;
+    padding: 32px 36px;
+    max-width: 860px;
+  }
+  .takeaways h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+  .takeaways ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .takeaways li {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    padding-left: 20px;
+    position: relative;
+  }
+  .takeaways li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 6px;
+    height: 6px;
+    background: var(--red);
+    border-radius: 50%;
+  }
+  .takeaways li strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    padding: 48px 0;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+  .footer-links a:hover {
+    color: var(--text);
+    border-color: var(--red);
+    background: rgba(196, 32, 32, 0.08);
+  }
+  .footer .credit {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ── Nav dots ── */
+  .nav-bar {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+  }
+  .nav-bar a {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-dim);
+    transition: all 0.25s;
+    display: block;
+  }
+  .nav-bar a:hover, .nav-bar a.active {
+    background: var(--red);
+    transform: scale(1.4);
+  }
+  @media (max-width: 768px) { .nav-bar { display: none; } }
+</style>
+</head>
+<body>
+
+<!-- Lightbox -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+  <img id="lightbox-img" src="" alt="">
+  <div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+
+<!-- Nav dots -->
+<nav class="nav-bar">
+  <a href="#band" title="Band Identity"></a>
+  <a href="#location" title="Location Scout"></a>
+  <a href="#aesthetic" title="Aesthetic References"></a>
+  <a href="#camera" title="Camera Movement"></a>
+  <a href="#takeaways" title="Key Takeaways"></a>
+</nav>
+
+<!-- ════════════════════════════════════════ HEADER ════════════════════════════════════════ -->
+<header class="header">
+  <div class="container">
+    <h1><span>METER</span> — Visual Reference Board</h1>
+    <p class="subtitle">Music Video Pre-Production &nbsp;|&nbsp; <strong>April 11-12, 2026</strong> &nbsp;|&nbsp; The Subway, Nashville</p>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════ BAND IDENTITY ════════════════════════════════════════ -->
+<section id="band">
+  <div class="container">
+    <div class="section-label">01</div>
+    <h2 class="section-title">Band Identity</h2>
+    <p class="section-note">The album art color palette (deep blue/teal with red METER branding) sets the tone for all visual decisions.</p>
+    <div class="band-grid">
+      <div class="card">
+        <img src="assets/meter-round3-1.png" alt="Album Art Direction — Round 3" onclick="openLightbox(this)" loading="lazy">
+        <div class="card-caption"><strong>Album Art Direction</strong> — Round 3</div>
+      </div>
+      <div class="card">
+        <img src="assets/meter-round3-2.png" alt="Album Art Direction — Round 3" onclick="openLightbox(this)" loading="lazy">
+        <div class="card-caption"><strong>Album Art Direction</strong> — Round 3</div>
+      </div>
+      <div class="card">
+        <img src="assets/meter-round3-7.jpg" alt="Testing My Patience — Key Art" onclick="openLightbox(this)" loading="lazy">
+        <div class="card-caption"><strong>'Testing My Patience'</strong> — Key Art</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ LOCATION SCOUT ════════════════════════════════════════ -->
+<section id="location">
+  <div class="container">
+    <div class="section-label">02</div>
+    <h2 class="section-title">Location Scout — The Subway</h2>
+    <p class="section-note">Venue has vintage subway car interiors — blue seats, natural window light, metal/industrial surfaces.</p>
+    <div class="location-single card">
+      <img src="assets/location-scout-thumb.jpg" alt="The Subway, Nashville — Scouted Feb 11, 2026" onclick="openLightbox(this)" loading="lazy">
+      <div class="card-caption"><strong>The Subway, Nashville</strong> — Scouted Feb 11, 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ AESTHETIC REFS ════════════════════════════════════════ -->
+<section id="aesthetic">
+  <div class="container">
+    <div class="section-label">03</div>
+    <h2 class="section-title">Aesthetic References — Late 90s / Early 2000s Album Art</h2>
+    <p class="section-note">These album covers and photographs establish the visual language — late-90s/early-2000s electronic, indie, and alternative music aesthetics. Heavy emphasis on: subway/transit spaces, fluorescent and artificial lighting, blue-green-yellow-amber color casts, urban isolation, and clean-but-gritty Y2K design.</p>
+    <div class="masonry">
+      <div class="card"><img src="assets/ref-01.png" alt="Subway/Underground Spaces" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Subway/Underground Spaces</div></div>
+      <div class="card"><img src="assets/ref-02.png" alt="Clinical/Sterile Spaces" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Clinical/Sterile Spaces</div></div>
+      <div class="card"><img src="assets/ref-03.png" alt="Transit Motion + Warm Light" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Transit Motion + Warm Light</div></div>
+      <div class="card"><img src="assets/ref-04.png" alt="Editorial Portraiture" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Editorial Portraiture</div></div>
+      <div class="card"><img src="assets/ref-05.png" alt="Y2K Interior Design" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Y2K Interior Design</div></div>
+      <div class="card"><img src="assets/ref-06.png" alt="Industrial Color Cast" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Industrial Color Cast</div></div>
+      <div class="card"><img src="assets/ref-07.png" alt="Isolation + Natural Light" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Isolation + Natural Light</div></div>
+      <div class="card"><img src="assets/ref-08.png" alt="Minimal Techno Aesthetic" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Minimal Techno Aesthetic</div></div>
+      <div class="card"><img src="assets/ref-09.png" alt="Color Split + Motion" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Color Split + Motion</div></div>
+      <div class="card"><img src="assets/ref-10.png" alt="Urban Movement" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Urban Movement</div></div>
+      <div class="card"><img src="assets/ref-11.png" alt="Travel/Transit Theme" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Travel/Transit Theme</div></div>
+      <div class="card"><img src="assets/ref-12.png" alt="Warm Metallic + Shadow" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Warm Metallic + Shadow</div></div>
+      <div class="card"><img src="assets/ref-13.png" alt="Architectural Color" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Architectural Color</div></div>
+      <div class="card"><img src="assets/ref-14.png" alt="Natural Portraiture" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Natural Portraiture</div></div>
+      <div class="card"><img src="assets/ref-15.png" alt="Club/Electronic Portraiture" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Club/Electronic Portraiture</div></div>
+      <div class="card"><img src="assets/ref-16.png" alt="Collage/Mixed Media" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Collage/Mixed Media</div></div>
+      <div class="card"><img src="assets/ref-17.png" alt="Subway Tunnels" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Subway Tunnels</div></div>
+      <div class="card"><img src="assets/ref-18.png" alt="Band Photography" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Band Photography</div></div>
+      <div class="card"><img src="assets/ref-19.png" alt="Moody Portraiture" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Moody Portraiture</div></div>
+      <div class="card"><img src="assets/ref-20.png" alt="Architectural Abstraction" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Architectural Abstraction</div></div>
+      <div class="card"><img src="assets/ref-21.png" alt="Urban Cool" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Urban Cool</div></div>
+      <div class="card"><img src="assets/ref-22.png" alt="Urban Texture" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Urban Texture</div></div>
+      <div class="card"><img src="assets/ref-23.png" alt="Gritty Transit Spaces" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Gritty Transit Spaces</div></div>
+      <div class="card"><img src="assets/ref-24.png" alt="Clean Pop Portraiture" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Clean Pop Portraiture</div></div>
+      <div class="card"><img src="assets/ref-25.png" alt="Neon + Art Installation" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Neon + Art Installation</div></div>
+      <div class="card"><img src="assets/ref-26.png" alt="Diner/Interior Scene" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Diner/Interior Scene</div></div>
+      <div class="card"><img src="assets/ref-27.png" alt="Night Urban Portrait" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Night Urban Portrait</div></div>
+      <div class="card"><img src="assets/ref-28.png" alt="Minimal Color Block" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Minimal Color Block</div></div>
+      <div class="card"><img src="assets/ref-29.png" alt="Abstract Pattern" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Abstract Pattern</div></div>
+      <div class="card"><img src="assets/ref-30.png" alt="Detail/Fragment Shots" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Detail/Fragment Shots</div></div>
+      <div class="card"><img src="assets/ref-31.png" alt="Subway Motion Blur" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Subway Motion Blur</div></div>
+      <div class="card"><img src="assets/ref-32.png" alt="Color-Drenched Interior" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Color-Drenched Interior</div></div>
+      <div class="card"><img src="assets/ref-33.png" alt="Fashion/Editorial" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Fashion/Editorial</div></div>
+      <div class="card"><img src="assets/ref-34.png" alt="Architectural Curves" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Architectural Curves</div></div>
+      <div class="card"><img src="assets/ref-35.png" alt="Ambient Motion" onclick="openLightbox(this)" loading="lazy"><div class="card-caption">Ambient Motion</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ CAMERA MOVEMENT ════════════════════════════════════════ -->
+<section id="camera">
+  <div class="container">
+    <div class="section-label">04</div>
+    <h2 class="section-title">Camera Movement References — Linkin Park "Papercut"</h2>
+    <p class="section-note">Matt pulled these specific camera moves from Linkin Park's 'Papercut' video as direct references for the shoot. The GIFs capture specific movements and framings to recreate/adapt — NOT copy 1:1.</p>
+    <div class="gif-grid">
+      <div class="card"><img src="assets/papercut-cam-02.gif" alt="Close-up tracking" onclick="openLightbox(this)"><div class="card-caption">Close-up tracking — intimate handheld following subject</div></div>
+      <div class="card"><img src="assets/papercut-cam-05.gif" alt="Tight face shot" onclick="openLightbox(this)"><div class="card-caption">Tight face shot — direct address to camera</div></div>
+      <div class="card"><img src="assets/papercut-cam-06.gif" alt="Medium shot" onclick="openLightbox(this)"><div class="card-caption">Medium shot — subject on couch, natural movement</div></div>
+      <div class="card"><img src="assets/papercut-cam-07.gif" alt="Dark interior" onclick="openLightbox(this)"><div class="card-caption">Dark interior — practical lighting, basement vibes</div></div>
+      <div class="card"><img src="assets/papercut-cam-08.gif" alt="Group shot" onclick="openLightbox(this)"><div class="card-caption">Group shot — dynamic blocking, multiple subjects</div></div>
+      <div class="card"><img src="assets/papercut-cam-11.gif" alt="Long hallway" onclick="openLightbox(this)"><div class="card-caption">Long hallway — tracking shot, teal lighting</div></div>
+      <div class="card"><img src="assets/papercut-cam-12.gif" alt="Close portrait" onclick="openLightbox(this)"><div class="card-caption">Close portrait — woman in dark hallway, emotional</div></div>
+      <div class="card"><img src="assets/papercut-cam-14.gif" alt="Detail shot" onclick="openLightbox(this)"><div class="card-caption">Detail shot — tile/texture, overhead angle</div></div>
+      <div class="card"><img src="assets/papercut-cam-15.gif" alt="Walking toward camera" onclick="openLightbox(this)"><div class="card-caption">Walking toward camera — tunnel, dramatic backlight</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ KEY TAKEAWAYS ════════════════════════════════════════ -->
+<section id="takeaways">
+  <div class="container">
+    <div class="section-label">05</div>
+    <h2 class="section-title">Key Takeaways for Crew</h2>
+    <div class="takeaways">
+      <h3>Shoot-Day Quick Reference</h3>
+      <ul>
+        <li><strong>Color palette:</strong> Deep blue/teal base with red accents from METER branding. Amber/yellow as warm counterpoint.</li>
+        <li><strong>Lighting:</strong> Primarily practical/motivated — fluorescent tubes, window light, neon. Avoid flat studio lighting.</li>
+        <li><strong>Camera:</strong> Handheld, intimate, DVX/camcorder look. Fisheye lens for specific shots. Tapeless adapter for texture.</li>
+        <li><strong>Locations:</strong> The Subway venue — use the actual train car interiors, tunnels, platforms.</li>
+        <li><strong>Movement:</strong> Reference Papercut — tracking subjects through spaces, following from behind, push-ins on faces.</li>
+        <li><strong>Tone:</strong> Gritty but beautiful. Y2K nostalgia without irony. Authentic analog processes.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════ FOOTER ════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-links">
+      <a href="/meter-music-video-production/">Production Doc</a>
+      <a href="/meter-call-sheet/">Call Sheet</a>
+      <a href="https://app.milanote.com/1VQJsq1BEzqB4L?p=2xL4hlaQfeJ" target="_blank" rel="noopener">Milanote Board</a>
+    </div>
+    <p class="credit">Matt Matheson Creative &nbsp;&middot;&nbsp; METER Music Video &nbsp;&middot;&nbsp; April 2026</p>
+  </div>
+</footer>
+
+<script>
+  // Lightbox
+  function openLightbox(img) {
+    const overlay = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const caption = document.getElementById('lightbox-caption');
+    lbImg.src = img.src;
+    caption.textContent = img.alt;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  // Nav dot active state
+  const sections = document.querySelectorAll('section[id]');
+  const dots = document.querySelectorAll('.nav-bar a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        dots.forEach(d => d.classList.remove('active'));
+        const dot = document.querySelector(`.nav-bar a[href="#${entry.target.id}"]`);
+        if (dot) dot.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
