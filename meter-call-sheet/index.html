@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METER — Call Sheet | April 11–12, 2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+            background: #0a0a0a;
+            color: #e8e8e8;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 2px solid #333;
+            margin-bottom: 24px;
+        }
+        .header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+        .header .subtitle {
+            font-size: 14px;
+            color: #888;
+            margin-top: 6px;
+            letter-spacing: 1px;
+        }
+        .header .date {
+            font-size: 28px;
+            font-weight: 800;
+            color: #ff4444;
+            margin-top: 12px;
+        }
+        .header .date-sub {
+            font-size: 14px;
+            color: #888;
+            margin-top: 4px;
+        }
+        .day-divider {
+            text-align: center;
+            padding: 16px 0;
+            margin: 24px 0 16px;
+            border-top: 2px solid #ff4444;
+            border-bottom: 1px solid #222;
+        }
+        .day-divider h2 {
+            font-size: 18px;
+            font-weight: 800;
+            color: #ff4444;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .day-divider .day-note {
+            font-size: 12px;
+            color: #888;
+            margin-top: 4px;
+        }
+        .section {
+            margin-bottom: 24px;
+        }
+        .section-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ff4444;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #222;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        .info-label {
+            color: #888;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .info-value {
+            color: #fff;
+            font-size: 13px;
+            font-weight: 500;
+            text-align: right;
+        }
+        .contact-card {
+            background: #141414;
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .contact-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .contact-role {
+            font-size: 11px;
+            color: #888;
+            margin-top: 2px;
+        }
+        .contact-phone {
+            color: #ff4444;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .contact-phone a {
+            color: #ff4444;
+            text-decoration: none;
+        }
+        .schedule-item {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        .schedule-time {
+            width: 70px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #ff4444;
+            flex-shrink: 0;
+        }
+        .schedule-desc {
+            font-size: 13px;
+            color: #ccc;
+            line-height: 1.4;
+        }
+        .schedule-item.break {
+            background: #1a1a0a;
+            margin: 0 -16px;
+            padding: 12px 16px;
+            border-radius: 8px;
+        }
+        .bring-list {
+            background: #141414;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 8px;
+        }
+        .bring-list h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .bring-list p {
+            font-size: 12px;
+            color: #999;
+            line-height: 1.5;
+        }
+        .notes-box {
+            background: #1a1414;
+            border-left: 3px solid #ff4444;
+            padding: 14px 16px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 8px;
+        }
+        .notes-box p {
+            font-size: 12px;
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 4px;
+        }
+        .tbd {
+            color: #666;
+            font-style: italic;
+        }
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #333;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>METER</h1>
+        <div class="subtitle">Music Video — Call Sheet</div>
+        <div class="date">April 11–12, 2026</div>
+        <div class="date-sub">Saturday & Sunday — All Day</div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Location</div>
+        <div class="info-row">
+            <span class="info-label">Venue</span>
+            <span class="info-value">The Subway</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Area</span>
+            <span class="info-value">Nashville, TN</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Address</span>
+            <span class="info-value tbd">TBD — Confirm with venue</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Booking</span>
+            <span class="info-value">All Day — Both Days</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Crew Call</span>
+            <span class="info-value tbd">TBD</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Crew & Contacts</div>
+        <div class="contact-card">
+            <div>
+                <div class="contact-name">Matt Matheson</div>
+                <div class="contact-role">Director / DP</div>
+            </div>
+            <div class="contact-phone"><a href="tel:+19312522070">(931) 252-2070</a></div>
+        </div>
+        <div class="contact-card">
+            <div>
+                <div class="contact-name">Cortney Hale</div>
+                <div class="contact-role">Artist / Band (Vocals)</div>
+            </div>
+            <div class="contact-phone"><a href="tel:+16155564851">(615) 556-4851</a></div>
+        </div>
+        <div class="contact-card">
+            <div>
+                <div class="contact-name">Luke</div>
+                <div class="contact-role">Artist / Band</div>
+            </div>
+            <div class="contact-phone"><a href="tel:+16159738835">(615) 973-8835</a></div>
+        </div>
+        <div class="contact-card">
+            <div>
+                <div class="contact-name">Nic Jiosa</div>
+                <div class="contact-role">BTS / Production Assist</div>
+            </div>
+            <div class="contact-phone"><a href="tel:+16157071475">(615) 707-1475</a></div>
+        </div>
+        <div class="contact-card">
+            <div>
+                <div class="contact-name">Paul Williams</div>
+                <div class="contact-role">Grip / Gaff</div>
+            </div>
+            <div class="contact-phone"><a href="tel:+16788863215">(678) 886-3215</a></div>
+        </div>
+    </div>
+
+    <!-- DAY 1 -->
+    <div class="day-divider">
+        <h2>Day 1 — Saturday, April 11</h2>
+        <div class="day-note">Primary shoot day</div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Schedule</div>
+        <div class="schedule-item">
+            <div class="schedule-time tbd">TBD</div>
+            <div class="schedule-desc">Crew arrives — load-in, lighting setup, camera prep</div>
+        </div>
+        <div class="schedule-item">
+            <div class="schedule-time tbd">TBD</div>
+            <div class="schedule-desc">Band arrives — wardrobe, walkthrough, rehearse playback</div>
+        </div>
+        <div class="schedule-item">
+            <div class="schedule-time tbd">TBD</div>
+            <div class="schedule-desc"><strong>Block 1</strong> — Performance setups (per storyboard)</div>
+        </div>
+        <div class="schedule-item break">
+            <div class="schedule-time tbd">TBD</div>
+            <div class="schedule-desc">Break / wardrobe change</div>
+        </div>
+        <div class="schedule-item">
+            <div class="schedule-time tbd">TBD</div>
+            <div class="schedule-desc"><strong>Block 2</strong> — Narrative / cinematic setups</div>
+        </div>
+        <div class="schedule-item">
+            <div class="schedule-time tbd">TBD</div>
+            <div class="schedule-desc">Review footage, pick up missing shots</div>
+        </div>
+        <div class="schedule-item">
+            <div class="schedule-time tbd">TBD</div>
+            <div class="schedule-desc">Wrap Day 1 — secure gear for overnight</div>
+        </div>
+    </div>
+
+    <!-- DAY 2 -->
+    <div class="day-divider">
+        <h2>Day 2 — Sunday, April 12</h2>
+        <div class="day-note">Pickup / additional setups</div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Schedule</div>
+        <div class="schedule-item">
+            <div class="schedule-time tbd">TBD</div>
+            <div class="schedule-desc">Crew call — setup remaining setups</div>
+        </div>
+        <div class="schedule-item">
+            <div class="schedule-time tbd">TBD</div>
+            <div class="schedule-desc"><strong>Block 3</strong> — Remaining storyboard shots</div>
+        </div>
+        <div class="schedule-item break">
+            <div class="schedule-time tbd">TBD</div>
+            <div class="schedule-desc">Break</div>
+        </div>
+        <div class="schedule-item">
+            <div class="schedule-time tbd">TBD</div>
+            <div class="schedule-desc"><strong>Block 4</strong> — BTS content, promo shots, b-roll</div>
+        </div>
+        <div class="schedule-item">
+            <div class="schedule-time tbd">TBD</div>
+            <div class="schedule-desc">Final review & wrap. Strike all gear, clean venue.</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">What to Bring</div>
+        <div class="bring-list">
+            <h4>Matt</h4>
+            <p>FX3, lenses (35mm, 50mm, 16-35, fisheye), tripod, Aperture 120D + light dome, DVX/camcorder, cards, batteries, playback speaker, song file</p>
+        </div>
+        <div class="bring-list">
+            <h4>Cortney</h4>
+            <p>Wardrobe options (coordinate w/ album art color scheme), camcorder + tapeless adapter + CF-to-SD + SD cards</p>
+        </div>
+        <div class="bring-list">
+            <h4>Luke</h4>
+            <p>Wardrobe options, instrument(s) for performance shots</p>
+        </div>
+        <div class="bring-list">
+            <h4>Nic</h4>
+            <p>BTS camera, phone for social content</p>
+        </div>
+        <div class="bring-list">
+            <h4>Paul</h4>
+            <p>Grip/gaff kit — stands, flags, gels, tape, c-stands, sandbags</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Notes</div>
+        <div class="notes-box">
+            <p>• 2-day shoot — maximize usable content across both days</p>
+            <p>• Nic on BTS duty the entire time — capture everything</p>
+            <p>• Wardrobe should play off the album art color scheme</p>
+            <p>• Camcorder footage for texture / alt-edit</p>
+            <p>• Reference storyboard + camera move GIFs (see production doc)</p>
+            <p>• Confirm venue address & rental times with Cortney</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        Matt Matheson Creative — mattmathesoncreative@gmail.com
+    </div>
+</body>
+</html>

@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METER — Music Video Production Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #C42020;
+            --bg: #FAFAFA;
+            --text: #1D1D1F;
+            --muted: #6E6E73;
+            --card-bg: #fff;
+            --border: #E5E5EA;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 2px solid var(--text);
+        }
+        header h1 {
+            font-size: 42px;
+            font-weight: 900;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        header .subtitle {
+            font-size: 16px;
+            color: var(--muted);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        header .dates {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-top: 16px;
+        }
+        .scope {
+            font-size: 14px;
+            color: var(--muted);
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        /* Listen controls */
+        .listen-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+        .listen-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.6rem 1.5rem;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .listen-btn:hover { opacity: 0.9; }
+        #voiceSelect, #speedBtn {
+            border: 1px solid var(--border);
+            border-radius: 2rem;
+            padding: 0.5rem 1rem;
+            font-size: 13px;
+            font-family: inherit;
+            background: #fff;
+            cursor: pointer;
+        }
+        .pro-tip {
+            font-size: 12px;
+            color: #999;
+            text-align: center;
+            margin-bottom: 32px;
+            font-style: italic;
+        }
+        .pro-tip a { color: var(--accent); cursor: pointer; }
+
+        section {
+            margin-bottom: 40px;
+            transition: all 0.3s ease;
+        }
+        section.reading {
+            border-left: 3px solid var(--accent);
+            background: rgba(196, 32, 32, 0.04);
+            padding-left: 1rem;
+            border-radius: 4px;
+        }
+        h2 {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        h3 {
+            font-size: 15px;
+            font-weight: 700;
+            margin: 20px 0 10px;
+        }
+        p {
+            font-size: 15px;
+            color: var(--text);
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 12px;
+        }
+        .card-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .card-meta {
+            font-size: 13px;
+            color: var(--muted);
+        }
+        .card-meta a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        @media (max-width: 480px) {
+            .info-grid { grid-template-columns: 1fr; }
+            .listen-controls { flex-direction: column; }
+            .listen-btn { width: 100%; }
+        }
+        .info-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+        }
+        .info-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 4px;
+        }
+        .info-value {
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .tbd {
+            color: #999;
+            font-style: italic;
+        }
+        ul, ol {
+            margin: 0 0 16px 20px;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+        li { margin-bottom: 4px; }
+        .timeline {
+            border-left: 3px solid var(--accent);
+            padding-left: 20px;
+            margin: 16px 0;
+        }
+        .timeline-item {
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            position: absolute;
+            left: -26px;
+            top: 6px;
+        }
+        .timeline-date {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+        .timeline-text {
+            font-size: 14px;
+            color: var(--text);
+            margin-top: 2px;
+        }
+        .callout {
+            background: #FFF5F5;
+            border-left: 3px solid var(--accent);
+            padding: 14px 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+        }
+        .callout p {
+            font-size: 13px;
+            color: var(--text);
+            margin: 0;
+        }
+        .reference-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        .ref-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+        }
+        .ref-title {
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .ref-desc {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+        .footer {
+            text-align: center;
+            padding: 40px 0 20px;
+            font-size: 12px;
+            color: #ccc;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        /* Player bar */
+        .player-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(30, 30, 30, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 16px;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            z-index: 100;
+        }
+        .player-bar.visible { transform: translateY(0); }
+        .player-bar button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px 8px;
+            font-family: inherit;
+        }
+        .player-bar .current-section {
+            flex: 1;
+            color: #ccc;
+            font-size: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .player-bar select {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: #fff;
+            border-radius: 1rem;
+            padding: 4px 8px;
+            font-size: 11px;
+            font-family: inherit;
+        }
+        .player-bar .speed-btn {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="content">
+        <header>
+            <h1>METER</h1>
+            <div class="subtitle">Music Video — Production Document</div>
+            <div class="dates">April 11–12, 2026</div>
+        </header>
+
+        <p class="scope">
+            Comprehensive production bible for the METER music video shoot. Covers concept, crew, location, gear, visual references, and all planning context extracted from 6 months of pre-production conversations.
+        </p>
+
+        <div class="listen-controls">
+            <button class="listen-btn" id="listenBtn" onclick="toggleListen()">Listen</button>
+            <select id="voiceSelect"></select>
+            <button id="speedBtn" onclick="cycleSpeed()">1x</button>
+        </div>
+        <p class="pro-tip">
+            Pro tip: For a better voice, <a onclick="selectAllContent()">select all</a> then use iOS Speak Selection (Settings &gt; Accessibility &gt; Spoken Content &gt; Speak Selection).
+        </p>
+
+        <section>
+            <h2>Project Overview</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Artist</div>
+                    <div class="info-value">METER</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Genre</div>
+                    <div class="info-value">Alt / Nu-Metal</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Shoot Dates</div>
+                    <div class="info-value">April 11–12, 2026</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Location</div>
+                    <div class="info-value">The Subway, Nashville</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Director / DP</div>
+                    <div class="info-value">Matt Matheson</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Song</div>
+                    <div class="info-value tbd">TBD — Confirm with band</div>
+                </div>
+            </div>
+            <p style="margin-top: 16px;">METER is Cortney Hale's alt/nu-metal band. Known singles include "Dreaming" and "Watch Me Bleed." The band has an existing hype page at mattmatheson.github.io/meter-hype-page and a growing YouTube presence via Cortney's cortneyhell channel.</p>
+        </section>
+
+        <section>
+            <h2>Crew Roster</h2>
+            <div class="card">
+                <div class="card-title">Matt Matheson — Director / DP</div>
+                <div class="card-meta"><a href="tel:+19312522070">(931) 252-2070</a> · mattmathesoncreative@gmail.com</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Cortney Hale — Artist / Band (Vocals)</div>
+                <div class="card-meta"><a href="tel:+16155564851">(615) 556-4851</a> · <span class="tbd">Email TBD</span></div>
+            </div>
+            <div class="card">
+                <div class="card-title">Luke — Artist / Band</div>
+                <div class="card-meta"><a href="tel:+16159738835">(615) 973-8835</a> · <span class="tbd">Email TBD</span></div>
+            </div>
+            <div class="card">
+                <div class="card-title">Nic Jiosa — BTS / Production Assist</div>
+                <div class="card-meta"><a href="tel:+16157071475">(615) 707-1475</a> · <span class="tbd">Email TBD</span></div>
+            </div>
+            <div class="card">
+                <div class="card-title">Paul Williams — Grip / Gaff</div>
+                <div class="card-meta"><a href="tel:+16788863215">(678) 886-3215</a> · <span class="tbd">Email TBD</span></div>
+            </div>
+            <div class="card">
+                <div class="card-title">Lighting Operator — <span class="tbd">TBD</span></div>
+                <div class="card-meta">Matt mentioned getting "lighting guy locked in" as of March 2 — confirm status</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Location — The Subway</h2>
+            <p>Cortney and Luke scouted "The Subway" as the primary location in late January. Matt and Cortney visited together on February 11 to assess the space. Consensus from everyone: "Subway goes crazy."</p>
+            <div class="callout">
+                <p><strong>Action needed:</strong> Confirm venue address, rental cost for 2 full days, load-in/load-out times, and any venue restrictions. Cortney is the point of contact with the venue.</p>
+            </div>
+            <p>Cortney noted concern about cost for a full day rental. With a 2-day shoot, budget for venue needs to be confirmed early.</p>
+        </section>
+
+        <section>
+            <h2>Creative Direction & References</h2>
+
+            <h3>Visual References</h3>
+            <div class="reference-grid">
+                <div class="ref-card">
+                    <div class="ref-title">Gummo (1997) — Bridge Scene</div>
+                    <div class="ref-desc">Cortney referenced the Gummo bridge aesthetic. Raw, textural, analog feel.</div>
+                </div>
+                <div class="ref-card">
+                    <div class="ref-title">Joel Walking / Van Following</div>
+                    <div class="ref-desc">Matt referenced a scene where a character walks while being followed in a van, with the van occupants talking about him. Adapt this for Meter.</div>
+                </div>
+                <div class="ref-card">
+                    <div class="ref-title">Michelle Branch Aesthetic</div>
+                    <div class="ref-desc">Cortney added Michelle Branch references to the mood board. Early 2000s alt-girl energy.</div>
+                </div>
+                <div class="ref-card">
+                    <div class="ref-title">Album Art Color Scheme</div>
+                    <div class="ref-desc">Wardrobe and lighting should play off the album art colors. Important: the album art itself CANNOT be modified — the designer will "lose it." Use the palette as a guide for production design.</div>
+                </div>
+            </div>
+
+            <h3>Milanote Board</h3>
+            <div class="callout">
+                <p><strong>Milanote:</strong> <span class="tbd">Link TBD — Matt started building this Feb 12. Drop the link here once available.</span></p>
+                <p>The Milanote board contains mood/reference imagery, album art color palette, and visual direction for the shoot. All crew should review before shoot day.</p>
+            </div>
+
+            <h3>Concept Notes from Conversations</h3>
+            <ul>
+                <li>Copy/adapt scenes from reference films, change them up — not 1:1 recreations</li>
+                <li>Mix cinematic camera (FX3) with camcorder/DVX texture footage</li>
+                <li>Color grade using Matt's revamped film emulation system (same as Dallas Murrae video)</li>
+                <li>Maximize usable content — not just the music video, but promo material, BTS, social clips</li>
+                <li>Matt was building a Milanote board for visual planning</li>
+                <li>Matt creating GIFs of camera moves for storyboard reference</li>
+            </ul>
+
+            <div class="callout">
+                <p><strong>From Luke (Feb 15):</strong> "We'll pay him and you but lets get the most out of the filming that we can. As much usable content as possible. Gotta get Nic in there filming BTS shit etc."</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Equipment</h2>
+            <h3>Camera</h3>
+            <ul>
+                <li>Sony FX3 — primary cinema camera</li>
+                <li>Lenses: 35mm, 50mm, 16-35mm, fisheye</li>
+                <li>DVX / camcorder — texture and alt-angle footage</li>
+                <li>Cortney's camcorder + tapeless adapter (CF-to-SD) for her POV footage</li>
+                <li>Nic's BTS camera/phone</li>
+            </ul>
+            <h3>Lighting & Grip</h3>
+            <ul>
+                <li>Aperture 120D + light dome</li>
+                <li>Paul Williams grip/gaff kit (c-stands, flags, gels, tape, sandbags)</li>
+                <li>Lighting operator TBD — Matt was locking this in as of March 2</li>
+            </ul>
+            <h3>Audio & Other</h3>
+            <ul>
+                <li>Playback speaker + song file for lip sync</li>
+                <li>Tripod (some shots locked off per style)</li>
+                <li>Memory cards, batteries, power strips</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Pre-Production Timeline</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">JAN 17, 2026</div>
+                    <div class="timeline-text">Initial group chat discussions begin between Matt, Cortney, and Luke</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">JAN 28</div>
+                    <div class="timeline-text">Cortney & Luke decide on The Subway as location: "It's too cool"</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">FEB 2</div>
+                    <div class="timeline-text">Matt requests studio camcorder footage of Meter; creates test clip with film emulation color grade</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">FEB 5</div>
+                    <div class="timeline-text">Subway venue scout scheduled for the 10th; discussion of visual references (Gummo bridge, van following scene)</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">FEB 8</div>
+                    <div class="timeline-text">Subway booked on the 10th — rescheduled scout to Wednesday Feb 11</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">FEB 11</div>
+                    <div class="timeline-text">Matt & Cortney visit The Subway in person. Verdict: "Subway goes crazy"</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">FEB 12</div>
+                    <div class="timeline-text">Milanote board started. Album art color scheme discussion. Michelle Branch references added. Cannot modify album art.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">FEB 13</div>
+                    <div class="timeline-text">Cortney bought tapeless adapter for camcorder — going tapeless for the shoot</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">FEB 15</div>
+                    <div class="timeline-text">Luke confirms budget: will pay Matt and Nic. Nic confirmed for BTS. Matt exploring lighting options (cheaper than Zach).</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">MAR 2</div>
+                    <div class="timeline-text">Matt shares storyboard imagery — getting "lighting guy locked in." Building camera move GIF library for storyboard.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">MAR 21</div>
+                    <div class="timeline-text">Latest group chat activity — ongoing prep</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Budget & Payment</h2>
+            <p>Luke confirmed the band will pay Matt and Nic for their work. Specific rates TBD.</p>
+            <ul>
+                <li><strong>Venue rental:</strong> TBD — Cortney managing. Concerned about full-day cost; now booking 2 full days.</li>
+                <li><strong>Matt (Director/DP):</strong> TBD — standard rate ~$1,200/day full day</li>
+                <li><strong>Nic (BTS/Assist):</strong> TBD</li>
+                <li><strong>Paul Williams (Grip/Gaff):</strong> TBD</li>
+                <li><strong>Lighting operator:</strong> TBD — Matt noted cheaper than Zach ($1,200)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Deliverables</h2>
+            <ul>
+                <li>Final music video edit</li>
+                <li>Vertical cuts for social</li>
+                <li>BTS content package (Nic)</li>
+                <li>Promo stills / photos</li>
+                <li>Camcorder texture cuts for social teaser content</li>
+                <li>Possible Cortneyhell YouTube upload of BTS/live footage</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Open Items</h2>
+            <div class="callout">
+                <p>These need to be resolved before shoot day:</p>
+            </div>
+            <ul>
+                <li>Confirm which song this video is for</li>
+                <li>Venue address and exact rental times for both days</li>
+                <li>Venue cost for 2 full days</li>
+                <li>Lock in lighting operator</li>
+                <li>Finalize storyboard / shot list</li>
+                <li>Confirm crew call time</li>
+                <li>Get email addresses for: Cortney, Luke, Nic, Paul</li>
+                <li>Luke's last name for call sheet</li>
+                <li>Wardrobe plan tied to album art colors</li>
+                <li>Confirm Cortney's camcorder tapeless setup works reliably (had tape issues in January)</li>
+                <li>Finalize Milanote board + camera move GIF storyboard</li>
+                <li>Confirm payment/rates with band</li>
+            </ul>
+        </section>
+
+        <div class="footer">
+            Matt Matheson Creative · METER Music Video · April 2026
+        </div>
+    </div>
+
+    <!-- Player bar -->
+    <div class="player-bar" id="playerBar">
+        <button onclick="toggleListen()" id="playerPlayPause">⏸</button>
+        <span class="current-section" id="playerSectionTitle">—</span>
+        <select id="playerVoiceSelect" onchange="document.getElementById('voiceSelect').value=this.value; selectedVoice=this.value;"></select>
+        <button class="speed-btn" onclick="cycleSpeed()" id="playerSpeedBtn">1x</button>
+        <button onclick="stopListen()">⏹</button>
+    </div>
+
+    <script>
+        const speeds = [0.8, 1, 1.2, 1.5];
+        let speedIndex = 1;
+        let selectedVoice = '';
+        let isPlaying = false;
+        let isPaused = false;
+        let utterances = [];
+        let currentIdx = 0;
+        let keepAlive = null;
+        const GOOD_VOICES = ['samantha','karen','daniel','moira','tessa','ava','allison','tom','aaron','nicky','evan','zoe','joelle','fiona','martha','arthur','google us english','google uk english'];
+
+        function populateVoices() {
+            const voices = speechSynthesis.getVoices();
+            const sel1 = document.getElementById('voiceSelect');
+            const sel2 = document.getElementById('playerVoiceSelect');
+            sel1.innerHTML = ''; sel2.innerHTML = '';
+            const filtered = voices.filter(v => GOOD_VOICES.some(g => v.name.toLowerCase().includes(g)));
+            (filtered.length ? filtered : voices.slice(0, 10)).forEach(v => {
+                const o1 = new Option(v.name, v.name); const o2 = new Option(v.name, v.name);
+                sel1.add(o1); sel2.add(o2);
+                if (v.name.toLowerCase().includes('samantha') && !selectedVoice) { selectedVoice = v.name; sel1.value = v.name; sel2.value = v.name; }
+            });
+            if (!selectedVoice && sel1.options.length) { selectedVoice = sel1.options[0].value; }
+        }
+        speechSynthesis.onvoiceschanged = populateVoices;
+        populateVoices();
+
+        document.getElementById('voiceSelect').onchange = function() { selectedVoice = this.value; document.getElementById('playerVoiceSelect').value = this.value; };
+        document.getElementById('playerVoiceSelect').onchange = function() { selectedVoice = this.value; document.getElementById('voiceSelect').value = this.value; };
+
+        function cycleSpeed() {
+            speedIndex = (speedIndex + 1) % speeds.length;
+            document.getElementById('speedBtn').textContent = speeds[speedIndex] + 'x';
+            document.getElementById('playerSpeedBtn').textContent = speeds[speedIndex] + 'x';
+        }
+
+        function getReadableElements() {
+            const sections = document.querySelectorAll('#content section');
+            const elements = [];
+            sections.forEach(sec => {
+                sec.querySelectorAll('h2, h3, p, li').forEach(el => {
+                    const text = el.textContent.trim();
+                    if (text && text.length > 2) elements.push({ el, text, section: sec });
+                });
+            });
+            return elements;
+        }
+
+        function showPlayer() { document.getElementById('playerBar').classList.add('visible'); }
+        function hidePlayer() { document.getElementById('playerBar').classList.remove('visible'); }
+
+        function toggleListen() {
+            if (isPlaying && !isPaused) {
+                speechSynthesis.pause();
+                isPaused = true;
+                document.getElementById('playerPlayPause').textContent = '▶';
+                return;
+            }
+            if (isPaused) {
+                speechSynthesis.resume();
+                isPaused = false;
+                document.getElementById('playerPlayPause').textContent = '⏸';
+                return;
+            }
+            startReading();
+        }
+
+        function startReading() {
+            speechSynthesis.cancel();
+            const items = getReadableElements();
+            if (!items.length) return;
+            currentIdx = 0;
+            isPlaying = true;
+            isPaused = false;
+            showPlayer();
+            document.getElementById('playerPlayPause').textContent = '⏸';
+            keepAlive = setInterval(() => { if (isPlaying && !isPaused) speechSynthesis.resume(); }, 10000);
+            readNext(items);
+        }
+
+        function readNext(items) {
+            if (currentIdx >= items.length) { stopListen(); return; }
+            const item = items[currentIdx];
+            // Highlight section
+            document.querySelectorAll('section.reading').forEach(s => s.classList.remove('reading'));
+            item.section.classList.add('reading');
+            if (currentIdx === 0 || items[currentIdx - 1]?.section !== item.section) {
+                item.section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            const heading = item.section.querySelector('h2');
+            document.getElementById('playerSectionTitle').textContent = heading ? heading.textContent : '—';
+
+            const utt = new SpeechSynthesisUtterance(item.text);
+            const voices = speechSynthesis.getVoices();
+            const voice = voices.find(v => v.name === selectedVoice);
+            if (voice) utt.voice = voice;
+            const isHeading = item.el.tagName === 'H2' || item.el.tagName === 'H3';
+            utt.rate = isHeading ? speeds[speedIndex] * 0.9 : speeds[speedIndex];
+            if (isHeading) utt.pitch = 1.05;
+
+            utt.onend = () => {
+                currentIdx++;
+                const pause = isHeading ? 400 : 200;
+                setTimeout(() => readNext(items), pause);
+            };
+            speechSynthesis.speak(utt);
+        }
+
+        function stopListen() {
+            speechSynthesis.cancel();
+            isPlaying = false;
+            isPaused = false;
+            if (keepAlive) { clearInterval(keepAlive); keepAlive = null; }
+            document.querySelectorAll('section.reading').forEach(s => s.classList.remove('reading'));
+            hidePlayer();
+        }
+
+        function selectAllContent() {
+            const range = document.createRange();
+            range.selectNodeContents(document.getElementById('content'));
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }
+    </script>
+</body>
+</html>
