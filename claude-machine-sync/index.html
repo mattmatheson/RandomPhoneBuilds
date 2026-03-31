@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="published" content="2026-03-31">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syncing Claude Code Across Machines — Windows PC & Mac Mini</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #C42020;
+            --bg: #FAFAFA;
+            --text: #1D1D1F;
+            --text-secondary: #6E6E73;
+            --card-bg: #F2F2F7;
+            --border: #E5E5E7;
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .header {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 2rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            margin-bottom: 0.75rem;
+        }
+
+        .scope {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+
+        .listen-row {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+
+        .listen-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.6rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: opacity 0.2s;
+        }
+        .listen-btn:hover { opacity: 0.85; }
+
+        .pro-tip {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+        .pro-tip a {
+            color: var(--text-secondary);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 1.5rem 4rem;
+        }
+
+        section {
+            margin-bottom: 2.5rem;
+            padding: 0.25rem 0;
+            transition: all 0.3s ease;
+        }
+        section.reading {
+            border-left: 3px solid var(--accent);
+            background: rgba(196, 32, 32, 0.04);
+            padding-left: 1rem;
+            border-radius: 4px;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--text);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        ul, ol {
+            padding-left: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        code {
+            background: var(--card-bg);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.88em;
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+        }
+
+        pre {
+            background: #1D1D1F;
+            color: #F5F5F7;
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        .sync-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        .sync-table th {
+            text-align: left;
+            padding: 0.6rem 0.75rem;
+            border-bottom: 2px solid var(--border);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-secondary);
+        }
+        .sync-table td {
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+        .sync-table .yes { color: #34C759; font-weight: 600; }
+        .sync-table .no { color: var(--accent); font-weight: 600; }
+
+        .phase-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+
+        .callout {
+            background: #FFF3CD;
+            border-left: 4px solid #F0AD4E;
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .callout-danger {
+            background: #FDECEA;
+            border-left-color: var(--accent);
+        }
+
+        /* Player bar */
+        .player-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(30, 30, 30, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: white;
+            padding: 0.75rem 1.25rem;
+            padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.35s ease;
+            font-size: 0.85rem;
+        }
+        .player-bar.visible { transform: translateY(0); }
+        .player-bar button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 0.25rem;
+            font-family: inherit;
+        }
+        .player-bar .track-title {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        .player-bar select {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0.3rem 0.4rem;
+            font-size: 0.75rem;
+            font-family: inherit;
+            max-width: 120px;
+        }
+        .player-bar .speed-btn {
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(255,255,255,0.15);
+            border-radius: 6px;
+            padding: 0.25rem 0.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.5rem; }
+            .listen-row { flex-direction: column; align-items: stretch; }
+            .listen-btn { width: 100%; text-align: center; }
+            pre { font-size: 0.78rem; padding: 1rem; }
+            .sync-table { font-size: 0.8rem; }
+            .sync-table td, .sync-table th { padding: 0.4rem 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Syncing Claude Code Across Machines</h1>
+    <p class="scope">A complete guide for cloning Matt's full Claude Code setup — skills, memory, MCP servers, hooks, and all — from the MacBook to the Windows PC and Mac Mini.</p>
+
+    <div class="listen-row">
+        <button class="listen-btn" id="listenBtn" onclick="toggleListen()">&#9654; Listen</button>
+    </div>
+    <p class="pro-tip">Pro tip: For a better voice, <a onclick="selectAllContent()">select all</a> then use iOS Speak Selection (Settings &gt; Accessibility &gt; Spoken Content).</p>
+</div>
+
+<div class="container" id="mainContent">
+
+<!-- SECTION: The Big Picture -->
+<section>
+    <h2>The Big Picture</h2>
+    <p>Right now, your MacBook is the fully loaded machine — 21 active skills, 31 archived skills, 6 MCP servers, TTS hooks, 20+ custom commands, your entire Cortex vault, and the claude-brain sync repo. The goal is to replicate that environment on two other machines:</p>
+    <ul>
+        <li><strong>Windows PC</strong> — your main editing/gaming rig, different OS, different path conventions</li>
+        <li><strong>Mac Mini</strong> — fresh macOS, same OS family, way simpler to clone</li>
+    </ul>
+    <p>There's no official "Claude Sync" feature from Anthropic yet (there's a feature request at GitHub issue #22648, but no timeline). So we're building our own sync pipeline using your existing <code>claude-brain</code> GitHub repo as the central hub.</p>
+</section>
+
+<!-- SECTION: What Gets Synced vs. What Stays Local -->
+<section>
+    <h2>What Gets Synced vs. What Stays Local</h2>
+    <p>Not everything in <code>~/.claude/</code> should travel between machines. Here's the breakdown:</p>
+
+    <table class="sync-table">
+        <thead>
+            <tr><th>File / Folder</th><th>Sync?</th><th>Why</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>CLAUDE.md</code></td><td class="yes">YES</td><td>Your global instructions — voice, personality, rules</td></tr>
+            <tr><td><code>settings.json</code></td><td class="yes">YES</td><td>MCP servers, hooks, permissions</td></tr>
+            <tr><td><code>commands/</code></td><td class="yes">YES</td><td>20 custom slash commands</td></tr>
+            <tr><td><code>skills/</code></td><td class="yes">YES</td><td>21 active skills (need the source repos too)</td></tr>
+            <tr><td><code>skills-archive/</code></td><td class="yes">YES</td><td>31 archived skills</td></tr>
+            <tr><td><code>agents/</code></td><td class="yes">YES</td><td>Agent personas</td></tr>
+            <tr><td><code>hooks/</code></td><td class="yes">YES</td><td>TTS stop hook, etc.</td></tr>
+            <tr><td><code>plugins/</code></td><td class="yes">YES</td><td>Plugin configs</td></tr>
+            <tr><td><code>projects/*/memory/</code></td><td class="yes">YES</td><td>Your auto-memory files (MEMORY.md + all .md files)</td></tr>
+            <tr><td><code>plans/</code></td><td class="yes">YES</td><td>5 saved plans</td></tr>
+            <tr><td><code>.credentials.json</code></td><td class="no">NO</td><td>OAuth tokens — machine-specific, security risk</td></tr>
+            <tr><td><code>settings.local.json</code></td><td class="no">NO</td><td>Machine-specific overrides by design</td></tr>
+            <tr><td><code>sessions/</code></td><td class="no">NO</td><td>Session state, machine-local</td></tr>
+            <tr><td><code>history.jsonl</code></td><td class="no">NO</td><td>Conversation history (265KB+), machine-local</td></tr>
+            <tr><td><code>file-history/</code></td><td class="no">NO</td><td>Edit snapshots, machine-local</td></tr>
+            <tr><td><code>cache/</code>, <code>paste-cache/</code>, <code>image-cache/</code></td><td class="no">NO</td><td>Temp data, regenerated automatically</td></tr>
+            <tr><td><code>telemetry/</code></td><td class="no">NO</td><td>Analytics, not useful to sync</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- SECTION: The Sync Strategy -->
+<section>
+    <h2>The Sync Strategy: Git + Symlinks</h2>
+    <p>Your <code>claude-brain</code> repo at <code>github.com/mattmatheson/claude-brain</code> is already the right vehicle. The approach is dead simple:</p>
+    <ol>
+        <li>The <code>claude-brain</code> repo holds the canonical copy of everything sync-worthy</li>
+        <li>Each machine clones the repo and symlinks files back into <code>~/.claude/</code></li>
+        <li>When you make changes on any machine, commit + push. Pull on the others.</li>
+    </ol>
+    <p>The repo already has <code>bootstrap.sh</code> and <code>sync.sh</code> scripts. We'll expand those to handle the full setup.</p>
+
+    <div class="card">
+        <div class="card-label">Repo Structure (target)</div>
+<pre><code>claude-brain/
+├── CLAUDE.md
+├── settings.json
+├── commands/
+├── skills/           # actual skill files (not symlinks)
+├── skills-archive/
+├── agents/
+├── hooks/
+├── plugins/
+├── memory/           # project memory files
+├── bootstrap.sh      # first-time setup on a new machine
+├── sync.sh           # pull latest + re-link
+├── bootstrap-win.ps1 # Windows-specific bootstrap
+└── platform/
+    ├── macos.sh      # macOS-specific tweaks
+    └── windows.ps1   # Windows-specific tweaks</code></pre>
+    </div>
+</section>
+
+<!-- ============================================== -->
+<!-- PART 1: WINDOWS PC -->
+<!-- ============================================== -->
+<section>
+    <h2><span class="phase-badge">Part 1</span> Windows PC Setup</h2>
+    <p>This is the harder one — different OS, different paths, some features that work differently. Let's break it down phase by phase.</p>
+</section>
+
+<section>
+    <h3>Phase 1: Install Claude Code on Windows</h3>
+    <p>Claude Code runs natively on Windows 10/11 now (no WSL required). The recommended install method:</p>
+<pre><code># Option A: winget (preferred)
+winget install Anthropic.ClaudeCode
+
+# Option B: npm (if winget is being weird)
+npm install -g @anthropic-ai/claude-code</code></pre>
+
+    <p>You also need <strong>Git for Windows</strong> installed — Claude Code uses Git Bash internally even when you're running it from PowerShell or CMD.</p>
+<pre><code>winget install Git.Git</code></pre>
+
+    <p>After install, open a terminal and run <code>claude</code> to authenticate. It'll walk you through the Anthropic login. On Windows, your credentials land in <code>%USERPROFILE%\.claude\.credentials.json</code> (not Keychain like on Mac).</p>
+
+    <div class="callout callout-danger">
+        <strong>Security note:</strong> On Windows, credentials are stored in a plaintext JSON file, not the system keychain. Never sync this file. Never commit it to Git.
+    </div>
+</section>
+
+<section>
+    <h3>Phase 2: Clone the Brain</h3>
+<pre><code># From PowerShell or Git Bash:
+cd %USERPROFILE%
+git clone https://github.com/mattmatheson/claude-brain.git</code></pre>
+    <p>This gives you the full config repo at <code>C:\Users\Matt\claude-brain\</code> (or whatever your Windows username is).</p>
+</section>
+
+<section>
+    <h3>Phase 3: Symlink Into .claude</h3>
+    <p>Windows supports symlinks but requires either <strong>Developer Mode enabled</strong> or <strong>running as admin</strong>. Turn on Developer Mode in Settings → For Developers → Developer Mode.</p>
+    <p>Then the bootstrap script creates the links. Here's the core logic for <code>bootstrap-win.ps1</code>:</p>
+<pre><code># bootstrap-win.ps1 — Run as Admin or with Developer Mode on
+$brain = "$env:USERPROFILE\claude-brain"
+$claude = "$env:USERPROFILE\.claude"
+
+# Back up existing settings if present
+if (Test-Path "$claude\settings.json") {
+    Copy-Item "$claude\settings.json" "$claude\settings.json.bak"
+}
+
+# Create symlinks for sync-worthy items
+$items = @(
+    "CLAUDE.md", "settings.json", "commands", "skills",
+    "skills-archive", "agents", "hooks", "plugins", "plans"
+)
+
+foreach ($item in $items) {
+    $target = "$brain\$item"
+    $link = "$claude\$item"
+
+    if (Test-Path $link) { Remove-Item $link -Recurse -Force }
+
+    if (Test-Path $target -PathType Container) {
+        New-Item -ItemType Junction -Path $link -Target $target
+    } else {
+        New-Item -ItemType SymbolicLink -Path $link -Target $target
+    }
+    Write-Host "Linked: $item"
+}</code></pre>
+</section>
+
+<section>
+    <h3>Phase 4: Handle the Path Problem</h3>
+    <p>This is the main gotcha. Claude Code stores project-specific memory using path-encoded directory names:</p>
+    <ul>
+        <li><strong>MacBook:</strong> <code>~/.claude/projects/-Users-matthewmatheson/memory/</code></li>
+        <li><strong>Windows:</strong> <code>~/.claude/projects/-C-Users-Matt/memory/</code></li>
+    </ul>
+    <p>So memory files from the MacBook won't automatically be found on Windows — the project path keys are different.</p>
+
+    <div class="card">
+        <div class="card-label">Solution: Cross-link memory</div>
+        <p>In the bootstrap script, we create a symlink that maps the Windows project path to the same memory folder:</p>
+<pre><code># In bootstrap-win.ps1, after the main links:
+$memSrc = "$brain\memory"
+$winProject = "$claude\projects\-C-Users-Matt"
+
+New-Item -ItemType Directory -Path $winProject -Force
+New-Item -ItemType Junction -Path "$winProject\memory" -Target $memSrc</code></pre>
+        <p>Now both machines read/write the same memory files regardless of OS path differences.</p>
+    </div>
+</section>
+
+<section>
+    <h3>Phase 5: MCP Servers</h3>
+    <p>Your current MCP servers from <code>settings.json</code>:</p>
+    <ul>
+        <li><strong>sequential-thinking</strong> — NPX, works cross-platform</li>
+        <li><strong>memory</strong> (knowledge-graph) — NPX, works cross-platform but needs path adjustment for the <code>.jsonl</code> file</li>
+        <li><strong>context7</strong> — NPX, works cross-platform</li>
+        <li><strong>chrome-devtools</strong> — needs Chrome installed</li>
+        <li><strong>gmail-personal</strong> / <strong>gmail-business</strong> — need credential files in the right spot</li>
+    </ul>
+    <p>Most of these are NPX-based, so they'll work as long as Node.js is installed. The Gmail MCP servers need their credential/config directories recreated on the Windows machine. The knowledge-graph path needs to be updated in <code>settings.local.json</code> (the machine-specific override file).</p>
+
+    <div class="card">
+        <div class="card-label">settings.local.json (Windows overrides)</div>
+<pre><code>{
+  "env": {
+    "CLAUDE_MEMORY_PATH": "C:\\Users\\Matt\\.claude\\memory\\knowledge-graph.jsonl"
+  }
+}</code></pre>
+    </div>
+</section>
+
+<section>
+    <h3>Phase 6: Skills & External Toolkits</h3>
+    <p>Your skills are mostly symlinks pointing to external toolkit repos:</p>
+    <ul>
+        <li><code>~/tools/nano-banana-2/</code> — hosts 31+ skills</li>
+        <li><code>~/tools/claude-video-toolkit/</code> — hosts ffmpeg, remotion, elevenlabs, etc.</li>
+        <li><code>~/.agents/skills/</code> — hosts firecrawl</li>
+    </ul>
+    <p>For the sync repo, we flatten these — copy the actual skill files into <code>claude-brain/skills/</code> instead of storing symlinks (symlinks to local paths won't survive cross-machine sync). The bootstrap script on each machine then re-links from the repo.</p>
+</section>
+
+<section>
+    <h3>Phase 7: Windows-Specific Adjustments</h3>
+    <ul>
+        <li><strong>TTS Hook:</strong> The <code>tts-stop.py</code> hook uses macOS <code>say</code> command, which doesn't exist on Windows. We'll need a Windows equivalent using PowerShell's <code>Add-Type -AssemblyName System.Speech</code> or skip TTS on Windows.</li>
+        <li><strong>Line endings:</strong> Set <code>git config core.autocrlf true</code> on Windows to handle LF/CRLF conversion.</li>
+        <li><strong>Playwright:</strong> Works natively on Windows. Run <code>npx playwright install</code> after setup.</li>
+        <li><strong>Shell hooks:</strong> Any bash-based hooks need PowerShell equivalents or Git Bash wrappers.</li>
+    </ul>
+</section>
+
+<section>
+    <h3>Windows: Quick-Start Checklist</h3>
+    <div class="card">
+        <ol>
+            <li>Install Git for Windows: <code>winget install Git.Git</code></li>
+            <li>Install Node.js: <code>winget install OpenJS.NodeJS.LTS</code></li>
+            <li>Install Claude Code: <code>winget install Anthropic.ClaudeCode</code></li>
+            <li>Run <code>claude</code> and authenticate</li>
+            <li>Enable Developer Mode (Settings → For Developers)</li>
+            <li>Clone claude-brain: <code>git clone https://github.com/mattmatheson/claude-brain.git</code></li>
+            <li>Run <code>bootstrap-win.ps1</code> as admin</li>
+            <li>Install Playwright browsers: <code>npx playwright install</code></li>
+            <li>Set up Gmail MCP credentials (manual — copy from MacBook)</li>
+            <li>Test: run <code>claude</code> and verify skills load, memory works, MCP connects</li>
+        </ol>
+    </div>
+</section>
+
+<!-- ============================================== -->
+<!-- PART 2: MAC MINI -->
+<!-- ============================================== -->
+<section>
+    <h2><span class="phase-badge">Part 2</span> Mac Mini Setup</h2>
+    <p>This is dramatically simpler than Windows. Same OS, same path conventions (if you use the same username), same Keychain for credentials. It's basically a clone operation.</p>
+</section>
+
+<section>
+    <h3>Phase 1: Prerequisites</h3>
+    <p>The Mac Mini needs these before anything else:</p>
+<pre><code># Install Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install Node.js
+brew install node
+
+# Install Claude Code
+npm install -g @anthropic-ai/claude-code
+
+# Authenticate
+claude</code></pre>
+    <p>Use the <strong>same username</strong> (<code>matthewmatheson</code>) on the Mac Mini. This means all your path-encoded project directories in <code>~/.claude/projects/</code> will match exactly. If you already set up a different username, you can still make it work with symlinks, but matching usernames eliminates that headache entirely.</p>
+</section>
+
+<section>
+    <h3>Phase 2: Clone & Bootstrap</h3>
+<pre><code># Clone the brain
+cd ~
+git clone https://github.com/mattmatheson/claude-brain.git
+
+# Clone your tool repos
+mkdir -p ~/tools
+git clone https://github.com/mattmatheson/nano-banana-2.git ~/tools/nano-banana-2
+git clone https://github.com/mattmatheson/claude-video-toolkit.git ~/tools/claude-video-toolkit
+
+# Clone Cortex vault
+git clone https://github.com/mattmatheson/cortex-vault.git ~/Cortex
+
+# Run bootstrap
+cd ~/claude-brain
+chmod +x bootstrap.sh
+./bootstrap.sh</code></pre>
+</section>
+
+<section>
+    <h3>Phase 3: What bootstrap.sh Does</h3>
+    <p>The bootstrap script for macOS is clean — just symlinks:</p>
+<pre><code>#!/bin/bash
+BRAIN="$HOME/claude-brain"
+CLAUDE="$HOME/.claude"
+
+# Backup existing
+[ -f "$CLAUDE/settings.json" ] && cp "$CLAUDE/settings.json" "$CLAUDE/settings.json.bak"
+
+# Symlink sync-worthy items
+for item in CLAUDE.md settings.json commands skills skills-archive agents hooks plugins plans; do
+    target="$BRAIN/$item"
+    link="$CLAUDE/$item"
+    [ -e "$link" ] && rm -rf "$link"
+    ln -sf "$target" "$link"
+    echo "Linked: $item"
+done
+
+# Memory symlink
+mkdir -p "$CLAUDE/projects/-Users-matthewmatheson"
+rm -rf "$CLAUDE/projects/-Users-matthewmatheson/memory"
+ln -sf "$BRAIN/memory" "$CLAUDE/projects/-Users-matthewmatheson/memory"
+echo "Linked: memory"
+
+echo "Done. Run 'claude' to verify."</code></pre>
+</section>
+
+<section>
+    <h3>Phase 4: MCP Servers</h3>
+    <p>Since <code>settings.json</code> is synced, all MCP server configs come over automatically. You just need to:</p>
+    <ol>
+        <li>Install NPX dependencies (they auto-install on first use)</li>
+        <li>Copy Gmail credential files from MacBook:
+<pre><code># On the MacBook:
+scp -r ~/.gmail-mcp-personal macmini:~/.gmail-mcp-personal
+scp -r ~/.gmail-mcp-business macmini:~/.gmail-mcp-business</code></pre>
+        </li>
+        <li>Install Playwright browsers: <code>npx playwright install</code></li>
+    </ol>
+    <p>The Anthropic API key is stored in Keychain, so you just authenticate with <code>claude</code> once and you're set.</p>
+</section>
+
+<section>
+    <h3>Phase 5: Cortex + Obsidian</h3>
+    <p>Your Cortex vault is already a git repo. On the Mac Mini:</p>
+    <ol>
+        <li>Clone it: <code>git clone https://github.com/mattmatheson/cortex-vault.git ~/Cortex</code></li>
+        <li>Install Obsidian on the Mac Mini</li>
+        <li>Open the <code>~/Cortex</code> folder as a vault</li>
+        <li>If you want real-time sync (not just git push/pull), consider Obsidian Sync ($4/mo) or use iCloud Drive as the vault location on both Macs</li>
+    </ol>
+</section>
+
+<section>
+    <h3>Mac Mini: Quick-Start Checklist</h3>
+    <div class="card">
+        <ol>
+            <li>Use username <code>matthewmatheson</code> (match the MacBook)</li>
+            <li>Install Homebrew + Node.js</li>
+            <li>Install Claude Code: <code>npm install -g @anthropic-ai/claude-code</code></li>
+            <li>Run <code>claude</code> and authenticate</li>
+            <li>Clone <code>claude-brain</code>, tool repos, and Cortex vault</li>
+            <li>Run <code>bootstrap.sh</code></li>
+            <li>Copy Gmail MCP credentials from MacBook via <code>scp</code></li>
+            <li>Install Playwright: <code>npx playwright install</code></li>
+            <li>Open Cortex vault in Obsidian</li>
+            <li>Test: run <code>claude</code> and verify everything loads</li>
+        </ol>
+    </div>
+</section>
+
+<!-- ============================================== -->
+<!-- ONGOING SYNC WORKFLOW -->
+<!-- ============================================== -->
+<section>
+    <h2>Ongoing Sync Workflow</h2>
+    <p>Once all three machines are set up, keeping them in sync is straightforward:</p>
+
+    <h3>Daily Workflow</h3>
+    <p>Before starting work on any machine:</p>
+<pre><code>cd ~/claude-brain && git pull</code></pre>
+    <p>After making changes (new skills, updated memory, changed settings):</p>
+<pre><code>cd ~/claude-brain && git add -A && git commit -m "sync: description" && git push</code></pre>
+
+    <h3>The sync.sh Script</h3>
+    <p>A one-liner that pulls latest and verifies symlinks are intact:</p>
+<pre><code>#!/bin/bash
+cd "$HOME/claude-brain"
+git pull --rebase
+./bootstrap.sh  # re-verify symlinks
+echo "Synced at $(date)"</code></pre>
+
+    <h3>Conflict Resolution</h3>
+    <p>If you edit memory or settings on two machines before syncing, you'll get merge conflicts. For <code>.md</code> files, these are easy to resolve — just pick the version you want or merge manually. For <code>settings.json</code>, be more careful and diff the changes.</p>
+</section>
+
+<!-- SECTION: What About Conversation History? -->
+<section>
+    <h2>What About Conversation History?</h2>
+    <p>Conversation history (<code>history.jsonl</code>) and sessions are <strong>intentionally not synced</strong>. They're large, machine-specific, and not useful across devices. What IS synced is your <strong>memory</strong> — the distilled context that Claude loads every conversation. So when you start a fresh session on the Windows PC, Claude won't remember the exact conversation from the MacBook, but it will know who you are, your preferences, your projects, and your feedback. That's the stuff that actually matters.</p>
+</section>
+
+<!-- SECTION: Tools Worth Knowing About -->
+<section>
+    <h2>Community Sync Tools Worth Knowing</h2>
+    <p>If the git + symlinks approach feels too manual, the community has built some tools:</p>
+    <ul>
+        <li><strong>memoir</strong> (memoir.sh) — CLI that auto-detects your Claude config, backs it up, and restores it on another machine. Handles cross-platform path remapping automatically.</li>
+        <li><strong>chezmoi + age</strong> — Gold standard for dotfile management. Encrypts sensitive files before they hit the repo. More setup, but more robust.</li>
+        <li><strong>dotclaude</strong> — Syncs via private Git repo with intelligent JSON merging for settings files.</li>
+        <li><strong>CCMS</strong> — Lightweight bash script using rsync over SSH. Good if your machines are on the same network (like MacBook ↔ Mac Mini on Tailscale).</li>
+    </ul>
+    <p>For your setup, the git + symlinks approach is the right call — you already have the repo, and it keeps you in control of exactly what syncs.</p>
+</section>
+
+<!-- SECTION: Priority Order -->
+<section>
+    <h2>What to Tackle First</h2>
+    <div class="card">
+        <div class="card-label">Recommended Order</div>
+        <ol>
+            <li><strong>Flatten the claude-brain repo</strong> — Copy actual skill/command files in (not symlinks to local paths). Push to GitHub.</li>
+            <li><strong>Windows PC</strong> — Install Claude Code, clone repo, run bootstrap, test core functionality.</li>
+            <li><strong>Mac Mini</strong> — Clone repo, run bootstrap, copy credentials. This one should take 15 minutes.</li>
+            <li><strong>Iterate</strong> — Use each machine for a real session. Note what's missing. Update the repo and re-sync.</li>
+        </ol>
+    </div>
+</section>
+
+</div><!-- /container -->
+
+<!-- Player Bar -->
+<div class="player-bar" id="playerBar">
+    <button id="playPauseBtn" onclick="togglePlayPause()">&#9208;</button>
+    <span class="track-title" id="trackTitle">—</span>
+    <select id="voiceSelect" onchange="changeVoice()"></select>
+    <button class="speed-btn" id="speedBtn" onclick="cycleSpeed()">1x</button>
+    <button onclick="stopListen()">&#9632;</button>
+</div>
+
+<script>
+// === Listen Mode ===
+const VOICE_WHITELIST = ['samantha','karen','daniel','moira','tessa','ava','allison','tom','aaron','nicky','evan','zoe','joelle','fiona','martha','arthur'];
+const SPEEDS = [0.8, 1, 1.2, 1.5];
+let currentSpeed = 1;
+let speedIdx = 1;
+let isPlaying = false;
+let isPaused = false;
+let chunks = [];
+let chunkIdx = 0;
+let keepAlive = null;
+let selectedVoice = null;
+
+function getVoices() {
+    return speechSynthesis.getVoices().filter(v => {
+        const n = v.name.toLowerCase();
+        return VOICE_WHITELIST.some(w => n.includes(w)) || n.includes('google us english') || n.includes('google uk english');
+    });
+}
+
+function populateVoices() {
+    const sel = document.getElementById('voiceSelect');
+    sel.innerHTML = '';
+    const voices = getVoices();
+    voices.forEach((v, i) => {
+        const opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = v.name.replace(/\(.*?\)/, '').trim();
+        sel.appendChild(opt);
+    });
+    if (!selectedVoice && voices.length) {
+        const sam = voices.findIndex(v => v.name.toLowerCase().includes('samantha'));
+        selectedVoice = voices[sam >= 0 ? sam : 0];
+        sel.value = sam >= 0 ? sam : 0;
+    }
+}
+
+speechSynthesis.onvoiceschanged = populateVoices;
+populateVoices();
+
+function changeVoice() {
+    const voices = getVoices();
+    selectedVoice = voices[document.getElementById('voiceSelect').value];
+}
+
+function cycleSpeed() {
+    speedIdx = (speedIdx + 1) % SPEEDS.length;
+    currentSpeed = SPEEDS[speedIdx];
+    document.getElementById('speedBtn').textContent = currentSpeed + 'x';
+}
+
+function buildChunks() {
+    chunks = [];
+    const sections = document.querySelectorAll('#mainContent section');
+    sections.forEach(sec => {
+        const els = sec.querySelectorAll('h2, h3, p, li, .card-label, pre code');
+        const sectionChunks = [];
+        els.forEach(el => {
+            const text = el.textContent.trim();
+            if (text) {
+                sectionChunks.push({
+                    text,
+                    isHeading: /^H[23]$/.test(el.tagName) || el.classList.contains('card-label'),
+                    section: sec,
+                    label: sec.querySelector('h2, h3')?.textContent || ''
+                });
+            }
+        });
+        if (sectionChunks.length) chunks.push(...sectionChunks);
+    });
+}
+
+function speakChunk(idx) {
+    if (idx >= chunks.length) { stopListen(); return; }
+    chunkIdx = idx;
+    const chunk = chunks[idx];
+
+    // Highlight section
+    document.querySelectorAll('section.reading').forEach(s => s.classList.remove('reading'));
+    chunk.section.classList.add('reading');
+    chunk.section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    document.getElementById('trackTitle').textContent = chunk.label;
+
+    const utt = new SpeechSynthesisUtterance(chunk.text);
+    if (selectedVoice) utt.voice = selectedVoice;
+    utt.rate = chunk.isHeading ? currentSpeed * 0.9 : currentSpeed;
+    if (chunk.isHeading) utt.pitch = 1.05;
+
+    utt.onend = () => {
+        const delay = chunk.isHeading ? 400 : 200;
+        setTimeout(() => { if (isPlaying && !isPaused) speakChunk(idx + 1); }, delay);
+    };
+
+    speechSynthesis.speak(utt);
+}
+
+function toggleListen() {
+    if (isPlaying) {
+        stopListen();
+    } else {
+        buildChunks();
+        isPlaying = true;
+        isPaused = false;
+        document.getElementById('listenBtn').innerHTML = '&#9632; Stop';
+        document.getElementById('playerBar').classList.add('visible');
+        keepAlive = setInterval(() => { if (isPlaying) speechSynthesis.resume(); }, 10000);
+        speakChunk(0);
+    }
+}
+
+function togglePlayPause() {
+    if (isPaused) {
+        speechSynthesis.resume();
+        isPaused = false;
+        document.getElementById('playPauseBtn').innerHTML = '&#9208;';
+    } else {
+        speechSynthesis.pause();
+        isPaused = true;
+        document.getElementById('playPauseBtn').innerHTML = '&#9654;';
+    }
+}
+
+function stopListen() {
+    speechSynthesis.cancel();
+    isPlaying = false;
+    isPaused = false;
+    clearInterval(keepAlive);
+    document.getElementById('listenBtn').innerHTML = '&#9654; Listen';
+    document.getElementById('playerBar').classList.remove('visible');
+    document.querySelectorAll('section.reading').forEach(s => s.classList.remove('reading'));
+}
+
+function selectAllContent() {
+    const container = document.getElementById('mainContent');
+    const range = document.createRange();
+    range.selectNodeContents(container);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+}
+</script>
+
+</body>
+</html>
