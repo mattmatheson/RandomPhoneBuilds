@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="published" content="2026-04-01">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Ops Zombies on Retroid Pocket 5 — Winlator + Plutonium Guide</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #C42020;
+            --bg: #FAFAFA;
+            --text: #1D1D1F;
+            --text2: #6E6E73;
+            --divider: #E5E5E7;
+            --card-bg: #F2F2F7;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding-bottom: 80px;
+        }
+        .hero {
+            background: var(--text);
+            color: var(--bg);
+            padding: 80px 24px 64px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            max-width: 720px;
+            margin: 0 auto 16px;
+        }
+        .hero h1 span { color: var(--accent); }
+        .hero .scope {
+            font-size: 1.1rem;
+            color: #A1A1A6;
+            max-width: 560px;
+            margin: 0 auto 24px;
+            font-weight: 400;
+        }
+        .listen-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .listen-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.6rem 1.5rem;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .listen-btn:hover { opacity: 0.85; }
+        .voice-select, .speed-btn {
+            background: rgba(255,255,255,0.12);
+            color: #A1A1A6;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 2rem;
+            padding: 0.5rem 1rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .voice-select option { background: #1D1D1F; color: #fff; }
+        .pro-tip {
+            font-size: 0.8rem;
+            color: #6E6E73;
+            max-width: 480px;
+            margin: 16px auto 0;
+            font-style: italic;
+        }
+        .pro-tip a { color: #A1A1A6; cursor: pointer; text-decoration: underline; }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 56px 24px 80px;
+        }
+        .intro {
+            font-size: 1.15rem;
+            color: var(--text2);
+            margin-bottom: 48px;
+            line-height: 1.8;
+            border-left: 3px solid var(--accent);
+            padding-left: 20px;
+        }
+        section {
+            margin-bottom: 48px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid var(--divider);
+            transition: all 0.3s ease;
+        }
+        section:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        section.reading {
+            border-left: 3px solid var(--accent);
+            background: rgba(196, 32, 32, 0.04);
+            padding-left: 1rem;
+            border-radius: 4px;
+        }
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+        }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+        h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-top: 28px;
+            margin-bottom: 12px;
+        }
+        p { color: var(--text2); margin-bottom: 16px; font-size: 0.975rem; }
+        ul, ol {
+            color: var(--text2);
+            font-size: 0.975rem;
+            padding-left: 24px;
+            margin-bottom: 16px;
+        }
+        li { margin-bottom: 8px; }
+        strong { color: var(--text); font-weight: 600; }
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .spec {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+        }
+        .spec-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text2);
+            margin-bottom: 4px;
+        }
+        .spec-value {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .callout {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+        }
+        .callout.warning {
+            border-left: 3px solid #F5A623;
+        }
+        .callout.success {
+            border-left: 3px solid #34C759;
+        }
+        .callout.tip {
+            border-left: 3px solid var(--accent);
+        }
+        .callout-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+        .callout p { margin-bottom: 8px; }
+        .callout p:last-child { margin-bottom: 0; }
+        code {
+            background: var(--card-bg);
+            border-radius: 6px;
+            padding: 2px 8px;
+            font-size: 0.88rem;
+            font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+        }
+        pre {
+            background: var(--text);
+            color: #E5E5E7;
+            border-radius: 12px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
+        pre code { background: none; padding: 0; color: inherit; }
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.92rem;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--divider);
+        }
+        th {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        td { color: var(--text2); }
+
+        /* Player bar */
+        .player-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(30, 30, 30, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 20px;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .player-bar.visible { transform: translateY(0); }
+        .player-bar button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            font-family: inherit;
+        }
+        .player-bar .now-playing {
+            flex: 1;
+            color: #A1A1A6;
+            font-size: 0.82rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .player-bar .p-voice-select, .player-bar .p-speed-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 2rem;
+            padding: 4px 10px;
+            color: #A1A1A6;
+            font-size: 0.78rem;
+            font-family: inherit;
+            cursor: pointer;
+        }
+        .player-bar .p-voice-select option { background: #1D1D1F; color: #fff; }
+
+        @media (max-width: 600px) {
+            .hero { padding: 60px 20px 48px; }
+            .container { padding: 40px 20px 60px; }
+            .listen-controls { flex-direction: column; }
+            .listen-btn { width: 100%; }
+            .specs-grid { grid-template-columns: repeat(2, 1fr); }
+            .player-bar { gap: 8px; padding: 10px 12px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
+            .player-bar .p-voice-select { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="hero">
+    <h1>Black Ops <span>Zombies</span> on Retroid Pocket 5</h1>
+    <p class="scope">The full guide to running Call of Duty zombies on a handheld using Winlator and Plutonium — from PC setup to pocket gameplay.</p>
+    <div class="listen-controls">
+        <button class="listen-btn" id="listenBtn">Listen</button>
+        <select class="voice-select" id="voiceSelect"></select>
+        <button class="speed-btn" id="speedBtn">1x</button>
+    </div>
+    <p class="pro-tip">Pro tip: For a better voice, <a id="selectAllBtn">select all</a> then use iOS Speak Selection (Settings &gt; Accessibility &gt; Spoken Content &gt; Speak Selection).</p>
+</header>
+
+<main class="container" id="mainContent">
+
+    <p class="intro">You've got a brand new Retroid Pocket 5 and you want to play Black Ops Zombies on it. This guide walks through everything — what each piece of software does, how to connect your RP5 to your PC, how to set up Winlator, how to get Plutonium running, and what to realistically expect. Most of this happens on your Windows PC first, then you transfer to the handheld.</p>
+
+    <section>
+        <div class="section-label">Part 1</div>
+        <h2>What You're Working With</h2>
+        <p>The Retroid Pocket 5 is a handheld gaming device running <strong>Android 13</strong>. It's not a phone — it's built for gaming with physical controls, a nice AMOLED screen, and a decent processor. Here are the specs that matter:</p>
+        <div class="specs-grid">
+            <div class="spec"><div class="spec-label">Processor</div><div class="spec-value">Snapdragon 865</div></div>
+            <div class="spec"><div class="spec-label">GPU</div><div class="spec-value">Adreno 650</div></div>
+            <div class="spec"><div class="spec-label">RAM</div><div class="spec-value">8 GB</div></div>
+            <div class="spec"><div class="spec-label">Storage</div><div class="spec-value">128 GB + microSD</div></div>
+            <div class="spec"><div class="spec-label">Display</div><div class="spec-value">5.5" 1080p AMOLED</div></div>
+            <div class="spec"><div class="spec-label">Battery</div><div class="spec-value">5000 mAh</div></div>
+        </div>
+        <p>The Snapdragon 865 is a solid chip — it handles GameCube, Wii, and PS2 emulation without breaking a sweat. Running actual Windows PC games through translation layers is where things get interesting (and challenging).</p>
+    </section>
+
+    <section>
+        <div class="section-label">Part 2</div>
+        <h2>Understanding the Software Stack</h2>
+        <p>There are three pieces of software involved. Here's what each one does and why you need it:</p>
+
+        <h3>Winlator — Windows on Android</h3>
+        <p>Winlator is an Android app that creates a fake Windows environment on your device. Under the hood, it uses <strong>Wine</strong> (a Windows compatibility layer), <strong>Box64</strong> (translates x86 PC instructions into ARM instructions your phone processor can understand), and <strong>Turnip Vulkan drivers</strong> (lets the GPU handle DirectX games). Think of it as tricking Windows games into thinking they're running on a real PC.</p>
+        <p>Current version: <strong>Winlator 11.0</strong> (February 2026). Download it from the official GitHub at github.com/brunodev85/winlator or winlator.org.</p>
+
+        <h3>Plutonium — The CoD Client</h3>
+        <p>Plutonium is a free, community-made client for older Call of Duty games. The official CoD servers for these games are dead — Plutonium brings them back. It supports:</p>
+        <ul>
+            <li><strong>World at War</strong> (T4) — zombies included</li>
+            <li><strong>Black Ops 1</strong> (T5) — zombies included</li>
+            <li><strong>Black Ops 2</strong> (T6) — zombies included</li>
+            <li><strong>Modern Warfare 3</strong> (IW5)</li>
+        </ul>
+        <p>Plutonium needs the <strong>actual game files</strong> to work. It's a launcher/modifier, not the game itself. You still need a copy of Black Ops from Steam or wherever.</p>
+
+        <h3>The Chain</h3>
+        <p>So the chain looks like this: <strong>RP5 (Android)</strong> runs <strong>Winlator</strong> which creates a <strong>Windows environment</strong> which runs <strong>Plutonium</strong> which launches <strong>Black Ops Zombies</strong>. That's three translation layers. It's ambitious.</p>
+    </section>
+
+    <section>
+        <div class="section-label">Part 3</div>
+        <h2>Fixing the PC Connection</h2>
+        <p>Before you can transfer anything, you need the RP5 to show up on your Windows PC. If it's not appearing as a drive, work through these fixes in order:</p>
+
+        <h3>Step 1: Switch USB Mode</h3>
+        <p>This is the most common fix. When you plug in the USB cable, the RP5 defaults to <strong>charging only</strong>. You need to manually switch it:</p>
+        <ol>
+            <li>Plug the USB-C cable into the RP5 and your PC</li>
+            <li>On the RP5, swipe down from the top to open the notification shade</li>
+            <li>Look for a notification that says "Charging this device via USB" or similar</li>
+            <li>Tap it and change to <strong>"File Transfer" or "MTP"</strong></li>
+            <li>The RP5 should now appear in Windows Explorer as a device</li>
+        </ol>
+        <p>If you don't see the notification, go to <strong>Settings > Connected Devices > USB</strong> and change it there.</p>
+
+        <h3>Step 2: Try a Different Cable</h3>
+        <p>Many USB-C cables are <strong>charge-only</strong> — they literally don't have the data wires inside. If switching USB mode didn't help, grab a different cable. The one that came with the RP5 should work. A cable you've used to transfer files from a phone will also work.</p>
+
+        <h3>Step 3: Try Different USB Ports</h3>
+        <p>Use a port directly on the back of your PC (connected to the motherboard), not a front panel port or USB hub.</p>
+
+        <h3>Step 4: Windows Driver Fix</h3>
+        <p>If the device shows up in Device Manager with a yellow triangle:</p>
+        <ol>
+            <li>Open Device Manager on your PC (search for it in Start)</li>
+            <li>Look under "Portable Devices" or "Other Devices" for the RP5</li>
+            <li>Right-click > Update Driver > Browse my computer > Let me pick from a list</li>
+            <li>Select <strong>"MTP USB Device"</strong></li>
+        </ol>
+        <p>If that doesn't work, right-click > Uninstall Device, unplug, replug, and let Windows reinstall.</p>
+
+        <h3>Step 5: Disable USB Debugging</h3>
+        <p>If you've turned on USB debugging in Developer Options, it can steal the USB connection away from file transfer mode. Turn it off temporarily, reconnect, and see if MTP works.</p>
+
+        <div class="callout tip">
+            <div class="callout-title">Alternative: microSD Card</div>
+            <p>If USB transfer is being stubborn, you can always pop a <strong>microSD card</strong> into the RP5, then use a USB card reader on your PC to load files onto the card. This bypasses all USB connection issues entirely.</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-label">Part 4</div>
+        <h2>Getting the Game Files (PC Side)</h2>
+        <p>This is the part that requires your Windows PC. You need two things: the actual Black Ops game files and the Plutonium launcher.</p>
+
+        <h3>Getting Black Ops Game Files</h3>
+        <p>You need a full copy of the game. The easiest way is through <strong>Steam</strong>:</p>
+        <ol>
+            <li>Open Steam on your PC</li>
+            <li>Purchase/install Call of Duty: Black Ops (BO1) or Black Ops II (BO2) — whichever one you want zombies from</li>
+            <li>Let it fully download and install</li>
+            <li>The game files will be at: <code>C:\Program Files (x86)\Steam\steamapps\common\Call of Duty Black Ops II\</code> (or similar)</li>
+            <li>Game size is roughly <strong>13 GB for BO2</strong>, slightly less for BO1</li>
+        </ol>
+
+        <div class="callout warning">
+            <div class="callout-title">Heads Up</div>
+            <p>You need to own the game. Plutonium requires legitimate game files. The launcher itself is free, but the game files aren't included.</p>
+        </div>
+
+        <h3>Getting Plutonium</h3>
+        <ol>
+            <li>Go to plutonium.pw on your PC</li>
+            <li>Create a free account</li>
+            <li>Download the Plutonium launcher (tiny download, about 4.5 MB)</li>
+            <li>Run the launcher, sign in, and point it to your game files folder</li>
+            <li>It will download additional Plutonium-specific files (~1-2 GB)</li>
+            <li>Test that it launches and runs Zombies on your PC first — this confirms the files are good</li>
+        </ol>
+
+        <h3>What to Transfer</h3>
+        <p>Once everything works on your PC, you'll need to transfer to the RP5:</p>
+        <ul>
+            <li>The entire game folder (~13-15 GB)</li>
+            <li>The Plutonium launcher files</li>
+            <li>The Winlator APK (if you haven't installed it directly on the RP5)</li>
+        </ul>
+        <p>Use a <strong>microSD card</strong> for the game files — they're too big for the RP5's internal storage to handle comfortably alongside everything else.</p>
+    </section>
+
+    <section>
+        <div class="section-label">Part 5</div>
+        <h2>Setting Up Winlator on the RP5</h2>
+        <p>Now we move to the handheld itself.</p>
+
+        <h3>Installing Winlator</h3>
+        <ol>
+            <li>Download the Winlator 11.0 APK — either from GitHub releases directly on the RP5's browser, or transfer it from your PC</li>
+            <li>Open the APK on the RP5 to install it (you may need to enable "Install from unknown sources" in Settings > Security)</li>
+            <li>Launch Winlator — first launch takes a minute while it sets up the Windows container</li>
+        </ol>
+
+        <h3>Creating a Container</h3>
+        <p>Winlator uses "containers" — each one is basically a separate Windows installation. Set one up for Black Ops:</p>
+        <ol>
+            <li>Tap the <strong>+</strong> button to create a new container</li>
+            <li>Name it something like "BlackOps"</li>
+            <li>Set the <strong>resolution to 1280x720</strong> — 1080p will tank performance</li>
+            <li>Set graphics to <strong>DXVK</strong> (this translates DirectX to Vulkan)</li>
+            <li>Select <strong>Turnip</strong> as the Vulkan driver (optimized for Snapdragon chips)</li>
+            <li>Set the <strong>Box64 preset to "Performance"</strong> — if the game crashes later, try "Compatibility" instead</li>
+            <li>Save and launch the container</li>
+        </ol>
+
+        <h3>Mapping Your Game Files</h3>
+        <p>Inside the container, you need to tell Winlator where the game files are:</p>
+        <ol>
+            <li>Your microSD card shows up as a drive inside the Winlator Windows environment</li>
+            <li>Navigate to the game files using the built-in file explorer</li>
+            <li>You can also set up drive mappings in Winlator's container settings to point to specific folders on the SD card</li>
+        </ol>
+
+        <h3>Performance Settings on the RP5</h3>
+        <ul>
+            <li>Set the RP5 to <strong>High Performance</strong> mode in its system settings</li>
+            <li>Make sure the <strong>fan is on</strong> (smart fan or always-on) — this will get toasty</li>
+            <li>Close all other apps to free up RAM</li>
+        </ul>
+    </section>
+
+    <section>
+        <div class="section-label">Part 6</div>
+        <h2>Launching Black Ops Zombies</h2>
+
+        <h3>Option A: Plutonium (Full Setup)</h3>
+        <p>Inside your Winlator container:</p>
+        <ol>
+            <li>Navigate to the Plutonium launcher executable</li>
+            <li>Run it — if it works, sign into your Plutonium account</li>
+            <li>Select the game (Black Ops or Black Ops II)</li>
+            <li>Choose <strong>Zombies</strong> mode</li>
+            <li>Launch and pray</li>
+        </ol>
+
+        <div class="callout warning">
+            <div class="callout-title">Reality Check</div>
+            <p>Nobody has publicly confirmed Plutonium working through Winlator on any Android device. The launcher requires 64-bit Windows and DirectX 11, which Winlator technically supports, but Plutonium's components might not cooperate under Wine/Box64 translation. If Plutonium's launcher fails, try Option B.</p>
+        </div>
+
+        <h3>Option B: Vanilla Black Ops (Skip Plutonium)</h3>
+        <p>If Plutonium doesn't work through Winlator, try running the base game directly:</p>
+        <ol>
+            <li>Navigate to the game folder inside Winlator</li>
+            <li>Find the game's .exe file (like <code>BlackOps.exe</code> or <code>t6zm.exe</code> for BO2 Zombies)</li>
+            <li>Run it directly</li>
+            <li>For Black Ops II, you can launch the Zombies executable separately without needing the full multiplayer launcher</li>
+        </ol>
+        <p>Winlator compatibility lists show <strong>Black Ops as a tested title</strong> with 30-60 FPS claimed on similar hardware. Without Plutonium's overhead, you might get better performance.</p>
+
+        <h3>Expected Performance</h3>
+        <table>
+            <thead><tr><th>Setting</th><th>Expectation</th></tr></thead>
+            <tbody>
+                <tr><td>Resolution</td><td>720p (don't try 1080p)</td></tr>
+                <tr><td>Graphics quality</td><td>All Low</td></tr>
+                <tr><td>Expected FPS (vanilla)</td><td>20-40 FPS</td></tr>
+                <tr><td>Expected FPS (Plutonium)</td><td>15-30 FPS if it works</td></tr>
+                <tr><td>Playable?</td><td>Probably yes for Zombies (less demanding than MP)</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <div class="section-label">Part 7</div>
+        <h2>Alternatives If It Doesn't Work</h2>
+        <p>If the full Winlator + Plutonium setup turns out to be too unstable, here are your backup plans ranked by likelihood of success:</p>
+
+        <h3>1. Stream from Your PC (Easiest)</h3>
+        <p>Install <strong>Moonlight</strong> or <strong>Steam Link</strong> on the RP5 and stream the game from your Windows PC over your home Wi-Fi. This gives you full-quality Black Ops Zombies with zero performance issues on the handheld. Your PC does all the work — the RP5 just displays the video and sends your inputs.</p>
+        <ul>
+            <li><strong>Moonlight</strong> — works with NVIDIA GPUs (needs GeForce Experience)</li>
+            <li><strong>Steam Link</strong> — works with any GPU, runs through Steam</li>
+            <li><strong>Parsec</strong> — works with any GPU, slightly more setup</li>
+        </ul>
+        <p>Downside: you need to be on the same network as your PC (or set up remote access).</p>
+
+        <h3>2. Call of Duty Mobile</h3>
+        <p>CoD Mobile has a Zombies mode and runs natively on Android. Install it from the Play Store on the RP5. It's not the same as Black Ops Zombies, but it's a genuine Call of Duty Zombies experience with no translation layers.</p>
+
+        <h3>3. World at War Zombies (Legacy)</h3>
+        <p>There was an official <strong>Call of Duty: Zombies</strong> mobile game (iOS/Android). If you can find the APK, it runs natively on Android. It's basically World at War Zombies adapted for touchscreen.</p>
+
+        <h3>4. Lighter CoD Titles Through Winlator</h3>
+        <p>If Black Ops is too heavy, older Call of Duty games run better through Winlator:</p>
+        <ul>
+            <li><strong>Call of Duty 2</strong> — confirmed 30-45 FPS on similar hardware</li>
+            <li><strong>Call of Duty 4: Modern Warfare</strong> — lighter engine, should run well</li>
+            <li><strong>World at War</strong> — slightly less demanding than Black Ops</li>
+        </ul>
+    </section>
+
+    <section>
+        <div class="section-label">Part 8</div>
+        <h2>Mac vs PC — What Goes Where</h2>
+        <p>Quick breakdown of what you need each computer for:</p>
+
+        <table>
+            <thead><tr><th>Task</th><th>PC</th><th>Mac</th></tr></thead>
+            <tbody>
+                <tr><td>Download game files from Steam</td><td>Yes</td><td>No (Steam on Mac doesn't have CoD)</td></tr>
+                <tr><td>Download Plutonium</td><td>Yes</td><td>No (Windows only)</td></tr>
+                <tr><td>Test game before transfer</td><td>Yes</td><td>No</td></tr>
+                <tr><td>Transfer files to RP5 via USB</td><td>Yes (MTP built in)</td><td>Yes (needs OpenMTP app)</td></tr>
+                <tr><td>Transfer files via microSD card</td><td>Yes</td><td>Yes</td></tr>
+                <tr><td>ADB sideloading</td><td>Yes</td><td>Yes (brew install android-platform-tools)</td></tr>
+                <tr><td>Install emulators on RP5</td><td>Not needed</td><td>Not needed (done on device)</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>Bottom line:</strong> You need the PC for getting the game files and Plutonium. That's a one-time thing. After that, the Mac can handle file transfers if needed, but really you're doing everything on the RP5 itself.</p>
+
+        <div class="callout tip">
+            <div class="callout-title">Mac File Transfer</div>
+            <p>If you need to transfer from Mac later, install <strong>OpenMTP</strong> (free, open-source) — it replaces Google's dead Android File Transfer app. Or just use a microSD card with a USB reader, which works on both Mac and PC with zero setup.</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-label">Part 9</div>
+        <h2>Quick Reference — The Full Checklist</h2>
+        <p>Here's the step-by-step in order:</p>
+        <ol>
+            <li>Fix RP5 USB connection (switch to MTP / File Transfer mode)</li>
+            <li>On your Windows PC: install Black Ops from Steam</li>
+            <li>On your Windows PC: create Plutonium account and download launcher</li>
+            <li>On your Windows PC: point Plutonium at game files, test Zombies works</li>
+            <li>Transfer game files + Plutonium to RP5's microSD card</li>
+            <li>On RP5: install Winlator 11.0 APK</li>
+            <li>On RP5: create Winlator container (720p, DXVK, Turnip, Performance preset)</li>
+            <li>On RP5: set device to High Performance mode, fan on</li>
+            <li>Inside Winlator: navigate to game files, try Plutonium launcher</li>
+            <li>If Plutonium fails: try running the game .exe directly</li>
+            <li>If that fails: set up Moonlight/Steam Link for streaming instead</li>
+        </ol>
+    </section>
+
+    <section>
+        <div class="section-label">Resources</div>
+        <h2>Helpful Links</h2>
+        <ul>
+            <li>Winlator GitHub — github.com/brunodev85/winlator</li>
+            <li>Plutonium Project — plutonium.pw</li>
+            <li>Plutonium Install Guide — plutonium.pw/docs/install/</li>
+            <li>Plutonium Offline Play — forum.plutonium.pw/topic/33178/play-plutonium-offline-bo1-bo2-mw3-waw</li>
+            <li>Retroid Pocket 5 Setup — retrohandhelds.gg/retroid-pocket-5-setup-guide/</li>
+            <li>Retro Game Corps RP5 Guide — retrogamecorps.com</li>
+            <li>OpenMTP (Mac file transfer) — openmtp.ganeshrvel.com</li>
+            <li>Reddit community — r/retroid</li>
+        </ul>
+    </section>
+
+</main>
+
+<!-- Player bar -->
+<div class="player-bar" id="playerBar">
+    <button id="pPlayPause" title="Play/Pause">&#9654;</button>
+    <span class="now-playing" id="pNowPlaying">Ready</span>
+    <select class="p-voice-select" id="pVoiceSelect"></select>
+    <button class="p-speed-btn" id="pSpeedBtn">1x</button>
+    <button id="pStop" title="Stop">&#9632;</button>
+</div>
+
+<script>
+(function() {
+    const VOICE_WHITELIST = [
+        'samantha','karen','daniel','moira','tessa','ava','allison','tom',
+        'aaron','nicky','evan','zoe','joelle','fiona','martha','arthur',
+        'google us english','google uk english'
+    ];
+    const SPEEDS = [0.8, 1, 1.2, 1.5];
+    let speedIdx = 1;
+    let voices = [];
+    let selectedVoice = null;
+    let chunks = [];
+    let chunkIdx = 0;
+    let playing = false;
+    let paused = false;
+    let keepAlive = null;
+
+    const listenBtn = document.getElementById('listenBtn');
+    const voiceSelect = document.getElementById('voiceSelect');
+    const speedBtn = document.getElementById('speedBtn');
+    const playerBar = document.getElementById('playerBar');
+    const pPlayPause = document.getElementById('pPlayPause');
+    const pNowPlaying = document.getElementById('pNowPlaying');
+    const pVoiceSelect = document.getElementById('pVoiceSelect');
+    const pSpeedBtn = document.getElementById('pSpeedBtn');
+    const pStop = document.getElementById('pStop');
+    const mainContent = document.getElementById('mainContent');
+    const selectAllBtn = document.getElementById('selectAllBtn');
+
+    function isWhitelisted(name) {
+        const n = name.toLowerCase();
+        return VOICE_WHITELIST.some(w => n.includes(w));
+    }
+
+    function loadVoices() {
+        const all = speechSynthesis.getVoices();
+        voices = all.filter(v => isWhitelisted(v.name));
+        if (!voices.length) voices = all.slice(0, 5);
+        [voiceSelect, pVoiceSelect].forEach(sel => {
+            sel.innerHTML = '';
+            voices.forEach((v, i) => {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.textContent = v.name.replace(/\(.*\)/, '').trim();
+                sel.appendChild(opt);
+            });
+        });
+        const samIdx = voices.findIndex(v => v.name.toLowerCase().includes('samantha'));
+        const defIdx = samIdx >= 0 ? samIdx : 0;
+        voiceSelect.value = defIdx;
+        pVoiceSelect.value = defIdx;
+        selectedVoice = voices[defIdx] || null;
+    }
+
+    speechSynthesis.onvoiceschanged = loadVoices;
+    loadVoices();
+
+    function syncVoice(val) {
+        voiceSelect.value = val;
+        pVoiceSelect.value = val;
+        selectedVoice = voices[parseInt(val)] || null;
+    }
+    voiceSelect.addEventListener('change', e => { syncVoice(e.target.value); if (playing && !paused) restartCurrent(); });
+    pVoiceSelect.addEventListener('change', e => { syncVoice(e.target.value); if (playing && !paused) restartCurrent(); });
+
+    function cycleSpeed(btn1, btn2) {
+        speedIdx = (speedIdx + 1) % SPEEDS.length;
+        const label = SPEEDS[speedIdx] + 'x';
+        btn1.textContent = label;
+        btn2.textContent = label;
+    }
+    speedBtn.addEventListener('click', () => cycleSpeed(speedBtn, pSpeedBtn));
+    pSpeedBtn.addEventListener('click', () => cycleSpeed(pSpeedBtn, speedBtn));
+
+    function buildChunks() {
+        chunks = [];
+        const sections = mainContent.querySelectorAll('section, .intro');
+        sections.forEach(sec => {
+            const els = sec.querySelectorAll('h2, h3, p, li, .callout-title, td, .spec-value, pre code');
+            const sectionTitle = sec.querySelector('h2')?.textContent || sec.querySelector('h3')?.textContent || 'Introduction';
+            if (els.length === 0) {
+                const text = sec.textContent.trim();
+                if (text) chunks.push({ text, section: sec, sectionTitle, isHeading: false });
+            } else {
+                els.forEach(el => {
+                    const text = el.textContent.trim();
+                    if (!text) return;
+                    const isHeading = el.tagName === 'H2' || el.tagName === 'H3';
+                    chunks.push({ text, section: sec, sectionTitle, isHeading });
+                });
+            }
+        });
+    }
+
+    function clearHighlights() {
+        mainContent.querySelectorAll('.reading').forEach(s => s.classList.remove('reading'));
+    }
+
+    function showPlayer() { playerBar.classList.add('visible'); }
+    function hidePlayer() { playerBar.classList.remove('visible'); }
+
+    function startKeepAlive() {
+        stopKeepAlive();
+        keepAlive = setInterval(() => { if (speechSynthesis.speaking && !speechSynthesis.paused) speechSynthesis.resume(); }, 10000);
+    }
+    function stopKeepAlive() { if (keepAlive) { clearInterval(keepAlive); keepAlive = null; } }
+
+    function speakChunk(idx) {
+        if (idx >= chunks.length) { stopPlayback(); return; }
+        chunkIdx = idx;
+        const chunk = chunks[idx];
+        const utt = new SpeechSynthesisUtterance(chunk.text);
+        if (selectedVoice) utt.voice = selectedVoice;
+        utt.rate = chunk.isHeading ? SPEEDS[speedIdx] * 0.9 : SPEEDS[speedIdx];
+        if (chunk.isHeading) utt.pitch = 1.05;
+
+        clearHighlights();
+        if (chunk.section && chunk.section.tagName === 'SECTION') {
+            chunk.section.classList.add('reading');
+            chunk.section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        pNowPlaying.textContent = chunk.sectionTitle;
+
+        utt.onend = () => {
+            const delay = chunk.isHeading ? 400 : 200;
+            setTimeout(() => { if (playing && !paused) speakChunk(idx + 1); }, delay);
+        };
+        utt.onerror = () => { if (playing && !paused) speakChunk(idx + 1); };
+        speechSynthesis.speak(utt);
+    }
+
+    function startPlayback() {
+        speechSynthesis.cancel();
+        buildChunks();
+        if (!chunks.length) return;
+        playing = true;
+        paused = false;
+        chunkIdx = 0;
+        listenBtn.textContent = 'Pause';
+        pPlayPause.innerHTML = '&#10074;&#10074;';
+        showPlayer();
+        startKeepAlive();
+        speakChunk(0);
+    }
+
+    function togglePause() {
+        if (paused) {
+            paused = false;
+            speechSynthesis.resume();
+            listenBtn.textContent = 'Pause';
+            pPlayPause.innerHTML = '&#10074;&#10074;';
+            startKeepAlive();
+        } else {
+            paused = true;
+            speechSynthesis.pause();
+            listenBtn.textContent = 'Resume';
+            pPlayPause.innerHTML = '&#9654;';
+            stopKeepAlive();
+        }
+    }
+
+    function stopPlayback() {
+        speechSynthesis.cancel();
+        playing = false;
+        paused = false;
+        clearHighlights();
+        hidePlayer();
+        listenBtn.textContent = 'Listen';
+        pPlayPause.innerHTML = '&#9654;';
+        pNowPlaying.textContent = 'Ready';
+        stopKeepAlive();
+    }
+
+    function restartCurrent() {
+        speechSynthesis.cancel();
+        speakChunk(chunkIdx);
+    }
+
+    listenBtn.addEventListener('click', () => {
+        if (!playing) startPlayback();
+        else togglePause();
+    });
+    pPlayPause.addEventListener('click', () => {
+        if (!playing) startPlayback();
+        else togglePause();
+    });
+    pStop.addEventListener('click', stopPlayback);
+
+    selectAllBtn.addEventListener('click', e => {
+        e.preventDefault();
+        const range = document.createRange();
+        range.selectNodeContents(mainContent);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+    });
+})();
+</script>
+
+</body>
+</html>
