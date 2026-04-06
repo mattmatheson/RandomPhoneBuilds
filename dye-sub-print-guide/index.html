@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="published" content="2026-04-05">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printing the Vibe — Dye-Sub & Photo Lab Printers for Y2K Analog Aesthetics</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --accent: #C4888A;
+            --bg: #1A1A1A;
+            --text: #D4CFC7;
+            --secondary: #8E9196;
+            --border: #333333;
+            --card-bg: #242424;
+            --highlight: #C49B3E;
+            --cool: #5B7B9A;
+            --warm: #C4888A;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 9997;
+            background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.4) 100%);
+        }
+
+        .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 6rem; position: relative; z-index: 1; }
+
+        header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 5vw, 2.4rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.03em;
+        }
+        .scope {
+            color: var(--secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.25rem;
+        }
+
+        /* Listen button */
+        .listen-btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: var(--accent); color: #fff; border: none; border-radius: 2rem;
+            padding: 0.6rem 1.5rem; font-size: 0.85rem; font-weight: 600;
+            cursor: pointer; font-family: inherit; transition: opacity 0.2s;
+        }
+        .listen-btn:hover { opacity: 0.85; }
+        .listen-controls { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin-bottom: 1rem; }
+        .listen-controls select, .listen-controls .speed-btn {
+            background: var(--card-bg); color: var(--text); border: 1px solid var(--border);
+            border-radius: 1rem; padding: 0.4rem 0.8rem; font-size: 0.8rem; font-family: inherit; cursor: pointer;
+        }
+        .pro-tip { color: var(--secondary); font-size: 0.75rem; font-style: italic; margin-top: 0.5rem; }
+        .pro-tip a { color: var(--accent); text-decoration: none; }
+
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem; font-weight: 600;
+            margin: 2.5rem 0 1rem;
+            letter-spacing: -0.02em;
+            color: var(--highlight);
+        }
+        h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem; font-weight: 600;
+            margin: 2rem 0 0.75rem;
+            color: var(--warm);
+        }
+
+        p { margin-bottom: 1rem; }
+
+        section { padding: 0.5rem 0 0.5rem 0; margin-bottom: 0.5rem; border-radius: 4px; transition: all 0.3s ease; }
+        section.reading { border-left: 3px solid var(--accent); background: rgba(196,32,32,0.04); padding-left: 1rem; }
+
+        .printer-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: border-color 0.2s;
+        }
+        .printer-card:hover { border-color: var(--accent); }
+        .printer-card h3 { margin-top: 0; }
+        .printer-card .era { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--highlight); margin-bottom: 0.25rem; }
+        .printer-card .price { color: var(--accent); font-weight: 600; font-size: 0.9rem; }
+        .printer-card .specs { color: var(--secondary); font-size: 0.85rem; margin: 0.5rem 0; }
+        .printer-card .verdict { font-style: italic; color: var(--text); font-size: 0.9rem; border-left: 2px solid var(--accent); padding-left: 0.75rem; margin-top: 0.75rem; }
+        .printer-card .links { margin-top: 0.75rem; font-size: 0.85rem; }
+        .printer-card .links a { color: var(--cool); text-decoration: none; margin-right: 1rem; }
+        .printer-card .links a:hover { text-decoration: underline; }
+
+        .tag {
+            display: inline-block; font-size: 0.7rem; text-transform: uppercase;
+            letter-spacing: 0.08em; padding: 0.2rem 0.6rem; border-radius: 1rem;
+            margin-right: 0.4rem; margin-bottom: 0.3rem;
+        }
+        .tag-top { background: rgba(196,155,62,0.15); color: var(--highlight); }
+        .tag-budget { background: rgba(91,123,154,0.15); color: var(--cool); }
+        .tag-grail { background: rgba(196,136,138,0.15); color: var(--warm); }
+        .tag-current { background: rgba(100,200,100,0.15); color: #8BC48B; }
+
+        .comparison-table {
+            width: 100%; border-collapse: collapse; margin: 1.5rem 0;
+            font-size: 0.85rem;
+        }
+        .comparison-table th {
+            text-align: left; padding: 0.75rem;
+            border-bottom: 2px solid var(--border);
+            color: var(--highlight); font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+        }
+        .comparison-table td {
+            padding: 0.75rem; border-bottom: 1px solid var(--border);
+            color: var(--text);
+        }
+        .comparison-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+        .inspo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .inspo-card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 8px; padding: 1rem; font-size: 0.85rem;
+        }
+        .inspo-card .label { color: var(--highlight); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.25rem; }
+        .inspo-card p { color: var(--secondary); font-size: 0.8rem; margin-bottom: 0.5rem; }
+        .inspo-card a { color: var(--cool); text-decoration: none; font-size: 0.8rem; }
+
+        ul { padding-left: 1.25rem; margin-bottom: 1rem; }
+        li { margin-bottom: 0.4rem; }
+        li::marker { color: var(--accent); }
+
+        .callout {
+            background: rgba(196,155,62,0.08);
+            border-left: 3px solid var(--highlight);
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        a { color: var(--cool); }
+
+        /* Player bar */
+        .player-bar {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(30,30,30,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 0.75rem 1.5rem; padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+            display: flex; align-items: center; gap: 0.75rem;
+            z-index: 9999; transform: translateY(100%); transition: transform 0.3s ease;
+            border-top: 1px solid var(--border);
+        }
+        .player-bar.visible { transform: translateY(0); }
+        .player-bar button {
+            background: none; border: none; color: #fff; cursor: pointer;
+            font-size: 1.1rem; padding: 0.25rem; font-family: inherit;
+        }
+        .player-bar .now-playing {
+            flex: 1; font-size: 0.8rem; color: var(--secondary);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .player-bar select {
+            background: var(--card-bg); color: var(--text); border: 1px solid var(--border);
+            border-radius: 0.5rem; padding: 0.25rem 0.4rem; font-size: 0.75rem; font-family: inherit;
+        }
+        .player-bar .speed-btn {
+            background: var(--card-bg); color: var(--text); border: 1px solid var(--border);
+            border-radius: 0.5rem; padding: 0.25rem 0.5rem; font-size: 0.75rem; cursor: pointer; font-family: inherit;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 1.25rem 1rem 6rem; }
+            .listen-btn { width: 100%; justify-content: center; }
+            .inspo-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="main-content">
+    <header>
+        <h1>Printing the Vibe</h1>
+        <p class="scope">A research guide to dye-sublimation printers, photo lab machines, and the hardware that made Y2K-era prints look the way they did. For the Gen X Soft Club aesthetic &mdash; warm tones, continuous tone, that drugstore photo lab soul.</p>
+        <div class="listen-controls">
+            <button class="listen-btn" id="listenBtn" onclick="toggleListen()">&#9654; Listen</button>
+            <select id="voicePicker"></select>
+            <button class="speed-btn" id="speedBtn" onclick="cycleSpeed()">1x</button>
+        </div>
+        <p class="pro-tip">Pro tip: For a better voice, <a href="#" onclick="selectAllContent(); return false;">select all</a> then use iOS Speak Selection (Settings &gt; Accessibility &gt; Spoken Content).</p>
+    </header>
+
+    <section>
+        <h2>Why Dye-Sublimation?</h2>
+        <p>Inkjet printers spray tiny dots. Laser printers fuse toner. But <strong>dye-sublimation</strong> (dye-sub) printers heat solid dye into gas that permeates the paper surface, creating <strong>continuous tone</strong> output &mdash; no dots, no dithering, no visible pixel grid. The result is indistinguishable from a chemical photo print.</p>
+        <p>This is exactly the technology that powered every photo booth, kiosk, and drugstore print station from roughly 1998 to 2008. That warm, slightly soft, beautifully imperfect look? It wasn't a filter. It was the physics of dye hitting thermal paper.</p>
+        <p>The other half of the equation was the <strong>minilab</strong> &mdash; the Fuji Frontier and Noritsu machines behind the counter at every CVS, Walgreens, and 1-hour photo shop. These used laser or LED exposure onto actual photographic paper, then chemical development. The color science in these machines &mdash; the auto-correction algorithms, the paper chemistry &mdash; created <em>the</em> look of an entire generation's photos.</p>
+    </section>
+
+    <section>
+        <h2>The Machines</h2>
+
+        <h3>Dye-Sub Printers (Home / Studio)</h3>
+
+        <div class="printer-card">
+            <div class="era">Still in production</div>
+            <h3>Canon SELPHY CP1500</h3>
+            <span class="tag tag-top">Top Pick</span><span class="tag tag-current">Still Made</span>
+            <p class="specs">Dye-sub &bull; 4x6, postcard, square &bull; 300x300 dpi &bull; USB, Wi-Fi, SD card &bull; ~45 sec per print</p>
+            <p>The last great consumer dye-sub printer still being manufactured. Produces that classic photo booth / drugstore print quality. The prints are water-resistant, fade-resistant, and have that slightly warm, glossy finish. Comes with an overcoat layer that adds texture options.</p>
+            <p class="price">~$110-130 new</p>
+            <div class="verdict">"If you want one printer to start printing Y2K-looking photos today, this is it. No fuss, no drivers, just the vibe."</div>
+            <div class="links">
+                <a href="https://www.usa.canon.com/shop/p/selphy-cp1500">Canon USA</a>
+                <a href="https://www.amazon.com/dp/B0B3R3QBJJ">Amazon</a>
+            </div>
+        </div>
+
+        <div class="printer-card">
+            <div class="era">2004&ndash;2012</div>
+            <h3>Sony DPP-FP Series (FP55, FP67, FP97)</h3>
+            <span class="tag tag-grail">Grail</span>
+            <p class="specs">Dye-sub &bull; 4x6 &bull; 300 dpi &bull; USB, PictBridge &bull; ~45 sec per print</p>
+            <p>The Sony DPP line is the <em>definitive</em> Y2K photo printer. These were everywhere &mdash; in dorms, living rooms, and photo kiosks. The color science Sony used was distinctly warm and slightly saturated, with a softness that modern printers actively try to eliminate. The FP67 and FP97 had small LCD screens for direct printing from memory cards.</p>
+            <p class="price">$30-80 on eBay (check that it includes the dye cartridge tray)</p>
+            <div class="verdict">"This IS the sound. The Sony DPP prints have a quality that feels like holding a memory. Hunt one down."</div>
+            <div class="links">
+                <a href="https://www.ebay.com/sch/i.html?_nkw=sony+dpp+fp">eBay listings</a>
+            </div>
+        </div>
+
+        <div class="printer-card">
+            <div class="era">2006&ndash;2015</div>
+            <h3>Canon SELPHY CP-Series (CP720, CP760, CP780, CP800, CP900)</h3>
+            <span class="tag tag-budget">Budget</span>
+            <p class="specs">Dye-sub &bull; 4x6, L-size, credit card &bull; 300 dpi &bull; USB, PictBridge</p>
+            <p>Older SELPHY models from the mid-2000s are plentiful on eBay and thrift stores. They use the same dye-sub process as the CP1500 but with slightly older (warmer) color profiles. The CP780 and CP800 are sweet spots &mdash; reliable, cheap, and they still use media packs you can find on Amazon.</p>
+            <p class="price">$15-40 on eBay / thrift stores</p>
+            <div class="verdict">"Grab one at Goodwill for $10. If it comes with a half-used media pack, even better &mdash; you're printing tonight."</div>
+            <div class="links">
+                <a href="https://www.ebay.com/sch/i.html?_nkw=canon+selphy+cp780">eBay CP780</a>
+                <a href="https://www.ebay.com/sch/i.html?_nkw=canon+selphy+cp800">eBay CP800</a>
+            </div>
+        </div>
+
+        <div class="printer-card">
+            <div class="era">2000s&ndash;2010s</div>
+            <h3>HiTi P520L / P525L</h3>
+            <span class="tag tag-grail">Photo Booth Standard</span>
+            <p class="specs">Dye-sub &bull; 4x6, 5x7, 6x8 &bull; 300 dpi &bull; USB &bull; ~16 sec per print</p>
+            <p>These are the machines inside every mall photo booth and event photo printer from the 2000s. Commercial grade, incredibly fast, and they produce that unmistakable photo booth print quality &mdash; punchy, warm, slightly over-saturated in the best way. The P525L can do 5x7 and 6x8, which is rare for dye-sub.</p>
+            <p class="price">$150-400 on eBay</p>
+            <div class="verdict">"If you want to print 5x7s with that photo booth energy, this is your machine. They're workhorses."</div>
+            <div class="links">
+                <a href="https://www.ebay.com/sch/i.html?_nkw=hiti+p520l">eBay P520L</a>
+                <a href="https://www.ebay.com/sch/i.html?_nkw=hiti+p525l">eBay P525L</a>
+            </div>
+        </div>
+
+        <div class="printer-card">
+            <div class="era">2018&ndash;present</div>
+            <h3>DNP DS-RX1HS</h3>
+            <span class="tag tag-top">Pro Pick</span>
+            <p class="specs">Dye-sub &bull; 4x6, 6x8 &bull; 300 dpi &bull; USB &bull; ~12 sec per 4x6</p>
+            <p>The current king of event/portrait dye-sub printing. Used by professional photographers at weddings, events, and portrait studios. Incredibly fast, professional color science, and the prints are archival quality. Overkill for casual use but if you want the best modern dye-sub output available, this is it.</p>
+            <p class="price">$400-500 new / $200-350 used</p>
+            <div class="verdict">"Pro-grade. If you're printing for clients or doing pop-up portrait sessions, this pays for itself fast."</div>
+            <div class="links">
+                <a href="https://www.ebay.com/sch/i.html?_nkw=dnp+ds-rx1hs">eBay</a>
+            </div>
+        </div>
+
+        <h3>Minilab Machines (The Holy Grail)</h3>
+
+        <div class="printer-card">
+            <div class="era">1996&ndash;2010s</div>
+            <h3>Fuji Frontier 340 / 370 / 390</h3>
+            <span class="tag tag-grail">Grail</span>
+            <p class="specs">Laser exposure on silver halide paper &bull; 4x6 through 8x12 &bull; Chemical development &bull; 300-400 dpi optical</p>
+            <p>This is the machine. The Fuji Frontier is responsible for how an entire generation's photos look. The laser writes directly onto real photographic paper (Fuji Crystal Archive), which is then chemically developed. The color science &mdash; Fuji's auto-exposure algorithms, the warm bias of Crystal Archive paper, the slight cyan shadow shift &mdash; this is what people mean when they say "film look" without knowing it.</p>
+            <p>People are buying decommissioned Frontiers from closing photo labs. They need plumbing (chemical processing), space, and patience to set up. But the output is unmatched.</p>
+            <p class="price">$500-3,000 on Craigslist/eBay (plus chemicals and setup)</p>
+            <div class="verdict">"The Frontier is to photo printing what a tube amp is to guitar tone. Nothing else sounds like this. Nothing else prints like this."</div>
+            <div class="links">
+                <a href="https://www.ebay.com/sch/i.html?_nkw=fuji+frontier+minilab">eBay Frontiers</a>
+                <a href="https://www.reddit.com/r/AnalogCommunity/search/?q=fuji+frontier">r/AnalogCommunity threads</a>
+            </div>
+        </div>
+
+        <div class="printer-card">
+            <div class="era">1998&ndash;2010s</div>
+            <h3>Noritsu QSS Series (3001, 3011, 3501)</h3>
+            <span class="tag tag-grail">Grail</span>
+            <p class="specs">LED/laser exposure on silver halide &bull; Up to 12x18 &bull; Chemical dev &bull; Film scanning built-in</p>
+            <p>Noritsu was Fuji's main competitor in the minilab space. Similar process, slightly different color science &mdash; Noritsus tend to run a touch cooler and more neutral than Frontiers, with tighter grain rendering. Many Noritsus also have built-in film scanners (the QSS-3501 scanner is legendary in the film community). Labs like Richard Photo Lab and The Find Lab use Noritsus.</p>
+            <p class="price">$500-5,000 depending on model and condition</p>
+            <div class="verdict">"If Frontier is warm vinyl, Noritsu is clean tape. Both incredible. Different flavor."</div>
+            <div class="links">
+                <a href="https://www.ebay.com/sch/i.html?_nkw=noritsu+qss+minilab">eBay Noritsus</a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Quick Comparison</h2>
+        <div style="overflow-x: auto;">
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Printer</th>
+                    <th>Type</th>
+                    <th>Max Size</th>
+                    <th>Price Range</th>
+                    <th>Vibe</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Canon SELPHY CP1500</td><td>Dye-sub</td><td>4x6</td><td>$110-130</td><td>Modern drugstore</td></tr>
+                <tr><td>Sony DPP-FP67</td><td>Dye-sub</td><td>4x6</td><td>$30-80</td><td>Peak Y2K</td></tr>
+                <tr><td>Canon SELPHY CP780</td><td>Dye-sub</td><td>4x6</td><td>$15-40</td><td>Warm & cheap</td></tr>
+                <tr><td>HiTi P525L</td><td>Dye-sub</td><td>6x8</td><td>$150-400</td><td>Photo booth</td></tr>
+                <tr><td>DNP DS-RX1HS</td><td>Dye-sub</td><td>6x8</td><td>$200-500</td><td>Pro events</td></tr>
+                <tr><td>Fuji Frontier 370</td><td>Minilab</td><td>8x12</td><td>$500-3,000</td><td>THE look</td></tr>
+                <tr><td>Noritsu QSS-3501</td><td>Minilab</td><td>12x18</td><td>$500-5,000</td><td>Clean analog</td></tr>
+            </tbody>
+        </table>
+        </div>
+    </section>
+
+    <section>
+        <h2>The Science of the Look</h2>
+        <p>Why do Y2K-era prints look different from modern inkjet output? A few reasons:</p>
+        <ul>
+            <li><strong>Continuous tone vs. halftone</strong> &mdash; Dye-sub and minilab prints have no dot pattern. Every pixel is a smooth blend of CMYO (cyan, magenta, yellow, overcoat). Inkjets use thousands of tiny dots in patterns your brain averages together.</li>
+            <li><strong>Overcoat layer</strong> &mdash; Dye-sub printers apply a clear protective layer as the final pass. This is what gives prints that slightly glossy, sealed, "photo lab" feel. It also makes them water and UV resistant.</li>
+            <li><strong>Thermal paper response</strong> &mdash; Dye-sub papers have a polyester receiver layer that absorbs the dye gas. The thermal response curve is nonlinear in a way that naturally compresses highlights and opens shadows &mdash; essentially a built-in S-curve.</li>
+            <li><strong>Auto-correction algorithms</strong> &mdash; Fuji and Noritsu minilabs ran auto-exposure and auto-color-balance on every print. These algorithms were trained on millions of consumer photos and optimized for "pleasing" over "accurate" &mdash; warm skin tones, blue skies, green grass. This is the look.</li>
+            <li><strong>Paper chemistry</strong> &mdash; Fuji Crystal Archive paper has a warm base tone. Kodak Royal paper ran cooler. The paper itself was half the equation.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Where to Find Supplies</h2>
+        <p>The biggest concern with vintage dye-sub printers is media availability. Here's the state of things:</p>
+        <ul>
+            <li><strong>Canon SELPHY</strong> &mdash; KP-108IN media packs (108 sheets + 3 ink cartridges) are still manufactured and widely available on Amazon for ~$30. This is the safest bet for long-term use.</li>
+            <li><strong>Sony DPP</strong> &mdash; SVM-F120P media packs are discontinued but still findable on eBay/Amazon. Stock up when you find them. Third-party compatible packs exist but quality varies.</li>
+            <li><strong>HiTi</strong> &mdash; P520L/P525L media is still manufactured (HiTi is still in business). Available direct from HiTi or photo supply retailers.</li>
+            <li><strong>DNP</strong> &mdash; Fully supported, media readily available from B&H, Adorama, Amazon.</li>
+            <li><strong>Minilab chemicals</strong> &mdash; Fuji and Kodak still manufacture RA-4 chemistry. Paper is harder &mdash; Fuji Crystal Archive is still made but distribution has shrunk.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Inspo & References</h2>
+        <p>People and places leaning into this aesthetic with intention:</p>
+        <div class="inspo-grid">
+            <div class="inspo-card">
+                <div class="label">Lab</div>
+                <p>Richard Photo Lab &mdash; premium Noritsu scans & prints, the gold standard for film shooters</p>
+                <a href="https://www.richardphotolab.com/">richardphotolab.com</a>
+            </div>
+            <div class="inspo-card">
+                <div class="label">Lab</div>
+                <p>The Find Lab &mdash; Noritsu & Frontier scans, popular with wedding photographers</p>
+                <a href="https://www.thefindlab.com/">thefindlab.com</a>
+            </div>
+            <div class="inspo-card">
+                <div class="label">Community</div>
+                <p>r/AnalogCommunity &mdash; discussions on minilabs, dye-sub, and print processes</p>
+                <a href="https://www.reddit.com/r/AnalogCommunity/">reddit</a>
+            </div>
+            <div class="inspo-card">
+                <div class="label">Community</div>
+                <p>r/Darkroom &mdash; chemical printing, alternative processes, RA-4 at home</p>
+                <a href="https://www.reddit.com/r/Darkroom/">reddit</a>
+            </div>
+            <div class="inspo-card">
+                <div class="label">YouTube</div>
+                <p>Grainydays &mdash; film photography, scanning, and the analog process</p>
+                <a href="https://www.youtube.com/@graaborern">youtube</a>
+            </div>
+            <div class="inspo-card">
+                <div class="label">Reference</div>
+                <p>Fuji Frontier color science &mdash; why "shot on film, scanned on Frontier" became a flex</p>
+                <a href="https://www.reddit.com/r/AnalogCommunity/search/?q=frontier+color+science">threads</a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>The Move</h2>
+        <div class="callout">
+            <strong>Start here:</strong> Grab a Canon SELPHY CP1500 ($110) for immediate dye-sub printing. It does 4x6 and postcard sizes beautifully.<br><br>
+            <strong>Then hunt:</strong> Keep an eye on eBay for a Sony DPP-FP67 or HiTi P525L. The Sony for the authentic Y2K warmth, the HiTi if you want 5x7 capability.<br><br>
+            <strong>Dream tier:</strong> A decommissioned Fuji Frontier from a closing photo lab. Join local photography groups and Craigslist alerts for "photo lab equipment." They come up more often than you'd think.
+        </div>
+        <p>The prints themselves become part of the aesthetic &mdash; scan them back in, photograph them in your hands, tape them to walls. The physicality is the point. A dye-sub print photographed with a CRT monitor behind it? That's the whole Gen X Soft Club energy in one frame.</p>
+    </section>
+</div>
+
+<!-- Player bar -->
+<div class="player-bar" id="playerBar">
+    <button id="playPauseBtn" onclick="togglePlayPause()">&#9654;</button>
+    <span class="now-playing" id="nowPlaying">Ready</span>
+    <select id="playerVoice" onchange="document.getElementById('voicePicker').value=this.value"></select>
+    <button class="speed-btn" id="playerSpeed" onclick="cycleSpeed()">1x</button>
+    <button onclick="stopListen()">&#9632;</button>
+</div>
+
+<script>
+// Listen mode
+const speeds = [0.8, 1, 1.2, 1.5];
+let speedIdx = 1, isPlaying = false, isPaused = false, chunks = [], chunkIdx = 0, keepAlive;
+const voiceWhitelist = /samantha|karen|daniel|moira|tessa|ava|allison|tom|aaron|nicky|evan|zoe|joelle|fiona|martha|arthur|google us english|google uk english/i;
+
+function populateVoices() {
+    const voices = speechSynthesis.getVoices().filter(v => voiceWhitelist.test(v.name));
+    ['voicePicker','playerVoice'].forEach(id => {
+        const sel = document.getElementById(id);
+        sel.innerHTML = '';
+        voices.forEach((v,i) => { const o = document.createElement('option'); o.value = i; o.textContent = v.name; sel.appendChild(o); });
+    });
+}
+speechSynthesis.onvoiceschanged = populateVoices;
+populateVoices();
+
+function getVoice() {
+    const voices = speechSynthesis.getVoices().filter(v => voiceWhitelist.test(v.name));
+    const idx = parseInt(document.getElementById('voicePicker').value) || 0;
+    return voices[idx] || voices[0];
+}
+
+function buildChunks() {
+    chunks = []; chunkIdx = 0;
+    const sections = document.querySelectorAll('#main-content section');
+    sections.forEach(sec => {
+        const els = sec.querySelectorAll('h2, h3, p, li, .verdict, .callout');
+        els.forEach(el => chunks.push({ el, section: sec, text: el.textContent.trim(), isHeading: /^H[23]$/.test(el.tagName) }));
+    });
+}
+
+function speakChunk() {
+    if (chunkIdx >= chunks.length) { stopListen(); return; }
+    const c = chunks[chunkIdx];
+    document.querySelectorAll('section.reading').forEach(s => s.classList.remove('reading'));
+    c.section.classList.add('reading');
+    c.section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('nowPlaying').textContent = c.text.substring(0, 60) + (c.text.length > 60 ? '...' : '');
+
+    const u = new SpeechSynthesisUtterance(c.text);
+    u.voice = getVoice();
+    u.rate = c.isHeading ? speeds[speedIdx] * 0.9 : speeds[speedIdx];
+    if (c.isHeading) u.pitch = 1.05;
+    u.onend = () => {
+        chunkIdx++;
+        const delay = c.isHeading ? 400 : 200;
+        setTimeout(() => { if (isPlaying && !isPaused) speakChunk(); }, delay);
+    };
+    speechSynthesis.speak(u);
+}
+
+function toggleListen() {
+    if (isPlaying) { stopListen(); return; }
+    buildChunks();
+    isPlaying = true; isPaused = false;
+    document.getElementById('listenBtn').innerHTML = '&#9632; Stop';
+    document.getElementById('playerBar').classList.add('visible');
+    document.getElementById('playPauseBtn').innerHTML = '&#10074;&#10074;';
+    keepAlive = setInterval(() => { if (isPlaying) speechSynthesis.resume(); }, 10000);
+    speakChunk();
+}
+
+function stopListen() {
+    speechSynthesis.cancel();
+    isPlaying = false; isPaused = false; chunkIdx = 0;
+    clearInterval(keepAlive);
+    document.getElementById('listenBtn').innerHTML = '&#9654; Listen';
+    document.getElementById('playerBar').classList.remove('visible');
+    document.querySelectorAll('section.reading').forEach(s => s.classList.remove('reading'));
+}
+
+function togglePlayPause() {
+    if (isPaused) { speechSynthesis.resume(); isPaused = false; document.getElementById('playPauseBtn').innerHTML = '&#10074;&#10074;'; }
+    else { speechSynthesis.pause(); isPaused = true; document.getElementById('playPauseBtn').innerHTML = '&#9654;'; }
+}
+
+function cycleSpeed() {
+    speedIdx = (speedIdx + 1) % speeds.length;
+    const label = speeds[speedIdx] + 'x';
+    document.getElementById('speedBtn').textContent = label;
+    document.getElementById('playerSpeed').textContent = label;
+}
+
+function selectAllContent() {
+    const r = document.createRange();
+    r.selectNodeContents(document.getElementById('main-content'));
+    const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+}
+</script>
+</body>
+</html>
