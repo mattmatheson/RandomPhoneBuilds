@@ -395,6 +395,16 @@
             fill: white;
         }
 
+        .streaming-note {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 16px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         /* Footer */
         .footer {
             text-align: center;
@@ -441,7 +451,7 @@
         <h1>DRUM PRINTS</h1>
         <div class="subtitle">Recorded by <strong>Zach Ramsey</strong> for <strong>Lethal Method</strong></div>
         <div class="divider"></div>
-        <div class="meta">11 Tracks &mdash; WAV</div>
+        <div class="meta">11 Tracks</div>
     </div>
 
     <div class="track-list fade-in">
@@ -453,9 +463,10 @@
         <div id="tracks"></div>
 
         <div class="download-section">
+            <p class="streaming-note">Streaming previews are compressed MP3. For full-quality uncompressed WAV files, download from Dropbox below.</p>
             <a class="download-btn" href="https://www.dropbox.com/scl/fo/23i8lvmzaea8faukuii02/AH1BOwvMCMLZbTINiAtKcnA?rlkey=u55np5jvdq9icfpyc5dcuwzpl&e=1&st=6w8ok607&dl=0" target="_blank" rel="noopener">
                 <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                Download All on Dropbox
+                Download WAVs on Dropbox
             </a>
         </div>
     </div>
@@ -494,17 +505,17 @@
 
 <script>
 const tracks = [
-    { title: "Bad One", file: "BAD ONE_DRUMS T1.wav", url: "https://www.dropbox.com/scl/fo/23i8lvmzaea8faukuii02/AJ_R2NwoE21rECma8b8RR40/BAD%20ONE_DRUMS%20T1.wav?rlkey=u55np5jvdq9icfpyc5dcuwzpl&dl=1" },
-    { title: "Breaking It Down", file: "BREAKING IT DOWN_DRUMS T1.wav", url: "https://www.dropbox.com/scl/fo/23i8lvmzaea8faukuii02/AFTzBC-rKinnnjUzAvTdU00/BREAKING%20IT%20DOWN_DRUMS%20T1.wav?rlkey=u55np5jvdq9icfpyc5dcuwzpl&dl=1" },
-    { title: "No Hand Outs", file: "NO HAND OUTS_DRUMS T1.1.wav", url: "https://www.dropbox.com/scl/fo/23i8lvmzaea8faukuii02/AEenlzkf6X89TTMtrSTY7Kg/NO%20HAND%20OUTS_DRUMS%20T1.1.wav?rlkey=u55np5jvdq9icfpyc5dcuwzpl&dl=1" },
-    { title: "Soul Power", file: "SOUL POWER_DRUMS T1.1.wav", url: "https://www.dropbox.com/scl/fo/23i8lvmzaea8faukuii02/AKSSgGmYwCffFUdHiy1L_eQ/SOUL%20POWER_DRUMS%20T1.1.wav?rlkey=u55np5jvdq9icfpyc5dcuwzpl&dl=1" },
-    { title: "Territory", file: "TERRITORY_DRUMS T1.1.wav", url: "https://www.dropbox.com/scl/fo/23i8lvmzaea8faukuii02/ANT5u6TlxACrB9bWNp6ty1g/TERRITORY_DRUMS%20T1.1.wav?rlkey=u55np5jvdq9icfpyc5dcuwzpl&dl=1" },
-    { title: "The Hard Way", file: "THE HARD WAY_DRUMS T1.wav", url: "https://www.dropbox.com/scl/fo/23i8lvmzaea8faukuii02/AMAbUDKH7IPtrzq8xWmJZdI/THE%20HARD%20WAY_DRUMS%20T1.wav?rlkey=u55np5jvdq9icfpyc5dcuwzpl&dl=1" },
-    { title: "The Method", file: "THE METHOD_DRUMS T1.wav", url: "https://www.dropbox.com/scl/fo/23i8lvmzaea8faukuii02/AOnYWrVK0en63SiUFlMLyBw/THE%20METHOD_DRUMS%20T1.wav?rlkey=u55np5jvdq9icfpyc5dcuwzpl&dl=1" },
-    { title: "The Purist Love", file: "THE PURIST LOVE_DRUMS T1.wav", url: "https://www.dropbox.com/scl/fo/23i8lvmzaea8faukuii02/ANPsMnMJuG_maeOOvxfyOr0/THE%20PURIST%20LOVE_DRUMS%20T1.wav?rlkey=u55np5jvdq9icfpyc5dcuwzpl&dl=1" },
-    { title: "This World", file: "THIS WORLD_DRUMS T1.wav", url: "https://www.dropbox.com/scl/fo/23i8lvmzaea8faukuii02/AMQa3MjAgfSewr2EJngA3FU/THIS%20WORLD_DRUMS%20T1.wav?rlkey=u55np5jvdq9icfpyc5dcuwzpl&dl=1" },
-    { title: "Time to Breathe", file: "TIME TO BREATHE_DRUMS T1.wav", url: "https://www.dropbox.com/scl/fo/23i8lvmzaea8faukuii02/ANovJR9pJwGoB7H75iODrKI/TIME%20TO%20BREATHE_DRUMS%20T1.wav?rlkey=u55np5jvdq9icfpyc5dcuwzpl&dl=1" },
-    { title: "Trapped", file: "TRAPPED_DRUMS T1.wav", url: "https://www.dropbox.com/scl/fo/23i8lvmzaea8faukuii02/AEm8M5PsZ67LX-ZnQzOmUwY/TRAPPED_DRUMS%20T1.wav?rlkey=u55np5jvdq9icfpyc5dcuwzpl&dl=1" },
+    { title: "Bad One", file: "BAD ONE_DRUMS T1", url: "audio/BAD%20ONE_DRUMS%20T1.mp3" },
+    { title: "Breaking It Down", file: "BREAKING IT DOWN_DRUMS T1", url: "audio/BREAKING%20IT%20DOWN_DRUMS%20T1.mp3" },
+    { title: "No Hand Outs", file: "NO HAND OUTS_DRUMS T1.1", url: "audio/NO%20HAND%20OUTS_DRUMS%20T1.1.mp3" },
+    { title: "Soul Power", file: "SOUL POWER_DRUMS T1.1", url: "audio/SOUL%20POWER_DRUMS%20T1.1.mp3" },
+    { title: "Territory", file: "TERRITORY_DRUMS T1.1", url: "audio/TERRITORY_DRUMS%20T1.1.mp3" },
+    { title: "The Hard Way", file: "THE HARD WAY_DRUMS T1", url: "audio/THE%20HARD%20WAY_DRUMS%20T1.mp3" },
+    { title: "The Method", file: "THE METHOD_DRUMS T1", url: "audio/THE%20METHOD_DRUMS%20T1.mp3" },
+    { title: "The Purist Love", file: "THE PURIST LOVE_DRUMS T1", url: "audio/THE%20PURIST%20LOVE_DRUMS%20T1.mp3" },
+    { title: "This World", file: "THIS WORLD_DRUMS T1", url: "audio/THIS%20WORLD_DRUMS%20T1.mp3" },
+    { title: "Time to Breathe", file: "TIME TO BREATHE_DRUMS T1", url: "audio/TIME%20TO%20BREATHE_DRUMS%20T1.mp3" },
+    { title: "Trapped", file: "TRAPPED_DRUMS T1", url: "audio/TRAPPED_DRUMS%20T1.mp3" },
 ];
 
 const audio = document.getElementById('audio');
