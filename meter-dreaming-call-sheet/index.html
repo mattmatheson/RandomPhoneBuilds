@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="published" content="2026-04-07">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METER — "Dreaming" Call Sheet | Day 1</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+            background: #0a0a0a;
+            color: #e8e8e8;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 2px solid #333;
+            margin-bottom: 24px;
+        }
+        .header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+        .header .subtitle {
+            font-size: 14px;
+            color: #888;
+            margin-top: 6px;
+            letter-spacing: 1px;
+        }
+        .header .date {
+            font-size: 28px;
+            font-weight: 800;
+            color: #ff4444;
+            margin-top: 12px;
+        }
+        .header .date-sub {
+            font-size: 14px;
+            color: #888;
+            margin-top: 4px;
+        }
+        .day-divider {
+            text-align: center;
+            padding: 16px 0;
+            margin: 24px 0 16px;
+            border-top: 2px solid #ff4444;
+            border-bottom: 1px solid #222;
+        }
+        .day-divider h2 {
+            font-size: 18px;
+            font-weight: 800;
+            color: #ff4444;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .day-divider .day-note {
+            font-size: 12px;
+            color: #888;
+            margin-top: 4px;
+        }
+        .section {
+            margin-bottom: 24px;
+        }
+        .section-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ff4444;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #222;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        .info-label {
+            color: #888;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .info-value {
+            color: #fff;
+            font-size: 13px;
+            font-weight: 500;
+            text-align: right;
+        }
+        .contact-card {
+            background: #141414;
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .contact-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .contact-role {
+            font-size: 11px;
+            color: #888;
+            margin-top: 2px;
+        }
+        .contact-phone {
+            color: #ff4444;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .contact-phone a {
+            color: #ff4444;
+            text-decoration: none;
+        }
+        .schedule-item {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        .schedule-time {
+            width: 70px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #ff4444;
+            flex-shrink: 0;
+        }
+        .schedule-desc {
+            font-size: 13px;
+            color: #ccc;
+            line-height: 1.4;
+        }
+        .schedule-item.break {
+            background: #1a1a0a;
+            margin: 0 -16px;
+            padding: 12px 16px;
+            border-radius: 8px;
+        }
+        .notes-box {
+            background: #1a1414;
+            border-left: 3px solid #ff4444;
+            padding: 14px 16px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 8px;
+        }
+        .notes-box p {
+            font-size: 12px;
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 4px;
+        }
+        .band-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .band-member {
+            background: #141414;
+            border-radius: 12px;
+            padding: 12px 16px;
+        }
+        .band-member .contact-name {
+            font-size: 13px;
+        }
+        .band-member .contact-role {
+            font-size: 11px;
+        }
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #333;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>METER</h1>
+        <div class="subtitle">Music Video — "Dreaming" — Call Sheet</div>
+        <div class="date">Day 1</div>
+        <div class="date-sub">5:00 PM — 11:00 PM</div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Location</div>
+        <div class="info-row">
+            <span class="info-label">Address</span>
+            <span class="info-value">8515 Cub Creek Rd, Nashville, TN</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Call Time</span>
+            <span class="info-value">5:00 PM</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Wrap</span>
+            <span class="info-value">11:00 PM</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Crew</div>
+        <div class="contact-card">
+            <div>
+                <div class="contact-name">Matt Matheson</div>
+                <div class="contact-role">Producer / DP / Editor / Colorist</div>
+            </div>
+            <div class="contact-phone"><a href="tel:+19312522070">(931) 252-2070</a></div>
+        </div>
+        <div class="contact-card">
+            <div>
+                <div class="contact-name">Cortney Hale</div>
+                <div class="contact-role">Co-Director / Singer</div>
+            </div>
+            <div class="contact-phone"><a href="tel:+16155564851">(615) 556-4851</a></div>
+        </div>
+        <div class="contact-card">
+            <div>
+                <div class="contact-name">Paul Williams</div>
+                <div class="contact-role">Gaffer — Bringing Van</div>
+            </div>
+            <div class="contact-phone"><a href="tel:+16788863215">(678) 886-3215</a></div>
+        </div>
+        <div class="contact-card">
+            <div>
+                <div class="contact-name">Nic Jiosa</div>
+                <div class="contact-role">Assistant / BTS</div>
+            </div>
+            <div class="contact-phone"></div>
+        </div>
+        <div class="contact-card">
+            <div>
+                <div class="contact-name">Ben Boyte</div>
+                <div class="contact-role">Assistant / Grip</div>
+            </div>
+            <div class="contact-phone"></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Band — Meter</div>
+        <div class="band-grid">
+            <div class="band-member">
+                <div class="contact-name">Cortney Hale</div>
+                <div class="contact-role">Vocals</div>
+            </div>
+            <div class="band-member">
+                <div class="contact-name">Luke Granered</div>
+                <div class="contact-role">Vocals / Guitar</div>
+            </div>
+            <div class="band-member">
+                <div class="contact-name">Hunter Walls</div>
+                <div class="contact-role">Guitar</div>
+            </div>
+            <div class="band-member">
+                <div class="contact-name">Dalton Stucker</div>
+                <div class="contact-role">Bass</div>
+            </div>
+            <div class="band-member">
+                <div class="contact-name">Lucas Bowers</div>
+                <div class="contact-role">Band</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="day-divider">
+        <h2>Day 1 Schedule</h2>
+        <div class="day-note">5:00 PM — 11:00 PM</div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Schedule</div>
+        <div class="schedule-item">
+            <div class="schedule-time">5:00</div>
+            <div class="schedule-desc">Crew call — Load-in, lighting setup, generator on</div>
+        </div>
+        <div class="schedule-item">
+            <div class="schedule-time">5:30</div>
+            <div class="schedule-desc">Band arrives — Walkthrough, rehearse playback</div>
+        </div>
+        <div class="schedule-item">
+            <div class="schedule-time">6:00</div>
+            <div class="schedule-desc"><strong>Block 1</strong> — Performance setups</div>
+        </div>
+        <div class="schedule-item break">
+            <div class="schedule-time">7:30</div>
+            <div class="schedule-desc">Break — Snacks & drinks</div>
+        </div>
+        <div class="schedule-item">
+            <div class="schedule-time">8:00</div>
+            <div class="schedule-desc"><strong>Block 2</strong> — Fog machine setups, cinematic/narrative shots</div>
+        </div>
+        <div class="schedule-item">
+            <div class="schedule-time">9:30</div>
+            <div class="schedule-desc"><strong>Block 3</strong> — Pickup shots, alternate angles</div>
+        </div>
+        <div class="schedule-item">
+            <div class="schedule-time">10:30</div>
+            <div class="schedule-desc">Review footage, final pickups</div>
+        </div>
+        <div class="schedule-item">
+            <div class="schedule-time">11:00</div>
+            <div class="schedule-desc">Wrap — Strike gear, clean location</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Notes</div>
+        <div class="notes-box">
+            <p>• Generator will be on-site for power — plan accordingly</p>
+            <p>• Fog machine in use — let Matt know if you have sensitivities</p>
+            <p>• Snacks and drinks provided</p>
+            <p>• Paul is bringing the van with lighting/grip gear</p>
+            <p>• Co-directed by Cortney & Matt — both calling shots on creative</p>
+            <p>• Nic is on BTS duty all night — stay camera-ready</p>
+            <p>• Day 2 details coming separately</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        Matt Matheson Creative — mattmathesoncreative@gmail.com
+    </div>
+</body>
+</html>
