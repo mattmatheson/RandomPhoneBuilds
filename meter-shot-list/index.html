@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="published" content="2026-04-09">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METER — "Dreaming" Shot List</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+            background: #0a0a0a;
+            color: #e8e8e8;
+            padding: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+            padding-bottom: 80px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 2px solid #333;
+            margin-bottom: 24px;
+        }
+        .header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+        .header .subtitle {
+            font-size: 14px;
+            color: #888;
+            margin-top: 6px;
+            letter-spacing: 1px;
+        }
+        .header .date {
+            font-size: 28px;
+            font-weight: 800;
+            color: #ff4444;
+            margin-top: 12px;
+        }
+        .header .date-sub {
+            font-size: 14px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        /* Speed FX Reference Card */
+        .fx-card {
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+        .fx-card .section-title {
+            margin-bottom: 14px;
+        }
+        .fx-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 2fr;
+            gap: 8px;
+            padding: 10px 0;
+            border-bottom: 1px solid #1a1a1a;
+            font-size: 12px;
+            align-items: center;
+        }
+        .fx-row:last-child { border-bottom: none; }
+        .fx-row.fx-header {
+            color: #666;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 10px;
+            border-bottom: 1px solid #2a2a2a;
+            padding-bottom: 8px;
+        }
+        .fx-label {
+            color: #ff4444;
+            font-weight: 700;
+            font-size: 11px;
+        }
+        .fx-value {
+            color: #ccc;
+            font-size: 12px;
+        }
+        .fx-feel {
+            color: #888;
+            font-size: 11px;
+            font-style: italic;
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            margin: 0 -20px;
+            padding: 16px 20px;
+            border-bottom: 1px solid #222;
+        }
+        .filter-group {
+            margin-bottom: 12px;
+        }
+        .filter-group:last-child { margin-bottom: 0; }
+        .filter-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .filter-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .filter-pill {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+            letter-spacing: 0.3px;
+        }
+        .filter-pill:hover {
+            border-color: #555;
+            color: #ccc;
+        }
+        .filter-pill.active {
+            background: #ff4444;
+            border-color: #ff4444;
+            color: #fff;
+        }
+        .filter-pill .pill-count {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            border-radius: 10px;
+            padding: 1px 6px;
+            font-size: 10px;
+            margin-left: 4px;
+            font-weight: 700;
+        }
+        .filter-pill.active .pill-count {
+            background: rgba(255,255,255,0.25);
+        }
+
+        /* Results Counter */
+        .results-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        .results-count {
+            font-size: 13px;
+            color: #888;
+            font-weight: 500;
+        }
+        .results-count strong {
+            color: #ff4444;
+            font-weight: 700;
+        }
+        .clear-filters {
+            font-size: 11px;
+            color: #ff4444;
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+        }
+        .clear-filters.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Section Headers */
+        .section {
+            margin-bottom: 24px;
+        }
+        .section-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ff4444;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #222;
+        }
+        .section-title .shot-count {
+            color: #555;
+            font-weight: 500;
+            letter-spacing: 0;
+        }
+
+        /* Shot Cards */
+        .shot-card {
+            background: #141414;
+            border: 1px solid #1e1e1e;
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+        }
+        .shot-card.hidden {
+            display: none;
+        }
+        .shot-card:hover {
+            border-color: #333;
+        }
+        .shot-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .shot-desc {
+            font-size: 13px;
+            font-weight: 500;
+            color: #e0e0e0;
+            line-height: 1.5;
+            flex: 1;
+        }
+        .shot-num {
+            color: #444;
+            font-size: 11px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            flex-shrink: 0;
+            min-width: 20px;
+            text-align: right;
+        }
+        .shot-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 8px;
+        }
+        .tag {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: #1e1e1e;
+            color: #777;
+        }
+        .tag.tag-lens {
+            background: #1a1a2a;
+            color: #7788cc;
+        }
+        .tag.tag-person {
+            background: #1a2a1a;
+            color: #77cc88;
+        }
+        .tag.tag-fps {
+            background: #2a1a2a;
+            color: #cc77bb;
+        }
+        .tag.tag-speed {
+            background: #2a2a1a;
+            color: #ccbb77;
+        }
+        .tag.tag-type {
+            background: #2a1a1a;
+            color: #cc8877;
+        }
+
+        /* Section collapsed when all shots hidden */
+        .section.section-hidden {
+            display: none;
+        }
+
+        /* Notes Box */
+        .notes-box {
+            background: #1a1414;
+            border-left: 3px solid #ff4444;
+            padding: 14px 16px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 8px;
+            margin-bottom: 24px;
+        }
+        .notes-box p {
+            font-size: 12px;
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 4px;
+        }
+
+        /* Photos & Content sections */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #333;
+            font-size: 11px;
+        }
+
+        /* Mobile tweaks */
+        @media (max-width: 500px) {
+            .fx-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 4px;
+            }
+            .fx-row.fx-header { display: none; }
+            .fx-feel { grid-column: span 2; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>METER</h1>
+        <div class="subtitle">Music Video — "Dreaming" — Shot List</div>
+        <div class="date">The Subway</div>
+        <div class="date-sub">Nashville, TN</div>
+    </div>
+
+    <!-- Speed FX Reference -->
+    <div class="fx-card">
+        <div class="section-title">Speed FX Reference</div>
+        <div class="fx-row fx-header">
+            <span>Effect</span>
+            <span>Record</span>
+            <span>Playback</span>
+            <span>Feel</span>
+        </div>
+        <div class="fx-row">
+            <span class="fx-label">Slow FX</span>
+            <span class="fx-value">30fps</span>
+            <span class="fx-value">Song @ 125%</span>
+            <span class="fx-feel">Subtle smoothness, barely noticeable</span>
+        </div>
+        <div class="fx-row">
+            <span class="fx-label">Fast 2×</span>
+            <span class="fx-value">24fps</span>
+            <span class="fx-value">Song @ 50%</span>
+            <span class="fx-feel">Classic jerky undercrank</span>
+        </div>
+        <div class="fx-row">
+            <span class="fx-label">Fast 3×</span>
+            <span class="fx-value">24fps</span>
+            <span class="fx-value">Song @ 33%</span>
+            <span class="fx-feel">Very exaggerated, twitchy, horror feel</span>
+        </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" id="filterBar">
+        <div class="filter-group">
+            <div class="filter-label">Lens</div>
+            <div class="filter-pills" id="lensFilters">
+                <div class="filter-pill" data-filter="lens" data-value="sigma-50">Sigma 50 <span class="pill-count" data-count-lens="sigma-50"></span></div>
+                <div class="filter-pill" data-filter="lens" data-value="sigma-35">Sigma 35 <span class="pill-count" data-count-lens="sigma-35"></span></div>
+                <div class="filter-pill" data-filter="lens" data-value="canon-16-35">Canon 16-35 <span class="pill-count" data-count-lens="canon-16-35"></span></div>
+                <div class="filter-pill" data-filter="lens" data-value="canon-70-200">Canon 70-200 <span class="pill-count" data-count-lens="canon-70-200"></span></div>
+                <div class="filter-pill" data-filter="lens" data-value="fisheye">Fisheye <span class="pill-count" data-count-lens="fisheye"></span></div>
+            </div>
+        </div>
+        <div class="filter-group">
+            <div class="filter-label">Band Member</div>
+            <div class="filter-pills" id="personFilters">
+                <div class="filter-pill" data-filter="person" data-value="cortney">Cortney <span class="pill-count" data-count-person="cortney"></span></div>
+                <div class="filter-pill" data-filter="person" data-value="luke">Luke <span class="pill-count" data-count-person="luke"></span></div>
+                <div class="filter-pill" data-filter="person" data-value="lucas">Lucas <span class="pill-count" data-count-person="lucas"></span></div>
+                <div class="filter-pill" data-filter="person" data-value="dalton">Dalton <span class="pill-count" data-count-person="dalton"></span></div>
+                <div class="filter-pill" data-filter="person" data-value="hunter">Hunter <span class="pill-count" data-count-person="hunter"></span></div>
+            </div>
+        </div>
+        <div class="filter-group">
+            <div class="filter-label">Setup</div>
+            <div class="filter-pills" id="typeFilters">
+                <div class="filter-pill" data-filter="type" data-value="gimbal">Gimbal <span class="pill-count" data-count-type="gimbal"></span></div>
+                <div class="filter-pill" data-filter="type" data-value="tripod">Tripod <span class="pill-count" data-count-type="tripod"></span></div>
+                <div class="filter-pill" data-filter="type" data-value="handheld">Handheld <span class="pill-count" data-count-type="handheld"></span></div>
+                <div class="filter-pill" data-filter="type" data-value="locked">Locked <span class="pill-count" data-count-type="locked"></span></div>
+                <div class="filter-pill" data-filter="type" data-value="green-screen">Green Screen <span class="pill-count" data-count-type="green-screen"></span></div>
+                <div class="filter-pill" data-filter="type" data-value="60fps">60fps <span class="pill-count" data-count-type="60fps"></span></div>
+                <div class="filter-pill" data-filter="type" data-value="30fps">30fps <span class="pill-count" data-count-type="30fps"></span></div>
+                <div class="filter-pill" data-filter="type" data-value="speed-fx">Speed FX <span class="pill-count" data-count-type="speed-fx"></span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Bar -->
+    <div class="results-bar">
+        <div class="results-count">Showing <strong id="visibleCount">0</strong> of <strong id="totalCount">0</strong> shots</div>
+        <div class="clear-filters" id="clearFilters" onclick="clearAllFilters()">Clear Filters</div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- GIMBAL SHOTS -->
+    <!-- ============================================ -->
+    <div class="section" data-section="gimbal">
+        <div class="section-title">Gimbal <span class="shot-count" id="gimbalCount"></span></div>
+
+        <div class="shot-card" data-lens="sigma-50 sigma-35" data-person="" data-type="gimbal">
+            <div class="shot-top">
+                <div class="shot-desc">Push in — intro only. Try with and without pan-down.</div>
+                <div class="shot-num">01</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 50</span>
+                <span class="tag tag-lens">Sigma 35</span>
+                <span class="tag tag-type">Gimbal</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="sigma-50 sigma-35" data-person="" data-type="gimbal">
+            <div class="shot-top">
+                <div class="shot-desc">Pull out — outro only. Song stops, lights turn off simultaneously.</div>
+                <div class="shot-num">02</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 50</span>
+                <span class="tag tag-lens">Sigma 35</span>
+                <span class="tag tag-type">Gimbal</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-16-35" data-person="cortney luke lucas dalton hunter" data-type="gimbal">
+            <div class="shot-top">
+                <div class="shot-desc">Band shots — freestyle person to person. Full take.</div>
+                <div class="shot-num">03</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 16-35</span>
+                <span class="tag tag-type">Gimbal</span>
+                <span class="tag tag-person">Full Band</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="" data-person="luke" data-type="gimbal">
+            <div class="shot-top">
+                <div class="shot-desc">Luke with guitar × 1 take.</div>
+                <div class="shot-num">04</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-type">Gimbal</span>
+                <span class="tag tag-person">Luke</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-16-35" data-person="lucas" data-type="gimbal">
+            <div class="shot-top">
+                <div class="shot-desc">Drum fills — rotating around drumset.</div>
+                <div class="shot-num">05</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 16-35</span>
+                <span class="tag tag-type">Gimbal</span>
+                <span class="tag tag-person">Lucas</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="" data-person="cortney" data-type="gimbal">
+            <div class="shot-top">
+                <div class="shot-desc">Cortney full performance take.</div>
+                <div class="shot-num">06</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-type">Gimbal</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-16-35 fisheye" data-person="cortney" data-type="gimbal">
+            <div class="shot-top">
+                <div class="shot-desc">Cortney walking up and down the aisle — low angle, super wide. Maybe fisheye.</div>
+                <div class="shot-num">07</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 16-35</span>
+                <span class="tag tag-lens">Fisheye</span>
+                <span class="tag tag-type">Gimbal</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="" data-person="cortney" data-type="gimbal">
+            <div class="shot-top">
+                <div class="shot-desc">Pull outs on "Lately I've been dreaming" — chorus smash-in.</div>
+                <div class="shot-num">08</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-type">Gimbal</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="" data-person="cortney" data-type="gimbal speed-fx">
+            <div class="shot-top">
+                <div class="shot-desc">Song slowed for speed-up — in and out while band plays slow. Cortney makes funny poses.</div>
+                <div class="shot-num">09</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-type">Gimbal</span>
+                <span class="tag tag-speed">Speed FX</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="sigma-35" data-person="cortney" data-type="gimbal">
+            <div class="shot-top">
+                <div class="shot-desc">High angle looking down at Cortney.</div>
+                <div class="shot-num">10</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 35</span>
+                <span class="tag tag-type">Gimbal</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="" data-person="" data-type="gimbal green-screen">
+            <div class="shot-top">
+                <div class="shot-desc">Green screen plates — normal speed.</div>
+                <div class="shot-num">11</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-type">Gimbal</span>
+                <span class="tag tag-type">Green Screen</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="" data-person="" data-type="gimbal green-screen 60fps">
+            <div class="shot-top">
+                <div class="shot-desc">Green screen plates — 60fps.</div>
+                <div class="shot-num">12</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-type">Gimbal</span>
+                <span class="tag tag-type">Green Screen</span>
+                <span class="tag tag-fps">60fps</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="" data-person="" data-type="gimbal green-screen 30fps">
+            <div class="shot-top">
+                <div class="shot-desc">Green screen plates — 30fps.</div>
+                <div class="shot-num">13</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-type">Gimbal</span>
+                <span class="tag tag-type">Green Screen</span>
+                <span class="tag tag-fps">30fps</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="" data-person="" data-type="gimbal">
+            <div class="shot-top">
+                <div class="shot-desc">Empty subway — no band members. One cool credits shot.</div>
+                <div class="shot-num">14</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-type">Gimbal</span>
+                <span class="tag">B-Roll</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SIGMA 50mm -->
+    <!-- ============================================ -->
+    <div class="section" data-section="sigma-50">
+        <div class="section-title">Sigma 50mm <span class="shot-count" id="sigma50Count"></span></div>
+
+        <div class="shot-card" data-lens="sigma-50" data-person="cortney luke lucas dalton hunter" data-type="tripod">
+            <div class="shot-top">
+                <div class="shot-desc">Full band — tripod. Full take.</div>
+                <div class="shot-num">15</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 50</span>
+                <span class="tag tag-type">Tripod</span>
+                <span class="tag tag-person">Full Band</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="sigma-50" data-person="cortney luke lucas dalton hunter" data-type="tripod speed-fx">
+            <div class="shot-top">
+                <div class="shot-desc">Full band — tripod, sped up. Song slowed for speed-up.</div>
+                <div class="shot-num">16</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 50</span>
+                <span class="tag tag-type">Tripod</span>
+                <span class="tag tag-speed">Speed FX</span>
+                <span class="tag tag-person">Full Band</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="sigma-50" data-person="cortney luke lucas dalton hunter" data-type="tripod 30fps">
+            <div class="shot-top">
+                <div class="shot-desc">Full band — tripod, 30fps. Slowed down.</div>
+                <div class="shot-num">17</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 50</span>
+                <span class="tag tag-type">Tripod</span>
+                <span class="tag tag-fps">30fps</span>
+                <span class="tag tag-person">Full Band</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="sigma-50" data-person="cortney" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Close-up off-frame — Cortney. Full take.</div>
+                <div class="shot-num">18</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 50</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="sigma-50" data-person="cortney" data-type="60fps">
+            <div class="shot-top">
+                <div class="shot-desc">Close-up off-frame — Cortney. 60fps. Full take.</div>
+                <div class="shot-num">19</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 50</span>
+                <span class="tag tag-fps">60fps</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="sigma-50" data-person="luke" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Close-up off-frame — Luke. Full take.</div>
+                <div class="shot-num">20</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 50</span>
+                <span class="tag tag-person">Luke</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="sigma-50" data-person="luke" data-type="60fps">
+            <div class="shot-top">
+                <div class="shot-desc">Close-up off-frame — Luke. 60fps. Full take.</div>
+                <div class="shot-num">21</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 50</span>
+                <span class="tag tag-fps">60fps</span>
+                <span class="tag tag-person">Luke</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="sigma-50" data-person="lucas" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Close-up off-frame — Lucas. Full take.</div>
+                <div class="shot-num">22</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 50</span>
+                <span class="tag tag-person">Lucas</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="sigma-50" data-person="lucas" data-type="60fps">
+            <div class="shot-top">
+                <div class="shot-desc">Close-up off-frame — Lucas. 60fps. Not full song.</div>
+                <div class="shot-num">23</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 50</span>
+                <span class="tag tag-fps">60fps</span>
+                <span class="tag tag-person">Lucas</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="sigma-50" data-person="dalton" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Close-up off-frame — Dalton. Full take.</div>
+                <div class="shot-num">24</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 50</span>
+                <span class="tag tag-person">Dalton</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="sigma-50" data-person="dalton" data-type="60fps">
+            <div class="shot-top">
+                <div class="shot-desc">Close-up off-frame — Dalton. 60fps. Not full song.</div>
+                <div class="shot-num">25</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 50</span>
+                <span class="tag tag-fps">60fps</span>
+                <span class="tag tag-person">Dalton</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="sigma-50" data-person="hunter" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Close-up off-frame — Hunter. Full take.</div>
+                <div class="shot-num">26</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 50</span>
+                <span class="tag tag-person">Hunter</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="sigma-50" data-person="hunter" data-type="60fps">
+            <div class="shot-top">
+                <div class="shot-desc">Close-up off-frame — Hunter. 60fps. Not full song.</div>
+                <div class="shot-num">27</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 50</span>
+                <span class="tag tag-fps">60fps</span>
+                <span class="tag tag-person">Hunter</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SIGMA 35mm -->
+    <!-- ============================================ -->
+    <div class="section" data-section="sigma-35">
+        <div class="section-title">Sigma 35mm <span class="shot-count" id="sigma35Count"></span></div>
+
+        <div class="shot-card" data-lens="sigma-35" data-person="lucas" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Lucas angled shot. Full take.</div>
+                <div class="shot-num">28</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 35</span>
+                <span class="tag tag-person">Lucas</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="sigma-35" data-person="cortney" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Cortney full performance — straight on. Full take.</div>
+                <div class="shot-num">29</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 35</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="sigma-35" data-person="cortney" data-type="30fps">
+            <div class="shot-top">
+                <div class="shot-desc">Cortney full performance — 30fps.</div>
+                <div class="shot-num">30</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 35</span>
+                <span class="tag tag-fps">30fps</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="sigma-35" data-person="cortney" data-type="green-screen 30fps">
+            <div class="shot-top">
+                <div class="shot-desc">Cortney green screen — 30fps.</div>
+                <div class="shot-num">31</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 35</span>
+                <span class="tag tag-type">Green Screen</span>
+                <span class="tag tag-fps">30fps</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="sigma-35" data-person="" data-type="green-screen">
+            <div class="shot-top">
+                <div class="shot-desc">Green screen plates.</div>
+                <div class="shot-num">32</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Sigma 35</span>
+                <span class="tag tag-type">Green Screen</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- CANON 16-35mm (Wide) -->
+    <!-- ============================================ -->
+    <div class="section" data-section="canon-16-35">
+        <div class="section-title">Canon 16-35mm <span class="shot-count" id="wideCount"></span></div>
+
+        <div class="shot-card" data-lens="canon-16-35" data-person="" data-type="handheld">
+            <div class="shot-top">
+                <div class="shot-desc">B-roll — lights leading into lens for intro. Like Baxter video.</div>
+                <div class="shot-num">33</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 16-35</span>
+                <span class="tag tag-type">Handheld</span>
+                <span class="tag">B-Roll</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-16-35" data-person="cortney" data-type="handheld">
+            <div class="shot-top">
+                <div class="shot-desc">Handheld Cortney — full take.</div>
+                <div class="shot-num">34</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 16-35</span>
+                <span class="tag tag-type">Handheld</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-16-35" data-person="cortney" data-type="handheld">
+            <div class="shot-top">
+                <div class="shot-desc">Handheld Cortney — "Lately I've been dreaming" camera whip.</div>
+                <div class="shot-num">35</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 16-35</span>
+                <span class="tag tag-type">Handheld</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-16-35" data-person="luke" data-type="handheld">
+            <div class="shot-top">
+                <div class="shot-desc">Handheld Luke — full take.</div>
+                <div class="shot-num">36</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 16-35</span>
+                <span class="tag tag-type">Handheld</span>
+                <span class="tag tag-person">Luke</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-16-35" data-person="lucas" data-type="handheld">
+            <div class="shot-top">
+                <div class="shot-desc">Handheld drum fills.</div>
+                <div class="shot-num">37</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 16-35</span>
+                <span class="tag tag-type">Handheld</span>
+                <span class="tag tag-person">Lucas</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-16-35" data-person="dalton hunter" data-type="handheld">
+            <div class="shot-top">
+                <div class="shot-desc">Handheld freestyle — Dalton and Hunter.</div>
+                <div class="shot-num">38</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 16-35</span>
+                <span class="tag tag-type">Handheld</span>
+                <span class="tag tag-person">Dalton</span>
+                <span class="tag tag-person">Hunter</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- CANON 70-200mm (Telephoto) -->
+    <!-- ============================================ -->
+    <div class="section" data-section="canon-70-200">
+        <div class="section-title">Canon 70-200mm <span class="shot-count" id="teleCount"></span></div>
+
+        <div class="shot-card" data-lens="canon-70-200" data-person="luke" data-type="locked">
+            <div class="shot-top">
+                <div class="shot-desc">Luke — straight down right side of subway, locked. Full song.</div>
+                <div class="shot-num">39</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 70-200</span>
+                <span class="tag tag-type">Locked</span>
+                <span class="tag tag-person">Luke</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-70-200" data-person="luke" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Luke — zoom in/out for fast transitions.</div>
+                <div class="shot-num">40</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 70-200</span>
+                <span class="tag tag-person">Luke</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-70-200" data-person="luke" data-type="locked">
+            <div class="shot-top">
+                <div class="shot-desc">Luke — zoomed in, locked, lower guitar shot.</div>
+                <div class="shot-num">41</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 70-200</span>
+                <span class="tag tag-type">Locked</span>
+                <span class="tag tag-person">Luke</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-70-200" data-person="luke cortney" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Luke & Cortney — focus racks during harmony / trading vocals.</div>
+                <div class="shot-num">42</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 70-200</span>
+                <span class="tag tag-person">Luke</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-70-200" data-person="cortney" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Cortney — zoomed, off-frame. Full take.</div>
+                <div class="shot-num">43</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 70-200</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-70-200" data-person="cortney" data-type="30fps">
+            <div class="shot-top">
+                <div class="shot-desc">Cortney — zoomed, off-frame. 30fps. Full take.</div>
+                <div class="shot-num">44</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 70-200</span>
+                <span class="tag tag-fps">30fps</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-70-200" data-person="cortney" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Cortney — just vibing, no words. Face down to face up.</div>
+                <div class="shot-num">45</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 70-200</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-70-200" data-person="cortney" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Cortney — zooms for transition FX.</div>
+                <div class="shot-num">46</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 70-200</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-70-200" data-person="cortney" data-type="speed-fx">
+            <div class="shot-top">
+                <div class="shot-desc">Cortney — zooms for transition FX. Song slowed for speed-up.</div>
+                <div class="shot-num">47</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 70-200</span>
+                <span class="tag tag-speed">Speed FX</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-70-200" data-person="cortney" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Cortney — walking, lots of movement. Following action.</div>
+                <div class="shot-num">48</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 70-200</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-70-200" data-person="lucas" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Lucas — full take.</div>
+                <div class="shot-num">49</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 70-200</span>
+                <span class="tag tag-person">Lucas</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-70-200" data-person="lucas" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Lucas — do the fills a couple times.</div>
+                <div class="shot-num">50</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 70-200</span>
+                <span class="tag tag-person">Lucas</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-70-200" data-person="hunter dalton" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Hunter — down the left side. Rack focus maybe with Dalton.</div>
+                <div class="shot-num">51</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 70-200</span>
+                <span class="tag tag-person">Hunter</span>
+                <span class="tag tag-person">Dalton</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-70-200" data-person="" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Random zoom in/out take for transitions. Doesn't have to be whole song.</div>
+                <div class="shot-num">52</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 70-200</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-70-200" data-person="" data-type="60fps">
+            <div class="shot-top">
+                <div class="shot-desc">Random 60fps.</div>
+                <div class="shot-num">53</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 70-200</span>
+                <span class="tag tag-fps">60fps</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-70-200" data-person="" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">B-roll details — lights flickering, feet moving, hand letting mic drape down, guitar details.</div>
+                <div class="shot-num">54</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 70-200</span>
+                <span class="tag">B-Roll</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-70-200" data-person="cortney luke" data-type="speed-fx">
+            <div class="shot-top">
+                <div class="shot-desc">Random close-ups — Cortney, Luke, rack between them. Sped up, crooked angle.</div>
+                <div class="shot-num">55</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 70-200</span>
+                <span class="tag tag-speed">Speed FX</span>
+                <span class="tag tag-person">Cortney</span>
+                <span class="tag tag-person">Luke</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="canon-70-200" data-person="" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Whips for transition FX — different textures. Don't forget these.</div>
+                <div class="shot-num">56</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Canon 70-200</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- FISHEYE -->
+    <!-- ============================================ -->
+    <div class="section" data-section="fisheye">
+        <div class="section-title">Fisheye <span class="shot-count" id="fisheyeCount"></span></div>
+
+        <div class="shot-card" data-lens="fisheye" data-person="cortney" data-type="locked">
+            <div class="shot-top">
+                <div class="shot-desc">Security camera angle — top right, angled down left. Cortney. Full take.</div>
+                <div class="shot-num">57</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Fisheye</span>
+                <span class="tag tag-type">Locked</span>
+                <span class="tag tag-person">Cortney</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="fisheye" data-person="luke" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Luke rap take × 4. Just the breakdown rap section.</div>
+                <div class="shot-num">58</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Fisheye</span>
+                <span class="tag tag-person">Luke</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="fisheye" data-person="" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Camera on the ground — like it fell there. Capturing feet, energy, cables moving.</div>
+                <div class="shot-num">59</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Fisheye</span>
+                <span class="tag">B-Roll</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- PHOTOS -->
+    <!-- ============================================ -->
+    <div class="section" data-section="photos">
+        <div class="section-title">Photos <span class="shot-count" id="photosCount"></span></div>
+
+        <div class="shot-card" data-lens="fisheye" data-person="cortney luke lucas dalton hunter" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Band photos — fisheye + flash. Canon 5D. On seats looking down at them.</div>
+                <div class="shot-num">60</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-lens">Fisheye</span>
+                <span class="tag">Canon 5D</span>
+                <span class="tag tag-person">Full Band</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="" data-person="cortney luke lucas dalton hunter" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Down the middle — Luke's rap angle, full band, Cortney center looking down at camera.</div>
+                <div class="shot-num">61</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag">Canon 5D</span>
+                <span class="tag tag-person">Full Band</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="" data-person="" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Minolta shots on film — same setups.</div>
+                <div class="shot-num">62</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag">Minolta</span>
+                <span class="tag">Film</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="" data-person="" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Digi cam shots — same setups.</div>
+                <div class="shot-num">63</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag">Digi Cam</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- CONTENT (if time) -->
+    <!-- ============================================ -->
+    <div class="section" data-section="content">
+        <div class="section-title">Content — If Time Before Shoot <span class="shot-count" id="contentCount"></span></div>
+
+        <div class="shot-card" data-lens="" data-person="cortney" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Down the middle of the subway.</div>
+                <div class="shot-num">64</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-person">Cortney</span>
+                <span class="tag">Content</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="" data-person="cortney" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Facing window, sitting in chair.</div>
+                <div class="shot-num">65</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-person">Cortney</span>
+                <span class="tag">Content</span>
+            </div>
+        </div>
+
+        <div class="shot-card" data-lens="" data-person="cortney" data-type="">
+            <div class="shot-top">
+                <div class="shot-desc">Walking around — After-style IG shots fading into each other. Camera low, hip level, looking up at Cortney. Fading into chilling in subway, leaning against outside, walking around like who cares.</div>
+                <div class="shot-num">66</div>
+            </div>
+            <div class="shot-tags">
+                <span class="tag tag-person">Cortney</span>
+                <span class="tag">Content</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Matt Matheson Creative — mattmathesoncreative@gmail.com
+    </div>
+
+    <script>
+        // ── Filter State ──
+        const activeFilters = { lens: new Set(), person: new Set(), type: new Set() };
+        const allCards = document.querySelectorAll('.shot-card');
+        const allSections = document.querySelectorAll('.section');
+        const totalEl = document.getElementById('totalCount');
+        const visibleEl = document.getElementById('visibleCount');
+        const clearEl = document.getElementById('clearFilters');
+
+        totalEl.textContent = allCards.length;
+
+        // ── Count pills on init ──
+        function initCounts() {
+            document.querySelectorAll('.filter-pill').forEach(pill => {
+                const filterType = pill.dataset.filter;
+                const filterValue = pill.dataset.value;
+                let count = 0;
+                allCards.forEach(card => {
+                    const vals = (card.dataset[filterType] || '').split(' ').filter(Boolean);
+                    if (vals.includes(filterValue)) count++;
+                });
+                const countEl = pill.querySelector('.pill-count');
+                if (countEl) countEl.textContent = count;
+            });
+        }
+
+        // ── Toggle filter pill ──
+        document.querySelectorAll('.filter-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                const filterType = pill.dataset.filter;
+                const filterValue = pill.dataset.value;
+
+                if (activeFilters[filterType].has(filterValue)) {
+                    activeFilters[filterType].delete(filterValue);
+                    pill.classList.remove('active');
+                } else {
+                    activeFilters[filterType].add(filterValue);
+                    pill.classList.add('active');
+                }
+                applyFilters();
+            });
+        });
+
+        // ── Apply filters ──
+        function applyFilters() {
+            const hasAnyFilter = Object.values(activeFilters).some(s => s.size > 0);
+            let visible = 0;
+
+            allCards.forEach(card => {
+                let show = true;
+
+                // For each filter category that has active values,
+                // the card must match at least one value in that category
+                for (const [filterType, values] of Object.entries(activeFilters)) {
+                    if (values.size === 0) continue;
+                    const cardVals = (card.dataset[filterType] || '').split(' ').filter(Boolean);
+                    const matches = [...values].some(v => cardVals.includes(v));
+                    if (!matches) { show = false; break; }
+                }
+
+                card.classList.toggle('hidden', !show);
+                if (show) visible++;
+            });
+
+            visibleEl.textContent = visible;
+            clearEl.classList.toggle('visible', hasAnyFilter);
+
+            // Hide sections with zero visible cards
+            allSections.forEach(section => {
+                const visCards = section.querySelectorAll('.shot-card:not(.hidden)');
+                section.classList.toggle('section-hidden', visCards.length === 0);
+                // Update section counts
+                const countEl = section.querySelector('.shot-count');
+                if (countEl) {
+                    countEl.textContent = hasAnyFilter ? `(${visCards.length})` : `(${section.querySelectorAll('.shot-card').length})`;
+                }
+            });
+        }
+
+        // ── Clear all filters ──
+        function clearAllFilters() {
+            for (const key of Object.keys(activeFilters)) activeFilters[key].clear();
+            document.querySelectorAll('.filter-pill.active').forEach(p => p.classList.remove('active'));
+            applyFilters();
+        }
+
+        // ── Init ──
+        initCounts();
+        applyFilters();
+    </script>
+</body>
+</html>
