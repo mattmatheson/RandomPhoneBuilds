@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="published" content="2026-04-10">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METER — "Dreaming" — Day 1 Shooting Schedule (Subway)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+            background: #0a0a0a;
+            color: #e8e8e8;
+            padding: 20px;
+            max-width: 720px;
+            margin: 0 auto;
+            padding-bottom: 120px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 24px 0 20px;
+            border-bottom: 2px solid #333;
+            margin-bottom: 20px;
+        }
+        .header .brand {
+            font-size: 11px;
+            color: #666;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        .header h1 {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #fff;
+            margin-top: 4px;
+        }
+        .header .subtitle {
+            font-size: 13px;
+            color: #888;
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+        .header .date {
+            font-size: 20px;
+            font-weight: 800;
+            color: #ff4444;
+            margin-top: 14px;
+        }
+        .header .date-sub {
+            font-size: 12px;
+            color: #888;
+            margin-top: 2px;
+        }
+        .header .version-tag {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: #1a1a1a;
+            color: #888;
+            border: 1px solid #2a2a2a;
+        }
+
+        /* Sticky progress bar */
+        .progress-wrap {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(10, 10, 10, 0.94);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            margin: 0 -20px 16px;
+            padding: 12px 20px;
+            border-bottom: 1px solid #222;
+        }
+        .progress-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+        .progress-row strong { color: #ff4444; font-weight: 700; }
+        .progress-bar {
+            height: 6px;
+            background: #1a1a1a;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff4444, #ff6666);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+        .progress-actions {
+            margin-top: 8px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        .progress-actions button {
+            background: transparent;
+            color: #666;
+            border: 1px solid #222;
+            border-radius: 14px;
+            padding: 4px 12px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .progress-actions button:hover {
+            border-color: #ff4444;
+            color: #ff4444;
+        }
+
+        /* Key info strip */
+        .keyinfo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .keyinfo .cell {
+            background: #141414;
+            border: 1px solid #1e1e1e;
+            border-radius: 10px;
+            padding: 10px 12px;
+        }
+        .keyinfo .label {
+            font-size: 9px;
+            color: #666;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        .keyinfo .value {
+            font-size: 13px;
+            color: #fff;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+        .keyinfo .value.accent { color: #ff4444; }
+
+        /* Block */
+        .block {
+            margin-bottom: 22px;
+            border: 1px solid #1e1e1e;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #0e0e0e;
+        }
+        .block-header {
+            background: #141414;
+            padding: 14px 16px;
+            border-bottom: 1px solid #1e1e1e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .block-header .bh-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 0;
+        }
+        .block-header .bh-num {
+            font-size: 10px;
+            color: #ff4444;
+            font-weight: 800;
+            letter-spacing: 2px;
+            flex-shrink: 0;
+        }
+        .block-header .bh-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.3px;
+        }
+        .block-header .bh-meta {
+            font-size: 11px;
+            color: #888;
+            margin-top: 2px;
+            font-weight: 500;
+        }
+        .block-header .bh-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .block-header .bh-progress {
+            font-size: 11px;
+            color: #888;
+            font-variant-numeric: tabular-nums;
+            font-weight: 600;
+        }
+        .block-header .bh-chevron {
+            color: #555;
+            font-size: 12px;
+            transition: transform 0.2s;
+        }
+        .block.collapsed .bh-chevron { transform: rotate(-90deg); }
+        .block.collapsed .block-body { display: none; }
+
+        .block.all-done .block-header { opacity: 0.55; }
+        .block.all-done .bh-title { text-decoration: line-through; text-decoration-color: #ff4444; }
+
+        .block-body { padding: 8px 12px 12px; }
+
+        .block-note {
+            background: #1a1414;
+            border-left: 3px solid #ff4444;
+            padding: 10px 12px;
+            margin: 6px 4px 10px;
+            border-radius: 0 6px 6px 0;
+            font-size: 11px;
+            color: #bbb;
+            line-height: 1.5;
+        }
+
+        /* Shot row */
+        .shot {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            margin: 4px 0;
+            background: #141414;
+            border: 1px solid #1c1c1c;
+            border-radius: 10px;
+            transition: all 0.15s ease;
+        }
+        .shot:hover { border-color: #2a2a2a; }
+
+        .shot .checkbox {
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            border: 2px solid #333;
+            background: #0a0a0a;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+            transition: all 0.15s ease;
+        }
+        .shot .checkbox:hover { border-color: #ff4444; }
+        .shot .checkbox::after {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            background: #ff4444;
+            transform: scale(0);
+            transition: transform 0.15s ease;
+        }
+        .shot.done .checkbox { border-color: #ff4444; }
+        .shot.done .checkbox::after { transform: scale(1); }
+
+        .shot .main { flex: 1; min-width: 0; }
+
+        .shot-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .shot .desc {
+            font-size: 13px;
+            line-height: 1.45;
+            color: #e8e8e8;
+            font-weight: 500;
+            flex: 1;
+        }
+        .shot .desc .star {
+            color: #ffbb44;
+            margin-right: 4px;
+            font-size: 11px;
+        }
+        .shot .num {
+            color: #444;
+            font-size: 10px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            flex-shrink: 0;
+            padding-top: 2px;
+        }
+
+        .shot.done .desc {
+            text-decoration: line-through;
+            text-decoration-color: #ff4444;
+            text-decoration-thickness: 1.5px;
+            color: #666;
+        }
+        .shot.done .desc .star { opacity: 0.3; }
+
+        .shot .part {
+            display: inline-block;
+            font-size: 10px;
+            color: #ff9977;
+            font-weight: 600;
+            margin-top: 4px;
+            padding: 2px 8px;
+            background: #1f1414;
+            border-radius: 10px;
+            letter-spacing: 0.2px;
+        }
+        .shot.done .part { opacity: 0.4; }
+
+        .shot .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 6px;
+        }
+        .shot.done .tags { opacity: 0.4; }
+        .tag {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            padding: 2px 7px;
+            border-radius: 4px;
+            background: #1e1e1e;
+            color: #777;
+        }
+        .tag.tag-take-full { background: #1a2a1a; color: #77cc88; }
+        .tag.tag-take-partial { background: #2a261a; color: #ccbb77; }
+        .tag.tag-take-broll { background: #1a1a2a; color: #8888cc; }
+        .tag.tag-lens { background: #1a1a2a; color: #7788cc; }
+        .tag.tag-person { background: #1a2a1a; color: #77cc88; }
+        .tag.tag-fps { background: #2a1a2a; color: #cc77bb; }
+        .tag.tag-cam { background: #2a1a1a; color: #cc8877; }
+
+        .play-slot {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px dashed #2a2a2a;
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 10px;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
+        /* Footer reference */
+        .fx-card {
+            background: #141414;
+            border: 1px solid #1e1e1e;
+            border-radius: 14px;
+            padding: 16px;
+            margin-top: 22px;
+        }
+        .fx-card .title {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ff4444;
+            margin-bottom: 12px;
+        }
+        .fx-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 2fr;
+            gap: 6px;
+            padding: 8px 0;
+            border-bottom: 1px solid #1a1a1a;
+            font-size: 11px;
+            align-items: center;
+        }
+        .fx-row:last-child { border-bottom: none; }
+        .fx-row.fx-header {
+            color: #555;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 9px;
+            border-bottom: 1px solid #2a2a2a;
+            padding-bottom: 6px;
+        }
+        .fx-label { color: #ff4444; font-weight: 700; font-size: 10px; }
+        .fx-value { color: #ccc; font-size: 11px; }
+        .fx-feel { color: #777; font-size: 10px; font-style: italic; }
+
+        .legend {
+            background: #141414;
+            border: 1px solid #1e1e1e;
+            border-radius: 14px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+        .legend .title {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ff4444;
+            margin-bottom: 10px;
+        }
+        .legend-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 11px;
+            color: #aaa;
+            line-height: 1.5;
+        }
+        .legend-grid .lg-item {
+            display: flex;
+            gap: 6px;
+            align-items: baseline;
+        }
+        .legend-grid .star { color: #ffbb44; font-weight: 700; }
+
+        /* Links */
+        .quicklinks {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 11px;
+            color: #666;
+        }
+        .quicklinks a {
+            color: #ff4444;
+            text-decoration: none;
+            margin: 0 6px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        .quicklinks a:hover { text-decoration: underline; }
+
+        .footer {
+            text-align: center;
+            padding: 24px 0 10px;
+            color: #333;
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+
+        /* Print */
+        @media print {
+            body { background: #fff; color: #000; padding: 0; padding-bottom: 0; max-width: none; }
+            .progress-wrap, .progress-actions, .play-slot { display: none !important; }
+            .block { border: 1px solid #999; break-inside: avoid; background: #fff; page-break-inside: avoid; }
+            .block-header { background: #f5f5f5; color: #000; border-bottom: 1px solid #999; }
+            .block-header .bh-title { color: #000; }
+            .block-header .bh-num { color: #c42020; }
+            .block-header .bh-meta { color: #555; }
+            .block.collapsed .block-body { display: block !important; }
+            .bh-chevron { display: none; }
+            .shot { background: #fff; border: 1px solid #ccc; page-break-inside: avoid; }
+            .shot .desc { color: #000; }
+            .shot .checkbox { border-color: #999; background: #fff; }
+            .shot .part { background: #fff3ea; color: #c42020; border: 1px solid #c42020; }
+            .tag { background: #f0f0f0; color: #333; border: 1px solid #ddd; }
+            .tag.tag-take-full { background: #e6f5e6; color: #066; }
+            .tag.tag-take-partial { background: #fff5d6; color: #850; }
+            .tag.tag-take-broll { background: #e6e6f5; color: #339; }
+            .header h1, .header .subtitle, .keyinfo .value { color: #000; }
+            .keyinfo .cell { background: #fafafa; border: 1px solid #ccc; }
+            .fx-card, .legend { background: #fafafa; border: 1px solid #ccc; break-inside: avoid; }
+            .fx-card .title, .legend .title { color: #c42020; }
+            .version-tag { background: #eee; color: #555; border-color: #ccc; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="brand">METER — "Dreaming"</div>
+        <h1>Day 1 Shooting Schedule</h1>
+        <div class="subtitle">The Subway — Nashville, TN</div>
+        <div class="date">Saturday, April 11, 2026</div>
+        <div class="date-sub">5:00 PM — 11:00 PM (hard out)</div>
+        <div class="version-tag">V1 — AUDIO CUES COMING IN V2</div>
+    </div>
+
+    <div class="progress-wrap">
+        <div class="progress-row">
+            <span>DAY PROGRESS</span>
+            <span><strong id="doneCount">0</strong> / <strong id="totalCount">0</strong> shots</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-actions">
+            <button onclick="window.print()">Print</button>
+            <button onclick="expandAll()">Expand All</button>
+            <button onclick="collapseDone()">Collapse Done</button>
+            <button onclick="resetAll()">Reset</button>
+        </div>
+    </div>
+
+    <div class="keyinfo">
+        <div class="cell">
+            <div class="label">Load-in</div>
+            <div class="value">5:00 PM</div>
+        </div>
+        <div class="cell">
+            <div class="label">First shot</div>
+            <div class="value accent">~6:30 PM</div>
+        </div>
+        <div class="cell">
+            <div class="label">Hard out</div>
+            <div class="value accent">11:00 PM</div>
+        </div>
+    </div>
+
+    <!-- ================================= -->
+    <!-- BLOCK 0: SETUP -->
+    <!-- ================================= -->
+    <div class="block" data-block="0">
+        <div class="block-header" onclick="toggleBlock(this)">
+            <div class="bh-left">
+                <span class="bh-num">BLOCK 0</span>
+                <div>
+                    <div class="bh-title">Setup & Load-in</div>
+                    <div class="bh-meta">5:00 — 6:30 PM · 90 min</div>
+                </div>
+            </div>
+            <div class="bh-right">
+                <span class="bh-progress"></span>
+                <span class="bh-chevron">▾</span>
+            </div>
+        </div>
+        <div class="block-body">
+            <div class="block-note">Crew load-in, lighting, camera prep, band arrives → wardrobe, playback speaker test, quick walkthrough of subway and positions.</div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Crew load-in — all gear into the subway</div><div class="num">0.1</div></div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Lighting setup — Aperture 120D + dome, gaffer flags, gels</div><div class="num">0.2</div></div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Camera prep — FX3 rigs, tripod, gimbal balanced, cards formatted</div><div class="num">0.3</div></div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Playback speaker positioned + song file loaded, test volume</div><div class="num">0.4</div></div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Band arrives — wardrobe, walk-through positions, warm up</div><div class="num">0.5</div></div>
+            </div><div class="play-slot">—</div></div>
+        </div>
+    </div>
+
+    <!-- ================================= -->
+    <!-- BLOCK 1: FULL BAND TRIPOD SOURCE -->
+    <!-- ================================= -->
+    <div class="block" data-block="1">
+        <div class="block-header" onclick="toggleBlock(this)">
+            <div class="bh-left">
+                <span class="bh-num">BLOCK 1</span>
+                <div>
+                    <div class="bh-title">Full Band — Tripod Source Takes</div>
+                    <div class="bh-meta">6:30 — 7:15 PM · 45 min · LOCKED OFF</div>
+                </div>
+            </div>
+            <div class="bh-right">
+                <span class="bh-progress"></span>
+                <span class="bh-chevron">▾</span>
+            </div>
+        </div>
+        <div class="block-body">
+            <div class="block-note">These are load-bearing — every vocal/instrument cutaway pulls from these. Protect the time. Everyone fresh, everyone in frame, zero camera movement.</div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Full band — Sigma 50mm locked off, wide enough for all 5 — Take 1</div><div class="num">1.1</div></div>
+                <div class="part">Entire Song</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Sigma 50</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Full Band</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Full band — Sigma 50mm locked off — Take 2</div><div class="num">1.2</div></div>
+                <div class="part">Entire Song</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Sigma 50</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Full Band</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Full band — Sigma 50mm locked off — Take 3</div><div class="num">1.3</div></div>
+                <div class="part">Entire Song</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Sigma 50</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Full Band</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Full band — Canon 70-200 telephoto tripod — Take 1 (source for cutaways)</div><div class="num">1.4</div></div>
+                <div class="part">Entire Song</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Full Band</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Full band — Canon 70-200 telephoto — Take 2</div><div class="num">1.5</div></div>
+                <div class="part">Entire Song</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Full Band</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Full band — Canon 70-200 telephoto — Take 3</div><div class="num">1.6</div></div>
+                <div class="part">Entire Song</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Full Band</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+        </div>
+    </div>
+
+    <!-- ================================= -->
+    <!-- BLOCK 2: FULL BAND GIMBAL -->
+    <!-- ================================= -->
+    <div class="block" data-block="2">
+        <div class="block-header" onclick="toggleBlock(this)">
+            <div class="bh-left">
+                <span class="bh-num">BLOCK 2</span>
+                <div>
+                    <div class="bh-title">Full Band — Gimbal Coverage</div>
+                    <div class="bh-meta">7:15 — 8:00 PM · 45 min · GIMBAL STAYS BUILT</div>
+                </div>
+            </div>
+            <div class="bh-right">
+                <span class="bh-progress"></span>
+                <span class="bh-chevron">▾</span>
+            </div>
+        </div>
+        <div class="block-body">
+            <div class="block-note">Gimbal is built and balanced — knock out every gimbal move back-to-back before breaking down.</div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Gimbal push-in on full band — introducing the band for the first time</div><div class="num">2.1</div></div>
+                <div class="part">Intro</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Sigma 35</span>
+                    <span class="tag tag-cam">Gimbal</span>
+                    <span class="tag tag-person">Full Band</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc"><span class="star">★</span>Gimbal push-in — lyric "too weak to return where I started"</div><div class="num">2.2</div></div>
+                <div class="part">Verse 1 — "too weak to return where I started"</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Canon 16-35 / Sigma 35</span>
+                    <span class="tag tag-cam">Gimbal</span>
+                    <span class="tag tag-person">Cortney</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Gimbal up-high following instruments — Hunter, Dalton, Lucas (instrumental before Cortney re-enters)</div><div class="num">2.3</div></div>
+                <div class="part">Verse 2 — opening instrumental</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Sigma 35 / 50</span>
+                    <span class="tag tag-cam">Gimbal</span>
+                    <span class="tag tag-person">Hunter</span>
+                    <span class="tag tag-person">Dalton</span>
+                    <span class="tag tag-person">Lucas</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc"><span class="star">★</span>Fast gimbal pull-out backwards, 35mm — introducing first full-band chorus</div><div class="num">2.4</div></div>
+                <div class="part">Chorus 2 entry — first full-band chorus</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Sigma 35</span>
+                    <span class="tag tag-cam">Gimbal</span>
+                    <span class="tag tag-person">Full Band</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc"><span class="star">★</span>35mm tripod whip-pan onto Lucas hitting the toms (high angle, camera off Lucas then whips to him)</div><div class="num">2.5</div></div>
+                <div class="part">Pre-bridge — tom hits into breakdown</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Sigma 35</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Lucas</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+        </div>
+    </div>
+
+    <!-- ================================= -->
+    <!-- BLOCK 3: CORTNEY FOCUSED -->
+    <!-- ================================= -->
+    <div class="block" data-block="3">
+        <div class="block-header" onclick="toggleBlock(this)">
+            <div class="bh-left">
+                <span class="bh-num">BLOCK 3</span>
+                <div>
+                    <div class="bh-title">Cortney — Lead Vocal Focus</div>
+                    <div class="bh-meta">8:00 — 9:00 PM · 60 min · THE HEAVIEST LIFT</div>
+                </div>
+            </div>
+            <div class="bh-right">
+                <span class="bh-progress"></span>
+                <span class="bh-chevron">▾</span>
+            </div>
+        </div>
+        <div class="block-body">
+            <div class="block-note">Rest of band can tap out or half-play. Cortney is carrying this block. Water + breaks between takes.</div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Cortney telephoto, vocal focused — Take 1</div><div class="num">3.1</div></div>
+                <div class="part">Entire Song — source for all vocal cutaways</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Cortney</span>
+                    <span class="tag tag-fps">24fps</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Cortney telephoto, vocal focused — Take 2</div><div class="num">3.2</div></div>
+                <div class="part">Entire Song</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Cortney</span>
+                    <span class="tag tag-fps">24fps</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Cortney telephoto, vocal focused — Take 3</div><div class="num">3.3</div></div>
+                <div class="part">Entire Song</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Cortney</span>
+                    <span class="tag tag-fps">24fps</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Cortney telephoto — Slow FX variant (Coldplay effect)</div><div class="num">3.4</div></div>
+                <div class="part">Entire Song — sped-up playback, slowed in post</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Cortney</span>
+                    <span class="tag tag-fps">30fps</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Cortney gimbal up-high — Sigma 35mm normal speed</div><div class="num">3.5</div></div>
+                <div class="part">Entire Song</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Sigma 35</span>
+                    <span class="tag tag-cam">Gimbal</span>
+                    <span class="tag tag-person">Cortney</span>
+                    <span class="tag tag-fps">24fps</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Cortney gimbal up-high — Sigma 50mm normal speed</div><div class="num">3.6</div></div>
+                <div class="part">Entire Song</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Sigma 50</span>
+                    <span class="tag tag-cam">Gimbal</span>
+                    <span class="tag tag-person">Cortney</span>
+                    <span class="tag tag-fps">24fps</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Cortney gimbal up-high — 30fps Slow FX variant (heavy use in Verse 2)</div><div class="num">3.7</div></div>
+                <div class="part">Entire Song — Slow FX variant</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Sigma 35 / 50</span>
+                    <span class="tag tag-cam">Gimbal</span>
+                    <span class="tag tag-person">Cortney</span>
+                    <span class="tag tag-fps">30fps</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc"><span class="star">★</span>Rack focus Cortney ↔ Luke, dueling vocals, lyric "so let me explode"</div><div class="num">3.8</div></div>
+                <div class="part">Verse 2 pre-chorus — "so let me explode"</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Cortney</span>
+                    <span class="tag tag-person">Luke</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Cortney telephoto, bridge-specific — normal speed</div><div class="num">3.9</div></div>
+                <div class="part">Bridge</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Cortney</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Cortney gimbal, bridge-specific — normal speed</div><div class="num">3.10</div></div>
+                <div class="part">Bridge</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Sigma 35 / 50</span>
+                    <span class="tag tag-cam">Gimbal</span>
+                    <span class="tag tag-person">Cortney</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Cortney 50mm low-shutter time-lapse, blurry/messy (2× speed source)</div><div class="num">3.11</div></div>
+                <div class="part">Bridge — 2nd drum fill</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Sigma 50</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Cortney</span>
+                    <span class="tag tag-fps">Speed FX</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc"><span class="star">★</span>Match cut medium of Cortney — MUST mirror Day 2 living room angle for acoustic fakeout</div><div class="num">3.12</div></div>
+                <div class="part">Chorus 3 entry — acoustic fakeout match cut</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Sigma 35 / 50</span>
+                    <span class="tag tag-cam">Gimbal</span>
+                    <span class="tag tag-person">Cortney</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc"><span class="star">★</span>Straight-on gimbal medium of Cortney — lyric "my own"</div><div class="num">3.13</div></div>
+                <div class="part">Outro — "my own"</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Sigma 50</span>
+                    <span class="tag tag-cam">Gimbal</span>
+                    <span class="tag tag-person">Cortney</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc"><span class="star">★</span>Canon 16-35 gimbal pullback — Cortney looking up, mic in the air, lyric "nightmare"</div><div class="num">3.14</div></div>
+                <div class="part">Outro — "nightmare"</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Canon 16-35</span>
+                    <span class="tag tag-cam">Gimbal</span>
+                    <span class="tag tag-person">Cortney</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+        </div>
+    </div>
+
+    <!-- ================================= -->
+    <!-- BLOCK 4: INDIVIDUAL MEMBERS -->
+    <!-- ================================= -->
+    <div class="block" data-block="4">
+        <div class="block-header" onclick="toggleBlock(this)">
+            <div class="bh-left">
+                <span class="bh-num">BLOCK 4</span>
+                <div>
+                    <div class="bh-title">Individual Members</div>
+                    <div class="bh-meta">9:00 — 10:00 PM · 60 min · Luke → Hunter → Dalton → Lucas</div>
+                </div>
+            </div>
+            <div class="bh-right">
+                <span class="bh-progress"></span>
+                <span class="bh-chevron">▾</span>
+            </div>
+        </div>
+        <div class="block-body">
+            <div class="block-note">Batch by lens to reduce swap time. Luke has the most shots so start there.</div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Luke telephoto full guitar take (source for Luke cutaways)</div><div class="num">4.1</div></div>
+                <div class="part">Entire Song</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Luke</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Luke off-axis telephoto — tripod shifted right so Luke is frame-left, right edge of subway frame-right</div><div class="num">4.2</div></div>
+                <div class="part">Entire Song</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Luke</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Luke chug take — just the guitar chug sections</div><div class="num">4.3</div></div>
+                <div class="part">Chug sections (verse/bridge)</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Luke</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Luke wide-angle handheld, shaky high-energy — Luke's first vocal entry</div><div class="num">4.4</div></div>
+                <div class="part">Verse 1 — Luke's first vocals</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Canon 16-35</span>
+                    <span class="tag tag-cam">Handheld</span>
+                    <span class="tag tag-person">Luke</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc"><span class="star">★</span>Luke fisheye low angle, security-cam vibe — lyric "sun sets quick on a day like this"</div><div class="num">4.5</div></div>
+                <div class="part">Verse 2 — "sun sets quick on a day like this"</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Fisheye</span>
+                    <span class="tag tag-cam">Handheld</span>
+                    <span class="tag tag-person">Luke</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Luke low-right angle — bridge chugs + guitar ring-out (~10 sec)</div><div class="num">4.6</div></div>
+                <div class="part">Bridge — Luke chugs/ring-out</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Luke</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Hunter wide-angle, lead guitar focused — intro lead line</div><div class="num">4.7</div></div>
+                <div class="part">Intro — lead guitar line</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Canon 16-35</span>
+                    <span class="tag tag-cam">Handheld</span>
+                    <span class="tag tag-person">Hunter</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Hunter random guitar cutaways — Take 1</div><div class="num">4.8</div></div>
+                <div class="part">Entire Song</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Hunter</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Hunter random guitar cutaways — Take 2</div><div class="num">4.9</div></div>
+                <div class="part">Entire Song</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Hunter</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Hunter guitar chugs — bridge/rap segment</div><div class="num">4.10</div></div>
+                <div class="part">Bridge / rap segment</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Hunter</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Dalton random bass cutaways — Take 1</div><div class="num">4.11</div></div>
+                <div class="part">Entire Song</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Dalton</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Dalton random bass cutaways — Take 2</div><div class="num">4.12</div></div>
+                <div class="part">Entire Song</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Dalton</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Lucas wide-angle handheld — full drum playthrough</div><div class="num">4.13</div></div>
+                <div class="part">Entire Song</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Canon 16-35</span>
+                    <span class="tag tag-cam">Handheld</span>
+                    <span class="tag tag-person">Lucas</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Lucas drum fill #1 — wide angle specific capture</div><div class="num">4.14</div></div>
+                <div class="part">Bridge — 1st drum fill</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Canon 16-35</span>
+                    <span class="tag tag-cam">Handheld</span>
+                    <span class="tag tag-person">Lucas</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Lucas drum fill #2 — wide angle specific capture</div><div class="num">4.15</div></div>
+                <div class="part">Bridge — 2nd drum fill</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Canon 16-35</span>
+                    <span class="tag tag-cam">Handheld</span>
+                    <span class="tag tag-person">Lucas</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Lucas drum fill #3 — wide angle (leads into rap segment)</div><div class="num">4.16</div></div>
+                <div class="part">Bridge — 3rd drum fill (into rap segment)</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Canon 16-35</span>
+                    <span class="tag tag-cam">Handheld</span>
+                    <span class="tag tag-person">Lucas</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+        </div>
+    </div>
+
+    <!-- ================================= -->
+    <!-- BLOCK 5: SPECIALTY + SLOW-MO + VFX -->
+    <!-- ================================= -->
+    <div class="block" data-block="5">
+        <div class="block-header" onclick="toggleBlock(this)">
+            <div class="bh-left">
+                <span class="bh-num">BLOCK 5</span>
+                <div>
+                    <div class="bh-title">Slow-Mo + VFX Green Screen</div>
+                    <div class="bh-meta">10:00 — 10:40 PM · 40 min · GREEN SCREEN LIGHTING RESET</div>
+                </div>
+            </div>
+            <div class="bh-right">
+                <span class="bh-progress"></span>
+                <span class="bh-chevron">▾</span>
+            </div>
+        </div>
+        <div class="block-body">
+            <div class="block-note">120fps slow-mo first while band still has energy. Then strip down and reset for green screen — separate lighting pass. If running tight, green screen is first to move to Day 2.</div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">120fps telephoto — super slow-mo, high energy, NOT synced (cables, guitars flying, band rocking out) — Take 1</div><div class="num">5.1</div></div>
+                <div class="part">Final Chorus — crescendo</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Full Band</span>
+                    <span class="tag tag-fps">120fps</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">120fps telephoto slow-mo — Take 2</div><div class="num">5.2</div></div>
+                <div class="part">Final Chorus</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Full Band</span>
+                    <span class="tag tag-fps">120fps</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">120fps telephoto slow-mo — Take 3</div><div class="num">5.3</div></div>
+                <div class="part">Final Chorus</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Full Band</span>
+                    <span class="tag tag-fps">120fps</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">VFX background plates — gimbal push-in/pull-out of subway background (no talent)</div><div class="num">5.4</div></div>
+                <div class="part">Bridge VFX</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Sigma 35 / 50</span>
+                    <span class="tag tag-cam">Gimbal</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Green screen Cortney — tripod locked, normal speed</div><div class="num">5.5</div></div>
+                <div class="part">Bridge VFX — normal</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Sigma 50</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Cortney</span>
+                    <span class="tag tag-fps">24fps</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Green screen Cortney — tripod locked, 30fps Slow FX variant</div><div class="num">5.6</div></div>
+                <div class="part">Bridge VFX — Slow FX</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Sigma 50</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Cortney</span>
+                    <span class="tag tag-fps">30fps</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Green screen Cortney — tripod locked, source for 2× fast (slowed song variant)</div><div class="num">5.7</div></div>
+                <div class="part">Bridge VFX — Fast 2×</div>
+                <div class="tags">
+                    <span class="tag tag-take-full">Full Take</span>
+                    <span class="tag tag-lens">Sigma 50</span>
+                    <span class="tag tag-cam">Tripod</span>
+                    <span class="tag tag-person">Cortney</span>
+                    <span class="tag tag-fps">Speed FX</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+        </div>
+    </div>
+
+    <!-- ================================= -->
+    <!-- BLOCK 6: B-ROLL + ENDING -->
+    <!-- ================================= -->
+    <div class="block" data-block="6">
+        <div class="block-header" onclick="toggleBlock(this)">
+            <div class="bh-left">
+                <span class="bh-num">BLOCK 6</span>
+                <div>
+                    <div class="bh-title">B-Roll + Ending (Lights Out)</div>
+                    <div class="bh-meta">10:40 — 11:00 PM · 20 min · LIGHTS CUT IS LAST — NO GOING BACK</div>
+                </div>
+            </div>
+            <div class="bh-right">
+                <span class="bh-progress"></span>
+                <span class="bh-chevron">▾</span>
+            </div>
+        </div>
+        <div class="block-body">
+            <div class="block-note">Final gimbal pull-out with lights cut MUST be the last thing shot. Once the lights go out, the shoot is over. Confirm you got everything else first.</div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">B-roll — flickering lights, location atmosphere</div><div class="num">6.1</div></div>
+                <div class="tags">
+                    <span class="tag tag-take-broll">B-Roll</span>
+                    <span class="tag tag-lens">Any</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">B-roll — focus rack details (equipment, faces, venue textures)</div><div class="num">6.2</div></div>
+                <div class="tags">
+                    <span class="tag tag-take-broll">B-Roll</span>
+                    <span class="tag tag-lens">Canon 70-200</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc">Final pickup — any missing shots from earlier blocks (review monitor first)</div><div class="num">6.3</div></div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Pickups</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+
+            <div class="shot"><div class="checkbox"></div><div class="main">
+                <div class="shot-top"><div class="desc"><span class="star">★</span>FINAL SHOT — Gimbal pull-out + all lights cut simultaneously on the last beat</div><div class="num">6.4</div></div>
+                <div class="part">Outro — final beat</div>
+                <div class="tags">
+                    <span class="tag tag-take-partial">Partial</span>
+                    <span class="tag tag-lens">Sigma 35 / 50</span>
+                    <span class="tag tag-cam">Gimbal</span>
+                    <span class="tag tag-person">Full Band</span>
+                </div>
+            </div><div class="play-slot">—</div></div>
+        </div>
+    </div>
+
+    <!-- Speed FX Reference -->
+    <div class="fx-card">
+        <div class="title">Speed FX Reference</div>
+        <div class="fx-row fx-header">
+            <span>Effect</span>
+            <span>Record</span>
+            <span>Playback</span>
+            <span>Feel</span>
+        </div>
+        <div class="fx-row">
+            <span class="fx-label">Slow FX</span>
+            <span class="fx-value">30fps</span>
+            <span class="fx-value">Song @ 125%</span>
+            <span class="fx-feel">Coldplay-style slow-mo, lips still synced</span>
+        </div>
+        <div class="fx-row">
+            <span class="fx-label">Fast 2×</span>
+            <span class="fx-value">24fps</span>
+            <span class="fx-value">Song @ 50%</span>
+            <span class="fx-feel">Classic jerky undercrank</span>
+        </div>
+        <div class="fx-row">
+            <span class="fx-label">Fast 3×</span>
+            <span class="fx-value">24fps</span>
+            <span class="fx-value">Song @ 33%</span>
+            <span class="fx-feel">Horror / creepy crawly vibe</span>
+        </div>
+    </div>
+
+    <div class="legend">
+        <div class="title">Legend</div>
+        <div class="legend-grid">
+            <div class="lg-item"><span class="star">★</span><span>Can't-miss partial — lyric-specific</span></div>
+            <div class="lg-item"><span class="tag tag-take-full">Full</span><span>Full-song take</span></div>
+            <div class="lg-item"><span class="tag tag-take-partial">Partial</span><span>Specific song moment</span></div>
+            <div class="lg-item"><span class="tag tag-take-broll">B-Roll</span><span>No sync needed</span></div>
+        </div>
+    </div>
+
+    <div class="quicklinks">
+        <a href="../meter-call-sheet/">Call Sheet</a> ·
+        <a href="../meter-shot-list/">Full Shot List</a> ·
+        <a href="../meter-music-video-production/">Production Doc</a> ·
+        <a href="../meter-reference-board/">Reference Board</a>
+    </div>
+
+    <div class="footer">MATT MATHESON CREATIVE — DREAMING — DAY 1 V1</div>
+
+<script>
+(function(){
+    const STORAGE_KEY = 'meter-day1-v1-progress';
+
+    function loadState(){
+        try {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+        } catch(e) { return {}; }
+    }
+    function saveState(state){
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+    }
+
+    // Initialize shot IDs and hook up checkboxes
+    const shots = document.querySelectorAll('.shot');
+    const state = loadState();
+
+    shots.forEach((shot, i) => {
+        const numEl = shot.querySelector('.num');
+        const id = numEl ? numEl.textContent.trim() : ('s' + i);
+        shot.dataset.shotId = id;
+        if (state[id]) shot.classList.add('done');
+        const box = shot.querySelector('.checkbox');
+        box.addEventListener('click', () => {
+            shot.classList.toggle('done');
+            const newState = loadState();
+            if (shot.classList.contains('done')) newState[id] = true;
+            else delete newState[id];
+            saveState(newState);
+            updateProgress();
+        });
+    });
+
+    function updateProgress(){
+        const total = shots.length;
+        let done = 0;
+        shots.forEach(s => { if (s.classList.contains('done')) done++; });
+        document.getElementById('doneCount').textContent = done;
+        document.getElementById('totalCount').textContent = total;
+        document.getElementById('progressFill').style.width = (total ? (done/total*100) : 0) + '%';
+
+        // Per-block progress + all-done state
+        document.querySelectorAll('.block').forEach(block => {
+            const blockShots = block.querySelectorAll('.shot');
+            let bDone = 0;
+            blockShots.forEach(s => { if (s.classList.contains('done')) bDone++; });
+            const progEl = block.querySelector('.bh-progress');
+            if (progEl) progEl.textContent = bDone + '/' + blockShots.length;
+            if (blockShots.length > 0 && bDone === blockShots.length) {
+                block.classList.add('all-done');
+            } else {
+                block.classList.remove('all-done');
+            }
+        });
+    }
+
+    window.toggleBlock = function(header){
+        header.closest('.block').classList.toggle('collapsed');
+    };
+    window.expandAll = function(){
+        document.querySelectorAll('.block').forEach(b => b.classList.remove('collapsed'));
+    };
+    window.collapseDone = function(){
+        document.querySelectorAll('.block').forEach(b => {
+            if (b.classList.contains('all-done')) b.classList.add('collapsed');
+            else b.classList.remove('collapsed');
+        });
+    };
+    window.resetAll = function(){
+        if (!confirm('Reset all checkboxes? This clears your day progress.')) return;
+        localStorage.removeItem(STORAGE_KEY);
+        document.querySelectorAll('.shot').forEach(s => s.classList.remove('done'));
+        updateProgress();
+    };
+
+    updateProgress();
+})();
+</script>
+</body>
+</html>
