@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="published" content="2026-04-11">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METER — "Dreaming" — Visual Reference Sheet</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --ink: #111; --ink-soft: #555; --ink-faint: #888; --rule: #000; --rule-soft: #bbb; --paper: #fff; }
+        html, body {
+            background: #e8e8e8;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: var(--ink);
+            font-size: 13px;
+            line-height: 1.45;
+            -webkit-font-smoothing: antialiased;
+        }
+        .toolbar {
+            max-width: 8.5in;
+            margin: 24px auto 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            background: #222;
+            color: #ddd;
+            border-radius: 6px;
+            font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+        .toolbar strong { color: #fff; }
+        .toolbar button {
+            background: transparent;
+            color: #ddd;
+            border: 1px solid #555;
+            border-radius: 3px;
+            padding: 5px 12px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .toolbar button:hover { border-color: #fff; color: #fff; }
+        .page {
+            max-width: 8.5in;
+            margin: 24px auto;
+            background: var(--paper);
+            padding: 0.6in 0.5in 0.8in;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.15);
+        }
+        .masthead {
+            text-align: center;
+            padding-bottom: 16px;
+            border-bottom: 3px double var(--ink);
+            margin-bottom: 24px;
+        }
+        .masthead .house {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            margin-bottom: 6px;
+        }
+        .masthead h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: var(--ink);
+        }
+        .masthead .sub {
+            font-family: Georgia, serif;
+            font-style: italic;
+            font-size: 13px;
+            color: var(--ink-soft);
+            margin-top: 6px;
+        }
+        .masthead .doctype {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid var(--rule-soft);
+            display: inline-block;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .toc {
+            background: #faf8f4;
+            border: 1px solid var(--rule-soft);
+            padding: 14px 18px;
+            margin-bottom: 24px;
+        }
+        .toc h3 {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--ink);
+            margin-bottom: 8px;
+        }
+        .toc ol {
+            list-style: none;
+            columns: 2;
+            column-gap: 30px;
+        }
+        .toc li {
+            font-size: 12px;
+            padding: 3px 0;
+            border-bottom: 1px dotted var(--rule-soft);
+            font-family: Georgia, serif;
+            break-inside: avoid;
+        }
+        .toc li span.num {
+            color: var(--ink-faint);
+            font-size: 10px;
+            margin-right: 6px;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-weight: 700;
+        }
+        .section { margin-bottom: 28px; }
+        .section.page-break { page-break-before: always; }
+        .section-header {
+            border-bottom: 1.5px solid var(--ink);
+            padding-bottom: 5px;
+            margin-bottom: 14px;
+            page-break-after: avoid;
+        }
+        .section-header h2 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            color: var(--ink);
+        }
+        .section-header .count {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            font-weight: 700;
+            margin-top: 2px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .grid.grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid.grid-4 { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .thumb { page-break-inside: avoid; }
+        .thumb img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: 1px solid #888;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+        }
+        .grid.grid-4 .thumb img { aspect-ratio: 1/1; }
+        .thumb .caption {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 9px;
+            color: var(--ink-faint);
+            margin-top: 3px;
+            letter-spacing: 0.2px;
+            line-height: 1.3;
+        }
+        .gif-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+        .gif-item {
+            page-break-inside: avoid;
+            border: 1px solid var(--ink);
+            padding: 10px;
+        }
+        .gif-item .label {
+            font-family: Georgia, serif;
+            font-weight: 700;
+            font-size: 12px;
+            margin-bottom: 5px;
+            color: var(--ink);
+        }
+        .gif-item .contact-sheet img {
+            width: 100%;
+            display: block;
+            border: 1px solid #aaa;
+        }
+        .gif-item .note {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 9px;
+            color: var(--ink-faint);
+            margin-top: 4px;
+            font-style: italic;
+        }
+        .gif-item .note code {
+            font-family: Menlo, Monaco, monospace;
+            font-size: 9px;
+            color: var(--ink-soft);
+            font-style: normal;
+        }
+        .intro {
+            background: #faf8f4;
+            border-left: 3px solid var(--ink);
+            padding: 12px 14px;
+            margin-bottom: 20px;
+            font-family: Georgia, serif;
+            font-size: 11.5px;
+            line-height: 1.55;
+            color: var(--ink);
+        }
+        .doc-footer {
+            margin-top: 30px;
+            padding-top: 12px;
+            border-top: 1px solid var(--rule-soft);
+            text-align: center;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--ink-faint);
+            text-transform: uppercase;
+        }
+        @media print {
+            @page { size: letter; margin: 0.45in; }
+            html, body { background: #fff; font-size: 10.5px; }
+            .toolbar { display: none; }
+            .page { box-shadow: none; margin: 0; padding: 0; max-width: none; }
+            .masthead { margin-bottom: 16px; padding-bottom: 10px; }
+            .masthead h1 { font-size: 24px; }
+            .section { margin-bottom: 16px; }
+            .section.page-break { page-break-before: always; }
+            .grid { gap: 6px; }
+            .grid.grid-4 { gap: 5px; }
+            .thumb img { border-width: 0.5pt; }
+            .gif-item { page-break-inside: avoid; padding: 6px; }
+            .gif-grid { gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="toolbar">
+    <div><strong>METER — "Dreaming" — Visual Reference</strong></div>
+    <div><button onclick="window.print()">Print / Save as PDF</button></div>
+</div>
+
+<div class="page">
+
+    <div class="masthead">
+        <div class="house">Matt Matheson Creative</div>
+        <h1>DREAMING — VISUAL REFERENCE</h1>
+        <div class="sub">Meter · Music Video · All reference imagery in one place</div>
+        <div class="doctype">Crew Reference Sheet · Printable</div>
+    </div>
+
+    <div class="intro">
+        Complete visual reference library for the Meter "Dreaming" music video. Performance tone frames, living room (Lincoln Park "Papercut" style) stills, animated camera move contact sheets, subway location scout, mood board, and visual development. GIFs are shown as <strong>3×3 contact sheets</strong> sampling key frames across each camera move — fully printable.
+    </div>
+
+    <div class="toc">
+        <h3>Contents</h3>
+        <ol>
+            <li><span class="num">01</span>Performance Tone &amp; Visual Reference (12 frames)</li>
+            <li><span class="num">02</span>Living Room / Papercut Stills (10 frames)</li>
+            <li><span class="num">03</span>Papercut Camera Moves (9 contact sheets)</li>
+            <li><span class="num">04</span>Subway Location Scout (14 frames)</li>
+            <li><span class="num">05</span>Mood Board / Visual Language (35 references)</li>
+            <li><span class="num">06</span>Meter Visual Development (3 frames)</li>
+        </ol>
+    </div>
+
+        <section class="section page-break">
+            <div class="section-header">
+                <h2>01 — Performance Tone &amp; Visual Reference</h2>
+                <div class="count">12 frames · Baxter reference for performance energy, lighting, framing</div>
+            </div>
+            <div class="grid">
+            <div class="thumb"><img src="assets/baxter-band-performance.jpg" alt="Baxter Baxter Band Performance"><div class="caption">Baxter Band Performance</div></div>
+            <div class="thumb"><img src="assets/baxter-band-white.jpg" alt="Baxter Baxter Band White"><div class="caption">Baxter Band White</div></div>
+            <div class="thumb"><img src="assets/baxter-crt-pan.jpg" alt="Baxter Baxter Crt Pan"><div class="caption">Baxter Crt Pan</div></div>
+            <div class="thumb"><img src="assets/baxter-crt-television.jpg" alt="Baxter Baxter Crt Television"><div class="caption">Baxter Crt Television</div></div>
+            <div class="thumb"><img src="assets/baxter-dark-hallway.jpg" alt="Baxter Baxter Dark Hallway"><div class="caption">Baxter Dark Hallway</div></div>
+            <div class="thumb"><img src="assets/baxter-industrial-room.jpg" alt="Baxter Baxter Industrial Room"><div class="caption">Baxter Industrial Room</div></div>
+            <div class="thumb"><img src="assets/baxter-low-angle-corridor.jpg" alt="Baxter Baxter Low Angle Corridor"><div class="caption">Baxter Low Angle Corridor</div></div>
+            <div class="thumb"><img src="assets/baxter-platform-lights.jpg" alt="Baxter Baxter Platform Lights"><div class="caption">Baxter Platform Lights</div></div>
+            <div class="thumb"><img src="assets/baxter-portrait-closeup.jpg" alt="Baxter Baxter Portrait Closeup"><div class="caption">Baxter Portrait Closeup</div></div>
+            <div class="thumb"><img src="assets/baxter-portrait-emotion.jpg" alt="Baxter Baxter Portrait Emotion"><div class="caption">Baxter Portrait Emotion</div></div>
+            <div class="thumb"><img src="assets/baxter-portrait-intense.jpg" alt="Baxter Baxter Portrait Intense"><div class="caption">Baxter Portrait Intense</div></div>
+            <div class="thumb"><img src="assets/baxter-teal-corridor.jpg" alt="Baxter Baxter Teal Corridor"><div class="caption">Baxter Teal Corridor</div></div>
+            </div>
+        </section>
+        <section class="section page-break">
+            <div class="section-header">
+                <h2>02 — Living Room / Papercut Stills</h2>
+                <div class="count">10 stills · Lincoln Park 'Papercut' style reference for Day 2 living room</div>
+            </div>
+            <div class="grid">
+            <div class="thumb"><img src="assets/papercut-band-sitting.jpg" alt="Papercut Papercut Band Sitting"><div class="caption">Papercut Band Sitting</div></div>
+            <div class="thumb"><img src="assets/papercut-couch-closeup.jpg" alt="Papercut Papercut Couch Closeup"><div class="caption">Papercut Couch Closeup</div></div>
+            <div class="thumb"><img src="assets/papercut-extreme-closeup.jpg" alt="Papercut Papercut Extreme Closeup"><div class="caption">Papercut Extreme Closeup</div></div>
+            <div class="thumb"><img src="assets/papercut-face-glass.jpg" alt="Papercut Papercut Face Glass"><div class="caption">Papercut Face Glass</div></div>
+            <div class="thumb"><img src="assets/papercut-guitar-couch.jpg" alt="Papercut Papercut Guitar Couch"><div class="caption">Papercut Guitar Couch</div></div>
+            <div class="thumb"><img src="assets/papercut-living-room-band.jpg" alt="Papercut Papercut Living Room Band"><div class="caption">Papercut Living Room Band</div></div>
+            <div class="thumb"><img src="assets/papercut-motion-blur.jpg" alt="Papercut Papercut Motion Blur"><div class="caption">Papercut Motion Blur</div></div>
+            <div class="thumb"><img src="assets/papercut-room-wallpaper.jpg" alt="Papercut Papercut Room Wallpaper"><div class="caption">Papercut Room Wallpaper</div></div>
+            <div class="thumb"><img src="assets/papercut-wide-dark.jpg" alt="Papercut Papercut Wide Dark"><div class="caption">Papercut Wide Dark</div></div>
+            <div class="thumb"><img src="assets/papercut-wide-room.jpg" alt="Papercut Papercut Wide Room"><div class="caption">Papercut Wide Room</div></div>
+            </div>
+        </section>
+        <section class="section page-break">
+            <div class="section-header">
+                <h2>Papercut Camera Moves</h2>
+                <div class="count">9 contact sheets · Lincoln Park "Papercut" style camera moves · Each grid shows key frames sampled across the GIF</div>
+            </div>
+            <div class="gif-grid">
+            <div class="gif-item">
+                <div class="label">Camera Move 02</div>
+                <div class="contact-sheet"><img src="assets/contact-sheets/contact-papercut-cam-02.jpg" alt="Camera move 02 contact sheet"></div>
+                <div class="note">Key frames from <code>papercut-cam-02.gif</code> — animated version online</div>
+            </div>
+            <div class="gif-item">
+                <div class="label">Camera Move 05</div>
+                <div class="contact-sheet"><img src="assets/contact-sheets/contact-papercut-cam-05.jpg" alt="Camera move 05 contact sheet"></div>
+                <div class="note">Key frames from <code>papercut-cam-05.gif</code> — animated version online</div>
+            </div>
+            <div class="gif-item">
+                <div class="label">Camera Move 06</div>
+                <div class="contact-sheet"><img src="assets/contact-sheets/contact-papercut-cam-06.jpg" alt="Camera move 06 contact sheet"></div>
+                <div class="note">Key frames from <code>papercut-cam-06.gif</code> — animated version online</div>
+            </div>
+            <div class="gif-item">
+                <div class="label">Camera Move 07</div>
+                <div class="contact-sheet"><img src="assets/contact-sheets/contact-papercut-cam-07.jpg" alt="Camera move 07 contact sheet"></div>
+                <div class="note">Key frames from <code>papercut-cam-07.gif</code> — animated version online</div>
+            </div>
+            <div class="gif-item">
+                <div class="label">Camera Move 08</div>
+                <div class="contact-sheet"><img src="assets/contact-sheets/contact-papercut-cam-08.jpg" alt="Camera move 08 contact sheet"></div>
+                <div class="note">Key frames from <code>papercut-cam-08.gif</code> — animated version online</div>
+            </div>
+            <div class="gif-item">
+                <div class="label">Camera Move 11</div>
+                <div class="contact-sheet"><img src="assets/contact-sheets/contact-papercut-cam-11.jpg" alt="Camera move 11 contact sheet"></div>
+                <div class="note">Key frames from <code>papercut-cam-11.gif</code> — animated version online</div>
+            </div>
+            <div class="gif-item">
+                <div class="label">Camera Move 12</div>
+                <div class="contact-sheet"><img src="assets/contact-sheets/contact-papercut-cam-12.jpg" alt="Camera move 12 contact sheet"></div>
+                <div class="note">Key frames from <code>papercut-cam-12.gif</code> — animated version online</div>
+            </div>
+            <div class="gif-item">
+                <div class="label">Camera Move 14</div>
+                <div class="contact-sheet"><img src="assets/contact-sheets/contact-papercut-cam-14.jpg" alt="Camera move 14 contact sheet"></div>
+                <div class="note">Key frames from <code>papercut-cam-14.gif</code> — animated version online</div>
+            </div>
+            <div class="gif-item">
+                <div class="label">Camera Move 15</div>
+                <div class="contact-sheet"><img src="assets/contact-sheets/contact-papercut-cam-15.jpg" alt="Camera move 15 contact sheet"></div>
+                <div class="note">Key frames from <code>papercut-cam-15.gif</code> — animated version online</div>
+            </div>
+            </div>
+        </section>
+        <section class="section page-break">
+            <div class="section-header">
+                <h2>04 — Subway Location Scout</h2>
+                <div class="count">14 frames · The Subway, Nashville TN · Location survey with Cortney</div>
+            </div>
+            <div class="grid">
+            <div class="thumb"><img src="assets/scout-cortney-camcorder.jpg" alt="Scout Scout Cortney Camcorder"><div class="caption">Scout Cortney Camcorder</div></div>
+            <div class="thumb"><img src="assets/scout-cortney-center.jpg" alt="Scout Scout Cortney Center"><div class="caption">Scout Cortney Center</div></div>
+            <div class="thumb"><img src="assets/scout-cortney-fisheye.jpg" alt="Scout Scout Cortney Fisheye"><div class="caption">Scout Cortney Fisheye</div></div>
+            <div class="thumb"><img src="assets/scout-cortney-graffiti.jpg" alt="Scout Scout Cortney Graffiti"><div class="caption">Scout Cortney Graffiti</div></div>
+            <div class="thumb"><img src="assets/scout-cortney-seated.jpg" alt="Scout Scout Cortney Seated"><div class="caption">Scout Cortney Seated</div></div>
+            <div class="thumb"><img src="assets/scout-cortney-soft.jpg" alt="Scout Scout Cortney Soft"><div class="caption">Scout Cortney Soft</div></div>
+            <div class="thumb"><img src="assets/scout-cortney-vertical.jpg" alt="Scout Scout Cortney Vertical"><div class="caption">Scout Cortney Vertical</div></div>
+            <div class="thumb"><img src="assets/scout-cortney-wide.jpg" alt="Scout Scout Cortney Wide"><div class="caption">Scout Cortney Wide</div></div>
+            <div class="thumb"><img src="assets/scout-end-car-details.jpg" alt="Scout Scout End Car Details"><div class="caption">Scout End Car Details</div></div>
+            <div class="thumb"><img src="assets/scout-exterior-807.jpg" alt="Scout Scout Exterior 807"><div class="caption">Scout Exterior 807</div></div>
+            <div class="thumb"><img src="assets/scout-graffiti-doors.jpg" alt="Scout Scout Graffiti Doors"><div class="caption">Scout Graffiti Doors</div></div>
+            <div class="thumb"><img src="assets/scout-interior-empty.jpg" alt="Scout Scout Interior Empty"><div class="caption">Scout Interior Empty</div></div>
+            <div class="thumb"><img src="assets/scout-interior-long.jpg" alt="Scout Scout Interior Long"><div class="caption">Scout Interior Long</div></div>
+            <div class="thumb"><img src="assets/scout-window-seat.jpg" alt="Scout Scout Window Seat"><div class="caption">Scout Window Seat</div></div>
+            </div>
+        </section>
+        <section class="section page-break">
+            <div class="section-header">
+                <h2>05 — Mood Board / Visual Language</h2>
+                <div class="count">35 references · Tone, texture, inspiration</div>
+            </div>
+            <div class="grid grid-4">
+            <div class="thumb"><img src="assets/ref-01.png" alt="Ref Ref 01"><div class="caption">Ref 01</div></div>
+            <div class="thumb"><img src="assets/ref-02.png" alt="Ref Ref 02"><div class="caption">Ref 02</div></div>
+            <div class="thumb"><img src="assets/ref-03.png" alt="Ref Ref 03"><div class="caption">Ref 03</div></div>
+            <div class="thumb"><img src="assets/ref-04.png" alt="Ref Ref 04"><div class="caption">Ref 04</div></div>
+            <div class="thumb"><img src="assets/ref-05.png" alt="Ref Ref 05"><div class="caption">Ref 05</div></div>
+            <div class="thumb"><img src="assets/ref-06.png" alt="Ref Ref 06"><div class="caption">Ref 06</div></div>
+            <div class="thumb"><img src="assets/ref-07.png" alt="Ref Ref 07"><div class="caption">Ref 07</div></div>
+            <div class="thumb"><img src="assets/ref-08.png" alt="Ref Ref 08"><div class="caption">Ref 08</div></div>
+            <div class="thumb"><img src="assets/ref-09.png" alt="Ref Ref 09"><div class="caption">Ref 09</div></div>
+            <div class="thumb"><img src="assets/ref-10.png" alt="Ref Ref 10"><div class="caption">Ref 10</div></div>
+            <div class="thumb"><img src="assets/ref-11.png" alt="Ref Ref 11"><div class="caption">Ref 11</div></div>
+            <div class="thumb"><img src="assets/ref-12.png" alt="Ref Ref 12"><div class="caption">Ref 12</div></div>
+            <div class="thumb"><img src="assets/ref-13.png" alt="Ref Ref 13"><div class="caption">Ref 13</div></div>
+            <div class="thumb"><img src="assets/ref-14.png" alt="Ref Ref 14"><div class="caption">Ref 14</div></div>
+            <div class="thumb"><img src="assets/ref-15.png" alt="Ref Ref 15"><div class="caption">Ref 15</div></div>
+            <div class="thumb"><img src="assets/ref-16.png" alt="Ref Ref 16"><div class="caption">Ref 16</div></div>
+            <div class="thumb"><img src="assets/ref-17.png" alt="Ref Ref 17"><div class="caption">Ref 17</div></div>
+            <div class="thumb"><img src="assets/ref-18.png" alt="Ref Ref 18"><div class="caption">Ref 18</div></div>
+            <div class="thumb"><img src="assets/ref-19.png" alt="Ref Ref 19"><div class="caption">Ref 19</div></div>
+            <div class="thumb"><img src="assets/ref-20.png" alt="Ref Ref 20"><div class="caption">Ref 20</div></div>
+            <div class="thumb"><img src="assets/ref-21.png" alt="Ref Ref 21"><div class="caption">Ref 21</div></div>
+            <div class="thumb"><img src="assets/ref-22.png" alt="Ref Ref 22"><div class="caption">Ref 22</div></div>
+            <div class="thumb"><img src="assets/ref-23.png" alt="Ref Ref 23"><div class="caption">Ref 23</div></div>
+            <div class="thumb"><img src="assets/ref-24.png" alt="Ref Ref 24"><div class="caption">Ref 24</div></div>
+            <div class="thumb"><img src="assets/ref-25.png" alt="Ref Ref 25"><div class="caption">Ref 25</div></div>
+            <div class="thumb"><img src="assets/ref-26.png" alt="Ref Ref 26"><div class="caption">Ref 26</div></div>
+            <div class="thumb"><img src="assets/ref-27.png" alt="Ref Ref 27"><div class="caption">Ref 27</div></div>
+            <div class="thumb"><img src="assets/ref-28.png" alt="Ref Ref 28"><div class="caption">Ref 28</div></div>
+            <div class="thumb"><img src="assets/ref-29.png" alt="Ref Ref 29"><div class="caption">Ref 29</div></div>
+            <div class="thumb"><img src="assets/ref-30.png" alt="Ref Ref 30"><div class="caption">Ref 30</div></div>
+            <div class="thumb"><img src="assets/ref-31.png" alt="Ref Ref 31"><div class="caption">Ref 31</div></div>
+            <div class="thumb"><img src="assets/ref-32.png" alt="Ref Ref 32"><div class="caption">Ref 32</div></div>
+            <div class="thumb"><img src="assets/ref-33.png" alt="Ref Ref 33"><div class="caption">Ref 33</div></div>
+            <div class="thumb"><img src="assets/ref-34.png" alt="Ref Ref 34"><div class="caption">Ref 34</div></div>
+            <div class="thumb"><img src="assets/ref-35.png" alt="Ref Ref 35"><div class="caption">Ref 35</div></div>
+            </div>
+        </section>
+        <section class="section page-break">
+            <div class="section-header">
+                <h2>06 — Meter Visual Development</h2>
+                <div class="count">3 frames · Round 3 visual direction</div>
+            </div>
+            <div class="grid">
+            <div class="thumb"><img src="assets/meter-round3-1.png" alt="Meter Meter Round3 1"><div class="caption">Meter Round3 1</div></div>
+            <div class="thumb"><img src="assets/meter-round3-2.png" alt="Meter Meter Round3 2"><div class="caption">Meter Round3 2</div></div>
+            <div class="thumb"><img src="assets/meter-round3-7.jpg" alt="Meter Meter Round3 7"><div class="caption">Meter Round3 7</div></div>
+            </div>
+        </section>
+    <div class="doc-footer">
+        Matt Matheson Creative · Meter — Dreaming · Visual Reference · V1
+    </div>
+
+</div>
+
+</body>
+</html>
