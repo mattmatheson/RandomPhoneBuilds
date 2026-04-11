@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="published" content="2026-04-10">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METER — "Dreaming" — Day 1 Schedule (Print Version)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --ink: #111;
+            --ink-soft: #444;
+            --ink-faint: #777;
+            --rule: #000;
+            --rule-soft: #bbb;
+            --paper: #fff;
+        }
+
+        html, body {
+            background: #e8e8e8;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: var(--ink);
+            font-size: 13px;
+            line-height: 1.45;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page {
+            max-width: 8.5in;
+            margin: 24px auto;
+            background: var(--paper);
+            padding: 0.6in 0.6in 0.8in;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.15);
+        }
+
+        /* Screen-only toolbar */
+        .toolbar {
+            max-width: 8.5in;
+            margin: 24px auto 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            background: #222;
+            color: #ddd;
+            border-radius: 6px;
+            font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+        .toolbar strong { color: #fff; }
+        .toolbar .tb-right { display: flex; gap: 8px; }
+        .toolbar button {
+            background: transparent;
+            color: #ddd;
+            border: 1px solid #555;
+            border-radius: 3px;
+            padding: 5px 12px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .toolbar button:hover { border-color: #fff; color: #fff; }
+
+        /* Header — letterhead style */
+        .masthead {
+            text-align: center;
+            padding-bottom: 14px;
+            border-bottom: 3px double var(--ink);
+            margin-bottom: 18px;
+        }
+        .masthead .house {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            margin-bottom: 6px;
+        }
+        .masthead h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--ink);
+            margin-bottom: 4px;
+        }
+        .masthead .song {
+            font-style: italic;
+            font-size: 14px;
+            color: var(--ink-soft);
+            margin-bottom: 10px;
+        }
+        .masthead .doctype {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding-top: 8px;
+            border-top: 1px solid var(--rule-soft);
+            margin-top: 8px;
+            display: inline-block;
+            padding: 6px 24px 0;
+        }
+
+        /* Key info bar */
+        .keybar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            border: 1px solid var(--ink);
+            margin-bottom: 22px;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        .keybar .cell {
+            padding: 10px 12px;
+            border-right: 1px solid var(--rule-soft);
+        }
+        .keybar .cell:last-child { border-right: none; }
+        .keybar .lbl {
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            margin-bottom: 3px;
+            font-weight: 700;
+        }
+        .keybar .val {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        /* Playback callout */
+        .playback-callout {
+            border: 2px solid var(--ink);
+            padding: 12px 14px;
+            margin-bottom: 22px;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        .playback-callout .pc-title {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--ink);
+            padding-bottom: 4px;
+            margin-bottom: 8px;
+        }
+        .playback-callout .pc-row {
+            display: grid;
+            grid-template-columns: 110px 90px 1fr;
+            gap: 10px;
+            padding: 5px 0;
+            font-size: 11px;
+            align-items: baseline;
+        }
+        .playback-callout .pc-row:not(:last-child) {
+            border-bottom: 1px dotted var(--rule-soft);
+        }
+        .playback-callout .pc-name {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .playback-callout .pc-speed {
+            font-weight: 700;
+            color: var(--ink);
+        }
+        .playback-callout .pc-use {
+            font-style: italic;
+            color: var(--ink-soft);
+        }
+
+        .shot-play {
+            display: inline-block;
+            margin-top: 4px;
+            padding: 2px 8px;
+            border: 1.5px solid var(--ink);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .shot-play.play-slow { background: #000; color: #fff; }
+        .shot-play.play-fast { background: #000; color: #fff; }
+        .shot.done .shot-play { opacity: 0.4; }
+
+        /* TOP 3 PLAY BUTTONS */
+        .top-players {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 22px;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        .top-player-btn {
+            background: #fff;
+            border: 2px solid #000;
+            padding: 12px 14px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #000;
+            font-family: inherit;
+        }
+        .top-player-btn:hover { background: #000; color: #fff; }
+        .top-player-btn.active { background: #000; color: #fff; }
+        .top-player-btn .tp-icon {
+            width: 36px;
+            height: 36px;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 14px;
+            line-height: 1;
+        }
+        .top-player-btn.playing .tp-icon::before { content: "❚❚"; font-size: 11px; }
+        .top-player-btn .tp-icon::before { content: "▶"; margin-left: 2px; }
+        .top-player-btn.playing .tp-icon::before { content: "❚❚"; margin-left: 0; }
+        .top-player-btn .tp-text { flex: 1; min-width: 0; }
+        .top-player-btn .tp-label {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            opacity: 0.6;
+        }
+        .top-player-btn .tp-name {
+            font-size: 13px;
+            font-weight: 800;
+            margin-top: 1px;
+            letter-spacing: 0.3px;
+        }
+        .top-player-btn .tp-sub {
+            font-size: 10px;
+            margin-top: 1px;
+            opacity: 0.65;
+            font-style: italic;
+        }
+
+        /* SHOT-LEVEL PLAY BUTTON (injected via JS) */
+        .shot-playbtn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 5px;
+            padding: 3px 9px;
+            background: #fff;
+            border: 1.5px solid #000;
+            cursor: pointer;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #000;
+            transition: all 0.12s ease;
+        }
+        .shot-playbtn:hover { background: #000; color: #fff; }
+        .shot-playbtn.playing { background: #000; color: #fff; }
+        .shot-playbtn::before {
+            content: "▶";
+            font-size: 9px;
+            line-height: 1;
+        }
+        .shot-playbtn.playing::before { content: "❚❚"; }
+
+        /* STICKY BOTTOM PLAYER */
+        .sticky-player {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #111;
+            color: #eee;
+            padding: 12px 20px calc(12px + env(safe-area-inset-bottom)) 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+            box-shadow: 0 -8px 30px rgba(0,0,0,0.35);
+            z-index: 200;
+            transform: translateY(110%);
+            transition: transform 0.3s cubic-bezier(.25,.8,.3,1);
+        }
+        .sticky-player.visible { transform: translateY(0); }
+        .sp-inner {
+            max-width: 9in;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 40px 1fr auto;
+            gap: 14px;
+            align-items: center;
+        }
+        .sp-btn {
+            background: transparent;
+            color: #fff;
+            border: 1.5px solid #666;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: inherit;
+            transition: all 0.15s ease;
+        }
+        .sp-btn:hover { border-color: #fff; background: #fff; color: #111; }
+        .sp-body { min-width: 0; }
+        .sp-topline {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+        .sp-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            letter-spacing: 0.3px;
+        }
+        .sp-time {
+            font-size: 10px;
+            color: #888;
+            font-variant-numeric: tabular-nums;
+            flex-shrink: 0;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        .sp-bar {
+            height: 4px;
+            background: #333;
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .sp-bar-fill {
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            background: #fff;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        .sp-actions {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .sp-actions .sp-btn { width: 32px; height: 32px; font-size: 11px; }
+        .sp-vol {
+            width: 70px;
+            accent-color: #fff;
+        }
+
+        body { padding-bottom: 100px; }
+
+        /* MATT'S NOTES block (injected via JS) */
+        .matt-notes {
+            margin-top: 7px;
+            padding: 8px 12px 8px 14px;
+            border-left: 2.5px solid var(--ink);
+            background: #faf8f4;
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 11.5px;
+            line-height: 1.55;
+            color: var(--ink);
+            font-style: italic;
+        }
+        .matt-notes::before {
+            content: "Matt's notes — ";
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-style: normal;
+            font-weight: 800;
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            margin-right: 3px;
+        }
+        .shot.done .matt-notes { opacity: 0.5; }
+
+        @media (max-width: 600px) {
+            .top-players { grid-template-columns: 1fr; }
+            .sp-inner { grid-template-columns: 36px 1fr auto; gap: 10px; }
+            .sp-vol { display: none; }
+            .sp-actions .sp-btn { width: 28px; height: 28px; }
+        }
+
+        /* Block */
+        .block {
+            margin-bottom: 24px;
+            page-break-inside: auto;
+        }
+
+        .block-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            padding-bottom: 6px;
+            border-bottom: 1.5px solid var(--ink);
+            margin-bottom: 12px;
+            page-break-after: avoid;
+        }
+        .block-header .bh-left {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        .block-header .bh-num {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--ink-faint);
+            text-transform: uppercase;
+        }
+        .block-header .bh-title {
+            font-family: Georgia, serif;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            color: var(--ink);
+        }
+        .block-header .bh-time {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--ink);
+            letter-spacing: 0.5px;
+        }
+
+        .block-note {
+            font-style: italic;
+            font-size: 11.5px;
+            color: var(--ink-soft);
+            padding: 6px 0 10px 12px;
+            border-left: 2px solid var(--ink);
+            margin-bottom: 10px;
+        }
+
+        /* Shot row — document style */
+        .shot {
+            display: grid;
+            grid-template-columns: 22px 30px 1fr;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px dashed var(--rule-soft);
+            align-items: flex-start;
+            page-break-inside: avoid;
+        }
+        .shot:last-child { border-bottom: none; }
+
+        .checkbox {
+            width: 16px;
+            height: 16px;
+            border: 1.5px solid var(--ink);
+            background: #fff;
+            cursor: pointer;
+            flex-shrink: 0;
+            margin-top: 2px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .checkbox::after {
+            content: "✓";
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--ink);
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.12s ease;
+            line-height: 1;
+        }
+        .shot.done .checkbox::after { opacity: 1; transform: scale(1); }
+
+        .shot-num {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--ink-faint);
+            font-variant-numeric: tabular-nums;
+            padding-top: 4px;
+            text-align: right;
+        }
+
+        .shot-body { min-width: 0; }
+
+        .shot-desc {
+            font-size: 13px;
+            line-height: 1.45;
+            color: var(--ink);
+            font-weight: 400;
+        }
+        .shot-desc .star {
+            font-weight: 700;
+            margin-right: 2px;
+        }
+        .shot-desc .lyric {
+            font-style: italic;
+            color: var(--ink-soft);
+        }
+
+        .shot-meta {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10px;
+            color: var(--ink-faint);
+            margin-top: 3px;
+            letter-spacing: 0.3px;
+        }
+        .shot-meta .sep {
+            color: var(--rule-soft);
+            margin: 0 6px;
+        }
+        .shot-meta .take {
+            font-weight: 700;
+            color: var(--ink);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+        .shot-meta .part {
+            color: var(--ink);
+            font-weight: 700;
+        }
+
+        /* Done state */
+        .shot.done .shot-desc { text-decoration: line-through; text-decoration-thickness: 1px; color: var(--ink-faint); }
+        .shot.done .shot-meta { opacity: 0.5; }
+
+        /* Reference tables */
+        .ref-card {
+            margin-top: 20px;
+            border: 1px solid var(--ink);
+            padding: 12px 14px;
+            page-break-inside: avoid;
+        }
+        .ref-card .ref-title {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--ink);
+            padding-bottom: 4px;
+            margin-bottom: 8px;
+        }
+        .ref-card table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10px;
+        }
+        .ref-card th, .ref-card td {
+            text-align: left;
+            padding: 4px 6px;
+            border-bottom: 1px dotted var(--rule-soft);
+        }
+        .ref-card th {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--ink-faint);
+        }
+        .ref-card td:first-child { font-weight: 700; }
+        .ref-card tr:last-child td { border-bottom: none; }
+        .ref-card .feel { font-style: italic; color: var(--ink-soft); }
+
+        .legend {
+            margin-top: 14px;
+            padding: 10px 14px;
+            border: 1px solid var(--rule-soft);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10px;
+            color: var(--ink-soft);
+            line-height: 1.6;
+        }
+        .legend strong { color: var(--ink); }
+
+        .doc-footer {
+            margin-top: 28px;
+            padding-top: 10px;
+            border-top: 1px solid var(--rule-soft);
+            text-align: center;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--ink-faint);
+            text-transform: uppercase;
+        }
+
+        .signature {
+            margin-top: 28px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            page-break-inside: avoid;
+        }
+        .signature .sig-line {
+            border-bottom: 1px solid var(--ink);
+            height: 32px;
+        }
+        .signature .sig-label {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            margin-top: 3px;
+        }
+
+        /* Print */
+        @media print {
+            @page { size: letter; margin: 0.5in; }
+            html, body { background: #fff; font-size: 11px; }
+            .page {
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+                max-width: none;
+            }
+            .toolbar { display: none; }
+            .block, .shot, .block-header, .ref-card, .signature { page-break-inside: avoid; }
+            .masthead { margin-bottom: 14px; padding-bottom: 10px; }
+            .masthead h1 { font-size: 22px; }
+            .block { margin-bottom: 16px; }
+            .block-header .bh-title { font-size: 15px; }
+            .shot { padding: 7px 0; }
+            .shot-desc { font-size: 11px; }
+            .shot-meta { font-size: 9px; }
+            .checkbox { width: 13px; height: 13px; }
+            .checkbox::after { font-size: 11px; opacity: 0 !important; transform: scale(0.5) !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="toolbar">
+    <div><strong>METER — "Dreaming" — Day 1</strong> · Print Version</div>
+    <div class="tb-right">
+        <button onclick="window.print()">Print</button>
+        <button onclick="resetAll()">Reset Checks</button>
+        <button onclick="window.location.href='../meter-day1-schedule/'">Full Version →</button>
+    </div>
+</div>
+
+<div class="page">
+
+    <div class="masthead">
+        <div class="house">Matt Matheson Creative</div>
+        <h1>DREAMING</h1>
+        <div class="song">Meter — Music Video — Day 1 Shooting Schedule</div>
+        <div class="doctype">Production Document · V1</div>
+    </div>
+
+    <div class="keybar">
+        <div class="cell">
+            <div class="lbl">Date</div>
+            <div class="val">Sat, Apr 11, 2026</div>
+        </div>
+        <div class="cell">
+            <div class="lbl">Location</div>
+            <div class="val">The Subway — Nashville</div>
+        </div>
+        <div class="cell">
+            <div class="lbl">Call</div>
+            <div class="val">5:00 PM</div>
+        </div>
+        <div class="cell">
+            <div class="lbl">Hard Out</div>
+            <div class="val">11:00 PM</div>
+        </div>
+    </div>
+
+    <div class="playback-callout">
+        <div class="pc-title">Three Song Playback Versions</div>
+        <div class="pc-row">
+            <span class="pc-name">Normal</span>
+            <span class="pc-speed">100% speed</span>
+            <span class="pc-use">Default for all 24fps takes. Lip-synced.</span>
+        </div>
+        <div class="pc-row">
+            <span class="pc-name">Slow FX</span>
+            <span class="pc-speed">Song @ 125%</span>
+            <span class="pc-use">Play this for 30fps takes → slowed in post for Coldplay effect, still synced.</span>
+        </div>
+        <div class="pc-row">
+            <span class="pc-name">Fast 2×</span>
+            <span class="pc-speed">Song @ 50%</span>
+            <span class="pc-use">Play this for 24fps takes intended to be sped up 2× in post. Creepy/fast, still synced.</span>
+        </div>
+    </div>
+
+    <div class="top-players" id="topPlayers">
+        <button class="top-player-btn" data-audio="../meter-day1-schedule/audio/FullTake_NormalSpeed.mp3" data-title="Full Take — Normal Speed">
+            <div class="tp-icon"></div>
+            <div class="tp-text">
+                <div class="tp-label">Version 1</div>
+                <div class="tp-name">Normal</div>
+                <div class="tp-sub">100% · full song</div>
+            </div>
+        </button>
+        <button class="top-player-btn" data-audio="../meter-day1-schedule/audio/FullTake_SpedUpSpeed_30fps.mp3" data-title="Full Take — Sped Up (Slow FX)">
+            <div class="tp-icon"></div>
+            <div class="tp-text">
+                <div class="tp-label">Version 2</div>
+                <div class="tp-name">Slow FX</div>
+                <div class="tp-sub">125% · for 30fps capture</div>
+            </div>
+        </button>
+        <button class="top-player-btn" data-audio="../meter-day1-schedule/audio/FullTake_SlowedDownSpeed_24fps.mp3" data-title="Full Take — Slowed Down (Fast 2×)">
+            <div class="tp-icon"></div>
+            <div class="tp-text">
+                <div class="tp-label">Version 3</div>
+                <div class="tp-name">Fast 2×</div>
+                <div class="tp-sub">50% · for 24fps capture</div>
+            </div>
+        </button>
+    </div>
+
+    <!-- BLOCK 0 -->
+    <div class="block">
+        <div class="block-header">
+            <div class="bh-left">
+                <span class="bh-num">Block 0</span>
+                <span class="bh-title">Setup &amp; Load-in</span>
+            </div>
+            <div class="bh-time">5:00 – 6:30 PM · 90 min</div>
+        </div>
+        <div class="block-note">Crew load-in, lighting, camera prep. Band arrives for wardrobe, playback test, walkthrough.</div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">0.1</div><div class="shot-body">
+            <div class="shot-desc">Crew load-in — all gear into the subway</div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">0.2</div><div class="shot-body">
+            <div class="shot-desc">Lighting setup — Aperture 120D + dome, flags, gels</div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">0.3</div><div class="shot-body">
+            <div class="shot-desc">Camera prep — FX3 rigs, tripod, gimbal balanced, cards formatted</div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">0.4</div><div class="shot-body">
+            <div class="shot-desc">Playback speaker positioned, song file loaded, volume test</div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">0.5</div><div class="shot-body">
+            <div class="shot-desc">Band arrives — wardrobe, walk-through positions, warm up</div>
+        </div></div>
+    </div>
+
+    <!-- BLOCK 1 -->
+    <div class="block">
+        <div class="block-header">
+            <div class="bh-left">
+                <span class="bh-num">Block 1</span>
+                <span class="bh-title">Full Band — Tripod Source Takes</span>
+            </div>
+            <div class="bh-time">6:30 – 7:15 PM · 45 min</div>
+        </div>
+        <div class="block-note">Load-bearing — every cutaway pulls from these. Locked off, zero camera movement. Protect the time.</div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">1.1</div><div class="shot-body">
+            <div class="shot-desc">Full band — Sigma 50mm locked off — Take 1</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Sigma 50<span class="sep">·</span>Tripod<span class="sep">·</span><span class="part">Entire Song</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">1.2</div><div class="shot-body">
+            <div class="shot-desc">Full band — Sigma 50mm locked off — Take 2</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Sigma 50<span class="sep">·</span>Tripod<span class="sep">·</span><span class="part">Entire Song</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">1.3</div><div class="shot-body">
+            <div class="shot-desc">Full band — Sigma 50mm locked off — Take 3</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Sigma 50<span class="sep">·</span>Tripod<span class="sep">·</span><span class="part">Entire Song</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">1.4</div><div class="shot-body">
+            <div class="shot-desc">Full band — Canon 70-200 telephoto — Take 1 (source for cutaways)</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span><span class="part">Entire Song</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">1.5</div><div class="shot-body">
+            <div class="shot-desc">Full band — Canon 70-200 telephoto — Take 2</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span><span class="part">Entire Song</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">1.6</div><div class="shot-body">
+            <div class="shot-desc">Full band — Canon 70-200 telephoto — Take 3</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span><span class="part">Entire Song</span></div>
+        </div></div>
+    </div>
+
+    <!-- BLOCK 2 -->
+    <div class="block">
+        <div class="block-header">
+            <div class="bh-left">
+                <span class="bh-num">Block 2</span>
+                <span class="bh-title">Full Band — Gimbal Coverage</span>
+            </div>
+            <div class="bh-time">7:15 – 8:00 PM · 45 min</div>
+        </div>
+        <div class="block-note">Gimbal built and balanced — knock out every move back-to-back before breakdown.</div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">2.1</div><div class="shot-body">
+            <div class="shot-desc">Gimbal push-in on full band — first band reveal</div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Sigma 35<span class="sep">·</span>Gimbal<span class="sep">·</span><span class="part">Intro</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">2.2</div><div class="shot-body">
+            <div class="shot-desc"><span class="star">★</span> Gimbal push-in — lyric <span class="lyric">"too weak to return where I started"</span></div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Canon 16-35 or Sigma 35<span class="sep">·</span>Gimbal<span class="sep">·</span><span class="part">Verse 1</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">2.3</div><div class="shot-body">
+            <div class="shot-desc">Gimbal up-high following instruments — Hunter, Dalton, Lucas</div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Sigma 35 or 50<span class="sep">·</span>Gimbal<span class="sep">·</span><span class="part">Verse 2 opening instrumental</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">2.4</div><div class="shot-body">
+            <div class="shot-desc"><span class="star">★</span> Fast gimbal pull-out backwards — introduces first full-band chorus</div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Sigma 35<span class="sep">·</span>Gimbal<span class="sep">·</span><span class="part">Chorus 2 entry</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">2.5</div><div class="shot-body">
+            <div class="shot-desc"><span class="star">★</span> 35mm tripod whip-pan onto Lucas hitting the toms</div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Sigma 35<span class="sep">·</span>Tripod<span class="sep">·</span><span class="part">Pre-bridge tom hits</span></div>
+        </div></div>
+    </div>
+
+    <!-- BLOCK 3 -->
+    <div class="block">
+        <div class="block-header">
+            <div class="bh-left">
+                <span class="bh-num">Block 3</span>
+                <span class="bh-title">Cortney — Lead Vocal Focus</span>
+            </div>
+            <div class="bh-time">8:00 – 9:00 PM · 60 min</div>
+        </div>
+        <div class="block-note">Heaviest lift of the day. Rest of the band can tap out. Water + breaks between takes.</div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">3.1</div><div class="shot-body">
+            <div class="shot-desc">Cortney telephoto, vocal focused — Take 1 (source for all vocal cutaways)</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span>24fps<span class="sep">·</span><span class="part">Entire Song</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">3.2</div><div class="shot-body">
+            <div class="shot-desc">Cortney telephoto, vocal focused — Take 2</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span>24fps<span class="sep">·</span><span class="part">Entire Song</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">3.3</div><div class="shot-body">
+            <div class="shot-desc">Cortney telephoto, vocal focused — Take 3</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span>24fps<span class="sep">·</span><span class="part">Entire Song</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">3.4</div><div class="shot-body">
+            <div class="shot-desc">Cortney telephoto — Slow FX variant (Coldplay effect)</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span>30fps<span class="sep">·</span><span class="part">Entire Song</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">3.5</div><div class="shot-body">
+            <div class="shot-desc">Cortney gimbal up-high — Sigma 35mm normal speed</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Sigma 35<span class="sep">·</span>Gimbal<span class="sep">·</span>24fps<span class="sep">·</span><span class="part">Entire Song</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">3.6</div><div class="shot-body">
+            <div class="shot-desc">Cortney gimbal up-high — Sigma 50mm normal speed</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Sigma 50<span class="sep">·</span>Gimbal<span class="sep">·</span>24fps<span class="sep">·</span><span class="part">Entire Song</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">3.7</div><div class="shot-body">
+            <div class="shot-desc">Cortney gimbal up-high — 30fps Slow FX variant</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Sigma 35 or 50<span class="sep">·</span>Gimbal<span class="sep">·</span>30fps<span class="sep">·</span><span class="part">Entire Song (heavy use Verse 2)</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">3.8</div><div class="shot-body">
+            <div class="shot-desc"><span class="star">★</span> Rack focus Cortney ↔ Luke, lyric <span class="lyric">"so let me explode"</span></div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span><span class="part">Verse 2 pre-chorus</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">3.9</div><div class="shot-body">
+            <div class="shot-desc">Cortney telephoto — bridge-specific, normal speed</div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span><span class="part">Bridge</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">3.10</div><div class="shot-body">
+            <div class="shot-desc">Cortney gimbal — bridge-specific, normal speed</div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Sigma 35 or 50<span class="sep">·</span>Gimbal<span class="sep">·</span><span class="part">Bridge</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">3.11</div><div class="shot-body">
+            <div class="shot-desc">Cortney 50mm low-shutter time-lapse, blurry/messy (2× source)</div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Sigma 50<span class="sep">·</span>Tripod<span class="sep">·</span>Speed FX<span class="sep">·</span><span class="part">Bridge — 2nd drum fill</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">3.12</div><div class="shot-body">
+            <div class="shot-desc"><span class="star">★</span> Match cut medium of Cortney — must mirror Day 2 living room angle</div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Sigma 35 or 50<span class="sep">·</span>Gimbal<span class="sep">·</span><span class="part">Chorus 3 entry — acoustic fakeout</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">3.13</div><div class="shot-body">
+            <div class="shot-desc"><span class="star">★</span> Straight-on gimbal medium — lyric <span class="lyric">"my own"</span></div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Sigma 50<span class="sep">·</span>Gimbal<span class="sep">·</span><span class="part">Outro</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">3.14</div><div class="shot-body">
+            <div class="shot-desc"><span class="star">★</span> Canon 16-35 gimbal pullback — mic in air, lyric <span class="lyric">"nightmare"</span></div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Canon 16-35<span class="sep">·</span>Gimbal<span class="sep">·</span><span class="part">Outro</span></div>
+        </div></div>
+    </div>
+
+    <!-- BLOCK 4 -->
+    <div class="block">
+        <div class="block-header">
+            <div class="bh-left">
+                <span class="bh-num">Block 4</span>
+                <span class="bh-title">Individual Members</span>
+            </div>
+            <div class="bh-time">9:00 – 10:00 PM · 60 min</div>
+        </div>
+        <div class="block-note">Batch by lens. Luke → Hunter → Dalton → Lucas. Luke has the most shots — start there.</div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">4.1</div><div class="shot-body">
+            <div class="shot-desc">Luke telephoto — full guitar take (source for Luke cutaways)</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span><span class="part">Entire Song</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">4.2</div><div class="shot-body">
+            <div class="shot-desc">Luke off-axis telephoto — tripod shifted right, Luke frame-left</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span><span class="part">Entire Song</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">4.3</div><div class="shot-body">
+            <div class="shot-desc">Luke chug take — guitar chug sections only</div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span><span class="part">Chug sections</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">4.4</div><div class="shot-body">
+            <div class="shot-desc">Luke wide-angle handheld, shaky high-energy — first vocal entry</div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Canon 16-35<span class="sep">·</span>Handheld<span class="sep">·</span><span class="part">Verse 1 — Luke's first vocals</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">4.5</div><div class="shot-body">
+            <div class="shot-desc"><span class="star">★</span> Luke fisheye low angle, security-cam vibe — lyric <span class="lyric">"sun sets quick on a day like this"</span></div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Fisheye<span class="sep">·</span>Handheld<span class="sep">·</span><span class="part">Verse 2</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">4.6</div><div class="shot-body">
+            <div class="shot-desc">Luke low-right angle — bridge chugs + guitar ring-out (~10 sec)</div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span><span class="part">Bridge</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">4.7</div><div class="shot-body">
+            <div class="shot-desc">Hunter wide-angle lead-focused — intro lead line</div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Canon 16-35<span class="sep">·</span>Handheld<span class="sep">·</span><span class="part">Intro</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">4.8</div><div class="shot-body">
+            <div class="shot-desc">Hunter random guitar cutaways — Take 1</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span><span class="part">Entire Song</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">4.9</div><div class="shot-body">
+            <div class="shot-desc">Hunter random guitar cutaways — Take 2</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span><span class="part">Entire Song</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">4.10</div><div class="shot-body">
+            <div class="shot-desc">Hunter guitar chugs — bridge/rap</div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span><span class="part">Bridge</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">4.11</div><div class="shot-body">
+            <div class="shot-desc">Dalton random bass cutaways — Take 1</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span><span class="part">Entire Song</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">4.12</div><div class="shot-body">
+            <div class="shot-desc">Dalton random bass cutaways — Take 2</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span><span class="part">Entire Song</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">4.13</div><div class="shot-body">
+            <div class="shot-desc">Lucas wide-angle handheld — full drum playthrough</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Canon 16-35<span class="sep">·</span>Handheld<span class="sep">·</span><span class="part">Entire Song</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">4.14</div><div class="shot-body">
+            <div class="shot-desc">Lucas drum fill #1 — wide angle</div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Canon 16-35<span class="sep">·</span>Handheld<span class="sep">·</span><span class="part">Bridge — 1st drum fill</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">4.15</div><div class="shot-body">
+            <div class="shot-desc">Lucas drum fill #2 — wide angle</div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Canon 16-35<span class="sep">·</span>Handheld<span class="sep">·</span><span class="part">Bridge — 2nd drum fill</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">4.16</div><div class="shot-body">
+            <div class="shot-desc">Lucas drum fill #3 — wide angle (leads into rap segment)</div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Canon 16-35<span class="sep">·</span>Handheld<span class="sep">·</span><span class="part">Bridge — 3rd drum fill</span></div>
+        </div></div>
+    </div>
+
+    <!-- BLOCK 5 -->
+    <div class="block">
+        <div class="block-header">
+            <div class="bh-left">
+                <span class="bh-num">Block 5</span>
+                <span class="bh-title">Slow-Mo + VFX Green Screen</span>
+            </div>
+            <div class="bh-time">10:00 – 10:40 PM · 40 min</div>
+        </div>
+        <div class="block-note">120fps slow-mo first while band has energy. Green screen needs separate lighting pass. If tight on time, greenscreen moves to Day 2.</div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">5.1</div><div class="shot-body">
+            <div class="shot-desc">120fps telephoto super slow-mo, NOT synced — high energy, cables flying — Take 1</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span>120fps<span class="sep">·</span><span class="part">Final Chorus crescendo</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">5.2</div><div class="shot-body">
+            <div class="shot-desc">120fps telephoto slow-mo — Take 2</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span>120fps<span class="sep">·</span><span class="part">Final Chorus</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">5.3</div><div class="shot-body">
+            <div class="shot-desc">120fps telephoto slow-mo — Take 3</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Canon 70-200<span class="sep">·</span>Tripod<span class="sep">·</span>120fps<span class="sep">·</span><span class="part">Final Chorus</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">5.4</div><div class="shot-body">
+            <div class="shot-desc">VFX background plates — gimbal push-in/pull-out of subway (no talent)</div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Sigma 35 or 50<span class="sep">·</span>Gimbal<span class="sep">·</span><span class="part">Bridge VFX</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">5.5</div><div class="shot-body">
+            <div class="shot-desc">Green screen Cortney — tripod locked, normal speed</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Sigma 50<span class="sep">·</span>Tripod<span class="sep">·</span>24fps<span class="sep">·</span><span class="part">Bridge VFX</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">5.6</div><div class="shot-body">
+            <div class="shot-desc">Green screen Cortney — tripod locked, 30fps Slow FX variant</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Sigma 50<span class="sep">·</span>Tripod<span class="sep">·</span>30fps<span class="sep">·</span><span class="part">Bridge VFX</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">5.7</div><div class="shot-body">
+            <div class="shot-desc">Green screen Cortney — tripod locked, 2× Fast source</div>
+            <div class="shot-meta"><span class="take">Full Take</span><span class="sep">·</span>Sigma 50<span class="sep">·</span>Tripod<span class="sep">·</span>Speed FX<span class="sep">·</span><span class="part">Bridge VFX</span></div>
+        </div></div>
+    </div>
+
+    <!-- BLOCK 6 -->
+    <div class="block">
+        <div class="block-header">
+            <div class="bh-left">
+                <span class="bh-num">Block 6</span>
+                <span class="bh-title">B-Roll + Ending (Lights Out)</span>
+            </div>
+            <div class="bh-time">10:40 – 11:00 PM · 20 min</div>
+        </div>
+        <div class="block-note">Lights-out gimbal pull-out MUST be the last thing shot. Confirm everything else is in the can first.</div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">6.1</div><div class="shot-body">
+            <div class="shot-desc">B-roll — flickering lights, location atmosphere</div>
+            <div class="shot-meta"><span class="take">B-Roll</span><span class="sep">·</span>Any lens</div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">6.2</div><div class="shot-body">
+            <div class="shot-desc">B-roll — focus rack details, equipment, faces, textures</div>
+            <div class="shot-meta"><span class="take">B-Roll</span><span class="sep">·</span>Canon 70-200</div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">6.3</div><div class="shot-body">
+            <div class="shot-desc">Final pickups — review monitor, grab anything missing from earlier blocks</div>
+            <div class="shot-meta"><span class="take">Pickups</span></div>
+        </div></div>
+
+        <div class="shot"><div class="checkbox"></div><div class="shot-num">6.4</div><div class="shot-body">
+            <div class="shot-desc"><span class="star">★</span> FINAL SHOT — Gimbal pull-out + all lights cut on the last beat</div>
+            <div class="shot-meta"><span class="take">Partial</span><span class="sep">·</span>Sigma 35 or 50<span class="sep">·</span>Gimbal<span class="sep">·</span><span class="part">Outro — final beat</span></div>
+        </div></div>
+    </div>
+
+    <!-- Speed FX Reference -->
+    <div class="ref-card">
+        <div class="ref-title">Speed FX Reference</div>
+        <table>
+            <thead>
+                <tr><th>Effect</th><th>Record</th><th>Playback</th><th>Feel</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Slow FX</td><td>30 fps</td><td>Song @ 125%</td><td class="feel">Coldplay slow-mo, lips still synced</td></tr>
+                <tr><td>Fast 2×</td><td>24 fps</td><td>Song @ 50%</td><td class="feel">Classic jerky undercrank</td></tr>
+                <tr><td>Fast 3×</td><td>24 fps</td><td>Song @ 33%</td><td class="feel">Horror / creepy crawly vibe</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="legend">
+        <strong>★ Star</strong> = can't-miss partial tied to a specific lyric or beat. &nbsp;
+        <strong>Full Take</strong> = covers the entire song. &nbsp;
+        <strong>Partial</strong> = specific song moment only. &nbsp;
+        <strong>B-Roll</strong> = no sync needed.
+    </div>
+
+    <div class="signature">
+        <div>
+            <div class="sig-line"></div>
+            <div class="sig-label">Director / DP — Matt Matheson</div>
+        </div>
+        <div>
+            <div class="sig-line"></div>
+            <div class="sig-label">Grip / Gaff — Paul Williams</div>
+        </div>
+    </div>
+
+    <div class="doc-footer">
+        Matt Matheson Creative · Meter — Dreaming · Day 1 · V1
+    </div>
+
+</div>
+
+<!-- STICKY BOTTOM PLAYER -->
+<div class="sticky-player" id="stickyPlayer">
+    <div class="sp-inner">
+        <button class="sp-btn" id="spPlayPause" title="Play/Pause">▶</button>
+        <div class="sp-body">
+            <div class="sp-topline">
+                <div class="sp-title" id="spTitle">—</div>
+                <div class="sp-time" id="spTime">0:00 / 0:00</div>
+            </div>
+            <div class="sp-bar" id="spBar"><div class="sp-bar-fill" id="spBarFill"></div></div>
+        </div>
+        <div class="sp-actions">
+            <input type="range" class="sp-vol" id="spVol" min="0" max="1" step="0.01" value="1">
+            <button class="sp-btn" id="spStop" title="Stop">■</button>
+        </div>
+    </div>
+</div>
+
+<audio id="audioEl" preload="none"></audio>
+
+<script>
+(function(){
+
+    // =============================================================
+    // SHOT → AUDIO MAPPING (relative to this doc: ../meter-day1-schedule/audio/)
+    // =============================================================
+    const AUDIO_BASE = '../meter-day1-schedule/audio/';
+    const FULL_NORMAL = AUDIO_BASE + 'FullTake_NormalSpeed.mp3';
+    const FULL_SLOW_FX = AUDIO_BASE + 'FullTake_SpedUpSpeed_30fps.mp3';
+    const FULL_FAST_2X = AUDIO_BASE + 'FullTake_SlowedDownSpeed_24fps.mp3';
+
+    const SHOT_AUDIO = {
+        "1.1": { src: FULL_NORMAL, title: "Full Band 50mm — Take 1 · Normal" },
+        "1.2": { src: FULL_NORMAL, title: "Full Band 50mm — Take 2 · Normal" },
+        "1.3": { src: FULL_NORMAL, title: "Full Band 50mm — Take 3 · Normal" },
+        "1.4": { src: FULL_NORMAL, title: "Full Band 70-200 — Take 1 · Normal" },
+        "1.5": { src: FULL_NORMAL, title: "Full Band 70-200 — Take 2 · Normal" },
+        "1.6": { src: FULL_NORMAL, title: "Full Band 70-200 — Take 3 · Normal" },
+        "2.1": { src: AUDIO_BASE + 'PartialTake_NormalSpeed_IntroShotGimbalPushIn.mp3', title: "Intro Gimbal Push-In · Partial · Normal" },
+        "2.2": { src: AUDIO_BASE + 'PartialTake_NormalSpeed_GimbalPushInAndPullOut_PartOfVerse1.mp3', title: "\"Too weak to return\" Push-In · Partial · Normal" },
+        "2.3": { src: FULL_NORMAL, title: "Verse 2 opening gimbal · Normal" },
+        "2.4": { src: FULL_NORMAL, title: "Chorus 2 entry pull-out · Normal" },
+        "2.5": { src: FULL_NORMAL, title: "Lucas toms whip-pan · Normal" },
+        "3.1": { src: FULL_NORMAL, title: "Cortney Telephoto Vocal — Take 1 · Normal" },
+        "3.2": { src: FULL_NORMAL, title: "Cortney Telephoto Vocal — Take 2 · Normal" },
+        "3.3": { src: FULL_NORMAL, title: "Cortney Telephoto Vocal — Take 3 · Normal" },
+        "3.4": { src: FULL_SLOW_FX, title: "Cortney Telephoto · SLOW FX (Song @ 125%)" },
+        "3.5": { src: FULL_NORMAL, title: "Cortney Gimbal Up-High 35mm · Normal" },
+        "3.6": { src: FULL_NORMAL, title: "Cortney Gimbal Up-High 50mm · Normal" },
+        "3.7": { src: FULL_SLOW_FX, title: "Cortney Gimbal Up-High · SLOW FX (Song @ 125%)" },
+        "3.8": { src: FULL_NORMAL, title: "Rack focus \"so let me explode\" · Normal" },
+        "3.9": { src: AUDIO_BASE + 'PartialTake_NormalSpeed_Bridge_OnlyCortneyPart.mp3', title: "Cortney Bridge Telephoto · Partial · Normal" },
+        "3.10": { src: AUDIO_BASE + 'PartialTake_NormalSpeed_Bridge_OnlyCortneyPart.mp3', title: "Cortney Bridge Gimbal · Partial · Normal" },
+        "3.11": { src: FULL_FAST_2X, title: "Cortney Time-Lapse 2× · FAST 2× (Song @ 50%)" },
+        "3.12": { src: FULL_NORMAL, title: "Match Cut Medium · Normal" },
+        "3.13": { src: FULL_NORMAL, title: "\"my own\" Gimbal Medium · Normal" },
+        "3.14": { src: FULL_NORMAL, title: "\"nightmare\" 16-35 Pullback · Normal" },
+        "4.1": { src: FULL_NORMAL, title: "Luke Telephoto Full · Normal" },
+        "4.2": { src: FULL_NORMAL, title: "Luke Off-Axis Telephoto · Normal" },
+        "4.3": { src: FULL_NORMAL, title: "Luke Chug Take · Normal" },
+        "4.4": { src: AUDIO_BASE + 'PartialTake_NormalSpeed_LukeFirstVersePart.mp3', title: "Luke First Vocals Handheld · Partial · Normal" },
+        "4.5": { src: FULL_NORMAL, title: "Luke Fisheye \"sun sets quick\" · Normal" },
+        "4.6": { src: FULL_NORMAL, title: "Luke Bridge Chugs/Ring-out · Normal" },
+        "4.7": { src: AUDIO_BASE + 'PartialTake_NormalSpeed_IntroShotGimbalPushIn.mp3', title: "Hunter Intro Lead · Partial · Normal" },
+        "4.8": { src: FULL_NORMAL, title: "Hunter Guitar Cutaways — Take 1 · Normal" },
+        "4.9": { src: FULL_NORMAL, title: "Hunter Guitar Cutaways — Take 2 · Normal" },
+        "4.10": { src: FULL_NORMAL, title: "Hunter Bridge Chugs · Normal" },
+        "4.11": { src: FULL_NORMAL, title: "Dalton Bass Cutaways — Take 1 · Normal" },
+        "4.12": { src: FULL_NORMAL, title: "Dalton Bass Cutaways — Take 2 · Normal" },
+        "4.13": { src: FULL_NORMAL, title: "Lucas Handheld Drum Playthrough · Normal" },
+        "4.14": { src: FULL_NORMAL, title: "Lucas Drum Fill #1 · Normal" },
+        "4.15": { src: FULL_NORMAL, title: "Lucas Drum Fill #2 · Normal" },
+        "4.16": { src: FULL_NORMAL, title: "Lucas Drum Fill #3 · Normal" },
+        "5.1": { src: FULL_NORMAL, title: "120fps Slow-Mo — Take 1 (not synced) · Normal" },
+        "5.2": { src: FULL_NORMAL, title: "120fps Slow-Mo — Take 2 · Normal" },
+        "5.3": { src: FULL_NORMAL, title: "120fps Slow-Mo — Take 3 · Normal" },
+        "5.5": { src: FULL_NORMAL, title: "Green Screen Cortney · Normal" },
+        "5.6": { src: FULL_SLOW_FX, title: "Green Screen Cortney · SLOW FX (Song @ 125%)" },
+        "5.7": { src: FULL_FAST_2X, title: "Green Screen Cortney · FAST 2× (Song @ 50%)" },
+        "6.4": { src: FULL_NORMAL, title: "Final Lights-Cut Pull-Out · Normal" }
+    };
+
+    // =============================================================
+    // MATT'S VERBATIM NOTES — from his brain-dump, per shot
+    // =============================================================
+    const SHOT_NOTES = {
+        "1.1": "We need to do a full band take that's on the 50mm on a tripod — we'll probably do that full take three times. All band members at 50mm on a tripod, locked off shot.",
+        "1.4": "I'll be doing a full band telephoto take — at least three or four telephoto takes. Everything below pulls from these.",
+        "2.1": "The first time we see the band is a gimbal push-in. Probably on 35mm. I'm just getting the gimbal shot of the full band at just the intro section. That's its own partial take — just nailing the intro. We won't play the whole song.",
+        "2.2": "During the first verse, when she says 'too weak to return where I started,' I'm going to do a gimbal shot push-in with either the wide angle or the 35mm — but that's not a full take. That'll just be that one part, so I'll make a partial audio take for it.",
+        "2.3": "The beginning of the second verse is going to be some up-high gimbal shots that are turning and following the guitar player, the bass player, the drummer.",
+        "2.4": "When that chorus comes in we're doing a gimbal pull out — gimbal going backwards with the 35mm really fast to introduce the second chorus, which is the first real full band chorus. I need to make sure I get that gimbal shot.",
+        "2.5": "Right before the breakdown, I want to get Lucas the drummer hitting the toms — very quick, probably one second long. I want a 35mm shot that I'm on a tripod for, kind of up high, where the camera is NOT on Lucas and then it swiftly whips onto him hitting the toms. I definitely want that shot.",
+        "3.1": "When the vocals come in, I'll be pulling from telephoto shots. I will definitely be filming at least three to four telephoto takes that are solely about Cortney. Three will be vocal focused.",
+        "3.4": "One take needs to be the 30fps associated audio because we're going to play it fast so we can slow the audio down for the Coldplay effect. We have three versions of the song — sped up, normal, slowed down. Normal, Coldplay slow-mo with lip sync still synced, or a creepy crawly fast forward still synced up.",
+        "3.5": "I need gimbal shots of Cortney up high looking down with the 50 and 35mm lens. These will mostly be 30fps with the sped-up song — but I definitely want to get a normal speed version too. Will get intercut with Day 2 living room shots of her singing.",
+        "3.7": "The gimbal up-high Cortney shots will mostly be 30fps with the sped-up version of the song. This is the Coldplay slow-mo source.",
+        "3.8": "This is where we definitely get a rack focus shot of Cortney and Luke, right before he says 'so let me explode.'",
+        "3.11": "I want to get a 2× version of a 50mm shot of Cortney with a low shutter speed — like a time-lapse shot of her just being crazy in front of the camera. Can be blurry and messy. Goes beside the VFX shot just for a second. It's during the second drum fill of the bridge.",
+        "3.12": "For the acoustic fakeout, we need this to mirror the Day 2 living room angle. The beginning of the match cut comes from Day 2, but whatever angle we get Day 1 needs to match Day 2 so the match cut works.",
+        "3.13": "For the end of the video, when she says 'my own nightmare,' I want a straight-on gimbal take of her to catch a very specific medium shot of her saying 'my own.'",
+        "3.14": "When she says 'nightmare,' I want it to be a wide on my 16-35 on the gimbal, pulling back from her while she's looking up, with the mic up in the air, saying 'nightmare.'",
+        "4.2": "Telephoto take of Luke focused on him, off-axis from the center of the subway. Tripod moves to the right a little bit and goes straight — Luke is frame-left, the edge of the right side of the subway is frame-right. Probably a whole take with Luke in that arrangement.",
+        "4.4": "When Luke's vocals come in for the first time, we're doing a wide-angle handheld shaky high-energy take of just his first verse — when he first makes his appearance in the song.",
+        "4.5": "When Luke says 'sun sets quick on a day like this,' I want a fisheye shot where he's really getting up close with his face into it — getting a little angry. Security-camera type vibe. Just for that one part where he says 'sun sets quick on a day like this.'",
+        "4.6": "A shot of Luke from kind of down low to the right doing his chugs and then his guitar ring out. Specifically the chugs and guitar ring-out from the bridge — maybe 10 seconds of footage.",
+        "4.7": "The intro guitar part with Hunter, focused on the lead. Need to make sure we get a lead-focused part where we show him playing the lead on guitar. Just for the intro to the song.",
+        "4.14": "Definitely want Lucas' drum fills — very specific shots, NOT coming from a full take. Make sure we get his drum fills from the wide angle.",
+        "4.15": "Second drum fill in the bridge specifically. This is the one that the time-lapse Cortney 2× shot goes beside.",
+        "4.16": "Third drum fill in the bridge — leads into the rap video segment. The rap segment itself is Day 2 in the living room, but the drum fill is Day 1.",
+        "5.1": "On this part of the song we're filming slow-mo that doesn't have to be synced up. Just people vibing, rocking out really hard — cables flying, guitars flying, high energy. About three takes of telephoto zoom in super slow-mo, 120fps footage to mix in with normal speed on this part because it's the crescendo.",
+        "5.4": "This is the first VFX shot. I have to film the background plates for it — gimbal push-ins and pull-outs of the background. No talent.",
+        "5.5": "Green screen Cortney — same spot as the background plates but gimbal won't move, tripod only. Cortney just stands there. One version at normal speed.",
+        "5.6": "Green screen Cortney — second version at 30fps for the Coldplay slow-down.",
+        "5.7": "Green screen Cortney — third version for a 2× speed up. I have a slowed-down version of the song, and this is the first time we introduce that. Three frame rate variants of her in front of the green screen total.",
+        "6.4": "There is a very specific way the video ends — the gimbal pull out. On the last beat of the song we're going to cut all the lights out. And that's the end of the video."
+    };
+
+    // =============================================================
+    // CHECKBOX STATE
+    // =============================================================
+    const STORAGE_KEY = 'meter-day1-print-progress';
+    function loadState(){
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { return {}; }
+    }
+    function saveState(state){
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+    }
+
+    const shots = document.querySelectorAll('.shot');
+    const state = loadState();
+
+    shots.forEach((shot) => {
+        const numEl = shot.querySelector('.shot-num');
+        const id = numEl ? numEl.textContent.trim() : '';
+        shot.dataset.shotId = id;
+        if (state[id]) shot.classList.add('done');
+
+        const box = shot.querySelector('.checkbox');
+        box.addEventListener('click', () => {
+            shot.classList.toggle('done');
+            const s = loadState();
+            if (shot.classList.contains('done')) s[id] = true; else delete s[id];
+            saveState(s);
+        });
+
+        // Inject Matt's notes
+        if (SHOT_NOTES[id]) {
+            const body = shot.querySelector('.shot-body');
+            const notes = document.createElement('div');
+            notes.className = 'matt-notes';
+            notes.textContent = SHOT_NOTES[id];
+            body.appendChild(notes);
+        }
+
+        // Inject per-shot play button
+        if (SHOT_AUDIO[id]) {
+            const body = shot.querySelector('.shot-body');
+            const btn = document.createElement('button');
+            btn.className = 'shot-playbtn';
+            btn.dataset.audio = SHOT_AUDIO[id].src;
+            btn.dataset.title = SHOT_AUDIO[id].title;
+            btn.dataset.shotId = id;
+            btn.textContent = 'Play cue';
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                playAudio(btn.dataset.audio, btn.dataset.title, btn);
+            });
+            body.appendChild(btn);
+        }
+    });
+
+    window.resetAll = function(){
+        if (!confirm('Reset all checkboxes?')) return;
+        localStorage.removeItem(STORAGE_KEY);
+        document.querySelectorAll('.shot').forEach(s => s.classList.remove('done'));
+    };
+
+    // =============================================================
+    // AUDIO PLAYER
+    // =============================================================
+    const audio = document.getElementById('audioEl');
+    const player = document.getElementById('stickyPlayer');
+    const spTitle = document.getElementById('spTitle');
+    const spTime = document.getElementById('spTime');
+    const spBarFill = document.getElementById('spBarFill');
+    const spBar = document.getElementById('spBar');
+    const spPlayPause = document.getElementById('spPlayPause');
+    const spStop = document.getElementById('spStop');
+    const spVol = document.getElementById('spVol');
+
+    let activeBtn = null;
+
+    function fmt(s){
+        if (!s || isNaN(s)) return '0:00';
+        const m = Math.floor(s / 60);
+        const sec = Math.floor(s % 60).toString().padStart(2, '0');
+        return m + ':' + sec;
+    }
+
+    function setActiveButton(btn){
+        // Clear all play-state indicators
+        document.querySelectorAll('.shot-playbtn.playing').forEach(b => b.classList.remove('playing'));
+        document.querySelectorAll('.top-player-btn.playing').forEach(b => b.classList.remove('playing'));
+        document.querySelectorAll('.top-player-btn.active').forEach(b => b.classList.remove('active'));
+        if (btn) {
+            btn.classList.add('playing');
+            if (btn.classList.contains('top-player-btn')) btn.classList.add('active');
+        }
+        activeBtn = btn;
+    }
+
+    function playAudio(src, title, btn){
+        if (audio.src.endsWith(src.split('/').pop()) && !audio.paused) {
+            audio.pause();
+            return;
+        }
+        if (!audio.src.endsWith(src.split('/').pop())) {
+            audio.src = src;
+        }
+        spTitle.textContent = title;
+        player.classList.add('visible');
+        setActiveButton(btn);
+        audio.play().catch(err => {
+            console.error('Audio play failed:', err);
+            spTitle.textContent = 'Error: ' + err.message;
+        });
+    }
+
+    // Top player buttons
+    document.querySelectorAll('.top-player-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            playAudio(btn.dataset.audio, btn.dataset.title, btn);
+        });
+    });
+
+    // Player controls
+    spPlayPause.addEventListener('click', () => {
+        if (!audio.src) return;
+        if (audio.paused) audio.play();
+        else audio.pause();
+    });
+
+    spStop.addEventListener('click', () => {
+        audio.pause();
+        audio.currentTime = 0;
+        player.classList.remove('visible');
+        setActiveButton(null);
+    });
+
+    spBar.addEventListener('click', (e) => {
+        if (!audio.duration) return;
+        const rect = spBar.getBoundingClientRect();
+        const pct = (e.clientX - rect.left) / rect.width;
+        audio.currentTime = audio.duration * pct;
+    });
+
+    spVol.addEventListener('input', () => {
+        audio.volume = parseFloat(spVol.value);
+    });
+
+    audio.addEventListener('play', () => { spPlayPause.textContent = '❚❚'; });
+    audio.addEventListener('pause', () => { spPlayPause.textContent = '▶'; });
+    audio.addEventListener('timeupdate', () => {
+        const d = audio.duration || 0;
+        const c = audio.currentTime || 0;
+        spTime.textContent = fmt(c) + ' / ' + fmt(d);
+        spBarFill.style.width = (d ? (c / d * 100) : 0) + '%';
+    });
+    audio.addEventListener('ended', () => {
+        spBarFill.style.width = '100%';
+        setActiveButton(null);
+    });
+    audio.addEventListener('error', () => {
+        spTitle.textContent = 'Audio error — check file path';
+    });
+
+})();
+</script>
+</body>
+</html>

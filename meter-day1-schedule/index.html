@@ -352,18 +352,253 @@
 
         .play-slot {
             flex-shrink: 0;
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
-            border: 1px dashed #2a2a2a;
+            border: 1.5px solid #2a2a2a;
             background: #0a0a0a;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #333;
-            font-size: 10px;
-            font-weight: 700;
+            color: #666;
+            font-size: 11px;
+            cursor: pointer;
             margin-top: 2px;
+            transition: all 0.15s ease;
+            flex-shrink: 0;
+        }
+        .play-slot:hover { border-color: #ff4444; color: #ff4444; }
+        .play-slot.playing { border-color: #ff4444; background: #ff4444; color: #fff; }
+        .play-slot::before { content: "▶"; margin-left: 2px; font-size: 10px; line-height: 1; }
+        .play-slot.playing::before { content: "❚❚"; margin-left: 0; font-size: 9px; }
+        .play-slot.empty { opacity: 0.3; pointer-events: none; border-style: dashed; }
+        .play-slot.empty::before { content: "—"; margin: 0; font-size: 10px; }
+
+        /* Matt's verbatim notes */
+        .matt-notes {
+            margin-top: 8px;
+            padding: 10px 12px;
+            background: #12100a;
+            border-left: 3px solid #ffbb44;
+            border-radius: 0 6px 6px 0;
+            font-size: 12px;
+            line-height: 1.55;
+            color: #cfc5a8;
+            font-style: italic;
+        }
+        .matt-notes::before {
+            content: "MATT'S NOTES — ";
+            font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            font-style: normal;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: #ffbb44;
+            margin-right: 4px;
+        }
+        .shot.done .matt-notes { opacity: 0.45; }
+
+        /* 3-version callout */
+        .version-callout {
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            border-radius: 14px;
+            padding: 16px 18px;
+            margin-bottom: 18px;
+        }
+        .version-callout .vc-title {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ff4444;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .version-callout .vc-row {
+            display: grid;
+            grid-template-columns: 110px 100px 1fr;
+            gap: 12px;
+            padding: 7px 0;
+            align-items: baseline;
+            font-size: 12px;
+        }
+        .version-callout .vc-row:not(:last-child) { border-bottom: 1px solid #1a1a1a; }
+        .version-callout .vc-name {
+            font-weight: 800;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 11px;
+        }
+        .version-callout .vc-speed {
+            color: #ff9977;
+            font-weight: 700;
+            font-size: 11px;
+        }
+        .version-callout .vc-use {
+            color: #999;
+            font-size: 11px;
+            font-style: italic;
+        }
+
+        /* Top 3 big play buttons */
+        .top-players {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        .top-player-btn {
+            background: #141414;
+            border: 2px solid #2a2a2a;
+            border-radius: 14px;
+            padding: 14px 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            text-align: left;
+            color: #eee;
+            font-family: inherit;
+            transition: all 0.15s ease;
+        }
+        .top-player-btn:hover { border-color: #ff4444; background: #1a1212; }
+        .top-player-btn.active { border-color: #ff4444; background: #1a1212; }
+        .top-player-btn.playing { border-color: #ff4444; background: #2a0f0f; }
+        .top-player-btn .tp-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #0a0a0a;
+            border: 2px solid #ff4444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: #ff4444;
+            font-size: 14px;
+            line-height: 1;
+        }
+        .top-player-btn.playing .tp-icon { background: #ff4444; color: #fff; }
+        .top-player-btn .tp-icon::before { content: "▶"; margin-left: 2px; }
+        .top-player-btn.playing .tp-icon::before { content: "❚❚"; margin-left: 0; font-size: 11px; }
+        .top-player-btn .tp-text { flex: 1; min-width: 0; }
+        .top-player-btn .tp-label {
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #666;
+            font-weight: 700;
+        }
+        .top-player-btn .tp-name {
+            font-size: 14px;
+            font-weight: 800;
+            color: #fff;
+            margin-top: 2px;
+            letter-spacing: 0.3px;
+        }
+        .top-player-btn .tp-sub {
+            font-size: 10px;
+            color: #888;
+            margin-top: 1px;
+        }
+
+        /* Sticky bottom player */
+        .sticky-player {
+            position: fixed;
+            left: 0; right: 0; bottom: 0;
+            background: rgba(18,18,18,0.96);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: #eee;
+            padding: 12px 20px calc(12px + env(safe-area-inset-bottom)) 20px;
+            z-index: 200;
+            border-top: 1px solid #2a0f0f;
+            box-shadow: 0 -12px 40px rgba(0,0,0,0.5);
+            transform: translateY(110%);
+            transition: transform 0.35s cubic-bezier(.25,.8,.3,1);
+        }
+        .sticky-player.visible { transform: translateY(0); }
+        .sp-inner {
+            max-width: 720px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 42px 1fr auto;
+            gap: 14px;
+            align-items: center;
+        }
+        .sp-btn {
+            background: transparent;
+            color: #fff;
+            border: 1.5px solid #555;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: inherit;
+            font-size: 13px;
+            transition: all 0.15s ease;
+        }
+        .sp-btn:hover { border-color: #ff4444; color: #ff4444; }
+        .sp-body { min-width: 0; }
+        .sp-topline {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+        .sp-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            letter-spacing: 0.2px;
+        }
+        .sp-time {
+            font-size: 10px;
+            color: #888;
+            font-variant-numeric: tabular-nums;
+            flex-shrink: 0;
+        }
+        .sp-bar {
+            height: 5px;
+            background: #2a1a1a;
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .sp-bar-fill {
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            background: linear-gradient(90deg, #ff4444, #ff6666);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        .sp-actions {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .sp-actions .sp-btn { width: 34px; height: 34px; font-size: 11px; }
+        .sp-vol {
+            width: 70px;
+            accent-color: #ff4444;
+        }
+
+        @media (max-width: 600px) {
+            .top-players { grid-template-columns: 1fr; }
+            .sp-inner { grid-template-columns: 36px 1fr auto; gap: 10px; }
+            .sp-vol { display: none; }
+            .version-callout .vc-row { grid-template-columns: 90px 90px 1fr; gap: 8px; }
         }
 
         /* Footer reference */
@@ -524,6 +759,52 @@
             <div class="label">Hard out</div>
             <div class="value accent">11:00 PM</div>
         </div>
+    </div>
+
+    <div class="version-callout">
+        <div class="vc-title">Three Song Playback Versions</div>
+        <div class="vc-row">
+            <span class="vc-name">Normal</span>
+            <span class="vc-speed">100% speed</span>
+            <span class="vc-use">Default for all 24fps takes. Lip-synced.</span>
+        </div>
+        <div class="vc-row">
+            <span class="vc-name">Slow FX</span>
+            <span class="vc-speed">Song @ 125%</span>
+            <span class="vc-use">Play this for 30fps takes → slowed in post for Coldplay effect, still synced.</span>
+        </div>
+        <div class="vc-row">
+            <span class="vc-name">Fast 2×</span>
+            <span class="vc-speed">Song @ 50%</span>
+            <span class="vc-use">Play this for 24fps takes that'll be sped up 2× in post. Creepy-crawly, still synced.</span>
+        </div>
+    </div>
+
+    <div class="top-players">
+        <button class="top-player-btn" data-audio="audio/FullTake_NormalSpeed.mp3" data-title="Full Take — Normal Speed">
+            <div class="tp-icon"></div>
+            <div class="tp-text">
+                <div class="tp-label">Version 1</div>
+                <div class="tp-name">Normal</div>
+                <div class="tp-sub">100% · full song</div>
+            </div>
+        </button>
+        <button class="top-player-btn" data-audio="audio/FullTake_SpedUpSpeed_30fps.mp3" data-title="Full Take — Sped Up (Slow FX)">
+            <div class="tp-icon"></div>
+            <div class="tp-text">
+                <div class="tp-label">Version 2</div>
+                <div class="tp-name">Slow FX</div>
+                <div class="tp-sub">125% · for 30fps</div>
+            </div>
+        </button>
+        <button class="top-player-btn" data-audio="audio/FullTake_SlowedDownSpeed_24fps.mp3" data-title="Full Take — Slowed Down (Fast 2×)">
+            <div class="tp-icon"></div>
+            <div class="tp-text">
+                <div class="tp-label">Version 3</div>
+                <div class="tp-name">Fast 2×</div>
+                <div class="tp-sub">50% · for 24fps</div>
+            </div>
+        </button>
     </div>
 
     <!-- ================================= -->
@@ -1326,20 +1607,134 @@
 
     <div class="footer">MATT MATHESON CREATIVE — DREAMING — DAY 1 V1</div>
 
+<!-- STICKY BOTTOM PLAYER -->
+<div class="sticky-player" id="stickyPlayer">
+    <div class="sp-inner">
+        <button class="sp-btn" id="spPlayPause" title="Play/Pause">▶</button>
+        <div class="sp-body">
+            <div class="sp-topline">
+                <div class="sp-title" id="spTitle">—</div>
+                <div class="sp-time" id="spTime">0:00 / 0:00</div>
+            </div>
+            <div class="sp-bar" id="spBar"><div class="sp-bar-fill" id="spBarFill"></div></div>
+        </div>
+        <div class="sp-actions">
+            <input type="range" class="sp-vol" id="spVol" min="0" max="1" step="0.01" value="1">
+            <button class="sp-btn" id="spStop" title="Stop">■</button>
+        </div>
+    </div>
+</div>
+<audio id="audioEl" preload="none"></audio>
+
 <script>
 (function(){
-    const STORAGE_KEY = 'meter-day1-v1-progress';
 
+    // =============================================================
+    // SHOT → AUDIO MAPPING
+    // =============================================================
+    const AUDIO_BASE = 'audio/';
+    const FULL_NORMAL = AUDIO_BASE + 'FullTake_NormalSpeed.mp3';
+    const FULL_SLOW_FX = AUDIO_BASE + 'FullTake_SpedUpSpeed_30fps.mp3';
+    const FULL_FAST_2X = AUDIO_BASE + 'FullTake_SlowedDownSpeed_24fps.mp3';
+
+    const SHOT_AUDIO = {
+        "1.1": { src: FULL_NORMAL, title: "Full Band 50mm — Take 1 · Normal" },
+        "1.2": { src: FULL_NORMAL, title: "Full Band 50mm — Take 2 · Normal" },
+        "1.3": { src: FULL_NORMAL, title: "Full Band 50mm — Take 3 · Normal" },
+        "1.4": { src: FULL_NORMAL, title: "Full Band 70-200 — Take 1 · Normal" },
+        "1.5": { src: FULL_NORMAL, title: "Full Band 70-200 — Take 2 · Normal" },
+        "1.6": { src: FULL_NORMAL, title: "Full Band 70-200 — Take 3 · Normal" },
+        "2.1": { src: AUDIO_BASE + 'PartialTake_NormalSpeed_IntroShotGimbalPushIn.mp3', title: "Intro Gimbal Push-In · Partial · Normal" },
+        "2.2": { src: AUDIO_BASE + 'PartialTake_NormalSpeed_GimbalPushInAndPullOut_PartOfVerse1.mp3', title: "\"Too weak to return\" Push-In · Partial · Normal" },
+        "2.3": { src: FULL_NORMAL, title: "Verse 2 opening gimbal · Normal" },
+        "2.4": { src: FULL_NORMAL, title: "Chorus 2 entry pull-out · Normal" },
+        "2.5": { src: FULL_NORMAL, title: "Lucas toms whip-pan · Normal" },
+        "3.1": { src: FULL_NORMAL, title: "Cortney Telephoto Vocal — Take 1 · Normal" },
+        "3.2": { src: FULL_NORMAL, title: "Cortney Telephoto Vocal — Take 2 · Normal" },
+        "3.3": { src: FULL_NORMAL, title: "Cortney Telephoto Vocal — Take 3 · Normal" },
+        "3.4": { src: FULL_SLOW_FX, title: "Cortney Telephoto · SLOW FX (Song @ 125%)" },
+        "3.5": { src: FULL_NORMAL, title: "Cortney Gimbal Up-High 35mm · Normal" },
+        "3.6": { src: FULL_NORMAL, title: "Cortney Gimbal Up-High 50mm · Normal" },
+        "3.7": { src: FULL_SLOW_FX, title: "Cortney Gimbal Up-High · SLOW FX (Song @ 125%)" },
+        "3.8": { src: FULL_NORMAL, title: "Rack focus \"so let me explode\" · Normal" },
+        "3.9": { src: AUDIO_BASE + 'PartialTake_NormalSpeed_Bridge_OnlyCortneyPart.mp3', title: "Cortney Bridge Telephoto · Partial · Normal" },
+        "3.10": { src: AUDIO_BASE + 'PartialTake_NormalSpeed_Bridge_OnlyCortneyPart.mp3', title: "Cortney Bridge Gimbal · Partial · Normal" },
+        "3.11": { src: FULL_FAST_2X, title: "Cortney Time-Lapse 2× · FAST 2× (Song @ 50%)" },
+        "3.12": { src: FULL_NORMAL, title: "Match Cut Medium · Normal" },
+        "3.13": { src: FULL_NORMAL, title: "\"my own\" Gimbal Medium · Normal" },
+        "3.14": { src: FULL_NORMAL, title: "\"nightmare\" 16-35 Pullback · Normal" },
+        "4.1": { src: FULL_NORMAL, title: "Luke Telephoto Full · Normal" },
+        "4.2": { src: FULL_NORMAL, title: "Luke Off-Axis Telephoto · Normal" },
+        "4.3": { src: FULL_NORMAL, title: "Luke Chug Take · Normal" },
+        "4.4": { src: AUDIO_BASE + 'PartialTake_NormalSpeed_LukeFirstVersePart.mp3', title: "Luke First Vocals Handheld · Partial · Normal" },
+        "4.5": { src: FULL_NORMAL, title: "Luke Fisheye \"sun sets quick\" · Normal" },
+        "4.6": { src: FULL_NORMAL, title: "Luke Bridge Chugs/Ring-out · Normal" },
+        "4.7": { src: AUDIO_BASE + 'PartialTake_NormalSpeed_IntroShotGimbalPushIn.mp3', title: "Hunter Intro Lead · Partial · Normal" },
+        "4.8": { src: FULL_NORMAL, title: "Hunter Guitar Cutaways — Take 1 · Normal" },
+        "4.9": { src: FULL_NORMAL, title: "Hunter Guitar Cutaways — Take 2 · Normal" },
+        "4.10": { src: FULL_NORMAL, title: "Hunter Bridge Chugs · Normal" },
+        "4.11": { src: FULL_NORMAL, title: "Dalton Bass Cutaways — Take 1 · Normal" },
+        "4.12": { src: FULL_NORMAL, title: "Dalton Bass Cutaways — Take 2 · Normal" },
+        "4.13": { src: FULL_NORMAL, title: "Lucas Handheld Drum Playthrough · Normal" },
+        "4.14": { src: FULL_NORMAL, title: "Lucas Drum Fill #1 · Normal" },
+        "4.15": { src: FULL_NORMAL, title: "Lucas Drum Fill #2 · Normal" },
+        "4.16": { src: FULL_NORMAL, title: "Lucas Drum Fill #3 · Normal" },
+        "5.1": { src: FULL_NORMAL, title: "120fps Slow-Mo — Take 1 (not synced) · Normal" },
+        "5.2": { src: FULL_NORMAL, title: "120fps Slow-Mo — Take 2 · Normal" },
+        "5.3": { src: FULL_NORMAL, title: "120fps Slow-Mo — Take 3 · Normal" },
+        "5.5": { src: FULL_NORMAL, title: "Green Screen Cortney · Normal" },
+        "5.6": { src: FULL_SLOW_FX, title: "Green Screen Cortney · SLOW FX (Song @ 125%)" },
+        "5.7": { src: FULL_FAST_2X, title: "Green Screen Cortney · FAST 2× (Song @ 50%)" },
+        "6.4": { src: FULL_NORMAL, title: "Final Lights-Cut Pull-Out · Normal" }
+    };
+
+    // =============================================================
+    // MATT'S VERBATIM NOTES
+    // =============================================================
+    const SHOT_NOTES = {
+        "1.1": "We need to do a full band take that's on the 50mm on a tripod — we'll probably do that full take three times. All band members at 50mm on a tripod, locked off shot.",
+        "1.4": "I'll be doing a full band telephoto take — at least three or four telephoto takes. Everything below pulls from these.",
+        "2.1": "The first time we see the band is a gimbal push-in. Probably on 35mm. I'm just getting the gimbal shot of the full band at just the intro section. That's its own partial take — just nailing the intro. We won't play the whole song.",
+        "2.2": "During the first verse, when she says 'too weak to return where I started,' I'm going to do a gimbal shot push-in with either the wide angle or the 35mm — but that's not a full take. That'll just be that one part, so I'll make a partial audio take for it.",
+        "2.3": "The beginning of the second verse is going to be some up-high gimbal shots that are turning and following the guitar player, the bass player, the drummer.",
+        "2.4": "When that chorus comes in we're doing a gimbal pull out — gimbal going backwards with the 35mm really fast to introduce the second chorus, which is the first real full band chorus. I need to make sure I get that gimbal shot.",
+        "2.5": "Right before the breakdown, I want to get Lucas the drummer hitting the toms — very quick, probably one second long. I want a 35mm shot that I'm on a tripod for, kind of up high, where the camera is NOT on Lucas and then it swiftly whips onto him hitting the toms. I definitely want that shot.",
+        "3.1": "When the vocals come in, I'll be pulling from telephoto shots. I will definitely be filming at least three to four telephoto takes that are solely about Cortney. Three will be vocal focused.",
+        "3.4": "One take needs to be the 30fps associated audio because we're going to play it fast so we can slow the audio down for the Coldplay effect. We have three versions of the song — sped up, normal, slowed down. Normal, Coldplay slow-mo with lip sync still synced, or a creepy crawly fast forward still synced up.",
+        "3.5": "I need gimbal shots of Cortney up high looking down with the 50 and 35mm lens. These will mostly be 30fps with the sped-up song — but I definitely want to get a normal speed version too. Will get intercut with Day 2 living room shots of her singing.",
+        "3.7": "The gimbal up-high Cortney shots will mostly be 30fps with the sped-up version of the song. This is the Coldplay slow-mo source.",
+        "3.8": "This is where we definitely get a rack focus shot of Cortney and Luke, right before he says 'so let me explode.'",
+        "3.11": "I want to get a 2× version of a 50mm shot of Cortney with a low shutter speed — like a time-lapse shot of her just being crazy in front of the camera. Can be blurry and messy. Goes beside the VFX shot just for a second. It's during the second drum fill of the bridge.",
+        "3.12": "For the acoustic fakeout, we need this to mirror the Day 2 living room angle. The beginning of the match cut comes from Day 2, but whatever angle we get Day 1 needs to match Day 2 so the match cut works.",
+        "3.13": "For the end of the video, when she says 'my own nightmare,' I want a straight-on gimbal take of her to catch a very specific medium shot of her saying 'my own.'",
+        "3.14": "When she says 'nightmare,' I want it to be a wide on my 16-35 on the gimbal, pulling back from her while she's looking up, with the mic up in the air, saying 'nightmare.'",
+        "4.2": "Telephoto take of Luke focused on him, off-axis from the center of the subway. Tripod moves to the right a little bit and goes straight — Luke is frame-left, the edge of the right side of the subway is frame-right. Probably a whole take with Luke in that arrangement.",
+        "4.4": "When Luke's vocals come in for the first time, we're doing a wide-angle handheld shaky high-energy take of just his first verse — when he first makes his appearance in the song.",
+        "4.5": "When Luke says 'sun sets quick on a day like this,' I want a fisheye shot where he's really getting up close with his face into it — getting a little angry. Security-camera type vibe. Just for that one part where he says 'sun sets quick on a day like this.'",
+        "4.6": "A shot of Luke from kind of down low to the right doing his chugs and then his guitar ring out. Specifically the chugs and guitar ring-out from the bridge — maybe 10 seconds of footage.",
+        "4.7": "The intro guitar part with Hunter, focused on the lead. Need to make sure we get a lead-focused part where we show him playing the lead on guitar. Just for the intro to the song.",
+        "4.14": "Definitely want Lucas' drum fills — very specific shots, NOT coming from a full take. Make sure we get his drum fills from the wide angle.",
+        "4.15": "Second drum fill in the bridge specifically. This is the one the time-lapse Cortney 2× shot goes beside.",
+        "4.16": "Third drum fill in the bridge — leads into the rap video segment. The rap segment itself is Day 2 in the living room, but the drum fill is Day 1.",
+        "5.1": "On this part of the song we're filming slow-mo that doesn't have to be synced up. Just people vibing, rocking out really hard — cables flying, guitars flying, high energy. About three takes of telephoto zoom in super slow-mo, 120fps footage to mix in with normal speed on this part because it's the crescendo.",
+        "5.4": "This is the first VFX shot. I have to film the background plates for it — gimbal push-ins and pull-outs of the background. No talent.",
+        "5.5": "Green screen Cortney — same spot as the background plates but gimbal won't move, tripod only. Cortney just stands there. One version at normal speed.",
+        "5.6": "Green screen Cortney — second version at 30fps for the Coldplay slow-down.",
+        "5.7": "Green screen Cortney — third version for a 2× speed up. I have a slowed-down version of the song, and this is the first time we introduce that. Three frame rate variants of her in front of the green screen total.",
+        "6.4": "There is a very specific way the video ends — the gimbal pull out. On the last beat of the song we're going to cut all the lights out. And that's the end of the video."
+    };
+
+    // =============================================================
+    // CHECKBOX + PROGRESS
+    // =============================================================
+    const STORAGE_KEY = 'meter-day1-v1-progress';
     function loadState(){
-        try {
-            return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-        } catch(e) { return {}; }
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { return {}; }
     }
     function saveState(state){
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
     }
 
-    // Initialize shot IDs and hook up checkboxes
     const shots = document.querySelectorAll('.shot');
     const state = loadState();
 
@@ -1357,6 +1752,32 @@
             saveState(newState);
             updateProgress();
         });
+
+        // Inject Matt's notes
+        if (SHOT_NOTES[id]) {
+            const main = shot.querySelector('.main');
+            const notes = document.createElement('div');
+            notes.className = 'matt-notes';
+            notes.textContent = SHOT_NOTES[id];
+            main.appendChild(notes);
+        }
+
+        // Wire up play-slot as a real play button if audio exists
+        const slot = shot.querySelector('.play-slot');
+        if (slot) {
+            if (SHOT_AUDIO[id]) {
+                slot.classList.remove('empty');
+                slot.textContent = '';
+                slot.dataset.audio = SHOT_AUDIO[id].src;
+                slot.dataset.title = SHOT_AUDIO[id].title;
+                slot.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    playAudio(slot.dataset.audio, slot.dataset.title, slot);
+                });
+            } else {
+                slot.classList.add('empty');
+            }
+        }
     });
 
     function updateProgress(){
@@ -1366,28 +1787,19 @@
         document.getElementById('doneCount').textContent = done;
         document.getElementById('totalCount').textContent = total;
         document.getElementById('progressFill').style.width = (total ? (done/total*100) : 0) + '%';
-
-        // Per-block progress + all-done state
         document.querySelectorAll('.block').forEach(block => {
             const blockShots = block.querySelectorAll('.shot');
             let bDone = 0;
             blockShots.forEach(s => { if (s.classList.contains('done')) bDone++; });
             const progEl = block.querySelector('.bh-progress');
             if (progEl) progEl.textContent = bDone + '/' + blockShots.length;
-            if (blockShots.length > 0 && bDone === blockShots.length) {
-                block.classList.add('all-done');
-            } else {
-                block.classList.remove('all-done');
-            }
+            if (blockShots.length > 0 && bDone === blockShots.length) block.classList.add('all-done');
+            else block.classList.remove('all-done');
         });
     }
 
-    window.toggleBlock = function(header){
-        header.closest('.block').classList.toggle('collapsed');
-    };
-    window.expandAll = function(){
-        document.querySelectorAll('.block').forEach(b => b.classList.remove('collapsed'));
-    };
+    window.toggleBlock = function(header){ header.closest('.block').classList.toggle('collapsed'); };
+    window.expandAll = function(){ document.querySelectorAll('.block').forEach(b => b.classList.remove('collapsed')); };
     window.collapseDone = function(){
         document.querySelectorAll('.block').forEach(b => {
             if (b.classList.contains('all-done')) b.classList.add('collapsed');
@@ -1400,8 +1812,93 @@
         document.querySelectorAll('.shot').forEach(s => s.classList.remove('done'));
         updateProgress();
     };
-
     updateProgress();
+
+    // =============================================================
+    // AUDIO PLAYER
+    // =============================================================
+    const audio = document.getElementById('audioEl');
+    const player = document.getElementById('stickyPlayer');
+    const spTitle = document.getElementById('spTitle');
+    const spTime = document.getElementById('spTime');
+    const spBarFill = document.getElementById('spBarFill');
+    const spBar = document.getElementById('spBar');
+    const spPlayPause = document.getElementById('spPlayPause');
+    const spStop = document.getElementById('spStop');
+    const spVol = document.getElementById('spVol');
+
+    function fmt(s){
+        if (!s || isNaN(s)) return '0:00';
+        const m = Math.floor(s / 60);
+        const sec = Math.floor(s % 60).toString().padStart(2, '0');
+        return m + ':' + sec;
+    }
+
+    function setActiveButton(btn){
+        document.querySelectorAll('.play-slot.playing').forEach(b => b.classList.remove('playing'));
+        document.querySelectorAll('.top-player-btn.playing').forEach(b => b.classList.remove('playing'));
+        document.querySelectorAll('.top-player-btn.active').forEach(b => b.classList.remove('active'));
+        if (btn) {
+            btn.classList.add('playing');
+            if (btn.classList.contains('top-player-btn')) btn.classList.add('active');
+        }
+    }
+
+    function playAudio(src, title, btn){
+        const file = src.split('/').pop();
+        if (audio.src && audio.src.endsWith(file) && !audio.paused) {
+            audio.pause();
+            return;
+        }
+        if (!audio.src || !audio.src.endsWith(file)) {
+            audio.src = src;
+        }
+        spTitle.textContent = title;
+        player.classList.add('visible');
+        setActiveButton(btn);
+        audio.play().catch(err => {
+            spTitle.textContent = 'Error: ' + err.message;
+            console.error('Audio play failed:', err);
+        });
+    }
+
+    document.querySelectorAll('.top-player-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            playAudio(btn.dataset.audio, btn.dataset.title, btn);
+        });
+    });
+
+    spPlayPause.addEventListener('click', () => {
+        if (!audio.src) return;
+        if (audio.paused) audio.play(); else audio.pause();
+    });
+    spStop.addEventListener('click', () => {
+        audio.pause();
+        audio.currentTime = 0;
+        player.classList.remove('visible');
+        setActiveButton(null);
+    });
+    spBar.addEventListener('click', (e) => {
+        if (!audio.duration) return;
+        const rect = spBar.getBoundingClientRect();
+        audio.currentTime = audio.duration * ((e.clientX - rect.left) / rect.width);
+    });
+    spVol.addEventListener('input', () => { audio.volume = parseFloat(spVol.value); });
+    audio.addEventListener('play', () => { spPlayPause.textContent = '❚❚'; });
+    audio.addEventListener('pause', () => { spPlayPause.textContent = '▶'; });
+    audio.addEventListener('timeupdate', () => {
+        const d = audio.duration || 0;
+        const c = audio.currentTime || 0;
+        spTime.textContent = fmt(c) + ' / ' + fmt(d);
+        spBarFill.style.width = (d ? (c / d * 100) : 0) + '%';
+    });
+    audio.addEventListener('ended', () => {
+        spBarFill.style.width = '100%';
+        setActiveButton(null);
+    });
+    audio.addEventListener('error', () => {
+        spTitle.textContent = 'Audio error — check file path';
+    });
 })();
 </script>
 </body>
