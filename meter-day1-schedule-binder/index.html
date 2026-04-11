@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="published" content="2026-04-10">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>METER — "Dreaming" — Day 1 Schedule (Print Version)</title>
+    <title>METER — "Dreaming" — Day 1 Crew Binder</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -626,6 +626,250 @@
             margin-top: 3px;
         }
 
+        /* COVER PAGE */
+        .cover {
+            min-height: 10in;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0.4in 0.3in;
+            page-break-after: always;
+            border: 3px double var(--ink);
+        }
+        .cover .cover-top { text-align: center; padding-top: 0.5in; }
+        .cover .cover-brand {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 11px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            margin-bottom: 20px;
+        }
+        .cover .cover-band {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            margin-bottom: 8px;
+        }
+        .cover .cover-title {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 82px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--ink);
+            line-height: 1;
+            margin: 30px 0 14px;
+        }
+        .cover .cover-subtitle {
+            font-family: Georgia, serif;
+            font-style: italic;
+            font-size: 18px;
+            color: var(--ink-soft);
+            margin-bottom: 40px;
+        }
+        .cover .cover-divider {
+            border-top: 2px solid var(--ink);
+            margin: 30px auto;
+            width: 60%;
+        }
+        .cover .cover-doctype {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--ink);
+            margin-top: 20px;
+        }
+        .cover .cover-subdoctype {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            margin-top: 4px;
+        }
+        .cover .cover-meta { padding-top: 30px; text-align: center; }
+        .cover .cover-meta .cm-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            border: 1px solid var(--ink);
+        }
+        .cover .cover-meta .cm-cell {
+            padding: 12px 14px;
+            text-align: left;
+            border-right: 1px solid var(--rule-soft);
+        }
+        .cover .cover-meta .cm-cell:nth-child(2n) { border-right: none; }
+        .cover .cover-meta .cm-cell:not(:nth-last-child(-n+2)) { border-bottom: 1px solid var(--rule-soft); }
+        .cover .cover-meta .cm-label {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+        .cover .cover-meta .cm-value {
+            font-family: Georgia, serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--ink);
+        }
+        .cover .cover-footer {
+            text-align: center;
+            padding-bottom: 0.3in;
+            border-top: 1px solid var(--rule-soft);
+            padding-top: 20px;
+        }
+        .cover .cover-footer .cf-name {
+            font-family: Georgia, serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--ink);
+        }
+        .cover .cover-footer .cf-contact {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10px;
+            color: var(--ink-faint);
+            margin-top: 3px;
+            letter-spacing: 0.5px;
+        }
+        .cover .cover-footer .cf-version {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 9px;
+            color: var(--ink-faint);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 12px;
+            padding-top: 8px;
+            border-top: 1px dotted var(--rule-soft);
+        }
+
+        /* Section break */
+        .section-break {
+            page-break-before: always;
+            padding-top: 10px;
+        }
+        .section-break-heading {
+            font-family: Georgia, serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--ink);
+            border-bottom: 2px solid var(--ink);
+            padding-bottom: 4px;
+            margin-bottom: 6px;
+        }
+        .section-break-sub {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        /* Call sheet */
+        .callsheet { margin-bottom: 22px; }
+        .callsheet .cs-title {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-bottom: 1.5px solid var(--ink);
+            padding-bottom: 4px;
+            margin-bottom: 10px;
+            color: var(--ink);
+        }
+        .callsheet .cs-contact {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr 1fr;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px dotted var(--rule-soft);
+            font-family: Georgia, serif;
+            font-size: 12px;
+            align-items: baseline;
+        }
+        .callsheet .cs-contact:last-child { border-bottom: none; }
+        .callsheet .cs-name { font-weight: 700; }
+        .callsheet .cs-role {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10px;
+            color: var(--ink-soft);
+            letter-spacing: 0.3px;
+        }
+        .callsheet .cs-phone {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 11px;
+            color: var(--ink);
+            text-align: right;
+            font-weight: 600;
+        }
+        .callsheet .cs-bring {
+            padding: 8px 0 10px;
+            border-bottom: 1px dotted var(--rule-soft);
+        }
+        .callsheet .cs-bring:last-child { border-bottom: none; }
+        .callsheet .cs-bring-name {
+            font-family: Georgia, serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 2px;
+        }
+        .callsheet .cs-bring-list {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 11px;
+            line-height: 1.5;
+            color: var(--ink-soft);
+        }
+        .callsheet .cs-notes {
+            padding: 10px 12px;
+            border-left: 3px solid var(--ink);
+            background: #f7f5f0;
+            font-family: Georgia, serif;
+            font-size: 11.5px;
+            line-height: 1.55;
+            color: var(--ink);
+            margin-top: 8px;
+        }
+        .callsheet .cs-notes ul { padding-left: 18px; margin: 0; }
+        .callsheet .cs-notes li { margin-bottom: 3px; }
+
+        /* Reference imagery */
+        .ref-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .ref-grid .ref-item {
+            page-break-inside: avoid;
+        }
+        .ref-grid .ref-img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border: 1px solid var(--ink);
+        }
+        .ref-grid .ref-caption {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 9px;
+            letter-spacing: 0.3px;
+            color: var(--ink-soft);
+            margin-top: 3px;
+        }
+
         /* Print */
         @media print {
             @page { size: letter; margin: 0.5in; }
@@ -653,21 +897,60 @@
 <body>
 
 <div class="toolbar">
-    <div><strong>METER — "Dreaming" — Day 1</strong> · Print Version</div>
+    <div><strong>METER — "Dreaming" — Day 1</strong> · Crew Binder Edition</div>
     <div class="tb-right">
-        <button onclick="window.print()">Print</button>
-        <button onclick="resetAll()">Reset Checks</button>
-        <button onclick="window.location.href='../meter-day1-schedule/'">Full Version →</button>
+        <button onclick="window.print()">Print / Save as PDF</button>
     </div>
 </div>
 
 <div class="page">
 
-    <div class="masthead">
-        <div class="house">Matt Matheson Creative</div>
-        <h1>DREAMING</h1>
-        <div class="song">Meter — Music Video — Day 1 Shooting Schedule</div>
-        <div class="doctype">Production Document · V1</div>
+    <!-- ========================================= -->
+    <!-- COVER PAGE                                -->
+    <!-- ========================================= -->
+    <div class="cover">
+        <div class="cover-top">
+            <div class="cover-brand">Matt Matheson Creative</div>
+            <div class="cover-band">Meter</div>
+            <div class="cover-divider"></div>
+            <div class="cover-title">DREAMING</div>
+            <div class="cover-subtitle">A music video by Matt Matheson</div>
+            <div class="cover-doctype">Crew Production Binder</div>
+            <div class="cover-subdoctype">Day 1 · Subway · Nashville TN</div>
+        </div>
+        <div class="cover-meta">
+            <div class="cm-row">
+                <div class="cm-cell">
+                    <div class="cm-label">Date</div>
+                    <div class="cm-value">Saturday · April 11, 2026</div>
+                </div>
+                <div class="cm-cell">
+                    <div class="cm-label">Location</div>
+                    <div class="cm-value">The Subway, Nashville</div>
+                </div>
+                <div class="cm-cell">
+                    <div class="cm-label">Crew Call</div>
+                    <div class="cm-value">5:00 PM</div>
+                </div>
+                <div class="cm-cell">
+                    <div class="cm-label">Hard Out</div>
+                    <div class="cm-value">11:00 PM</div>
+                </div>
+            </div>
+        </div>
+        <div class="cover-footer">
+            <div class="cf-name">Matt Matheson — Director / DP</div>
+            <div class="cf-contact">mattmathesoncreative@gmail.com · (931) 252-2070</div>
+            <div class="cf-version">Crew Binder Edition · V1 · Day 1 of 2</div>
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- CALL SHEET SECTION                        -->
+    <!-- ========================================= -->
+    <div class="section-break">
+        <div class="section-break-heading">Call Sheet</div>
+        <div class="section-break-sub">Crew, Contacts & Load-in</div>
     </div>
 
     <div class="keybar">
@@ -676,8 +959,8 @@
             <div class="val">Sat, Apr 11, 2026</div>
         </div>
         <div class="cell">
-            <div class="lbl">Location</div>
-            <div class="val">The Subway — Nashville</div>
+            <div class="lbl">Venue</div>
+            <div class="val">The Subway</div>
         </div>
         <div class="cell">
             <div class="lbl">Call</div>
@@ -687,6 +970,100 @@
             <div class="lbl">Hard Out</div>
             <div class="val">11:00 PM</div>
         </div>
+    </div>
+
+    <div class="callsheet">
+        <div class="cs-title">Crew &amp; Contacts</div>
+        <div class="cs-contact">
+            <span class="cs-name">Matt Matheson</span>
+            <span class="cs-role">Director / DP</span>
+            <span class="cs-phone">(931) 252-2070</span>
+        </div>
+        <div class="cs-contact">
+            <span class="cs-name">Cortney Hale</span>
+            <span class="cs-role">Artist / Lead Vocals</span>
+            <span class="cs-phone">(615) 556-4851</span>
+        </div>
+        <div class="cs-contact">
+            <span class="cs-name">Luke</span>
+            <span class="cs-role">Guitar / 2nd Vocal</span>
+            <span class="cs-phone">(615) 973-8835</span>
+        </div>
+        <div class="cs-contact">
+            <span class="cs-name">Hunter</span>
+            <span class="cs-role">Lead Guitar</span>
+            <span class="cs-phone">—</span>
+        </div>
+        <div class="cs-contact">
+            <span class="cs-name">Dalton</span>
+            <span class="cs-role">Bass</span>
+            <span class="cs-phone">—</span>
+        </div>
+        <div class="cs-contact">
+            <span class="cs-name">Lucas</span>
+            <span class="cs-role">Drums</span>
+            <span class="cs-phone">—</span>
+        </div>
+        <div class="cs-contact">
+            <span class="cs-name">Paul Williams</span>
+            <span class="cs-role">Grip / Gaff</span>
+            <span class="cs-phone">(678) 886-3215</span>
+        </div>
+        <div class="cs-contact">
+            <span class="cs-name">Nic Jiosa</span>
+            <span class="cs-role">BTS / Production Assist</span>
+            <span class="cs-phone">(615) 707-1475</span>
+        </div>
+    </div>
+
+    <div class="callsheet">
+        <div class="cs-title">What To Bring</div>
+        <div class="cs-bring">
+            <div class="cs-bring-name">Matt</div>
+            <div class="cs-bring-list">FX3, lenses (Sigma 35 / Sigma 50 / Canon 16-35 / Canon 70-200 / Fisheye), tripod, gimbal, Aperture 120D + light dome, DVX/camcorder, cards, batteries, playback speaker, song file (3 versions).</div>
+        </div>
+        <div class="cs-bring">
+            <div class="cs-bring-name">Cortney</div>
+            <div class="cs-bring-list">Wardrobe options coordinated with album art color scheme. Camcorder + tapeless adapter + CF-to-SD + SD cards.</div>
+        </div>
+        <div class="cs-bring">
+            <div class="cs-bring-name">Luke</div>
+            <div class="cs-bring-list">Wardrobe options, guitar(s) for performance shots.</div>
+        </div>
+        <div class="cs-bring">
+            <div class="cs-bring-name">Hunter / Dalton / Lucas</div>
+            <div class="cs-bring-list">Wardrobe, instruments.</div>
+        </div>
+        <div class="cs-bring">
+            <div class="cs-bring-name">Paul</div>
+            <div class="cs-bring-list">Grip / gaff kit — stands, flags, gels, tape, c-stands, sandbags.</div>
+        </div>
+        <div class="cs-bring">
+            <div class="cs-bring-name">Nic</div>
+            <div class="cs-bring-list">BTS camera, phone for social content.</div>
+        </div>
+    </div>
+
+    <div class="callsheet">
+        <div class="cs-title">Production Notes</div>
+        <div class="cs-notes">
+            <ul>
+                <li>2-day shoot — Day 1 Subway (tomorrow), Day 2 Living Room (Sunday).</li>
+                <li>Nic on BTS duty the entire time — capture everything.</li>
+                <li>Wardrobe plays off the album art color scheme.</li>
+                <li>Camcorder footage for texture / alt-edit.</li>
+                <li>Three song playback versions (Normal / Slow FX 125% / Fast 2× 50%) — see reference card next page.</li>
+                <li>Reset lights after shot 2.6 (final lights-cut ending) before moving to Block 3.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- SHOOTING SCHEDULE SECTION                 -->
+    <!-- ========================================= -->
+    <div class="section-break">
+        <div class="section-break-heading">Day 1 Shooting Schedule</div>
+        <div class="section-break-sub">Blocks, shots & Matt's notes</div>
     </div>
 
     <div class="playback-callout">
@@ -706,33 +1083,6 @@
             <span class="pc-speed">Song @ 50%</span>
             <span class="pc-use">Play this for 24fps takes intended to be sped up 2× in post. Creepy/fast, still synced.</span>
         </div>
-    </div>
-
-    <div class="top-players" id="topPlayers">
-        <button class="top-player-btn" data-audio="../meter-day1-schedule/audio/FullTake_NormalSpeed.mp3" data-title="Full Take — Normal Speed">
-            <div class="tp-icon"></div>
-            <div class="tp-text">
-                <div class="tp-label">Version 1</div>
-                <div class="tp-name">Normal</div>
-                <div class="tp-sub">100% · full song</div>
-            </div>
-        </button>
-        <button class="top-player-btn" data-audio="../meter-day1-schedule/audio/FullTake_SpedUpSpeed_30fps.mp3" data-title="Full Take — Sped Up (Slow FX)">
-            <div class="tp-icon"></div>
-            <div class="tp-text">
-                <div class="tp-label">Version 2</div>
-                <div class="tp-name">Slow FX</div>
-                <div class="tp-sub">125% · for 30fps capture</div>
-            </div>
-        </button>
-        <button class="top-player-btn" data-audio="../meter-day1-schedule/audio/FullTake_SlowedDownSpeed_24fps.mp3" data-title="Full Take — Slowed Down (Fast 2×)">
-            <div class="tp-icon"></div>
-            <div class="tp-text">
-                <div class="tp-label">Version 3</div>
-                <div class="tp-name">Fast 2×</div>
-                <div class="tp-sub">50% · for 24fps capture</div>
-            </div>
-        </button>
     </div>
 
     <!-- BLOCK 0 -->
@@ -1121,6 +1471,60 @@
         <strong>B-Roll</strong> = no sync needed.
     </div>
 
+    <!-- ========================================= -->
+    <!-- VISUAL REFERENCE BOARD                    -->
+    <!-- ========================================= -->
+    <div class="section-break">
+        <div class="section-break-heading">Visual Reference</div>
+        <div class="section-break-sub">Tone, mood & framing — selected reference frames</div>
+    </div>
+
+    <div class="ref-grid">
+        <div class="ref-item">
+            <img class="ref-img" src="assets/baxter-band-performance.jpg" alt="Band performance reference">
+            <div class="ref-caption">Performance energy — full band framing</div>
+        </div>
+        <div class="ref-item">
+            <img class="ref-img" src="assets/baxter-platform-lights.jpg" alt="Platform lights reference">
+            <div class="ref-caption">Platform lights — location atmosphere</div>
+        </div>
+        <div class="ref-item">
+            <img class="ref-img" src="assets/baxter-low-angle-corridor.jpg" alt="Low angle corridor reference">
+            <div class="ref-caption">Low-angle corridor — subway vibe</div>
+        </div>
+        <div class="ref-item">
+            <img class="ref-img" src="assets/baxter-dark-hallway.jpg" alt="Dark hallway reference">
+            <div class="ref-caption">Dark hallway / depth</div>
+        </div>
+        <div class="ref-item">
+            <img class="ref-img" src="assets/baxter-portrait-closeup.jpg" alt="Portrait close-up reference">
+            <div class="ref-caption">Portrait close-up — Cortney intensity</div>
+        </div>
+        <div class="ref-item">
+            <img class="ref-img" src="assets/baxter-portrait-emotion.jpg" alt="Portrait emotion reference">
+            <div class="ref-caption">Portrait emotion — vocal delivery</div>
+        </div>
+        <div class="ref-item">
+            <img class="ref-img" src="assets/meter-round3-1.png" alt="Meter visual round 3">
+            <div class="ref-caption">Meter visual development</div>
+        </div>
+        <div class="ref-item">
+            <img class="ref-img" src="assets/meter-round3-2.png" alt="Meter visual round 3">
+            <div class="ref-caption">Meter visual development</div>
+        </div>
+    </div>
+
+    <div class="ref-section" style="page-break-before: auto;">
+        <div class="cs-notes" style="background: #f7f5f0; padding: 14px 16px; border-left: 3px solid #111; font-family: Georgia, serif; font-size: 11.5px; line-height: 1.55;">
+            <strong>For more reference materials</strong> including full mood board, camera move GIFs (Lincoln Park paper-cut style), location scouts, and production breakdowns, see the online reference docs at
+            <code style="font-family: monospace; font-size: 10.5px;">mattmatheson.github.io/RandomPhoneBuilds</code> under the METER project folders:
+            <em>meter-music-video-production</em>,
+            <em>meter-visual-language</em>,
+            <em>meter-reference-board</em>,
+            <em>meter-nashville</em>.
+        </div>
+    </div>
+
     <div class="signature">
         <div>
             <div class="sig-line"></div>
@@ -1138,87 +1542,10 @@
 
 </div>
 
-<!-- STICKY BOTTOM PLAYER -->
-<div class="sticky-player" id="stickyPlayer">
-    <div class="sp-inner">
-        <button class="sp-btn" id="spPlayPause" title="Play/Pause">▶</button>
-        <div class="sp-body">
-            <div class="sp-topline">
-                <div class="sp-title" id="spTitle">—</div>
-                <div class="sp-time" id="spTime">0:00 / 0:00</div>
-            </div>
-            <div class="sp-bar" id="spBar"><div class="sp-bar-fill" id="spBarFill"></div></div>
-        </div>
-        <div class="sp-actions">
-            <input type="range" class="sp-vol" id="spVol" min="0" max="1" step="0.01" value="1">
-            <button class="sp-btn" id="spStop" title="Stop">■</button>
-        </div>
-    </div>
-</div>
-
-<audio id="audioEl" preload="none"></audio>
-
 <script>
 (function(){
 
-    // =============================================================
-    // SHOT → AUDIO MAPPING (relative to this doc: ../meter-day1-schedule/audio/)
-    // =============================================================
-    const AUDIO_BASE = '../meter-day1-schedule/audio/';
-    const FULL_NORMAL = AUDIO_BASE + 'FullTake_NormalSpeed.mp3';
-    const FULL_SLOW_FX = AUDIO_BASE + 'FullTake_SpedUpSpeed_30fps.mp3';
-    const FULL_FAST_2X = AUDIO_BASE + 'FullTake_SlowedDownSpeed_24fps.mp3';
-
-    const SHOT_AUDIO = {
-        "1.1": { src: FULL_NORMAL, title: "Full Band 50mm — Take 1 · Normal" },
-        "1.2": { src: FULL_NORMAL, title: "Full Band 50mm — Take 2 · Normal" },
-        "1.3": { src: FULL_NORMAL, title: "Full Band 50mm — Take 3 · Normal" },
-        "1.4": { src: FULL_NORMAL, title: "Full Band 70-200 — Take 1 · Normal" },
-        "1.5": { src: FULL_NORMAL, title: "Full Band 70-200 — Take 2 · Normal" },
-        "1.6": { src: FULL_NORMAL, title: "Full Band 70-200 — Take 3 · Normal" },
-        "1.7": { src: FULL_NORMAL, title: "120fps Slow-Mo — Take 1 (not synced) · Normal" },
-        "1.8": { src: FULL_NORMAL, title: "120fps Slow-Mo — Take 2 · Normal" },
-        "1.9": { src: FULL_NORMAL, title: "120fps Slow-Mo — Take 3 · Normal" },
-        "2.1": { src: AUDIO_BASE + 'PartialTake_NormalSpeed_IntroShotGimbalPushIn.mp3', title: "Intro Gimbal Push-In · Partial · Normal" },
-        "2.2": { src: AUDIO_BASE + 'PartialTake_NormalSpeed_GimbalPushInAndPullOut_PartOfVerse1.mp3', title: "\"Too weak to return\" Push-In · Partial · Normal" },
-        "2.3": { src: FULL_NORMAL, title: "Verse 2 opening gimbal · Normal" },
-        "2.4": { src: FULL_NORMAL, title: "Chorus 2 entry pull-out · Normal" },
-        "2.5": { src: FULL_NORMAL, title: "Lucas toms whip-pan · Normal" },
-        "2.6": { src: FULL_NORMAL, title: "Final Lights-Cut Pull-Out · Normal" },
-        "3.1": { src: FULL_NORMAL, title: "Cortney Telephoto Vocal — Take 1 · Normal" },
-        "3.2": { src: FULL_NORMAL, title: "Cortney Telephoto Vocal — Take 2 · Normal" },
-        "3.3": { src: FULL_NORMAL, title: "Cortney Telephoto Vocal — Take 3 · Normal" },
-        "3.4": { src: FULL_SLOW_FX, title: "Cortney Telephoto · SLOW FX (Song @ 125%)" },
-        "3.5": { src: FULL_NORMAL, title: "Cortney Gimbal Up-High 35mm · Normal" },
-        "3.6": { src: FULL_NORMAL, title: "Cortney Gimbal Up-High 50mm · Normal" },
-        "3.7": { src: FULL_SLOW_FX, title: "Cortney Gimbal Up-High · SLOW FX (Song @ 125%)" },
-        "3.8": { src: FULL_NORMAL, title: "Rack focus \"so let me explode\" · Normal" },
-        "3.9": { src: AUDIO_BASE + 'PartialTake_NormalSpeed_Bridge_OnlyCortneyPart.mp3', title: "Cortney Bridge Telephoto · Partial · Normal" },
-        "3.10": { src: AUDIO_BASE + 'PartialTake_NormalSpeed_Bridge_OnlyCortneyPart.mp3', title: "Cortney Bridge Gimbal · Partial · Normal" },
-        "3.11": { src: FULL_FAST_2X, title: "Cortney Time-Lapse 2× · FAST 2× (Song @ 50%)" },
-        "3.12": { src: FULL_NORMAL, title: "Match Cut Medium · Normal" },
-        "3.13": { src: FULL_NORMAL, title: "\"my own\" Gimbal Medium · Normal" },
-        "3.14": { src: FULL_NORMAL, title: "\"nightmare\" 16-35 Pullback · Normal" },
-        "4.1": { src: FULL_NORMAL, title: "Luke Telephoto Full · Normal" },
-        "4.2": { src: FULL_NORMAL, title: "Luke Off-Axis Telephoto · Normal" },
-        "4.3": { src: FULL_NORMAL, title: "Luke Chug Take · Normal" },
-        "4.4": { src: AUDIO_BASE + 'PartialTake_NormalSpeed_LukeFirstVersePart.mp3', title: "Luke First Vocals Handheld · Partial · Normal" },
-        "4.5": { src: FULL_NORMAL, title: "Luke Fisheye \"sun sets quick\" · Normal" },
-        "4.6": { src: FULL_NORMAL, title: "Luke Bridge Chugs/Ring-out · Normal" },
-        "4.7": { src: AUDIO_BASE + 'PartialTake_NormalSpeed_IntroShotGimbalPushIn.mp3', title: "Hunter Intro Lead · Partial · Normal" },
-        "4.8": { src: FULL_NORMAL, title: "Hunter Guitar Cutaways — Take 1 · Normal" },
-        "4.9": { src: FULL_NORMAL, title: "Hunter Guitar Cutaways — Take 2 · Normal" },
-        "4.10": { src: FULL_NORMAL, title: "Hunter Bridge Chugs · Normal" },
-        "4.11": { src: FULL_NORMAL, title: "Dalton Bass Cutaways — Take 1 · Normal" },
-        "4.12": { src: FULL_NORMAL, title: "Dalton Bass Cutaways — Take 2 · Normal" },
-        "4.13": { src: FULL_NORMAL, title: "Lucas Handheld Drum Playthrough · Normal" },
-        "4.14": { src: FULL_NORMAL, title: "Lucas Drum Fill #1 · Normal" },
-        "4.15": { src: FULL_NORMAL, title: "Lucas Drum Fill #2 · Normal" },
-        "4.16": { src: FULL_NORMAL, title: "Lucas Drum Fill #3 · Normal" },
-        "5.5": { src: FULL_NORMAL, title: "Green Screen Cortney · Normal" },
-        "5.6": { src: FULL_SLOW_FX, title: "Green Screen Cortney · SLOW FX (Song @ 125%)" },
-        "5.7": { src: FULL_FAST_2X, title: "Green Screen Cortney · FAST 2× (Song @ 50%)" }
-    };
+    // Binder edition — no audio playback. Just Matt's notes + visual checkboxes.
 
     // =============================================================
     // MATT'S VERBATIM NOTES — from his brain-dump, per shot
@@ -1314,21 +1641,6 @@
             body.appendChild(notes);
         }
 
-        // Inject per-shot play button
-        if (SHOT_AUDIO[id]) {
-            const body = shot.querySelector('.shot-body');
-            const btn = document.createElement('button');
-            btn.className = 'shot-playbtn';
-            btn.dataset.audio = SHOT_AUDIO[id].src;
-            btn.dataset.title = SHOT_AUDIO[id].title;
-            btn.dataset.shotId = id;
-            btn.textContent = 'Play cue';
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                playAudio(btn.dataset.audio, btn.dataset.title, btn);
-            });
-            body.appendChild(btn);
-        }
     });
 
     window.resetAll = function(){
@@ -1336,105 +1648,6 @@
         localStorage.removeItem(STORAGE_KEY);
         document.querySelectorAll('.shot').forEach(s => s.classList.remove('done'));
     };
-
-    // =============================================================
-    // AUDIO PLAYER
-    // =============================================================
-    const audio = document.getElementById('audioEl');
-    const player = document.getElementById('stickyPlayer');
-    const spTitle = document.getElementById('spTitle');
-    const spTime = document.getElementById('spTime');
-    const spBarFill = document.getElementById('spBarFill');
-    const spBar = document.getElementById('spBar');
-    const spPlayPause = document.getElementById('spPlayPause');
-    const spStop = document.getElementById('spStop');
-    const spVol = document.getElementById('spVol');
-
-    let activeBtn = null;
-
-    function fmt(s){
-        if (!s || isNaN(s)) return '0:00';
-        const m = Math.floor(s / 60);
-        const sec = Math.floor(s % 60).toString().padStart(2, '0');
-        return m + ':' + sec;
-    }
-
-    function setActiveButton(btn){
-        // Clear all play-state indicators
-        document.querySelectorAll('.shot-playbtn.playing').forEach(b => b.classList.remove('playing'));
-        document.querySelectorAll('.top-player-btn.playing').forEach(b => b.classList.remove('playing'));
-        document.querySelectorAll('.top-player-btn.active').forEach(b => b.classList.remove('active'));
-        if (btn) {
-            btn.classList.add('playing');
-            if (btn.classList.contains('top-player-btn')) btn.classList.add('active');
-        }
-        activeBtn = btn;
-    }
-
-    function playAudio(src, title, btn){
-        if (audio.src.endsWith(src.split('/').pop()) && !audio.paused) {
-            audio.pause();
-            return;
-        }
-        if (!audio.src.endsWith(src.split('/').pop())) {
-            audio.src = src;
-        }
-        spTitle.textContent = title;
-        player.classList.add('visible');
-        setActiveButton(btn);
-        audio.play().catch(err => {
-            console.error('Audio play failed:', err);
-            spTitle.textContent = 'Error: ' + err.message;
-        });
-    }
-
-    // Top player buttons
-    document.querySelectorAll('.top-player-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            playAudio(btn.dataset.audio, btn.dataset.title, btn);
-        });
-    });
-
-    // Player controls
-    spPlayPause.addEventListener('click', () => {
-        if (!audio.src) return;
-        if (audio.paused) audio.play();
-        else audio.pause();
-    });
-
-    spStop.addEventListener('click', () => {
-        audio.pause();
-        audio.currentTime = 0;
-        player.classList.remove('visible');
-        setActiveButton(null);
-    });
-
-    spBar.addEventListener('click', (e) => {
-        if (!audio.duration) return;
-        const rect = spBar.getBoundingClientRect();
-        const pct = (e.clientX - rect.left) / rect.width;
-        audio.currentTime = audio.duration * pct;
-    });
-
-    spVol.addEventListener('input', () => {
-        audio.volume = parseFloat(spVol.value);
-    });
-
-    audio.addEventListener('play', () => { spPlayPause.textContent = '❚❚'; });
-    audio.addEventListener('pause', () => { spPlayPause.textContent = '▶'; });
-    audio.addEventListener('timeupdate', () => {
-        const d = audio.duration || 0;
-        const c = audio.currentTime || 0;
-        spTime.textContent = fmt(c) + ' / ' + fmt(d);
-        spBarFill.style.width = (d ? (c / d * 100) : 0) + '%';
-    });
-    audio.addEventListener('ended', () => {
-        spBarFill.style.width = '100%';
-        setActiveButton(null);
-    });
-    audio.addEventListener('error', () => {
-        spTitle.textContent = 'Audio error — check file path';
-    });
 
 })();
 </script>
