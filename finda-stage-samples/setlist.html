@@ -97,33 +97,44 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    counter-reset: song;
   }
   ol.songs li {
-    counter-increment: song;
+    padding: 0.04in 0 0.035in;
+    border-bottom: 1.5px solid var(--ink);
+  }
+  ol.songs li .main {
     display: grid;
     grid-template-columns: 0.95in 1fr;
     align-items: baseline;
     column-gap: 0.15in;
-    padding: 0.04in 0 0.035in;
-    border-bottom: 1.5px solid var(--ink);
     font-size: 24pt;
     line-height: 1;
     letter-spacing: -0.01em;
     text-transform: uppercase;
   }
-  ol.songs li::before {
-    content: counter(song, decimal-leading-zero);
+  ol.songs li .num {
     font-family: "Space Mono", monospace;
     font-weight: 700;
     font-size: 18pt;
     letter-spacing: 0;
     text-align: left;
     padding-left: 0.1in;
-    position: relative;
   }
   ol.songs li .name {
     padding-right: 0.1in;
+  }
+  ol.songs li .sub {
+    font-family: "Space Mono", monospace;
+    font-weight: 700;
+    font-size: 10pt;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding-left: 1.2in;
+    margin-top: 0.035in;
+    line-height: 1.15;
+  }
+  ol.songs li .sub + .sub {
+    margin-top: 0.005in;
   }
 
   /* Break row — thicker bar instead of a song row */
@@ -140,7 +151,6 @@
     align-items: center;
     gap: 10px;
   }
-  ol.songs li.break::before { content: none; }
   ol.songs li.break .bar {
     flex: 1;
     height: 10px;
@@ -214,16 +224,26 @@
     .meta { font-size: 8pt; }
     .meta .tag { margin-bottom: 3px; padding: 1px 6px; }
     ol.songs li {
-      font-size: 17pt;
-      padding: 0.025in 0 0.02in;
-      grid-template-columns: 0.75in 1fr;
+      padding: 0.022in 0 0.018in;
     }
-    ol.songs li::before { font-size: 13pt; padding-left: 0.05in; }
+    ol.songs li .main {
+      font-size: 16pt;
+      grid-template-columns: 0.65in 1fr;
+      column-gap: 0.1in;
+    }
+    ol.songs li .num { font-size: 12pt; padding-left: 0.05in; }
+    ol.songs li .sub {
+      font-size: 8pt;
+      padding-left: 0.8in;
+      margin-top: 0.02in;
+      letter-spacing: 0.15em;
+    }
+    ol.songs li .sub + .sub { margin-top: 0; }
     ol.songs li.break {
-      padding: 0.02in 0;
-      font-size: 6.5pt;
+      padding: 0.015in 0;
+      font-size: 6pt;
     }
-    ol.songs li.break .bar { height: 6px; }
+    ol.songs li.break .bar { height: 5px; }
     footer {
       margin-top: 0.1in;
       padding-top: 0.05in;
@@ -253,33 +273,51 @@
     </header>
 
     <ol class="songs">
-      <li><span class="name">Matt / Tommy Intro</span></li>
-      <li><span class="name">Fires</span></li>
-      <li><span class="name">Mermaid</span></li>
-      <li><span class="name">Prisoner</span></li>
-      <li><span class="name">Yes</span></li>
+      <li>
+        <div class="main"><span class="num">01</span><span class="name">Matt / Tommy Intro</span></div>
+        <div class="sub">▶ Wacka</div>
+      </li>
+      <li><div class="main"><span class="num">02</span><span class="name">Fires</span></div></li>
+      <li>
+        <div class="main"><span class="num">03</span><span class="name">Mermaid</span></div>
+        <div class="sub">▶ Outro sample</div>
+      </li>
+      <li>
+        <div class="main"><span class="num">04</span><span class="name">Prisoner</span></div>
+        <div class="sub">▶ Intro sample</div>
+        <div class="sub">▶ Outro sample (Ambient Jam)</div>
+      </li>
+      <li>
+        <div class="main"><span class="num">05</span><span class="name">Yes</span></div>
+        <div class="sub">▶ Bridge sample</div>
+        <div class="sub">▶ Outro sample</div>
+      </li>
 
       <li class="break"><span class="bar"></span><span>Break</span><span class="bar"></span></li>
 
-      <li><span class="name">Aaron</span></li>
-      <li><span class="name">Symbols</span></li>
-      <li><span class="name">Pillies</span></li>
-      <li><span class="name">Bones</span></li>
+      <li><div class="main"><span class="num">06</span><span class="name">Aaron</span></div></li>
+      <li><div class="main"><span class="num">07</span><span class="name">Symbols</span></div></li>
+      <li><div class="main"><span class="num">08</span><span class="name">Pillies</span></div></li>
+      <li><div class="main"><span class="num">09</span><span class="name">Bones</span></div></li>
 
       <li class="break"><span class="bar"></span><span>Break</span><span class="bar"></span></li>
 
-      <li><span class="name">Moth</span></li>
+      <li><div class="main"><span class="num">10</span><span class="name">Moth</span></div></li>
 
       <li class="break"><span class="bar"></span><span>Break</span><span class="bar"></span></li>
 
-      <li><span class="name">Blue Valentine</span></li>
-      <li><span class="name">MBP</span></li>
-      <li><span class="name">Bad Buzz</span></li>
-      <li><span class="name">Kevin</span></li>
+      <li>
+        <div class="main"><span class="num">11</span><span class="name">Blue Valentine</span></div>
+        <div class="sub">▶ Intro sample</div>
+        <div class="sub">▶ Bridge sample</div>
+      </li>
+      <li><div class="main"><span class="num">12</span><span class="name">MBP</span></div></li>
+      <li><div class="main"><span class="num">13</span><span class="name">Bad Buzz</span></div></li>
+      <li><div class="main"><span class="num">14</span><span class="name">Kevin</span></div></li>
 
       <li class="break"><span class="bar"></span><span>Break</span><span class="bar"></span></li>
 
-      <li><span class="name">Bad Storm</span></li>
+      <li><div class="main"><span class="num">15</span><span class="name">Bad Storm</span></div></li>
     </ol>
 
     <footer>
