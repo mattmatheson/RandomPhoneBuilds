@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="theme-color" content="#000000" />
+<meta name="published" content="2026-04-17" />
+<title>Finda — Stage Samples</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    overscroll-behavior: none;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    height: 100dvh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 1rem 0.5rem;
+    border-bottom: 1px solid #1a1a1a;
+    flex-shrink: 0;
+  }
+  .title {
+    font-weight: 800;
+    letter-spacing: 0.35em;
+    font-size: 0.9rem;
+    color: #fff;
+  }
+  .status {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: #555;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: color 0.15s;
+  }
+  .status.on { color: #00d66a; }
+
+  main {
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+    gap: 6px;
+    padding: 6px;
+    min-height: 0;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 6px;
+    min-height: 0;
+  }
+  .song {
+    background: #0a0a0a;
+    border: 1px solid #1a1a1a;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 0.4rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    font-size: 0.85rem;
+    line-height: 1.05;
+    color: #bbb;
+    text-transform: uppercase;
+  }
+  .buttons {
+    display: grid;
+    gap: 6px;
+    min-height: 0;
+  }
+  .buttons.one   { grid-template-columns: 1fr; }
+  .buttons.two   { grid-template-columns: 1fr 1fr; }
+
+  button.pad {
+    appearance: none;
+    -webkit-appearance: none;
+    border: 2px solid #222;
+    background: #111;
+    color: #fff;
+    border-radius: 12px;
+    font-family: inherit;
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background 0.08s, border-color 0.08s, color 0.08s, transform 0.05s;
+    position: relative;
+    overflow: hidden;
+    min-height: 0;
+  }
+  button.pad .icon {
+    font-size: 1.3rem;
+    line-height: 1;
+  }
+  button.pad .label {
+    font-size: 1rem;
+  }
+  button.pad:active {
+    transform: scale(0.985);
+  }
+  button.pad.playing {
+    background: #e63946;
+    border-color: #ff5d6c;
+    color: #fff;
+    box-shadow: 0 0 0 1px #ff5d6c inset, 0 0 18px rgba(230, 57, 70, 0.55);
+  }
+  button.pad.playing .icon::before { content: "■"; }
+  button.pad:not(.playing) .icon::before { content: "▶"; }
+
+  button.pad .progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 0%;
+    background: rgba(255, 255, 255, 0.85);
+    pointer-events: none;
+    transition: width 0.1s linear;
+  }
+
+  /* Full-width rows (single button spanning) used for Matt/Tommy and Random */
+  .row.full {
+    grid-template-columns: 1fr;
+  }
+  .row.full .song { display: none; }
+  .row.full .pad {
+    font-size: 1.1rem;
+  }
+  .row.full .pad .label::before {
+    content: "";
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="title">FINDA</div>
+    <div class="status" id="status">READY</div>
+  </header>
+
+  <main>
+    <div class="row full">
+      <div class="song"></div>
+      <div class="buttons one">
+        <button class="pad" data-src="audio/MattTommyIntro_Intro.mp3">
+          <span class="icon"></span>
+          <span class="label">Matt / Tommy Intro</span>
+          <span class="progress"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="song">Mermaid</div>
+      <div class="buttons one">
+        <button class="pad" data-src="audio/Mermaid_Outro.mp3">
+          <span class="icon"></span>
+          <span class="label">Outro</span>
+          <span class="progress"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="song">Prisoner</div>
+      <div class="buttons two">
+        <button class="pad" data-src="audio/Zero_Intro.mp3">
+          <span class="icon"></span>
+          <span class="label">Intro</span>
+          <span class="progress"></span>
+        </button>
+        <button class="pad" data-src="audio/Zero_Outro.mp3">
+          <span class="icon"></span>
+          <span class="label">Outro</span>
+          <span class="progress"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="song">Yes</div>
+      <div class="buttons two">
+        <button class="pad" data-src="audio/Yes_Bridge.mp3">
+          <span class="icon"></span>
+          <span class="label">Bridge</span>
+          <span class="progress"></span>
+        </button>
+        <button class="pad" data-src="audio/Yes_Outro.mp3">
+          <span class="icon"></span>
+          <span class="label">Outro</span>
+          <span class="progress"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="song">Blue Valentine</div>
+      <div class="buttons two">
+        <button class="pad" data-src="audio/BlueVal_Intro.mp3">
+          <span class="icon"></span>
+          <span class="label">Intro</span>
+          <span class="progress"></span>
+        </button>
+        <button class="pad" data-src="audio/BlueVal_Bridge.mp3">
+          <span class="icon"></span>
+          <span class="label">Bridge</span>
+          <span class="progress"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="row full">
+      <div class="song"></div>
+      <div class="buttons one">
+        <button class="pad" data-src="audio/Random_haha.mp3">
+          <span class="icon"></span>
+          <span class="label">Random</span>
+          <span class="progress"></span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+<script>
+(() => {
+  const pads = Array.from(document.querySelectorAll('button.pad'));
+  const statusEl = document.getElementById('status');
+  const audioMap = new Map();
+
+  // Pre-create one Audio element per pad so first tap plays instantly
+  for (const pad of pads) {
+    const a = new Audio(pad.dataset.src);
+    a.preload = 'auto';
+    a.playsInline = true;
+    audioMap.set(pad, a);
+
+    a.addEventListener('ended', () => stop(pad));
+    a.addEventListener('error', () => {
+      pad.classList.remove('playing');
+      statusEl.textContent = 'ERR';
+      statusEl.classList.remove('on');
+    });
+    a.addEventListener('timeupdate', () => {
+      if (!a.duration || isNaN(a.duration)) return;
+      const pct = (a.currentTime / a.duration) * 100;
+      const bar = pad.querySelector('.progress');
+      if (bar) bar.style.width = pct + '%';
+    });
+  }
+
+  let active = null;
+
+  function stop(pad) {
+    const a = audioMap.get(pad);
+    if (!a) return;
+    a.pause();
+    a.currentTime = 0;
+    pad.classList.remove('playing');
+    const bar = pad.querySelector('.progress');
+    if (bar) bar.style.width = '0%';
+    if (active === pad) {
+      active = null;
+      statusEl.textContent = 'READY';
+      statusEl.classList.remove('on');
+    }
+  }
+
+  function play(pad) {
+    if (active && active !== pad) stop(active);
+    const a = audioMap.get(pad);
+    if (!a) return;
+    a.currentTime = 0;
+    a.play().then(() => {
+      active = pad;
+      pad.classList.add('playing');
+      const label = pad.querySelector('.label').textContent.trim().toUpperCase();
+      statusEl.textContent = '▶ ' + label;
+      statusEl.classList.add('on');
+      requestWakeLock();
+    }).catch(() => {
+      pad.classList.remove('playing');
+    });
+  }
+
+  for (const pad of pads) {
+    pad.addEventListener('click', () => {
+      if (pad.classList.contains('playing')) stop(pad);
+      else play(pad);
+    });
+  }
+
+  // Keep the screen on during the set
+  let wakeLock = null;
+  async function requestWakeLock() {
+    if (!('wakeLock' in navigator)) return;
+    try {
+      if (!wakeLock || wakeLock.released) {
+        wakeLock = await navigator.wakeLock.request('screen');
+        wakeLock.addEventListener('release', () => {});
+      }
+    } catch (_) {}
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') requestWakeLock();
+  });
+  document.body.addEventListener('touchstart', requestWakeLock, { once: true, passive: true });
+})();
+</script>
+</body>
+</html>
