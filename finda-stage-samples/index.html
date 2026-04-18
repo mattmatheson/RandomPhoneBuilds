@@ -71,7 +71,7 @@
   }
   .song {
     background: #0a0a0a;
-    border: 1px solid #1a1a1a;
+    border: 1px solid var(--song, #1a1a1a);
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -82,7 +82,7 @@
     letter-spacing: 0.08em;
     font-size: 0.85rem;
     line-height: 1.05;
-    color: #bbb;
+    color: var(--song, #bbb);
     text-transform: uppercase;
   }
   .buttons {
@@ -96,9 +96,9 @@
   button.pad {
     appearance: none;
     -webkit-appearance: none;
-    border: 2px solid #222;
+    border: 2.5px solid var(--song, #222);
     background: #111;
-    color: #fff;
+    color: var(--song, #fff);
     border-radius: 12px;
     font-family: inherit;
     font-weight: 800;
@@ -127,10 +127,10 @@
     transform: scale(0.985);
   }
   button.pad.playing {
-    background: #e63946;
-    border-color: #ff5d6c;
-    color: #fff;
-    box-shadow: 0 0 0 1px #ff5d6c inset, 0 0 18px rgba(230, 57, 70, 0.55);
+    background: var(--song, #e63946);
+    border-color: var(--song, #ff5d6c);
+    color: #000;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.25) inset, 0 0 22px var(--song, rgba(230,57,70,0.55));
   }
   button.pad.playing .icon::before { content: "■"; }
   button.pad:not(.playing) .icon::before { content: "▶"; }
@@ -166,7 +166,7 @@
   </header>
 
   <main>
-    <div class="row full">
+    <div class="row full" style="--song:#e91e8c">
       <div class="song"></div>
       <div class="buttons one">
         <button class="pad" data-src="audio/MattTommyIntro_Intro.mp3">
@@ -177,7 +177,7 @@
       </div>
     </div>
 
-    <div class="row full">
+    <div class="row full" style="--song:#c97a3b">
       <div class="song"></div>
       <div class="buttons one">
         <button class="pad" data-src="audio/Wacka.mp3">
@@ -188,7 +188,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" style="--song:#b07bdc">
       <div class="song">Mermaid</div>
       <div class="buttons one">
         <button class="pad" data-src="audio/Mermaid_Outro.mp3">
@@ -199,7 +199,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" style="--song:#34d399">
       <div class="song">Prisoner</div>
       <div class="buttons two">
         <button class="pad" data-src="audio/Zero_Intro.mp3">
@@ -215,7 +215,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" style="--song:#fbbf24">
       <div class="song">Yes</div>
       <div class="buttons two">
         <button class="pad" data-src="audio/Yes_Bridge.mp3">
@@ -231,7 +231,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" style="--song:#3b82f6">
       <div class="song">Blue Valentine</div>
       <div class="buttons two">
         <button class="pad" data-src="audio/BlueVal_Intro.mp3">
@@ -247,7 +247,7 @@
       </div>
     </div>
 
-    <div class="row full">
+    <div class="row full" style="--song:#22d3ee">
       <div class="song"></div>
       <div class="buttons one">
         <button class="pad" data-src="audio/Random_haha.mp3">
