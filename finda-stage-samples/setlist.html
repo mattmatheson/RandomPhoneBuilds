@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="published" content="2026-04-18" />
+<title>Finda — Setlist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f2ede1;
+    --rule: #0a0a0a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #2a2a2a; }
+  body {
+    font-family: "Archivo Black", "Arial Black", Impact, sans-serif;
+    color: var(--ink);
+    padding: 2rem 1rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    background: var(--paper);
+    padding: 0.5in 0.55in 0.45in;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(10,10,10,0.06) 1px, transparent 0);
+    background-size: 3px 3px;
+  }
+
+  /* corner tick marks — printer's crop feel */
+  .page::before, .page::after {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--ink);
+  }
+  .page::before {
+    top: 0.25in; left: 0.25in;
+    border-right: none; border-bottom: none;
+  }
+  .page::after {
+    bottom: 0.2in; right: 0.25in;
+    border-left: none; border-top: none;
+  }
+
+  header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 0.5rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 6px solid var(--ink);
+    margin-bottom: 0.18in;
+  }
+  .brand {
+    font-size: 104pt;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+  .meta {
+    font-family: "Space Mono", ui-monospace, Menlo, monospace;
+    font-weight: 700;
+    font-size: 10pt;
+    line-height: 1.25;
+    text-align: right;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding-bottom: 0.35rem;
+  }
+  .meta .tag {
+    display: inline-block;
+    border: 1.5px solid var(--ink);
+    padding: 2px 8px;
+    margin-bottom: 6px;
+  }
+  .meta .fill {
+    display: block;
+    margin-top: 2px;
+    border-bottom: 1.5px solid var(--ink);
+    width: 1.6in;
+    margin-left: auto;
+    height: 14px;
+  }
+
+  ol.songs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: song;
+  }
+  ol.songs li {
+    counter-increment: song;
+    display: grid;
+    grid-template-columns: 1.1in 1fr;
+    align-items: baseline;
+    column-gap: 0.15in;
+    padding: 0.055in 0 0.05in;
+    border-bottom: 1.5px solid var(--ink);
+    font-size: 30pt;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+  ol.songs li::before {
+    content: counter(song, decimal-leading-zero);
+    font-family: "Space Mono", monospace;
+    font-weight: 700;
+    font-size: 22pt;
+    letter-spacing: 0;
+    text-align: left;
+    padding-left: 0.1in;
+    position: relative;
+  }
+  ol.songs li .name {
+    padding-right: 0.1in;
+  }
+
+  /* Break row — thicker bar instead of a song row */
+  ol.songs li.break {
+    grid-template-columns: 1fr;
+    padding: 0.05in 0;
+    border-bottom: none;
+    font-family: "Space Mono", monospace;
+    font-weight: 700;
+    font-size: 9pt;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  ol.songs li.break::before { content: none; }
+  ol.songs li.break .bar {
+    flex: 1;
+    height: 10px;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        var(--ink) 0 8px,
+        transparent 8px 14px
+      );
+  }
+
+  footer {
+    margin-top: 0.25in;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Space Mono", monospace;
+    font-weight: 700;
+    font-size: 9pt;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    border-top: 3px solid var(--ink);
+    padding-top: 0.12in;
+  }
+  footer .stars {
+    letter-spacing: 0.3em;
+  }
+
+  .controls {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+  .controls button {
+    font-family: "Space Mono", monospace;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    border: 2px solid #fff;
+    background: #111;
+    color: #fff;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .controls button:hover { background: #fff; color: #111; }
+
+  @media print {
+    html, body { background: #fff; padding: 0; margin: 0; }
+    .controls { display: none; }
+    .page {
+      width: auto;
+      min-height: auto;
+      box-shadow: none;
+      padding: 0.4in 0.5in;
+      background-image: none;
+      background-color: #fff;
+    }
+    @page {
+      size: letter portrait;
+      margin: 0.25in;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="controls">
+    <button onclick="window.print()">Print</button>
+  </div>
+
+  <div class="page">
+    <header>
+      <div class="brand">Finda</div>
+      <div class="meta">
+        <span class="tag">Setlist</span><br>
+        Venue <span class="fill"></span><br>
+        Date&nbsp; <span class="fill"></span>
+      </div>
+    </header>
+
+    <ol class="songs">
+      <li><span class="name">Matt / Tommy Intro</span></li>
+      <li><span class="name">Fires</span></li>
+      <li><span class="name">Mermaid</span></li>
+      <li><span class="name">Prisoner</span></li>
+      <li><span class="name">Yes</span></li>
+
+      <li class="break"><span class="bar"></span><span>Break</span><span class="bar"></span></li>
+
+      <li><span class="name">Aaron</span></li>
+      <li><span class="name">Symbols</span></li>
+      <li><span class="name">Pillies</span></li>
+      <li><span class="name">Bones</span></li>
+
+      <li class="break"><span class="bar"></span><span>Break</span><span class="bar"></span></li>
+
+      <li><span class="name">Moth</span></li>
+
+      <li class="break"><span class="bar"></span><span>Break</span><span class="bar"></span></li>
+
+      <li><span class="name">Blue Valentine</span></li>
+      <li><span class="name">MBP</span></li>
+      <li><span class="name">Bad Buzz</span></li>
+      <li><span class="name">Kevin</span></li>
+
+      <li class="break"><span class="bar"></span><span>Break</span><span class="bar"></span></li>
+
+      <li><span class="name">Bad Storm</span></li>
+    </ol>
+
+    <footer>
+      <span class="stars">★ ★ ★</span>
+      <span>Finda / 2026</span>
+      <span class="stars">★ ★ ★</span>
+    </footer>
+  </div>
+</body>
+</html>
