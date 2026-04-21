@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="published" content="2026-04-21">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meter — The Cobra, Nashville (Apr 20, 2026)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    background: #FFFFFF;
+    color: #1D1D1F;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 4vw, 2rem) 4rem;
+  }
+
+  header {
+    margin-bottom: 4rem;
+    animation: fadeIn 0.6s ease-out both;
+  }
+
+  .label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #86868B;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 0.4rem;
+  }
+
+  .meta {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #6E6E73;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.4rem;
+    border-radius: 980px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+  }
+
+  .btn-primary {
+    background: #1D1D1F;
+    color: #FFFFFF;
+  }
+
+  .btn-primary:hover {
+    background: #424245;
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: #1D1D1F;
+    border: 1px solid #D2D2D7;
+  }
+
+  .btn-outline:hover {
+    background: #F5F5F7;
+  }
+
+  .divider {
+    height: 1px;
+    background: #E5E5E7;
+    margin-bottom: 3rem;
+  }
+
+  .feed {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .feed-item {
+    animation: fadeIn 0.5s ease-out both;
+  }
+
+  .feed-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+
+  .feed-item img:hover {
+    opacity: 0.92;
+  }
+
+  /* Lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.15s ease-out;
+  }
+
+  .lightbox.active { display: flex; }
+
+  .lightbox img {
+    max-width: 92vw;
+    max-height: calc(100vh - 120px);
+    object-fit: contain;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.06);
+    border: none;
+    color: #1D1D1F;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    z-index: 10;
+  }
+
+  .lightbox-close:hover { background: rgba(0,0,0,0.1); }
+
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.06);
+    border: none;
+    color: #1D1D1F;
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    z-index: 10;
+  }
+
+  .lightbox-nav:hover { background: rgba(0,0,0,0.1); }
+  .lightbox-prev { left: 1rem; }
+  .lightbox-next { right: 1rem; }
+
+  .lightbox-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .lightbox-bottom .lb-nav-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.06);
+    border: none;
+    color: #1D1D1F;
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-counter {
+    color: #86868B;
+    font-size: 0.75rem;
+    font-weight: 500;
+    flex: 1;
+    text-align: center;
+  }
+
+  @media (max-width: 600px) {
+    .lightbox-nav { display: none; }
+    .lightbox-bottom .lb-nav-btn { display: flex; }
+    .lightbox img { max-height: calc(100vh - 140px); }
+  }
+
+  footer {
+    text-align: center;
+    padding: 3rem 0 2rem;
+    color: #86868B;
+    font-size: 0.7rem;
+    font-weight: 400;
+  }
+
+  footer a {
+    color: #86868B;
+    text-decoration: none;
+  }
+
+  footer a:hover { color: #1D1D1F; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @media (max-width: 600px) {
+    .container { padding-left: 0; padding-right: 0; }
+    header { padding: 0 1.25rem; }
+    .divider { margin-left: 1.25rem; margin-right: 1.25rem; }
+    footer { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .feed { gap: 1px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <span class="label">Live Photography</span>
+    <h1>Meter</h1>
+    <p class="meta">The Cobra, Nashville &mdash; April 20, 2026</p>
+    <div class="actions">
+      <a href="https://drive.google.com/drive/folders/1r4QUnchFdWnWRb7cWIkBnNoy9q7tKOHU" target="_blank" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z" fill="#fff"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0-1.2 4.5h27.5z" fill="#fff"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.85z" fill="#fff"/><path d="M43.65 25 57.4 1.2C56.05.4 54.5 0 52.9 0H34.4c-1.6 0-3.15.45-4.5 1.2z" fill="#fff"/><path d="m59.8 53h-32.3L13.75 76.8c1.35.8 2.9 1.2 4.5 1.2h22.6c1.6 0 3.15-.45 4.5-1.2z" fill="#fff"/><path d="M73.4 26.5 60.65 3.3c-.8-1.4-1.95-2.5-3.3-3.3L43.6 25l16.2 28h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#fff"/></svg>
+        Google Drive
+      </a>
+      <span class="btn btn-outline" style="cursor:default;">52 photos</span>
+    </div>
+  </header>
+
+  <div style="background:#F5F5F7;border-radius:12px;padding:1.25rem 1.5rem;margin:0 clamp(1.25rem,4vw,2rem) 2rem;font-size:0.82rem;color:#424245;line-height:1.7;">
+    <strong style="color:#1D1D1F;">Hey!</strong> Full set of stills from The Cobra in the Google Drive folder &mdash; feel free to grab anything you want to use.
+    <p style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid #E5E5E7;font-size:0.78rem;color:#6E6E73;">If you post any of this, I'd appreciate a credit! On YouTube: <strong style="color:#424245;">Filmed by Matt Matheson</strong>. On Instagram: <strong style="color:#424245;">@mattmatheson_</strong></p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="feed" id="feed"></div>
+
+  <footer>
+    <p>Photos by <a href="https://mattmatheson.github.io/RandomPhoneBuilds/">Matt Matheson</a></p>
+  </footer>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <button class="lightbox-nav lightbox-prev" onclick="navLightbox(-1)">&#8249;</button>
+  <img id="lightboxImg" src="" alt="">
+  <button class="lightbox-nav lightbox-next" onclick="navLightbox(1)">&#8250;</button>
+  <div class="lightbox-bottom">
+    <button class="lb-nav-btn" onclick="navLightbox(-1)">&#8249;</button>
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+    <button class="lb-nav-btn" onclick="navLightbox(1)">&#8250;</button>
+  </div>
+</div>
+
+<script>
+const photos = [
+  { name: "Photo Album 1 - 00000001.jpg", id: "1dFQlvCtKhokvVdDBa6iBeV8Tz8BxJMyQ" },
+  { name: "Photo Album 1 - 00000002.jpg", id: "1a9so0y-q52hNrR3iks7z8kLkYq6KRNJn" },
+  { name: "Photo Album 1 - 00000003.jpg", id: "1PZDh6fFIlGF7EakUxfLhlJZYxC2RVraP" },
+  { name: "Photo Album 1 - 00000004.jpg", id: "10sGBDJI_KUPN4OYcOmNv7e3ss3-mlsQj" },
+  { name: "Photo Album 1 - 00000005.jpg", id: "1jhS08i2avipvCYydZ23MDxjnhh1QKV2H" },
+  { name: "Photo Album 1 - 00000006.jpg", id: "1zxyDk7Oc-43gdcYW2uI7BcnBGzhwywVi" },
+  { name: "Photo Album 1 - 00000007.jpg", id: "15kGmUqVOk8tbmzo6SSf8QvEUKexQl4yn" },
+  { name: "Photo Album 1 - 00000008.jpg", id: "1ohFnsf5MHcfC604v2qQupBHzT1MJE2BM" },
+  { name: "Photo Album 1 - 00000009.jpg", id: "1cBZRlzaW9z8_gWmUT3cQU878Mx-C5WoX" },
+  { name: "Photo Album 1 - 00000010.jpg", id: "1bo-eaNl-pIns3MCjbWTedzf5S2c6gJua" },
+  { name: "Photo Album 1 - 00000011.jpg", id: "1G1ZVFvYnAkPPE0Kb13FmrMw8AvzaUEQg" },
+  { name: "Photo Album 1 - 00000012.jpg", id: "1wSf8frWzGgPCmFfoogmeHeBLQJHlR-7X" },
+  { name: "Photo Album 1 - 00000013.jpg", id: "1hp1OFbWB7BVfqeDflw3qAYcKDENht12e" },
+  { name: "Photo Album 1 - 00000014.jpg", id: "1XA-Hv5P2RKUCp4s6PUIhpl2SnGR5YZx3" },
+  { name: "Photo Album 1 - 00000015.jpg", id: "1obzh9YyJeO729WFr8gCxfu6jgWesLCik" },
+  { name: "Photo Album 1 - 00000016.jpg", id: "1xjB84Prd7oJuovVYdJY-6zV-MCMUr7bm" },
+  { name: "Photo Album 1 - 00000017.jpg", id: "1xJKsiGIKGd0KREZycFs4fqoDnVcGdVhm" },
+  { name: "Photo Album 1 - 00000018.jpg", id: "1ZqUQ0zIU6RopoM7rhlquxxrrk7GUvz7T" },
+  { name: "Photo Album 1 - 00000019.jpg", id: "1a86unHdyru4koMdxDscyQ0l-YoYeJj9T" },
+  { name: "Photo Album 1 - 00000020.jpg", id: "1T5dabe9LUjIq_WHRlPeftxt0g1vZoJCm" },
+  { name: "Photo Album 1 - 00000021.jpg", id: "1MV7PRFSMNT6DohnHG6yj0oeIWvdZ3B0G" },
+  { name: "Photo Album 1 - 00000022.jpg", id: "122If7FFu9VCJvoTC6trY2SFrZbzL-WR4" },
+  { name: "Photo Album 1 - 00000023.jpg", id: "180mrwxlgbL62ESiaROtN-kTktEYPIWWl" },
+  { name: "Photo Album 1 - 00000024.jpg", id: "1aZly9aGKK-z0FlnicZ6JgKPzfXNTmAPH" },
+  { name: "Photo Album 1 - 00000025.jpg", id: "1MNvhBu2GtxOK24M-GO5-x_UDcMWDNmgM" },
+  { name: "Photo Album 1 - 00000026.jpg", id: "1hzOuDwFnCZJ8XvMNM9F7MEappvXM_Ocq" },
+  { name: "Photo Album 1 - 00000027.jpg", id: "1oHAtZZ3lteU0thEhci9UaYz6Q2bcmG80" },
+  { name: "Photo Album 1 - 00000029.jpg", id: "1KctMB06ElWAmv6prXsfQY6GiDuij-sIP" },
+  { name: "Photo Album 1 - 00000030.jpg", id: "1AzG-XsAfOGcpoKjJ0OlymsEWB1Pow8Jz" },
+  { name: "Photo Album 1 - 00000031.jpg", id: "1s6R-Ups4k5-KasJPRgyue2uvfsaXKCQe" },
+  { name: "Photo Album 1 - 00000032.jpg", id: "13rVlGOGkTFnVAJcuwSAfWBq6SQCweib9" },
+  { name: "Photo Album 1 - 00000033.jpg", id: "1DX0gBZzbANciFDrVhwvY06AZPWT0F6YA" },
+  { name: "Photo Album 1 - 00000034.jpg", id: "1IMldHXG7eNBLzeQsn0a-yjeCzn2WAhgE" },
+  { name: "Photo Album 1 - 00000035.jpg", id: "1RVxDITQ2JaUWOQ-RzNnTIRyOK_BNJ9By" },
+  { name: "Photo Album 1 - 00000036.jpg", id: "1hzRNAkJ13C_RzQRI-Lf7qS4rF_HtrN_i" },
+  { name: "Photo Album 1 - 00000037.jpg", id: "1Qf1A2zQ7xlw0FHiIrHrCVe25hf2yrUso" },
+  { name: "Photo Album 1 - 00000038.jpg", id: "1l7iXekDT0xf_B6Q1I6vL5N2bkTN_L3z4" },
+  { name: "Photo Album 1 - 00000039.jpg", id: "1m0RIDHGQGNdLiGfHYaxXekDC2BF49ULx" },
+  { name: "Photo Album 1 - 00000040.jpg", id: "1G1ETusCvY6EFEd7sNcOErclQJC68XXpz" },
+  { name: "Photo Album 1 - 00000041.jpg", id: "13ZzPe5VKadKGrsVdGiPe2C6EL7oObp4-" },
+  { name: "Photo Album 1 - 00000042.jpg", id: "1Z7Dgv-boBqy9ZbTUlay_YiE27NgatO5w" },
+  { name: "Photo Album 1 - 00000043.jpg", id: "1T3XJISfMZT8A5ksG-j8Nn-3wy2ox7GHP" },
+  { name: "Photo Album 1 - 00000044.jpg", id: "15m0sJkH8Ll-RZAUximrihp9qCP2yvuKT" },
+  { name: "Photo Album 1 - 00000045.jpg", id: "1nS9NUvw665g_YhVxWOfBGERES26C-dMX" },
+  { name: "Photo Album 1 - 00000046.jpg", id: "1qvNTP93xl04DCcTrzc98CjEGHn_t1xyA" },
+  { name: "Photo Album 1 - 00000047.jpg", id: "1M25hG7LswAomof17Jpcrx-3iDCBGHy_L" },
+  { name: "Photo Album 1 - 00000048.jpg", id: "10ioRqCsmrRaU6MdHOcWjPKqeXQDRk12g" },
+  { name: "Photo Album 1 - 00000049.jpg", id: "1ngPJ4vui4Nu3uTMGsf3qBaDXYhutmuj6" },
+  { name: "Photo Album 1 - 00000050.jpg", id: "1L6AVnG79VXo_tvhh1aooPM9KhcfmDGBt" },
+  { name: "Photo Album 1 - 00000051.jpg", id: "1k1ZS4ifcVGn-50AxlWQ4t4pz1fONKEHU" },
+  { name: "Photo Album 1 - 00000052.jpg", id: "1-WnTuZfCuTNA31rxZadzJ63yXYSY3q6R" },
+  { name: "Photo Album 1 - 00000053.jpg", id: "1dIsYu1tVnV2UBsNIdcA82kLMdzDAO3rg" }
+];
+
+function thumb(id, w) {
+  return `https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
+}
+
+const feed = document.getElementById('feed');
+let currentIndex = 0;
+
+photos.forEach((photo, i) => {
+  const item = document.createElement('div');
+  item.className = 'feed-item';
+  item.style.animationDelay = `${i * 0.05}s`;
+  item.innerHTML = `<img src="${thumb(photo.id, 1400)}" alt="${photo.name}" loading="lazy">`;
+  item.querySelector('img').onclick = () => openLightbox(i);
+  feed.appendChild(item);
+});
+
+function openLightbox(index) {
+  currentIndex = index;
+  document.getElementById('lightbox').classList.add('active');
+  updateLightbox();
+  document.addEventListener('keydown', handleKeys);
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.removeEventListener('keydown', handleKeys);
+}
+
+function navLightbox(dir) {
+  currentIndex = (currentIndex + dir + photos.length) % photos.length;
+  updateLightbox();
+}
+
+function updateLightbox() {
+  const img = document.getElementById('lightboxImg');
+  img.src = thumb(photos[currentIndex].id, 2000);
+  img.alt = photos[currentIndex].name;
+  document.getElementById('lightboxCounter').textContent = `${currentIndex + 1} / ${photos.length}`;
+}
+
+function handleKeys(e) {
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowRight') navLightbox(1);
+  if (e.key === 'ArrowLeft') navLightbox(-1);
+}
+
+document.getElementById('lightbox').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeLightbox();
+});
+
+// Swipe support for mobile
+let touchStartX = 0;
+const lbEl = document.getElementById('lightbox');
+lbEl.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
+lbEl.addEventListener('touchend', (e) => {
+  const diff = e.changedTouches[0].screenX - touchStartX;
+  if (Math.abs(diff) > 50) { navLightbox(diff > 0 ? -1 : 1); }
+}, {passive: true});
+</script>
+</body>
+</html>
