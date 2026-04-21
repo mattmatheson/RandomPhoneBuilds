@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="published" content="2026-04-21">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code for Sara — Getting Started</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #C42020;
+            --bg: #FAFAFA;
+            --text: #1D1D1F;
+            --text-secondary: #6E6E73;
+            --card-bg: #F2F2F7;
+            --border: #E5E5E7;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .header {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 2rem;
+        }
+
+        .kicker {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 0.75rem;
+        }
+
+        .scope {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+
+        .listen-row {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+
+        .listen-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.6rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: opacity 0.2s;
+        }
+        .listen-btn:hover { opacity: 0.85; }
+
+        .pro-tip {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+        .pro-tip a {
+            color: var(--text-secondary);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 1.5rem 4rem;
+        }
+
+        section {
+            margin-bottom: 2.5rem;
+            padding: 0.25rem 0;
+            transition: all 0.3s ease;
+        }
+        section.reading {
+            border-left: 3px solid var(--accent);
+            background: rgba(196, 32, 32, 0.04);
+            padding-left: 1rem;
+            border-radius: 4px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--text);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .lede {
+            font-size: 1.1rem;
+            color: var(--text);
+            border-left: 3px solid var(--accent);
+            padding: 0.25rem 0 0.25rem 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        ul, ol {
+            padding-left: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        li { margin-bottom: 0.5rem; }
+
+        code {
+            background: var(--card-bg);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.88em;
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+        }
+
+        pre {
+            background: #1D1D1F;
+            color: #F5F5F7;
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        .callout {
+            background: #FFF3CD;
+            border-left: 4px solid #F0AD4E;
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .callout-success {
+            background: #E8F5E9;
+            border-left-color: #34C759;
+        }
+
+        .repo-cta {
+            background: #1D1D1F;
+            color: #F5F5F7;
+            border-radius: 14px;
+            padding: 1.75rem 1.75rem;
+            margin: 1rem 0 2rem;
+        }
+        .repo-cta .card-label { color: #FF6B6B; }
+        .repo-cta h3 { color: #F5F5F7; margin-top: 0; }
+        .repo-cta a {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: #F5F5F7;
+            font-weight: 600;
+            text-decoration: underline;
+            word-break: break-all;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .two-col .card { margin-bottom: 0; }
+
+        /* Player bar */
+        .player-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(30, 30, 30, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: white;
+            padding: 0.75rem 1.25rem;
+            padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.35s ease;
+            font-size: 0.85rem;
+        }
+        .player-bar.visible { transform: translateY(0); }
+        .player-bar button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 0.25rem;
+            font-family: inherit;
+        }
+        .player-bar .track-title {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        .player-bar select {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0.3rem 0.4rem;
+            font-size: 0.75rem;
+            font-family: inherit;
+            max-width: 120px;
+        }
+        .player-bar .speed-btn {
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(255,255,255,0.15);
+            border-radius: 6px;
+            padding: 0.25rem 0.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.7rem; }
+            .listen-row { flex-direction: column; align-items: stretch; }
+            .listen-btn { width: 100%; text-align: center; }
+            pre { font-size: 0.78rem; padding: 1rem; }
+            .two-col { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="kicker">For Sara, from Matt</div>
+    <h1>Claude Code — The CLI Version of What You Just Saw</h1>
+    <p class="scope">The app is fun. The CLI is a different animal. This is a walk-through of installing Claude Code on your Mac and a tour of how I have mine set up — so you can see what it feels like when Claude lives in your terminal and can actually do things.</p>
+
+    <div class="listen-row">
+        <button class="listen-btn" id="listenBtn" onclick="toggleListen()">&#9654; Listen</button>
+    </div>
+    <p class="pro-tip">Pro tip: For a better voice, <a onclick="selectAllContent()">select all</a> then use iOS Speak Selection (Settings &gt; Accessibility &gt; Spoken Content).</p>
+</div>
+
+<div class="container" id="mainContent">
+
+<section>
+    <p class="lede">Hey Sara — this is a little tour. You just got clawed in the app, which is a nice on-ramp, but the real unlock is the CLI. That's the version where Claude can read your files, run commands, push to GitHub, and stay in a project with you for hours. This doc walks you through installing it and shows you how I have mine wired up. At the bottom there's a link to a repo I put together for you — you clone it, and it onboards you the rest of the way.</p>
+</section>
+
+<section>
+    <h2>What "the CLI" actually means</h2>
+    <p>Claude Code is a command-line tool. You open your terminal, type <code>claude</code>, and you're talking to Claude the same way you talked to it in the app — but now it can edit files on your computer, run shell commands, commit to git, and use a growing library of <em>skills</em> and <em>MCP servers</em> (more on those in a minute).</p>
+    <p>The app is a chat window. The CLI is an agent. Big difference.</p>
+</section>
+
+<section>
+    <h2>Step 1 — Install the prerequisites</h2>
+    <p>If you've never used a terminal before, open <strong>Terminal.app</strong> (Spotlight: <code>Cmd+Space</code>, type "Terminal"). Paste these in one at a time.</p>
+
+    <h3>Homebrew (the package manager for Mac)</h3>
+<pre><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></pre>
+    <p>It'll ask for your Mac password. That's fine — it's the standard installer.</p>
+
+    <h3>Node.js (Claude Code is a Node package)</h3>
+<pre><code>brew install node</code></pre>
+
+    <h3>Git and the GitHub CLI</h3>
+<pre><code>brew install git gh</code></pre>
+    <p>Then sign in to GitHub so you can push repos later:</p>
+<pre><code>gh auth login</code></pre>
+</section>
+
+<section>
+    <h2>Step 2 — Install Claude Code</h2>
+<pre><code>npm install -g @anthropic-ai/claude-code</code></pre>
+    <p>That's it. To start it, go to any folder you want to work in and type:</p>
+<pre><code>cd ~/Desktop
+claude</code></pre>
+    <p>First run, it'll open a browser tab for you to log in with your Anthropic account. After that, you're in.</p>
+
+    <div class="callout callout-success">
+        <strong>You're talking to Claude now.</strong> Anything you type in the terminal is a prompt. It reads files, it edits files, it runs commands. The whole computer is its workspace.
+    </div>
+</section>
+
+<section>
+    <h2>Step 3 — The four permission modes</h2>
+    <p>This is the most important concept to grasp early. Press <code>Shift+Tab</code> to cycle through the first three:</p>
+
+    <div class="two-col">
+        <div class="card">
+            <div class="card-label">Normal</div>
+            <p style="margin: 0; font-size: 0.95rem;">Claude asks before doing anything that touches your computer. Great while you're learning.</p>
+        </div>
+        <div class="card">
+            <div class="card-label">Auto-accept</div>
+            <p style="margin: 0; font-size: 0.95rem;">Claude edits files and runs safe commands without asking. Still shows you what it's doing.</p>
+        </div>
+        <div class="card">
+            <div class="card-label">Plan mode</div>
+            <p style="margin: 0; font-size: 0.95rem;">Read-only. Claude can look and think but can't change anything. Good for "explain this codebase."</p>
+        </div>
+        <div class="card">
+            <div class="card-label">YOLO (dangerous)</div>
+            <p style="margin: 0; font-size: 0.95rem;"><code>claude --dangerously-skip-permissions</code> — no asking at all. Only in folders where you can afford a mistake.</p>
+        </div>
+    </div>
+    <p>Start in Normal mode. After a week or two you'll hop into Auto-accept for most work. I basically live in Auto-accept with a <code>/yolo</code> skill (more on those in a minute).</p>
+</section>
+
+<section>
+    <h2>Step 4 — The things that make it feel like yours</h2>
+    <p>Out of the box, Claude Code is powerful. What makes it feel personal is three things: <strong>CLAUDE.md</strong>, <strong>memory</strong>, and <strong>skills</strong>. These are the reasons my Claude feels like my assistant and not just a generic AI.</p>
+
+    <h3>CLAUDE.md — your standing instructions</h3>
+    <p>A file called <code>CLAUDE.md</code> at the root of a project gets loaded into every Claude Code session in that folder. Mine has my name, my job (videographer in Cookeville TN), how I want it to talk to me (terse, no emoji, don't ask unnecessary questions), and rules about my workflow. Think of it as the system prompt for that folder.</p>
+    <p>A CLAUDE.md at <code>~/.claude/CLAUDE.md</code> applies globally — to every folder on your machine.</p>
+
+    <h3>Memory — persistence across conversations</h3>
+    <p>Claude can save little markdown files to a memory folder. When you start a new conversation, it can recall who you are, what you care about, and feedback you've given before. No more re-explaining yourself every morning. I have about 50 memory files — all of them under a hundred words.</p>
+
+    <h3>Skills — reusable capabilities</h3>
+    <p>Skills are markdown instructions stored at <code>~/.claude/skills/</code>. You invoke them with a slash command. A skill called <code>/commit</code> might tell Claude exactly how to write a git commit message the way you like. A skill called <code>/yolo</code> flips it into auto-accept mode. Skills compose — you can give Claude a whole behavior with one word.</p>
+</section>
+
+<section>
+    <h2>Step 5 — MCP servers (the superpowers)</h2>
+    <p>MCP (Model Context Protocol) lets Claude plug into outside tools. You add a little config to your <code>settings.json</code> and suddenly Claude can read your Gmail, drive a browser, look at a Postgres database, or query live documentation. Here's what I actually use day-to-day:</p>
+
+    <div class="card">
+        <div class="card-label">Matt's MCP Servers</div>
+        <ul style="margin: 0;">
+            <li><strong>sequential-thinking</strong> — lets Claude think step-by-step on hard problems</li>
+            <li><strong>context7</strong> — pulls live docs for any library or framework so answers aren't stale</li>
+            <li><strong>chrome-devtools</strong> — drives a headless Chrome for scraping, testing, or checking a page</li>
+            <li><strong>knowledge-graph</strong> — a small persistent memory DB for longer-term facts</li>
+            <li><strong>Gmail personal + Calendar</strong> — Claude reads my inbox and schedules events directly</li>
+            <li><strong>Gmail business</strong> — same, separate account for my video business</li>
+        </ul>
+    </div>
+    <p>You don't need all of these to start. I'd start with just <code>sequential-thinking</code> and <code>context7</code> — they're free, they work out of the box, and they make Claude noticeably smarter.</p>
+</section>
+
+<section>
+    <h2>How my setup is actually wired</h2>
+    <p>Not prescriptive — just so you can see what a real working setup looks like after a few months of iteration.</p>
+
+    <ul>
+        <li><strong>Global CLAUDE.md</strong> at <code>~/.claude/CLAUDE.md</code> with my voice-TTS toggles (my computer literally talks back to me when Claude finishes responding)</li>
+        <li><strong>Per-project CLAUDE.md</strong> in every folder that matters — tells Claude the rules for that specific project</li>
+        <li><strong>Memory folder</strong> with 50-ish files covering who I am, feedback I've given, ongoing projects, and external system references</li>
+        <li><strong>Cortex</strong> — a separate Obsidian vault at <code>~/Cortex</code> that's my long-form knowledge base. Claude reads it, writes to it, keeps it tidy</li>
+        <li><strong>Skills</strong> — around 20 active slash commands, plus an archive of ~30 more I toggle on/off depending on the project</li>
+        <li><strong>RandomPhoneBuilds</strong> — a GitHub Pages site where I publish research docs like the one you're reading right now. I just say "put this on RPB" and Claude pushes a styled HTML page live in about a minute</li>
+        <li><strong>Neo</strong> — a little agent that watches my iMessage inbox and routes requests to Claude when I'm away from my computer</li>
+    </ul>
+    <p>You don't need Neo or Cortex or any of that to be useful. They came one at a time. The only things that matter day one are Claude Code installed, a CLAUDE.md file, and the permission modes.</p>
+</section>
+
+<section>
+    <h2>The three slash commands I'd install first</h2>
+    <p>These live in <code>~/.claude/commands/</code> (or <code>~/.claude/skills/</code> depending on your version). Each is a tiny markdown file.</p>
+
+    <div class="card">
+        <div class="card-label">/yolo</div>
+        <p style="margin: 0; font-size: 0.95rem;">Auto-approves file ops, git, and safe dev tools. Still asks before <code>rm -rf</code> or <code>sudo</code>. This is my default mode.</p>
+    </div>
+    <div class="card">
+        <div class="card-label">/safe</div>
+        <p style="margin: 0; font-size: 0.95rem;">The opposite. Asks permission for everything. Use when you're doing something you don't fully trust.</p>
+    </div>
+    <div class="card">
+        <div class="card-label">/commit</div>
+        <p style="margin: 0; font-size: 0.95rem;">Looks at your staged and unstaged changes, writes a clean commit message that explains the <em>why</em>, and commits it. Never stops to ask trivia.</p>
+    </div>
+    <p>All three are bundled in the onboarding repo I made for you (linked below). You don't have to write them from scratch.</p>
+</section>
+
+<section>
+    <h2>Keyboard shortcuts worth memorizing</h2>
+    <div class="card">
+        <ul style="margin: 0;">
+            <li><code>Enter</code> — send your message</li>
+            <li><code>Shift+Enter</code> — new line without sending (for multi-line prompts)</li>
+            <li><code>Shift+Tab</code> — cycle permission modes (Normal → Auto-Accept → Plan)</li>
+            <li><code>Escape</code> — clear the current input</li>
+            <li><code>Escape, Escape</code> — (with empty input) opens the rollback menu — lets you undo your conversation to any earlier point</li>
+            <li><code>/</code> — open the slash-command menu</li>
+            <li><code>claude --resume</code> — reopen your last session after quitting</li>
+        </ul>
+    </div>
+</section>
+
+<section>
+    <h2>Tips from the dirt</h2>
+    <ul>
+        <li><strong>Be specific.</strong> "Build a website" is too vague. "Make an index.html with Tailwind and a hero, nav, and footer" gets better output fast.</li>
+        <li><strong>Let it read before you ask it to write.</strong> "Read these three files, then tell me what you think" is almost always the right opener.</li>
+        <li><strong>Course-correct bluntly.</strong> If it's going the wrong way, just say "stop, that's not what I meant, I want X." You're not hurting its feelings.</li>
+        <li><strong>Use Plan Mode to learn.</strong> It'll tell you what it <em>would</em> do without actually doing anything. Great for understanding a codebase.</li>
+        <li><strong>Commit often.</strong> Claude is a fast editor. A bad edit session is recoverable if you've been committing. Use <code>/commit</code> every 20 minutes.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>The onboarding repo</h2>
+    <div class="repo-cta">
+        <div class="card-label">Clone this to finish your setup</div>
+        <h3>claude-for-sara</h3>
+        <p style="margin: 0 0 0.5rem; color: #d2d2d7;">I put together a little repo that has all my starter configs, a CLAUDE.md template, a verify script that checks what's installed, and 6 guides that go deeper than this article. When you clone it and run <code>claude</code> inside the folder, it'll walk you through setup step-by-step — the repo's own CLAUDE.md tells Claude how to onboard you.</p>
+        <a href="https://github.com/mattmatheson/claude-for-sara">https://github.com/mattmatheson/claude-for-sara</a>
+    </div>
+
+    <p>To use it:</p>
+<pre><code>cd ~
+git clone https://github.com/mattmatheson/claude-for-sara.git
+cd claude-for-sara
+claude</code></pre>
+    <p>Then just say "start onboarding me" and it'll take you through everything.</p>
+</section>
+
+<section>
+    <h2>If you get stuck</h2>
+    <p>Text me. Or open Claude and paste in the error — it's genuinely great at debugging its own environment. Half of "setting up Claude Code" is just asking Claude Code to set itself up.</p>
+    <p>Welcome to the terminal side. It's a lot more fun over here.</p>
+    <p>— Matt</p>
+</section>
+
+</div><!-- /container -->
+
+<!-- Player Bar -->
+<div class="player-bar" id="playerBar">
+    <button id="playPauseBtn" onclick="togglePlayPause()">&#9208;</button>
+    <span class="track-title" id="trackTitle">—</span>
+    <select id="voiceSelect" onchange="changeVoice()"></select>
+    <button class="speed-btn" id="speedBtn" onclick="cycleSpeed()">1x</button>
+    <button onclick="stopListen()">&#9632;</button>
+</div>
+
+<script>
+// === Listen Mode ===
+const VOICE_WHITELIST = ['samantha','karen','daniel','moira','tessa','ava','allison','tom','aaron','nicky','evan','zoe','joelle','fiona','martha','arthur'];
+const SPEEDS = [0.8, 1, 1.2, 1.5];
+let currentSpeed = 1;
+let speedIdx = 1;
+let isPlaying = false;
+let isPaused = false;
+let chunks = [];
+let chunkIdx = 0;
+let keepAlive = null;
+let selectedVoice = null;
+
+function getVoices() {
+    return speechSynthesis.getVoices().filter(v => {
+        const n = v.name.toLowerCase();
+        return VOICE_WHITELIST.some(w => n.includes(w)) || n.includes('google us english') || n.includes('google uk english');
+    });
+}
+
+function populateVoices() {
+    const sel = document.getElementById('voiceSelect');
+    sel.innerHTML = '';
+    const voices = getVoices();
+    voices.forEach((v, i) => {
+        const opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = v.name.replace(/\(.*?\)/, '').trim();
+        sel.appendChild(opt);
+    });
+    if (!selectedVoice && voices.length) {
+        const sam = voices.findIndex(v => v.name.toLowerCase().includes('samantha'));
+        selectedVoice = voices[sam >= 0 ? sam : 0];
+        sel.value = sam >= 0 ? sam : 0;
+    }
+}
+
+speechSynthesis.onvoiceschanged = populateVoices;
+populateVoices();
+
+function changeVoice() {
+    const voices = getVoices();
+    selectedVoice = voices[document.getElementById('voiceSelect').value];
+}
+
+function cycleSpeed() {
+    speedIdx = (speedIdx + 1) % SPEEDS.length;
+    currentSpeed = SPEEDS[speedIdx];
+    document.getElementById('speedBtn').textContent = currentSpeed + 'x';
+}
+
+function buildChunks() {
+    chunks = [];
+    const sections = document.querySelectorAll('#mainContent section');
+    sections.forEach(sec => {
+        const els = sec.querySelectorAll('h2, h3, p, li, .card-label, pre code');
+        const sectionChunks = [];
+        els.forEach(el => {
+            const text = el.textContent.trim();
+            if (text) {
+                sectionChunks.push({
+                    text,
+                    isHeading: /^H[23]$/.test(el.tagName) || el.classList.contains('card-label'),
+                    section: sec,
+                    label: sec.querySelector('h2, h3')?.textContent || ''
+                });
+            }
+        });
+        if (sectionChunks.length) chunks.push(...sectionChunks);
+    });
+}
+
+function speakChunk(idx) {
+    if (idx >= chunks.length) { stopListen(); return; }
+    chunkIdx = idx;
+    const chunk = chunks[idx];
+
+    document.querySelectorAll('section.reading').forEach(s => s.classList.remove('reading'));
+    chunk.section.classList.add('reading');
+    chunk.section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    document.getElementById('trackTitle').textContent = chunk.label;
+
+    const utt = new SpeechSynthesisUtterance(chunk.text);
+    if (selectedVoice) utt.voice = selectedVoice;
+    utt.rate = chunk.isHeading ? currentSpeed * 0.9 : currentSpeed;
+    if (chunk.isHeading) utt.pitch = 1.05;
+
+    utt.onend = () => {
+        const delay = chunk.isHeading ? 400 : 200;
+        setTimeout(() => { if (isPlaying && !isPaused) speakChunk(idx + 1); }, delay);
+    };
+
+    speechSynthesis.speak(utt);
+}
+
+function toggleListen() {
+    if (isPlaying) {
+        stopListen();
+    } else {
+        buildChunks();
+        isPlaying = true;
+        isPaused = false;
+        document.getElementById('listenBtn').innerHTML = '&#9632; Stop';
+        document.getElementById('playerBar').classList.add('visible');
+        keepAlive = setInterval(() => { if (isPlaying) speechSynthesis.resume(); }, 10000);
+        speakChunk(0);
+    }
+}
+
+function togglePlayPause() {
+    if (isPaused) {
+        speechSynthesis.resume();
+        isPaused = false;
+        document.getElementById('playPauseBtn').innerHTML = '&#9208;';
+    } else {
+        speechSynthesis.pause();
+        isPaused = true;
+        document.getElementById('playPauseBtn').innerHTML = '&#9654;';
+    }
+}
+
+function stopListen() {
+    speechSynthesis.cancel();
+    isPlaying = false;
+    isPaused = false;
+    clearInterval(keepAlive);
+    document.getElementById('listenBtn').innerHTML = '&#9654; Listen';
+    document.getElementById('playerBar').classList.remove('visible');
+    document.querySelectorAll('section.reading').forEach(s => s.classList.remove('reading'));
+}
+
+function selectAllContent() {
+    const container = document.getElementById('mainContent');
+    const range = document.createRange();
+    range.selectNodeContents(container);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+}
+</script>
+
+</body>
+</html>
