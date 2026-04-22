@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="published" content="2026-04-22">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meter.tv — Fuse TV / VH1 / MTV Aesthetic Research</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --bg: #FAFAFA;
+    --text: #1D1D1F;
+    --text-secondary: #6E6E73;
+    --border: #E5E5EA;
+    --card: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 6rem;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 7vw, 5rem) clamp(1.25rem, 4vw, 2rem) 4rem;
+  }
+
+  header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    margin-bottom: 0.75rem;
+  }
+
+  .scope {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+    max-width: 640px;
+    margin-bottom: 1.5rem;
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-items: center;
+    margin-top: 1rem;
+  }
+
+  .listen-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.6rem 1.5rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .listen-btn:hover { transform: translateY(-1px); background: #A01818; }
+
+  .ctrl-select, .ctrl-btn {
+    font-family: inherit;
+    font-size: 0.85rem;
+    padding: 0.55rem 0.9rem;
+    border-radius: 2rem;
+    border: 1px solid var(--border);
+    background: white;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .pro-tip {
+    margin-top: 0.75rem;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+  .pro-tip a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  section {
+    margin-bottom: 3rem;
+    padding: 1rem 0;
+  }
+
+  section.reading {
+    border-left: 3px solid var(--accent);
+    background: rgba(196, 32, 32, 0.04);
+    padding-left: 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  p { margin-bottom: 1rem; }
+
+  ul, ol { margin-bottom: 1rem; padding-left: 1.4rem; }
+  li { margin-bottom: 0.45rem; }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(196, 32, 32, 0.25);
+    transition: border-color 0.15s ease;
+  }
+  a:hover { border-bottom-color: var(--accent); }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
+
+  .video-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.15rem;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .video-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+  .video-card .num {
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: center;
+    line-height: 26px;
+    margin-right: 0.6rem;
+    vertical-align: middle;
+  }
+  .video-card .title {
+    font-weight: 600;
+    font-size: 1rem;
+    vertical-align: middle;
+  }
+  .video-card .title a {
+    border-bottom: none;
+    color: var(--text);
+  }
+  .video-card .title a:hover { color: var(--accent); }
+  .video-card .note {
+    display: block;
+    margin-top: 0.4rem;
+    margin-left: 32px;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+  }
+  .video-card .source {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-left: 32px;
+    display: block;
+    margin-top: 0.2rem;
+  }
+
+  .trope-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.15rem 1.3rem;
+    margin-bottom: 0.8rem;
+  }
+  .trope-card h3 {
+    margin-top: 0;
+    color: var(--accent);
+    font-size: 1.05rem;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 1rem;
+    background: rgba(196, 32, 32, 0.1);
+    color: var(--accent);
+    margin-right: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .asset-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+  .asset-row > div {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    font-size: 0.94rem;
+  }
+  .asset-row strong { color: var(--text); }
+
+  blockquote {
+    margin: 1.2rem 0;
+    padding: 1rem 1.2rem;
+    border-left: 3px solid var(--accent);
+    background: rgba(196, 32, 32, 0.04);
+    border-radius: 0 6px 6px 0;
+    font-style: italic;
+    color: var(--text-secondary);
+  }
+
+  /* Sticky player bar */
+  .player-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(30, 30, 30, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: white;
+    padding: 0.8rem 1rem;
+    padding-bottom: calc(0.8rem + env(safe-area-inset-bottom));
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+  }
+  .player-bar.visible { transform: translateY(0); }
+  .player-bar button, .player-bar select {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1.5rem;
+    padding: 0.4rem 0.8rem;
+    font-family: inherit;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+  .player-bar .current-section {
+    flex: 1;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0.85;
+  }
+
+  @media (max-width: 600px) {
+    .listen-btn { width: 100%; }
+    .controls { flex-direction: column; align-items: stretch; }
+    .player-bar { flex-wrap: wrap; gap: 0.4rem; }
+    .player-bar .current-section { order: -1; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<main class="container" id="main-content">
+<header>
+  <span class="label">Meter — The Cobra — Nashville</span>
+  <h1>Meter.tv Aesthetic Research</h1>
+  <p class="scope">Reference deck for the Benny Method concert doc: early 2000s Fuse TV / VH1 / MTV man-on-the-street energy. Rock stingers, pop-up bubbles, camcorder grit, cheesy title cards, crowd interviews. 20+ videos, asset leads, trope breakdown.</p>
+  <div class="controls">
+    <button class="listen-btn" id="listen-btn">Listen</button>
+    <select class="ctrl-select" id="voice-select" aria-label="Voice"></select>
+    <button class="ctrl-btn" id="speed-btn">1x</button>
+    <button class="ctrl-btn" id="select-all-btn">Select All</button>
+  </div>
+  <p class="pro-tip">Pro tip: For a better voice, tap <a href="#" id="select-all-link">select all</a> then use iOS Speak Selection (Settings &gt; Accessibility &gt; Spoken Content &gt; Speak Selection).</p>
+</header>
+
+<section id="sec-concept">
+  <h2>The Concept</h2>
+  <p>The video is a show at The Cobra in Nashville for the band Meter, shot and cut like a segment from 2002-2005-era Fuse TV — when low-budget music television thrived on chaotic energy, handheld camcorder footage, and rapid-fire cuts between band interviews, fan reactions, and live performance clips.</p>
+  <p>Host <strong>Benny Method</strong> works the crowd with glasses and a goofball persona, the A-cam is a camcorder shooting the main interviews, and the B-cam adds lower-frame-rate black-and-white cutaways. Rock stingers punch transitions. A <strong>meter.tv</strong> bug lives in the bottom-right and animates in and out.</p>
+</section>
+
+<section id="sec-fuse">
+  <h2>Fuse TV — The Core Reference</h2>
+  <p>Fuse was MTV's scrappier, rock-and-punk-leaning rival from roughly 2003-2010. The aesthetic is DIY, high-contrast, graphic-heavy, and a little sloppy in the best way. Most interviews were shot in-studio with neon backdrops or on location at Warped Tour / club shows.</p>
+
+  <div class="video-grid">
+    <div class="video-card">
+      <span class="num">1</span>
+      <span class="title"><a href="https://www.youtube.com/watch?v=cFa_9clBCno" target="_blank" rel="noopener">Daily Download "Sizzle Reel" — Fuse (2004-2007)</a></span>
+      <span class="note">The single best reference clip. Rapid cuts, on-screen graphics, lower thirds, stingers — watch this first.</span>
+      <span class="source">YouTube</span>
+    </div>
+    <div class="video-card">
+      <span class="num">2</span>
+      <span class="title"><a href="https://www.youtube.com/watch?v=tqoBttP5Uyk" target="_blank" rel="noopener">FUSE TV: Commercials and Music Videos (2003)</a></span>
+      <span class="note">Network bumpers, bug animation, promos — steal ideas for meter.tv bug animation timing.</span>
+      <span class="source">YouTube</span>
+    </div>
+    <div class="video-card">
+      <span class="num">3</span>
+      <span class="title"><a href="https://www.youtube.com/watch?v=NhKGc4VVWb8" target="_blank" rel="noopener">Linkin Park — Fuse TV IMX Interview (2003)</a></span>
+      <span class="note">Classic Fuse live studio interview with graphics overlay. Note the name tag style + the "Fuse" bug.</span>
+      <span class="source">YouTube</span>
+    </div>
+    <div class="video-card">
+      <span class="num">4</span>
+      <span class="title"><a href="https://www.youtube.com/watch?v=K0yPOYGClgo" target="_blank" rel="noopener">Evanescence — Fuse IMX (2003)</a></span>
+      <span class="note">More of the IMX format — useful for studying lower-third typography and transition pacing.</span>
+      <span class="source">YouTube</span>
+    </div>
+    <div class="video-card">
+      <span class="num">5</span>
+      <span class="title"><a href="https://www.youtube.com/watch?v=bEzzFHv8ifc" target="_blank" rel="noopener">Incubus — Fuse TV IMX (2004)</a></span>
+      <span class="note">Casual interview tone — Benny should be 50% hyped, 50% dumb questions, just like these.</span>
+      <span class="source">YouTube</span>
+    </div>
+    <div class="video-card">
+      <span class="num">6</span>
+      <span class="title"><a href="https://www.youtube.com/watch?v=E-SGqunDtrY" target="_blank" rel="noopener">My Chemical Romance — Fuse TV Interview</a></span>
+      <span class="note">Scene band interview energy. MCR in their element, scrappy graphics.</span>
+      <span class="source">YouTube</span>
+    </div>
+    <div class="video-card">
+      <span class="num">7</span>
+      <span class="title"><a href="https://www.youtube.com/watch?v=951Ld-ln5mA" target="_blank" rel="noopener">Aiden on Steven's Untitled Rock Show (Fuse)</a></span>
+      <span class="note">Steven Smith = the patron saint of Benny Method. Rock-show host, snarky, talks to bands + crowd.</span>
+      <span class="source">YouTube</span>
+    </div>
+    <div class="video-card">
+      <span class="num">8</span>
+      <span class="title"><a href="https://www.youtube.com/watch?v=lS1z86pGEK4" target="_blank" rel="noopener">Bayside on Steven's Untitled Rock Show</a></span>
+      <span class="note">More SURS — this is the show to mimic in tone for the band interviews.</span>
+      <span class="source">YouTube</span>
+    </div>
+    <div class="video-card">
+      <span class="num">9</span>
+      <span class="title"><a href="https://www.youtube.com/watch?v=Mh2M5PWElx4" target="_blank" rel="noopener">Silverstein on Steven's Untitled Rock Show</a></span>
+      <span class="note">Backstage at a show — EXACTLY the energy you're going for at The Cobra.</span>
+      <span class="source">YouTube</span>
+    </div>
+  </div>
+</section>
+
+<section id="sec-vh1">
+  <h2>VH1 Pop-Up Video — The Bubble Commentary Playbook</h2>
+  <p>Pop-Up Video (1996-2002 original run, 2011-2012 revival) is the ur-text for "cheesy pop-up graphics with a little <em>bloop</em> sound." The format: factoid bubbles animate in over music video / interview footage with a signature bubble-pop SFX. Don't copy it exactly — but mine it for bubble timing, font choices, and the arrow/line that connects a bubble to its subject.</p>
+
+  <div class="video-grid">
+    <div class="video-card">
+      <span class="num">10</span>
+      <span class="title"><a href="https://www.youtube.com/watch?v=Inxhxho1E4E" target="_blank" rel="noopener">VH1 Pop-Up Video — Full Episode 49 (Season 2)</a></span>
+      <span class="note">Full episode. Study bubble in/out animation, arrow pointers, typography.</span>
+      <span class="source">YouTube</span>
+    </div>
+    <div class="video-card">
+      <span class="num">11</span>
+      <span class="title"><a href="https://www.youtube.com/playlist?list=PLYbocufkwRFA1cz_N8epnI10--gPwzzKu" target="_blank" rel="noopener">VH1 Pop-Up Video — YouTube Playlist</a></span>
+      <span class="note">Fan-curated playlist of surviving episodes.</span>
+      <span class="source">YouTube Playlist</span>
+    </div>
+    <div class="video-card">
+      <span class="num">12</span>
+      <span class="title"><a href="https://archive.org/details/vh1s-pop-up-video-rock-n-roll-heaven-1999.10.20" target="_blank" rel="noopener">VH1 Pop-Up Video — "Rock 'n Roll Heaven" (1999)</a></span>
+      <span class="note">Rock-focused theme episode. Highest relevance for Meter.tv subject matter.</span>
+      <span class="source">Internet Archive</span>
+    </div>
+    <div class="video-card">
+      <span class="num">13</span>
+      <span class="title"><a href="https://archive.org/details/vh1s-pop-up-video-s02e04-the-big-80s-1998.01.22" target="_blank" rel="noopener">VH1 Pop-Up Video — "The Big 80's" S02E04 (1998)</a></span>
+      <span class="note">Complete episode — great for studying the full rhythm of bubble pacing.</span>
+      <span class="source">Internet Archive</span>
+    </div>
+    <div class="video-card">
+      <span class="num">14</span>
+      <span class="title"><a href="https://www.youtube.com/watch?v=-AIUNxpj_Oo" target="_blank" rel="noopener">VH1 Pop-Up Video Bubble SFX — with download link</a></span>
+      <span class="note">The actual "bloop" sound effect. Grab it for your edit.</span>
+      <span class="source">YouTube / SFX</span>
+    </div>
+  </div>
+</section>
+
+<section id="sec-mtv">
+  <h2>MTV — Chaotic Street Interview Energy</h2>
+  <p>For Benny's unhinged crowd segments, pull from Tom Green, Jackass, and Wildboyz — low-fi camcorder, handheld zooms, reaction shots from confused bystanders. Also TRL for the "big red MTV logo + fan signs + yelling" crowd-hype energy.</p>
+
+  <div class="video-grid">
+    <div class="video-card">
+      <span class="num">15</span>
+      <span class="title"><a href="https://www.youtube.com/watch?v=d_YPv_cwIpY" target="_blank" rel="noopener">Jackass: The Movie — Giant Shopping Cart Intro</a></span>
+      <span class="note">Perfect cold-open rhythm — title card, handheld chaos, quick payoff. Good model for Benny's intro.</span>
+      <span class="source">YouTube</span>
+    </div>
+    <div class="video-card">
+      <span class="num">16</span>
+      <span class="title"><a href="https://www.youtube.com/watch?v=a07qjvFhNIg" target="_blank" rel="noopener">Steve-O &amp; Chris Pontius — Wildboyz reflections</a></span>
+      <span class="note">Context for the camcorder + goofball persona dynamic you're after.</span>
+      <span class="source">YouTube</span>
+    </div>
+    <div class="video-card">
+      <span class="num">17</span>
+      <span class="title"><a href="https://archive.org/details/trl-archive" target="_blank" rel="noopener">MTV TRL Archive — 21+ hours (1998-2001)</a></span>
+      <span class="note">Digitized VHS tape dump. Watch the crowd-interaction segments and lower-third name plates.</span>
+      <span class="source">Internet Archive</span>
+    </div>
+    <div class="video-card">
+      <span class="num">18</span>
+      <span class="title"><a href="https://archive.org/details/trl-1000" target="_blank" rel="noopener">TRL #1000 — Full Episode (2002)</a></span>
+      <span class="note">Landmark episode. Good full-show reference for graphic rhythm and host energy.</span>
+      <span class="source">Internet Archive</span>
+    </div>
+    <div class="video-card">
+      <span class="num">19</span>
+      <span class="title"><a href="https://archive.org/details/mtv2-headbangers-ball" target="_blank" rel="noopener">MTV2 Headbanger's Ball Archive</a></span>
+      <span class="note">Heavier/metal tilt — useful for darker stinger aesthetics and metal-band interview framing.</span>
+      <span class="source">Internet Archive</span>
+    </div>
+  </div>
+</section>
+
+<section id="sec-honorable">
+  <h2>Honorable Mention Searches</h2>
+  <p>Not direct links but search queries that'll pull the right era of content on YouTube:</p>
+  <div class="video-grid">
+    <div class="video-card">
+      <span class="num">20</span>
+      <span class="title"><a href="https://www.youtube.com/results?search_query=Tom+Green+Show+MTV+man+on+street" target="_blank" rel="noopener">Tom Green Show — Man on Street compilations</a></span>
+      <span class="note">The ur-text for a chaotic camcorder host ambushing strangers. Benny should steal the zoom-into-a-stranger's-face move.</span>
+      <span class="source">YouTube search</span>
+    </div>
+    <div class="video-card">
+      <span class="num">21</span>
+      <span class="title"><a href="https://www.youtube.com/results?search_query=Warped+Tour+2003+DVD+documentary" target="_blank" rel="noopener">Warped Tour 2002 / 2003 DVD footage</a></span>
+      <span class="note">Official tour DVDs had hours of backstage + crowd interview footage — exactly the vibe at The Cobra.</span>
+      <span class="source">YouTube search</span>
+    </div>
+    <div class="video-card">
+      <span class="num">22</span>
+      <span class="title"><a href="https://www.youtube.com/results?search_query=Fuse+Oven+Fresh+2006" target="_blank" rel="noopener">Fuse "Oven Fresh" clips</a></span>
+      <span class="note">New-video review format with host commentary bubbles — good for segment transitions.</span>
+      <span class="source">YouTube search</span>
+    </div>
+    <div class="video-card">
+      <span class="num">23</span>
+      <span class="title"><a href="https://www.youtube.com/results?search_query=MTV+I+Love+the+90s+talking+head+commentary" target="_blank" rel="noopener">MTV / VH1 "I Love the 90s" — talking head commentary</a></span>
+      <span class="note">If you want to cut the crowd interviews as talking-head commentary over B-roll, this is the template.</span>
+      <span class="source">YouTube search</span>
+    </div>
+  </div>
+</section>
+
+<section id="sec-tropes">
+  <h2>The Visual Tropes — Shot-by-Shot Playbook</h2>
+  <p>These are the specific ingredients to mix in. Hit 6-8 of these across the edit and it'll feel unmistakably 2003.</p>
+
+  <div class="trope-card">
+    <h3>01 — The Network Bug (meter.tv)</h3>
+    <p><span class="tag">Essential</span> Bottom-right corner. Semi-transparent white or red. Animates IN at the top of each new segment with a small scale-up and subtle motion blur, then sits static for 20-30 seconds, then animates OUT with a shrink / flip / dissolve. Occasionally glitches. Never stays on screen the whole time — that's modern. Real 2003 bugs came and went.</p>
+  </div>
+
+  <div class="trope-card">
+    <h3>02 — Pop-Up Commentary Bubbles</h3>
+    <p><span class="tag">Signature</span> Circular or speech-bubble shape. White fill, black outline, drop shadow. Factoid text inside. Arrow line pointing to the subject on screen. Animates in with a squash-and-stretch "bloop" and a matching SFX. Stays on screen 3-5 seconds. Limit 1-2 per segment — don't over-clutter.</p>
+  </div>
+
+  <div class="trope-card">
+    <h3>03 — Rock Stinger Transitions</h3>
+    <p><span class="tag">Essential</span> 0.5-1.5 seconds total. Power chord or cymbal crash, white frame flash, logo or title card slams in, then cuts to the next segment. You've already got two stinger MP3s in the project folder — loop those or layer them with the flash frame.</p>
+  </div>
+
+  <div class="trope-card">
+    <h3>04 — Title Cards / Segment Intros</h3>
+    <p>Solid color background (red, black, yellow). Giant sans-serif bold italic type with heavy drop shadow. Bonus points: spray-paint or scribble texture, star bursts, lightning bolts. Text examples: "BENNY vs. THE CROWD", "MEETING METER", "MOSH PIT REPORT". Hold on screen 1-2 seconds before cutting to the scene.</p>
+  </div>
+
+  <div class="trope-card">
+    <h3>05 — Lower-Third Name Plates</h3>
+    <p>Rotated 3-8 degrees off-axis. Bold sans-serif or marker-drawn font. Primary name line + tiny subtitle ("JIMMY — mosher", "BENNY METHOD — your host"). Red accent bar. Animates in from the left with a slide.</p>
+  </div>
+
+  <div class="trope-card">
+    <h3>06 — B-Cam Grading (the black-and-white, low-frame-rate cutaway)</h3>
+    <p>Desaturate to B&amp;W or heavy cyan-tint. Drop to 12-15fps via frame-blending. Add a subtle vignette + film grain. Use as quick 0.5-1.5s inserts between A-cam interview beats — never as a sustained shot. Dutch angles recommended.</p>
+  </div>
+
+  <div class="trope-card">
+    <h3>07 — VHS / Camcorder Overlays</h3>
+    <p>Tracking bar glitches, horizontal noise lines, timecode burn-in bottom-left, "REC ●" indicator top-right, battery icon, date stamp. Use SPARINGLY — a little goes a long way. Two VHS flashes in a 3-minute piece is plenty.</p>
+  </div>
+
+  <div class="trope-card">
+    <h3>08 — Crowd Reaction Punches</h3>
+    <p>Zoom-punch into a fan's face, hold for 0.5s, freeze frame with a circle graphic + arrow + handwritten label ("THIS GUY RULES"). Cut out. This is the Tom Green / Jackass move. Classic.</p>
+  </div>
+
+  <div class="trope-card">
+    <h3>09 — The Announcer Voice</h3>
+    <p>Gravel-voiced male narrator, slight compression, a touch of radio EQ. "Up next on METER DOT T V — Benny gets punched in the pit!" Used for segment intros only. Your voice with a pitch-down + compression in post works fine.</p>
+  </div>
+
+  <div class="trope-card">
+    <h3>10 — Freeze Frame &amp; Record-Scratch</h3>
+    <p>On a punchline or weird moment: freeze the frame + DJ record-scratch SFX + Benny's voiceover commentary. Classic VH1 "I Love the 90s" move. Breaks the 4th wall and injects humor.</p>
+  </div>
+</section>
+
+<section id="sec-assets">
+  <h2>Asset Leads</h2>
+
+  <h3>Motion Graphics Templates</h3>
+  <div class="asset-row">
+    <div><strong>Envato Elements — Retro VHS Camcorder Toolkit</strong> — Full pack of REC indicators, battery icons, tracking glitches, date stamps. Subscription-based. <a href="https://elements.envato.com/mini-dv-camcorder-toolkit-XYH58EP" target="_blank" rel="noopener">envato elements</a></div>
+    <div><strong>Motion Array — Y2K Retro Title Animation</strong> — Drop-in title card template. Editable text. <a href="https://motionarray.com/motion-graphics-templates/y2k-retro-title-animation-2508757/" target="_blank" rel="noopener">motionarray.com</a></div>
+    <div><strong>Motion Array — 25 Nostalgic VHS Video Effects</strong> — Curated list with downloadable overlays. <a href="https://motionarray.com/learn/video-effects/vhs-video-effects/" target="_blank" rel="noopener">motionarray.com</a></div>
+    <div><strong>VideoHive — Stinger Transitions</strong> — Broad library of stinger transitions for Premiere / AE. <a href="https://videohive.net/search/stinger%20transition" target="_blank" rel="noopener">videohive.net</a></div>
+  </div>
+
+  <h3>Free Y2K Graphics (for title cards, stickers, backgrounds)</h3>
+  <div class="asset-row">
+    <div><strong>Graphic For Free — Free Y2K Pack</strong> — Starbursts, stickers, chrome type — all the cheesy bits. <a href="https://graphicforfree.com/free-y2k-pack-collection/" target="_blank" rel="noopener">graphicforfree.com</a></div>
+    <div><strong>Vecteezy — Y2K Vector Art</strong> — 47k+ free vectors, icons, clipart. <a href="https://www.vecteezy.com/free-vector/y2k" target="_blank" rel="noopener">vecteezy.com</a></div>
+    <div><strong>Freepik — Y2K Elements</strong> — Free pack with many commercial-use graphics. <a href="https://www.freepik.com/free-photos-vectors/y2k-elements" target="_blank" rel="noopener">freepik.com</a></div>
+  </div>
+
+  <h3>Tutorials — Build Your Own</h3>
+  <div class="asset-row">
+    <div><strong>Premium Beat — Mid-'90s DV Camcorder Look in AE</strong> — Step-by-step grade to get that camcorder look. <a href="https://www.premiumbeat.com/blog/create-dv-camcorder-look-after-effects/" target="_blank" rel="noopener">premiumbeat.com</a></div>
+    <div><strong>VHS look on any camera (YouTube)</strong> — Full practical tutorial. <a href="https://www.youtube.com/watch?v=uWsIoiWobxE" target="_blank" rel="noopener">youtube.com</a></div>
+    <div><strong>Premiere Pro VHS look (no plugins)</strong> — Fast Premiere-native approach. <a href="https://www.youtube.com/watch?v=S9RtSOrbfiM" target="_blank" rel="noopener">youtube.com</a></div>
+    <div><strong>AE Juice — How to create a Pop-Up Effect in After Effects</strong> — Recreate Pop-Up Video bubble animation. <a href="https://aejuice.com/blog/how-to-create-a-pop-up-effect-in-after-effects/" target="_blank" rel="noopener">aejuice.com</a></div>
+    <div><strong>Pop-up effect tutorial (YouTube)</strong> — Video walkthrough. <a href="https://www.youtube.com/watch?v=FobYH3FSZZE" target="_blank" rel="noopener">youtube.com</a></div>
+  </div>
+
+  <h3>Sound FX</h3>
+  <div class="asset-row">
+    <div><strong>VH1 Pop-Up Video bubble SFX + download</strong> — The actual "bloop". <a href="https://www.youtube.com/watch?v=-AIUNxpj_Oo" target="_blank" rel="noopener">youtube.com</a></div>
+    <div><strong>Two rock stingers already in the project folder</strong> — <code>Rock Bumper Music (Imaging Stinger) 1.mp3</code> and <code>Logos &amp; Idents - Rock Logo Stingers Ident Pack 02.mp3</code> in <code>meter-cobra-nashville/</code>.</div>
+  </div>
+</section>
+
+<section id="sec-structure">
+  <h2>Suggested Edit Structure</h2>
+  <p>A rough skeleton to build off — adjust to what the footage gives you:</p>
+  <ol>
+    <li><strong>Cold open</strong> — quick Benny intro in the parking lot, camcorder on, title card slam: "METER.TV PRESENTS — LIVE AT THE COBRA"</li>
+    <li><strong>Stinger 1</strong> — rock bumper MP3 + white flash</li>
+    <li><strong>Crowd interview 1</strong> — 20-30 seconds, fan reaction, lower-third name plate, pop-up bubble ("IT'S THIS GUY'S THIRD METER SHOW")</li>
+    <li><strong>Stinger 2</strong> — power chord transition</li>
+    <li><strong>Meter music clip 1</strong> — 15 seconds live, meter.tv bug pulses in, brief song-title pop-up</li>
+    <li><strong>Stinger 3</strong></li>
+    <li><strong>Band interview</strong> — 30-45 seconds, pop-up bubble with band fact, B-cam cutaway in B&amp;W</li>
+    <li><strong>Stinger 4</strong></li>
+    <li><strong>Meter music clip 2</strong> — 15 seconds, different camera angle, VHS glitch overlay for 1 second</li>
+    <li><strong>Stinger 5</strong></li>
+    <li><strong>Crowd interview 2</strong> — freeze-frame ending with a handwritten arrow graphic</li>
+    <li><strong>Outro</strong> — Benny sign-off, meter.tv bug animates OUT, fade to black with next-episode tease</li>
+  </ol>
+  <blockquote>Keep every segment under 30 seconds. The era's magic is velocity — if you feel bored, your audience already is. Cut harder than you want to.</blockquote>
+</section>
+
+<section id="sec-dos-donts">
+  <h2>Dos and Don'ts</h2>
+  <h3>DO</h3>
+  <ul>
+    <li>Let the camcorder footage look rough — auto-exposure hunting, occasional overexposure, soft focus. That's the look.</li>
+    <li>Use hard cuts 90% of the time; save stingers for major beats.</li>
+    <li>Let Benny be loud and cringy — that's the point.</li>
+    <li>Mix lo-fi (camcorder, VHS) with hi-fi (crisp B-cam, clean stingers) — 2003 was the transition era and that contrast IS the era.</li>
+    <li>Include at least one freeze-frame-with-arrow joke.</li>
+  </ul>
+  <h3>DON'T</h3>
+  <ul>
+    <li>Use modern smooth motion graphics (looks instantly 2020s).</li>
+    <li>Use long dissolves or cinematic transitions — it kills the energy.</li>
+    <li>Over-use the VHS glitch — 2-3 times in a 3-min video, max.</li>
+    <li>Let any single shot breathe for more than 2-3 seconds unless it's a band performance beat.</li>
+    <li>Use clean, modern fonts. Go bold italic, drop-shadow, marker, or nothing.</li>
+  </ul>
+</section>
+
+</main>
+
+<div class="player-bar" id="player-bar" role="region" aria-label="Audio player">
+  <button id="pb-playpause" aria-label="Play/Pause">Pause</button>
+  <span class="current-section" id="pb-section">—</span>
+  <select id="pb-voice" aria-label="Voice"></select>
+  <button id="pb-speed" aria-label="Speed">1x</button>
+  <button id="pb-stop" aria-label="Stop">Stop</button>
+</div>
+
+<script>
+(function() {
+  const VOICE_WHITELIST = [
+    'samantha','karen','daniel','moira','tessa','ava','allison','tom','aaron',
+    'nicky','evan','zoe','joelle','fiona','martha','arthur'
+  ];
+  function isWhitelisted(v) {
+    if (!v || !v.name) return false;
+    const n = v.name.toLowerCase();
+    if (n.includes('google us english') || n.includes('google uk english')) return true;
+    return VOICE_WHITELIST.some(w => n.includes(w));
+  }
+
+  const SPEEDS = [0.8, 1, 1.2, 1.5];
+  let speedIdx = 1;
+  let isPlaying = false;
+  let isPaused = false;
+  let queue = [];
+  let queueIdx = 0;
+  let currentSection = null;
+  let keepAliveInterval = null;
+  let currentUtterance = null;
+
+  const listenBtn = document.getElementById('listen-btn');
+  const voiceSelect = document.getElementById('voice-select');
+  const speedBtn = document.getElementById('speed-btn');
+  const selectAllBtn = document.getElementById('select-all-btn');
+  const selectAllLink = document.getElementById('select-all-link');
+  const playerBar = document.getElementById('player-bar');
+  const pbPlayPause = document.getElementById('pb-playpause');
+  const pbSection = document.getElementById('pb-section');
+  const pbVoice = document.getElementById('pb-voice');
+  const pbSpeed = document.getElementById('pb-speed');
+  const pbStop = document.getElementById('pb-stop');
+  const mainContent = document.getElementById('main-content');
+
+  function populateVoices() {
+    const voices = speechSynthesis.getVoices().filter(isWhitelisted);
+    [voiceSelect, pbVoice].forEach(sel => {
+      sel.innerHTML = '';
+      voices.forEach((v, i) => {
+        const opt = document.createElement('option');
+        opt.value = v.name;
+        opt.textContent = v.name;
+        sel.appendChild(opt);
+      });
+      const samantha = voices.find(v => v.name.toLowerCase().includes('samantha'));
+      if (samantha) sel.value = samantha.name;
+    });
+  }
+
+  function getSelectedVoice() {
+    const voices = speechSynthesis.getVoices();
+    return voices.find(v => v.name === voiceSelect.value) || voices[0];
+  }
+
+  function buildQueue() {
+    const q = [];
+    document.querySelectorAll('main > section').forEach(section => {
+      const sectionId = section.id;
+      const heading = section.querySelector('h2');
+      if (heading) q.push({ text: heading.textContent, type: 'heading', section, sectionId });
+      section.querySelectorAll('h3, p, li').forEach(el => {
+        const text = el.textContent.trim();
+        if (text) {
+          const type = el.tagName === 'H3' ? 'heading' : 'body';
+          q.push({ text, type, section, sectionId });
+        }
+      });
+    });
+    return q;
+  }
+
+  function highlightSection(section) {
+    if (currentSection && currentSection !== section) {
+      currentSection.classList.remove('reading');
+    }
+    if (section && section !== currentSection) {
+      section.classList.add('reading');
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      currentSection = section;
+      const h2 = section.querySelector('h2');
+      if (h2) pbSection.textContent = h2.textContent;
+    }
+  }
+
+  function speakChunk(idx) {
+    if (idx >= queue.length) { stopPlayback(); return; }
+    queueIdx = idx;
+    const chunk = queue[idx];
+    highlightSection(chunk.section);
+
+    const u = new SpeechSynthesisUtterance(chunk.text);
+    const v = getSelectedVoice();
+    if (v) u.voice = v;
+    u.rate = chunk.type === 'heading' ? SPEEDS[speedIdx] * 0.9 : SPEEDS[speedIdx];
+    u.pitch = chunk.type === 'heading' ? 1.05 : 1.0;
+    currentUtterance = u;
+
+    u.onend = () => {
+      const pause = chunk.type === 'heading' ? 400 : 200;
+      setTimeout(() => {
+        if (isPlaying && !isPaused) speakChunk(idx + 1);
+      }, pause);
+    };
+    speechSynthesis.speak(u);
+  }
+
+  function startPlayback() {
+    queue = buildQueue();
+    if (!queue.length) return;
+    isPlaying = true;
+    isPaused = false;
+    playerBar.classList.add('visible');
+    pbPlayPause.textContent = 'Pause';
+    keepAliveInterval = setInterval(() => {
+      if (isPlaying && !isPaused) speechSynthesis.resume();
+    }, 10000);
+    speakChunk(0);
+  }
+
+  function stopPlayback() {
+    isPlaying = false;
+    isPaused = false;
+    speechSynthesis.cancel();
+    if (keepAliveInterval) { clearInterval(keepAliveInterval); keepAliveInterval = null; }
+    if (currentSection) { currentSection.classList.remove('reading'); currentSection = null; }
+    playerBar.classList.remove('visible');
+  }
+
+  function togglePause() {
+    if (!isPlaying) return;
+    if (isPaused) {
+      speechSynthesis.resume();
+      isPaused = false;
+      pbPlayPause.textContent = 'Pause';
+    } else {
+      speechSynthesis.pause();
+      isPaused = true;
+      pbPlayPause.textContent = 'Play';
+    }
+  }
+
+  function cycleSpeed() {
+    speedIdx = (speedIdx + 1) % SPEEDS.length;
+    const label = SPEEDS[speedIdx] + 'x';
+    speedBtn.textContent = label;
+    pbSpeed.textContent = label;
+  }
+
+  function selectAllContent() {
+    const range = document.createRange();
+    range.selectNodeContents(mainContent);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+
+  listenBtn.addEventListener('click', () => { if (isPlaying) stopPlayback(); else startPlayback(); });
+  speedBtn.addEventListener('click', cycleSpeed);
+  selectAllBtn.addEventListener('click', selectAllContent);
+  selectAllLink.addEventListener('click', (e) => { e.preventDefault(); selectAllContent(); });
+  pbPlayPause.addEventListener('click', togglePause);
+  pbStop.addEventListener('click', stopPlayback);
+  pbSpeed.addEventListener('click', cycleSpeed);
+  voiceSelect.addEventListener('change', () => { pbVoice.value = voiceSelect.value; });
+  pbVoice.addEventListener('change', () => { voiceSelect.value = pbVoice.value; });
+
+  if (typeof speechSynthesis !== 'undefined') {
+    populateVoices();
+    speechSynthesis.onvoiceschanged = populateVoices;
+  }
+})();
+</script>
+
+</body>
+</html>
