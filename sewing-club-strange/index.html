@@ -185,17 +185,19 @@
         <svg width="14" height="14" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z" fill="#fff"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0-1.2 4.5h27.5z" fill="#fff"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.85z" fill="#fff"/><path d="M43.65 25 57.4 1.2C56.05.4 54.5 0 52.9 0H34.4c-1.6 0-3.15.45-4.5 1.2z" fill="#fff"/><path d="m59.8 53h-32.3L13.75 76.8c1.35.8 2.9 1.2 4.5 1.2h22.6c1.6 0 3.15-.45 4.5-1.2z" fill="#fff"/><path d="M73.4 26.5 60.65 3.3c-.8-1.4-1.95-2.5-3.3-3.3L43.6 25l16.2 28h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#fff"/></svg>
         Google Drive
       </a>
-      <span class="btn btn-outline" style="cursor:default;">2 video previews</span>
+      <span class="btn btn-outline" style="cursor:default;">Pre-final cut</span>
     </div>
   </header>
 
   <div style="background:#F5F5F7;border-radius:12px;padding:1.25rem 1.5rem;margin:0 clamp(1.25rem,4vw,2rem) 2rem;font-size:0.82rem;color:#424245;line-height:1.7;">
-    <strong style="color:#1D1D1F;">Hey!</strong> Two pre-final cuts in the Drive folder for you to look at &mdash; same edit, slightly different finish:
-    <ul style="margin:0.5rem 0 0 1.25rem;">
-      <li><strong>Pre-Final</strong> &mdash; clean cut, current grade.</li>
-      <li><strong>Pre-Final w/ RCA Capture</strong> &mdash; same cut with the RCA-captured analog pass on top.</li>
-    </ul>
-    <p style="margin-top:0.5rem;font-size:0.78rem;color:#6E6E73;">Click either thumbnail below to play it in Drive. Send me notes whenever you've got them and I'll roll them into the final.</p>
+    <strong style="color:#1D1D1F;">Hey!</strong> Here's the pre-final cut. What you're watching has been through the full analog pipeline:
+    <ol style="margin:0.5rem 0 0 1.25rem;">
+      <li>Raw digital footage, edited and graded.</li>
+      <li>Filmed out to real <strong>16mm</strong>.</li>
+      <li>Scanned back in with a <strong>print simulation</strong> pass on top.</li>
+      <li>Run through an <strong>analog RCA box</strong> and captured back to digital.</li>
+    </ol>
+    <p style="margin-top:0.75rem;font-size:0.78rem;color:#6E6E73;">Everything you see is baked into the picture &mdash; no filters, all real passes. Send notes whenever and I'll roll them into the final.</p>
   </div>
 
   <div class="divider"></div>
@@ -211,8 +213,7 @@
 const RELEASE = "https://github.com/mattmatheson/RandomPhoneBuilds/releases/download/sewing-club-strange-prefinal";
 
 const videos = [
-  { title: "Pre-Final",                sub: "Clean cut",          file: "TSC_Strange_PreFinal.mp4",                driveId: "185rYLjyIpEJdaecfu9XpIotoC6oE6YNE" },
-  { title: "Pre-Final w/ RCA Capture", sub: "Analog pass on top", file: "TSC_Strange_PreFinal_wRCA-Capture.mp4",   driveId: "1RIssxAHcs3eJafgdoU8TuSkYdUzHs3eD" }
+  { title: "Strange &mdash; Pre-Final", sub: "16mm film out + print sim + analog capture", file: "TSC_Strange_PreFinal_wRCA-Capture.mp4", driveId: "1RIssxAHcs3eJafgdoU8TuSkYdUzHs3eD" }
 ];
 
 const feed = document.getElementById('feed');
