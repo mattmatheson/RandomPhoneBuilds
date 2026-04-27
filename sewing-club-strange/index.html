@@ -115,11 +115,11 @@
     overflow: hidden;
   }
 
-  .video-card .player iframe {
+  .video-card .player video {
     width: 100%;
     height: 100%;
-    border: 0;
     display: block;
+    background: #000;
   }
 
   .video-card .info {
@@ -208,9 +208,11 @@
 </div>
 
 <script>
+const RELEASE = "https://github.com/mattmatheson/RandomPhoneBuilds/releases/download/sewing-club-strange-prefinal";
+
 const videos = [
-  { title: "Pre-Final",                   sub: "Clean cut",         id: "185rYLjyIpEJdaecfu9XpIotoC6oE6YNE" },
-  { title: "Pre-Final w/ RCA Capture",    sub: "Analog pass on top", id: "1RIssxAHcs3eJafgdoU8TuSkYdUzHs3eD" }
+  { title: "Pre-Final",                sub: "Clean cut",          file: "TSC_Strange_PreFinal.mp4",                driveId: "185rYLjyIpEJdaecfu9XpIotoC6oE6YNE" },
+  { title: "Pre-Final w/ RCA Capture", sub: "Analog pass on top", file: "TSC_Strange_PreFinal_wRCA-Capture.mp4",   driveId: "1RIssxAHcs3eJafgdoU8TuSkYdUzHs3eD" }
 ];
 
 const feed = document.getElementById('feed');
@@ -219,9 +221,13 @@ videos.forEach((v, i) => {
   const card = document.createElement('div');
   card.className = 'video-card';
   card.style.animationDelay = `${i * 0.08}s`;
+  const poster = `https://drive.google.com/thumbnail?id=${v.driveId}&sz=w1600`;
+  const src = `${RELEASE}/${encodeURIComponent(v.file)}`;
   card.innerHTML = `
     <div class="player">
-      <iframe src="https://drive.google.com/file/d/${v.id}/preview" allow="autoplay" allowfullscreen loading="lazy"></iframe>
+      <video controls preload="metadata" playsinline poster="${poster}">
+        <source src="${src}" type="video/mp4">
+      </video>
     </div>
     <div class="info">
       <div class="title">${v.title}</div>
