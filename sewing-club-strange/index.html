@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="published" content="2026-04-27">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sewing Club &mdash; Strange (Pre-Final Preview)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    background: #FFFFFF;
+    color: #1D1D1F;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 4vw, 2rem) 4rem;
+  }
+
+  header {
+    margin-bottom: 4rem;
+    animation: fadeIn 0.6s ease-out both;
+  }
+
+  .label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #86868B;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 0.4rem;
+  }
+
+  .meta {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #6E6E73;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.4rem;
+    border-radius: 980px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+  }
+
+  .btn-primary {
+    background: #1D1D1F;
+    color: #FFFFFF;
+  }
+
+  .btn-primary:hover {
+    background: #424245;
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: #1D1D1F;
+    border: 1px solid #D2D2D7;
+  }
+
+  .divider {
+    height: 1px;
+    background: #E5E5E7;
+    margin-bottom: 3rem;
+  }
+
+  .feed {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .video-card {
+    animation: fadeIn 0.5s ease-out both;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .video-card .poster {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #1D1D1F;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .video-card .poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.3s ease, transform 0.6s ease;
+  }
+
+  .video-card:hover .poster img {
+    opacity: 0.85;
+    transform: scale(1.02);
+  }
+
+  .play-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .play-overlay .ring {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+    transition: transform 0.3s ease;
+  }
+
+  .video-card:hover .play-overlay .ring { transform: scale(1.05); }
+
+  .play-overlay svg {
+    width: 30px;
+    height: 30px;
+    margin-left: 4px;
+    color: #1D1D1F;
+  }
+
+  .video-card .info {
+    margin-top: 0.9rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .video-card .title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .video-card .sub {
+    font-size: 0.78rem;
+    color: #86868B;
+    font-weight: 400;
+    flex-shrink: 0;
+  }
+
+  footer {
+    text-align: center;
+    padding: 3rem 0 2rem;
+    color: #86868B;
+    font-size: 0.7rem;
+    font-weight: 400;
+  }
+
+  footer a {
+    color: #86868B;
+    text-decoration: none;
+  }
+
+  footer a:hover { color: #1D1D1F; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @media (max-width: 600px) {
+    .container { padding-left: 0; padding-right: 0; }
+    header { padding: 0 1.25rem; }
+    .divider { margin-left: 1.25rem; margin-right: 1.25rem; }
+    footer { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .feed { gap: 1.25rem; }
+    .video-card .poster { border-radius: 0; }
+    .video-card .info { padding: 0 1.25rem; }
+    .play-overlay .ring { width: 60px; height: 60px; }
+    .play-overlay svg { width: 24px; height: 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <span class="label">Music Video &mdash; Pre-Final</span>
+    <h1>Sewing Club &mdash; Strange</h1>
+    <p class="meta">Pre-Final preview &mdash; for band review</p>
+    <div class="actions">
+      <a href="https://drive.google.com/drive/folders/1J6MDqobNf7IBtBz0o7mYn4LmW6twAS_K" target="_blank" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z" fill="#fff"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0-1.2 4.5h27.5z" fill="#fff"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.85z" fill="#fff"/><path d="M43.65 25 57.4 1.2C56.05.4 54.5 0 52.9 0H34.4c-1.6 0-3.15.45-4.5 1.2z" fill="#fff"/><path d="m59.8 53h-32.3L13.75 76.8c1.35.8 2.9 1.2 4.5 1.2h22.6c1.6 0 3.15-.45 4.5-1.2z" fill="#fff"/><path d="M73.4 26.5 60.65 3.3c-.8-1.4-1.95-2.5-3.3-3.3L43.6 25l16.2 28h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#fff"/></svg>
+        Google Drive
+      </a>
+      <span class="btn btn-outline" style="cursor:default;">2 video previews</span>
+    </div>
+  </header>
+
+  <div style="background:#F5F5F7;border-radius:12px;padding:1.25rem 1.5rem;margin:0 clamp(1.25rem,4vw,2rem) 2rem;font-size:0.82rem;color:#424245;line-height:1.7;">
+    <strong style="color:#1D1D1F;">Hey!</strong> Two pre-final cuts in the Drive folder for you to look at &mdash; same edit, slightly different finish:
+    <ul style="margin:0.5rem 0 0 1.25rem;">
+      <li><strong>Pre-Final</strong> &mdash; clean cut, current grade.</li>
+      <li><strong>Pre-Final w/ RCA Capture</strong> &mdash; same cut with the RCA-captured analog pass on top.</li>
+    </ul>
+    <p style="margin-top:0.5rem;font-size:0.78rem;color:#6E6E73;">Click either thumbnail below to play it in Drive. Send me notes whenever you've got them and I'll roll them into the final.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="feed" id="feed"></div>
+
+  <footer>
+    <p>Video by <a href="https://mattmatheson.github.io/RandomPhoneBuilds/">Matt Matheson</a></p>
+  </footer>
+</div>
+
+<script>
+const videos = [
+  { title: "Pre-Final",                   sub: "Clean cut",         id: "185rYLjyIpEJdaecfu9XpIotoC6oE6YNE" },
+  { title: "Pre-Final w/ RCA Capture",    sub: "Analog pass on top", id: "1RIssxAHcs3eJafgdoU8TuSkYdUzHs3eD" }
+];
+
+function poster(id, w) {
+  return `https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
+}
+
+const feed = document.getElementById('feed');
+
+videos.forEach((v, i) => {
+  const a = document.createElement('a');
+  a.className = 'video-card';
+  a.href = `https://drive.google.com/file/d/${v.id}/view`;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  a.style.animationDelay = `${i * 0.08}s`;
+  a.innerHTML = `
+    <div class="poster">
+      <img src="${poster(v.id, 1600)}" alt="${v.title}" loading="lazy">
+      <div class="play-overlay"><div class="ring"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>
+    </div>
+    <div class="info">
+      <div class="title">${v.title}</div>
+      <div class="sub">${v.sub}</div>
+    </div>`;
+  feed.appendChild(a);
+});
+</script>
+</body>
+</html>
