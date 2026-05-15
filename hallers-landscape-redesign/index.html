@@ -9,45 +9,42 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=Manrope:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
 <style>
-/* ============================================================
-   HALLER'S LANDSCAPE — REDESIGN
-   Direction: Cinematic Modernist
-   Bg #0E0F0C · Paper #F2F0EA · Moss #5C6B4A · Rust #B15528
-   ============================================================ */
-
 :root {
-  --ink: #0E0F0C;
-  --ink-2: #16170F;
-  --ink-3: #1D1F18;
-  --paper: #F2F0EA;
-  --paper-2: #D9D6CB;
-  --paper-3: #8A8779;
-  --moss: #5C6B4A;
-  --moss-deep: #3F4A2E;
-  --rust: #B15528;
-  --rust-bright: #C8612C;
-  --hairline: rgba(242, 240, 234, 0.10);
-  --hairline-strong: rgba(242, 240, 234, 0.20);
-  --max: 1480px;
-  --gutter: clamp(20px, 4vw, 64px);
-  --ease: cubic-bezier(0.32, 0.72, 0, 1);
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --sky-1: #7CC2EE;
+  --sky-2: #A6D7F0;
+  --sky-3: #C9E7F4;
+  --lime: #DBFA3D;
+  --lime-dark: #BFE229;
+  --ink: #0B0B0B;
+  --ink-soft: #1A1A1A;
+  --paper: #FFFFFF;
+  --cream: #F4F0E8;
+  --cream-2: #EBE6DA;
+  --grey-1: #6B6B6B;
+  --grey-2: #9B9B9B;
+  --grey-3: #C9C9C9;
+  --line: #E8E5DC;
+  --line-soft: #F0EDE6;
+  --max: 1240px;
+  --gutter: clamp(18px, 4vw, 56px);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-card: 0 18px 40px -18px rgba(15, 30, 50, 0.18), 0 4px 10px -4px rgba(15, 30, 50, 0.08);
+  --shadow-float: 0 28px 60px -22px rgba(15, 30, 50, 0.28), 0 8px 20px -8px rgba(15, 30, 50, 0.14);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
-  background: var(--ink);
-  color: var(--paper);
-  font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 17px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 16px;
   line-height: 1.55;
   font-weight: 400;
   overflow-x: hidden;
-  font-feature-settings: 'ss01', 'cv11';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -55,1774 +52,1261 @@ img, svg, video { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 
-::selection { background: var(--rust); color: var(--paper); }
+::selection { background: var(--lime); color: var(--ink); }
 
-/* ----- Type ----- */
-.display {
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  line-height: 0.92;
-  text-transform: uppercase;
-  font-stretch: 75%;
-}
 .eyebrow {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--paper-3);
-}
-.label-mono {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-/* ----- Grain overlay (fixed, doesn't repaint on scroll) ----- */
-.grain {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 60;
-  opacity: 0.045;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23n)' opacity='0.85'/></svg>");
-}
-
-/* ============================================================
-   LOADING REVEAL
-   ============================================================ */
-.loader {
-  position: fixed; inset: 0; z-index: 200;
-  background: var(--ink);
-  display: flex; align-items: center; justify-content: center;
-  transition: transform 900ms var(--ease) 600ms, visibility 0s 1500ms;
-}
-.loader.done {
-  transform: translateY(-100%);
-  visibility: hidden;
-}
-.loader-mark {
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-size: clamp(40px, 9vw, 120px);
-  letter-spacing: -0.04em;
-  color: var(--paper);
-  font-stretch: 75%;
-  text-transform: uppercase;
-  opacity: 0;
-  animation: loaderIn 700ms var(--ease-out) 100ms forwards;
-}
-.loader-mark .dot { color: var(--rust); }
-.loader-meta {
-  position: absolute;
-  bottom: clamp(20px, 5vh, 60px);
-  left: var(--gutter);
-  right: var(--gutter);
-  display: flex;
-  justify-content: space-between;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--paper-3);
-  opacity: 0;
-  animation: loaderIn 700ms var(--ease-out) 300ms forwards;
-}
-@keyframes loaderIn {
-  to { opacity: 1; }
-}
-
-/* ============================================================
-   FLOATING NAV (Fluid Island)
-   ============================================================ */
-.nav {
-  position: fixed;
-  top: clamp(14px, 2.5vw, 26px);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 90;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 6px 6px 6px 22px;
-  border-radius: 999px;
-  background: rgba(14, 15, 12, 0.38);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border: 1px solid var(--hairline-strong);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 20px 60px -10px rgba(0,0,0,0.35);
-  opacity: 0;
-  transform: translate(-50%, -10px);
-  animation: navIn 800ms var(--ease) 1300ms forwards;
-}
-@keyframes navIn { to { opacity: 1; transform: translate(-50%, 0); } }
-
-.nav-mark {
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-stretch: 75%;
-  letter-spacing: -0.04em;
-  font-size: 16px;
-  text-transform: uppercase;
-  margin-right: 8px;
-  color: var(--paper);
-}
-.nav-mark .dot { color: var(--rust); }
-
-.nav-links { display: flex; gap: 4px; }
-.nav-link {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 8px 14px;
-  border-radius: 999px;
-  color: var(--paper);
-  opacity: 0.78;
-  transition: opacity 220ms var(--ease), background 320ms var(--ease);
-}
-.nav-link:hover { opacity: 1; background: rgba(242,240,234,0.06); }
-
-.nav-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--paper);
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.02em;
   color: var(--ink);
-  padding: 8px 6px 8px 16px;
-  border-radius: 999px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  font-weight: 500;
-  transition: transform 320ms var(--ease), background 320ms var(--ease);
 }
-.nav-cta:hover { background: var(--paper-2); }
-.nav-cta:active { transform: scale(0.97); }
-.nav-cta-arrow {
-  width: 26px; height: 26px;
-  border-radius: 999px;
-  background: var(--ink);
-  color: var(--paper);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 320ms var(--ease);
+.eyebrow::before {
+  content: ''; width: 6px; height: 6px; border-radius: 999px;
+  background: var(--lime); box-shadow: 0 0 0 3px rgba(219, 250, 61, 0.35);
 }
-.nav-cta:hover .nav-cta-arrow { transform: translate(2px, -2px); }
+.eyebrow.on-sky { color: rgba(11,11,11,0.7); }
 
+h1, h2, h3, h4 {
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  line-height: 1.08;
+}
+h1 { font-size: clamp(38px, 6.4vw, 84px); font-weight: 700; }
+h2 { font-size: clamp(30px, 4.4vw, 56px); font-weight: 700; }
+h3 { font-size: clamp(20px, 2vw, 26px); font-weight: 600; }
+.lead {
+  font-size: clamp(15px, 1.2vw, 17px);
+  color: var(--grey-1);
+  max-width: 56ch;
+}
+
+.container {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav-wrap {
+  position: sticky; top: 0; z-index: 80;
+  padding: 18px 0;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.nav-wrap.on-sky {
+  background: linear-gradient(to bottom, rgba(124, 194, 238, 0.0), rgba(124, 194, 238, 0));
+}
+.nav {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px;
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 700; font-size: 18px;
+  letter-spacing: -0.02em;
+}
+.nav-brand-mark {
+  width: 30px; height: 30px; border-radius: 999px;
+  background: linear-gradient(135deg, #5C6B4A 0%, #3F4A2E 100%);
+  position: relative;
+  flex-shrink: 0;
+}
+.nav-brand-mark::after {
+  content: ''; position: absolute; inset: 7px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, var(--lime), transparent 60%);
+  opacity: 0.7;
+}
+.nav-links {
+  display: flex; gap: 4px;
+}
+.nav-link {
+  font-size: 14px; font-weight: 500;
+  padding: 10px 16px; border-radius: 999px;
+  color: var(--ink); opacity: 0.78;
+  transition: all 200ms var(--ease);
+}
+.nav-link:hover { opacity: 1; background: rgba(11,11,11,0.05); }
+.nav-cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--lime);
+  color: var(--ink);
+  padding: 10px 8px 10px 18px;
+  border-radius: 999px;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: all 220ms var(--ease);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.04) inset, 0 6px 16px -6px rgba(11,11,11,0.18);
+}
+.nav-cta:hover { background: var(--lime-dark); transform: translateY(-1px); }
+.nav-cta-arrow {
+  width: 24px; height: 24px; border-radius: 999px;
+  background: var(--ink); color: var(--lime);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 12px;
+}
 @media (max-width: 820px) {
   .nav-links { display: none; }
-  .nav { padding: 6px 6px 6px 18px; }
 }
-
-/* Top utility bar */
-.utility {
-  position: fixed;
-  top: clamp(20px, 2.8vw, 32px);
-  left: var(--gutter);
-  z-index: 80;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
-  color: var(--paper);
-  opacity: 0;
-  animation: navIn 800ms var(--ease) 1500ms forwards;
-}
-.utility::before {
-  content: "";
-  display: inline-block;
-  width: 6px; height: 6px;
-  background: var(--rust);
-  border-radius: 999px;
-  margin-right: 10px;
-  vertical-align: 1px;
-  box-shadow: 0 0 12px rgba(177, 85, 40, 0.7);
-  animation: pulse 2.4s ease-in-out infinite;
-}
-@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
-@media (max-width: 820px) { .utility { display: none; } }
 
 /* ============================================================
    HERO
    ============================================================ */
 .hero {
   position: relative;
-  min-height: 100dvh;
-  display: flex;
-  align-items: flex-end;
+  margin: 14px var(--gutter) 0;
+  border-radius: 28px;
   overflow: hidden;
-  padding: 0 var(--gutter) clamp(40px, 6vh, 80px);
+  background: linear-gradient(180deg, var(--sky-1) 0%, var(--sky-2) 60%, var(--sky-3) 100%);
+  padding: clamp(48px, 9vw, 96px) clamp(20px, 5vw, 80px) clamp(80px, 12vw, 140px);
+  isolation: isolate;
 }
-.hero-media {
-  position: absolute;
-  inset: 0;
+.hero::before {
+  /* soft sun glow top-right */
+  content: '';
+  position: absolute; top: -120px; right: -80px;
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%);
   z-index: 0;
-  overflow: hidden;
+  pointer-events: none;
 }
-.hero-media::after {
-  content: "";
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(180deg, rgba(14,15,12,0.55) 0%, rgba(14,15,12,0.10) 30%, rgba(14,15,12,0.20) 60%, rgba(14,15,12,0.92) 100%),
-    radial-gradient(120% 80% at 50% 0%, rgba(14,15,12,0.0) 40%, rgba(14,15,12,0.55) 100%);
+.cloud {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.92;
+  filter: drop-shadow(0 14px 24px rgba(255,255,255,0.25));
 }
-.hero-media img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  filter: saturate(0.85) contrast(1.06) brightness(0.92);
-  transform: scale(1.08);
-  animation: heroZoom 6s var(--ease-out) 700ms forwards;
-}
-@keyframes heroZoom {
-  to { transform: scale(1); }
-}
+.cloud svg { width: 100%; height: 100%; }
+.cloud-1 { top: 12%; left: 4%; width: 180px; }
+.cloud-2 { top: 38%; right: 6%; width: 230px; }
+.cloud-3 { bottom: 8%; left: 18%; width: 140px; }
+.cloud-4 { top: 60%; left: 50%; width: 120px; opacity: 0.7; }
+.cloud-5 { top: 6%; right: 28%; width: 90px; opacity: 0.7; }
 
 .hero-inner {
   position: relative;
   z-index: 2;
-  width: 100%;
-  max-width: var(--max);
+  max-width: 1100px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: clamp(24px, 4vw, 60px);
-  align-items: end;
+  text-align: center;
 }
-.hero-headline {
-  font-size: clamp(56px, 12.5vw, 220px);
-  color: var(--paper);
-}
-.hero-headline .line {
-  display: block;
-  overflow: hidden;
-}
-.hero-headline .line span {
-  display: inline-block;
-  transform: translateY(110%);
-  animation: lineUp 1100ms var(--ease) forwards;
-}
-.hero-headline .line:nth-child(1) span { animation-delay: 1500ms; }
-.hero-headline .line:nth-child(2) span { animation-delay: 1650ms; }
-@keyframes lineUp { to { transform: translateY(0); } }
-
-.hero-headline .accent { color: var(--rust); }
-
-.hero-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  align-self: end;
-  max-width: 320px;
-  text-align: right;
-  opacity: 0;
-  animation: fadeUp 800ms var(--ease) 2100ms forwards;
-}
-@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
-
-.hero-meta p {
-  color: var(--paper-2);
-  font-size: 15px;
-  line-height: 1.55;
-}
-
 .hero-eyebrow {
-  position: absolute;
-  top: 50%;
-  left: var(--gutter);
-  transform: translateY(-50%) rotate(-90deg);
-  transform-origin: left center;
-  white-space: nowrap;
-  z-index: 2;
-  opacity: 0;
-  animation: fadeUp 800ms var(--ease) 1800ms forwards;
-}
-.hero-eyebrow span { display: inline-block; padding-right: 16px; }
-.hero-eyebrow span + span { padding-left: 16px; border-left: 1px solid var(--hairline-strong); }
-
-@media (max-width: 820px) {
-  .hero-inner { grid-template-columns: 1fr; }
-  .hero-meta { max-width: none; text-align: left; align-self: start; }
-  .hero-eyebrow { display: none; }
-}
-
-.hero-scroll {
-  position: absolute;
-  bottom: clamp(20px, 4vh, 40px);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--paper-3);
-  opacity: 0;
-  animation: fadeUp 800ms var(--ease) 2400ms forwards;
-}
-.hero-scroll-line {
-  width: 1px; height: 28px;
-  background: linear-gradient(180deg, transparent, var(--paper-3), transparent);
-  position: relative;
-  overflow: hidden;
-}
-.hero-scroll-line::after {
-  content: "";
-  position: absolute;
-  top: -100%; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(180deg, transparent, var(--paper) 50%, transparent);
-  animation: scrollLine 2.2s var(--ease) infinite;
-}
-@keyframes scrollLine {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(200%); }
-}
-
-/* ============================================================
-   MARQUEE — credentials
-   ============================================================ */
-.marquee {
-  border-top: 1px solid var(--hairline);
-  border-bottom: 1px solid var(--hairline);
-  padding: 22px 0;
-  overflow: hidden;
-  background: var(--ink-2);
-  position: relative;
-  z-index: 3;
-}
-.marquee-track {
-  display: flex;
-  gap: 60px;
-  width: max-content;
-  animation: marquee 38s linear infinite;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--paper-2);
-}
-.marquee-track span { display: inline-flex; align-items: center; gap: 60px; white-space: nowrap; }
-.marquee-track span::after {
-  content: "✦";
-  color: var(--rust);
-  font-size: 9px;
-  margin-left: 60px;
-}
-@keyframes marquee {
-  to { transform: translateX(-50%); }
-}
-
-/* ============================================================
-   STATEMENT — kinetic numeral
-   ============================================================ */
-.statement {
-  padding: clamp(100px, 18vw, 240px) var(--gutter) clamp(80px, 14vw, 200px);
-  max-width: var(--max);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 60px;
-  position: relative;
-}
-.statement-headline {
-  font-size: clamp(40px, 7.4vw, 130px);
-  color: var(--paper);
-  max-width: 14ch;
-  text-wrap: balance;
-}
-.statement-headline em {
-  font-style: normal;
-  color: var(--paper-3);
-  font-weight: 400;
-  font-stretch: 100%;
-  letter-spacing: -0.02em;
-}
-.statement-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(40px, 6vw, 100px);
-  align-items: end;
-  margin-top: 60px;
-}
-.statement-num {
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-stretch: 75%;
-  font-size: clamp(120px, 22vw, 360px);
-  line-height: 0.85;
-  letter-spacing: -0.05em;
-  color: var(--rust);
-  font-variant-numeric: tabular-nums;
-  position: relative;
-}
-.statement-num small {
-  display: block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--paper-3);
-  margin-top: 16px;
-  font-weight: 500;
-}
-.statement-body {
-  max-width: 44ch;
-}
-.statement-body p {
-  color: var(--paper-2);
-  font-size: clamp(15px, 1.4vw, 19px);
-  margin-bottom: 16px;
-}
-.statement-body p:first-child { color: var(--paper); font-weight: 500; }
-
-@media (max-width: 720px) {
-  .statement-grid { grid-template-columns: 1fr; gap: 40px; }
-}
-
-/* ============================================================
-   BENTO SERVICES
-   ============================================================ */
-.services {
-  padding: 0 var(--gutter) clamp(80px, 14vw, 200px);
-  max-width: var(--max);
-  margin: 0 auto;
-}
-.services-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 36px;
-  border-top: 1px solid var(--hairline);
-  padding-top: 28px;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-.services-head h2 {
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-stretch: 75%;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
-  font-size: clamp(28px, 3.6vw, 56px);
-  color: var(--paper);
-}
-
-.bento {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 14px;
-}
-.bento-tile {
-  position: relative;
-  overflow: hidden;
-  background: var(--ink-2);
-  border: 1px solid var(--hairline);
-  border-radius: 22px;
-  padding: 28px;
-  min-height: 320px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  transition: transform 600ms var(--ease), border-color 400ms var(--ease);
-  isolation: isolate;
-}
-.bento-tile::before {
-  content: "";
-  position: absolute; inset: 0;
-  background-position: center;
-  background-size: cover;
-  opacity: 0.55;
-  z-index: -2;
-  transition: opacity 600ms var(--ease), transform 1200ms var(--ease);
-}
-.bento-tile::after {
-  content: "";
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(14,15,12,0.10) 0%, rgba(14,15,12,0.45) 50%, rgba(14,15,12,0.92) 100%);
-  z-index: -1;
-}
-.bento-tile:hover { border-color: var(--hairline-strong); }
-.bento-tile:hover::before { opacity: 0.78; transform: scale(1.04); }
-
-.bento-feature {
-  grid-row: 1 / span 2;
-  min-height: 640px;
-}
-.bento-feature::before {
-  background-image: url("assets/photos/MidSt-Motlow-1-3.jpg");
-}
-.bento-md-1::before { background-image: url("assets/photos/Krajewski-after-photo-5.jpg"); }
-.bento-md-2::before { background-image: url("assets/photos/East-Nashville-HS-irrigation-lines-5.jpg"); }
-.bento-md-1, .bento-md-2 { min-height: 313px; }
-
-.bento-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  color: var(--paper-3);
-  text-transform: uppercase;
-  margin-bottom: 14px;
-}
-.bento-tile h3 {
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-stretch: 75%;
-  font-size: clamp(28px, 3.4vw, 52px);
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
-  line-height: 0.94;
-  color: var(--paper);
-  margin-bottom: 14px;
-}
-.bento-feature h3 { font-size: clamp(40px, 5.2vw, 84px); }
-.bento-tile p {
-  color: var(--paper-2);
-  font-size: 14px;
-  max-width: 38ch;
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.7);
+  padding: 6px 14px 6px 8px;
+  border-radius: 999px;
+  font-size: 12px; font-weight: 600;
+  color: var(--ink);
   margin-bottom: 22px;
 }
-.bento-feature p { font-size: 16px; max-width: 48ch; }
-
-.bento-meta {
-  display: flex;
-  gap: 20px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
-  color: var(--paper-3);
-  flex-wrap: wrap;
-}
-.bento-meta span::before { content: "→ "; color: var(--rust); }
-
-.bento-cred {
-  grid-column: 1 / -1;
-  background: var(--paper);
-  color: var(--ink);
-  border: 1px solid var(--paper);
-  border-radius: 22px;
-  padding: 22px 28px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  min-height: auto;
-}
-.bento-cred::before, .bento-cred::after { display: none; }
-.bento-cred .cred-item {
-  border-left: 1px solid rgba(14,15,12,0.10);
-  padding-left: 20px;
-}
-.bento-cred .cred-item:first-child { border-left: 0; padding-left: 0; }
-.bento-cred .cred-num {
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-stretch: 75%;
-  font-size: clamp(28px, 3.2vw, 46px);
-  letter-spacing: -0.03em;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
-  margin-bottom: 6px;
-}
-.bento-cred .cred-label {
-  font-family: 'JetBrains Mono', monospace;
+.hero-eyebrow-pip {
+  width: 18px; height: 18px; border-radius: 999px;
+  background: var(--lime);
+  display: inline-flex; align-items: center; justify-content: center;
   font-size: 10px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--paper-3);
-  color: #5a594f;
 }
-
-@media (max-width: 980px) {
-  .bento { grid-template-columns: 1fr; }
-  .bento-feature { grid-row: auto; min-height: 460px; }
-  .bento-md-1, .bento-md-2 { min-height: 320px; }
-  .bento-cred { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 540px) {
-  .bento-cred { grid-template-columns: 1fr; }
-  .bento-cred .cred-item { border-left: 0; border-top: 1px solid rgba(14,15,12,0.10); padding-left: 0; padding-top: 16px; }
-  .bento-cred .cred-item:first-child { border-top: 0; padding-top: 0; }
-}
-
-/* ============================================================
-   FEATURED PROJECT — full bleed cinematic
-   ============================================================ */
-.feature {
-  position: relative;
-  min-height: 100vh;
-  min-height: 100dvh;
-  overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-  padding: clamp(60px, 8vw, 140px) var(--gutter);
-}
-.feature::before {
-  content: "";
-  position: absolute; inset: 0;
-  background: url("assets/photos/Lebanon-Hwy-231-Landscaping-11.jpg") center/cover no-repeat;
-  filter: saturate(0.85) contrast(1.1);
-}
-.feature::after {
-  content: "";
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(180deg, rgba(14,15,12,0.4) 0%, rgba(14,15,12,0.1) 30%, rgba(14,15,12,0.95) 100%);
-}
-.feature-inner {
-  position: relative;
-  z-index: 2;
-  max-width: var(--max);
-  margin: 0 auto;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: clamp(24px, 4vw, 80px);
-  align-items: end;
-}
-.feature h2 {
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-stretch: 75%;
-  font-size: clamp(40px, 7vw, 110px);
-  letter-spacing: -0.04em;
-  line-height: 0.92;
-  text-transform: uppercase;
+.hero h1 {
   color: var(--paper);
-  text-wrap: balance;
+  text-shadow: 0 2px 24px rgba(15, 50, 90, 0.18);
+  margin-bottom: 22px;
 }
-.feature .case {
-  display: grid;
-  gap: 18px;
+.hero h1 em {
+  font-style: normal;
+  display: inline-block;
 }
-.feature .case-row {
-  display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 16px;
-  border-top: 1px solid var(--hairline-strong);
-  padding-top: 14px;
-}
-.feature .case-row:last-of-type { border-bottom: 1px solid var(--hairline-strong); padding-bottom: 14px; }
-.feature .case-key {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--paper-3);
-}
-.feature .case-val {
-  color: var(--paper);
-  font-size: 14px;
+.hero-sub {
+  color: rgba(11, 30, 55, 0.78);
+  font-size: clamp(15px, 1.3vw, 18px);
+  max-width: 580px;
+  margin: 0 auto 32px;
   font-weight: 500;
 }
-@media (max-width: 820px) {
-  .feature-inner { grid-template-columns: 1fr; }
+.hero-ctas {
+  display: inline-flex; flex-wrap: wrap; gap: 12px;
+  justify-content: center;
+  margin-bottom: 56px;
 }
-
-/* ============================================================
-   PROJECT INDEX — cursor preview
-   ============================================================ */
-.index {
-  background: var(--paper);
-  color: var(--ink);
-  padding: clamp(100px, 14vw, 200px) var(--gutter);
-  position: relative;
-  overflow: hidden;
-}
-.index-inner { max-width: var(--max); margin: 0 auto; }
-.index-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  border-top: 1px solid rgba(14,15,12,0.15);
-  padding-top: 28px;
-  margin-bottom: 60px;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-.index-head h2 {
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-stretch: 75%;
-  letter-spacing: -0.03em;
-  font-size: clamp(40px, 6.4vw, 110px);
-  line-height: 0.94;
-  text-transform: uppercase;
-  text-wrap: balance;
-}
-.index-head .eyebrow { color: #5a594f; }
-
-.index-list { list-style: none; }
-.index-row {
-  display: grid;
-  grid-template-columns: 60px 1fr auto auto;
-  gap: 24px;
-  padding: 26px 0;
-  border-top: 1px solid rgba(14,15,12,0.12);
-  align-items: center;
-  position: relative;
-  cursor: pointer;
-  transition: padding 500ms var(--ease);
-}
-.index-row:last-child { border-bottom: 1px solid rgba(14,15,12,0.12); }
-.index-row:hover { padding-left: 16px; }
-.index-row .idx {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  color: #8a8779;
-  font-weight: 500;
-}
-.index-row .name {
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-stretch: 75%;
-  font-size: clamp(24px, 3.6vw, 48px);
-  letter-spacing: -0.025em;
-  text-transform: uppercase;
-  line-height: 1;
-  transition: color 320ms var(--ease);
-}
-.index-row:hover .name { color: var(--rust); }
-.index-row .scope, .index-row .year {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #5a594f;
-}
-@media (max-width: 720px) {
-  .index-row { grid-template-columns: 36px 1fr; gap: 14px; }
-  .index-row .scope, .index-row .year { display: none; }
-}
-
-/* Cursor preview */
-.preview {
-  position: fixed;
-  width: 320px;
-  height: 220px;
-  pointer-events: none;
-  z-index: 70;
-  border-radius: 16px;
-  overflow: hidden;
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(0.85);
-  transition: opacity 280ms var(--ease), transform 480ms var(--ease);
-  border: 1px solid rgba(255,255,255,0.10);
-  box-shadow: 0 30px 80px -10px rgba(0,0,0,0.5);
-}
-.preview.show {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-}
-.preview img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  position: absolute; inset: 0;
-  opacity: 0;
-  transition: opacity 280ms var(--ease);
-}
-.preview img.active { opacity: 1; }
-@media (hover: none) { .preview { display: none; } }
-
-/* ============================================================
-   SUSTAINABILITY CHAPTER (Pervious paving)
-   ============================================================ */
-.chapter {
-  padding: clamp(100px, 14vw, 200px) var(--gutter);
-  max-width: var(--max);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(40px, 6vw, 120px);
-  align-items: start;
-}
-.chapter-img {
-  position: relative;
-  aspect-ratio: 4/5;
-  border-radius: 22px;
-  overflow: hidden;
-}
-.chapter-img img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  filter: saturate(0.9) contrast(1.05);
-}
-.chapter-img-tag {
-  position: absolute;
-  bottom: 16px; left: 16px; right: 16px;
-  display: flex;
-  justify-content: space-between;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--paper);
-  z-index: 2;
-}
-.chapter-img::after {
-  content: "";
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 60%, rgba(14,15,12,0.85) 100%);
-}
-.chapter-content { padding-top: 40px; }
-.chapter-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 7px 14px;
+.pill {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 12px 10px 12px 22px;
   border-radius: 999px;
-  border: 1px solid var(--hairline-strong);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--moss);
-  background: rgba(92,107,74,0.08);
-  margin-bottom: 28px;
+  font-size: 14px; font-weight: 600;
+  letter-spacing: -0.005em;
+  transition: all 220ms var(--ease);
+  cursor: pointer;
+  white-space: nowrap;
 }
-.chapter-eyebrow::before {
-  content: ""; width: 6px; height: 6px; border-radius: 999px;
-  background: var(--moss);
+.pill-arrow {
+  width: 30px; height: 30px; border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 13px;
 }
-.chapter h2 {
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-stretch: 75%;
-  font-size: clamp(36px, 5.4vw, 80px);
-  letter-spacing: -0.035em;
-  line-height: 0.94;
-  text-transform: uppercase;
-  margin-bottom: 28px;
-  text-wrap: balance;
+.pill-white {
+  background: rgba(255,255,255,0.96);
+  color: var(--ink);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.04) inset, 0 10px 24px -10px rgba(11,30,55,0.25);
 }
-.chapter p {
-  color: var(--paper-2);
-  font-size: 16px;
-  margin-bottom: 16px;
-  max-width: 50ch;
+.pill-white:hover { transform: translateY(-1px); }
+.pill-white .pill-arrow { background: var(--ink); color: var(--paper); }
+.pill-lime {
+  background: var(--lime);
+  color: var(--ink);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.06) inset, 0 10px 24px -10px rgba(60,90,10,0.4);
 }
-.chapter-stats {
+.pill-lime:hover { background: var(--lime-dark); transform: translateY(-1px); }
+.pill-lime .pill-arrow { background: var(--ink); color: var(--lime); }
+.pill-ink {
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 0 10px 24px -10px rgba(0,0,0,0.4);
+}
+.pill-ink:hover { background: var(--ink-soft); transform: translateY(-1px); }
+.pill-ink .pill-arrow { background: var(--lime); color: var(--ink); }
+
+/* Floating cards composition */
+.hero-cards {
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 40px;
-  padding-top: 28px;
-  border-top: 1px solid var(--hairline-strong);
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 14px;
+  align-items: center;
+  max-width: 980px;
+  margin: 0 auto;
+  min-height: 220px;
 }
-.chapter-stat .num {
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-stretch: 75%;
-  font-size: clamp(28px, 3.4vw, 50px);
-  letter-spacing: -0.03em;
-  color: var(--moss);
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
+.float-card {
+  background: var(--paper);
+  border-radius: 18px;
+  padding: 16px 18px;
+  box-shadow: var(--shadow-float);
+  position: relative;
+}
+.fc-1 {
+  transform: rotate(-3deg) translateY(20px);
+  grid-column: 1 / 2;
+}
+.fc-2 {
+  transform: rotate(2deg) translateY(-10px);
+  grid-column: 2 / 3;
+  padding: 0;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+}
+.fc-3 {
+  transform: rotate(-1.5deg) translateY(20px);
+  grid-column: 3 / 4;
+  background: var(--ink);
+  color: var(--paper);
+}
+.fc-4 {
+  transform: rotate(2.5deg) translateY(-6px);
+  grid-column: 4 / 5;
+  background: linear-gradient(135deg, #62A5DA 0%, #4F8AC0 100%);
+  color: var(--paper);
+}
+.fc-num {
+  font-size: 38px; font-weight: 800; letter-spacing: -0.03em;
+  margin-bottom: 4px; line-height: 1;
+}
+.fc-lime-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--lime);
+  color: var(--ink);
+  padding: 4px 10px; border-radius: 999px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.02em;
   margin-bottom: 8px;
 }
-.chapter-stat .label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--paper-3);
+.fc-meta {
+  font-size: 11px; color: var(--grey-1); font-weight: 500;
+  line-height: 1.4;
 }
-@media (max-width: 820px) {
-  .chapter { grid-template-columns: 1fr; }
-  .chapter-img { aspect-ratio: 4/3; }
-  .chapter-content { padding-top: 0; }
+.fc-meta-light { color: rgba(255,255,255,0.8); }
+.fc-photo {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
 }
-
-/* ============================================================
-   CLIENT WALL
-   ============================================================ */
-.clients {
-  background: var(--ink-2);
-  border-top: 1px solid var(--hairline);
-  border-bottom: 1px solid var(--hairline);
-  padding: clamp(80px, 10vw, 140px) var(--gutter);
-}
-.clients-inner { max-width: var(--max); margin: 0 auto; }
-.clients-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 60px;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-.clients-head h2 {
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-stretch: 75%;
-  font-size: clamp(28px, 3.4vw, 50px);
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
-  text-wrap: balance;
-  max-width: 22ch;
-}
-.clients-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--hairline);
-  border: 1px solid var(--hairline);
-  border-radius: 18px;
-  overflow: hidden;
-}
-.client {
-  background: var(--ink-2);
-  padding: 36px 24px;
-  text-align: center;
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-stretch: 75%;
-  font-size: clamp(15px, 1.6vw, 22px);
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-  color: var(--paper-2);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  min-height: 120px;
-  transition: background 320ms var(--ease), color 320ms var(--ease);
-}
-.client small {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 400;
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  color: var(--paper-3);
-  text-transform: uppercase;
-}
-.client:hover { background: var(--ink-3); color: var(--paper); }
-
-@media (max-width: 820px) {
-  .clients-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-/* ============================================================
-   PROCESS — horizontal numbered steps
-   ============================================================ */
-.process {
-  padding: clamp(100px, 14vw, 180px) var(--gutter);
-  max-width: var(--max);
-  margin: 0 auto;
-}
-.process-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  border-top: 1px solid var(--hairline);
-  padding-top: 28px;
-  margin-bottom: 60px;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-.process-head h2 {
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-stretch: 75%;
-  font-size: clamp(40px, 6vw, 100px);
-  letter-spacing: -0.035em;
-  text-transform: uppercase;
-  line-height: 0.94;
-  text-wrap: balance;
-  max-width: 14ch;
-}
-.process-head .eyebrow { color: var(--paper-3); }
-
-.process-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--hairline);
-  border: 1px solid var(--hairline);
-  border-radius: 22px;
-  overflow: hidden;
-}
-.step {
-  background: var(--ink);
-  padding: 36px 28px 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  min-height: 280px;
-  position: relative;
-  transition: background 320ms var(--ease);
-}
-.step:hover { background: var(--ink-2); }
-.step-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  color: var(--rust);
-  font-weight: 500;
-}
-.step h3 {
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-stretch: 75%;
-  font-size: clamp(20px, 2vw, 30px);
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
+.fc-overlay {
+  position: absolute; left: 12px; right: 12px; bottom: 12px;
+  background: rgba(11,11,11,0.78);
+  backdrop-filter: blur(6px);
+  border-radius: 12px;
+  padding: 8px 10px;
   color: var(--paper);
+  font-size: 10px;
+  font-weight: 600;
+  display: flex; align-items: center; justify-content: space-between;
 }
-.step p {
-  color: var(--paper-2);
-  font-size: 14px;
-  margin-top: auto;
+.fc-check {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--lime);
+  color: var(--ink);
+  padding: 4px 10px; border-radius: 999px;
+  font-size: 10px; font-weight: 700;
 }
+.fc-bar {
+  display: flex; gap: 4px; margin-top: 10px; align-items: flex-end; height: 28px;
+}
+.fc-bar span {
+  flex: 1; background: var(--lime); border-radius: 3px; opacity: 0.85;
+}
+.fc-bar span:nth-child(1) { height: 30%; }
+.fc-bar span:nth-child(2) { height: 60%; }
+.fc-bar span:nth-child(3) { height: 45%; }
+.fc-bar span:nth-child(4) { height: 90%; }
+.fc-bar span:nth-child(5) { height: 70%; }
 
-@media (max-width: 820px) {
-  .process-grid { grid-template-columns: 1fr; }
+/* star rating */
+.rating-row {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(8px);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 12px; font-weight: 600;
+  color: var(--ink);
+  margin-top: 36px;
+}
+.rating-stars { color: #F2BC1E; letter-spacing: 1px; }
+
+@media (max-width: 760px) {
+  .hero-cards {
+    grid-template-columns: 1fr 1fr;
+    min-height: auto;
+  }
+  .fc-1, .fc-2, .fc-3, .fc-4 {
+    grid-column: auto;
+    transform: rotate(-1.5deg);
+  }
+  .fc-2 { transform: rotate(2deg); aspect-ratio: 5/4; }
+  .fc-4 { transform: rotate(1.5deg); }
 }
 
 /* ============================================================
-   QUOTE CTA
+   LOGO STRIP
+   ============================================================ */
+.logos {
+  padding: 56px 0 24px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.logos-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 24px;
+  align-items: center;
+  opacity: 0.5;
+}
+.logo-text {
+  text-align: center;
+  font-size: 14px; font-weight: 700;
+  color: var(--grey-1);
+  letter-spacing: -0.01em;
+}
+.logo-text small { display: block; font-size: 9px; font-weight: 500; letter-spacing: 0.04em; color: var(--grey-2); margin-top: 2px; text-transform: uppercase;}
+@media (max-width: 900px) {
+  .logos-row { grid-template-columns: repeat(3, 1fr); gap: 18px 14px; }
+  .logo-text:nth-child(n+7) { display: none; }
+}
+
+/* ============================================================
+   ABOUT US
+   ============================================================ */
+.about {
+  padding: clamp(80px, 12vw, 140px) 0 clamp(20px, 3vw, 40px);
+  text-align: center;
+}
+.about h2 {
+  max-width: 880px;
+  margin: 18px auto 0;
+}
+.about h2 .pill-avatar {
+  display: inline-flex; align-items: center;
+  width: 64px; height: 38px;
+  background: var(--sky-2);
+  border-radius: 999px;
+  vertical-align: middle;
+  margin: 0 6px;
+  overflow: hidden;
+  position: relative;
+  border: 3px solid var(--paper);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.about h2 .pill-avatar img {
+  width: 100%; height: 100%; object-fit: cover; transform: scale(1.1);
+}
+.about h2 .underline {
+  position: relative;
+  display: inline-block;
+}
+.about h2 .underline svg {
+  position: absolute;
+  left: 0; right: 0; bottom: -10px;
+  width: 100%; height: 14px;
+  stroke: var(--lime-dark);
+  stroke-width: 4;
+  fill: none;
+}
+.about h2 .leaf {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px;
+  background: var(--lime);
+  border-radius: 999px;
+  vertical-align: middle;
+  margin: 0 4px;
+  font-size: 18px;
+}
+
+/* ============================================================
+   ASYMMETRIC STAT GRID
+   ============================================================ */
+.stat-grid {
+  padding: 40px 0 clamp(40px, 8vw, 80px);
+}
+.stat-grid-inner {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 16px;
+}
+.stat-card {
+  border-radius: 22px;
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+  display: flex; flex-direction: column; justify-content: space-between;
+  min-height: 200px;
+}
+.stat-card.sky {
+  background: linear-gradient(155deg, #7CC2EE 0%, #5BA6D6 100%);
+  color: var(--paper);
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+  min-height: 420px;
+}
+.stat-card.cream { background: var(--cream); grid-column: 2 / 3; grid-row: 1 / 2;}
+.stat-card.lime { background: var(--lime); grid-column: 3 / 4; grid-row: 1 / 2;}
+.stat-card.ink { background: var(--ink); color: var(--paper); grid-column: 2 / 4; grid-row: 2 / 3;}
+.stat-num {
+  font-size: clamp(54px, 6vw, 84px);
+  font-weight: 800; letter-spacing: -0.04em; line-height: 0.95;
+  margin-bottom: 8px;
+}
+.stat-num small { font-size: 0.5em; font-weight: 600; opacity: 0.6;}
+.stat-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(11,11,11,0.06);
+  padding: 6px 12px; border-radius: 999px;
+  font-size: 11px; font-weight: 600;
+  margin-bottom: 16px;
+  width: fit-content;
+}
+.stat-card.sky .stat-eyebrow { background: rgba(255,255,255,0.22); color: var(--paper); }
+.stat-card.ink .stat-eyebrow { background: rgba(255,255,255,0.12); color: var(--paper); }
+.stat-card.lime .stat-eyebrow { background: rgba(11,11,11,0.12); color: var(--ink); }
+.stat-card .stat-meta {
+  font-size: 13px;
+  line-height: 1.45;
+  max-width: 32ch;
+}
+.stat-card.sky .stat-portrait {
+  position: absolute;
+  right: -20px; bottom: -20px;
+  width: 220px; height: 220px;
+  background-size: cover; background-position: center;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 6px rgba(255,255,255,0.18);
+}
+.stat-card.cream .photo-stack {
+  display: flex; gap: -10px; margin-top: 14px;
+}
+.photo-stack {
+  display: flex; align-items: center;
+}
+.photo-stack-img {
+  width: 38px; height: 38px; border-radius: 999px;
+  background-size: cover; background-position: center;
+  border: 2px solid var(--cream);
+  margin-left: -8px;
+}
+.photo-stack-img:first-child { margin-left: 0; }
+.stat-card.ink .quote {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  max-width: 36ch;
+}
+.stat-card.ink .partners-count {
+  position: absolute; right: 20px; bottom: 18px;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.1);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px; font-weight: 600;
+}
+.stat-card.ink .partners-count strong { font-size: 16px; font-weight: 800; }
+@media (max-width: 900px) {
+  .stat-grid-inner { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto auto;}
+  .stat-card.sky { grid-column: 1 / 3; grid-row: 1 / 2; min-height: 320px;}
+  .stat-card.cream { grid-column: 1 / 2; grid-row: 2 / 3;}
+  .stat-card.lime { grid-column: 2 / 3; grid-row: 2 / 3;}
+  .stat-card.ink { grid-column: 1 / 3; grid-row: 3 / 4;}
+}
+
+/* ============================================================
+   SERVICES INTRO
+   ============================================================ */
+.services-intro {
+  padding: clamp(60px, 10vw, 120px) 0 36px;
+  text-align: center;
+}
+.services-intro h2 {
+  max-width: 760px;
+  margin: 18px auto 0;
+}
+.services-intro .lead {
+  margin: 18px auto 28px;
+  text-align: center;
+}
+.services-intro .pill {
+  margin-top: 6px;
+}
+
+/* ============================================================
+   PRICING / SERVICE TIERS
+   ============================================================ */
+.tiers {
+  padding: 16px 0 clamp(60px, 8vw, 100px);
+}
+.tiers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.tier {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 26px;
+  display: flex; flex-direction: column;
+  transition: all 240ms var(--ease);
+}
+.tier:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card);
+}
+.tier-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--cream);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  width: fit-content;
+  margin-bottom: 16px;
+}
+.tier-badge-dot {
+  width: 6px; height: 6px; border-radius: 999px; background: var(--lime-dark);
+}
+.tier-title {
+  font-size: 22px; font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+.tier-scope {
+  font-size: 26px; font-weight: 800; letter-spacing: -0.025em;
+  margin-bottom: 4px;
+}
+.tier-scope small {
+  font-size: 13px; color: var(--grey-1); font-weight: 500; letter-spacing: 0;
+  display: block;
+  margin-top: 2px;
+}
+.tier-list {
+  list-style: none;
+  margin: 18px 0 22px;
+  display: flex; flex-direction: column; gap: 10px;
+  flex: 1;
+}
+.tier-list li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 14px;
+  color: var(--ink);
+}
+.tier-list li::before {
+  content: '';
+  width: 18px; height: 18px;
+  border-radius: 999px;
+  background: var(--ink);
+  flex-shrink: 0;
+  margin-top: 2px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none' stroke='%23DBFA3D' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><polyline points='3 7 6 10 11 4'/></svg>");
+  background-size: 12px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.tier .pill-ink { width: 100%; justify-content: center; padding-left: 22px; padding-right: 8px;}
+@media (max-width: 900px) {
+  .tiers-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   TESTIMONIALS / PARTNERS
+   ============================================================ */
+.testimonials {
+  padding: clamp(60px, 8vw, 100px) 0;
+  border-top: 1px solid var(--line-soft);
+}
+.testimonials-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 32px;
+  gap: 20px;
+}
+.testimonials-head .lead { margin-top: 12px; }
+.testimonials-nav {
+  display: flex; gap: 10px;
+}
+.t-nav {
+  width: 40px; height: 40px; border-radius: 999px;
+  border: 1px solid var(--line);
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 200ms var(--ease);
+}
+.t-nav:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.testimonials-scroll {
+  display: flex; gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: var(--gutter);
+  padding-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.testimonials-scroll::-webkit-scrollbar { display: none; }
+.t-card {
+  flex: 0 0 280px;
+  scroll-snap-align: start;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background: var(--cream);
+}
+.t-card-photo {
+  width: 100%; height: 100%;
+  background-size: cover; background-position: center;
+}
+.t-card-photo::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.65) 100%);
+}
+.t-card-chip {
+  position: absolute; top: 14px; left: 14px;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.92);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.02em;
+  z-index: 2;
+}
+.t-card-chip-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--lime-dark); }
+.t-card-body {
+  position: absolute; left: 16px; right: 16px; bottom: 16px;
+  color: var(--paper);
+  z-index: 2;
+}
+.t-card-quote {
+  font-size: 13px; font-weight: 500; line-height: 1.45;
+  margin-bottom: 10px;
+}
+.t-card-quote::before {
+  content: '"'; font-size: 22px; opacity: 0.7; line-height: 0; margin-right: 2px;
+}
+.t-card-name {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 11px; font-weight: 600;
+  opacity: 0.85;
+}
+
+/* ============================================================
+   PROJECTS LIST
+   ============================================================ */
+.projects {
+  padding: clamp(60px, 8vw, 100px) 0;
+  border-top: 1px solid var(--line-soft);
+}
+.projects-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 32px;
+  gap: 20px;
+}
+.projects-list {
+  border-top: 1px solid var(--line);
+}
+.project-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 1fr 100px;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+  font-size: 14px;
+  transition: padding 240ms var(--ease), background 240ms var(--ease);
+}
+.project-row:hover { padding-left: 10px; padding-right: 10px; background: var(--line-soft); }
+.project-row-num {
+  font-size: 12px; color: var(--grey-2); font-weight: 600; letter-spacing: 0.05em;
+}
+.project-row-title { font-weight: 600; letter-spacing: -0.01em;}
+.project-row-meta { color: var(--grey-1); }
+.project-row-year { text-align: right; color: var(--grey-1); font-variant-numeric: tabular-nums;}
+@media (max-width: 720px) {
+  .project-row { grid-template-columns: 40px 1fr 60px; }
+  .project-row-meta { display: none; }
+}
+
+/* ============================================================
+   CONTACT / CTA
    ============================================================ */
 .cta {
+  margin: clamp(60px, 8vw, 100px) var(--gutter) 0;
+  border-radius: 28px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: clamp(48px, 8vw, 92px) clamp(24px, 5vw, 64px);
   position: relative;
-  min-height: 80vh;
-  min-height: 80dvh;
-  padding: clamp(80px, 12vw, 180px) var(--gutter);
-  display: flex;
-  align-items: center;
   overflow: hidden;
+  isolation: isolate;
 }
 .cta::before {
-  content: "";
-  position: absolute; inset: 0;
-  background: url("assets/photos/APSU-Planted-And-Sodded.jpg") center/cover no-repeat;
-  filter: saturate(0.7) contrast(1.1) brightness(0.55);
-}
-.cta::after {
-  content: "";
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(14,15,12,0.85), rgba(14,15,12,0.9));
+  content: '';
+  position: absolute; inset: -2px -2px auto auto;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle at center, rgba(219,250,61,0.25), transparent 60%);
+  z-index: 0;
 }
 .cta-inner {
-  position: relative;
-  z-index: 2;
-  max-width: var(--max);
-  margin: 0 auto;
-  width: 100%;
+  position: relative; z-index: 2;
   display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: clamp(30px, 5vw, 80px);
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
   align-items: end;
 }
-.cta h2 {
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-stretch: 75%;
-  font-size: clamp(46px, 8.6vw, 150px);
-  letter-spacing: -0.04em;
-  line-height: 0.9;
-  text-transform: uppercase;
-  color: var(--paper);
-  text-wrap: balance;
+.cta h2 { max-width: 14ch; line-height: 1.02;}
+.cta-side {
+  display: flex; flex-direction: column; gap: 22px;
 }
-.cta h2 .accent { color: var(--rust); }
-
-.cta-form {
-  width: 100%;
-  display: grid;
-  gap: 14px;
+.cta-row {
+  display: flex; justify-content: space-between;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  padding-bottom: 14px;
 }
-.cta-form .form-row {
-  display: flex;
-  border-bottom: 1px solid var(--hairline-strong);
-  padding-bottom: 12px;
-  align-items: end;
-}
-.cta-form input {
-  flex: 1;
-  background: transparent;
-  border: 0;
-  outline: 0;
-  color: var(--paper);
-  font-family: 'Manrope', sans-serif;
-  font-size: 18px;
-  padding: 8px 0;
-  font-weight: 400;
-}
-.cta-form input::placeholder { color: var(--paper-3); }
-.cta-submit {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  background: var(--paper);
-  color: var(--ink);
-  padding: 8px 8px 8px 22px;
-  border-radius: 999px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-weight: 500;
-  transition: background 320ms var(--ease), transform 220ms var(--ease);
-  margin-left: 12px;
-}
-.cta-submit:hover { background: var(--paper-2); }
-.cta-submit:active { transform: scale(0.97); }
-.cta-submit-arrow {
-  width: 30px; height: 30px;
-  border-radius: 999px;
-  background: var(--rust);
-  color: var(--paper);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 320ms var(--ease);
-}
-.cta-submit:hover .cta-submit-arrow { transform: translate(2px, -2px) rotate(0deg); }
-
-.cta-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-top: 40px;
-  padding-top: 24px;
-  border-top: 1px solid var(--hairline-strong);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--paper-2);
-}
-.cta-meta a { color: var(--paper); }
-.cta-meta a:hover { color: var(--rust); }
-
+.cta-row-label { color: rgba(255,255,255,0.55); letter-spacing: 0.04em; text-transform: uppercase; font-size: 11px; font-weight: 600;}
+.cta-row-value { font-weight: 500; text-align: right;}
+.cta .pill-lime { align-self: flex-start; margin-top: 12px;}
 @media (max-width: 820px) {
   .cta-inner { grid-template-columns: 1fr; }
 }
 
 /* ============================================================
-   FOOTER — wordmark sign-off
+   FOOTER
    ============================================================ */
-.footer {
-  background: var(--ink);
-  padding: clamp(60px, 8vw, 100px) var(--gutter) clamp(20px, 3vw, 40px);
-  border-top: 1px solid var(--hairline);
+footer {
+  padding: clamp(60px, 8vw, 100px) 0 32px;
 }
-.footer-inner { max-width: var(--max); margin: 0 auto; }
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
   gap: 40px;
-  padding-bottom: 60px;
-  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 56px;
+  border-bottom: 1px solid var(--line);
 }
-.footer-col h4 {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--paper-3);
+.footer-brand .nav-brand { margin-bottom: 18px;}
+.footer-brand p { font-size: 13px; color: var(--grey-1); line-height: 1.6; max-width: 30ch; }
+.footer-col h5 {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--grey-2); font-weight: 600;
   margin-bottom: 16px;
-  font-weight: 500;
 }
-.footer-col ul { list-style: none; display: grid; gap: 8px; }
-.footer-col a {
-  color: var(--paper-2);
-  font-size: 14px;
-  transition: color 220ms var(--ease);
-}
-.footer-col a:hover { color: var(--rust); }
-.footer-col p { color: var(--paper-2); font-size: 14px; }
-
-.footer-mark {
-  font-family: 'Archivo', sans-serif;
-  font-weight: 900;
-  font-stretch: 75%;
-  letter-spacing: -0.05em;
-  font-size: clamp(70px, 18vw, 280px);
-  line-height: 0.85;
-  text-transform: uppercase;
-  color: var(--paper);
-  padding: 60px 0 24px;
-  text-align: center;
-  position: relative;
-  user-select: none;
-  overflow: hidden;
-}
-.footer-mark .dot { color: var(--rust); }
-.footer-mark::before {
-  content: "EST. 1997";
-  position: absolute;
-  top: 80px; left: 0;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  color: var(--paper-3);
-  font-weight: 500;
-}
-.footer-mark::after {
-  content: "SPARTA, TENNESSEE";
-  position: absolute;
-  top: 80px; right: 0;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  color: var(--paper-3);
-  font-weight: 500;
-}
-
-.footer-base {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  color: var(--paper-3);
-  text-transform: uppercase;
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 13px;}
+.footer-col a:hover { color: var(--grey-1); }
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center;
   padding-top: 24px;
-  border-top: 1px solid var(--hairline);
+  font-size: 12px;
+  color: var(--grey-2);
+  flex-wrap: wrap; gap: 10px;
 }
-.footer-base .legal { display: flex; gap: 24px; }
-.footer-base a { color: var(--paper-3); transition: color 220ms var(--ease); }
-.footer-base a:hover { color: var(--paper); }
-
-@media (max-width: 820px) {
-  .footer-grid { grid-template-columns: 1fr 1fr; }
-  .footer-mark { font-size: 22vw; padding: 40px 0 20px; }
-  .footer-mark::before, .footer-mark::after { display: none; }
+.footer-bottom-links {
+  display: flex; gap: 18px;
 }
-@media (max-width: 480px) {
-  .footer-grid { grid-template-columns: 1fr; }
+@media (max-width: 760px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px 20px; }
+  .footer-brand { grid-column: 1 / 3;}
 }
 
 /* ============================================================
-   Reveal on scroll
+   REVEAL
    ============================================================ */
 .reveal {
   opacity: 0;
-  transform: translateY(40px);
-  filter: blur(8px);
-  transition: opacity 1100ms var(--ease), transform 1100ms var(--ease), filter 1100ms var(--ease);
+  transform: translateY(24px);
+  transition: opacity 700ms var(--ease), transform 700ms var(--ease);
 }
 .reveal.in {
   opacity: 1;
-  transform: none;
-  filter: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  .reveal { opacity: 1; transform: none; filter: none; }
-  .marquee-track { animation: none; }
-  .hero-scroll-line::after { animation: none; }
-  .utility::before { animation: none; }
+  transform: translateY(0);
 }
 
 </style>
 </head>
 <body>
 
-<!-- Loading screen -->
-<div class="loader" id="loader" aria-hidden="true">
-  <div class="loader-mark">Haller's<span class="dot">.</span></div>
-  <div class="loader-meta">
-    <span>EST. 1997</span>
-    <span>SPARTA · TENNESSEE</span>
-    <span>LIC. #61416</span>
+<!-- ============================================================
+     NAV
+============================================================ -->
+<div class="nav-wrap">
+  <div class="container nav">
+    <a href="#" class="nav-brand">
+      <span class="nav-brand-mark"></span>
+      <span>Haller's</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#about" class="nav-link">About</a>
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+    <a href="#contact" class="nav-cta">
+      Get a Quote
+      <span class="nav-cta-arrow">→</span>
+    </a>
   </div>
 </div>
 
-<div class="grain" aria-hidden="true"></div>
-
-<!-- Utility (top-left) -->
-<div class="utility">CALL <a href="tel:+19312615885" style="color:inherit;">931 · 261 · 5885</a></div>
-
-<!-- Floating nav -->
-<nav class="nav">
-  <a href="#" class="nav-mark">Haller's<span class="dot">.</span></a>
-  <div class="nav-links">
-    <a class="nav-link" href="#services">Services</a>
-    <a class="nav-link" href="#projects">Projects</a>
-    <a class="nav-link" href="#sustain">Sustainability</a>
-    <a class="nav-link" href="#process">Process</a>
-  </div>
-  <a href="#contact" class="nav-cta">
-    Get Quote
-    <span class="nav-cta-arrow" aria-hidden="true">
-      <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </span>
-  </a>
-</nav>
-
-<!-- ====================================================
+<!-- ============================================================
      HERO
-     ==================================================== -->
-<header class="hero">
-  <div class="hero-media">
-    <img src="assets/photos/TTU-Lab-Bldg-Final-Landscape-3.jpg" alt="Tennessee Tech Lab Building — finished commercial landscape installation by Haller's" />
-  </div>
+============================================================ -->
+<section class="hero">
+  <!-- soft clouds -->
+  <div class="cloud cloud-1"><svg viewBox="0 0 200 100"><path fill="#fff" d="M40 70 C20 70 20 40 45 40 C45 20 80 20 85 40 C100 30 130 40 130 60 C155 55 165 80 145 85 L50 85 C30 88 25 75 40 70 Z"/></svg></div>
+  <div class="cloud cloud-2"><svg viewBox="0 0 200 100"><path fill="#fff" d="M40 70 C20 70 20 40 45 40 C45 20 80 20 85 40 C100 30 130 40 130 60 C155 55 165 80 145 85 L50 85 C30 88 25 75 40 70 Z"/></svg></div>
+  <div class="cloud cloud-3"><svg viewBox="0 0 200 100"><path fill="#fff" d="M40 70 C20 70 20 40 45 40 C45 20 80 20 85 40 C100 30 130 40 130 60 C155 55 165 80 145 85 L50 85 C30 88 25 75 40 70 Z"/></svg></div>
+  <div class="cloud cloud-4"><svg viewBox="0 0 200 100"><path fill="#fff" d="M40 70 C20 70 20 40 45 40 C45 20 80 20 85 40 C100 30 130 40 130 60 C155 55 165 80 145 85 L50 85 C30 88 25 75 40 70 Z"/></svg></div>
+  <div class="cloud cloud-5"><svg viewBox="0 0 200 100"><path fill="#fff" d="M40 70 C20 70 20 40 45 40 C45 20 80 20 85 40 C100 30 130 40 130 60 C155 55 165 80 145 85 L50 85 C30 88 25 75 40 70 Z"/></svg></div>
 
   <div class="hero-inner">
-    <h1 class="display hero-headline">
-      <span class="line"><span>Built for the</span></span>
-      <span class="line"><span>long <span class="accent">season.</span></span></span>
-    </h1>
-    <div class="hero-meta">
-      <span class="eyebrow">Since 1997 · Sparta, TN</span>
-      <p>Commercial landscape, hardscape, and irrigation across Middle Tennessee. Universities, municipalities, corporate campuses — built at scale and built to last.</p>
+    <span class="hero-eyebrow">
+      <span class="hero-eyebrow-pip">★</span>
+      Tennessee · Since 1997
+    </span>
+    <h1>Commercial ground,<br/>built to <em>stand.</em></h1>
+    <p class="hero-sub">Landscape, hardscape, and irrigation across Middle Tennessee. Universities, municipalities, corporate campuses — built at scale, built to last.</p>
+    <div class="hero-ctas">
+      <a href="#projects" class="pill pill-white">
+        View Projects
+        <span class="pill-arrow">→</span>
+      </a>
+      <a href="#contact" class="pill pill-lime">
+        Get a Quote
+        <span class="pill-arrow">→</span>
+      </a>
+    </div>
+
+    <div class="hero-cards">
+      <div class="float-card fc-1">
+        <span class="fc-lime-pill">● Active</span>
+        <div class="fc-num">29</div>
+        <div class="fc-meta">years installing commercial ground in TN</div>
+        <div class="fc-bar"><span></span><span></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="float-card fc-2">
+        <img class="fc-photo" src="assets/photos/Lebanon-Hwy-231-Landscaping-11.jpg" alt="Lebanon Hwy 231 commercial landscape" />
+        <div class="fc-overlay">
+          <span>Lebanon · Hwy 231</span>
+          <span>2024</span>
+        </div>
+      </div>
+      <div class="float-card fc-3">
+        <div class="fc-num" style="color: var(--lime);">$2MM</div>
+        <div class="fc-meta fc-meta-light">Bidding capability on commercial scopes</div>
+        <div style="margin-top: 14px; display: flex; align-items: center; gap: 6px; font-size: 10px; opacity: 0.7;">
+          <span style="width: 8px; height: 8px; background: var(--lime); border-radius: 999px;"></span>
+          Bonded &amp; insured
+        </div>
+      </div>
+      <div class="float-card fc-4">
+        <span class="fc-check">✓ Verified</span>
+        <div style="margin-top: 12px; font-size: 18px; font-weight: 800; line-height: 1.1;">TDOT<br/>Prequalified</div>
+        <div class="fc-meta fc-meta-light" style="margin-top: 8px;">TN Licensed #61416</div>
+      </div>
+    </div>
+
+    <div class="rating-row">
+      <span class="rating-stars">★★★★★</span>
+      Trusted by Tennessee's institutions
     </div>
   </div>
+</section>
 
-  <div class="hero-scroll">
-    <span>Scroll</span>
-    <div class="hero-scroll-line"></div>
-  </div>
-</header>
-
-<!-- Marquee credentials -->
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
-    <span>TDOT Prequalified</span>
-    <span>Tennessee Licensed Contractor #61416</span>
-    <span>Plant Certification Landscaper</span>
-    <span>Pesticide Licensed</span>
-    <span>Bonded &amp; Insured</span>
-    <span>Bidding Capability $2MM</span>
-    <span>Established 1997</span>
-    <span>TDOT Prequalified</span>
-    <span>Tennessee Licensed Contractor #61416</span>
-    <span>Plant Certification Landscaper</span>
-    <span>Pesticide Licensed</span>
-    <span>Bonded &amp; Insured</span>
-    <span>Bidding Capability $2MM</span>
-    <span>Established 1997</span>
+<!-- ============================================================
+     LOGO STRIP
+============================================================ -->
+<div class="container">
+  <div class="logos">
+    <div class="logos-row">
+      <div class="logo-text">TTU<small>Cookeville</small></div>
+      <div class="logo-text">MTSU<small>Murfreesboro</small></div>
+      <div class="logo-text">APSU<small>Clarksville</small></div>
+      <div class="logo-text">Motlow<small>Tullahoma</small></div>
+      <div class="logo-text">TDOT<small>Statewide</small></div>
+      <div class="logo-text">Lebanon<small>Wilson Co.</small></div>
+      <div class="logo-text">Bishop Park<small>Livingston</small></div>
+    </div>
   </div>
 </div>
 
-<!-- ====================================================
-     STATEMENT
-     ==================================================== -->
-<section class="statement">
-  <div class="reveal">
-    <p class="eyebrow" style="margin-bottom: 28px;">A WORD FROM PATRICK HALLER</p>
-    <h2 class="display statement-headline">
-      We don't maintain landscapes.<br/>
-      <em>We build them. At scale.</em>
+<!-- ============================================================
+     ABOUT
+============================================================ -->
+<section id="about" class="container">
+  <div class="about reveal">
+    <span class="eyebrow">ABOUT US</span>
+    <h2>
+      A working partner with Tennessee's<br/>
+      institutions, building ground that
+      <span class="pill-avatar"><img src="assets/photos/patrick-profile-picture.jpg" alt="Patrick Haller"></span>
+      <span class="underline">lasts<svg viewBox="0 0 120 14" preserveAspectRatio="none"><path d="M2 8 C 20 2, 40 12, 60 6 S 100 2, 118 8"/></svg></span>
+      and <span class="leaf">🌱</span> runs itself.
     </h2>
   </div>
 
-  <div class="statement-grid">
-    <div class="statement-num reveal">
-      <span data-count="29">0</span>
-      <small>Years installing commercial ground in Tennessee · 1997 → 2026</small>
-    </div>
-    <div class="statement-body reveal">
-      <p>For 29 years, Patrick Haller and the team have specialized in one thing: large-scale commercial landscape installation across the Upper Cumberland.</p>
-      <p>In 2019, we made a deliberate choice — to stop maintenance work entirely, and double down on what we do best. Building ground that holds. Hardscape that drains. Irrigation that runs without you thinking about it.</p>
-      <p>You won't find us doing residential mowing routes. You'll find us on TDOT projects, university campuses, municipal parks, and corporate sites where the work has to last decades.</p>
-    </div>
-  </div>
-</section>
+  <!-- Asymmetric stat grid -->
+  <div class="stat-grid">
+    <div class="stat-grid-inner reveal">
 
-<!-- ====================================================
-     SERVICES — BENTO
-     ==================================================== -->
-<section class="services" id="services">
-  <div class="services-head reveal">
-    <h2><span class="eyebrow" style="display:block; margin-bottom: 12px;">Capabilities · 03</span>What we build</h2>
-    <a href="#contact" class="eyebrow" style="border-bottom: 1px solid currentColor; padding-bottom: 4px;">Request scope of work →</a>
-  </div>
-
-  <div class="bento">
-    <div class="bento-tile bento-feature reveal">
-      <div class="bento-num">01 / Commercial Landscape</div>
-      <h3>Commercial Landscape Installation</h3>
-      <p>Custom design, native planting, turf management, soil testing, fertilization, and tree &amp; shrub care — executed by in-house arborists and project managers. From single storefronts to multi-state portfolios.</p>
-      <div class="bento-meta">
-        <span>Native planting</span>
-        <span>Turf &amp; soil</span>
-        <span>Arboriculture</span>
-        <span>Account managed</span>
-      </div>
-    </div>
-
-    <div class="bento-tile bento-md-1 reveal">
-      <div class="bento-num">02 / Hardscape</div>
-      <h3>Hardscape &amp; Pervious Pavers</h3>
-      <p>50+ projects. Pedestrian plazas, retaining walls, ADA-compliant walks, commercial curbing.</p>
-      <div class="bento-meta">
-        <span>Engineered walls</span>
-        <span>Pervious systems</span>
-      </div>
-    </div>
-
-    <div class="bento-tile bento-md-2 reveal">
-      <div class="bento-num">03 / Irrigation</div>
-      <h3>Irrigation Systems</h3>
-      <p>Smart-controller integration, drip retrofits, certified backflow testing, leak-response repair.</p>
-      <div class="bento-meta">
-        <span>Smart controllers</span>
-        <span>Backflow certified</span>
-      </div>
-    </div>
-
-    <div class="bento-tile bento-cred reveal">
-      <div class="cred-item">
-        <div class="cred-num">$2MM</div>
-        <div class="cred-label">Bidding Capability</div>
-      </div>
-      <div class="cred-item">
-        <div class="cred-num">29 yrs</div>
-        <div class="cred-label">Installing in TN</div>
-      </div>
-      <div class="cred-item">
-        <div class="cred-num">#61416</div>
-        <div class="cred-label">TN Licensed Contractor</div>
-      </div>
-      <div class="cred-item">
-        <div class="cred-num">TDOT</div>
-        <div class="cred-label">Prequalified</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ====================================================
-     FEATURED PROJECT
-     ==================================================== -->
-<section class="feature" id="featured">
-  <div class="feature-inner">
-    <h2 class="reveal">Lebanon, Hwy 231 — full-scope commercial landscape.</h2>
-    <div class="case reveal">
-      <div class="case-row">
-        <div class="case-key">Client</div>
-        <div class="case-val">City of Lebanon, Tennessee</div>
-      </div>
-      <div class="case-row">
-        <div class="case-key">Scope</div>
-        <div class="case-val">Roadway landscape, irrigation install, native planting</div>
-      </div>
-      <div class="case-row">
-        <div class="case-key">Year</div>
-        <div class="case-val">2024 — Completed</div>
-      </div>
-      <div class="case-row">
-        <div class="case-key">Status</div>
-        <div class="case-val">Live · Public-facing · Performing</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ====================================================
-     PROJECT INDEX (cursor preview)
-     ==================================================== -->
-<section class="index" id="projects">
-  <div class="index-inner">
-    <div class="index-head reveal">
-      <div>
-        <span class="eyebrow" style="display:block; margin-bottom: 14px;">Selected Projects · 2018–2026</span>
-        <h2>A working list.</h2>
-      </div>
-      <span class="eyebrow">Hover · click for case study</span>
-    </div>
-
-    <ul class="index-list">
-      <li class="index-row" data-img="assets/photos/TTU-Lab-Bldg-Final-Landscape-3.jpg">
-        <span class="idx">01 / 12</span>
-        <span class="name">Tennessee Tech · Lab Building</span>
-        <span class="scope">Landscape · Hardscape</span>
-        <span class="year">2024</span>
-      </li>
-      <li class="index-row" data-img="assets/photos/MTSU-final-photos-010.jpg">
-        <span class="idx">02 / 12</span>
-        <span class="name">Middle Tennessee State University</span>
-        <span class="scope">Campus Landscape</span>
-        <span class="year">2023</span>
-      </li>
-      <li class="index-row" data-img="assets/photos/APSU-Planted-And-Sodded.jpg">
-        <span class="idx">03 / 12</span>
-        <span class="name">Austin Peay State University</span>
-        <span class="scope">Landscape · Irrigation</span>
-        <span class="year">2023</span>
-      </li>
-      <li class="index-row" data-img="assets/photos/MidSt-Motlow-1-3.jpg">
-        <span class="idx">04 / 12</span>
-        <span class="name">Motlow State Community College</span>
-        <span class="scope">Multi-Phase Landscape</span>
-        <span class="year">2022</span>
-      </li>
-      <li class="index-row" data-img="assets/photos/TTU-Roaden-Progress9.jpg">
-        <span class="idx">05 / 12</span>
-        <span class="name">TTU Roaden University Center</span>
-        <span class="scope">Hardscape · Pavers</span>
-        <span class="year">2022</span>
-      </li>
-      <li class="index-row" data-img="assets/photos/Lebanon-Hwy-231-Landscaping-11.jpg">
-        <span class="idx">06 / 12</span>
-        <span class="name">City of Lebanon · Hwy 231</span>
-        <span class="scope">Roadway Landscape</span>
-        <span class="year">2024</span>
-      </li>
-      <li class="index-row" data-img="assets/photos/East-Nashville-HS-irrigation-lines-5.jpg">
-        <span class="idx">07 / 12</span>
-        <span class="name">East Nashville High School</span>
-        <span class="scope">Irrigation Install</span>
-        <span class="year">2023</span>
-      </li>
-      <li class="index-row" data-img="assets/photos/Krajewski-after-photo-5.jpg">
-        <span class="idx">08 / 12</span>
-        <span class="name">Krajewski Estate</span>
-        <span class="scope">Hardscape · Walls</span>
-        <span class="year">2022</span>
-      </li>
-      <li class="index-row" data-img="assets/photos/Livingston-Bishop-Park4.jpg">
-        <span class="idx">09 / 12</span>
-        <span class="name">Bishop Park · Livingston, TN</span>
-        <span class="scope">Municipal Landscape</span>
-        <span class="year">2021</span>
-      </li>
-      <li class="index-row" data-img="assets/photos/Linsten-Sod-installation.jpg">
-        <span class="idx">10 / 12</span>
-        <span class="name">Linsten Property</span>
-        <span class="scope">Sod · Turf Establishment</span>
-        <span class="year">2021</span>
-      </li>
-      <li class="index-row" data-img="assets/photos/ACME-Progress-Photo-3.jpg">
-        <span class="idx">11 / 12</span>
-        <span class="name">ACME Industrial Site</span>
-        <span class="scope">Hardscape · Drainage</span>
-        <span class="year">2020</span>
-      </li>
-      <li class="index-row" data-img="assets/photos/TTU-Lab-Bldg-Final-Paver-Photo.jpg">
-        <span class="idx">12 / 12</span>
-        <span class="name">TTU Lab · Pedestrian Plaza</span>
-        <span class="scope">Pervious Pavers · ADA</span>
-        <span class="year">2024</span>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<!-- Cursor preview element -->
-<div class="preview" id="preview" aria-hidden="true">
-  <img id="previewImg" src="assets/photos/TTU-Lab-Bldg-Final-Landscape-3.jpg" alt="" />
-</div>
-
-<!-- ====================================================
-     SUSTAINABILITY CHAPTER
-     ==================================================== -->
-<section class="chapter" id="sustain">
-  <div class="chapter-img reveal">
-    <img src="assets/photos/ACME-Progress-Photo-3.jpg" alt="Pervious paver installation in progress at ACME industrial site" />
-    <div class="chapter-img-tag">
-      <span>FIG. 04</span>
-      <span>PERVIOUS · IN PROGRESS</span>
-    </div>
-  </div>
-  <div class="chapter-content reveal">
-    <span class="chapter-eyebrow">Real differentiation · Not greenwashing</span>
-    <h2>Pervious paving that actually drains.</h2>
-    <p>Most contractors will sell you a stamped-concrete plaza and call it sustainable. We engineer permeable hardscape systems — high-PSI stone, polymeric joint stabilization, ADA-compliant walking surfaces — that absorb stormwater on-site instead of dumping it into the watershed.</p>
-    <p>It's the kind of thing nobody asks for in the RFP. It's the kind of thing the EPA, your insurance carrier, and the building you're working on will all thank you for in fifteen years.</p>
-
-    <div class="chapter-stats">
-      <div class="chapter-stat">
-        <div class="num">50+</div>
-        <div class="label">Hardscape projects</div>
-      </div>
-      <div class="chapter-stat">
-        <div class="num">100%</div>
-        <div class="label">Native plant capable</div>
-      </div>
-      <div class="chapter-stat">
-        <div class="num">0</div>
-        <div class="label">Runoff to drain</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ====================================================
-     CLIENT WALL
-     ==================================================== -->
-<section class="clients">
-  <div class="clients-inner">
-    <div class="clients-head reveal">
-      <h2>Trusted by the institutions that hold Tennessee together.</h2>
-      <span class="eyebrow">Selected partners</span>
-    </div>
-    <div class="clients-grid reveal">
-      <div class="client">TTU<small>Cookeville</small></div>
-      <div class="client">MTSU<small>Murfreesboro</small></div>
-      <div class="client">APSU<small>Clarksville</small></div>
-      <div class="client">Motlow State<small>Tullahoma</small></div>
-      <div class="client">TDOT<small>Statewide</small></div>
-      <div class="client">City of Lebanon<small>Wilson Co.</small></div>
-      <div class="client">Bishop Park<small>Livingston</small></div>
-      <div class="client">East Nashville HS<small>Davidson Co.</small></div>
-    </div>
-  </div>
-</section>
-
-<!-- ====================================================
-     PROCESS
-     ==================================================== -->
-<section class="process" id="process">
-  <div class="process-head reveal">
-    <h2>How a project moves from RFP to ribbon-cutting.</h2>
-    <span class="eyebrow">Four steps · One point of contact</span>
-  </div>
-
-  <div class="process-grid reveal">
-    <div class="step">
-      <span class="step-num">STEP 01</span>
-      <h3>Consultation</h3>
-      <p>Site walk, soil sampling, drainage assessment, and an honest read on scope. We tell you what we can do, what we can't, and what the budget actually buys.</p>
-    </div>
-    <div class="step">
-      <span class="step-num">STEP 02</span>
-      <h3>Design</h3>
-      <p>Custom landscape plan, hardscape layout, irrigation schematic. Native species selection. Phasing strategy if the site is live.</p>
-    </div>
-    <div class="step">
-      <span class="step-num">STEP 03</span>
-      <h3>Build</h3>
-      <p>In-house crews, in-house arborists, locally-sourced materials wherever possible. Single point of contact through the entire install.</p>
-    </div>
-    <div class="step">
-      <span class="step-num">STEP 04</span>
-      <h3>Verify</h3>
-      <p>Walk-through, irrigation wet-check, plant warranty period. If something fails in the establishment window, we replace it.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ====================================================
-     QUOTE CTA
-     ==================================================== -->
-<section class="cta" id="contact">
-  <div class="cta-inner">
-    <div class="reveal">
-      <span class="eyebrow" style="display:block; margin-bottom: 28px;">Start a conversation · 04</span>
-      <h2>Let's talk about your <span class="accent">site.</span></h2>
-    </div>
-
-    <div class="reveal">
-      <form class="cta-form" onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.querySelector('.cta-submit').innerHTML='Sent · We\\'ll be in touch <span class=\\'cta-submit-arrow\\'>✓</span>';">
-        <div class="form-row">
-          <input type="text" placeholder="Your name, project, or just a phone number" required />
-          <button type="submit" class="cta-submit">
-            Send
-            <span class="cta-submit-arrow" aria-hidden="true">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </button>
+      <!-- big sky card with portrait -->
+      <div class="stat-card sky">
+        <div>
+          <span class="stat-eyebrow">● Founder</span>
+          <div class="stat-num"><span data-count="29">0</span>+</div>
+          <p class="stat-meta">Patrick Haller and the team have spent 29 years on one thing: large-scale commercial landscape installation across the Upper Cumberland.</p>
         </div>
-      </form>
-
-      <div class="cta-meta">
-        <span>OR — DIRECT</span>
-        <a href="tel:+19312615885">(931) 261 · 5885</a>
-        <a href="mailto:contact@hallerslandscape.com">contact@hallerslandscape.com</a>
-        <span>MON–FRI · 7:00 AM → 4:00 PM CT</span>
+        <div class="stat-portrait" style="background-image: url('assets/photos/patrick-profile-picture.jpg');"></div>
       </div>
+
+      <!-- cream card -->
+      <div class="stat-card cream">
+        <span class="stat-eyebrow">● Native plant capable</span>
+        <div class="stat-num">100%</div>
+        <p class="stat-meta">In-house arborists, soil testing, native species selection — engineered for the Tennessee climate.</p>
+        <div class="photo-stack">
+          <div class="photo-stack-img" style="background-image: url('assets/photos/APSU-Planted-And-Sodded.jpg');"></div>
+          <div class="photo-stack-img" style="background-image: url('assets/photos/MTSU-final-photos-010.jpg');"></div>
+          <div class="photo-stack-img" style="background-image: url('assets/photos/Livingston-Bishop-Park4.jpg');"></div>
+          <div class="photo-stack-img" style="background-image: url('assets/photos/Linsten-Sod-installation.jpg');"></div>
+        </div>
+      </div>
+
+      <!-- lime card -->
+      <div class="stat-card lime">
+        <span class="stat-eyebrow">● Bidding capability</span>
+        <div class="stat-num">$2MM</div>
+        <p class="stat-meta">Bonded, insured, and bidding TDOT, university, and municipal scopes across Middle Tennessee.</p>
+      </div>
+
+      <!-- black testimonial card -->
+      <div class="stat-card ink">
+        <span class="stat-eyebrow">● Selected partners</span>
+        <p class="quote">"They tell you what the budget actually buys, what they can do, and what they can't. Then they build it like that."</p>
+        <span class="partners-count"><strong>20+</strong>&nbsp;institutions</span>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- ====================================================
-     FOOTER
-     ==================================================== -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-grid">
-      <div class="footer-col">
-        <h4>Office</h4>
-        <p>Haller's Landscaping &amp; Nursery, Inc.<br/>
-        379 Taggart Haller Lane<br/>
-        Sparta, Tennessee 38583</p>
-        <p style="margin-top: 16px;">(931) 261-5885<br/>
-        contact@hallerslandscape.com</p>
-      </div>
-      <div class="footer-col">
-        <h4>Capabilities</h4>
-        <ul>
-          <li><a href="#services">Commercial Landscape</a></li>
-          <li><a href="#services">Hardscape &amp; Pavers</a></li>
-          <li><a href="#services">Irrigation</a></li>
-          <li><a href="#services">Lighting</a></li>
-          <li><a href="#services">Wholesale Nursery</a></li>
+<!-- ============================================================
+     SERVICES INTRO
+============================================================ -->
+<section id="services" class="container">
+  <div class="services-intro reveal">
+    <span class="eyebrow">CAPABILITIES</span>
+    <h2>Comprehensive landscape<br/>and infrastructure work.</h2>
+    <p class="lead">Whether it's a single storefront or a multi-state portfolio, we tailor scope, phasing, and crews to your timeline.</p>
+    <a href="#contact" class="pill pill-ink">
+      Request Scope of Work
+      <span class="pill-arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- ============================================================
+     TIERS
+============================================================ -->
+<section class="container">
+  <div class="tiers">
+    <div class="tiers-grid">
+
+      <div class="tier reveal">
+        <span class="tier-badge"><span class="tier-badge-dot"></span> Tier 01</span>
+        <div class="tier-title">Commercial Landscape</div>
+        <div class="tier-scope">Install &amp; Build<small>Design, native planting, turf, arboriculture</small></div>
+        <ul class="tier-list">
+          <li>Custom landscape design</li>
+          <li>Soil testing &amp; fertilization plans</li>
+          <li>In-house arborists &amp; project managers</li>
+          <li>Native species selection</li>
+          <li>Multi-phase install on live sites</li>
         </ul>
+        <a href="#contact" class="pill pill-ink">
+          Get Started
+          <span class="pill-arrow">→</span>
+        </a>
       </div>
-      <div class="footer-col">
-        <h4>Studio</h4>
-        <ul>
-          <li><a href="#">About Patrick &amp; Mason</a></li>
-          <li><a href="#projects">Selected Projects</a></li>
-          <li><a href="#sustain">Sustainability</a></li>
-          <li><a href="#process">Process</a></li>
-          <li><a href="#contact">Contact</a></li>
+
+      <div class="tier reveal">
+        <span class="tier-badge"><span class="tier-badge-dot"></span> Tier 02</span>
+        <div class="tier-title">Hardscape &amp; Pavers</div>
+        <div class="tier-scope">Stone &amp; Structure<small>50+ commercial hardscape installs</small></div>
+        <ul class="tier-list">
+          <li>Pedestrian plazas &amp; ADA-compliant walks</li>
+          <li>Engineered retaining walls</li>
+          <li>Pervious paving systems</li>
+          <li>Commercial curbing</li>
+          <li>Polymeric joint stabilization</li>
         </ul>
+        <a href="#contact" class="pill pill-ink">
+          Get Started
+          <span class="pill-arrow">→</span>
+        </a>
       </div>
-      <div class="footer-col">
-        <h4>Connect</h4>
-        <ul>
-          <li><a href="https://www.instagram.com/haller_landscaping/" target="_blank" rel="noopener">Instagram ↗</a></li>
-          <li><a href="https://www.facebook.com/hallerslandscaping/" target="_blank" rel="noopener">Facebook ↗</a></li>
-          <li><a href="https://www.google.com/maps/place/Hallers+Landscaping/" target="_blank" rel="noopener">Directions ↗</a></li>
+
+      <div class="tier reveal">
+        <span class="tier-badge"><span class="tier-badge-dot"></span> Tier 03</span>
+        <div class="tier-title">Irrigation Systems</div>
+        <div class="tier-scope">Install &amp; Service<small>Smart, certified, code-compliant</small></div>
+        <ul class="tier-list">
+          <li>Smart-controller integration</li>
+          <li>Drip retrofits for established sites</li>
+          <li>Certified backflow testing</li>
+          <li>Leak-response repair</li>
+          <li>Annual wet-check program</li>
         </ul>
+        <a href="#contact" class="pill pill-ink">
+          Get Started
+          <span class="pill-arrow">→</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TESTIMONIALS / PROJECT CARDS
+============================================================ -->
+<section class="container">
+  <div class="testimonials">
+    <div class="testimonials-head reveal">
+      <div>
+        <span class="eyebrow">SELECTED WORK</span>
+        <h2 style="margin-top: 12px;">What we've built across<br/>Tennessee.</h2>
+        <p class="lead">A working list of projects from 2018–2026 — universities, municipalities, and corporate campuses.</p>
+      </div>
+      <div class="testimonials-nav">
+        <button class="t-nav" id="t-prev">←</button>
+        <button class="t-nav" id="t-next">→</button>
       </div>
     </div>
 
-    <div class="footer-mark">Haller's<span class="dot">.</span></div>
+    <div class="testimonials-scroll" id="t-scroll">
 
-    <div class="footer-base">
-      <span>© 1997–2026 · Haller's Landscaping &amp; Nursery, Inc.</span>
-      <div class="legal">
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-        <a href="#">Accessibility</a>
-        <span>· Concept redesign</span>
+      <div class="t-card">
+        <div class="t-card-photo" style="background-image: url('assets/photos/Lebanon-Hwy-231-Landscaping-11.jpg');"></div>
+        <span class="t-card-chip"><span class="t-card-chip-dot"></span> Lebanon · Hwy 231</span>
+        <div class="t-card-body">
+          <p class="t-card-quote">Full-scope commercial landscape, roadway irrigation, and native planting on a live public corridor.</p>
+          <div class="t-card-name"><span>City of Lebanon, TN</span><span>2024</span></div>
+        </div>
       </div>
+
+      <div class="t-card">
+        <div class="t-card-photo" style="background-image: url('assets/photos/TTU-Lab-Bldg-Final-Landscape-3.jpg');"></div>
+        <span class="t-card-chip"><span class="t-card-chip-dot"></span> Tennessee Tech</span>
+        <div class="t-card-body">
+          <p class="t-card-quote">Landscape and hardscape for a new lab building — paver plaza, ADA walks, plant install.</p>
+          <div class="t-card-name"><span>TTU · Cookeville</span><span>2024</span></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-card-photo" style="background-image: url('assets/photos/MTSU-final-photos-010.jpg');"></div>
+        <span class="t-card-chip"><span class="t-card-chip-dot"></span> MTSU</span>
+        <div class="t-card-body">
+          <p class="t-card-quote">Campus landscape install — native planting, turf establishment, and project-managed phasing.</p>
+          <div class="t-card-name"><span>MTSU · Murfreesboro</span><span>2023</span></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-card-photo" style="background-image: url('assets/photos/APSU-Planted-And-Sodded.jpg');"></div>
+        <span class="t-card-chip"><span class="t-card-chip-dot"></span> Austin Peay</span>
+        <div class="t-card-body">
+          <p class="t-card-quote">Full landscape install with new irrigation — designed for the Cumberland River climate.</p>
+          <div class="t-card-name"><span>APSU · Clarksville</span><span>2023</span></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-card-photo" style="background-image: url('assets/photos/MidSt-Motlow-1-3.jpg');"></div>
+        <span class="t-card-chip"><span class="t-card-chip-dot"></span> Motlow State</span>
+        <div class="t-card-body">
+          <p class="t-card-quote">Multi-phase landscape install with single point of contact through the entire build.</p>
+          <div class="t-card-name"><span>Motlow · Tullahoma</span><span>2022</span></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-card-photo" style="background-image: url('assets/photos/TTU-Lab-Bldg-Final-Paver-Photo.jpg');"></div>
+        <span class="t-card-chip"><span class="t-card-chip-dot"></span> TTU Pavers</span>
+        <div class="t-card-body">
+          <p class="t-card-quote">Pervious-paver pedestrian plaza, ADA-compliant, designed to drain on-site rather than into the watershed.</p>
+          <div class="t-card-name"><span>TTU Lab · Cookeville</span><span>2024</span></div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-card-photo" style="background-image: url('assets/photos/Livingston-Bishop-Park4.jpg');"></div>
+        <span class="t-card-chip"><span class="t-card-chip-dot"></span> Bishop Park</span>
+        <div class="t-card-body">
+          <p class="t-card-quote">Municipal park landscape — planting, hardscape, and irrigation built for public use.</p>
+          <div class="t-card-name"><span>Livingston, TN</span><span>2021</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROJECTS INDEX
+============================================================ -->
+<section id="projects" class="container">
+  <div class="projects">
+    <div class="projects-head reveal">
+      <div>
+        <span class="eyebrow">PROJECT INDEX</span>
+        <h2 style="margin-top: 12px;">A working list.<br/>2018 → 2026.</h2>
+      </div>
+    </div>
+    <div class="projects-list">
+      <div class="project-row"><span class="project-row-num">01</span><span class="project-row-title">Tennessee Tech · Lab Building</span><span class="project-row-meta">Landscape · Hardscape</span><span class="project-row-year">2024</span></div>
+      <div class="project-row"><span class="project-row-num">02</span><span class="project-row-title">Middle Tennessee State University</span><span class="project-row-meta">Campus Landscape</span><span class="project-row-year">2023</span></div>
+      <div class="project-row"><span class="project-row-num">03</span><span class="project-row-title">Austin Peay State University</span><span class="project-row-meta">Landscape · Irrigation</span><span class="project-row-year">2023</span></div>
+      <div class="project-row"><span class="project-row-num">04</span><span class="project-row-title">Motlow State Community College</span><span class="project-row-meta">Multi-Phase Landscape</span><span class="project-row-year">2022</span></div>
+      <div class="project-row"><span class="project-row-num">05</span><span class="project-row-title">TTU Roaden University Center</span><span class="project-row-meta">Hardscape · Pavers</span><span class="project-row-year">2022</span></div>
+      <div class="project-row"><span class="project-row-num">06</span><span class="project-row-title">City of Lebanon · Hwy 231</span><span class="project-row-meta">Roadway Landscape</span><span class="project-row-year">2024</span></div>
+      <div class="project-row"><span class="project-row-num">07</span><span class="project-row-title">East Nashville High School</span><span class="project-row-meta">Irrigation Install</span><span class="project-row-year">2023</span></div>
+      <div class="project-row"><span class="project-row-num">08</span><span class="project-row-title">Krajewski Estate</span><span class="project-row-meta">Hardscape · Walls</span><span class="project-row-year">2022</span></div>
+      <div class="project-row"><span class="project-row-num">09</span><span class="project-row-title">Bishop Park · Livingston, TN</span><span class="project-row-meta">Municipal Landscape</span><span class="project-row-year">2021</span></div>
+      <div class="project-row"><span class="project-row-num">10</span><span class="project-row-title">Linsten Property</span><span class="project-row-meta">Sod · Turf Establishment</span><span class="project-row-year">2021</span></div>
+      <div class="project-row"><span class="project-row-num">11</span><span class="project-row-title">ACME Industrial Site</span><span class="project-row-meta">Hardscape · Drainage</span><span class="project-row-year">2020</span></div>
+      <div class="project-row"><span class="project-row-num">12</span><span class="project-row-title">TTU Lab · Pedestrian Plaza</span><span class="project-row-meta">Pervious Pavers · ADA</span><span class="project-row-year">2024</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA
+============================================================ -->
+<section id="contact" class="cta reveal">
+  <div class="cta-inner">
+    <div>
+      <span class="eyebrow on-sky" style="color: rgba(255,255,255,0.6);">START A CONVERSATION</span>
+      <h2 style="margin-top: 18px; color: var(--paper);">Let's talk about your site.</h2>
+      <p class="lead" style="color: rgba(255,255,255,0.65); margin-top: 16px;">RFP, bid set, or a one-line note — we'll get back same business day.</p>
+      <a href="tel:+19312615885" class="pill pill-lime">
+        Call (931) 261-5885
+        <span class="pill-arrow">→</span>
+      </a>
+    </div>
+    <div class="cta-side">
+      <div class="cta-row"><span class="cta-row-label">Office</span><span class="cta-row-value">379 Taggart Haller Ln<br/>Sparta, TN 38583</span></div>
+      <div class="cta-row"><span class="cta-row-label">Email</span><span class="cta-row-value">contact@hallerslandscape.com</span></div>
+      <div class="cta-row"><span class="cta-row-label">Hours</span><span class="cta-row-value">Mon–Fri · 7:00 AM → 4:00 PM CT</span></div>
+      <div class="cta-row" style="border-bottom: 0;"><span class="cta-row-label">License</span><span class="cta-row-value">TN #61416 · TDOT Prequalified</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer class="container">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="nav-brand">
+        <span class="nav-brand-mark"></span>
+        <span>Haller's Landscape</span>
+      </a>
+      <p>Haller's Landscaping &amp; Nursery, Inc. Commercial landscape contractor serving Middle Tennessee since 1997.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Capabilities</h5>
+      <ul>
+        <li><a href="#services">Commercial Landscape</a></li>
+        <li><a href="#services">Hardscape &amp; Pavers</a></li>
+        <li><a href="#services">Irrigation</a></li>
+        <li><a href="#services">Lighting</a></li>
+        <li><a href="#services">Wholesale Nursery</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Studio</h5>
+      <ul>
+        <li><a href="#about">About Patrick &amp; Mason</a></li>
+        <li><a href="#projects">Selected Projects</a></li>
+        <li><a href="#services">Process</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Connect</h5>
+      <ul>
+        <li><a href="#">Instagram ↗</a></li>
+        <li><a href="#">Facebook ↗</a></li>
+        <li><a href="#">Directions ↗</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 1997–2026 · Haller's Landscaping &amp; Nursery, Inc.</span>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Accessibility</a>
     </div>
   </div>
 </footer>
 
 <script>
-/* ============================================================
-   LOADER — fire once, fade out
-   ============================================================ */
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    document.getElementById('loader').classList.add('done');
-    document.body.style.overflow = '';
-  }, 100);
-});
-document.body.style.overflow = 'hidden';
-setTimeout(() => { document.body.style.overflow = ''; }, 1600);
-
-/* ============================================================
-   SCROLL REVEAL — IntersectionObserver
-   ============================================================ */
+/* Reveal on scroll */
 const io = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -1830,19 +1314,16 @@ const io = new IntersectionObserver((entries) => {
       io.unobserve(entry.target);
     }
   });
-}, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
-
+}, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
 document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
-/* ============================================================
-   KINETIC NUMBER COUNTERS
-   ============================================================ */
+/* Counters */
 const counterIO = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (!entry.isIntersecting) return;
     const el = entry.target;
     const target = parseInt(el.dataset.count, 10);
-    const duration = 1600;
+    const duration = 1500;
     const start = performance.now();
     const step = (now) => {
       const t = Math.min(1, (now - start) / duration);
@@ -1855,70 +1336,18 @@ const counterIO = new IntersectionObserver((entries) => {
     counterIO.unobserve(el);
   });
 }, { threshold: 0.4 });
-
 document.querySelectorAll('[data-count]').forEach((el) => counterIO.observe(el));
 
-/* ============================================================
-   PROJECT INDEX — cursor-following preview
-   ============================================================ */
-const preview = document.getElementById('preview');
-const previewImg = document.getElementById('previewImg');
-const rows = document.querySelectorAll('.index-row');
-let lastImg = null;
-let rafId = null;
-let mouseX = 0, mouseY = 0, currentX = 0, currentY = 0;
-
-rows.forEach((row) => {
-  row.addEventListener('mouseenter', () => {
-    const src = row.dataset.img;
-    if (src && src !== lastImg) {
-      previewImg.src = src;
-      lastImg = src;
-    }
-    preview.classList.add('show');
-  });
-  row.addEventListener('mouseleave', () => {
-    preview.classList.remove('show');
-  });
+/* Testimonial carousel scroll */
+const scroller = document.getElementById('t-scroll');
+const cardWidth = 296;
+document.getElementById('t-prev').addEventListener('click', () => {
+  scroller.scrollBy({ left: -cardWidth, behavior: 'smooth' });
 });
-
-const indexSection = document.getElementById('projects');
-if (indexSection) {
-  indexSection.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    if (!rafId) rafId = requestAnimationFrame(updatePreview);
-  });
-}
-function updatePreview() {
-  currentX += (mouseX - currentX) * 0.18;
-  currentY += (mouseY - currentY) * 0.18;
-  preview.style.left = currentX + 'px';
-  preview.style.top = currentY + 'px';
-  if (Math.abs(mouseX - currentX) > 0.4 || Math.abs(mouseY - currentY) > 0.4) {
-    rafId = requestAnimationFrame(updatePreview);
-  } else {
-    rafId = null;
-  }
-}
-
-/* ============================================================
-   ACTIVE NAV LINK
-   ============================================================ */
-const navLinks = document.querySelectorAll('.nav-link');
-const sections = ['services', 'projects', 'sustain', 'process'].map((id) => document.getElementById(id)).filter(Boolean);
-
-const navIO = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      const id = entry.target.id;
-      navLinks.forEach((a) => {
-        a.style.opacity = a.getAttribute('href') === '#' + id ? '1' : '0.78';
-      });
-    }
-  });
-}, { threshold: 0.4 });
-sections.forEach((s) => navIO.observe(s));
+document.getElementById('t-next').addEventListener('click', () => {
+  scroller.scrollBy({ left: cardWidth, behavior: 'smooth' });
+});
 </script>
+
 </body>
 </html>
