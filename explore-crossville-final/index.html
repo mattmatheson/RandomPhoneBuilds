@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="published" content="2026-05-21">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explore Crossville — Final Cuts</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    background: #FFFFFF;
+    color: #1D1D1F;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 4vw, 2rem) 4rem;
+  }
+
+  header {
+    margin-bottom: 4rem;
+    animation: fadeIn 0.6s ease-out both;
+  }
+
+  .label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #86868B;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 0.4rem;
+  }
+
+  .meta {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #6E6E73;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.4rem;
+    border-radius: 980px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+  }
+
+  .btn-primary { background: #1D1D1F; color: #FFFFFF; }
+  .btn-primary:hover { background: #424245; }
+
+  .btn-outline {
+    background: transparent;
+    color: #1D1D1F;
+    border: 1px solid #D2D2D7;
+  }
+
+  .info-box {
+    background: #F5F5F7;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin: 0 0 2rem;
+    font-size: 0.85rem;
+    color: #424245;
+    line-height: 1.7;
+  }
+
+  .info-box strong { color: #1D1D1F; }
+
+  .info-box .credit {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #E5E5E7;
+    font-size: 0.78rem;
+    color: #6E6E73;
+  }
+
+  .divider {
+    height: 1px;
+    background: #E5E5E7;
+    margin: 0 0 3rem;
+  }
+
+  .video-card {
+    margin-bottom: 3rem;
+    animation: fadeIn 0.5s ease-out both;
+  }
+
+  .video-card video {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #000;
+    border-radius: 8px;
+  }
+
+  .video-card .vmeta {
+    margin-top: 1rem;
+    padding: 0 0.25rem;
+  }
+
+  .video-card .vlabel {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 980px;
+    margin-bottom: 0.6rem;
+  }
+
+  .vlabel-tv { background: #1D1D1F; color: #fff; }
+  .vlabel-web { background: #F5F5F7; color: #424245; border: 1px solid #E5E5E7; }
+
+  .video-card h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-bottom: 0.4rem;
+  }
+
+  .video-card .vstats {
+    margin-top: 0.6rem;
+    font-size: 0.72rem;
+    color: #86868B;
+  }
+
+  footer {
+    text-align: center;
+    padding: 3rem 0 2rem;
+    color: #86868B;
+    font-size: 0.7rem;
+    font-weight: 400;
+  }
+
+  footer a { color: #86868B; text-decoration: none; }
+  footer a:hover { color: #1D1D1F; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .container { padding-left: 1rem; padding-right: 1rem; }
+    .video-card { margin-bottom: 2.25rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <span class="label">Final Delivery</span>
+    <h1>Explore Crossville</h1>
+    <p class="meta">PJ Barnes · Crossville-Cumberland County Chamber &mdash; Delivered May 21, 2026</p>
+    <div class="actions">
+      <a href="https://drive.google.com/drive/folders/1-py-ipNDimWl2my9AXRuEMYcRK6i3n2n" target="_blank" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z" fill="#fff"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0-1.2 4.5h27.5z" fill="#fff"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.85z" fill="#fff"/><path d="M43.65 25 57.4 1.2C56.05.4 54.5 0 52.9 0H34.4c-1.6 0-3.15.45-4.5 1.2z" fill="#fff"/><path d="m59.8 53h-32.3L13.75 76.8c1.35.8 2.9 1.2 4.5 1.2h22.6c1.6 0 3.15-.45 4.5-1.2z" fill="#fff"/><path d="M73.4 26.5 60.65 3.3c-.8-1.4-1.95-2.5-3.3-3.3L43.6 25l16.2 28h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#fff"/></svg>
+        Google Drive
+      </a>
+      <span class="btn btn-outline" style="cursor:default;">9 video cuts</span>
+    </div>
+  </header>
+
+  <div class="info-box">
+    <strong>Hey PJ,</strong> here are the final color-graded cuts &mdash; two TV-bound 30s spots and seven web cuts ready for the website and socials. The originals (ProRes masters) are on Google Drive via the button above for downloads and sending to the station.
+    <p style="margin-top:0.6rem;">You can preview each cut right on this page. Tap the Drive button for the full-quality master files.</p>
+    <p class="credit">If you post any of these, a credit would mean a lot &mdash; on YouTube: <strong style="color:#424245;">Filmed by Matt Matheson</strong>. On Instagram: <strong style="color:#424245;">@mattmatheson_</strong></p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="video-card">
+    <video controls preload="metadata" playsinline>
+      <source src="ExploreCrossville_TVCut1.mp4" type="video/mp4">
+    </video>
+    <div class="vmeta">
+      <span class="vlabel vlabel-tv">TV Cut 1 &middot; :30</span>
+      <h2>TV Cut 1</h2>
+      <p class="vstats">31 seconds &middot; ProRes master / 1080p web preview</p>
+    </div>
+  </div>
+
+  <div class="video-card">
+    <video controls preload="metadata" playsinline>
+      <source src="ExploreCrossville_TVCut2.mp4" type="video/mp4">
+    </video>
+    <div class="vmeta">
+      <span class="vlabel vlabel-tv">TV Cut 2 &middot; :30</span>
+      <h2>TV Cut 2</h2>
+      <p class="vstats">29 seconds &middot; ProRes master / 1080p web preview</p>
+    </div>
+  </div>
+
+  <div class="video-card">
+    <video controls preload="metadata" playsinline>
+      <source src="ExploreCrossville_WebCut1.mp4" type="video/mp4">
+    </video>
+    <div class="vmeta">
+      <span class="vlabel vlabel-web">Web Cut 1</span>
+      <h2>Web Cut 1</h2>
+      <p class="vstats">30 seconds &middot; ProRes master / 1080p web preview</p>
+    </div>
+  </div>
+
+  <div class="video-card">
+    <video controls preload="metadata" playsinline>
+      <source src="ExploreCrossville_WebCut2.mp4" type="video/mp4">
+    </video>
+    <div class="vmeta">
+      <span class="vlabel vlabel-web">Web Cut 2</span>
+      <h2>Web Cut 2</h2>
+      <p class="vstats">29 seconds &middot; ProRes master / 1080p web preview</p>
+    </div>
+  </div>
+
+  <div class="video-card">
+    <video controls preload="metadata" playsinline>
+      <source src="ExploreCrossville_WebCut3.mp4" type="video/mp4">
+    </video>
+    <div class="vmeta">
+      <span class="vlabel vlabel-web">Web Cut 3</span>
+      <h2>Web Cut 3</h2>
+      <p class="vstats">22 seconds &middot; ProRes master / 1080p web preview</p>
+    </div>
+  </div>
+
+  <div class="video-card">
+    <video controls preload="metadata" playsinline>
+      <source src="ExploreCrossville_WebCut4.mp4" type="video/mp4">
+    </video>
+    <div class="vmeta">
+      <span class="vlabel vlabel-web">Web Cut 4</span>
+      <h2>Web Cut 4</h2>
+      <p class="vstats">29 seconds &middot; ProRes master / 1080p web preview</p>
+    </div>
+  </div>
+
+  <div class="video-card">
+    <video controls preload="metadata" playsinline>
+      <source src="ExploreCrossville_WebCut5.mp4" type="video/mp4">
+    </video>
+    <div class="vmeta">
+      <span class="vlabel vlabel-web">Web Cut 5</span>
+      <h2>Web Cut 5</h2>
+      <p class="vstats">29 seconds &middot; ProRes master / 1080p web preview</p>
+    </div>
+  </div>
+
+  <div class="video-card">
+    <video controls preload="metadata" playsinline>
+      <source src="ExploreCrossville_WebCut6.mp4" type="video/mp4">
+    </video>
+    <div class="vmeta">
+      <span class="vlabel vlabel-web">Web Cut 6</span>
+      <h2>Web Cut 6</h2>
+      <p class="vstats">30 seconds &middot; ProRes master / 1080p web preview</p>
+    </div>
+  </div>
+
+  <div class="video-card">
+    <video controls preload="metadata" playsinline>
+      <source src="ExploreCrossville_WebCut7.mp4" type="video/mp4">
+    </video>
+    <div class="vmeta">
+      <span class="vlabel vlabel-web">Web Cut 7</span>
+      <h2>Web Cut 7</h2>
+      <p class="vstats">30 seconds &middot; ProRes master / 1080p web preview</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>Filmed &amp; edited by <a href="https://mattmatheson.github.io/RandomPhoneBuilds/">Matt Matheson</a> &middot; @mattmatheson_</p>
+  </footer>
+</div>
+</body>
+</html>
