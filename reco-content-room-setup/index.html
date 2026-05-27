@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="published" content="2026-05-27">
+<title>RECO Content Room — Lighting & Camera Setup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --bg: #FAFAFA;
+    --text: #1D1D1F;
+    --muted: #6E6E73;
+    --border: #E5E5E7;
+    --card: #FFFFFF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 6rem;
+  }
+  .container { max-width: 880px; margin: 0 auto; padding: 3rem 1.5rem; }
+  header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+  .scope { color: var(--muted); font-size: 1.05rem; margin-bottom: 1.5rem; }
+  .meta-row { display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .meta-row span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .controls { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+  .listen-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.6rem 1.5rem;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .listen-btn:hover { opacity: 0.9; }
+  .listen-btn:active { transform: scale(0.97); }
+  .voice-select, .speed-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 2rem;
+    padding: 0.55rem 1rem;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .select-all-link {
+    background: none;
+    border: none;
+    color: var(--accent);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-family: inherit;
+    text-decoration: underline;
+    padding: 0;
+  }
+  .protip {
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-style: italic;
+    margin-top: 0.75rem;
+  }
+  @media (max-width: 600px) {
+    .listen-btn { width: 100%; justify-content: center; }
+    .controls { flex-direction: column; align-items: stretch; }
+    .voice-select, .speed-btn { width: 100%; text-align: center; }
+  }
+  section { margin-bottom: 2.75rem; padding: 0.5rem 0; transition: all 0.3s ease; }
+  section.reading {
+    border-left: 3px solid var(--accent);
+    background: rgba(196, 32, 32, 0.04);
+    padding-left: 1rem;
+    border-radius: 4px;
+  }
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--text);
+    display: inline-block;
+  }
+  h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.6rem;
+    color: var(--text);
+  }
+  p { margin-bottom: 1rem; }
+  ul { margin: 0.5rem 0 1rem 1.25rem; }
+  li { margin-bottom: 0.35rem; }
+  .specs {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin: 1rem 0 1.5rem;
+    list-style: none;
+  }
+  .specs li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    margin: 0;
+    font-size: 0.95rem;
+    gap: 1rem;
+  }
+  .specs li:last-child { border-bottom: none; }
+  .specs .label { color: var(--muted); flex-shrink: 0; }
+  .specs .value { font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+  figure {
+    margin: 1.5rem 0 1rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    cursor: zoom-in;
+  }
+  figcaption {
+    padding: 0.85rem 1.1rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 1rem;
+    cursor: zoom-out;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox img { max-width: 95%; max-height: 95vh; object-fit: contain; }
+  .player-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(30, 30, 30, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: white;
+    padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 100;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+  .player-bar.visible { transform: translateY(0); }
+  .player-bar button {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    border-radius: 1.5rem;
+    padding: 0.4rem 0.85rem;
+    font-family: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .player-bar .play-btn {
+    background: var(--accent);
+    border-color: var(--accent);
+    min-width: 70px;
+  }
+  .player-bar .current-section {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.85);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .player-bar select {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    border-radius: 1.5rem;
+    padding: 0.4rem 0.6rem;
+    font-family: inherit;
+    font-size: 0.8rem;
+    max-width: 110px;
+  }
+  .player-bar select option { color: black; }
+  .callout {
+    background: rgba(196, 32, 32, 0.06);
+    border-left: 3px solid var(--accent);
+    padding: 0.85rem 1.1rem;
+    border-radius: 0 6px 6px 0;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+  }
+  .callout strong { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="container" id="main-content">
+
+<header>
+  <h1>RECO Content Room</h1>
+  <p class="scope">Lighting setup, camera positions, and settings — so the next shoot matches the last one.</p>
+  <div class="meta-row">
+    <span>Documented 2026-05-27</span>
+    <span>Matt Matheson Creative</span>
+  </div>
+  <div class="controls">
+    <button class="listen-btn" id="listen-btn">Listen</button>
+    <select class="voice-select" id="voice-select" aria-label="Voice"></select>
+    <button class="speed-btn" id="speed-btn">1x</button>
+    <button class="select-all-link" id="select-all">Select all text</button>
+  </div>
+  <p class="protip">Pro tip: For a better voice, tap "select all" above then use iOS Speak Selection (Settings &gt; Accessibility &gt; Spoken Content &gt; Speak Selection).</p>
+</header>
+
+<section id="overview">
+  <h2>Overview</h2>
+  <p>This is a two-camera interview setup in the RECO content room. Talent sits in the white boucle chair against the wood-slat accent wall. Wide cam is dead-on at 35mm. Side angle is camera-right at 50mm. Key light is the larger lightdome (mine) low and close on camera-left; fill/rim is the studio's octagonal lightdome boomed in from above-behind.</p>
+  <figure>
+    <img src="IMG_8259.jpeg" alt="Wide overview of the RECO content room lighting setup" data-zoom>
+    <figcaption>Room overview. Boomed octagonal softbox (studio's dome) overhead with sandbag counterweight. The large parabolic lightdome (mine) is set low at chair height, camera-left. C-stands and arms throughout.</figcaption>
+  </figure>
+</section>
+
+<section id="set">
+  <h2>The Set</h2>
+  <p>Talent faces camera, seated in the white boucle chair. Background is the vertical wood-slat accent wall with the dark wood credenza tucked in camera-right. A warm practical lamp on the credenza adds depth and a color contrast against the cool key. Framed tile-print art lives camera-left of the chair, just outside the wide frame.</p>
+  <figure>
+    <img src="IMG_8262.jpeg" alt="The talent set — boucle chair, wood slat wall, dark credenza, warm practical lamp" data-zoom>
+    <figcaption>Set composition. Wood-slat wall behind chair, warm practical on the credenza for fill warmth and a depth cue. Gray patterned rug grounds the floor.</figcaption>
+  </figure>
+  <h3>Set checklist</h3>
+  <ul>
+    <li>White boucle chair centered on the wood-slat wall</li>
+    <li>Credenza camera-right, lamp ON (warm tungsten practical)</li>
+    <li>Gray patterned area rug under and forward of the chair</li>
+    <li>Framed tile-print art camera-left (out of wide frame)</li>
+    <li>Small decor items on credenza top (figurine, books)</li>
+  </ul>
+</section>
+
+<section id="lights">
+  <h2>Lighting</h2>
+  <p>Two-light setup. Both LEDs run daylight-balanced at 5600K — the warm practical lamp on the credenza supplies the orange contrast. Don't change the lamp.</p>
+
+  <h3>Key — my lightdome (camera-left, low)</h3>
+  <p>The large parabolic-style lightdome (the one I bring from home) is the key. Placed low — roughly at chair-arm height — camera-left, angled up into talent's face. Soft, large source, wraps cleanly across the cheekbone. Front diffusion is on.</p>
+  <ul class="specs">
+    <li><span class="label">Color temp</span><span class="value">5600K (CCT)</span></li>
+    <li><span class="label">Intensity</span><span class="value">100</span></li>
+    <li><span class="label">Modifier</span><span class="value">Matt's parabolic lightdome + front diffusion</span></li>
+    <li><span class="label">Position</span><span class="value">Camera-left, low, chair-arm height</span></li>
+  </ul>
+  <figure>
+    <img src="IMG_8260.jpeg" alt="Key light LED control panel showing 5600K and intensity 100" data-zoom>
+    <figcaption>Key light controller — CCT mode, 5600K, intensity 100.</figcaption>
+  </figure>
+
+  <h3>Fill/rim — studio's lightdome (boomed, above-behind)</h3>
+  <p>The octagonal lightdome that lives at the studio. Boomed in from above and slightly behind talent (camera-right side) on a C-stand with arm + sandbag counterweight. Acts as a soft top-rim — pulls talent off the wood-slat wall and gives some highlight to hair and shoulder.</p>
+  <ul class="specs">
+    <li><span class="label">Color temp</span><span class="value">5600K (CCT)</span></li>
+    <li><span class="label">Intensity</span><span class="value">17</span></li>
+    <li><span class="label">Modifier</span><span class="value">Studio's octagonal lightdome</span></li>
+    <li><span class="label">Position</span><span class="value">Boomed from above, slightly camera-right and behind</span></li>
+  </ul>
+  <figure>
+    <img src="IMG_8261.jpeg" alt="Fill/rim light controller showing 5600K and intensity 17" data-zoom>
+    <figcaption>Fill/rim controller — CCT mode, 5600K, intensity 17. Much lower output than the key by design.</figcaption>
+  </figure>
+
+  <div class="callout">
+    <strong>Ratio:</strong> Key at 100, rim at 17. That's the recipe. The practical lamp on the credenza is the only warm source in the frame.
+  </div>
+</section>
+
+<section id="cameras">
+  <h2>Cameras</h2>
+  <p>Two Blackmagic Pocket Cinema Camera 4Ks. Both running the same exposure and color settings so they cut together cleanly.</p>
+
+  <h3>A-Cam — wide (35mm Sigma)</h3>
+  <ul class="specs">
+    <li><span class="label">Body</span><span class="value">Blackmagic Pocket 4K</span></li>
+    <li><span class="label">Lens</span><span class="value">Sigma 35mm</span></li>
+    <li><span class="label">Filter</span><span class="value">ND on lens</span></li>
+    <li><span class="label">Position</span><span class="value">Dead-on, centered on chair</span></li>
+  </ul>
+
+  <h3>B-Cam — side angle (50mm Sigma)</h3>
+  <ul class="specs">
+    <li><span class="label">Body</span><span class="value">Blackmagic Pocket 4K</span></li>
+    <li><span class="label">Lens</span><span class="value">Sigma 50mm</span></li>
+    <li><span class="label">Filter</span><span class="value">None</span></li>
+    <li><span class="label">Position</span><span class="value">Camera-right, ~30–45° off axis</span></li>
+  </ul>
+
+  <figure>
+    <img src="IMG_8263.jpeg" alt="Camera tripod, V-flag, gear shelf, second lightdome — wider rig overview" data-zoom>
+    <figcaption>Rig overview from the other side. BMPCC 4K on tripod with fluid head, large black V-flag behind for negative fill / wall flag, gear shelf upstage.</figcaption>
+  </figure>
+</section>
+
+<section id="camera-settings">
+  <h2>Camera Settings (both bodies)</h2>
+  <p>Match these on both cameras. Confirmed off the BMPCC 4K LCD on the wide cam:</p>
+  <ul class="specs">
+    <li><span class="label">Frame rate</span><span class="value">23.98 fps</span></li>
+    <li><span class="label">Shutter</span><span class="value">1/100</span></li>
+    <li><span class="label">Iris</span><span class="value">f/1.4</span></li>
+    <li><span class="label">ISO</span><span class="value">800</span></li>
+    <li><span class="label">White balance</span><span class="value">6400K</span></li>
+    <li><span class="label">Tint</span><span class="value">0</span></li>
+    <li><span class="label">LUT</span><span class="value">ON (monitor LUT loaded)</span></li>
+  </ul>
+  <figure>
+    <img src="IMG_8264.jpeg" alt="BMPCC 4K LCD showing 23.98fps, 1/100, f1.4, ISO 800, WB 6400K" data-zoom>
+    <figcaption>Wide cam LCD reference. WB at 6400K against the 5600K LEDs warms talent skin and pushes the practical lamp into a richer amber — that's the look.</figcaption>
+  </figure>
+  <div class="callout">
+    <strong>Why WB 6400K vs 5600K lights:</strong> Pushing camera WB warmer than the lights gives skin a warmer cast without re-coloring the LEDs. Keeps the practical lamp glowing amber instead of going neutral.
+  </div>
+</section>
+
+<section id="quick-setup">
+  <h2>Quick Setup Checklist</h2>
+  <ul>
+    <li>Chair centered on wood-slat wall, credenza camera-right with lamp ON</li>
+    <li>Key (my dome) camera-left, low, ~chair-arm height — 5600K, intensity 100</li>
+    <li>Fill/rim (studio's dome) boomed from above-behind camera-right — 5600K, intensity 17</li>
+    <li>A-Cam: BMPCC 4K + Sigma 35mm + ND, dead-on</li>
+    <li>B-Cam: BMPCC 4K + Sigma 50mm, camera-right ~30–45°</li>
+    <li>Both cams: 23.98 fps, 1/100, f/1.4, ISO 800, WB 6400K, tint 0, LUT on</li>
+    <li>Negative fill / V-flag on the opposite side if shadow side needs deepening</li>
+    <li>Sandbag every C-stand with a boom arm. No exceptions.</li>
+  </ul>
+</section>
+
+</div>
+
+<div class="lightbox" id="lightbox"><img src="" alt=""></div>
+
+<div class="player-bar" id="player-bar">
+  <button class="play-btn" id="player-play">Pause</button>
+  <span class="current-section" id="player-section">—</span>
+  <select id="player-voice"></select>
+  <button id="player-speed">1x</button>
+  <button id="player-stop">Stop</button>
+</div>
+
+<script>
+  // ---- Lightbox ----
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = lightbox.querySelector('img');
+  document.querySelectorAll('img[data-zoom]').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('active');
+    });
+  });
+  lightbox.addEventListener('click', () => lightbox.classList.remove('active'));
+
+  // ---- Select all ----
+  document.getElementById('select-all').addEventListener('click', () => {
+    const container = document.getElementById('main-content');
+    const range = document.createRange();
+    range.selectNodeContents(container);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  });
+
+  // ---- TTS ----
+  const synth = window.speechSynthesis;
+  const WHITELIST = ['samantha','karen','daniel','moira','tessa','ava','allison','tom','aaron','nicky','evan','zoe','joelle','fiona','martha','arthur'];
+  let voices = [];
+  let currentVoice = null;
+  const SPEEDS = [0.8, 1, 1.2, 1.5];
+  let speedIdx = 1;
+  let queue = [];
+  let queueIdx = 0;
+  let playing = false;
+  let paused = false;
+  let keepAlive = null;
+
+  function loadVoices() {
+    voices = synth.getVoices().filter(v => {
+      const n = v.name.toLowerCase();
+      if (WHITELIST.some(w => n.includes(w))) return true;
+      if (n.includes('google us english') || n.includes('google uk english')) return true;
+      return false;
+    });
+    const sel = document.getElementById('voice-select');
+    const psel = document.getElementById('player-voice');
+    [sel, psel].forEach(s => {
+      s.innerHTML = '';
+      voices.forEach((v, i) => {
+        const o = document.createElement('option');
+        o.value = i; o.textContent = v.name;
+        s.appendChild(o);
+      });
+    });
+    if (voices.length) {
+      const samIdx = voices.findIndex(v => v.name.toLowerCase().includes('samantha'));
+      const idx = samIdx >= 0 ? samIdx : 0;
+      currentVoice = voices[idx];
+      sel.value = idx; psel.value = idx;
+    }
+  }
+  loadVoices();
+  if (typeof speechSynthesis !== 'undefined') {
+    speechSynthesis.onvoiceschanged = loadVoices;
+  }
+  document.getElementById('voice-select').addEventListener('change', e => {
+    currentVoice = voices[e.target.value];
+    document.getElementById('player-voice').value = e.target.value;
+  });
+  document.getElementById('player-voice').addEventListener('change', e => {
+    currentVoice = voices[e.target.value];
+    document.getElementById('voice-select').value = e.target.value;
+  });
+
+  function cycleSpeed() {
+    speedIdx = (speedIdx + 1) % SPEEDS.length;
+    const label = SPEEDS[speedIdx] + 'x';
+    document.getElementById('speed-btn').textContent = label;
+    document.getElementById('player-speed').textContent = label;
+  }
+  document.getElementById('speed-btn').addEventListener('click', cycleSpeed);
+  document.getElementById('player-speed').addEventListener('click', cycleSpeed);
+
+  function buildQueue() {
+    const q = [];
+    document.querySelectorAll('section').forEach(section => {
+      const id = section.id || '';
+      const heading = section.querySelector('h2')?.textContent || '';
+      section.querySelectorAll('h2, h3, p, li').forEach(el => {
+        const text = el.textContent.trim();
+        if (!text) return;
+        const isHeading = ['H2','H3'].includes(el.tagName);
+        q.push({ text, isHeading, section, sectionTitle: heading });
+      });
+    });
+    return q;
+  }
+
+  function highlightSection(section) {
+    document.querySelectorAll('section.reading').forEach(s => { if (s !== section) s.classList.remove('reading'); });
+    if (section) {
+      section.classList.add('reading');
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function speakNext() {
+    if (!playing || queueIdx >= queue.length) {
+      stop();
+      return;
+    }
+    const item = queue[queueIdx];
+    document.getElementById('player-section').textContent = item.sectionTitle;
+    const prevSection = queueIdx > 0 ? queue[queueIdx-1].section : null;
+    if (prevSection !== item.section) highlightSection(item.section);
+    const u = new SpeechSynthesisUtterance(item.text);
+    if (currentVoice) u.voice = currentVoice;
+    const baseRate = SPEEDS[speedIdx];
+    u.rate = item.isHeading ? baseRate * 0.9 : baseRate;
+    u.pitch = item.isHeading ? 1.05 : 1;
+    u.onend = () => {
+      queueIdx++;
+      const pause = item.isHeading ? 400 : 200;
+      setTimeout(speakNext, pause);
+    };
+    synth.speak(u);
+  }
+
+  function start() {
+    if (playing && paused) {
+      synth.resume();
+      paused = false;
+      document.getElementById('player-play').textContent = 'Pause';
+      return;
+    }
+    if (playing) return;
+    queue = buildQueue();
+    queueIdx = 0;
+    playing = true;
+    paused = false;
+    document.getElementById('player-bar').classList.add('visible');
+    document.getElementById('player-play').textContent = 'Pause';
+    document.getElementById('listen-btn').textContent = 'Stop Listening';
+    keepAlive = setInterval(() => { if (playing && !paused) synth.resume(); }, 10000);
+    speakNext();
+  }
+
+  function pause() {
+    if (!playing) return;
+    if (paused) {
+      synth.resume();
+      paused = false;
+      document.getElementById('player-play').textContent = 'Pause';
+    } else {
+      synth.pause();
+      paused = true;
+      document.getElementById('player-play').textContent = 'Play';
+    }
+  }
+
+  function stop() {
+    synth.cancel();
+    playing = false;
+    paused = false;
+    queue = [];
+    queueIdx = 0;
+    if (keepAlive) { clearInterval(keepAlive); keepAlive = null; }
+    document.getElementById('player-bar').classList.remove('visible');
+    document.getElementById('listen-btn').textContent = 'Listen';
+    document.querySelectorAll('section.reading').forEach(s => s.classList.remove('reading'));
+  }
+
+  document.getElementById('listen-btn').addEventListener('click', () => {
+    if (playing) stop(); else start();
+  });
+  document.getElementById('player-play').addEventListener('click', pause);
+  document.getElementById('player-stop').addEventListener('click', stop);
+</script>
+
+</body>
+</html>
