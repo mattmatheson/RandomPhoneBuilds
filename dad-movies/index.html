@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="published" content="2026-06-29">
+<title>Dad Movies — The Directory</title>
+<link rel="icon" href="/RandomPhoneBuilds/favicon.ico" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --bg: #FAFAFA;
+    --card-bg: #FFFFFF;
+    --text-primary: #1D1D1F;
+    --text-secondary: #6E6E73;
+    --divider: #E5E5E7;
+    --hover-bg: rgba(0, 0, 0, 0.02);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .top-bar { height: 3px; background: var(--accent); }
+
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 4vw, 2.5rem) 5rem;
+  }
+
+  /* Header */
+  header { margin-bottom: 2.5rem; animation: fadeInUp 0.6s ease-out both; }
+  header .label {
+    font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.14em; color: var(--accent); margin-bottom: 0.9rem;
+  }
+  h1 {
+    font-size: clamp(2.2rem, 6vw, 3.4rem); font-weight: 700;
+    letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 1rem;
+  }
+  header .scope {
+    font-size: clamp(1rem, 2.2vw, 1.15rem); color: var(--text-secondary);
+    max-width: 640px; font-weight: 400;
+  }
+  header .scope strong { color: var(--text-primary); font-weight: 600; }
+
+  /* Controls */
+  .controls {
+    position: sticky; top: 0; z-index: 40;
+    background: rgba(250,250,250,0.86); backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 1rem 0 0.75rem; margin: 1.5rem 0 0.5rem;
+    border-bottom: 1px solid var(--divider);
+  }
+  .search-wrap { position: relative; margin-bottom: 0.85rem; }
+  .search-wrap svg {
+    position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);
+    width: 18px; height: 18px; stroke: var(--text-secondary); pointer-events: none;
+  }
+  #search {
+    width: 100%; padding: 0.85rem 1rem 0.85rem 2.8rem;
+    font-family: inherit; font-size: 1rem; color: var(--text-primary);
+    background: var(--card-bg); border: 1px solid var(--divider);
+    border-radius: 0.85rem; outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  #search:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(196,32,32,0.1); }
+
+  .chips { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.3rem;
+    scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
+  .chips::-webkit-scrollbar { height: 5px; }
+  .chips::-webkit-scrollbar-thumb { background: var(--divider); border-radius: 3px; }
+  .chip {
+    flex: 0 0 auto; padding: 0.45rem 0.95rem; font-family: inherit;
+    font-size: 0.82rem; font-weight: 500; color: var(--text-secondary);
+    background: var(--card-bg); border: 1px solid var(--divider);
+    border-radius: 2rem; cursor: pointer; white-space: nowrap;
+    transition: all 0.18s; user-select: none;
+  }
+  .chip:hover { border-color: #ccc; color: var(--text-primary); }
+  .chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .count { font-size: 0.82rem; color: var(--text-secondary); margin: 1.25rem 0 0.25rem; }
+
+  /* Lane sections */
+  .lane { margin-top: 2.5rem; animation: fadeInUp 0.5s ease-out both; }
+  .lane-head {
+    display: flex; align-items: baseline; gap: 0.6rem;
+    margin-bottom: 1.1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--divider);
+  }
+  .lane-head h2 {
+    font-size: clamp(1.1rem, 2.6vw, 1.4rem); font-weight: 700; letter-spacing: -0.02em;
+  }
+  .lane-head .n { font-size: 0.8rem; color: var(--text-secondary); font-weight: 500; }
+
+  /* Grid */
+  .grid {
+    display: grid; gap: 1.1rem;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  .card {
+    background: var(--card-bg); border: 1px solid var(--divider);
+    border-radius: 0.9rem; overflow: hidden; cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    display: flex; flex-direction: column;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.10);
+    border-color: #d8d8d8;
+  }
+  .thumb {
+    position: relative; aspect-ratio: 16 / 9; background: #1a1a1a;
+    overflow: hidden;
+  }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.35s ease, opacity 0.3s ease; }
+  .card:hover .thumb img { transform: scale(1.05); }
+  .thumb.noimg {
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #2a2a2e 0%, #3a2020 100%);
+    padding: 0.8rem;
+  }
+  .thumb.noimg span {
+    color: #fff; font-weight: 600; font-size: 0.95rem; text-align: center;
+    letter-spacing: -0.01em; opacity: 0.92;
+  }
+  .play {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.18); opacity: 0; transition: opacity 0.2s;
+  }
+  .card:hover .play { opacity: 1; }
+  .play div {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(196,32,32,0.92); display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+  .play div::after {
+    content: ""; display: block; width: 0; height: 0;
+    border-left: 15px solid #fff; border-top: 9px solid transparent; border-bottom: 9px solid transparent;
+    margin-left: 4px;
+  }
+  .meta { padding: 0.75rem 0.85rem 0.9rem; }
+  .meta .t { font-size: 0.96rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; }
+  .meta .y { font-size: 0.78rem; color: var(--accent); font-weight: 600; margin-top: 0.15rem; }
+  .meta .note { font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.45rem; line-height: 1.45; }
+
+  .empty { text-align: center; color: var(--text-secondary); padding: 4rem 1rem; font-size: 1rem; }
+
+  /* Lightbox */
+  .lb {
+    position: fixed; inset: 0; z-index: 100; display: none;
+    align-items: center; justify-content: center; padding: 1.2rem;
+    background: rgba(0,0,0,0.86); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  }
+  .lb.open { display: flex; animation: lbIn 0.2s ease-out; }
+  .lb-inner { width: 100%; max-width: 960px; }
+  .lb-title { color: #fff; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.7rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .lb-title .yr { color: #bbb; font-weight: 400; font-size: 0.9rem; }
+  .lb-frame { position: relative; aspect-ratio: 16 / 9; width: 100%; background: #000;
+    border-radius: 0.6rem; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  .lb-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .lb-close {
+    position: absolute; top: -0.5rem; right: -0.5rem; transform: translate(40%,-40%);
+    width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;
+    background: #fff; color: #111; font-size: 1.4rem; line-height: 1;
+    display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  }
+  @media (max-width: 560px) {
+    .lb-close { transform: none; top: 0; right: 0; }
+    .lb { padding: 0.8rem; }
+  }
+
+  footer {
+    margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--divider);
+    font-size: 0.82rem; color: var(--text-secondary); line-height: 1.7;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @keyframes lbIn { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="container">
+  <header>
+    <div class="label">Family Cinema · A Living Directory</div>
+    <h1>Dad Movies</h1>
+    <p class="scope">The full canon, built out from <strong>The Firm</strong>, <strong>Meet Joe Black</strong>, <strong>Cast Away</strong>, <strong>Tin Cup</strong>, and <strong>Apollo 13</strong> — plus the 90s/00s film-look lane. Tap any movie to watch the trailer. This list grows over time.</p>
+  </header>
+
+  <div class="controls">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input id="search" type="text" placeholder="Search movies…" autocomplete="off" spellcheck="false">
+    </div>
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <div class="count" id="count"></div>
+  <div id="lanes"></div>
+  <div class="empty" id="empty" style="display:none">No movies match that search.</div>
+
+  <footer>
+    A growing directory of the movies Dad always had on — and the film-look era that rhymes with them.<br>
+    Trailers stream from YouTube. Built on Random Phone Builds · Updated June 29, 2026.
+  </footer>
+</div>
+
+<div class="lb" id="lb">
+  <div class="lb-inner">
+    <div class="lb-title"><span id="lbName"></span><a id="lbYt" href="#" target="_blank" rel="noopener" title="Wrong trailer? Find it on YouTube" style="color:#fff;font-size:0.78rem;font-weight:500;text-decoration:none;border:1px solid rgba(255,255,255,0.3);padding:0.4rem 0.75rem;border-radius:2rem;white-space:nowrap;flex:0 0 auto;">Open on YouTube&nbsp;&#8599;</a></div>
+    <div class="lb-frame">
+      <button class="lb-close" id="lbClose" aria-label="Close">&times;</button>
+      <div id="lbMount"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== MOVIE DATA =====
+   Each entry: { t: title, y: year, lane: section, note: blurb, yt: youtubeTrailerId|null }
+   To add a movie later: append an object here. No other changes needed. */
+const MOVIES = [{"t": "The Fugitive","y": 1993,"lane": "The Firm — legal & conspiracy thrillers","note": "The platonic ideal of a dad movie.","yt": "OlYsVq6FpuU"},{"t": "A Few Good Men","y": 1992,"lane": "The Firm — legal & conspiracy thrillers","note": "Cruise in the courtroom. \"You can't handle the truth.\"","yt": "cXMNGokxbQA"},{"t": "The Pelican Brief","y": 1993,"lane": "The Firm — legal & conspiracy thrillers","note": "The Grisham run.","yt": "N7seUNbY1_w"},{"t": "The Client","y": 1994,"lane": "The Firm — legal & conspiracy thrillers","note": "The Grisham run.","yt": "ldM7YLR2OY0"},{"t": "A Time to Kill","y": 1996,"lane": "The Firm — legal & conspiracy thrillers","note": "The Grisham run.","yt": "IoHDOEWaX-w"},{"t": "Clear and Present Danger","y": 1994,"lane": "The Firm — legal & conspiracy thrillers","note": "The Jack Ryan trilogy.","yt": "TuYb6ZNQaZo"},{"t": "Patriot Games","y": 1992,"lane": "The Firm — legal & conspiracy thrillers","note": "The Jack Ryan trilogy.","yt": "MLAElZn3r4E"},{"t": "The Hunt for Red October","y": 1990,"lane": "The Firm — legal & conspiracy thrillers","note": "The Jack Ryan trilogy.","yt": "9tt3GWZZvlM"},{"t": "Air Force One","y": 1997,"lane": "The Firm — legal & conspiracy thrillers","note": "Harrison Ford punches terrorists on a plane.","yt": "cUclxtJDxh4"},{"t": "Primal Fear","y": 1996,"lane": "The Firm — legal & conspiracy thrillers","note": "Grown-up courtroom menace.","yt": "glWAjoDVH3c"},{"t": "Presumed Innocent","y": 1990,"lane": "The Firm — legal & conspiracy thrillers","note": "Grown-up courtroom menace.","yt": "U8j6wjbmd7k"},{"t": "The Untouchables","y": 1987,"lane": "The Firm — legal & conspiracy thrillers","note": "Grown-up crime classic.","yt": "2cGat1xI8G8"},{"t": "Saving Private Ryan","y": 1998,"lane": "Apollo 13 — true-story & competence epics","note": "The competence epic.","yt": "zwhP5b4tD6g"},{"t": "Gladiator","y": 2000,"lane": "Apollo 13 — true-story & competence epics","note": "The competence epic.","yt": "LdJOWTBZl6Y"},{"t": "Braveheart","y": 1995,"lane": "Apollo 13 — true-story & competence epics","note": "The competence epic.","yt": "1NJO0jxBtMo"},{"t": "The Patriot","y": 2000,"lane": "Apollo 13 — true-story & competence epics","note": "The competence epic.","yt": "R_C_dPHEWN0"},{"t": "Black Hawk Down","y": 2001,"lane": "Apollo 13 — true-story & competence epics","note": "The competence epic.","yt": "2GfBkC3qs78"},{"t": "We Were Soldiers","y": 2002,"lane": "Apollo 13 — true-story & competence epics","note": "The competence epic.","yt": "wYK4jrhepdU"},{"t": "Glory","y": 1989,"lane": "Apollo 13 — true-story & competence epics","note": "The competence epic.","yt": "CvmuHfSgra8"},{"t": "Master and Commander: The Far Side of the World","y": 2003,"lane": "Apollo 13 — true-story & competence epics","note": "The best naval movie of the bunch.","yt": "tHTHCNYiiHk"},{"t": "Cinderella Man","y": 2005,"lane": "Apollo 13 — true-story & competence epics","note": "More Hanks/Howard energy.","yt": "q3cT96OuOJE"},{"t": "Catch Me If You Can","y": 2002,"lane": "Apollo 13 — true-story & competence epics","note": "More Hanks/Howard energy.","yt": "Q6By16h-pwA"},{"t": "The Perfect Storm","y": 2000,"lane": "Cast Away — survival & high-stakes adventure","note": "Clooney, Wahlberg — the obvious companion piece.","yt": "RZvljNvnd18"},{"t": "The Edge","y": 1997,"lane": "Cast Away — survival & high-stakes adventure","note": "Hopkins vs. a bear. Criminally underrated.","yt": "U0ZVuHntc-8"},{"t": "The River Wild","y": 1994,"lane": "Cast Away — survival & high-stakes adventure","note": "High-stakes adventure.","yt": "gWew8lWYhtI"},{"t": "Open Range","y": 2003,"lane": "Cast Away — survival & high-stakes adventure","note": "Crime-epic energy.","yt": "OHbgRrLBpLI"},{"t": "Heat","y": 1995,"lane": "Cast Away — survival & high-stakes adventure","note": "Crime-epic energy.","yt": "PpAhjOvQVj0"},{"t": "Field of Dreams","y": 1989,"lane": "Tin Cup — sports (especially Costner)","note": "The Costner sports trilogy.","yt": "95RYgkNNPvU"},{"t": "Bull Durham","y": 1988,"lane": "Tin Cup — sports (especially Costner)","note": "The Costner sports trilogy.","yt": "qnWSvSrb1-I"},{"t": "For Love of the Game","y": 1999,"lane": "Tin Cup — sports (especially Costner)","note": "The Costner sports trilogy.","yt": "WlgXndusYmc"},{"t": "Jerry Maguire","y": 1996,"lane": "Tin Cup — sports (especially Costner)","note": "The dramatic-sports crossover.","yt": "7gZcQ6ddJF0"},{"t": "Rudy","y": 1993,"lane": "Tin Cup — sports (especially Costner)","note": "The underdog classic.","yt": "firK4y-3bKw"},{"t": "Hoosiers","y": 1986,"lane": "Tin Cup — sports (especially Costner)","note": "The underdog classic.","yt": "12h5KGHU8Mg"},{"t": "Remember the Titans","y": 2000,"lane": "Tin Cup — sports (especially Costner)","note": "The underdog classic.","yt": "iMrdUCJuvlQ"},{"t": "The Natural","y": 1984,"lane": "Tin Cup — sports (especially Costner)","note": "The mythic baseball one.","yt": "IEZnBQJG4ig"},{"t": "Caddyshack","y": 1980,"lane": "Tin Cup — sports (especially Costner)","note": "The golf comedy double feature.","yt": "PxlY9wCx6vs"},{"t": "Happy Gilmore","y": 1996,"lane": "Tin Cup — sports (especially Costner)","note": "The golf comedy double feature. (Confirmed favorite.)","yt": "y1emDAYCfVQ"},{"t": "The Bridges of Madison County","y": 1995,"lane": "Meet Joe Black — grown-up romance & drama","note": "Grown-up romance.","yt": "Up-oN4NtvbM"},{"t": "Message in a Bottle","y": 1999,"lane": "Meet Joe Black — grown-up romance & drama","note": "Grown-up romance.","yt": "Ur9xLzOJNIs"},{"t": "Legends of the Fall","y": 1994,"lane": "Meet Joe Black — grown-up romance & drama","note": "John Toll cinematography. A visual feast.","yt": "QmfxbiMbASI"},{"t": "As Good as It Gets","y": 1997,"lane": "Meet Joe Black — grown-up romance & drama","note": "Grown-up dramedy.","yt": "t2d89afgtqg"},{"t": "Forrest Gump","y": 1994,"lane": "Meet Joe Black — grown-up romance & drama","note": "Americana heart. (Confirmed favorite.)","yt": "XHhAG-YLdk8"},{"t": "The Shawshank Redemption","y": 1994,"lane": "The all-purpose dad pantheon","note": "Possibly the single most-rewatched dad movie ever.","yt": "6hB3S9bIaco"},{"t": "Tombstone","y": 1993,"lane": "The all-purpose dad pantheon","note": "The western.","yt": "sSQBypcft1U"},{"t": "Unforgiven","y": 1992,"lane": "The all-purpose dad pantheon","note": "The western.","yt": "ftTX4FoBWlE"},{"t": "Ronin","y": 1998,"lane": "The all-purpose dad pantheon","note": "Just put it on.","yt": "OelZtfrUIgc"},{"t": "Crimson Tide","y": 1995,"lane": "The all-purpose dad pantheon","note": "Just put it on.","yt": "UMjcOLGReBU"},{"t": "The Bourne Identity","y": 2002,"lane": "The all-purpose dad pantheon","note": "Just put it on.","yt": "FpKaB5dvQ4g"},{"t": "Ocean's Eleven","y": 2001,"lane": "The all-purpose dad pantheon","note": "Heist cool. (Confirmed favorite.)","yt": "imm6OR605UI"},{"t": "Top Gun","y": 1986,"lane": "The all-purpose dad pantheon","note": "More Cruise. (Confirmed favorite.)","yt": "D--NdUSn6Hs"},{"t": "Days of Thunder","y": 1990,"lane": "The all-purpose dad pantheon","note": "More Cruise.","yt": "oPXL4_eZ4-M"},{"t": "The Last Samurai","y": 2003,"lane": "The all-purpose dad pantheon","note": "More Cruise.","yt": "T50_qHEOahQ"},{"t": "Die Hard","y": 1988,"lane": "Action & adventure","note": "The whole trilogy earns its spot.","yt": "jaJuwKCmJbY"},{"t": "Die Hard 2","y": 1990,"lane": "Action & adventure","note": "The whole trilogy earns its spot.","yt": "CvHp7xJZ4_U"},{"t": "Die Hard with a Vengeance","y": 1995,"lane": "Action & adventure","note": "The whole trilogy earns its spot.","yt": "apY_TYoJios"},{"t": "Lethal Weapon","y": 1987,"lane": "Action & adventure","note": "All of them.","yt": "X9_n8jakvWU"},{"t": "Speed","y": 1994,"lane": "Action & adventure","note": "Pure 90s action.","yt": "8piqd2BWeGI"},{"t": "Con Air","y": 1997,"lane": "Action & adventure","note": "Pure 90s action.","yt": "Olvpk5BXWCI"},{"t": "The Rock","y": 1996,"lane": "Action & adventure","note": "Pure 90s action.","yt": "a3qcNyjj9ZQ"},{"t": "Face/Off","y": 1997,"lane": "Action & adventure","note": "Pure 90s action.","yt": "eB_4jFsyhj4"},{"t": "True Lies","y": 1994,"lane": "Action & adventure","note": "Pure 90s action.","yt": "e94VCq6rzyE"},{"t": "Bad Boys","y": 1995,"lane": "Action & adventure","note": "Pure 90s action.","yt": "Xm12NSa8jsM"},{"t": "Point Break","y": 1991,"lane": "Action & adventure","note": "Pure 90s action.","yt": "ZgHPumVN4Fo"},{"t": "Twister","y": 1996,"lane": "Action & adventure","note": "Blockbuster spectacle.","yt": "HCIK_AN8Zn4"},{"t": "Independence Day","y": 1996,"lane": "Action & adventure","note": "Blockbuster spectacle.","yt": "B1E7h3SeMDk"},{"t": "Men in Black","y": 1997,"lane": "Action & adventure","note": "Blockbuster spectacle.","yt": "1Q4mhYF9aQQ"},{"t": "The Mummy","y": 1999,"lane": "Action & adventure","note": "Blockbuster spectacle.","yt": "f7oKxlaUBac"},{"t": "National Treasure","y": 2004,"lane": "Action & adventure","note": "Blockbuster spectacle.","yt": "vqUPxNT8io4"},{"t": "The Last of the Mohicans","y": 1992,"lane": "Action & adventure","note": "Sweeping adventure.","yt": "yaQeVnN6pUc"},{"t": "Top Gun: Maverick","y": 2022,"lane": "Action & adventure","note": "The legacy sequel that delivered.","yt": "giXco2jaZ_4"},{"t": "The Bourne Supremacy","y": 2004,"lane": "Thrillers & crime","note": "The Bourne run.","yt": "Y-HqyyfBbSo"},{"t": "The Bourne Ultimatum","y": 2007,"lane": "Thrillers & crime","note": "The Bourne run.","yt": "ZT2ZxjUjSo0"},{"t": "Enemy of the State","y": 1998,"lane": "Thrillers & crime","note": "Paranoid surveillance thriller.","yt": "ZjogdKObxrI"},{"t": "The Negotiator","y": 1998,"lane": "Thrillers & crime","note": "Tense standoff thriller.","yt": "YnSk9xrOf2M"},{"t": "In the Line of Fire","y": 1993,"lane": "Thrillers & crime","note": "Eastwood vs. an assassin.","yt": "FuZdS9da4S4"},{"t": "Ransom","y": 1996,"lane": "Thrillers & crime","note": "\"Give me back my son.\"","yt": "KcAzjSTzSwY"},{"t": "Collateral","y": 2004,"lane": "Thrillers & crime","note": "Michael Mann, digital LA night.","yt": "USktiCUOJy8"},{"t": "The Departed","y": 2006,"lane": "Thrillers & crime","note": "Scorsese crime epic.","yt": "iQpb1LoeVUc"},{"t": "L.A. Confidential","y": 1997,"lane": "Thrillers & crime","note": "Dante Spinotti noir, immaculate.","yt": "9ZH4Fg_dM_k"},{"t": "Se7en","y": 1995,"lane": "Thrillers & crime","note": "Darius Khondji. The film-look bible.","yt": "znmZoVkCjpI"},{"t": "The Usual Suspects","y": 1995,"lane": "Thrillers & crime","note": "The twist that defined a decade.","yt": "Ij4Fdq190qo"},{"t": "Goodfellas","y": 1990,"lane": "Thrillers & crime","note": "Scorsese crime epic.","yt": "2ilzidi_J8Q"},{"t": "Casino","y": 1995,"lane": "Thrillers & crime","note": "Scorsese crime epic.","yt": "j-D0QiMpGKc"},{"t": "Ocean's Twelve","y": 2004,"lane": "Heist & ensemble cool","note": "The Ocean's run.","yt": "TSKzL-8RHuw"},{"t": "Ocean's Thirteen","y": 2007,"lane": "Heist & ensemble cool","note": "The Ocean's run.","yt": "so9Eh-Guci8"},{"t": "The Italian Job","y": 2003,"lane": "Heist & ensemble cool","note": "Mini Coopers and revenge.","yt": "uw6jY3VuOcI"},{"t": "The Sting","y": 1973,"lane": "Heist & ensemble cool","note": "Newman & Redford. The original con.","yt": "_nAIb_J9T5M"},{"t": "Snatch","y": 2000,"lane": "Heist & ensemble cool","note": "Guy Ritchie crime caper.","yt": "AMZH867eWS4"},{"t": "Lock, Stock and Two Smoking Barrels","y": 1998,"lane": "Heist & ensemble cool","note": "Guy Ritchie crime caper.","yt": "Y8MXn5No1Jc"},{"t": "The Waterboy","y": 1998,"lane": "Sports","note": "Sandler sports comedy.","yt": "MB6QbHx2TE4"},{"t": "Slap Shot","y": 1977,"lane": "Sports","note": "Hockey cult classic.","yt": "MUuEWI6F3dQ"},{"t": "Major League","y": 1989,"lane": "Sports","note": "Baseball comedy.","yt": "8iNcyhHzHqc"},{"t": "Miracle","y": 2004,"lane": "Sports","note": "\"Do you believe in miracles?\"","yt": "Bd0_Dm2xlEM"},{"t": "Friday Night Lights","y": 2004,"lane": "Sports","note": "Texas football, the film.","yt": "O-mI9GajrBc"},{"t": "Rocky","y": 1976,"lane": "Sports","note": "The whole run.","yt": "-Hk-LYcavrw"},{"t": "Talladega Nights: The Ballad of Ricky Bobby","y": 2006,"lane": "Sports","note": "\"Shake and bake.\"","yt": "YfGRg0FLxtE"},{"t": "Dodgeball: A True Underdog Story","y": 2004,"lane": "Sports","note": "\"If you can dodge a wrench...\"","yt": "W-XbDZUnUmw"},{"t": "Kingpin","y": 1996,"lane": "Sports","note": "Farrelly bowling comedy.","yt": "AwjtrwDtf3Q"},{"t": "The Legend of Bagger Vance","y": 2000,"lane": "Sports","note": "Tin Cup's golf cousin.","yt": "znjcEycE4O4"},{"t": "Stripes","y": 1981,"lane": "Comedy he'd quote for years","note": "Bill Murray, peak era.","yt": "mV9kxSK_-0I"},{"t": "Animal House","y": 1978,"lane": "Comedy he'd quote for years","note": "The frat-comedy blueprint.","yt": "KWjtI6n5xWM"},{"t": "Fletch","y": 1985,"lane": "Comedy he'd quote for years","note": "Chevy Chase at his quickest.","yt": "4sMMt2M3RiU"},{"t": "Trading Places","y": 1983,"lane": "Comedy he'd quote for years","note": "Murphy & Aykroyd.","yt": "vEaXAsbvHV4"},{"t": "Coming to America","y": 1988,"lane": "Comedy he'd quote for years","note": "Murphy classic.","yt": "ZDme5Y5E-bI"},{"t": "Planes, Trains and Automobiles","y": 1987,"lane": "Comedy he'd quote for years","note": "The Thanksgiving classic.","yt": "LeyDQUnBgIU"},{"t": "Tommy Boy","y": 1995,"lane": "Comedy he'd quote for years","note": "Farley & Spade.","yt": "9btKFrFhq28"},{"t": "Billy Madison","y": 1995,"lane": "Comedy he'd quote for years","note": "Early Sandler.","yt": "V2Q40rXJuMU"},{"t": "Anchorman: The Legend of Ron Burgundy","y": 2004,"lane": "Comedy he'd quote for years","note": "\"Stay classy.\"","yt": "QvJ1K0_JzFI"},{"t": "Old School","y": 2003,"lane": "Comedy he'd quote for years","note": "\"We're going streaking!\"","yt": "HNyxTUX-9_U"},{"t": "Wedding Crashers","y": 2005,"lane": "Comedy he'd quote for years","note": "Vaughn & Wilson.","yt": "8KdXdqb4iQY"},{"t": "Meet the Parents","y": 2000,"lane": "Comedy he'd quote for years","note": "De Niro vs. Stiller.","yt": "jXfG_ei2m6E"},{"t": "Liar Liar","y": 1997,"lane": "Comedy he'd quote for years","note": "Peak Carrey.","yt": "U5QP6z9xir0"},{"t": "The Big Lebowski","y": 1998,"lane": "Comedy he'd quote for years","note": "The Dude abides.","yt": "knxhiwUspsA"},{"t": "Office Space","y": 1999,"lane": "Comedy he'd quote for years","note": "\"Did you get the memo?\"","yt": "rPJUXZvX6UI"},{"t": "Blazing Saddles","y": 1974,"lane": "Comedy he'd quote for years","note": "Mel Brooks classic.","yt": "tb2fYUKJdN8"},{"t": "The Green Mile","y": 1999,"lane": "Heart & Americana","note": "Apollo 13's emotional sibling.","yt": "Ki4haFrqSrw"},{"t": "Big","y": 1988,"lane": "Heart & Americana","note": "Hanks heart.","yt": "BGDTNhHYJ94"},{"t": "A League of Their Own","y": 1992,"lane": "Heart & Americana","note": "\"There's no crying in baseball.\"","yt": "zA6RimS_isQ"},{"t": "Dances with Wolves","y": 1990,"lane": "Heart & Americana","note": "Costner's sweeping epic.","yt": "q6jBTxE4GsM"},{"t": "Silverado","y": 1985,"lane": "Westerns","note": "The ensemble western.","yt": "ozlnGrH94Rc"},{"t": "The Magnificent Seven","y": 1960,"lane": "Westerns","note": "The original seven.","yt": "nlXBaP7l5n4"},{"t": "Young Guns","y": 1988,"lane": "Westerns","note": "The brat-pack western.","yt": "qLGhrmntLqU"},{"t": "3:10 to Yuma","y": 2007,"lane": "Westerns","note": "The modern remake that works.","yt": "jX1m45CwvJ8"},{"t": "Mission: Impossible","y": 1996,"lane": "Cruise beyond Top Gun","note": "The whole series.","yt": "Ohws8y572KE"},{"t": "Rain Man","y": 1988,"lane": "Cruise beyond Top Gun","note": "Cruise & Hoffman.","yt": "mlNwXuHUA8I"},{"t": "Jaws","y": 1975,"lane": "Classics that play in every dad's house","note": "\"You're gonna need a bigger boat.\"","yt": "4pxkU9GVAoA"},{"t": "Raiders of the Lost Ark","y": 1981,"lane": "Classics that play in every dad's house","note": "The whole Indiana Jones run.","yt": "Rh_BJXG1-44"},{"t": "Back to the Future","y": 1985,"lane": "Classics that play in every dad's house","note": "The trilogy.","yt": "Wqx7YEjR4II"},{"t": "The Godfather","y": 1972,"lane": "Classics that play in every dad's house","note": "The peak.","yt": "1x0GpEZnwa8"},{"t": "The Godfather Part II","y": 1974,"lane": "Classics that play in every dad's house","note": "The peak.","yt": "tF_v4ZZkQWE"},{"t": "Butch Cassidy and the Sundance Kid","y": 1969,"lane": "Classics that play in every dad's house","note": "Newman & Redford.","yt": "vqwFSiq8E-U"},{"t": "Cool Hand Luke","y": 1967,"lane": "Classics that play in every dad's house","note": "\"What we've got here is failure to communicate.\"","yt": "ofxtDrRVQY4"},{"t": "The Great Escape","y": 1963,"lane": "Classics that play in every dad's house","note": "McQueen on the motorcycle.","yt": "M2bEzJFVdQ4"},{"t": "Vanilla Sky","y": 2001,"lane": "Matt's lane — the 90s/00s film look (already loves)","note": "You already love this one.","yt": "k09OX40NLUw"},{"t": "The Truman Show","y": 1998,"lane": "Matt's lane — the 90s/00s film look (already loves)","note": "You already love this one.","yt": "dlnmQbPGuls"},{"t": "Cruel Intentions","y": 1999,"lane": "Matt's lane — the 90s/00s film look (already loves)","note": "You already love this one.","yt": "bkTV1AQCIjY"},{"t": "The Game","y": 1997,"lane": "Matt's lane — the 90s/00s film look (already loves)","note": "You already love this one.","yt": "nsKdR05ZsGE"},{"t": "Gattaca","y": 1997,"lane": "Matt's lane — the 90s/00s film look (already loves)","note": "You already love this one.","yt": "W_KruQhfvW4"},{"t": "A.I. Artificial Intelligence","y": 2001,"lane": "Matt's lane — the 90s/00s film look (already loves)","note": "You already love this one.","yt": "pm7qlQ2E0iE"},{"t": "The Talented Mr. Ripley","y": 1999,"lane": "Bullseyes — watch these next","note": "John Seale. Sun-drenched Italy, glossy menace. The platonic version of the vibe.","yt": "h4e-Si4oGEw"},{"t": "Great Expectations","y": 1998,"lane": "Bullseyes — watch these next","note": "Cuarón / Lubezki. Drenched in green, gorgeous, overlooked.","yt": "AoEpfmHG2ko"},{"t": "American Beauty","y": 1999,"lane": "Bullseyes — watch these next","note": "Conrad Hall. Won the cinematography Oscar for exactly this suburban gloss.","yt": "Ly7rq5EsTC8"},{"t": "The Insider","y": 1999,"lane": "Bullseyes — watch these next","note": "Mann / Spinotti. Anamorphic, paranoid, immaculate.","yt": "MGOb29aePyc"},{"t": "Eyes Wide Shut","y": 1999,"lane": "Bullseyes — watch these next","note": "Kubrick. The dreamy, lit-from-within quality Vanilla Sky reached for.","yt": "qwPeuXv7Suo"},{"t": "Dark City","y": 1998,"lane": "Bullseyes — watch these next","note": "The missing link between Gattaca and The Matrix.","yt": "gt9HkO-cGGo"},{"t": "Minority Report","y": 2002,"lane": "Bullseyes — watch these next","note": "Kamiński. Bleach-bypass Spielberg sci-fi. A.I.'s harder-edged cousin.","yt": "lG7DGMgfOb8"},{"t": "Fight Club","y": 1999,"lane": "Paranoia & reality-benders","note": "Jeff Cronenweth. The Game lane.","yt": "Ba3JVQXp16w"},{"t": "Memento","y": 2000,"lane": "Paranoia & reality-benders","note": "Reality unspooled backwards.","yt": "4CV41hoyS8A"},{"t": "Mulholland Drive","y": 2001,"lane": "Paranoia & reality-benders","note": "Lynch dream-logic.","yt": "PN9cYz38b4w"},{"t": "Donnie Darko","y": 2001,"lane": "Paranoia & reality-benders","note": "Suburban time-bending dread.","yt": "AOIPyZBySds"},{"t": "The Sixth Sense","y": 1999,"lane": "Paranoia & reality-benders","note": "The Shyamalan original.","yt": "3-ZP95NF_Wk"},{"t": "Unbreakable","y": 2000,"lane": "Paranoia & reality-benders","note": "The grounded superhero one.","yt": "fNeCB2ALNoA"},{"t": "Signs","y": 2002,"lane": "Paranoia & reality-benders","note": "Slow-burn dread.","yt": "dUw26F0WfLg"},{"t": "The Thirteenth Floor","y": 1999,"lane": "Paranoia & reality-benders","note": "Simulated-reality sleeper.","yt": "f5qQHqOHMZ0"},{"t": "eXistenZ","y": 1999,"lane": "Paranoia & reality-benders","note": "Cronenberg game-reality.","yt": "a3rWwv4om1U"},{"t": "12 Monkeys","y": 1995,"lane": "Paranoia & reality-benders","note": "Gilliam time-loop fever dream.","yt": "15s4Y9ffW_o"},{"t": "Strange Days","y": 1995,"lane": "Paranoia & reality-benders","note": "Bigelow millennial paranoia.","yt": "R8o3uy5Xq2A"},{"t": "Solaris","y": 2002,"lane": "Paranoia & reality-benders","note": "Soderbergh. Quiet, lit-from-within sci-fi.","yt": "rvm7WMbXfeY"},{"t": "Open Your Eyes","y": 1997,"lane": "Paranoia & reality-benders","note": "The Spanish original Vanilla Sky remade.","yt": "rjS_uzWt6pc"},{"t": "S1m0ne","y": 2002,"lane": "Paranoia & reality-benders","note": "Synthetic-celebrity satire.","yt": "HuAjeuKXX7c"},{"t": "The Cell","y": 2000,"lane": "Paranoia & reality-benders","note": "Tarsem. A surreal visual feast.","yt": "eIpy4p_yMV0"},{"t": "Contact","y": 1997,"lane": "Sleek metaphysical sci-fi","note": "The Gattaca / A.I. lane.","yt": "Q399v-pMG30"},{"t": "Bicentennial Man","y": 1999,"lane": "Sleek metaphysical sci-fi","note": "Literally the A.I. companion piece.","yt": "yfDlQ-Q12rg"},{"t": "Equilibrium","y": 2002,"lane": "Sleek metaphysical sci-fi","note": "Gun-kata dystopia.","yt": "raleKODYeg0"},{"t": "Code 46","y": 2003,"lane": "Sleek metaphysical sci-fi","note": "Winterbottom soft-focus future.","yt": "g7WgrrefZoc"},{"t": "The Island","y": 2005,"lane": "Sleek metaphysical sci-fi","note": "Clones and chrome.","yt": "xr78AERXHw8"},{"t": "Sphere","y": 1998,"lane": "Sleek metaphysical sci-fi","note": "Deep-sea mind-bender.","yt": "GJvKLetIV20"},{"t": "Mission to Mars","y": 2000,"lane": "Sleek metaphysical sci-fi","note": "De Palma's earnest space epic.","yt": "njIN5HU4UMQ"},{"t": "Impostor","y": 2001,"lane": "Sleek metaphysical sci-fi","note": "PKD paranoia.","yt": "a1oHpR_7cpg"},{"t": "The Matrix","y": 1999,"lane": "Sleek metaphysical sci-fi","note": "The one that rewired everything.","yt": "vKQi3bBA1y8"},{"t": "City of Angels","y": 1998,"lane": "Lush prestige drama & romance","note": "The Meet Joe Black lane.","yt": "wCrcDidiGJs"},{"t": "What Dreams May Come","y": 1998,"lane": "Lush prestige drama & romance","note": "A painterly visual feast.","yt": "unJ0Mx9VEcM"},{"t": "Snow Falling on Cedars","y": 1999,"lane": "Lush prestige drama & romance","note": "Misty, gorgeous, melancholic.","yt": "SY6mC4I4SWk"},{"t": "The Age of Innocence","y": 1993,"lane": "Lush prestige drama & romance","note": "Scorsese's opulent period piece.","yt": "0uPg36iMlGU"},{"t": "The English Patient","y": 1996,"lane": "Lush prestige drama & romance","note": "Sweeping desert romance.","yt": "Xk_LRcOFT0c"},{"t": "The House of Mirth","y": 2000,"lane": "Lush prestige drama & romance","note": "Period restraint and gloss.","yt": "DXHJjezLLwk"},{"t": "Original Sin","y": 2001,"lane": "Lush prestige drama & romance","note": "Lush, sultry melodrama.","yt": "HF0eg5YAFIs"},{"t": "The Portrait of a Lady","y": 1996,"lane": "Lush prestige drama & romance","note": "Campion period piece.","yt": "kAkTcfZus8s"},{"t": "Magnolia","y": 1999,"lane": "Lush prestige drama & romance","note": "PTA's interlocking epic.","yt": "KnamcFv_N9Q"},{"t": "Almost Famous","y": 2000,"lane": "Lush prestige drama & romance","note": "Crowe's golden-hour rock memoir.","yt": "aQXh_AaJXaM"},{"t": "Boogie Nights","y": 1997,"lane": "Lush prestige drama & romance","note": "PTA's neon-lit 70s sprawl.","yt": "pOk0fsMGyck"},{"t": "The Devil's Advocate","y": 1997,"lane": "Glossy adult thrillers","note": "The Firm lane.","yt": "ziD_fQuxPyY"},{"t": "Arlington Road","y": 1999,"lane": "Glossy adult thrillers","note": "Paranoid suburban dread.","yt": "zfbBavo86qs"},{"t": "A Simple Plan","y": 1998,"lane": "Glossy adult thrillers","note": "Raimi's snowbound morality tale.","yt": "6fwEc9nFgkE"},{"t": "Frequency","y": 2000,"lane": "Glossy adult thrillers","note": "Time-bending father-son thriller.","yt": "H_FK6JZr4lc"},{"t": "Conspiracy Theory","y": 1997,"lane": "Glossy adult thrillers","note": "Gibson & Roberts paranoia.","yt": "adYGUai7PNc"},{"t": "The Bone Collector","y": 1999,"lane": "Glossy adult thrillers","note": "Slick serial-killer procedural.","yt": "cuJ717M7Vh8"},{"t": "Proof of Life","y": 2000,"lane": "Glossy adult thrillers","note": "Hostage-negotiation thriller.","yt": "kY7qGRhWcCo"}];
+
+/* ===== Render ===== */
+const lanesEl = document.getElementById('lanes');
+const chipsEl = document.getElementById('chips');
+const countEl = document.getElementById('count');
+const emptyEl = document.getElementById('empty');
+const searchEl = document.getElementById('search');
+
+const laneOrder = [];
+MOVIES.forEach(m => { if (!laneOrder.includes(m.lane)) laneOrder.push(m.lane); });
+
+let activeLane = 'All';
+let query = '';
+
+function ytThumb(id){ return 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg'; }
+
+function cardHTML(m, idx){
+  const thumb = m.yt
+    ? '<div class="thumb"><img loading="lazy" src="'+ytThumb(m.yt)+'" alt="'+escapeHtml(m.t)+'" onerror="thumbErr(this)"><div class="play"><div></div></div></div>'
+    : '<div class="thumb noimg"><span>'+escapeHtml(m.t)+'</span><div class="play"><div></div></div></div>';
+  return '<div class="card" data-idx="'+idx+'">'+thumb+
+    '<div class="meta"><div class="t">'+escapeHtml(m.t)+'</div>'+
+    '<div class="y">'+m.y+'</div>'+
+    (m.note ? '<div class="note">'+escapeHtml(m.note)+'</div>' : '')+
+    '</div></div>';
+}
+
+function escapeHtml(s){ return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function render(){
+  const q = query.trim().toLowerCase();
+  let total = 0;
+  lanesEl.innerHTML = '';
+  laneOrder.forEach(lane => {
+    if (activeLane !== 'All' && lane !== activeLane) return;
+    const items = MOVIES.map((m,i)=>({m,i})).filter(({m}) =>
+      m.lane === lane && (!q || m.t.toLowerCase().includes(q) || (''+m.y).includes(q) || (m.note||'').toLowerCase().includes(q))
+    );
+    if (!items.length) return;
+    total += items.length;
+    const sec = document.createElement('div');
+    sec.className = 'lane';
+    sec.innerHTML = '<div class="lane-head"><h2>'+escapeHtml(lane)+'</h2><span class="n">'+items.length+'</span></div>'+
+      '<div class="grid">'+items.map(({m,i})=>cardHTML(m,i)).join('')+'</div>';
+    lanesEl.appendChild(sec);
+  });
+  emptyEl.style.display = total ? 'none' : 'block';
+  countEl.textContent = total + (total === 1 ? ' movie' : ' movies') + (q || activeLane!=='All' ? ' shown' : ' in the directory');
+}
+
+function buildChips(){
+  const all = ['All', ...laneOrder];
+  chipsEl.innerHTML = all.map(l =>
+    '<button class="chip'+(l==='All'?' active':'')+'" data-lane="'+escapeHtml(l)+'">'+escapeHtml(l.split(' — ')[0])+'</button>'
+  ).join('');
+  chipsEl.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+    activeLane = c.dataset.lane;
+    chipsEl.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+    c.classList.add('active');
+    render();
+    window.scrollTo({ top: document.querySelector('.controls').offsetTop - 10, behavior: 'smooth' });
+  }));
+}
+
+/* ===== Lightbox ===== */
+const lb = document.getElementById('lb');
+const lbMount = document.getElementById('lbMount');
+const lbName = document.getElementById('lbName');
+const lbYt = document.getElementById('lbYt');
+
+function ytSearchUrl(m){ return 'https://www.youtube.com/results?search_query='+encodeURIComponent(m.t+' '+m.y+' trailer'); }
+
+function thumbErr(img){
+  const thumb = img.parentElement;
+  thumb.classList.add('noimg');
+  thumb.innerHTML = '<span>'+escapeHtml(img.alt||'')+'</span><div class="play"><div></div></div>';
+  const card = thumb.closest('.card');
+  if (card) card.dataset.noyt = '1';
+}
+
+function openTrailer(m, forceSearch){
+  lbYt.href = ytSearchUrl(m);
+  if (m.yt && !forceSearch){
+    lbName.innerHTML = escapeHtml(m.t)+' <span class="yr">'+m.y+'</span>';
+    lbMount.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/'+m.yt+'?autoplay=1&rel=0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  } else {
+    window.open(ytSearchUrl(m), '_blank');
+  }
+}
+function closeTrailer(){
+  lb.classList.remove('open');
+  lbMount.innerHTML = '';
+  document.body.style.overflow = '';
+}
+document.getElementById('lbClose').addEventListener('click', closeTrailer);
+lb.addEventListener('click', e => { if (e.target === lb) closeTrailer(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && lb.classList.contains('open')) closeTrailer(); });
+
+lanesEl.addEventListener('click', e => {
+  const card = e.target.closest('.card');
+  if (!card) return;
+  openTrailer(MOVIES[+card.dataset.idx], card.dataset.noyt === '1');
+});
+
+searchEl.addEventListener('input', e => { query = e.target.value; render(); });
+
+searchEl.placeholder = 'Search ' + MOVIES.length + ' movies…';
+buildChips();
+render();
+</script>
+</body>
+</html>
