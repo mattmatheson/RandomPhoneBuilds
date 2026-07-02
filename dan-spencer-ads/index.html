@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="published" content="2026-07-01">
+<title>Dan Spencer — Instagram & Facebook Ads</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --bg: #FAFAFA;
+    --card: #FFFFFF;
+    --text: #1D1D1F;
+    --muted: #6E6E73;
+    --line: #E6E6E8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 6rem;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 1.25rem; }
+
+  header {
+    padding: 4rem 0 2.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.9rem;
+  }
+  h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .scope {
+    font-size: 1.15rem;
+    color: var(--muted);
+    margin-top: 0.9rem;
+    max-width: 34rem;
+  }
+
+  /* Listen controls */
+  .listen-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1.6rem;
+  }
+  .listen-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.6rem 1.5rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: opacity 0.2s;
+  }
+  .listen-btn:hover { opacity: 0.9; }
+  select.voice, .speed-btn {
+    font-family: inherit;
+    font-size: 0.9rem;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 2rem;
+    background: var(--card);
+    color: var(--text);
+    cursor: pointer;
+  }
+  .protip {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1rem;
+    line-height: 1.5;
+  }
+  .protip a { color: var(--accent); cursor: pointer; text-decoration: none; font-weight: 600; }
+
+  main { padding-top: 2.5rem; }
+  section { margin-bottom: 2.6rem; scroll-margin-top: 1rem; }
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.9rem;
+  }
+  h2 .num {
+    color: var(--accent);
+    font-weight: 800;
+    margin-right: 0.5rem;
+  }
+  p { margin-bottom: 1rem; color: #333; }
+  p.lead { font-size: 1.12rem; color: var(--text); }
+  strong { font-weight: 700; color: var(--text); }
+  ul { margin: 0 0 1rem 1.1rem; }
+  li { margin-bottom: 0.5rem; color: #333; }
+
+  section.reading {
+    border-left: 3px solid var(--accent);
+    background: rgba(196, 32, 32, 0.04);
+    padding-left: 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+
+  /* Ad cards */
+  .cards { display: grid; gap: 1rem; margin: 0.5rem 0 1rem; }
+  .adcard {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 1.5rem;
+  }
+  .adcard .tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: rgba(196,32,32,0.08);
+    padding: 0.25rem 0.7rem;
+    border-radius: 1rem;
+    margin-bottom: 0.8rem;
+  }
+  .adcard h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.7rem; }
+  .adcard .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    border-top: 1px solid var(--line);
+    font-size: 0.95rem;
+  }
+  .adcard .row:first-of-type { border-top: none; }
+  .adcard .row .k { color: var(--muted); }
+  .adcard .row .v { font-weight: 600; text-align: right; }
+  .live { color: #178A3B; font-weight: 700; }
+
+  /* Budget bar */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin: 1rem 0; }
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1.1rem 0.9rem;
+    text-align: center;
+  }
+  .stat .big { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.02em; }
+  .stat .lbl { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
+
+  .callout {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem;
+    margin: 1.2rem 0;
+  }
+  .callout p { margin: 0; }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 2rem 0 1rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  /* Sticky player bar */
+  .player {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(30,30,30,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1rem;
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    transform: translateY(100%);
+    transition: transform 0.35s ease;
+    z-index: 100;
+  }
+  .player.show { transform: translateY(0); }
+  .player button {
+    background: rgba(255,255,255,0.14);
+    border: none; color: #fff;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    font-size: 1rem; cursor: pointer;
+    flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .player button.primary { background: var(--accent); }
+  .player .now {
+    flex: 1;
+    font-size: 0.82rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    color: #eee;
+  }
+  .player select, .player .speed-btn {
+    background: rgba(255,255,255,0.14);
+    color: #fff;
+    border: none;
+    font-size: 0.8rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 1rem;
+  }
+  .player select option { color: #000; }
+
+  @media (max-width: 560px) {
+    h1 { font-size: 2.1rem; }
+    header { padding-top: 3rem; }
+    .listen-btn { width: 100%; justify-content: center; }
+    .stats { grid-template-columns: 1fr; }
+    .player .now { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Managed by Matt Matheson Creative</div>
+    <h1>Dan Spencer — Instagram &amp; Facebook Ads</h1>
+    <p class="scope">A plain-English rundown of what's running, why, and what to expect. Updated July 1, 2026.</p>
+    <div class="listen-row">
+      <button class="listen-btn" id="listenBtn">▶ Listen</button>
+      <select class="voice" id="voiceSelect" aria-label="Choose voice"></select>
+      <button class="speed-btn" id="speedBtn">1x</button>
+    </div>
+    <p class="protip"><em>Pro tip: for a nicer voice, tap <a id="selectAll">select all</a> then use iOS Speak Selection (Settings → Accessibility → Spoken Content → Speak Selection).</em></p>
+  </header>
+
+  <main id="content">
+
+    <section>
+      <h2>The short version</h2>
+      <p class="lead">You've got <strong>two ads running</strong> right now — one built to <strong>grow your Instagram following</strong>, and one built to <strong>drive Spotify streams</strong> for "Sin of Loneliness." Both target country-music fans across the <strong>US, Canada, UK &amp; Ireland</strong>, and both use your video (with a vertical cut made specifically for Stories &amp; Reels).</p>
+    </section>
+
+    <section>
+      <h2><span class="num">1</span>What was going wrong</h2>
+      <p>The old ad looked like it was "only reaching your current followers." It turned out the targeting wasn't the real problem — two other things were:</p>
+      <ul>
+        <li><strong>The account had run out of money.</strong> The ad account runs on a prepaid balance, and it was down to about $10. The old ad quietly spent that and then <em>stopped delivering</em> — so it never had the budget to reach new people beyond your warmest audience.</li>
+        <li><strong>The budget was too thin for the goal.</strong> A few dollars a day spread across three continents can't find new fans. It collapses back to the people Instagram already knows follow you.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="num">2</span>What we changed</h2>
+      <ul>
+        <li><strong>Added funds</strong> so the ads can actually run.</li>
+        <li><strong>Rebuilt the ads around your video</strong> — not a photo — with proper goals and a real audience.</li>
+        <li><strong>Split it into two ads</strong> so one chases followers and one chases streams, instead of asking a single ad to do both.</li>
+        <li><strong>Added your vertical clip</strong> so Instagram Stories &amp; Reels show a full-screen, properly-formatted vertical video, while the feed shows the landscape version.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="num">3</span>What's running now</h2>
+      <div class="cards">
+        <div class="adcard">
+          <span class="tag">Ad 1 · Followers</span>
+          <h3>Grow your Instagram</h3>
+          <div class="row"><span class="k">Goal</span><span class="v">Instagram profile visits</span></div>
+          <div class="row"><span class="k">Creative</span><span class="v">Sin of Loneliness video</span></div>
+          <div class="row"><span class="k">Daily budget</span><span class="v">$8 / day</span></div>
+          <div class="row"><span class="k">Status</span><span class="v live">Live</span></div>
+        </div>
+        <div class="adcard">
+          <span class="tag">Ad 2 · Streams</span>
+          <h3>Drive Spotify streams</h3>
+          <div class="row"><span class="k">Goal</span><span class="v">Traffic → Spotify track</span></div>
+          <div class="row"><span class="k">Button</span><span class="v">"Listen now"</span></div>
+          <div class="row"><span class="k">Creative</span><span class="v">Landscape in Feed · Vertical in Stories/Reels</span></div>
+          <div class="row"><span class="k">Daily budget</span><span class="v">$4 / day</span></div>
+          <div class="row"><span class="k">Status</span><span class="v live">Live</span></div>
+        </div>
+      </div>
+      <p>Both ads target the same audience: <strong>country-music fans in the US, Canada, UK &amp; Ireland.</strong></p>
+    </section>
+
+    <section>
+      <h2><span class="num">4</span>The budget</h2>
+      <div class="stats">
+        <div class="stat"><div class="big">$110</div><div class="lbl">funded total</div></div>
+        <div class="stat"><div class="big">$12</div><div class="lbl">/ day combined</div></div>
+        <div class="stat"><div class="big">~1 wk</div><div class="lbl">runway</div></div>
+      </div>
+      <p>At roughly $12/day combined, the current funds will run for about a week before the ads pause. We can add more, slow the daily spend to stretch it, or set a hard end date — your call.</p>
+    </section>
+
+    <section>
+      <h2><span class="num">5</span>What to expect</h2>
+      <ul>
+        <li><strong>Give it 24–48 hours.</strong> New ads go through a "learning" period while the system figures out who responds — early numbers aren't the real picture.</li>
+        <li><strong>Followers won't spike overnight.</strong> The follower ad drives people to your profile; some follow, some just look. Steady beats sudden.</li>
+        <li><strong>Streams build gradually</strong> as the "Listen now" taps land on your Spotify page.</li>
+        <li><strong>The ads pause on their own</strong> when the funds run out — nothing runs away with your money.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Questions?</h2>
+      <p>If anything here is confusing or you want to push more budget behind one ad over the other, just tell Matt and he'll adjust it. This whole thing is flexible — we can dial it up, slow it down, or change the audience any time.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Prepared by Matt Matheson Creative for Dan Spencer · July 1, 2026</p>
+  </footer>
+</div>
+
+<!-- Sticky player bar -->
+<div class="player" id="player">
+  <button class="primary" id="pPlay">❚❚</button>
+  <span class="now" id="pNow">Reading…</span>
+  <select id="pVoice" aria-label="Voice"></select>
+  <button class="speed-btn" id="pSpeed">1x</button>
+  <button id="pStop">■</button>
+</div>
+
+<script>
+(function () {
+  var synth = window.speechSynthesis;
+  if (!synth) {
+    document.getElementById('listenBtn').style.display = 'none';
+    return;
+  }
+
+  var WHITELIST = ['samantha','karen','daniel','moira','tessa','ava','allison','tom','aaron','nicky','evan','zoe','joelle','fiona','martha','arthur'];
+  function isGood(name) {
+    var n = name.toLowerCase();
+    if (n.indexOf('google us english') > -1 || n.indexOf('google uk english') > -1) return true;
+    for (var i = 0; i < WHITELIST.length; i++) { if (n.indexOf(WHITELIST[i]) > -1) return true; }
+    return false;
+  }
+
+  var voices = [];
+  var chosenVoice = null;
+  var speeds = [0.8, 1, 1.2, 1.5];
+  var speedIdx = 1;
+
+  var listenBtn = document.getElementById('listenBtn');
+  var voiceSelect = document.getElementById('voiceSelect');
+  var speedBtn = document.getElementById('speedBtn');
+  var player = document.getElementById('player');
+  var pPlay = document.getElementById('pPlay');
+  var pStop = document.getElementById('pStop');
+  var pNow = document.getElementById('pNow');
+  var pVoice = document.getElementById('pVoice');
+  var pSpeed = document.getElementById('pSpeed');
+
+  function loadVoices() {
+    var all = synth.getVoices();
+    voices = all.filter(function (v) { return isGood(v.name); });
+    if (!voices.length) voices = all.slice(0, 5);
+    fillSelect(voiceSelect);
+    fillSelect(pVoice);
+    if (!chosenVoice && voices.length) {
+      var sam = voices.filter(function (v) { return v.name.toLowerCase().indexOf('samantha') > -1; });
+      chosenVoice = sam.length ? sam[0] : voices[0];
+      syncVoiceSelects();
+    }
+  }
+  function fillSelect(sel) {
+    sel.innerHTML = '';
+    voices.forEach(function (v, i) {
+      var o = document.createElement('option');
+      o.value = i; o.textContent = v.name.replace(/\(.*?\)/, '').trim();
+      sel.appendChild(o);
+    });
+  }
+  function syncVoiceSelects() {
+    var idx = voices.indexOf(chosenVoice);
+    if (idx > -1) { voiceSelect.value = idx; pVoice.value = idx; }
+  }
+  loadVoices();
+  if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = loadVoices;
+
+  // Build the reading queue from content elements
+  var content = document.getElementById('content');
+  var nodes = Array.prototype.slice.call(
+    content.querySelectorAll('h2, p, li')
+  );
+  var queue = nodes.map(function (el) {
+    return { el: el, text: (el.textContent || '').replace(/\s+/g, ' ').trim(), isHeading: el.tagName === 'H2' };
+  }).filter(function (q) { return q.text.length > 1; });
+
+  var idx = 0;
+  var playing = false;
+  var paused = false;
+  var keepAlive = null;
+
+  function currentSection(el) {
+    var s = el.closest ? el.closest('section') : null;
+    return s;
+  }
+  function highlight(el) {
+    var secs = content.querySelectorAll('section.reading');
+    for (var i = 0; i < secs.length; i++) secs[i].classList.remove('reading');
+    var s = currentSection(el);
+    if (s) {
+      s.classList.add('reading');
+      s.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function speakNext() {
+    if (idx >= queue.length) { stop(); return; }
+    var item = queue[idx];
+    highlight(item.el);
+    pNow.textContent = item.isHeading ? '▸ ' + item.text : item.text;
+
+    var u = new SpeechSynthesisUtterance(item.text);
+    if (chosenVoice) u.voice = chosenVoice;
+    var rate = speeds[speedIdx];
+    u.rate = item.isHeading ? rate * 0.9 : rate;
+    u.pitch = item.isHeading ? 1.05 : 1;
+
+    u.onend = function () {
+      if (!playing) return;
+      idx++;
+      var pause = item.isHeading ? 400 : 200;
+      setTimeout(function () { if (playing) speakNext(); }, pause);
+    };
+    synth.speak(u);
+  }
+
+  function start() {
+    if (playing) return;
+    playing = true; paused = false;
+    if (idx >= queue.length) idx = 0;
+    player.classList.add('show');
+    pPlay.textContent = '❚❚';
+    listenBtn.textContent = '❚❚ Pause';
+    keepAlive = setInterval(function () { try { synth.resume(); } catch (e) {} }, 10000);
+    speakNext();
+  }
+  function pause() {
+    if (!playing) return;
+    if (!paused) { synth.pause(); paused = true; pPlay.textContent = '▶'; listenBtn.textContent = '▶ Resume'; }
+    else { synth.resume(); paused = false; pPlay.textContent = '❚❚'; listenBtn.textContent = '❚❚ Pause'; }
+  }
+  function stop() {
+    playing = false; paused = false;
+    synth.cancel();
+    if (keepAlive) { clearInterval(keepAlive); keepAlive = null; }
+    player.classList.remove('show');
+    listenBtn.textContent = '▶ Listen';
+    var secs = content.querySelectorAll('section.reading');
+    for (var i = 0; i < secs.length; i++) secs[i].classList.remove('reading');
+    idx = 0;
+  }
+
+  listenBtn.addEventListener('click', function () {
+    if (!playing) start();
+    else pause();
+  });
+  pPlay.addEventListener('click', function () { if (!playing) start(); else pause(); });
+  pStop.addEventListener('click', stop);
+
+  function onVoiceChange(e) {
+    var i = parseInt(e.target.value, 10);
+    if (voices[i]) { chosenVoice = voices[i]; syncVoiceSelects(); }
+  }
+  voiceSelect.addEventListener('change', onVoiceChange);
+  pVoice.addEventListener('change', onVoiceChange);
+
+  function cycleSpeed() {
+    speedIdx = (speedIdx + 1) % speeds.length;
+    var label = speeds[speedIdx] + 'x';
+    speedBtn.textContent = label; pSpeed.textContent = label;
+  }
+  speedBtn.addEventListener('click', cycleSpeed);
+  pSpeed.addEventListener('click', cycleSpeed);
+
+  document.getElementById('selectAll').addEventListener('click', function () {
+    try {
+      var range = document.createRange();
+      range.selectNodeContents(content);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    } catch (e) {}
+  });
+
+  window.addEventListener('beforeunload', function () { synth.cancel(); });
+})();
+</script>
+
+</body>
+</html>
