@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="published" content="2026-07-08">
+<title>Dan Spencer — Vinyl Funding Agreement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --bg: #FAFAFA;
+    --card: #FFFFFF;
+    --text: #1D1D1F;
+    --muted: #6E6E73;
+    --line: #E5E5E7;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 0 0 6rem;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.25rem 0; }
+
+  header.head { margin-bottom: 1.5rem; }
+  .eyebrow { color: var(--accent); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.72rem; margin: 0 0 0.5rem; }
+  h1 { font-size: clamp(1.7rem, 5.5vw, 2.5rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 0.6rem; }
+  .scope { color: var(--muted); font-size: 0.98rem; margin: 0 0 1.1rem; }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--accent); color: #fff; border: none; cursor: pointer;
+    border-radius: 2rem; padding: 0.6rem 1.4rem; font-family: inherit;
+    font-size: 0.92rem; font-weight: 600; text-decoration: none;
+    transition: transform 0.12s ease, opacity 0.12s ease;
+  }
+  .pill:active { transform: scale(0.97); }
+  .pill.ghost { background: #fff; color: var(--text); border: 1px solid var(--line); }
+  select.voice, button.speed {
+    font-family: inherit; font-size: 0.85rem; padding: 0.5rem 0.8rem;
+    border-radius: 1.4rem; border: 1px solid var(--line); background: #fff; color: var(--text); cursor: pointer;
+  }
+  .protip { color: var(--muted); font-size: 0.82rem; margin: 0.9rem 0 0; }
+  .protip a { color: var(--accent); cursor: pointer; text-decoration: underline; }
+
+  /* Note for Dan */
+  .note {
+    background: #FFF7F7;
+    border: 1px solid #F0CFCF;
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+    padding: 1.2rem 1.3rem;
+    margin: 1.75rem 0 2rem;
+  }
+  .note h2 { font-size: 1rem; font-weight: 700; margin: 0 0 0.5rem; color: var(--accent); }
+  .note p { margin: 0 0 0.7rem; font-size: 0.95rem; }
+  .note p:last-child { margin-bottom: 0; }
+  .note ul { margin: 0.2rem 0 0.7rem; padding-left: 1.2rem; }
+  .note li { font-size: 0.95rem; margin-bottom: 0.35rem; }
+  .note .sig { color: var(--muted); font-size: 0.88rem; font-style: italic; }
+
+  /* Contract card */
+  .doc {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 2rem 1.6rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .doc .title { text-align: center; margin: 0 0 1.6rem; }
+  .doc .title h2 { font-size: 1.15rem; font-weight: 800; letter-spacing: 0.01em; margin: 0; line-height: 1.35; }
+  section { scroll-margin-top: 1rem; }
+  section h3 {
+    font-size: 0.98rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;
+    margin: 1.6rem 0 0.7rem; color: var(--text);
+  }
+  section:first-of-type h3 { margin-top: 0; }
+  .doc p { margin: 0 0 0.85rem; font-size: 0.96rem; }
+  .lead { font-weight: 700; }
+  ol.recoup { margin: 0 0 0.85rem; padding-left: 1.5rem; }
+  ol.recoup li { margin-bottom: 0.6rem; font-size: 0.96rem; }
+  .fill { color: var(--muted); }
+
+  .sigs { margin-top: 1.8rem; display: grid; gap: 1.4rem; }
+  .sig { border-top: 1px solid var(--text); padding-top: 0.4rem; max-width: 320px; }
+  .sig .role { font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2.2rem; }
+  .sig .who { font-size: 0.92rem; }
+  .sig .date { color: var(--muted); font-size: 0.85rem; margin-top: 0.5rem; }
+
+  footer.foot { color: var(--muted); font-size: 0.8rem; text-align: center; margin: 2.5rem 0 0; line-height: 1.5; }
+
+  section.reading {
+    border-left: 3px solid var(--accent);
+    background: rgba(196, 32, 32, 0.04);
+    padding-left: 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+
+  /* Player bar */
+  #player {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+    background: rgba(28, 28, 30, 0.92);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    color: #fff; padding: 0.7rem 1rem calc(0.7rem + env(safe-area-inset-bottom));
+    transform: translateY(110%); transition: transform 0.32s cubic-bezier(0.4,0,0.2,1);
+    display: flex; align-items: center; gap: 0.7rem;
+  }
+  #player.up { transform: translateY(0); }
+  #player button {
+    background: rgba(255,255,255,0.14); color: #fff; border: none; cursor: pointer;
+    width: 38px; height: 38px; border-radius: 50%; font-size: 1rem; flex: none;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  #player button.wide { width: auto; border-radius: 1.2rem; padding: 0 0.9rem; font-size: 0.82rem; }
+  #player .now { flex: 1; min-width: 0; font-size: 0.82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #eee; }
+  #player select { background: rgba(255,255,255,0.14); color: #fff; border: none; border-radius: 1.2rem; padding: 0.4rem 0.6rem; font-size: 0.78rem; max-width: 34vw; }
+  #player select option { color: #000; }
+
+  @media (max-width: 560px) {
+    .controls { gap: 0.5rem; }
+    .pill { flex: 1 1 auto; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="head">
+      <p class="eyebrow">Draft Agreement · For Review</p>
+      <h1>Vinyl Funding &amp; Promotion Agreement</h1>
+      <p class="scope">Between Bobby Greenleaf &amp; Adam DeGross (funding) and Daniel Gardner d/b/a Dan Spencer — for the album <em>That&rsquo;s Your Big Boy</em>.</p>
+      <div class="controls">
+        <a class="pill" href="Dan-Spencer-Funding-Agreement.pdf" download>⬇︎ Download PDF</a>
+        <button class="pill ghost" id="listenBtn">▶︎ Listen</button>
+        <select class="voice" id="voiceTop" aria-label="Voice"></select>
+        <button class="speed" id="speedTop">1×</button>
+      </div>
+      <p class="protip">Pro tip: for a better voice, tap <a id="selectAll">select all</a> then use iOS <em>Speak Selection</em> (Settings › Accessibility › Spoken Content › Speak Selection).</p>
+    </header>
+
+    <!-- Footnote for Dan about the language -->
+    <aside class="note">
+      <h2>A note for Dan — about the language</h2>
+      <p>The wording below reads formal because that&rsquo;s what makes a contract hold up — but the deal itself is simple. Here&rsquo;s the plain-English version:</p>
+      <ul>
+        <li>Bobby and Adam are putting up <strong>$10,000</strong> to market, promote, and press vinyl for <em>That&rsquo;s Your Big Boy</em>.</li>
+        <li>They understand this is a <strong>bet, not a loan</strong>. They don&rsquo;t automatically get the money back.</li>
+        <li>They&rsquo;d only expect to be paid back if (1) the album <strong>blows up</strong>, or (2) a real label with real money steps in and wants a piece of the <strong>Dan Spencer brand going forward</strong> — and if that happens, the specifics get worked out then.</li>
+        <li>Nothing here hands over your <strong>masters, your name, or your brand</strong>. Any future label arrangement would be its own separate agreement.</li>
+      </ul>
+      <p>The blanks (dates, how the money is sent) get filled in when everyone signs. This is a starting draft — worth a quick look from a lawyer before anyone signs it.</p>
+      <p class="sig">— drafted for Matt Matheson Creative</p>
+    </aside>
+
+    <article class="doc" id="content">
+      <div class="title">
+        <h2>PROMOTIONAL FUNDING AND<br>VINYL PRESSING AGREEMENT</h2>
+      </div>
+
+      <section>
+        <p>This Promotional Funding and Vinyl Pressing Agreement (this <strong>&ldquo;Agreement&rdquo;</strong>) is made and entered into as of the <span class="fill">______</span> day of <span class="fill">________________</span>, 2026 (the <strong>&ldquo;Effective Date&rdquo;</strong>), by and among the following parties:</p>
+        <p><strong>Bobby Greenleaf</strong>, an individual (&ldquo;Greenleaf&rdquo;), and <strong>Adam DeGross</strong>, an individual (&ldquo;DeGross&rdquo;), each of the foregoing referred to individually as an &ldquo;Investor&rdquo; and collectively as the &ldquo;Investors&rdquo;; and</p>
+        <p><strong>Daniel Gardner</strong>, an individual doing business as &ldquo;<strong>Dan Spencer</strong>&rdquo; (the &ldquo;Artist&rdquo;).</p>
+        <p>The Investors and the Artist are referred to herein individually as a &ldquo;Party&rdquo; and collectively as the &ldquo;Parties.&rdquo;</p>
+      </section>
+
+      <section>
+        <h3>Recitals</h3>
+        <p>WHEREAS, the Artist is a recording artist who has created, or is in the process of creating, a musical sound recording and album titled <strong><em>&ldquo;That&rsquo;s Your Big Boy&rdquo;</em></strong> (the &ldquo;Album&rdquo;);</p>
+        <p>WHEREAS, the Artist desires funding for the marketing, promotion, and vinyl pressing of the Album; and</p>
+        <p>WHEREAS, the Investors desire to provide such funding to the Artist upon the terms and conditions set forth in this Agreement, including the Parties&rsquo; shared understanding regarding the speculative nature of the funding and the limited expectation of repayment described herein;</p>
+        <p>NOW, THEREFORE, in consideration of the mutual covenants and promises set forth herein, and for other good and valuable consideration, the receipt and sufficiency of which are hereby acknowledged, the Parties agree as follows:</p>
+      </section>
+
+      <section>
+        <h3>1. Funding Contribution</h3>
+        <p><span class="lead">1.1&nbsp;&nbsp;Contribution.</span> The Investors, jointly, agree to pay to the Artist the total sum of Ten Thousand and 00/100 United States Dollars ($10,000.00) (the &ldquo;Funds&rdquo;).</p>
+        <p><span class="lead">1.2&nbsp;&nbsp;Payment.</span> The Funds shall be paid to the Artist in a single lump sum on or before <span class="fill">________________</span>, 2026, by <span class="fill">________________</span> (e.g., check, wire transfer, or other mutually agreed method). Unless otherwise agreed in writing, Greenleaf and DeGross shall each be responsible for one-half (1/2) of the Funds.</p>
+      </section>
+
+      <section>
+        <h3>2. Use of Funds</h3>
+        <p><span class="lead">2.1&nbsp;&nbsp;Purpose.</span> The Artist shall use the Funds solely and exclusively for the marketing, promotion, and pressing of vinyl records for the Album, including reasonably related costs and expenses incurred in furtherance of the foregoing (collectively, the &ldquo;Approved Purposes&rdquo;).</p>
+        <p><span class="lead">2.2&nbsp;&nbsp;Discretion.</span> The Artist shall have reasonable discretion over the allocation and application of the Funds among the Approved Purposes and over the creative, marketing, and promotional decisions relating to the Album.</p>
+      </section>
+
+      <section>
+        <h3>3. Nature of Funding; Limited Expectation of Recoupment</h3>
+        <p><span class="lead">3.1&nbsp;&nbsp;Speculative Contribution.</span> The Investors acknowledge, understand, and agree that the Funds are provided on a speculative basis and that the outcome of the Album&rsquo;s marketing, promotion, and release is inherently uncertain. Accordingly, the Investors shall <strong><em>not</em></strong> expect, and shall not be entitled to demand, full recoupment or repayment of the Funds, except upon the occurrence of one or both of the conditions set forth in Section 3.2 below.</p>
+        <p><span class="lead">3.2&nbsp;&nbsp;Recoupment Conditions.</span> The Investors&rsquo; expectation of, and potential entitlement to, full recoupment of the Funds shall arise only upon the occurrence of one or both of the following:</p>
+        <ol class="recoup" type="a">
+          <li>the Album achieves exceptional commercial success (i.e., becomes &ldquo;wildly financially successful&rdquo;), such that the revenues generated by the Album are sufficient to provide for such recoupment; and/or</li>
+          <li>a record label or comparable entity possessing substantial financial backing becomes involved with the Artist and desires to participate in the marketing, optics, and brand of Dan Spencer on a going-forward basis, in which event the terms of any such involvement, together with any recoupment, repayment, compensation, or other consideration owed to the Investors, shall be negotiated and determined by the Parties in good faith at a later time.</li>
+        </ol>
+        <p><span class="lead">3.3&nbsp;&nbsp;No Guarantee.</span> Except as expressly provided in Section 3.2, nothing in this Agreement shall be construed as a guarantee, promise, or representation that the Investors will recoup, recover, or be repaid all or any portion of the Funds. In the absence of the conditions described in Section 3.2, the Investors shall have no right to repayment of the Funds, and the Funds shall be deemed a contribution toward the Approved Purposes.</p>
+      </section>
+
+      <section>
+        <h3>4. Relationship of the Parties</h3>
+        <p><span class="lead">4.1&nbsp;&nbsp;Independent Parties.</span> Nothing in this Agreement shall be deemed to create a partnership, joint venture, employment, agency, or fiduciary relationship between or among the Parties. Except as the Parties may expressly agree in a separate written instrument, this Agreement does not convey to the Investors any ownership interest in the Album, in the master recordings, in any copyrights or intellectual property, or in the Artist&rsquo;s business, brand, or name.</p>
+        <p><span class="lead">4.2&nbsp;&nbsp;Future Arrangements.</span> Any involvement of a record label or comparable entity as described in Section 3.2(b), and any resulting rights, roles, compensation, or brand participation of the Investors, shall be the subject of a separate written agreement negotiated by the Parties at the relevant time. This Agreement does not obligate the Artist to accept any particular label, offer, or arrangement.</p>
+      </section>
+
+      <section>
+        <h3>5. Representations and Acknowledgments</h3>
+        <p><span class="lead">5.1&nbsp;&nbsp;Authority.</span> Each Party represents that such Party has the full right, power, and authority to enter into and perform this Agreement.</p>
+        <p><span class="lead">5.2&nbsp;&nbsp;Investor Acknowledgment.</span> Each Investor acknowledges that such Investor has had the opportunity to review this Agreement, to seek independent legal and financial advice, and understands and accepts the speculative nature of the Funds and the limited expectation of recoupment set forth in Section 3.</p>
+      </section>
+
+      <section>
+        <h3>6. General Provisions</h3>
+        <p><span class="lead">6.1&nbsp;&nbsp;Entire Agreement.</span> This Agreement constitutes the entire agreement among the Parties with respect to its subject matter and supersedes all prior or contemporaneous understandings, whether written or oral.</p>
+        <p><span class="lead">6.2&nbsp;&nbsp;Amendment.</span> This Agreement may be amended or modified only by a written instrument signed by all Parties.</p>
+        <p><span class="lead">6.3&nbsp;&nbsp;Governing Law.</span> This Agreement shall be governed by and construed in accordance with the laws of the State of Tennessee, without regard to its conflict-of-laws principles.</p>
+        <p><span class="lead">6.4&nbsp;&nbsp;Severability.</span> If any provision of this Agreement is held to be invalid or unenforceable, the remaining provisions shall continue in full force and effect.</p>
+        <p><span class="lead">6.5&nbsp;&nbsp;Counterparts.</span> This Agreement may be executed in counterparts, including by electronic signature or transmission, each of which shall be deemed an original and all of which together shall constitute one and the same instrument.</p>
+      </section>
+
+      <section>
+        <p><strong>IN WITNESS WHEREOF,</strong> the Parties have executed this Agreement as of the Effective Date first written above.</p>
+        <div class="sigs">
+          <div class="sig"><div class="role">Investor</div><div class="who">Bobby Greenleaf</div><div class="date">Date: ____________________</div></div>
+          <div class="sig"><div class="role">Investor</div><div class="who">Adam DeGross</div><div class="date">Date: ____________________</div></div>
+          <div class="sig"><div class="role">Artist</div><div class="who">Daniel Gardner, d/b/a Dan Spencer</div><div class="date">Date: ____________________</div></div>
+        </div>
+      </section>
+    </article>
+
+    <footer class="foot">
+      Draft prepared for review — not legal advice. Have an attorney review before signing.<br>
+      Governing law and the 50/50 payment split are editable defaults.
+    </footer>
+  </div>
+
+  <!-- Sticky player bar -->
+  <div id="player">
+    <button id="ppBtn" aria-label="Play/Pause">⏸</button>
+    <span class="now" id="nowTitle">—</span>
+    <select class="voice" id="voiceBar" aria-label="Voice"></select>
+    <button class="wide" id="speedBar">1×</button>
+    <button id="stopBtn" aria-label="Stop">■</button>
+  </div>
+
+<script>
+(function () {
+  const synth = window.speechSynthesis;
+  if (!synth) { document.getElementById('listenBtn').style.display = 'none'; }
+
+  const WHITELIST = ['samantha','karen','daniel','moira','tessa','ava','allison','tom','aaron','nicky','evan','zoe','joelle','fiona','martha','arthur'];
+  const okVoice = (n) => { n = n.toLowerCase(); return WHITELIST.some(w => n.includes(w)) || n.includes('google us english') || n.includes('google uk english'); };
+
+  const SPEEDS = [0.8, 1, 1.2, 1.5];
+  let speedIdx = 1;
+  let voices = [];
+  let chosenVoice = null;
+
+  const listenBtn = document.getElementById('listenBtn');
+  const voiceTop = document.getElementById('voiceTop');
+  const voiceBar = document.getElementById('voiceBar');
+  const speedTop = document.getElementById('speedTop');
+  const speedBar = document.getElementById('speedBar');
+  const player = document.getElementById('player');
+  const ppBtn = document.getElementById('ppBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const nowTitle = document.getElementById('nowTitle');
+
+  function loadVoices() {
+    const all = synth.getVoices();
+    voices = all.filter(v => okVoice(v.name));
+    if (!voices.length) voices = all.slice(0, 6);
+    [voiceTop, voiceBar].forEach(sel => {
+      sel.innerHTML = '';
+      voices.forEach((v, i) => {
+        const o = document.createElement('option');
+        o.value = i; o.textContent = v.name.replace(/\s*\(.*?\)\s*/, ' ').trim();
+        sel.appendChild(o);
+      });
+    });
+    let def = voices.findIndex(v => v.name.toLowerCase().includes('samantha'));
+    if (def < 0) def = 0;
+    voiceTop.value = def; voiceBar.value = def;
+    chosenVoice = voices[def] || null;
+  }
+  if (synth) { loadVoices(); synth.onvoiceschanged = loadVoices; }
+
+  function syncVoice(i) { i = +i; chosenVoice = voices[i] || null; voiceTop.value = i; voiceBar.value = i; }
+  voiceTop.addEventListener('change', e => syncVoice(e.target.value));
+  voiceBar.addEventListener('change', e => syncVoice(e.target.value));
+
+  function setSpeed(i) { speedIdx = i % SPEEDS.length; const lbl = SPEEDS[speedIdx] + '×'; speedTop.textContent = lbl; speedBar.textContent = lbl; }
+  speedTop.addEventListener('click', () => setSpeed(speedIdx + 1));
+  speedBar.addEventListener('click', () => setSpeed(speedIdx + 1));
+
+  // Build reading queue from sections
+  const sections = Array.from(document.querySelectorAll('#content section'));
+  let queue = [];       // { el, section, text, isHeading, gap }
+  function buildQueue() {
+    queue = [];
+    sections.forEach(sec => {
+      const blocks = sec.querySelectorAll('h3, p, li');
+      blocks.forEach(b => {
+        const text = b.textContent.replace(/\s+/g, ' ').trim();
+        if (!text) return;
+        const isHeading = b.tagName === 'H3';
+        queue.push({ el: b, section: sec, text, isHeading, gap: isHeading ? 400 : 200 });
+      });
+    });
+  }
+
+  let idx = 0, playing = false, paused = false, keepAlive = null;
+
+  function highlight(sec) {
+    sections.forEach(s => s.classList.remove('reading'));
+    if (sec) { sec.classList.add('reading'); sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  }
+
+  function speakNext() {
+    if (!playing) return;
+    if (idx >= queue.length) { stop(); return; }
+    const item = queue[idx];
+    if (item.section !== (queue[idx - 1] && queue[idx - 1].section)) highlight(item.section);
+    nowTitle.textContent = (item.section.querySelector('h3')?.textContent || 'Agreement').trim();
+
+    const u = new SpeechSynthesisUtterance(item.text);
+    const base = SPEEDS[speedIdx];
+    u.rate = item.isHeading ? base * 0.9 : base;
+    u.pitch = item.isHeading ? 1.05 : 1;
+    if (chosenVoice) u.voice = chosenVoice;
+    u.onend = () => {
+      if (!playing) return;
+      idx++;
+      setTimeout(speakNext, item.gap);
+    };
+    synth.speak(u);
+  }
+
+  function start() {
+    if (!synth) return;
+    buildQueue();
+    if (!queue.length) return;
+    synth.cancel();
+    idx = 0; playing = true; paused = false;
+    player.classList.add('up');
+    ppBtn.textContent = '⏸';
+    listenBtn.textContent = '⏸ Reading…';
+    keepAlive = setInterval(() => { if (playing && !paused) synth.resume(); }, 10000);
+    speakNext();
+  }
+
+  function stop() {
+    playing = false; paused = false;
+    synth.cancel();
+    clearInterval(keepAlive);
+    highlight(null);
+    player.classList.remove('up');
+    listenBtn.textContent = '▶︎ Listen';
+  }
+
+  function togglePause() {
+    if (!playing) return;
+    if (paused) { synth.resume(); paused = false; ppBtn.textContent = '⏸'; }
+    else { synth.pause(); paused = true; ppBtn.textContent = '▶︎'; }
+  }
+
+  listenBtn.addEventListener('click', () => { if (playing) togglePause(); else start(); });
+  ppBtn.addEventListener('click', togglePause);
+  stopBtn.addEventListener('click', stop);
+
+  // Select-all helper
+  document.getElementById('selectAll').addEventListener('click', () => {
+    const c = document.getElementById('content');
+    const range = document.createRange();
+    range.selectNodeContents(c);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  });
+
+  window.addEventListener('beforeunload', () => { if (synth) synth.cancel(); });
+})();
+</script>
+</body>
+</html>
