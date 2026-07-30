@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="published" content="2026-07-30">
+<title>METER — Physical CD + DVD: Options &amp; Pricing</title>
+<link rel="icon" href="/RandomPhoneBuilds/favicon.ico" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --bg: #FAFAFA;
+    --card-bg: #FFFFFF;
+    --text-primary: #1D1D1F;
+    --text-secondary: #6E6E73;
+    --divider: #E5E5E7;
+    --hover-bg: rgba(0, 0, 0, 0.02);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .top-bar { height: 3px; background: var(--accent); }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: clamp(3rem, 8vw, 7rem) clamp(1.5rem, 4vw, 2rem) 7rem;
+  }
+
+  header { margin-bottom: 3rem; }
+
+  header .label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: clamp(1.9rem, 5vw, 2.6rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  .scope {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+  }
+
+  /* Listen controls */
+  .listen-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .listen-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.6rem 1.5rem;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .listen-btn:hover { opacity: 0.85; }
+
+  select.voice-picker, button.speed-btn {
+    font-family: inherit;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.8rem;
+    border: 1px solid var(--divider);
+    border-radius: 2rem;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    cursor: pointer;
+    max-width: 11rem;
+  }
+
+  .pro-tip {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-bottom: 2rem;
+  }
+  .pro-tip a {
+    color: var(--accent);
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  section {
+    margin-bottom: 3rem;
+    transition: all 0.3s ease;
+  }
+
+  section.reading {
+    border-left: 3px solid var(--accent);
+    background: rgba(196, 32, 32, 0.04);
+    padding-left: 1rem;
+    border-radius: 4px;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--divider);
+  }
+
+  section:first-of-type h2 { border-top: none; padding-top: 0; }
+
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-top: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p { margin-bottom: 1rem; }
+
+  ul, ol { margin: 0 0 1rem 1.2rem; }
+  li { margin-bottom: 0.5rem; }
+
+  strong { font-weight: 600; }
+
+  a { color: var(--accent); }
+
+  .table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1.4rem;
+    border: 1px solid var(--divider);
+    border-radius: 10px;
+    background: var(--card-bg);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    min-width: 460px;
+  }
+
+  th {
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--divider);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--divider);
+    vertical-align: top;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tr.total td {
+    font-weight: 700;
+    background: rgba(196, 32, 32, 0.04);
+  }
+
+  .price { white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+  .callout {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 1.1rem 1.3rem;
+    margin-bottom: 1.4rem;
+  }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout .callout-title {
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .pick {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: white;
+    background: var(--accent);
+    border-radius: 2rem;
+    padding: 0.15rem 0.7rem;
+    vertical-align: middle;
+    margin-left: 0.5rem;
+  }
+
+  .big-number {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  .big-number span {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--divider);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+
+  /* Sticky player bar */
+  #playerBar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(30, 30, 30, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 1rem;
+    padding-bottom: calc(0.7rem + env(safe-area-inset-bottom));
+    transform: translateY(110%);
+    transition: transform 0.3s ease;
+    z-index: 999;
+  }
+  #playerBar.visible { transform: translateY(0); }
+
+  #playerBar button {
+    background: rgba(255,255,255,0.14);
+    border: none;
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 2rem;
+    padding: 0.45rem 0.8rem;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  #playerBar button:hover { background: rgba(255,255,255,0.24); }
+
+  #playerBar select {
+    background: rgba(255,255,255,0.14);
+    border: none;
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.78rem;
+    border-radius: 2rem;
+    padding: 0.45rem 0.6rem;
+    max-width: 7rem;
+    cursor: pointer;
+  }
+  #playerBar select option { color: #000; }
+
+  #nowReading {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.75);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 560px) {
+    .listen-btn { width: 100%; }
+    select.voice-picker { flex: 1; }
+    table { font-size: 0.85rem; }
+    #nowReading { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="container">
+
+<header>
+  <div class="label">METER · Testing My Patience</div>
+  <h1>Physical CD + DVD — Every Option, With Prices</h1>
+  <p class="scope">A CD and a DVD in one jewel case, 25–50 copies. Here's every choice we'd have to make, what each one costs, and what I'd recommend. Researched 30 July 2026.</p>
+
+  <div class="listen-controls">
+    <button class="listen-btn" id="listenBtn">▶ Listen</button>
+    <select class="voice-picker" id="voicePicker" aria-label="Voice"></select>
+    <button class="speed-btn" id="speedBtn">1x</button>
+  </div>
+  <p class="pro-tip">Pro tip: For a better voice, tap <a id="selectAllLink">select all</a> below then use iOS Speak Selection (Settings &gt; Accessibility &gt; Spoken Content &gt; Speak Selection).</p>
+</header>
+
+<main id="content">
+
+<section>
+  <h2>What we're actually making</h2>
+  <p>One standard jewel case — the normal CD thickness, not a fat double — with a hinged tray inside that holds two discs. <strong>Disc one is the record. Disc two is a DVD of video.</strong> Front cover, a booklet or insert, and a printed back tray card.</p>
+  <p>This is a collector's item, not a distribution plan. Nobody is buying a CD in 2026 to listen to it. They're buying an object because they like the band. That should drive every decision below — it means spend where people can see it and don't spend where they can't.</p>
+  <div class="callout">
+    <div class="callout-title">One thing to know up front</div>
+    <p>At 25–50 copies, these are <strong>burned discs with printed faces</strong>, not pressed discs. Real pressing — the stamped aluminum thing a store-bought CD is — starts at 300–500 copies with a $1,000+ setup fee before you've made a single disc. Every option here is burned.</p>
+    <p>That's completely normal for a short-run band release and nobody at a show will ever know. The only practical difference: the discs will say "CD-R" in the clear inner ring, and a very old car stereo might be picky. Just don't let anyone print the word "pressed" on anything.</p>
+  </div>
+</section>
+
+<section>
+  <h2>The short answer</h2>
+  <p>Three ways to do this. The difference between them is entirely <em>how much of it we do ourselves</em> — the finished object is basically identical.</p>
+  <div class="table-wrap">
+    <table>
+      <tr>
+        <th>Approach</th>
+        <th>Who does the work</th>
+        <th class="price">50 copies</th>
+        <th class="price">Per unit</th>
+      </tr>
+      <tr>
+        <td><strong>A. Turnkey</strong></td>
+        <td>One company does everything. A box of finished, shrinkwrapped CDs shows up.</td>
+        <td class="price">$360–$490</td>
+        <td class="price">$7–10</td>
+      </tr>
+      <tr>
+        <td><strong>B. Hybrid</strong> <span class="pick">Recommended</span></td>
+        <td>Companies burn and print the discs. We buy the cases, print the inserts, and assemble.</td>
+        <td class="price">$180–$310</td>
+        <td class="price">$3.60–6.20</td>
+      </tr>
+      <tr>
+        <td><strong>C. Full DIY</strong></td>
+        <td>We burn, print, cut and assemble everything ourselves.</td>
+        <td class="price">$95–$135</td>
+        <td class="price">$1.90–2.70</td>
+      </tr>
+    </table>
+  </div>
+  <p>Those are materials and vendor costs only. My time isn't in there — we can talk about that separately, and honestly for a 50-unit run it's a Saturday.</p>
+  <p><strong>Option C looks like the obvious winner and it isn't.</strong> See the section on printing the discs — there's a $600+ piece of equipment hiding in that column.</p>
+</section>
+
+<section>
+  <h2>How many should we make?</h2>
+  <p>Make 50. This is the one place the math is unambiguous.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Quantity</th><th class="price">Turnkey cost</th><th class="price">Per unit</th></tr>
+      <tr><td>25 copies</td><td class="price">$400–$500</td><td class="price">$16–20</td></tr>
+      <tr><td>50 copies</td><td class="price">$360–$490</td><td class="price">$7–10</td></tr>
+    </table>
+  </div>
+  <p>That's not a typo. <strong>50 copies costs about the same as 25.</strong> Short-run companies have floor pricing — there's a minimum charge to set up the print run whether you order 25 or 100, so the first 25 absorb almost all the cost and the next 25 are nearly free.</p>
+  <p>Going 25 → 50 doubles the product for roughly 10–20% more money. If we sell out of 50 we can always run more; if we don't, we've got merch for the next tour.</p>
+</section>
+
+<section>
+  <h2>Option 1 — The case</h2>
+  <p>What the thing physically is. This is the biggest decision because it determines everything else.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Case type</th><th>What it's like</th><th class="price">Cost (50)</th></tr>
+      <tr>
+        <td><strong>Standard double jewel</strong> <span class="pick">Pick</span></td>
+        <td>Normal CD case thickness, hinged flip tray inside holds both discs. Room for a real booklet. This is the classic 2000s two-disc release.</td>
+        <td class="price">$30–$40</td>
+      </tr>
+      <tr>
+        <td>Slim double jewel</td>
+        <td>Thinner, cheaper, holds both discs — but no room for a booklet, just a single folded sheet.</td>
+        <td class="price">$20–$28</td>
+      </tr>
+      <tr>
+        <td>DVD case (Amaray)</td>
+        <td>The tall black plastic case. Holds a CD and DVD on opposite faces. One wraparound printed sleeve instead of booklet + tray card, so it's fewer print pieces and cheaper. Bigger shelf presence. Reads as "a movie," not "a record."</td>
+        <td class="price">$25–$35</td>
+      </tr>
+      <tr>
+        <td>Digipak</td>
+        <td>Cardboard fold-out with plastic trays glued in. Feels the most premium and modern. Roughly $0.69/unit at short run, but it's the least 2003-looking option.</td>
+        <td class="price">$35–$50</td>
+      </tr>
+    </table>
+  </div>
+  <p><strong>My vote is the standard double jewel case.</strong> The whole identity of this record — the TV spot, the artwork, all of it — is a 2000s artifact. The jewel case is the correct object. It's also the only one with room for a proper booklet, and the booklet is the part people actually keep.</p>
+</section>
+
+<section>
+  <h2>Option 2 — Printing the discs</h2>
+  <p>What the disc faces look like. There are three real choices and they look genuinely different.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Method</th><th>Look</th><th class="price">Cost (both discs, 50 sets)</th></tr>
+      <tr>
+        <td><strong>Black thermal on silver</strong></td>
+        <td>Crisp black printed straight onto the silver disc face. Sharp, permanent, waterproof. Looks exactly like a 2000s promo CD. One color only.</td>
+        <td class="price">$63</td>
+      </tr>
+      <tr>
+        <td><strong>Full color inkjet</strong></td>
+        <td>Full artwork on a white disc face. Photo-quality, any design. Slightly softer than thermal and the white base means a different feel than silver.</td>
+        <td class="price">$90–$120</td>
+      </tr>
+      <tr>
+        <td>Adhesive labels</td>
+        <td>Printed sticker sheets applied by hand. <strong>Don't.</strong> See below.</td>
+        <td class="price">$25</td>
+      </tr>
+    </table>
+  </div>
+  <p>Black thermal at <strong>$25 for 50 CDs</strong> is the single best value in this entire project, and I'd argue it's also the <em>better</em> look for this record — black on raw silver is period-correct and it'll sit right next to Charles's artwork instead of competing with it. Full color is available if the art demands it.</p>
+
+  <div class="callout">
+    <div class="callout-title">Please, no stick-on labels</div>
+    <p>They're the obvious cheap answer and they're a trap. A label that goes on even slightly off-center unbalances the disc, so it wobbles at speed — that means skipping, stuttering, and discs that stop playing. Paper labels also absorb humidity, warp, and tilt the disc over time, and some adhesives eat into the dye layer and kill the disc.</p>
+    <p>It's survivable on a CD. On a <strong>DVD</strong>, which spins faster and reads a tighter track, it's a known failure mode. We'd be shipping a collector's item with a built-in expiration date. Not worth saving $40.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Option 3 — The insert / booklet</h2>
+  <p>The printed piece inside the front of the case. This is where people look, and it's where the record either feels like a real release or feels like a burned disc in a case.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Insert</th><th>What you get</th><th class="price">Cost (50 sets)</th></tr>
+      <tr>
+        <td>2-panel</td>
+        <td>A single card. Front cover, and the back of it. Minimum viable.</td>
+        <td class="price">$45–$70</td>
+      </tr>
+      <tr>
+        <td><strong>4-panel folded</strong> <span class="pick">Pick</span></td>
+        <td>Folds open. Front cover, two inside pages, back. Room for the tracklist, a photo, and credits. The standard.</td>
+        <td class="price">$60–$110</td>
+      </tr>
+      <tr>
+        <td>8-panel accordion</td>
+        <td>Folds out four times. Room for a full lyric spread or a photo layout.</td>
+        <td class="price">$85–$140</td>
+      </tr>
+      <tr>
+        <td>12-page stapled booklet</td>
+        <td>An actual little book. Every lyric, band photos, full credits, thank-yous. This is the collector move.</td>
+        <td class="price">$100–$170</td>
+      </tr>
+    </table>
+  </div>
+  <p>Plus a <strong>tray card</strong> — the piece behind the discs that you see through the back of the case, with the tracklist on it. About $10–20 for 50, and it's not optional; without it you're looking at bare plastic.</p>
+
+  <h3>Paper choices</h3>
+  <ul>
+    <li><strong>100lb gloss text</strong> — standard, shiny, what most CDs used. Cheaper.</li>
+    <li><strong>16pt card stock</strong> — noticeably thicker and stiffer. Feels more expensive in the hand. Slightly more.</li>
+    <li><strong>Matte or gloss UV coating</strong> — matte reads modern and photographs better; gloss reads more 2003 and pops harder under lights.</li>
+  </ul>
+  <p>For what it's worth: going from a 4-panel to a 12-page booklet costs roughly <strong>$40–60 more on the whole run</strong> and it's probably the highest-impact dollar in the project. It's the difference between "burned CD" and "we made a record."</p>
+</section>
+
+<section>
+  <h2>Option 4 — Shrinkwrap</h2>
+  <p>About $10–13 for 50 units. It's cheap and it matters more than it sounds — an unwrapped CD looks used, a wrapped one looks like product. Also stops the case popping open in a merch tub. Yes on this.</p>
+</section>
+
+<section>
+  <h2>The three approaches, in detail</h2>
+
+  <h3>A. Turnkey — $360–$490</h3>
+  <p>We send artwork files and the audio/video masters to one company. They burn the discs, print the faces, print the booklets and tray cards, assemble everything into cases, shrinkwrap it, and ship us a box. Nobody touches anything.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Line item</th><th class="price">50 copies</th></tr>
+      <tr><td>2-disc jewel case package, discs burned + printed, assembled</td><td class="price">$250–$300</td></tr>
+      <tr><td>4-panel booklet + tray card printing</td><td class="price">$70–$130</td></tr>
+      <tr><td>Shrinkwrap</td><td class="price">$13</td></tr>
+      <tr><td>Shipping to us</td><td class="price">$25–$45</td></tr>
+      <tr class="total"><td>Total</td><td class="price">$360–$490</td></tr>
+    </table>
+  </div>
+  <p>Turnaround is roughly 5–12 business days once art is approved. Companies I've priced out: Morphius (advertises this exact CD+DVD-in-one-case setup, 50 minimum), Bison Disc, Oasis, Blank Media Printing. Disc Makers is the big name but their minimum is 100.</p>
+  <p>One wrinkle: most of these companies sell "two-disc jewel case" as <em>two CDs</em>. Putting a DVD in slot two is a mixed-format set — they all do it, it's just a phone call instead of a web order.</p>
+
+  <h3>B. Hybrid — $180–$310 <span class="pick">Recommended</span></h3>
+  <p>Companies do the one part that genuinely needs equipment — burning and printing 100 disc faces — and we do the part that just needs an afternoon.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Line item</th><th class="price">50 copies</th></tr>
+      <tr><td>50 CDs, burned + printed</td><td class="price">$25–$60</td></tr>
+      <tr><td>50 DVDs, burned + printed</td><td class="price">$38–$60</td></tr>
+      <tr><td>50 double jewel cases</td><td class="price">$30–$40</td></tr>
+      <tr><td>Booklets + tray cards, 50 sets</td><td class="price">$60–$110</td></tr>
+      <tr><td>Shipping (2–3 inbound boxes)</td><td class="price">$25–$40</td></tr>
+      <tr class="total"><td>Total</td><td class="price">$180–$310</td></tr>
+    </table>
+  </div>
+  <p>Then it's about <strong>2–4 hours of assembly</strong> for 50 units — insert the booklet, snap in two discs, close, stack. Genuinely a good hang with a couple of beers, and if the band wants to be involved this is the fun part.</p>
+  <p>This is my recommendation. It saves roughly <strong>$200 versus turnkey</strong> for about four hours of work, and the finished object is identical.</p>
+
+  <h3>C. Full DIY — $95–$135 in materials</h3>
+  <p>We buy blank printable discs, burn everything ourselves, print the disc faces ourselves, print and trim the inserts ourselves.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Line item</th><th class="price">50 copies</th></tr>
+      <tr><td>Blank inkjet-printable CD-R, 50-pack</td><td class="price">$20–$29</td></tr>
+      <tr><td>Blank inkjet-printable DVD-R, 50-pack</td><td class="price">$20–$27</td></tr>
+      <tr><td>50 double jewel cases</td><td class="price">$30–$40</td></tr>
+      <tr><td>Cardstock + ink for inserts</td><td class="price">$25–$40</td></tr>
+      <tr class="total"><td>Materials total</td><td class="price">$95–$135</td></tr>
+    </table>
+  </div>
+  <div class="callout">
+    <div class="callout-title">Why this doesn't actually work</div>
+    <p>There is no cheap way to print a disc face at home in 2026. Consumer printers that print directly onto discs have almost entirely left the US market. The current option is an <strong>Epson EcoTank ET-8500 or ET-8550 — $600 to $900</strong>. Buying a $600 printer to make 50 discs is worse than every other option on this page by a wide margin.</p>
+    <p>The alternative is stick-on labels, which we're not doing (see above), or hand-lettering 100 discs with a paint pen — which is only a good idea if we <em>decide</em> it's the aesthetic and lean all the way in.</p>
+    <p>There's also the burn time. 100 discs one at a time on a laptop is <strong>5 to 8 hours</strong> of sitting there swapping discs. A duplicator tower fixes it for another $150–400.</p>
+    <p>Add it up and Option C is 12–20 hours of work plus equipment to save $150. Option B exists precisely because a company will print all 100 disc faces for about $65.</p>
+  </div>
+</section>
+
+<section>
+  <h2>What it costs vs. what it sells for</h2>
+  <p>At the recommended setup — 50 copies, hybrid approach, 4-panel booklet, black thermal discs, shrinkwrapped — we're in for roughly <strong>$220</strong> all in.</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>If we price it at</th><th class="price">Breaks even at</th><th class="price">Sold out (50)</th></tr>
+      <tr><td>$20</td><td class="price">11 copies</td><td class="price">$1,000</td></tr>
+      <tr><td>$25</td><td class="price">9 copies</td><td class="price">$1,250</td></tr>
+      <tr><td>$30 (numbered / limited)</td><td class="price">8 copies</td><td class="price">$1,500</td></tr>
+    </table>
+  </div>
+  <p>$25 feels right, and it goes up to $30 easily if we hand-number them — writing "14/50" on the back of the tray card costs nothing and genuinely changes what people will pay for it.</p>
+  <p>Worth flagging: the TV spot's order card currently says <strong>$19.98 CD+DVD</strong> as a period-correct joke price. If we actually make these, we either eat that number and let the joke stand, or the ad says $19.98 and the merch table says $25. Either is fine — just something to decide before that card gets locked.</p>
+</section>
+
+<section>
+  <h2>What we need from you before anything gets ordered</h2>
+  <p>The manufacturing is the easy part and it's fast. These are the actual bottlenecks:</p>
+  <ol>
+    <li><strong>What goes on the DVD.</strong> This is the real open question. Candidates: the <em>Dreaming</em> music video, the TV spot, Cobra live footage, behind-the-scenes from the video shoot. A 2000s bonus DVD ran 15–30 minutes — we should be honest about whether we have that much finished video yet, because it might mean waiting.</li>
+    <li><strong>Artwork for four pieces.</strong> Charles's album cover is one image. A finished package needs a booklet layout, a tray card, a CD face, and a DVD face. Either Charles extends the artwork or I lay it out from what exists. This is the longest lead item.</li>
+    <li><strong>A CD master.</strong> The EP is mastered for streaming. A CD wants 16-bit/44.1k files and ideally a proper pass on track gaps. For 50 units the streaming master is honestly fine — but worth asking Tate and Kris whether a CD master already exists.</li>
+    <li><strong>Booklet page count.</strong> 4-page or 12-page. About $40–60 apart, and it's the biggest visible difference in the whole package.</li>
+    <li><strong>Who's paying, and who owns the boxes.</strong> Band-funded, split, or something else. Needs deciding before I place an order.</li>
+  </ol>
+  <p>One thing that isn't on anyone's price list: <strong>the DVD has to be authored.</strong> A disc that plays in an actual DVD player isn't a folder of video files — it needs menus and a specific disc structure. That's a few hours of work on my end and I'd rather name it now than have it surprise us later.</p>
+</section>
+
+<section>
+  <h2>What I'd do</h2>
+  <p><strong>50 copies. Hybrid approach. Standard double jewel case, black thermal discs, 12-page booklet if the art can support it, shrinkwrapped, hand-numbered. Around $250–280 all in, sell at $25–30.</strong></p>
+  <p>That's a real object, it pays for itself after nine sales, and it makes the mail-order gag in the TV spot literally true — which is a much better ad than a joke phone number pointing at nothing.</p>
+  <p>Say the word on the DVD contents and the booklet size and I'll start getting real quotes in.</p>
+</section>
+
+</main>
+
+<footer>
+  <p>Prices researched 30 July 2026 from published vendor pricing (Blank Media Printing, Atlanta Disc, DVDs4Less, Bison Disc, Kunaki, TrepStar, Morphius, PrintDirtCheap). They're solid estimates, not signed quotes — final numbers come back within a day or two of asking.</p>
+  <p>Matt Matheson · METER — <em>Testing My Patience</em></p>
+</footer>
+
+</div>
+
+<div id="playerBar">
+  <button id="barPlayPause">❚❚</button>
+  <div id="nowReading">—</div>
+  <select id="barVoice" aria-label="Voice"></select>
+  <button id="barSpeed">1x</button>
+  <button id="barStop">■</button>
+</div>
+
+<script>
+(function () {
+  var synth = window.speechSynthesis;
+  if (!synth) { document.querySelector('.listen-controls').style.display = 'none'; return; }
+
+  var VOICE_WHITELIST = ['samantha','karen','daniel','moira','tessa','ava','allison','tom','aaron','nicky','evan','zoe','joelle','fiona','martha','arthur'];
+  var SPEEDS = [0.8, 1, 1.2, 1.5];
+
+  var listenBtn   = document.getElementById('listenBtn');
+  var voicePicker = document.getElementById('voicePicker');
+  var speedBtn    = document.getElementById('speedBtn');
+  var selectAll   = document.getElementById('selectAllLink');
+  var bar         = document.getElementById('playerBar');
+  var barPlay     = document.getElementById('barPlayPause');
+  var barVoice    = document.getElementById('barVoice');
+  var barSpeed    = document.getElementById('barSpeed');
+  var barStop     = document.getElementById('barStop');
+  var nowReading  = document.getElementById('nowReading');
+  var content     = document.getElementById('content');
+
+  var voices = [];
+  var chunks = [];
+  var idx = 0;
+  var speedIdx = 1;
+  var playing = false;
+  var keepAlive = null;
+
+  function loadVoices() {
+    var all = synth.getVoices() || [];
+    voices = all.filter(function (v) {
+      var n = (v.name || '').toLowerCase();
+      if (n.indexOf('google us english') !== -1 || n.indexOf('google uk english') !== -1) return true;
+      return VOICE_WHITELIST.some(function (w) { return n === w || n.indexOf(w) === 0; });
+    });
+    if (!voices.length) voices = all.slice(0, 6);
+
+    [voicePicker, barVoice].forEach(function (sel) {
+      sel.innerHTML = '';
+      voices.forEach(function (v, i) {
+        var o = document.createElement('option');
+        o.value = i;
+        o.textContent = v.name;
+        sel.appendChild(o);
+      });
+    });
+
+    var def = voices.findIndex(function (v) { return /samantha/i.test(v.name); });
+    if (def < 0) def = 0;
+    voicePicker.value = def;
+    barVoice.value = def;
+  }
+
+  loadVoices();
+  if (typeof synth.onvoiceschanged !== 'undefined') synth.onvoiceschanged = loadVoices;
+
+  function buildChunks() {
+    chunks = [];
+    var sections = content.querySelectorAll('section');
+    sections.forEach(function (sec) {
+      var els = sec.querySelectorAll('h2, h3, p, li, td');
+      els.forEach(function (el) {
+        if (el.closest('.table-wrap') && el.tagName !== 'TD') return;
+        var text = (el.textContent || '').replace(/\s+/g, ' ').trim();
+        if (!text || text === '—') return;
+        var isHeading = el.tagName === 'H2' || el.tagName === 'H3';
+        chunks.push({ text: text, heading: isHeading, section: sec });
+      });
+    });
+  }
+
+  function highlight(sec) {
+    var prev = content.querySelector('section.reading');
+    if (prev === sec) return;
+    if (prev) prev.classList.remove('reading');
+    if (sec) {
+      sec.classList.add('reading');
+      sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function speakCurrent() {
+    if (idx >= chunks.length) { stop(); return; }
+    var c = chunks[idx];
+    highlight(c.section);
+    nowReading.textContent = c.heading ? c.text : (c.section.querySelector('h2') || {}).textContent || '';
+
+    var u = new SpeechSynthesisUtterance(c.text);
+    var v = voices[parseInt(voicePicker.value, 10)];
+    if (v) u.voice = v;
+    var rate = SPEEDS[speedIdx];
+    u.rate = c.heading ? rate * 0.9 : rate;
+    if (c.heading) u.pitch = 1.05;
+
+    u.onend = function () {
+      if (!playing) return;
+      var pause = c.heading ? 400 : 200;
+      idx++;
+      setTimeout(function () { if (playing) speakCurrent(); }, pause);
+    };
+
+    synth.speak(u);
+  }
+
+  function start() {
+    buildChunks();
+    if (!chunks.length) return;
+    idx = 0;
+    playing = true;
+    synth.cancel();
+    bar.classList.add('visible');
+    barPlay.textContent = '❚❚';
+    listenBtn.textContent = '■ Stop';
+    keepAlive = setInterval(function () { if (playing) synth.resume(); }, 10000);
+    speakCurrent();
+  }
+
+  function stop() {
+    playing = false;
+    synth.cancel();
+    if (keepAlive) { clearInterval(keepAlive); keepAlive = null; }
+    bar.classList.remove('visible');
+    listenBtn.textContent = '▶ Listen';
+    var prev = content.querySelector('section.reading');
+    if (prev) prev.classList.remove('reading');
+  }
+
+  listenBtn.addEventListener('click', function () { playing ? stop() : start(); });
+
+  barPlay.addEventListener('click', function () {
+    if (!playing) return;
+    if (synth.paused) { synth.resume(); barPlay.textContent = '❚❚'; }
+    else { synth.pause(); barPlay.textContent = '▶'; }
+  });
+
+  barStop.addEventListener('click', stop);
+
+  function cycleSpeed() {
+    speedIdx = (speedIdx + 1) % SPEEDS.length;
+    var label = SPEEDS[speedIdx] + 'x';
+    speedBtn.textContent = label;
+    barSpeed.textContent = label;
+  }
+  speedBtn.addEventListener('click', cycleSpeed);
+  barSpeed.addEventListener('click', cycleSpeed);
+
+  voicePicker.addEventListener('change', function () { barVoice.value = voicePicker.value; });
+  barVoice.addEventListener('change', function () { voicePicker.value = barVoice.value; });
+
+  selectAll.addEventListener('click', function (e) {
+    e.preventDefault();
+    var range = document.createRange();
+    range.selectNodeContents(content);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  });
+
+  window.addEventListener('beforeunload', function () { synth.cancel(); });
+})();
+</script>
+
+</body>
+</html>
