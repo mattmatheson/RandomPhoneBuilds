@@ -148,6 +148,60 @@
 
   a { color: var(--accent); }
 
+  /* Figures */
+  figure { margin: 0 0 1.5rem; }
+
+  figure img {
+    display: block;
+    width: 100%;
+    background: #fff;
+    border: 1px solid var(--divider);
+    border-radius: 10px;
+  }
+
+  figcaption {
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    margin-top: 0.55rem;
+  }
+  figcaption strong { color: var(--text-primary); font-weight: 600; }
+
+  .fig-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .fig-grid figure { margin: 0; }
+  .fig-grid img {
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    padding: 0.6rem;
+  }
+
+  .fig-duo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 176px));
+    justify-content: center;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  .fig-duo figure { margin: 0; }
+  .fig-duo figcaption { text-align: center; }
+
+  figure.wide img { padding: 0.6rem; }
+
+  /* Fold diagram */
+  .fold-diagram {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 10px;
+    padding: 1.2rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .fold-diagram svg { display: block; width: 100%; height: auto; }
+
   .table-wrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -331,6 +385,10 @@
 
 <section>
   <h2>What we're actually making</h2>
+  <figure>
+    <img src="img/finished-package.jpg" alt="A finished CD in a jewel case with a printed booklet cover and a full-colour printed disc" loading="lazy">
+    <figcaption><strong>The finished thing.</strong> Printed booklet in the front, printed disc face, tray card behind. Ours would have a second disc — the DVD — on a flip tray inside. <em>Product photo: Blank Media Printing.</em></figcaption>
+  </figure>
   <p>One standard jewel case — the normal CD thickness, not a fat double — with a hinged tray inside that holds two discs. <strong>Disc one is the record. Disc two is a DVD of video.</strong> Front cover, a booklet or insert, and a printed back tray card.</p>
   <p>This is a collector's item, not a distribution plan. Nobody is buying a CD in 2026 to listen to it. They're buying an object because they like the band. That should drive every decision below — it means spend where people can see it and don't spend where they can't.</p>
   <div class="callout">
@@ -392,6 +450,33 @@
 <section>
   <h2>Option 1 — The case</h2>
   <p>What the thing physically is. This is the biggest decision because it determines everything else.</p>
+
+  <figure>
+    <img src="img/double-jewel-flip.jpg" alt="A hand placing a second disc into a double jewel case with a hinged flip tray, one disc already seated underneath" loading="lazy">
+    <figcaption><strong>This is the one I'm recommending.</strong> A normal-thickness jewel case with a hinged flip tray — the CD sits underneath, the DVD clips on top. Same shelf footprint as any other CD. <em>Product photo: Maxtek Media.</em></figcaption>
+  </figure>
+
+  <p>Here are the four realistic options side by side:</p>
+
+  <div class="fig-grid">
+    <figure>
+      <img src="img/double-jewel-stack.jpg" alt="A stack of standard 10.4mm double jewel cases with black trays" loading="lazy">
+      <figcaption><strong>Standard double jewel</strong> — $30–40 for 50. <em>Maxtek Media.</em></figcaption>
+    </figure>
+    <figure>
+      <img src="img/slim-case.jpg" alt="A thin clear slim jewel case, open" loading="lazy">
+      <figcaption><strong>Slim double jewel</strong> — $20–28 for 50. No booklet room. <em>Maxtek Media.</em></figcaption>
+    </figure>
+    <figure>
+      <img src="img/dvd-case.jpg" alt="The inside of a black plastic DVD keep case showing the disc hub" loading="lazy">
+      <figcaption><strong>DVD case (Amaray)</strong> — $25–35 for 50. Discs on opposite faces. <em>Photo: Wikimedia Commons, CC0.</em></figcaption>
+    </figure>
+    <figure>
+      <img src="img/digipak.jpg" alt="A six-panel cardboard digipak folded open showing a disc and printed panels" loading="lazy">
+      <figcaption><strong>Digipak</strong> — $35–50 for 50. Cardboard, feels premium. <em>Photo: Toothseeker / Oasis Disc Manufacturing, CC BY 3.0.</em></figcaption>
+    </figure>
+  </div>
+
   <div class="table-wrap">
     <table>
       <tr><th>Case type</th><th>What it's like</th><th class="price">Cost (50)</th></tr>
@@ -423,6 +508,12 @@
 <section>
   <h2>Option 2 — Printing the discs</h2>
   <p>What the disc faces look like. There are three real choices and they look genuinely different.</p>
+
+  <figure class="wide">
+    <img src="img/printed-discs.jpg" alt="Full-colour printed discs laid out beside a spindle of blanks and clear sleeves" loading="lazy">
+    <figcaption><strong>Full-colour printing goes edge to edge on the disc face</strong> — artwork, not a label. This is what comes back from a duplication house. <em>Product photo: Atlanta Disc.</em></figcaption>
+  </figure>
+
   <div class="table-wrap">
     <table>
       <tr><th>Method</th><th>Look</th><th class="price">Cost (both discs, 50 sets)</th></tr>
@@ -455,6 +546,73 @@
 <section>
   <h2>Option 3 — The insert / booklet</h2>
   <p>The printed piece inside the front of the case. This is where people look, and it's where the record either feels like a real release or feels like a burned disc in a case.</p>
+
+  <figure>
+    <img src="img/inserts.jpg" alt="Printed CD inserts and folded booklets laid out on a table beside assembled jewel cases" loading="lazy">
+    <figcaption><strong>Inserts arrive flat and pre-folded</strong>, ready to drop into the cases. This is the pile we'd be assembling from. <em>Product photo: Blank Media Printing.</em></figcaption>
+  </figure>
+
+  <p>There are two separate printed pieces and they're easy to mix up:</p>
+
+  <div class="fig-duo">
+    <figure>
+      <img src="img/detail-booklet.jpg" alt="A jewel case with the front booklet visible through the lid" loading="lazy">
+      <figcaption><strong>Booklet</strong><br>front of the case</figcaption>
+    </figure>
+    <figure>
+      <img src="img/detail-traycard.jpg" alt="A jewel case seen from behind showing the printed tray card through the back" loading="lazy">
+      <figcaption><strong>Tray card</strong><br>behind the discs</figcaption>
+    </figure>
+  </div>
+
+  <p>How many panels the booklet has is the main cost lever. This is what each one actually is:</p>
+
+  <div class="fold-diagram">
+    <svg viewBox="0 0 620 300" role="img" aria-label="Diagram comparing 2-panel, 4-panel, 8-panel and 12-page insert formats">
+      <defs>
+        <style>
+          .lbl { font: 600 13px Inter, sans-serif; fill: #1D1D1F; }
+          .sub { font: 400 11px Inter, sans-serif; fill: #6E6E73; }
+          .pnl { fill: #FFFFFF; stroke: #C9C9CE; stroke-width: 1.5; }
+          .fld { stroke: #C42020; stroke-width: 1.5; stroke-dasharray: 4 3; }
+          .stpl { stroke: #C42020; stroke-width: 2.5; stroke-linecap: round; }
+        </style>
+      </defs>
+
+      <text class="lbl" x="0" y="26">2-panel</text>
+      <text class="sub" x="0" y="43">one card</text>
+      <rect class="pnl" x="150" y="8" width="56" height="56" rx="2"/>
+      <text class="sub" x="220" y="41">Front cover, and the back of it. That's all.</text>
+
+      <text class="lbl" x="0" y="105">4-panel</text>
+      <text class="sub" x="0" y="122">one fold</text>
+      <rect class="pnl" x="150" y="87" width="56" height="56" rx="2"/>
+      <rect class="pnl" x="206" y="87" width="56" height="56" rx="2"/>
+      <line class="fld" x1="206" y1="83" x2="206" y2="147"/>
+      <text class="sub" x="276" y="120">Cover, two inside pages, back. Room for a tracklist.</text>
+
+      <text class="lbl" x="0" y="184">8-panel</text>
+      <text class="sub" x="0" y="201">accordion</text>
+      <rect class="pnl" x="150" y="166" width="56" height="56" rx="2"/>
+      <rect class="pnl" x="206" y="166" width="56" height="56" rx="2"/>
+      <rect class="pnl" x="262" y="166" width="56" height="56" rx="2"/>
+      <rect class="pnl" x="318" y="166" width="56" height="56" rx="2"/>
+      <line class="fld" x1="206" y1="162" x2="206" y2="226"/>
+      <line class="fld" x1="262" y1="162" x2="262" y2="226"/>
+      <line class="fld" x1="318" y1="162" x2="318" y2="226"/>
+      <text class="sub" x="388" y="199">Folds out. Full lyric spread.</text>
+
+      <text class="lbl" x="0" y="263">12-page</text>
+      <text class="sub" x="0" y="280">stapled book</text>
+      <rect class="pnl" x="144" y="249" width="56" height="56" rx="2"/>
+      <rect class="pnl" x="147" y="246" width="56" height="56" rx="2"/>
+      <rect class="pnl" x="150" y="243" width="56" height="56" rx="2"/>
+      <line class="stpl" x1="150" y1="255" x2="150" y2="263"/>
+      <line class="stpl" x1="150" y1="279" x2="150" y2="287"/>
+      <text class="sub" x="220" y="276">Every lyric, photos, full credits. The collector version.</text>
+    </svg>
+  </div>
+
   <div class="table-wrap">
     <table>
       <tr><th>Insert</th><th>What you get</th><th class="price">Cost (50 sets)</th></tr>
@@ -532,6 +690,20 @@
 
   <h3>C. Full DIY — $95–$135 in materials</h3>
   <p>We buy blank printable discs, burn everything ourselves, print the disc faces ourselves, print and trim the inserts ourselves.</p>
+
+  <div class="fig-grid">
+    <figure>
+      <img src="img/blank-cdr.jpg" alt="A blank silver Verbatim CD-R disc, 700MB 52x" loading="lazy">
+      <figcaption><strong>Blank CD-R</strong> — about $0.45 each in a 50-pack. <em>Photo: Wikimedia Commons, CC0.</em></figcaption>
+    </figure>
+    <figure>
+      <img src="img/blank-dvdr.jpg" alt="The recording side of a blank DVD-R disc" loading="lazy">
+      <figcaption><strong>Blank DVD-R</strong> — about $0.50 each in a 50-pack. <em>Photo: Wikimedia Commons, CC0.</em></figcaption>
+    </figure>
+  </div>
+
+  <p>The blanks are genuinely cheap. That's the part that makes this look tempting — and it's also the only part that's cheap.</p>
+
   <div class="table-wrap">
     <table>
       <tr><th>Line item</th><th class="price">50 copies</th></tr>
@@ -590,6 +762,7 @@
 
 <footer>
   <p>Prices researched 30 July 2026 from published vendor pricing (Blank Media Printing, Atlanta Disc, DVDs4Less, Bison Disc, Kunaki, TrepStar, Morphius, PrintDirtCheap). They're solid estimates, not signed quotes — final numbers come back within a day or two of asking.</p>
+  <p>Photo credits: product photography courtesy of Maxtek Media, Blank Media Printing and Atlanta Disc, shown to illustrate the options described above. Digipak photo by Toothseeker / Oasis Disc Manufacturing (CC BY 3.0). DVD case, CD-R and DVD-R photos via Wikimedia Commons (CC0). Fold diagram drawn for this page.</p>
   <p>Matt Matheson · METER — <em>Testing My Patience</em></p>
 </footer>
 
