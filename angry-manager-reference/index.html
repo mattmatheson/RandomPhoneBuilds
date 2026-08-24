@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="published" content="2026-08-24">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angry Manager &amp; Lazy Employees — Music Video Reference Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --red:#C42020;
+    --bg:#0a0a0a;
+    --surface:#111;
+    --surface-raised:#161616;
+    --border:#222;
+    --text:#e8e8e8;
+    --text-muted:#8a8a8a;
+    --text-dim:#555;
+  }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--bg); color:var(--text); line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .container { max-width:1240px; margin:0 auto; padding:0 24px; }
+
+  .header { padding:88px 0 56px; border-bottom:1px solid var(--border); text-align:center; position:relative; }
+  .header::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--red); }
+  .header .kicker {
+    font-size:.7rem; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--red); font-weight:700; margin-bottom:18px;
+  }
+  .header h1 { font-size:clamp(2rem,5.2vw,3.4rem); font-weight:800; letter-spacing:-.035em; line-height:1.08; }
+  .header h1 span { color:var(--red); }
+  .header .subtitle {
+    margin-top:20px; color:var(--text-muted); font-size:clamp(.9rem,1.6vw,1.05rem);
+    max-width:660px; margin-left:auto; margin-right:auto; font-weight:400;
+  }
+  .header .count {
+    margin-top:28px; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--text-dim); font-weight:600;
+  }
+
+  .nav {
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,10,10,.86); backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner {
+    max-width:1240px; margin:0 auto; padding:0 24px;
+    display:flex; gap:26px; overflow-x:auto; scrollbar-width:none;
+  }
+  .nav-inner::-webkit-scrollbar { display:none; }
+  .nav a {
+    flex:none; padding:16px 0; color:var(--text-dim); text-decoration:none;
+    font-size:.72rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+    border-bottom:2px solid transparent; transition:color .2s, border-color .2s; white-space:nowrap;
+  }
+  .nav a:hover { color:var(--text); border-bottom-color:var(--red); }
+
+  section { padding:72px 0; border-bottom:1px solid var(--border); scroll-margin-top:54px; }
+  .sec-head { display:flex; gap:22px; align-items:flex-start; margin-bottom:40px; max-width:820px; }
+  .sec-num {
+    font-size:.78rem; font-weight:800; color:var(--red);
+    letter-spacing:.1em; padding-top:.55rem; flex:none;
+  }
+  .sec-head h2 { font-size:clamp(1.4rem,3vw,2rem); font-weight:800; letter-spacing:-.025em; line-height:1.15; }
+  .sec-blurb { margin-top:12px; color:var(--text-muted); font-size:.95rem; }
+  .sec-blurb em { color:var(--text); font-style:italic; }
+
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:18px; }
+  .card {
+    background:var(--surface); border:1px solid var(--border); border-radius:10px;
+    padding:24px; display:flex; flex-direction:column;
+    transition:background .2s, border-color .2s, transform .2s;
+  }
+  .card:hover { background:var(--surface-raised); border-color:#333; transform:translateY(-2px); }
+  .card-head { display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
+  .card h3 { font-size:1.02rem; font-weight:700; letter-spacing:-.015em; line-height:1.3; }
+  .year { font-size:.68rem; color:var(--text-dim); font-weight:600; letter-spacing:.08em; flex:none; }
+  .scene {
+    margin-top:10px; color:var(--red); font-size:.74rem; font-weight:700;
+    letter-spacing:.1em; text-transform:uppercase;
+  }
+  .note { margin-top:12px; color:var(--text-muted); font-size:.88rem; flex:1; }
+  .links { margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; }
+  .links a {
+    font-size:.72rem; font-weight:600; letter-spacing:.05em; text-decoration:none;
+    padding:8px 14px; border-radius:99px; border:1px solid var(--red);
+    color:#fff; background:var(--red); transition:opacity .2s, background .2s, color .2s;
+  }
+  .links a:hover { opacity:.82; }
+  .links a.secondary { background:transparent; border-color:#333; color:var(--text-muted); }
+  .links a.secondary:hover { border-color:#555; color:var(--text); opacity:1; }
+
+  .props { display:flex; flex-wrap:wrap; gap:10px; list-style:none; max-width:900px; }
+  .props li {
+    background:var(--surface); border:1px solid var(--border); border-radius:99px;
+    padding:9px 16px; font-size:.82rem; color:var(--text-muted);
+  }
+
+  .footer { padding:56px 0 80px; text-align:center; color:var(--text-dim); font-size:.78rem; }
+  .footer strong { color:var(--text-muted); font-weight:600; }
+
+  @media (max-width:640px) {
+    .header { padding:64px 0 44px; }
+    section { padding:56px 0; }
+    .sec-head { gap:14px; }
+    .grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <p class="kicker">Music Video &middot; Reference Board</p>
+    <h1>The Angry Manager<br>&amp; the <span>Lazy Employees</span></h1>
+    <p class="subtitle">Scene references for a band-in-a-store shoot, grouped by the shot mechanic rather than the movie &mdash; because the mechanic is what you actually block on the day.</p>
+    <p class="count">36 references &middot; 7 categories</p>
+  </div>
+</header>
+
+<nav class="nav"><div class="nav-inner"><a href="#s01">01 &middot; The Line-Up Inspection</a><a href="#s02">02 &middot; The Lean-In</a><a href="#s03">03 &middot; The Speech</a><a href="#s04">04 &middot; Checking Out Mid-Rant</a><a href="#s05">05 &middot; Retail & Food — The Counter as a Stage</a><a href="#s06">06 &middot; Stylized Flourishes</a><a href="#s07">07 &middot; Music Videos in This Lane</a></div></nav>
+
+  <section id="s01">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-num">01</span>
+        <div>
+          <h2>The Line-Up Inspection</h2>
+          <p class="sec-blurb">Manager walks the row. Camera dollies with him, talent locked off. The single most reliable blocking you can build in a store — a checkout lane or a shelf wall <em>is</em> the barracks.</p>
+        </div>
+      </div>
+      <div class="grid">
+      <article class="card">
+        <div class="card-head">
+          <h3>Full Metal Jacket</h3>
+          <span class="year">1987</span>
+        </div>
+        <p class="scene">Hartman's barracks walk</p>
+        <p class="note">The archetype. Lateral track at chest height, recruits rigid in a row, he enters and exits frame. Wide lens, he gets close enough to distort.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=full%20metal%20jacket%20hartman%20barracks%20inspection%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Full%20Metal%20Jacket%201987&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>The Devil Wears Prada</h3>
+          <span class="year">2006</span>
+        </div>
+        <p class="scene">Miranda's morning arrival</p>
+        <p class="note">Steadicam leading her while staff scatter. Whip-cut inserts of the coat and bag being tossed. Low angle on the boss, flat long-lens coverage on everyone else.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=devil%20wears%20prada%20miranda%20arrives%20office%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=The%20Devil%20Wears%20Prada%202006&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>The Bear</h3>
+          <span class="year">2022–</span>
+        </div>
+        <p class="scene">“Yes, chef.”</p>
+        <p class="note">Handheld, tight, tailing him through a cramped space while nobody actually listens. The one-take “Review” episode is a masterclass in escalating workplace tension.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=the%20bear%20yes%20chef%20kitchen%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=The%20Bear%20TV%20series&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      </div>
+    </div>
+  </section>
+  <section id="s02">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-num">02</span>
+        <div>
+          <h2>The Lean-In</h2>
+          <p class="sec-blurb">Boss invades personal space. Static or slow push, boss soft in the foreground, employee dead-eyed and sharp behind. This is your verse coverage.</p>
+        </div>
+      </div>
+      <div class="grid">
+      <article class="card">
+        <div class="card-head">
+          <h3>Office Space</h3>
+          <span class="year">1999</span>
+        </div>
+        <p class="scene">Lumbergh over the cubicle wall</p>
+        <p class="note">Coffee mug, slight low angle, “Yeah… I'm gonna need you to…” Boss half out of focus in foreground. The single most quotable version of your video's premise.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=office%20space%20lumbergh%20yeah%20im%20gonna%20need%20you%20to%20come%20in" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Office%20Space%201999&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Office Space</h3>
+          <span class="year">1999</span>
+        </div>
+        <p class="scene">Chotchkie's “flair”</p>
+        <p class="note">Manager Stan's fake-nice cornering of Joanna. Honestly your entire music video in one scene. Get inserts of buttons and name tags.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=office%20space%20flair%20scene%20chotchkies%2037%20pieces" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Office%20Space%201999&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Horrible Bosses</h3>
+          <span class="year">2011</span>
+        </div>
+        <p class="scene">“You're two minutes late”</p>
+        <p class="note">Boss dead-center, locked off, absolutely still while the employee squirms. Stillness is the joke.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=horrible%20bosses%20kevin%20spacey%20two%20minutes%20late%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Horrible%20Bosses%202011&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Clerks</h3>
+          <span class="year">1994</span>
+        </div>
+        <p class="scene">The counter</p>
+        <p class="note">No manager, but the definitive lazy-employee text. Locked-off B&W 16mm, the counter as a proscenium stage. Dante and Randal are your band.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=clerks%201994%20im%20not%20even%20supposed%20to%20be%20here%20today" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Clerks%201994&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      </div>
+    </div>
+  </section>
+  <section id="s03">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-num">03</span>
+        <div>
+          <h2>The Speech</h2>
+          <p class="sec-blurb">Boss addresses the group. One standing figure, a semicircle of slumped chairs. Cut this to a chorus.</p>
+        </div>
+      </div>
+      <div class="grid">
+      <article class="card">
+        <div class="card-head">
+          <h3>Glengarry Glen Ross</h3>
+          <span class="year">1992</span>
+        </div>
+        <p class="scene">“Coffee is for closers”</p>
+        <p class="note">Slow push-ins, chalkboard, boss standing while everyone sits. Steal the blocking wholesale — it works in a break room.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=glengarry%20glen%20ross%20coffee%20is%20for%20closers%20alec%20baldwin" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Glengarry%20Glen%20Ross%201992&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Boiler Room</h3>
+          <span class="year">2000</span>
+        </div>
+        <p class="scene">The floor rally</p>
+        <p class="note">Motivational-rally flavor. Low angle on the boss, employees as a sea of faces. Built for a chorus hit.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=boiler%20room%20ben%20affleck%20recruiting%20speech%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Boiler%20Room%202000&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>The Wolf of Wall Street</h3>
+          <span class="year">2013</span>
+        </div>
+        <p class="scene">Belfort with the mic</p>
+        <p class="note">Same rally, bigger. Boss roaming with a handheld mic, crowd chanting. Pure energy release if the song opens up.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=wolf%20of%20wall%20street%20belfort%20motivational%20speech%20mic" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=The%20Wolf%20of%20Wall%20Street%202013&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Empire Records</h3>
+          <span class="year">1995</span>
+        </div>
+        <p class="scene">Joe's staff meetings</p>
+        <p class="note">A record store staffed entirely by people who don't want to be there. Closest tonal match on this whole list. Rex Manning Day.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=empire%20records%20joe%20staff%20meeting%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Empire%20Records%201995&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Superstore</h3>
+          <span class="year">2015–2021</span>
+        </div>
+        <p class="scene">Break-room meeting</p>
+        <p class="note">Literally set in a big-box store. Mockumentary zoom-pushes and whip pans to reactions. If the band mugs at camera, this is the grammar.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=superstore%20glenn%20break%20room%20meeting%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Superstore%20TV%20series&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>The Office</h3>
+          <span class="year">2005–2013</span>
+        </div>
+        <p class="scene">Conference room address</p>
+        <p class="note">The talking-head cutaway and the slow zoom-in on a reaction. Cheap, fast, and instantly readable.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=the%20office%20michael%20scott%20conference%20room%20meeting%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=The%20Office%20US%20TV%20series&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Sorry to Bother You</h3>
+          <span class="year">2018</span>
+        </div>
+        <p class="scene">“Stick to the script”</p>
+        <p class="note">Call-center pep talk, stylized and weird. Pushed color, absurdist staging — good if you want the video to tilt surreal.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=sorry%20to%20bother%20you%20stick%20to%20the%20script%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Sorry%20to%20Bother%20You%202018&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      </div>
+    </div>
+  </section>
+  <section id="s04">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-num">04</span>
+        <div>
+          <h2>Checking Out Mid-Rant</h2>
+          <p class="sec-blurb">The manager keeps talking; the picture leaves. Reaction-driven cutting is where your band's personality lands.</p>
+        </div>
+      </div>
+      <div class="grid">
+      <article class="card">
+        <div class="card-head">
+          <h3>Fight Club</h3>
+          <span class="year">1999</span>
+        </div>
+        <p class="scene">The boss drones, camera pans away</p>
+        <p class="note">Audio keeps rolling while the camera abandons him for Tyler in the background. Perfect for a lyric hitting over a rant.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=fight%20club%20narrator%20boss%20office%20scene%20tyler%20background" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Fight%20Club%201999&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Office Space</h3>
+          <span class="year">1999</span>
+        </div>
+        <p class="scene">The printer fantasy</p>
+        <p class="note">Cut from the manager's mouth moving to what the employee is imagining, then snap back. Gives you a free excuse to leave the store.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=office%20space%20printer%20smashing%20scene%20damn%20it%20feels%20good" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Office%20Space%201999&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Punch-Drunk Love</h3>
+          <span class="year">2002</span>
+        </div>
+        <p class="scene">The plunger warehouse</p>
+        <p class="note">Very wide, very still, tiny figure in an enormous fluorescent space. Loneliness-of-the-job shots.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=punch%20drunk%20love%20warehouse%20opening%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Punch-Drunk%20Love%202002&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Ghost World</h3>
+          <span class="year">2001</span>
+        </div>
+        <p class="scene">Concession stand / Sidewinder</p>
+        <p class="note">Deadpan, one-line quits, employees who radiate contempt for the uniform. Flat, frontal, unhurried.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=ghost%20world%20josh%20sidewinder%20enid%20movie%20theater%20job" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Ghost%20World%202001&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      </div>
+    </div>
+  </section>
+  <section id="s05">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-num">05</span>
+        <div>
+          <h2>Retail & Food — The Counter as a Stage</h2>
+          <p class="sec-blurb">Register-level specifics. Everything here happens across a laminate counter under bad light.</p>
+        </div>
+      </div>
+      <div class="grid">
+      <article class="card">
+        <div class="card-head">
+          <h3>Fast Times at Ridgemont High</h3>
+          <span class="year">1982</span>
+        </div>
+        <p class="scene">“Learn it, know it, live it”</p>
+        <p class="note">Brad at All-American Burger, plus the pirate-costume quitting scene. The uniform as humiliation device.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=fast%20times%20at%20ridgemont%20high%20learn%20it%20know%20it%20live%20it" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Fast%20Times%20at%20Ridgemont%20High%201982&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Falling Down</h3>
+          <span class="year">1993</span>
+        </div>
+        <p class="scene">Whammy Burger</p>
+        <p class="note">The manager's frozen customer-service smile, the breakfast-menu standoff, and the shot of the sad real burger next to the glossy menu photo. Steal that insert.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=falling%20down%20whammy%20burger%20breakfast%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Falling%20Down%201993&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Half Baked</h3>
+          <span class="year">1998</span>
+        </div>
+        <p class="scene">The quitting rant</p>
+        <p class="note">Chappelle rapid-fire pointing at each coworker in turn. Built-in cutting rhythm — great over a fast section.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=half%20baked%20dave%20chappelle%20quitting%20job%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Half%20Baked%201998&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Waiting...</h3>
+          <span class="year">2005</span>
+        </div>
+        <p class="scene">Back of house</p>
+        <p class="note">The manager trying to be everyone's friend, which is its own kind of villain. Cramped kitchen blocking.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=waiting%202005%20dan%20manager%20scene%20restaurant" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Waiting%202005&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Clerks II</h3>
+          <span class="year">2006</span>
+        </div>
+        <p class="scene">Mooby's</p>
+        <p class="note">Brighter, broader corporate-mascot version of the same joke. Good for signage and branding gags.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=clerks%202%20moobys%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Clerks%20II%202006&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Employee of the Month</h3>
+          <span class="year">2006</span>
+        </div>
+        <p class="scene">Big-box rivalry</p>
+        <p class="note">Broad, but the store-floor geography and the Employee of the Month wall are worth lifting.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=employee%20of%20the%20month%202006%20store%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Employee%20of%20the%20Month%202006&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Career Opportunities</h3>
+          <span class="year">1991</span>
+        </div>
+        <p class="scene">Locked in the store overnight</p>
+        <p class="note">Frank Whaley alone in a big-box store at night on roller skates. Early-90s fluorescent-and-tungsten look — right in your wheelhouse.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=career%20opportunities%201991%20target%20store%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Career%20Opportunities%201991&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      </div>
+    </div>
+  </section>
+  <section id="s06">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-num">06</span>
+        <div>
+          <h2>Stylized Flourishes</h2>
+          <p class="sec-blurb">Formal moves that make a store aisle look intentional instead of accidental.</p>
+        </div>
+      </div>
+      <div class="grid">
+      <article class="card">
+        <div class="card-head">
+          <h3>The Grand Budapest Hotel</h3>
+          <span class="year">2014</span>
+        </div>
+        <p class="scene">Gustave briefs the staff</p>
+        <p class="note">Symmetrical, centered, planimetric — then the walking-lecture tracking shots. A store aisle is a perfect Anderson corridor.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=grand%20budapest%20hotel%20gustave%20staff%20briefing%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=The%20Grand%20Budapest%20Hotel%202014&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Do the Right Thing</h3>
+          <span class="year">1989</span>
+        </div>
+        <p class="scene">Sal berates Mookie</p>
+        <p class="note">Spike Lee's double dolly — subject and camera on the same dolly — so the manager glides at you unnaturally. Cheap on a slider if you rig it.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=do%20the%20right%20thing%20spike%20lee%20double%20dolly%20shot" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Do%20the%20Right%20Thing%201989&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Severance</h3>
+          <span class="year">2022–</span>
+        </div>
+        <p class="scene">Corporate absurdism</p>
+        <p class="note">Symmetrical fluorescent wides, motivational posters, the boss's office as a slightly too-empty room. Modern reference the band will recognize.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=severance%20lumon%20office%20hallway%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Severance%20TV%20series&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Joe Versus the Volcano</h3>
+          <span class="year">1990</span>
+        </div>
+        <p class="scene">The opening office</p>
+        <p class="note">Sickly green light, flickering fluorescents, coffee that tastes like death. Wildly underrated for exactly this mood.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=joe%20versus%20the%20volcano%20opening%20office%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Joe%20Versus%20the%20Volcano%201990&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Modern Times</h3>
+          <span class="year">1936</span>
+        </div>
+        <p class="scene">The boss on the screen</p>
+        <p class="note">Management appears on a giant monitor barking at the floor. In your store that's the PA system or the security-monitor bank.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=modern%20times%20chaplin%20boss%20screen%20factory%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Modern%20Times%201936&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>American Beauty</h3>
+          <span class="year">1999</span>
+        </div>
+        <p class="scene">Mr. Smiley's</p>
+        <p class="note">“The least possible amount of responsibility,” plus the quitting scene. Drive-thru headset as a costume piece.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=american%20beauty%20mr%20smileys%20job%20interview%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=American%20Beauty%201999&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Whiplash</h3>
+          <span class="year">2014</span>
+        </div>
+        <p class="scene">“Not quite my tempo”</p>
+        <p class="note">Not a store, but the best angry-boss close-up coverage ever cut: hard push-ins, cuts on the eyes, sudden silence.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=whiplash%20not%20quite%20my%20tempo%20scene" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Whiplash%202014&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      </div>
+    </div>
+  </section>
+  <section id="s07">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-num">07</span>
+        <div>
+          <h2>Music Videos in This Lane</h2>
+          <p class="sec-blurb">Direct-format precedent — how bands have played the workplace before.</p>
+        </div>
+      </div>
+      <div class="grid">
+      <article class="card">
+        <div class="card-head">
+          <h3>Foo Fighters — “Learn to Fly”</h3>
+          <span class="year">1999</span>
+        </div>
+        <p class="scene">Band plays every role</p>
+        <p class="note">Including management. If your band wants doubles and costume gags, this is the blueprint.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=foo%20fighters%20learn%20to%20fly%20official%20music%20video" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Foo%20Fighters%20Learn%20to%20Fly&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Fatboy Slim — “Weapon of Choice”</h3>
+          <span class="year">2001</span>
+        </div>
+        <p class="scene">Corporate guy snaps</p>
+        <p class="note">Best structural model on the list: verses = drudgery, chorus = physical release. Spike Jonze.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=fatboy%20slim%20weapon%20of%20choice%20official%20video" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Weapon%20of%20Choice%20music%20video&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Beastie Boys — “Sabotage”</h3>
+          <span class="year">1994</span>
+        </div>
+        <p class="scene">Crash-zoom pastiche</p>
+        <p class="note">For pure energy and coverage style — whip zooms, dutch angles, everything shot like a 70s cop show.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=beastie%20boys%20sabotage%20official%20music%20video" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Beastie%20Boys%20Sabotage&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <h3>Weezer — “Keep Fishin'”</h3>
+          <span class="year">2002</span>
+        </div>
+        <p class="scene">Band vs. authority</p>
+        <p class="note">Played completely straight against absurd circumstances. Useful tone calibration if the song is deadpan.</p>
+        <div class="links">
+          <a href="https://www.youtube.com/results?search_query=weezer%20keep%20fishin%20official%20music%20video" target="_blank" rel="noopener">Watch the scene</a>
+          <a href="https://www.imdb.com/find/?q=Weezer%20Keep%20Fishin&s=tt" target="_blank" rel="noopener" class="secondary">Title info</a>
+        </div>
+      </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="props">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-num">08</span>
+        <div>
+          <h2>Props &amp; Set Dressing</h2>
+          <p class="sec-blurb">Recurring across nearly every reference above. Cheap, instantly readable, and each one buys you an insert shot.</p>
+        </div>
+      </div>
+      <ul class="props"><li>Clipboard</li><li>Name tags at wrong angles</li><li>“Employee of the Month” wall (manager's own photo)</li><li>“WE ARE A FAMILY” sign</li><li>In-house training video on the break-room TV</li><li>Whistle</li><li>Time clock / punch cards</li><li>One open register, six closed</li><li>Manager's tiny office with a window onto the floor</li><li>PA microphone</li><li>Box cutter on a lanyard</li><li>Mop bucket parked in an aisle</li><li>Wet floor cone</li><li>Headset earpiece</li><li>Laminated policy binder</li></ul>
+    </div>
+  </section>
+
+<footer class="footer">
+  <div class="container">
+    <p><strong>Next step:</strong> send the tempo and feel of the song plus how many spots in the store you get, and this becomes a real shot list broken out by verse and chorus.</p>
+  </div>
+</footer>
+
+</body>
+</html>
