@@ -194,23 +194,48 @@
     box-shadow: 0 24px 60px -24px rgba(0,0,0,0.35);
   }
 
-  .player iframe {
+  .player video {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    border: 0;
     display: block;
+    background: #0C0C0E;
+  }
+
+  .player-bar {
+    margin-top: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
   }
 
   .player-note {
-    margin-top: 0.85rem;
-    text-align: center;
     font-size: 0.68rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--ink-faint);
   }
+
+  .dl-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-left: auto;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 2px;
+    transition: border-color 0.2s ease, opacity 0.2s ease;
+  }
+
+  .dl-link:hover { border-bottom-color: var(--ink); }
+  .dl-link svg { flex-shrink: 0; }
 
   /* ---------- Info box ---------- */
   .info-box {
@@ -354,9 +379,18 @@
 
 <div class="wrap">
   <div class="player">
-    <iframe id="player" src="" title="Liv and Bryson wedding film" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    <video id="player" controls preload="metadata" playsinline poster="poster.jpg">
+      <source src="web-720.mp4" type="video/mp4">
+      Your browser can't play this video. <a id="fallbackDrive" href="#">Download it instead</a>.
+    </video>
   </div>
-  <div class="player-note">Streaming preview &middot; download for full quality</div>
+  <div class="player-bar">
+    <span class="player-note">Streaming preview &middot; 720p</span>
+    <a class="dl-link" id="inlineDrive" href="#" target="_blank" rel="noopener">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download full quality
+    </a>
+  </div>
 
   <div class="info-box">
     <p>Here's your film. Thank you for letting me be there for it &mdash; it was a genuinely beautiful day to get to shoot.</p>
@@ -387,12 +421,9 @@
 const DRIVE_FILE   = "1BL_5YCuDclzBiRYgQ51arFspawSQYyAB";
 const DRIVE_FOLDER = "1v9w3oa9eMrExs59jaZa_oHPQy7nd-rjC";
 
-// Player
-document.getElementById('player').src = "https://drive.google.com/file/d/" + DRIVE_FILE + "/preview";
-
-// Download links point at the file in Drive
+// The preview streams from this page; every download link points at Drive.
 const fileUrl = "https://drive.google.com/file/d/" + DRIVE_FILE + "/view";
-['topDrive','mainDrive','footDrive'].forEach(id => {
+['topDrive','mainDrive','footDrive','inlineDrive','fallbackDrive'].forEach(id => {
   const el = document.getElementById(id);
   if (el) el.href = fileUrl;
 });
