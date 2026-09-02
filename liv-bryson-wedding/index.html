@@ -77,11 +77,11 @@
     object-position: center 42%;
     display: block;
     opacity: 0;
-    transform: scale(1.06);
+    transform: scale(1.32);
     transition: opacity 1.2s ease, transform 1.6s cubic-bezier(0.16,1,0.3,1);
   }
 
-  .hero img.loaded { opacity: 1; transform: scale(1); }
+  .hero img.loaded { opacity: 1; transform: scale(1.25); }
 
   .hero::after {
     content: '';
@@ -323,7 +323,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-    .hero img { opacity: 1; transform: none; }
+    .hero img { opacity: 1; transform: scale(1.25); }
   }
 </style>
 </head>
