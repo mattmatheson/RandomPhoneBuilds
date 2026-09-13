@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="published" content="2026-09-12">
+<title>The 35mm Era — A Directory</title>
+<link rel="icon" href="/RandomPhoneBuilds/favicon.ico" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --bg: #FAFAFA;
+    --card-bg: #FFFFFF;
+    --text-primary: #1D1D1F;
+    --text-secondary: #6E6E73;
+    --divider: #E5E5E7;
+    --hover-bg: rgba(0, 0, 0, 0.02);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .top-bar { height: 3px; background: var(--accent); }
+
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 4vw, 2.5rem) 5rem;
+  }
+
+  /* Header */
+  header { margin-bottom: 2.5rem; animation: fadeInUp 0.6s ease-out both; }
+  header .label {
+    font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.14em; color: var(--accent); margin-bottom: 0.9rem;
+  }
+  h1 {
+    font-size: clamp(2.2rem, 6vw, 3.4rem); font-weight: 700;
+    letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 1rem;
+  }
+  header .scope {
+    font-size: clamp(1rem, 2.2vw, 1.15rem); color: var(--text-secondary);
+    max-width: 640px; font-weight: 400;
+  }
+  header .scope strong { color: var(--text-primary); font-weight: 600; }
+
+  /* Controls */
+  .controls {
+    position: sticky; top: 0; z-index: 40;
+    background: rgba(250,250,250,0.86); backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 1rem 0 0.75rem; margin: 1.5rem 0 0.5rem;
+    border-bottom: 1px solid var(--divider);
+  }
+  .search-wrap { position: relative; margin-bottom: 0.85rem; }
+  .search-wrap svg {
+    position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);
+    width: 18px; height: 18px; stroke: var(--text-secondary); pointer-events: none;
+  }
+  #search {
+    width: 100%; padding: 0.85rem 1rem 0.85rem 2.8rem;
+    font-family: inherit; font-size: 1rem; color: var(--text-primary);
+    background: var(--card-bg); border: 1px solid var(--divider);
+    border-radius: 0.85rem; outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  #search:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(196,32,32,0.1); }
+
+  .chips { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.3rem;
+    scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
+  .chips::-webkit-scrollbar { height: 5px; }
+  .chips::-webkit-scrollbar-thumb { background: var(--divider); border-radius: 3px; }
+  .chip {
+    flex: 0 0 auto; padding: 0.45rem 0.95rem; font-family: inherit;
+    font-size: 0.82rem; font-weight: 500; color: var(--text-secondary);
+    background: var(--card-bg); border: 1px solid var(--divider);
+    border-radius: 2rem; cursor: pointer; white-space: nowrap;
+    transition: all 0.18s; user-select: none;
+  }
+  .chip:hover { border-color: #ccc; color: var(--text-primary); }
+  .chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .count { font-size: 0.82rem; color: var(--text-secondary); margin: 1.25rem 0 0.25rem; }
+
+  /* Lane sections */
+  .lane { margin-top: 2.5rem; animation: fadeInUp 0.5s ease-out both; }
+  .lane-head {
+    display: flex; align-items: baseline; gap: 0.6rem;
+    margin-bottom: 1.1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--divider);
+  }
+  .lane-head h2 {
+    font-size: clamp(1.1rem, 2.6vw, 1.4rem); font-weight: 700; letter-spacing: -0.02em;
+  }
+  .lane-head .n { font-size: 0.8rem; color: var(--text-secondary); font-weight: 500; }
+
+  /* Grid */
+  .grid {
+    display: grid; gap: 1.1rem;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  .card {
+    background: var(--card-bg); border: 1px solid var(--divider);
+    border-radius: 0.9rem; overflow: hidden; cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    display: flex; flex-direction: column;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.10);
+    border-color: #d8d8d8;
+  }
+  .thumb {
+    position: relative; aspect-ratio: 16 / 9; background: #1a1a1a;
+    overflow: hidden;
+  }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.35s ease, opacity 0.3s ease; }
+  .card:hover .thumb img { transform: scale(1.05); }
+  .thumb.noimg {
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #2a2a2e 0%, #3a2020 100%);
+    padding: 0.8rem;
+  }
+  .thumb.noimg span {
+    color: #fff; font-weight: 600; font-size: 0.95rem; text-align: center;
+    letter-spacing: -0.01em; opacity: 0.92;
+  }
+  .play {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.18); opacity: 0; transition: opacity 0.2s;
+  }
+  .card:hover .play { opacity: 1; }
+  .play div {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(196,32,32,0.92); display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+  .play div::after {
+    content: ""; display: block; width: 0; height: 0;
+    border-left: 15px solid #fff; border-top: 9px solid transparent; border-bottom: 9px solid transparent;
+    margin-left: 4px;
+  }
+  .meta { padding: 0.75rem 0.85rem 0.9rem; }
+  .meta .t { font-size: 0.96rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; }
+  .meta .y { font-size: 0.78rem; color: var(--accent); font-weight: 600; margin-top: 0.15rem; }
+  .meta .note { font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.45rem; line-height: 1.45; }
+
+  .empty { text-align: center; color: var(--text-secondary); padding: 4rem 1rem; font-size: 1rem; }
+
+  /* Lightbox */
+  .lb {
+    position: fixed; inset: 0; z-index: 100; display: none;
+    align-items: center; justify-content: center; padding: 1.2rem;
+    background: rgba(0,0,0,0.86); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  }
+  .lb.open { display: flex; animation: lbIn 0.2s ease-out; }
+  .lb-inner { width: 100%; max-width: 960px; }
+  .lb-title { color: #fff; font-weight: 600; font-size: 1.05rem; margin-bottom: 0.7rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .lb-title .yr { color: #bbb; font-weight: 400; font-size: 0.9rem; }
+  .lb-frame { position: relative; aspect-ratio: 16 / 9; width: 100%; background: #000;
+    border-radius: 0.6rem; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  .lb-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .lb-close {
+    position: absolute; top: -0.5rem; right: -0.5rem; transform: translate(40%,-40%);
+    width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;
+    background: #fff; color: #111; font-size: 1.4rem; line-height: 1;
+    display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  }
+  @media (max-width: 560px) {
+    .lb-close { transform: none; top: 0; right: 0; }
+    .lb { padding: 0.8rem; }
+  }
+
+  footer {
+    margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--divider);
+    font-size: 0.82rem; color: var(--text-secondary); line-height: 1.7;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @keyframes lbIn { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+<div class="container">
+  <header>
+    <div class="label">1995&ndash;2003 · A Living Directory</div>
+    <h1>The 35mm Era</h1>
+    <p class="scope">Real film grain, high-key lighting, anamorphic flare &mdash; all of it scanned to 4K and sharper now than it ever looked in theaters. Every genre, one era, built out from <strong>The Matrix</strong>, <strong>The Truman Show</strong>, <strong>Gattaca</strong>, <strong>Fear</strong>, and <strong>Cruel Intentions</strong>. Tap any movie to watch the trailer.</p>
+  </header>
+
+  <div class="controls">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input id="search" type="text" placeholder="Search movies…" autocomplete="off" spellcheck="false">
+    </div>
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <div class="count" id="count"></div>
+  <div id="lanes"></div>
+  <div class="empty" id="empty" style="display:none">No movies match that search.</div>
+
+  <footer>
+    The look you&rsquo;re chasing has names attached: <strong>Janusz Kami&#324;ski</strong> (the blown-out silver Spielberg films), <strong>Conrad Hall</strong> (<em>American Beauty</em>, <em>Road to Perdition</em>), <strong>Darius Khondji</strong> (<em>Se7en</em>, <em>The Ninth Gate</em>), and <strong>Jeff Cronenweth</strong> (<em>Fight Club</em>, <em>Panic Room</em>). The 4K restorations worth hunting down specifically: <em>Gattaca</em>, <em>Dark City</em>, <em>The Game</em>, <em>Ronin</em>, <em>Event Horizon</em>, <em>The Talented Mr. Ripley</em>.<br><br>
+    Trailers stream from YouTube. Built on Random Phone Builds · Updated September 12, 2026.
+  </footer>
+</div>
+
+<div class="lb" id="lb">
+  <div class="lb-inner">
+    <div class="lb-title"><span id="lbName"></span><a id="lbYt" href="#" target="_blank" rel="noopener" title="Wrong trailer? Find it on YouTube" style="color:#fff;font-size:0.78rem;font-weight:500;text-decoration:none;border:1px solid rgba(255,255,255,0.3);padding:0.4rem 0.75rem;border-radius:2rem;white-space:nowrap;flex:0 0 auto;">Open on YouTube&nbsp;&#8599;</a></div>
+    <div class="lb-frame">
+      <button class="lb-close" id="lbClose" aria-label="Close">&times;</button>
+      <div id="lbMount"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== MOVIE DATA =====
+   Each entry: { t: title, y: year, lane: section, note: blurb, yt: youtubeTrailerId|null }
+   To add a movie later: append an object here. No other changes needed. */
+const MOVIES = [{"t": "The Matrix","y": 1999,"lane": "The brief — what you already love","note": "The one that rewired everything. Bill Pope, green-tinted anamorphic.","yt": "vKQi3bBA1y8"},{"t": "The Truman Show","y": 1998,"lane": "The brief — what you already love","note": "Peter Weir. Still the smartest studio film of the era.","yt": "dlnmQbPGuls"},{"t": "Gattaca","y": 1997,"lane": "The brief — what you already love","note": "Slawomir Idziak's amber filters. Nothing else looks like it.","yt": "W_KruQhfvW4"},{"t": "Fear","y": 1996,"lane": "The brief — what you already love","note": "Wahlberg as the boyfriend from hell. The one that started this list.","yt": "kXEED7y7dkg"},{"t": "Cruel Intentions","y": 1999,"lane": "The brief — what you already love","note": "Manhattan gloss, Placebo needle-drops, zero mercy.","yt": "bkTV1AQCIjY"},{"t": "The Glass House","y": 2001,"lane": "The brief — what you already love","note": "Leelee Sobieski trapped in a Malibu modern. Pure 2001.","yt": "QhQSUSvMczE"},{"t": "Dr. Dolittle","y": 1998,"lane": "The brief — what you already love","note": "Peak Eddie Murphy studio comedy.","yt": "pTS0ckdRpkc"},{"t": "Mrs. Doubtfire","y": 1993,"lane": "The brief — what you already love","note": "Chris Columbus + Robin Williams. The gold standard.","yt": "jDE6fj6-QeQ"},{"t": "Wild Things","y": 1998,"lane": "Start here — the closest matches","note": "Florida-noir erotic thriller with an absurd triple-twist ending.","yt": "M6DsFyC9l-U"},{"t": "Arlington Road","y": 1999,"lane": "Start here — the closest matches","note": "Jeff Bridges vs. his neighbor. Paranoid, tense, ends brutally.","yt": "zfbBavo86qs"},{"t": "The Game","y": 1997,"lane": "Start here — the closest matches","note": "Fincher. Michael Douglas's life dismantled. Truman Show paranoia as thriller.","yt": "nsKdR05ZsGE"},{"t": "Dark City","y": 1998,"lane": "Start here — the closest matches","note": "The proto-Matrix. Came out a year earlier, same fake-reality premise.","yt": "gt9HkO-cGGo"},{"t": "EDtv","y": 1999,"lane": "Start here — the closest matches","note": "Literally the Truman Show comedy companion. Ron Howard, McConaughey.","yt": "87hvm2PSjeE"},{"t": "Swimfan","y": 2002,"lane": "Start here — the closest matches","note": "Fear, but at a high school swim meet. Trashy and gorgeous.","yt": "W-RGVruG7Y0"},{"t": "A Perfect Murder","y": 1998,"lane": "Start here — the closest matches","note": "Douglas / Paltrow / Mortensen. Expensive-looking Hitchcock remake.","yt": "K8X6yTa92VY"},{"t": "The Talented Mr. Ripley","y": 1999,"lane": "Start here — the closest matches","note": "John Seale, sun-drenched Italy, quietly horrifying.","yt": "h4e-Si4oGEw"},{"t": "Breakdown","y": 1997,"lane": "Thrillers — obsession, paranoia, procedure","note": "Kurt Russell's wife vanishes on a desert highway. 93 lean minutes.","yt": "wm4YfqVbABk"},{"t": "Ronin","y": 1998,"lane": "Thrillers — obsession, paranoia, procedure","note": "The best car chases of the decade, shot on real Paris streets.","yt": "OelZtfrUIgc"},{"t": "The Bone Collector","y": 1999,"lane": "Thrillers — obsession, paranoia, procedure","note": "Glossy serial-killer procedural at the peak of the form.","yt": "cuJ717M7Vh8"},{"t": "Kiss the Girls","y": 1997,"lane": "Thrillers — obsession, paranoia, procedure","note": "Freeman & Judd. The other great 90s procedural.","yt": "Kej1FsqB-gM"},{"t": "Enemy of the State","y": 1998,"lane": "Thrillers — obsession, paranoia, procedure","note": "Tony Scott surveillance paranoia. Will Smith running for his life.","yt": "ZjogdKObxrI"},{"t": "Double Jeopardy","y": 1999,"lane": "Thrillers — obsession, paranoia, procedure","note": "Ashley Judd revenge thriller. Dumb premise, perfect execution.","yt": "u22fy9OTaxo"},{"t": "Panic Room","y": 2002,"lane": "Thrillers — obsession, paranoia, procedure","note": "Fincher, one house, camera moves that still look impossible.","yt": "sp2kKzrCm44"},{"t": "Identity","y": 2003,"lane": "Thrillers — obsession, paranoia, procedure","note": "Ten strangers, a motel, a storm. The twist genuinely lands.","yt": "TQkG2x3qTf4"},{"t": "Frailty","y": 2001,"lane": "Thrillers — obsession, paranoia, procedure","note": "Bill Paxton directs quiet Texas horror that sneaks up on you.","yt": "HUfNR_7YxQE"},{"t": "The Ninth Gate","y": 1999,"lane": "Thrillers — obsession, paranoia, procedure","note": "Depp as a rare-book occult detective. Slow burn, beautiful.","yt": "zTEWeZyV7zQ"},{"t": "What Lies Beneath","y": 2000,"lane": "Thrillers — obsession, paranoia, procedure","note": "Zemeckis doing Hitchcock with Pfeiffer and Ford.","yt": "RmvKSL6WUic"},{"t": "The Others","y": 2001,"lane": "Thrillers — obsession, paranoia, procedure","note": "Kidman, candlelit. One of the best-looking films of the era.","yt": "C7pKqaPtMiA"},{"t": "Insomnia","y": 2002,"lane": "Thrillers — obsession, paranoia, procedure","note": "Nolan's Alaska remake. Pacino unraveling in permanent daylight.","yt": "V8Vu7Zre7h8"},{"t": "The Cell","y": 2000,"lane": "Thrillers — obsession, paranoia, procedure","note": "Tarsem. Insane production design, looks like nothing else.","yt": "eIpy4p_yMV0"},{"t": "Se7en","y": 1995,"lane": "Thrillers — obsession, paranoia, procedure","note": "Darius Khondji. The film-look bible.","yt": "znmZoVkCjpI"},{"t": "American Psycho","y": 2000,"lane": "Thrillers — obsession, paranoia, procedure","note": "Bateman's chrome-and-bone Manhattan. Very funny, actually.","yt": "zaaA7W5YKV8"},{"t": "Eyes Wide Shut","y": 1999,"lane": "Thrillers — obsession, paranoia, procedure","note": "Kubrick. The lit-from-within quality Vanilla Sky reached for.","yt": "qwPeuXv7Suo"},{"t": "The Devil's Advocate","y": 1997,"lane": "Thrillers — obsession, paranoia, procedure","note": "Pacino chews Manhattan. Absurd and great.","yt": "ziD_fQuxPyY"},{"t": "Fight Club","y": 1999,"lane": "Reality-benders — the Matrix / Truman brain","note": "Jeff Cronenweth. The Game lane, turned up.","yt": "Ba3JVQXp16w"},{"t": "Memento","y": 2000,"lane": "Reality-benders — the Matrix / Truman brain","note": "Reality unspooled backwards.","yt": "4CV41hoyS8A"},{"t": "Donnie Darko","y": 2001,"lane": "Reality-benders — the Matrix / Truman brain","note": "Suburban time-bending dread.","yt": "AOIPyZBySds"},{"t": "The Sixth Sense","y": 1999,"lane": "Reality-benders — the Matrix / Truman brain","note": "The Shyamalan original.","yt": "3-ZP95NF_Wk"},{"t": "Unbreakable","y": 2000,"lane": "Reality-benders — the Matrix / Truman brain","note": "The grounded superhero one. Better than you remember.","yt": "fNeCB2ALNoA"},{"t": "Signs","y": 2002,"lane": "Reality-benders — the Matrix / Truman brain","note": "Slow-burn dread, immaculate framing.","yt": "dUw26F0WfLg"},{"t": "Vanilla Sky","y": 2001,"lane": "Reality-benders — the Matrix / Truman brain","note": "Crowe's dream-logic remake. Divisive, stunning.","yt": "k09OX40NLUw"},{"t": "The Thirteenth Floor","y": 1999,"lane": "Reality-benders — the Matrix / Truman brain","note": "Simulation thriller buried by The Matrix the same year.","yt": "f5qQHqOHMZ0"},{"t": "eXistenZ","y": 1999,"lane": "Reality-benders — the Matrix / Truman brain","note": "Cronenberg's version of the same idea, with meat.","yt": "a3rWwv4om1U"},{"t": "Mulholland Drive","y": 2001,"lane": "Reality-benders — the Matrix / Truman brain","note": "Lynch dream-logic. LA as a nightmare.","yt": "PN9cYz38b4w"},{"t": "Pleasantville","y": 1998,"lane": "Reality-benders — the Matrix / Truman brain","note": "Selective-color 35mm work that's still a technical marvel.","yt": "dSDm62Hmbf4"},{"t": "Being John Malkovich","y": 1999,"lane": "Reality-benders — the Matrix / Truman brain","note": "Kaufman at his weirdest.","yt": "2UuRFr0GnHM"},{"t": "Adaptation.","y": 2002,"lane": "Reality-benders — the Matrix / Truman brain","note": "Kaufman eating his own tail. Cage twice.","yt": "uougMRq-MSo"},{"t": "Requiem for a Dream","y": 2000,"lane": "Reality-benders — the Matrix / Truman brain","note": "Rough watch, unbelievable craft.","yt": "0nU7dC9bIDg"},{"t": "Open Your Eyes","y": 1997,"lane": "Reality-benders — the Matrix / Truman brain","note": "The Spanish original Vanilla Sky remade.","yt": "rjS_uzWt6pc"},{"t": "Equilibrium","y": 2002,"lane": "Sci-fi — the Gattaca lane","note": "Gun-kata, Christian Bale, unapologetic Matrix worship. Rules.","yt": "raleKODYeg0"},{"t": "Minority Report","y": 2002,"lane": "Sci-fi — the Gattaca lane","note": "Kamiński's bleached, blown-out look. Unmistakable.","yt": "lG7DGMgfOb8"},{"t": "Pitch Black","y": 2000,"lane": "Sci-fi — the Gattaca lane","note": "Overexposed desert sci-fi horror. Wild grading for its time.","yt": "fIeSV4i7bxQ"},{"t": "Event Horizon","y": 1997,"lane": "Sci-fi — the Gattaca lane","note": "Haunted house in space. Genuinely disturbing.","yt": "YtxsKSm-ZGU"},{"t": "Contact","y": 1997,"lane": "Sci-fi — the Gattaca lane","note": "Zemeckis & Foster. The mirror shot is an all-timer.","yt": "Q399v-pMG30"},{"t": "Sphere","y": 1998,"lane": "Sci-fi — the Gattaca lane","note": "Big, dumb, glossy deep-sea mind-bender. A great time.","yt": "GJvKLetIV20"},{"t": "Deep Blue Sea","y": 1999,"lane": "Sci-fi — the Gattaca lane","note": "Sharks with PhDs. Committed to the bit.","yt": "oSz9MDN-iac"},{"t": "A.I. Artificial Intelligence","y": 2001,"lane": "Sci-fi — the Gattaca lane","note": "Spielberg finishing Kubrick's project. Devastating.","yt": "pm7qlQ2E0iE"},{"t": "The Faculty","y": 1998,"lane": "Sci-fi — the Gattaca lane","note": "Body-snatchers at high school, written by Kevin Williamson.","yt": "GDruXnBOzP0"},{"t": "Bicentennial Man","y": 1999,"lane": "Sci-fi — the Gattaca lane","note": "Literally the A.I. companion piece. Robin Williams.","yt": "yfDlQ-Q12rg"},{"t": "The Island","y": 2005,"lane": "Sci-fi — the Gattaca lane","note": "Clones and chrome. Late for the era but fits the look.","yt": "xr78AERXHw8"},{"t": "Code 46","y": 2003,"lane": "Sci-fi — the Gattaca lane","note": "Winterbottom soft-focus future. Quiet and strange.","yt": "g7WgrrefZoc"},{"t": "American Beauty","y": 1999,"lane": "Prestige drama — the pretty ones","note": "Conrad Hall won the Oscar for exactly this suburban gloss.","yt": "Ly7rq5EsTC8"},{"t": "Magnolia","y": 1999,"lane": "Prestige drama — the pretty ones","note": "PTA's interlocking epic. Three hours, no filler.","yt": "KnamcFv_N9Q"},{"t": "The Virgin Suicides","y": 1999,"lane": "Prestige drama — the pretty ones","note": "Coppola's debut. Hazy, gorgeous, sad.","yt": "9gFH3t97C7Y"},{"t": "Almost Famous","y": 2000,"lane": "Prestige drama — the pretty ones","note": "Crowe's golden-hour rock memoir.","yt": "aQXh_AaJXaM"},{"t": "Election","y": 1999,"lane": "Prestige drama — the pretty ones","note": "Payne & Witherspoon. Mean and perfect.","yt": "tBgM_Kw6PSM"},{"t": "Rushmore","y": 1998,"lane": "Prestige drama — the pretty ones","note": "Anderson's second, and his sharpest.","yt": "846UzdeHI1g"},{"t": "The Royal Tenenbaums","y": 2001,"lane": "Prestige drama — the pretty ones","note": "The symmetry era begins.","yt": "NCg0CE396EE"},{"t": "Catch Me If You Can","y": 2002,"lane": "Prestige drama — the pretty ones","note": "One of the prettiest studio films ever made.","yt": "Q6By16h-pwA"},{"t": "Road to Perdition","y": 2002,"lane": "Prestige drama — the pretty ones","note": "Conrad Hall's last film. Every frame is a painting.","yt": "S6JUMd-g7bE"},{"t": "The Insider","y": 1999,"lane": "Prestige drama — the pretty ones","note": "Mann & Spinotti. Anamorphic, paranoid, immaculate.","yt": "MGOb29aePyc"},{"t": "Erin Brockovich","y": 2000,"lane": "Prestige drama — the pretty ones","note": "Soderbergh's sunbaked California.","yt": "ELzu636Xf6Y"},{"t": "Traffic","y": 2000,"lane": "Prestige drama — the pretty ones","note": "Three color grades, three storylines. Soderbergh shot it himself.","yt": "6TetUbh6jrU"},{"t": "Girl, Interrupted","y": 1999,"lane": "Prestige drama — the pretty ones","note": "Ryder & Jolie. The one Jolie won for.","yt": "vL7c0Aqn_Pw"},{"t": "Great Expectations","y": 1998,"lane": "Prestige drama — the pretty ones","note": "Cuarón & Lubezki. Drenched in green, totally overlooked.","yt": "AoEpfmHG2ko"},{"t": "The Green Mile","y": 1999,"lane": "Prestige drama — the pretty ones","note": "Darabont's three hours of warm, aching 35mm.","yt": "Ki4haFrqSrw"},{"t": "The Skulls","y": 2000,"lane": "Teen thrillers — the Cruel Intentions shelf","note": "Secret society thriller with Joshua Jackson. Very Glass House.","yt": "aQ3LqlDbwOo"},{"t": "Disturbing Behavior","y": 1998,"lane": "Teen thrillers — the Cruel Intentions shelf","note": "Stepford teens. Katie Holmes.","yt": "ipcvwwIoEHo"},{"t": "Urban Legend","y": 1998,"lane": "Teen thrillers — the Cruel Intentions shelf","note": "Campus slasher with a big glossy budget.","yt": "R4d1_D90BwU"},{"t": "I Know What You Did Last Summer","y": 1997,"lane": "Teen thrillers — the Cruel Intentions shelf","note": "Williamson's other one. Prinze, Hewitt, a hook.","yt": "rEnCEM48QaY"},{"t": "Scream","y": 1996,"lane": "Teen thrillers — the Cruel Intentions shelf","note": "Craven & Williamson. The film that restarted the whole genre.","yt": "tV4PTwciTuQ"},{"t": "Jawbreaker","y": 1999,"lane": "Teen thrillers — the Cruel Intentions shelf","note": "Candy-colored and mean.","yt": "TrcrpJef1sQ"},{"t": "The Rules of Attraction","y": 2002,"lane": "Teen thrillers — the Cruel Intentions shelf","note": "Roger Avary. Nasty, stylish, split-screen.","yt": "xNXrGyryVBg"},{"t": "Final Destination","y": 2000,"lane": "Teen thrillers — the Cruel Intentions shelf","note": "Death as the killer. Better than it had to be.","yt": "XW7TQLigAuo"},{"t": "Gossip","y": 2000,"lane": "Teen thrillers — the Cruel Intentions shelf","note": "A rumor spirals. Peak 2000 casting.","yt": "BVeBO-ahVGU"},{"t": "Teaching Mrs. Tingle","y": 1999,"lane": "Teen thrillers — the Cruel Intentions shelf","note": "Williamson directs Helen Mirren as the villain.","yt": "QhIZO2mcSK4"},{"t": "10 Things I Hate About You","y": 1999,"lane": "Teen & romance","note": "The best one. Ledger, Stiles, Seattle.","yt": "uE7qjQlfoRs"},{"t": "Can't Hardly Wait","y": 1998,"lane": "Teen & romance","note": "One party, one night, the entire class of '98.","yt": "qukvN6ieeMY"},{"t": "Varsity Blues","y": 1999,"lane": "Teen & romance","note": "Texas football melodrama. Endlessly quotable.","yt": "HFTV-phVwAw"},{"t": "She's All That","y": 1999,"lane": "Teen & romance","note": "The makeover movie the whole decade copied.","yt": "ExDPiPhLqEQ"},{"t": "Never Been Kissed","y": 1999,"lane": "Teen & romance","note": "Drew Barrymore goes back to high school.","yt": "DQBPAdwJDsw"},{"t": "Bring It On","y": 2000,"lane": "Teen & romance","note": "Sharper and funnier than its reputation.","yt": "4Fza-ZDQE6c"},{"t": "Save the Last Dance","y": 2001,"lane": "Teen & romance","note": "Julia Stiles, Chicago, real emotion.","yt": "cm-tgph1IQw"},{"t": "Center Stage","y": 2000,"lane": "Teen & romance","note": "Ballet melodrama. The finale rips.","yt": "tf7vVdDExuM"},{"t": "Crazy/Beautiful","y": 2001,"lane": "Teen & romance","note": "Actually good, actually sad. Dunst's best of the era.","yt": "NuUiO85Xva0"},{"t": "A Walk to Remember","y": 2002,"lane": "Teen & romance","note": "Mandy Moore. The Sparks adaptation that works.","yt": "k3B2XBcp7vA"},{"t": "Serendipity","y": 2001,"lane": "Teen & romance","note": "Cusack & Beckinsale. Winter New York.","yt": "ePU2Ux9JIMM"},{"t": "You've Got Mail","y": 1998,"lane": "Teen & romance","note": "Ephron, Hanks, Ryan. Warm as a lamp.","yt": "bjP4s7UUnK8"},{"t": "Notting Hill","y": 1999,"lane": "Teen & romance","note": "Grant & Roberts. The seasons walk is perfect.","yt": "4RI0QvaGoiI"},{"t": "Coyote Ugly","y": 2000,"lane": "Teen & romance","note": "Bruckheimer makes a bar movie. Completely sincere.","yt": "lY1zndVdiKM"},{"t": "Drive Me Crazy","y": 1999,"lane": "Teen & romance","note": "Melissa Joan Hart, Adrian Grenier, Britney on the soundtrack.","yt": "kD7CDwoRPkE"},{"t": "Sweet Home Alabama","y": 2002,"lane": "Teen & romance","note": "Witherspoon at the height of her powers.","yt": "6L-YMDY5rq8"},{"t": "Liar Liar","y": 1997,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "Peak Carrey, peak Shadyac.","yt": "U5QP6z9xir0"},{"t": "Bruce Almighty","y": 2003,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "The same team, six years later. Still works.","yt": "a3oJIbFvYAI"},{"t": "The Nutty Professor","y": 1996,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "Murphy playing the entire family.","yt": "o3wJ-jzZqBw"},{"t": "Big Daddy","y": 1999,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "Sandler's warmest one.","yt": "5eqmGIeWpbQ"},{"t": "The Waterboy","y": 1998,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "\"You can do it!\"","yt": "MB6QbHx2TE4"},{"t": "Patch Adams","y": 1998,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "Williams in full sincerity mode.","yt": "lZqGA1ldvYE"},{"t": "Flubber","y": 1997,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "Disney + Williams + green goo.","yt": "KEAewElEcCo"},{"t": "George of the Jungle","y": 1997,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "Brendan Fraser, deeply committed.","yt": "ITlM041DW1U"},{"t": "The Parent Trap","y": 1998,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "Nancy Meyers. Lindsay Lohan twice.","yt": "VPhG_47VfDQ"},{"t": "Stuart Little","y": 1999,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "Early photoreal CG that still holds up.","yt": "Wlo-sYrADlw"},{"t": "Jingle All the Way","y": 1996,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "Schwarzenegger vs. Christmas retail.","yt": "jopbP67vLlE"},{"t": "Galaxy Quest","y": 1999,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "Flawless. Never give up, never surrender.","yt": "rzwJgFhMbL4"},{"t": "Bowfinger","y": 1999,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "Martin & Murphy. Criminally underrated.","yt": "SkbHfeWfxHw"},{"t": "Meet the Parents","y": 2000,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "De Niro vs. Stiller.","yt": "jXfG_ei2m6E"},{"t": "Office Space","y": 1999,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "\"Did you get the memo?\"","yt": "rPJUXZvX6UI"},{"t": "Austin Powers: International Man of Mystery","y": 1997,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "The first one, before it became merch.","yt": "5vsANcS4Ml8"},{"t": "There's Something About Mary","y": 1998,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "The Farrellys' biggest swing.","yt": "N9xVWDl3G2o"},{"t": "Zoolander","y": 2001,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "Blue Steel. Shot like a real fashion film.","yt": "MaEeSJZYkpY"},{"t": "Mystery Men","y": 1999,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "Bizarre, expensive, a total flop, very fun.","yt": "weL-NjlIQ0E"},{"t": "Blast from the Past","y": 1999,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "Fallout-shelter fish-out-of-water. Sweet.","yt": "9_mi3qoA_QY"},{"t": "School of Rock","y": 2003,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "Linklater & Black. Perfect.","yt": "5afGGGsxvEA"},{"t": "Elf","y": 2003,"lane": "Comedy — the Doubtfire / Dolittle lane","note": "Practical forced-perspective, real sets, actual craft.","yt": "a54yC1etmVc"},{"t": "Boogie Nights","y": 1997,"lane": "The Wahlberg run","note": "PTA's neon-lit 70s sprawl. His best performance.","yt": "pOk0fsMGyck"},{"t": "Three Kings","y": 1999,"lane": "The Wahlberg run","note": "Russell's bleach-bypass Gulf War movie. Looks like nothing else.","yt": "C5Ji-D4KUek"},{"t": "The Yards","y": 2000,"lane": "The Wahlberg run","note": "Gray's dim, grimy Queens crime drama.","yt": "udKtT5xkF_0"},{"t": "The Perfect Storm","y": 2000,"lane": "The Wahlberg run","note": "Clooney & Wahlberg vs. the Atlantic.","yt": "RZvljNvnd18"},{"t": "Rock Star","y": 2001,"lane": "The Wahlberg run","note": "Tribute-band singer joins the real band. Underrated.","yt": "-NIXXXzzyiY"},{"t": "Planet of the Apes","y": 2001,"lane": "The Wahlberg run","note": "Burton's swing. Rick Baker's makeup is still incredible.","yt": "rwhGmiEoQXs"},{"t": "The Italian Job","y": 2003,"lane": "The Wahlberg run","note": "Mini Coopers and revenge.","yt": "uw6jY3VuOcI"}];
+
+/* ===== Render ===== */
+const lanesEl = document.getElementById('lanes');
+const chipsEl = document.getElementById('chips');
+const countEl = document.getElementById('count');
+const emptyEl = document.getElementById('empty');
+const searchEl = document.getElementById('search');
+
+const laneOrder = [];
+MOVIES.forEach(m => { if (!laneOrder.includes(m.lane)) laneOrder.push(m.lane); });
+
+let activeLane = 'All';
+let query = '';
+
+function ytThumb(id){ return 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg'; }
+
+function cardHTML(m, idx){
+  const thumb = m.yt
+    ? '<div class="thumb"><img loading="lazy" src="'+ytThumb(m.yt)+'" alt="'+escapeHtml(m.t)+'" onerror="thumbErr(this)"><div class="play"><div></div></div></div>'
+    : '<div class="thumb noimg"><span>'+escapeHtml(m.t)+'</span><div class="play"><div></div></div></div>';
+  return '<div class="card" data-idx="'+idx+'">'+thumb+
+    '<div class="meta"><div class="t">'+escapeHtml(m.t)+'</div>'+
+    '<div class="y">'+m.y+'</div>'+
+    (m.note ? '<div class="note">'+escapeHtml(m.note)+'</div>' : '')+
+    '</div></div>';
+}
+
+function escapeHtml(s){ return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function render(){
+  const q = query.trim().toLowerCase();
+  let total = 0;
+  lanesEl.innerHTML = '';
+  laneOrder.forEach(lane => {
+    if (activeLane !== 'All' && lane !== activeLane) return;
+    const items = MOVIES.map((m,i)=>({m,i})).filter(({m}) =>
+      m.lane === lane && (!q || m.t.toLowerCase().includes(q) || (''+m.y).includes(q) || (m.note||'').toLowerCase().includes(q))
+    );
+    if (!items.length) return;
+    total += items.length;
+    const sec = document.createElement('div');
+    sec.className = 'lane';
+    sec.innerHTML = '<div class="lane-head"><h2>'+escapeHtml(lane)+'</h2><span class="n">'+items.length+'</span></div>'+
+      '<div class="grid">'+items.map(({m,i})=>cardHTML(m,i)).join('')+'</div>';
+    lanesEl.appendChild(sec);
+  });
+  emptyEl.style.display = total ? 'none' : 'block';
+  countEl.textContent = total + (total === 1 ? ' movie' : ' movies') + (q || activeLane!=='All' ? ' shown' : ' in the directory');
+}
+
+function buildChips(){
+  const all = ['All', ...laneOrder];
+  chipsEl.innerHTML = all.map(l =>
+    '<button class="chip'+(l==='All'?' active':'')+'" data-lane="'+escapeHtml(l)+'">'+escapeHtml(l.split(' — ')[0])+'</button>'
+  ).join('');
+  chipsEl.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+    activeLane = c.dataset.lane;
+    chipsEl.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+    c.classList.add('active');
+    render();
+    window.scrollTo({ top: document.querySelector('.controls').offsetTop - 10, behavior: 'smooth' });
+  }));
+}
+
+/* ===== Lightbox ===== */
+const lb = document.getElementById('lb');
+const lbMount = document.getElementById('lbMount');
+const lbName = document.getElementById('lbName');
+const lbYt = document.getElementById('lbYt');
+
+function ytSearchUrl(m){ return 'https://www.youtube.com/results?search_query='+encodeURIComponent(m.t+' '+m.y+' trailer'); }
+
+function thumbErr(img){
+  const thumb = img.parentElement;
+  thumb.classList.add('noimg');
+  thumb.innerHTML = '<span>'+escapeHtml(img.alt||'')+'</span><div class="play"><div></div></div>';
+  const card = thumb.closest('.card');
+  if (card) card.dataset.noyt = '1';
+}
+
+function openTrailer(m, forceSearch){
+  lbYt.href = ytSearchUrl(m);
+  if (m.yt && !forceSearch){
+    lbName.innerHTML = escapeHtml(m.t)+' <span class="yr">'+m.y+'</span>';
+    lbMount.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/'+m.yt+'?autoplay=1&rel=0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  } else {
+    window.open(ytSearchUrl(m), '_blank');
+  }
+}
+function closeTrailer(){
+  lb.classList.remove('open');
+  lbMount.innerHTML = '';
+  document.body.style.overflow = '';
+}
+document.getElementById('lbClose').addEventListener('click', closeTrailer);
+lb.addEventListener('click', e => { if (e.target === lb) closeTrailer(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && lb.classList.contains('open')) closeTrailer(); });
+
+lanesEl.addEventListener('click', e => {
+  const card = e.target.closest('.card');
+  if (!card) return;
+  openTrailer(MOVIES[+card.dataset.idx], card.dataset.noyt === '1');
+});
+
+searchEl.addEventListener('input', e => { query = e.target.value; render(); });
+
+searchEl.placeholder = 'Search ' + MOVIES.length + ' movies…';
+buildChips();
+render();
+</script>
+</body>
+</html>
