@@ -2,434 +2,184 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="published" content="2026-09-20">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Kale — Performance / Dailies</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kale — Performance (Daily 1)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ink: #16161A;
-    --ink-soft: #6E6E73;
-    --ink-faint: #A1A1A6;
-    --line: #E8E8EA;
-    --panel: #F5F5F7;
-    --bg: #FFFFFF;
-  }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
 
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
-    background: var(--bg);
-    color: var(--ink);
+    background: #FFFFFF;
+    color: #1D1D1F;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
   }
 
-  /* ---------- Sticky bar ---------- */
-  .topbar {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 900;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0.85rem clamp(1rem, 4vw, 2.5rem);
-    background: rgba(255,255,255,0.82);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-bottom: 1px solid transparent;
-    transform: translateY(-100%);
-    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.4s;
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 4vw, 2rem) 4rem;
   }
 
-  .topbar.visible { transform: translateY(0); border-bottom-color: var(--line); }
+  header {
+    margin-bottom: 2.5rem;
+    animation: fadeIn 0.6s ease-out both;
+  }
 
-  .topbar .names {
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.16em;
+  .label {
+    font-size: 0.65rem;
+    font-weight: 600;
     text-transform: uppercase;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  /* ---------- Hero banner ---------- */
-  .hero {
-    position: relative;
-    width: 100%;
-    height: clamp(300px, 52vh, 560px);
-    overflow: hidden;
-    background: #EDEDEF;
-  }
-
-  .hero img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 38%;
+    letter-spacing: 0.12em;
+    color: #86868B;
+    margin-bottom: 0.75rem;
     display: block;
-    opacity: 0;
-    transform: scale(1.14);
-    transition: opacity 1.2s ease, transform 1.6s cubic-bezier(0.16,1,0.3,1);
-  }
-
-  .hero img.loaded { opacity: 1; transform: scale(1.07); }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.06) 100%);
-    pointer-events: none;
-  }
-
-  /* ---------- Title block ---------- */
-  .titleblock {
-    text-align: center;
-    padding: clamp(2.5rem, 6vw, 4.5rem) 1.5rem clamp(1.75rem, 4vw, 2.75rem);
-    animation: rise 0.9s cubic-bezier(0.16,1,0.3,1) both;
-    animation-delay: 0.15s;
-  }
-
-  .eyebrow {
-    font-size: 0.62rem;
-    font-weight: 500;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    margin-bottom: 1.4rem;
   }
 
   h1 {
-    font-size: clamp(1.75rem, 5.5vw, 3.4rem);
-    font-weight: 200;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    line-height: 1.15;
-    margin-bottom: 1.4rem;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 0.4rem;
   }
 
-  .rule {
-    width: 44px;
-    height: 1px;
-    background: var(--line);
-    margin: 0 auto 1.3rem;
-  }
-
-  .count {
-    font-size: 0.72rem;
+  .meta {
+    font-size: 0.95rem;
     font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    margin-bottom: 2rem;
+    color: #6E6E73;
   }
-
-  /* ---------- Buttons ---------- */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.7rem 1.5rem;
-    border-radius: 980px;
-    font-family: inherit;
-    font-size: 0.76rem;
-    font-weight: 500;
-    letter-spacing: 0.03em;
-    text-decoration: none;
-    cursor: pointer;
-    border: 1px solid transparent;
-    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
-    white-space: nowrap;
-  }
-
-  .btn:active { transform: scale(0.97); }
-
-  .btn-primary { background: var(--ink); color: #fff; }
-  .btn-primary:hover { background: #3A3A40; }
-
-  .btn-outline {
-    background: transparent;
-    color: var(--ink-soft);
-    border-color: var(--line);
-  }
-
-  .btn-sm { padding: 0.5rem 1.05rem; font-size: 0.7rem; }
 
   .actions {
     display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
     flex-wrap: wrap;
-    gap: 0.6rem;
-    justify-content: center;
   }
 
-  /* ---------- Player ---------- */
-  .wrap {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 0 clamp(1rem, 4vw, 2rem);
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.4rem;
+    border-radius: 980px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+  }
+
+  .btn-primary {
+    background: #1D1D1F;
+    color: #FFFFFF;
+  }
+
+  .btn-primary:hover {
+    background: #424245;
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: #1D1D1F;
+    border: 1px solid #D2D2D7;
+  }
+
+  .btn-outline:hover {
+    background: #F5F5F7;
   }
 
   .player {
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 9;
-    background: #0C0C0E;
-    border-radius: 4px;
+    background: #000;
+    border-radius: 14px;
     overflow: hidden;
-    box-shadow: 0 24px 60px -24px rgba(0,0,0,0.35);
+    margin-bottom: 2.5rem;
+    animation: fadeIn 0.7s ease-out both;
+    animation-delay: 0.1s;
   }
 
   .player video {
-    position: absolute;
-    inset: 0;
     width: 100%;
     height: 100%;
     display: block;
-    background: #0C0C0E;
+    object-fit: cover;
   }
 
-  .player-bar {
-    margin-top: 0.85rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .player-note {
-    font-size: 0.68rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-  }
-
-  .dl-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    margin-left: auto;
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 2px;
-    transition: border-color 0.2s ease, opacity 0.2s ease;
-  }
-
-  .dl-link:hover { border-bottom-color: var(--ink); }
-  .dl-link svg { flex-shrink: 0; }
-
-  /* ---------- Info box ---------- */
   .info-box {
-    background: var(--panel);
-    border-radius: 4px;
-    padding: clamp(1.4rem, 3.5vw, 2rem);
-    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    background: #F5F5F7;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.82rem;
+    color: #424245;
+    line-height: 1.7;
   }
 
-  .info-box p {
-    font-size: 0.9rem;
-    font-weight: 300;
-    color: #2E2E33;
-    line-height: 1.75;
-  }
+  .info-box p { font-size: 0.88rem; color: #424245; }
+  .info-box p + p { margin-top: 0.75rem; }
+  .info-box strong { color: #1D1D1F; font-weight: 600; }
 
-  .info-box p + p { margin-top: 1rem; }
-
-  .info-box strong { font-weight: 500; color: var(--ink); }
-
-  /* ---------- Notice ---------- */
-  .notice {
-    margin-top: clamp(1.25rem, 3vw, 1.75rem);
-    padding: clamp(1.15rem, 3vw, 1.5rem) clamp(1.15rem, 3vw, 1.6rem);
-    border: 1px solid var(--ink);
-    border-radius: 4px;
-  }
-
-  .notice .notice-label {
-    font-size: 0.6rem;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--ink);
-    display: block;
-    margin-bottom: 0.7rem;
-  }
-
-  .notice p {
-    font-size: 0.9rem;
-    font-weight: 300;
-    color: #2E2E33;
-    line-height: 1.75;
-  }
-
-  .notice strong { font-weight: 500; color: var(--ink); }
-
-  /* ---------- Sections ---------- */
-  .section {
-    margin-top: clamp(3rem, 6vw, 4.5rem);
-    padding-top: clamp(2.5rem, 5vw, 3.5rem);
-    border-top: 1px solid var(--line);
-  }
-
-  .section h2 {
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    margin-bottom: 1.6rem;
-  }
-
-  .queue { list-style: none; }
-
-  .queue li {
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-    padding: 0.95rem 0;
-    border-bottom: 1px solid var(--line);
-    font-size: 0.9rem;
-    font-weight: 300;
-    color: #2E2E33;
-  }
-
-  .queue li:last-child { border-bottom: none; }
-
-  .queue .tag {
-    font-size: 0.6rem;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    white-space: nowrap;
-    margin-left: auto;
-  }
-
-  /* ---------- Footer ---------- */
   footer {
     text-align: center;
-    margin-top: clamp(3.5rem, 7vw, 5rem);
-    padding: clamp(2.5rem, 6vw, 4rem) 1.5rem clamp(3rem, 6vw, 4rem);
-    border-top: 1px solid var(--line);
-    color: var(--ink-faint);
+    padding: 3rem 0 2rem;
+    color: #86868B;
     font-size: 0.7rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    font-weight: 400;
+    border-top: 1px solid #E5E5E7;
   }
 
-  footer a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
-  footer a:hover { color: var(--ink); }
-
-  .footer-cta { margin-bottom: 2rem; }
-
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(18px); }
-    to { opacity: 1; transform: none; }
+  footer a {
+    color: #86868B;
+    text-decoration: none;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-    .hero img { opacity: 1; transform: scale(1.07); }
+  footer a:hover { color: #1D1D1F; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .player { border-radius: 8px; }
   }
 </style>
 </head>
 <body>
+<div class="container">
+  <header>
+    <span class="label">Daily</span>
+    <h1>Kale &mdash; Performance</h1>
+    <p class="meta">Daily 1 &mdash; September 20, 2026</p>
+    <div class="actions">
+      <a href="https://drive.google.com/file/d/1kXuRjPSQqDL0_OVxpMUwtWlX0gTkpjqJ/view" target="_blank" rel="noopener" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z" fill="#fff"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0-1.2 4.5h27.5z" fill="#fff"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.85z" fill="#fff"/><path d="M43.65 25 57.4 1.2C56.05.4 54.5 0 52.9 0H34.4c-1.6 0-3.15.45-4.5 1.2z" fill="#fff"/><path d="m59.8 53h-32.3L13.75 76.8c1.35.8 2.9 1.2 4.5 1.2h22.6c1.6 0 3.15-.45 4.5-1.2z" fill="#fff"/><path d="M73.4 26.5 60.65 3.3c-.8-1.4-1.95-2.5-3.3-3.3L43.6 25l16.2 28h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#fff"/></svg>
+        Download from Google Drive
+      </a>
+      <span class="btn btn-outline" style="cursor:default;">1080p &middot; 2:40</span>
+    </div>
+  </header>
 
-<div class="topbar" id="topbar">
-  <span class="names">Kale &mdash; Performance</span>
-  <a class="btn btn-primary btn-sm" href="#player">Watch</a>
-</div>
-
-<div class="hero">
-  <img id="heroImg" src="hero.jpg" alt="The ensemble mid-performance on a lit stage">
-</div>
-
-<div class="titleblock">
-  <div class="eyebrow">Dailies &nbsp;&middot;&nbsp; Daily 1</div>
-  <h1>Performance</h1>
-  <div class="rule"></div>
-  <div class="count">2:40 &nbsp;&middot;&nbsp; 1080p &nbsp;&middot;&nbsp; September 20, 2026</div>
-  <div class="actions">
-    <a class="btn btn-primary" href="#player">Watch the daily</a>
-    <span class="btn btn-outline" style="cursor:default;">Work in progress &mdash; not a final cut</span>
-  </div>
-</div>
-
-<div class="wrap">
-  <div class="player" id="player">
-    <video id="vid" controls preload="metadata" playsinline poster="poster.jpg">
+  <div class="player">
+    <video controls preload="metadata" playsinline poster="poster.jpg">
       <source src="daily1-1080.mp4" type="video/mp4">
-      Your browser can't play this video. <a href="daily1-1080.mp4">Download it instead</a>.
+      Your browser doesn't support HTML5 video. <a href="https://drive.google.com/file/d/1kXuRjPSQqDL0_OVxpMUwtWlX0gTkpjqJ/view">Watch on Google Drive</a>.
     </video>
-  </div>
-  <div class="player-bar">
-    <span class="player-note">Streams right here &middot; 1080p</span>
-    <a class="dl-link" href="daily1-1080.mp4" download>
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Download this cut
-    </a>
   </div>
 
   <div class="info-box">
-    <p>Kale &mdash; here's the <strong>first daily</strong> from the performance shoot. It plays straight off this page, no downloads and no Drive folder to dig through. Works on your phone too.</p>
-    <p>This is an early pass, so treat it as a look at where things are headed rather than a finished piece. Color, sound and pacing are all still open.</p>
-    <p>Watch it a couple of times and send me notes &mdash; the most useful thing you can give me is <strong>timecodes</strong>. Something like "1:12 &mdash; hold this longer" tells me exactly what to go fix.</p>
+    <p>Here's some colored samples of what the footage looks like. Feel free to pass it along to the players &mdash; just don't post or share it anywhere public. It's only a daily.</p>
   </div>
 
-  <div class="notice">
-    <span class="notice-label">Before you share it around</span>
-    <p>This link is fine to pass to anyone who needs to weigh in, but it's still a <strong>work in progress</strong> &mdash; please keep it off social until we've locked a final cut.</p>
-  </div>
-
-  <div class="section">
-    <h2>Still to come</h2>
-    <ul class="queue">
-      <li>Notes incorporated into the next pass <span class="tag">Next</span></li>
-      <li>Full color grade <span class="tag">After picture lock</span></li>
-      <li>Final audio mix <span class="tag">After picture lock</span></li>
-      <li>Delivery masters <span class="tag">On lock</span></li>
-    </ul>
-  </div>
+  <footer>
+    <p>Filmed by <a href="https://mattmatheson.github.io/RandomPhoneBuilds/">Matt Matheson</a></p>
+  </footer>
 </div>
-
-<footer>
-  <div class="footer-cta">
-    <a class="btn btn-primary" href="#player">Back to the daily</a>
-  </div>
-  <p>Filmed by <a href="https://mattmatheson.github.io/RandomPhoneBuilds/">Matt Matheson</a></p>
-</footer>
-
-<script>
-// Hero fade-in
-const hero = document.getElementById('heroImg');
-if (hero.complete) hero.classList.add('loaded');
-else hero.addEventListener('load', () => hero.classList.add('loaded'));
-
-// Sticky bar appears after the hero scrolls past
-const topbar = document.getElementById('topbar');
-let ticking = false;
-window.addEventListener('scroll', () => {
-  if (ticking) return;
-  ticking = true;
-  requestAnimationFrame(() => {
-    topbar.classList.toggle('visible', window.scrollY > window.innerHeight * 0.45);
-    ticking = false;
-  });
-}, { passive: true });
-</script>
-
 </body>
 </html>
