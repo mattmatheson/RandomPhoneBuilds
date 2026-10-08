@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="published" content="2026-10-08">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Devon Cherryholmes — RECO Vertical Video</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #16161A;
+    --ink-soft: #6E6E73;
+    --ink-faint: #A1A1A6;
+    --line: #E8E8EA;
+    --panel: #F5F5F7;
+    --bg: #FFFFFF;
+    --warn: #B3261E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* ---------- Title block ---------- */
+  .titleblock {
+    text-align: center;
+    padding: clamp(3rem, 8vw, 5.5rem) 1.5rem clamp(1.75rem, 4vw, 2.75rem);
+    animation: rise 0.9s cubic-bezier(0.16,1,0.3,1) both;
+    animation-delay: 0.1s;
+  }
+
+  .eyebrow {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 1.4rem;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 5.5vw, 3.2rem);
+    font-weight: 200;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    line-height: 1.15;
+    margin-bottom: 1.4rem;
+  }
+
+  .rule {
+    width: 44px;
+    height: 1px;
+    background: var(--line);
+    margin: 0 auto 1.3rem;
+  }
+
+  .count {
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 2rem;
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    border-radius: 980px;
+    font-family: inherit;
+    font-size: 0.76rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .btn:active { transform: scale(0.97); }
+  .btn-primary { background: #1D1D1F; color: #fff; }
+  .btn-primary:hover { background: #3A3A40; }
+  .btn-outline { background: transparent; color: var(--ink-soft); border-color: var(--line); }
+  .btn-outline:hover { color: var(--ink); border-color: var(--ink-faint); }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+  }
+
+  /* ---------- Layout ---------- */
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 clamp(1rem, 4vw, 2rem);
+  }
+
+  /* ---------- Vertical player ---------- */
+  .player {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    aspect-ratio: 9 / 16;
+    background: #0C0C0E;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 30px 70px -28px rgba(0,0,0,0.45);
+  }
+
+  .player video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    background: #0C0C0E;
+  }
+
+  .player-note {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* ---------- Message ---------- */
+  .info-box {
+    background: var(--panel);
+    border-radius: 4px;
+    padding: clamp(1.4rem, 3.5vw, 2rem);
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .info-box p,
+  .prose p {
+    font-size: 0.92rem;
+    font-weight: 300;
+    color: #2E2E33;
+    line-height: 1.75;
+  }
+
+  .info-box p + p,
+  .prose p + p { margin-top: 1rem; }
+
+  .info-box strong,
+  .prose strong { font-weight: 500; color: var(--ink); }
+
+  .info-box a { color: var(--ink); text-underline-offset: 3px; }
+
+  /* ---------- Sections ---------- */
+  .section {
+    margin-top: clamp(3rem, 6vw, 4.5rem);
+    padding-top: clamp(2.5rem, 5vw, 3.5rem);
+    border-top: 1px solid var(--line);
+  }
+
+  .section-label {
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.9rem;
+  }
+
+  .section h2 {
+    font-size: clamp(1.3rem, 3.6vw, 1.75rem);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    margin-bottom: 1.4rem;
+  }
+
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+  }
+
+  .compare div {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1.1rem 1.2rem;
+  }
+
+  .compare h3 {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.6rem;
+  }
+
+  .compare .is h3 { color: var(--ink); }
+  .compare .is { border-color: var(--ink); }
+
+  .compare ul { list-style: none; }
+
+  .compare li {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: #2E2E33;
+    line-height: 1.55;
+    padding: 0.3rem 0;
+  }
+
+  /* ---------- Steps ---------- */
+  .platform {
+    margin-top: 2.25rem;
+  }
+
+  .platform h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .platform h3 .sub {
+    margin-left: auto;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    color: var(--ink-faint);
+    font-size: 0.6rem;
+  }
+
+  .steps { list-style: none; counter-reset: step; }
+
+  .steps li {
+    position: relative;
+    padding: 1.1rem 0 1.1rem 2.75rem;
+    border-bottom: 1px solid var(--line);
+    counter-increment: step;
+  }
+
+  .steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 1.05rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    display: grid;
+    place-items: center;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+  }
+
+  .steps.from-zero li { counter-increment: none; }
+  .steps.from-zero li::before { content: attr(data-n); }
+
+  .steps strong {
+    display: block;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+
+  .steps span {
+    display: block;
+    font-size: 0.86rem;
+    font-weight: 300;
+    color: #4A4A50;
+    line-height: 1.65;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 2rem;
+  }
+
+  .two-col h4 {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 1.3rem;
+  }
+
+  .never {
+    margin-top: 1.25rem;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid var(--warn);
+    border-radius: 4px;
+  }
+
+  .never .label {
+    display: block;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--warn);
+    margin-bottom: 0.55rem;
+  }
+
+  .never ul { list-style: none; }
+
+  .never li {
+    font-size: 0.86rem;
+    font-weight: 300;
+    color: #2E2E33;
+    line-height: 1.6;
+    padding: 0.2rem 0 0.2rem 1.3rem;
+    position: relative;
+  }
+
+  .never li::before {
+    content: '\2715';
+    position: absolute;
+    left: 0;
+    color: var(--warn);
+    font-size: 0.75rem;
+    top: 0.32rem;
+  }
+
+  .tip {
+    margin-top: 1.25rem;
+    background: var(--panel);
+    border-radius: 4px;
+    padding: 1.1rem 1.25rem;
+  }
+
+  .tip .label {
+    display: block;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 0.5rem;
+  }
+
+  .tip p {
+    font-size: 0.86rem;
+    font-weight: 300;
+    color: #2E2E33;
+    line-height: 1.65;
+  }
+
+  /* ---------- Contact ---------- */
+  .contact {
+    margin-top: clamp(3rem, 6vw, 4.5rem);
+    padding: clamp(1.4rem, 3.5vw, 2rem);
+    border: 1px solid var(--ink);
+    border-radius: 4px;
+  }
+
+  .contact .label {
+    display: block;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 0.7rem;
+  }
+
+  .contact p {
+    font-size: 0.92rem;
+    font-weight: 300;
+    color: #2E2E33;
+    line-height: 1.75;
+  }
+
+  .contact p + p { margin-top: 0.8rem; }
+  .contact strong { font-weight: 500; color: var(--ink); }
+  .contact a { color: var(--ink); text-underline-offset: 3px; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    text-align: center;
+    margin-top: clamp(3.5rem, 7vw, 5rem);
+    padding: clamp(2.5rem, 6vw, 4rem) 1.5rem clamp(3rem, 6vw, 4rem);
+    border-top: 1px solid var(--line);
+    color: var(--ink-faint);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  footer a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  footer a:hover { color: var(--ink); }
+
+  .footer-cta { margin-bottom: 2rem; }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 600px) {
+    .compare, .two-col { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="titleblock">
+  <div class="eyebrow">Vertical Social Video &middot; The Real Estate Collective</div>
+  <h1>Devon Cherryholmes</h1>
+  <div class="rule"></div>
+  <div class="count">September 2026 &nbsp;&middot;&nbsp; 0:35 &nbsp;&middot;&nbsp; 4K Vertical 9:16</div>
+  <div class="actions">
+    <a class="btn btn-primary" id="mainDrive" href="#" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z" fill="#fff"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0-1.2 4.5h27.5z" fill="#fff"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.85z" fill="#fff"/><path d="M43.65 25 57.4 1.2C56.05.4 54.5 0 52.9 0H34.4c-1.6 0-3.15.45-4.5 1.2z" fill="#fff"/><path d="m59.8 53h-32.3L13.75 76.8c1.35.8 2.9 1.2 4.5 1.2h22.6c1.6 0 3.15-.45 4.5-1.2z" fill="#fff"/><path d="M73.4 26.5 60.65 3.3c-.8-1.4-1.95-2.5-3.3-3.3L43.6 25l16.2 28h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#fff"/></svg>
+      Open in Google Drive
+    </a>
+    <a class="btn btn-outline" href="#how-to-post">How to post it</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="player">
+    <video controls preload="metadata" playsinline poster="poster.jpg">
+      <source src="web-720.mp4" type="video/mp4">
+      Your browser can't play this video. <a id="fallbackDrive" href="#">Open it on Google Drive</a>.
+    </video>
+  </div>
+  <p class="player-note">Preview only &middot; Download the full-quality file from Drive to post</p>
+
+  <div class="info-box">
+    <p>Hey Devon, here's your video. It's free for you to use. There's no charge.</p>
+    <p>Before you post it, please read the instructions below. They're also in the Drive folder as <strong>&ldquo;READ ME BEFORE YOU POST.pdf&rdquo;</strong>. Instagram and Facebook compress video a lot, and the way the file gets uploaded decides whether it looks crisp or muddy once it's live. If you follow these steps, it'll look the way it was shot and color graded.</p>
+    <p>If you'd like any changes, please reach out to <strong>Meagan Flynn</strong> or <strong>Bekah Campbell</strong> at The Real Estate Collective.</p>
+  </div>
+
+  <!-- What this video is -->
+  <div class="section">
+    <div class="section-label">What this video is for</div>
+    <h2>A quick social piece, not a full walkthrough of the house.</h2>
+    <div class="prose">
+      <p>This is <strong>cinematic vertical content for RECO's social media</strong>. It's a short reel for Bekah to post, made for a phone screen in a feed. It shows off your listing, and it also builds brand awareness for The Real Estate Collective. That's the video I was booked to shoot.</p>
+      <p>Your <strong>listing video</strong> is the one that sells the property room by room, and you already have that. This video does a different job. Vertical 9:16 framing is tall and narrow, so some rooms and angles just don't work in it. Leaving those out is on purpose. The goal is to stop someone scrolling, not to cover every room.</p>
+      <p>If your seller asks why every room isn't in it, please explain that <strong>this isn't a five-minute tour of the house</strong>. It's a 35-second social piece meant to get eyes on the listing and on RECO.</p>
+    </div>
+
+    <div class="compare">
+      <div class="is">
+        <h3>This video is</h3>
+        <ul>
+          <li>35 seconds, vertical, made for Reels and Stories</li>
+          <li>Made for RECO's social media</li>
+          <li>Something that grabs attention in a feed</li>
+          <li>Your listing plus RECO brand awareness</li>
+          <li>Free for you to use too</li>
+        </ul>
+      </div>
+      <div>
+        <h3>This video isn't</h3>
+        <ul>
+          <li>A tour of every room</li>
+          <li>A replacement for your listing video</li>
+          <li>A long ad about the house</li>
+          <li>Shot to cover every angle of the property</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- How to post -->
+  <div class="section" id="how-to-post">
+    <div class="section-label">Read me before you post</div>
+    <h2>How to post it without losing quality</h2>
+    <div class="prose">
+      <p>The video was professionally shot and color graded. Follow these steps so it looks that way online.</p>
+    </div>
+
+    <!-- Step 0 -->
+    <div class="platform">
+      <h3>Step 0 &mdash; Save the file from Google Drive</h3>
+      <p class="prose" style="margin-top:1rem;"><span style="font-size:0.86rem;font-weight:300;color:#4A4A50;line-height:1.65;display:block;">Download the original file before you post it anywhere. Don't screen record it, don't screenshot it, and don't share it straight from the Drive app.</span></p>
+      <div class="two-col">
+        <div>
+          <h4>On your iPhone</h4>
+          <ol class="steps">
+            <li><strong>Open the Google Drive app</strong></li>
+            <li><strong>Tap the three dots next to the video</strong></li>
+            <li><strong>Tap Download</strong><span>Wait until it's fully saved to your Photos app.</span></li>
+            <li><strong>Post from your Camera Roll</strong><span>Open Instagram and pick the downloaded file.</span></li>
+          </ol>
+        </div>
+        <div>
+          <h4>On a computer</h4>
+          <ol class="steps">
+            <li><strong>Go to drive.google.com</strong></li>
+            <li><strong>Click the three dots next to the video</strong></li>
+            <li><strong>Click Download</strong><span>It saves to your Downloads folder.</span></li>
+            <li><strong>Upload that file to Facebook</strong><span>Pick it straight from your Downloads folder.</span></li>
+          </ol>
+        </div>
+      </div>
+      <div class="never">
+        <span class="label">Important</span>
+        <ul>
+          <li>Don't screen record the video.</li>
+          <li>Don't screenshot a frame and post the screenshot.</li>
+          <li>Don't share straight from the Google Drive app. Always download it first.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Instagram -->
+    <div class="platform">
+      <h3>Instagram <span class="sub">Post from an iPhone</span></h3>
+      <ol class="steps">
+        <li><strong>One-time setup: turn on high-quality uploads</strong><span>Open Instagram, tap your profile photo, then tap the three lines (&#8801;) at the top right. Go to Settings and privacy, search &ldquo;Data usage,&rdquo; and turn on <em>Upload at Highest Quality</em>. You only need to do this once. Leave it on.</span></li>
+        <li><strong>Connect to Wi-Fi</strong><span>Get on Wi-Fi before you do anything else. On cellular, Instagram can compress the video even with high quality turned on.</span></li>
+        <li><strong>Post from your Camera Roll</strong><span>Tap +, then pick the video you downloaded from Google Drive. It should be at the top of your Camera Roll.</span></li>
+        <li><strong>Don't add filters or edits. Post it as-is.</strong><span>Tap Next without touching any filters or sliders. The video is already color graded.</span></li>
+        <li><strong>Post it as a Reel, then share it to your Story</strong><span>Choose Reel, not a regular video post, because Reels reach a lot more people. Once it's posted, tap &ldquo;Share to Story&rdquo; so your followers see it too.</span></li>
+      </ol>
+      <div class="never">
+        <span class="label">Never do these</span>
+        <ul>
+          <li>Don't post to Instagram from an Android phone or a computer. Always use an iPhone.</li>
+          <li>Don't share straight from Google Drive. Always save it to your Camera Roll first.</li>
+          <li>Don't add Instagram filters. The video is already color graded.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Facebook -->
+    <div class="platform">
+      <h3>Facebook <span class="sub">Post from a computer</span></h3>
+      <ol class="steps">
+        <li><strong>Use a computer, not your phone</strong><span>Open facebook.com in a browser on your laptop or desktop. Facebook's desktop uploader handles big video files much better than the phone app does.</span></li>
+        <li><strong>Download the file from Google Drive first</strong><span>Follow Step 0 above to save it to your Downloads folder before you upload anything.</span></li>
+        <li><strong>Upload the video file itself, not a link</strong><span>Create a new post, click Photo/Video, and pick the file you downloaded. Facebook shows fewer people posts that link to YouTube or other outside sites.</span></li>
+        <li><strong>Pick a thumbnail before you publish</strong><span>After the upload, Facebook lets you choose the still image people see before they press play. Pick a clear, sharp frame instead of whatever Facebook chose.</span></li>
+        <li><strong>If you run an ad, turn off Advantage+ Creative</strong><span>In Ads Manager, at the ad level, find the Advantage+ Creative section. Turn off &ldquo;Adjust brightness and contrast&rdquo; and everything else in that section. Facebook turns it back on for every new ad, and it changes the colors of the graded video. You have to turn it off by hand every time.</span></li>
+      </ol>
+      <div class="tip">
+        <span class="label">Shortcut if your Facebook and Instagram are linked</span>
+        <p>If quality isn't your top priority and you want one connected post that shares comments and analytics across both apps, post to Instagram first using the steps above. Once it's live, tap the three dots (&middot;&middot;&middot;) on the post and choose <strong>Share to Facebook</strong>. If you want the best quality on Facebook, post there separately from a computer instead.</p>
+      </div>
+      <div class="never">
+        <span class="label">Never do these on Facebook</span>
+        <ul>
+          <li>Don't post a YouTube link or a Google Drive link. Upload the file itself.</li>
+          <li>Don't post from your phone if quality matters. Use a computer for Facebook.</li>
+          <li>Don't leave Advantage+ Creative on when you run ads. It changes the colors.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <div class="contact">
+    <span class="label">Revisions &amp; questions</span>
+    <p>For <strong>revision requests</strong>, please contact <strong>Meagan Flynn</strong> or <strong>Bekah Campbell</strong> at The Real Estate Collective.</p>
+    <p>For questions about posting, email Matt at <a href="mailto:mattmathesoncreative@gmail.com">mattmathesoncreative@gmail.com</a> or message <strong>@mattmatheson_</strong>.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-cta">
+    <a class="btn btn-primary" id="footDrive" href="#" target="_blank" rel="noopener">Open in Google Drive</a>
+  </div>
+  <p>Filmed by <a href="https://mattmatheson.github.io/RandomPhoneBuilds/">Matt Matheson</a></p>
+</footer>
+
+<script>
+const DRIVE_FOLDER = "16GnzRsBULhJEuitB5nRWtHbeSud69g57";
+const folderUrl = "https://drive.google.com/drive/folders/" + DRIVE_FOLDER;
+['mainDrive','footDrive','fallbackDrive'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.href = folderUrl;
+});
+</script>
+
+</body>
+</html>
