@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="published" content="2026-10-23">
+<title>Stella's Weight Loss Plan — Food, Portions & Progress</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C42020;
+    --bg: #FAFAFA;
+    --card: #FFFFFF;
+    --text: #1D1D1F;
+    --muted: #6E6E73;
+    --line: #E6E6E8;
+    --green: #178A3B;
+    --blue: #0A66C2;
+    --amber: #B26B00;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 6rem;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 1.25rem; }
+
+  header { padding: 4rem 0 2.5rem; border-bottom: 1px solid var(--line); }
+  .eyebrow {
+    text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.78rem;
+    font-weight: 700; color: var(--accent); margin-bottom: 0.9rem;
+  }
+  h1 { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .scope { font-size: 1.15rem; color: var(--muted); margin-top: 0.9rem; max-width: 34rem; }
+
+  /* Listen controls */
+  .listen-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin-top: 1.6rem; }
+  .listen-btn {
+    background: var(--accent); color: #fff; border: none; border-radius: 2rem;
+    padding: 0.6rem 1.5rem; font-family: inherit; font-size: 0.95rem; font-weight: 600;
+    cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; transition: opacity 0.2s;
+  }
+  .listen-btn:hover { opacity: 0.9; }
+  select.voice, .speed-btn {
+    font-family: inherit; font-size: 0.9rem; padding: 0.55rem 0.9rem;
+    border: 1px solid var(--line); border-radius: 2rem; background: var(--card);
+    color: var(--text); cursor: pointer;
+  }
+  .protip { font-size: 0.85rem; color: var(--muted); margin-top: 1rem; line-height: 1.5; }
+  .protip a { color: var(--accent); cursor: pointer; text-decoration: none; font-weight: 600; }
+
+  main { padding-top: 2.5rem; }
+  section { margin-bottom: 2.8rem; scroll-margin-top: 1rem; }
+  h2 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.9rem; }
+  h2 .num { color: var(--accent); font-weight: 800; margin-right: 0.5rem; }
+  h3 { font-size: 1.08rem; font-weight: 700; margin-bottom: 0.35rem; }
+  p { margin-bottom: 1rem; color: #333; }
+  p.lead { font-size: 1.12rem; color: var(--text); }
+  p.small, .small { font-size: 0.88rem; color: var(--muted); }
+  strong { font-weight: 700; color: var(--text); }
+  ul { margin: 0 0 1rem 1.1rem; }
+  li { margin-bottom: 0.5rem; color: #333; }
+  a { color: var(--accent); }
+
+  section.reading {
+    border-left: 3px solid var(--accent);
+    background: rgba(196, 32, 32, 0.04);
+    padding-left: 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 16px; padding: 1.25rem 1.3rem; margin-bottom: 0.9rem;
+  }
+
+  /* Stats */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin: 1rem 0 1.2rem; }
+  .stat {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 1rem 0.8rem; text-align: center;
+  }
+  .stat .big { font-size: 1.55rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+  .stat .lbl { font-size: 0.76rem; color: var(--muted); margin-top: 0.25rem; line-height: 1.3; }
+  .stat.accent .big { color: var(--accent); }
+
+  /* Pace gauge */
+  .gauge { display: grid; grid-template-columns: 1fr 1.6fr 1fr; border-radius: 12px; overflow: hidden; margin: 0.4rem 0 0.5rem; border: 1px solid var(--line); }
+  .gauge div { padding: 0.75rem 0.6rem; text-align: center; font-size: 0.8rem; line-height: 1.3; }
+  .gauge b { display: block; font-size: 0.95rem; margin-bottom: 0.15rem; }
+  .g-slow { background: #F2F2F4; color: var(--muted); }
+  .g-good { background: rgba(23,138,59,0.12); color: #0F5F28; }
+  .g-fast { background: rgba(196,32,32,0.1); color: #8E1414; }
+
+  /* Chart */
+  .chart { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 0.8rem 0.6rem 0.4rem; margin: 1rem 0 0.6rem; }
+  .chart svg { width: 100%; height: auto; display: block; }
+  .legend { display: flex; flex-wrap: wrap; gap: 0.9rem; font-size: 0.78rem; color: var(--muted); padding: 0.3rem 0.6rem 0.5rem; }
+  .legend span::before { content: ''; display: inline-block; width: 14px; height: 3px; border-radius: 2px; margin-right: 6px; vertical-align: middle; background: currentColor; }
+  .lg-fast { color: var(--accent); }
+  .lg-real { color: #555; }
+  .lg-goal { color: var(--green); }
+  .lg-dot { color: var(--text); }
+  .lg-dot::before { width: 9px !important; height: 9px !important; border-radius: 50% !important; }
+
+  /* Meals */
+  .meals { display: grid; gap: 0.6rem; margin: 0.6rem 0 0.9rem; }
+  .meal {
+    display: grid; grid-template-columns: 4.6rem 1fr auto; gap: 0.8rem; align-items: center;
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 0.85rem 1rem;
+  }
+  .meal .time { font-weight: 800; font-size: 0.95rem; color: var(--accent); }
+  .meal .what { font-size: 0.95rem; line-height: 1.35; }
+  .meal .what span { display: block; font-size: 0.8rem; color: var(--muted); }
+  .meal .kcal { font-weight: 700; font-size: 0.9rem; white-space: nowrap; }
+  .total { display: flex; justify-content: space-between; font-weight: 800; padding: 0.4rem 1rem 0; }
+
+  /* Bars */
+  .bars { margin: 0.8rem 0 0.6rem; }
+  .bar-row { display: grid; grid-template-columns: 9.5rem 1fr 3.6rem; gap: 0.6rem; align-items: center; margin-bottom: 0.55rem; font-size: 0.85rem; }
+  .bar-row .name { line-height: 1.25; }
+  .bar-track { background: #EFEFF1; border-radius: 6px; height: 14px; overflow: hidden; position: relative; }
+  .bar-fill { height: 100%; border-radius: 6px; background: var(--green); }
+  .bar-fill.mid { background: #7BAF8A; }
+  .bar-fill.dense { background: var(--amber); }
+  .bar-fill.bad { background: var(--accent); }
+  .bar-row .val { font-weight: 700; text-align: right; }
+  .target-line { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--text); }
+
+  /* Food cards */
+  .tag {
+    display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 0.22rem 0.65rem; border-radius: 1rem; margin-bottom: 0.6rem;
+  }
+  .t-staple { color: var(--green); background: rgba(23,138,59,0.1); }
+  .t-rotate { color: var(--blue); background: rgba(10,102,194,0.1); }
+  .t-useup { color: #555; background: #EFEFF1; }
+  .t-budget { color: #6B4FA0; background: rgba(107,79,160,0.1); }
+  .t-treat { color: var(--amber); background: rgba(178,107,0,0.12); }
+  .t-skip { color: var(--accent); background: rgba(196,32,32,0.08); }
+  .food p { margin-bottom: 0.7rem; font-size: 0.95rem; }
+  .rows { border-top: 1px solid var(--line); }
+  .row { display: flex; justify-content: space-between; gap: 1rem; padding: 0.42rem 0; border-bottom: 1px solid var(--line); font-size: 0.88rem; }
+  .row:last-child { border-bottom: none; }
+  .row .k { color: var(--muted); }
+  .row .v { font-weight: 600; text-align: right; }
+  .good { color: var(--green); }
+  .warn { color: var(--amber); }
+  .badc { color: var(--accent); }
+
+  /* Ladder */
+  .ladder { display: grid; gap: 0.5rem; margin: 0.6rem 0 1rem; }
+  .step { display: grid; grid-template-columns: 5.2rem 1fr; gap: 0.9rem; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 0.85rem 1rem; }
+  .step .n { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; }
+  .step .n small { display: block; font-size: 0.68rem; font-weight: 600; color: var(--muted); letter-spacing: 0; }
+  .step .d { font-size: 0.9rem; line-height: 1.4; }
+  .step.floor { border-color: rgba(196,32,32,0.35); background: rgba(196,32,32,0.03); }
+  .step.floor .n { color: var(--accent); }
+
+  /* Stories */
+  .stories { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 0.6rem 0 1.2rem; }
+  .story { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 1rem; }
+  .story .who { font-weight: 700; font-size: 0.95rem; }
+  .story .nums { font-size: 1.15rem; font-weight: 800; color: var(--accent); margin: 0.2rem 0 0.1rem; letter-spacing: -0.01em; }
+  .story .time2 { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.4rem; }
+  .story p { font-size: 0.86rem; margin: 0; line-height: 1.45; }
+
+  .callout {
+    background: #fff; border: 1px solid var(--line); border-left: 3px solid var(--accent);
+    border-radius: 10px; padding: 1rem 1.15rem; margin: 1.1rem 0;
+  }
+  .callout p { margin: 0; }
+  .callout.green { border-left-color: var(--green); }
+
+  .sources li { font-size: 0.82rem; word-break: break-word; }
+
+  footer { border-top: 1px solid var(--line); padding: 2rem 0 1rem; color: var(--muted); font-size: 0.9rem; }
+
+  /* Sticky player bar */
+  .player {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: rgba(30,30,30,0.92);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    color: #fff; display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.75rem 1rem; padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    transform: translateY(100%); transition: transform 0.35s ease; z-index: 100;
+  }
+  .player.show { transform: translateY(0); }
+  .player button {
+    background: rgba(255,255,255,0.14); border: none; color: #fff;
+    width: 38px; height: 38px; border-radius: 50%; font-size: 1rem; cursor: pointer;
+    flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .player button.primary { background: var(--accent); }
+  .player .now { flex: 1; font-size: 0.82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #eee; }
+  .player select, .player .speed-btn {
+    background: rgba(255,255,255,0.14); color: #fff; border: none;
+    font-size: 0.8rem; padding: 0.4rem 0.6rem; border-radius: 1rem;
+  }
+  .player select option { color: #000; }
+
+  @media (max-width: 560px) {
+    h1 { font-size: 2.1rem; }
+    header { padding-top: 3rem; }
+    .listen-btn { width: 100%; justify-content: center; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stories { grid-template-columns: 1fr; }
+    .bar-row { grid-template-columns: 7.6rem 1fr 3.2rem; font-size: 0.8rem; }
+    .meal { grid-template-columns: 3.9rem 1fr auto; gap: 0.6rem; padding: 0.8rem; }
+    .player .now { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Stella · about 10 years old · ~15.5 lb</div>
+    <h1>Stella's Weight Loss Plan</h1>
+    <p class="scope">Slow, liver-safe and wet-food-first. What to feed her, how much, and what "on track" looks like. Updated October 23, 2026.</p>
+    <div class="listen-row">
+      <button class="listen-btn" id="listenBtn">▶ Listen</button>
+      <select class="voice" id="voiceSelect" aria-label="Choose voice"></select>
+      <button class="speed-btn" id="speedBtn">1x</button>
+    </div>
+    <p class="protip"><em>Pro tip: for a nicer voice, tap <a id="selectAll">select all</a> then use iOS Speak Selection (Settings → Accessibility → Spoken Content → Speak Selection).</em></p>
+  </header>
+
+  <main id="content">
+
+    <section>
+      <h2>The short version</h2>
+      <div class="stats">
+        <div class="stat"><div class="big">~15.5 lb</div><div class="lbl">now (estimate until a real weigh-in)</div></div>
+        <div class="stat accent"><div class="big">11–12 lb</div><div class="lbl">goal (vet confirms)</div></div>
+        <div class="stat"><div class="big">~240</div><div class="lbl">kcal a day to start</div></div>
+        <div class="stat"><div class="big">2.5 oz</div><div class="lbl">lost per week (~0.15 lb)</div></div>
+        <div class="stat"><div class="big">7–12 mo</div><div class="lbl">to reach goal</div></div>
+        <div class="stat"><div class="big">4</div><div class="lbl">small meals a day, weighed in grams</div></div>
+      </div>
+      <p class="lead">Mostly wet food, protein first, weighed on a kitchen scale. She should lose slowly, about 1% of her weight a week. <strong>She should never go a whole day without eating.</strong></p>
+    </section>
+
+    <section>
+      <h2><span class="num">1</span>What "on track" looks like</h2>
+      <p>At her size, a healthy loss is between about 1 and 5 ounces a week. Slower than that means the food needs a small trim. Faster means a vet check, because at her age thyroid, diabetes and kidney problems can all cause weight loss.</p>
+      <div class="gauge noread">
+        <div class="g-slow"><b>Too slow</b>under 0.08 lb/wk<br>(1.2 oz)</div>
+        <div class="g-good"><b>On track</b>0.08–0.3 lb/wk<br>sweet spot ~0.15 lb (2.5 oz)</div>
+        <div class="g-fast"><b>Too fast</b>over 0.3 lb/wk<br>(5 oz) → vet</div>
+      </div>
+      <div class="chart noread">
+        <svg id="chart" viewBox="0 0 420 280" role="img" aria-label="Expected weight path for Stella"></svg>
+        <div class="legend">
+          <span class="lg-fast">1%/week (fast end)</span>
+          <span class="lg-real">0.6%/week (what most real cats did)</span>
+          <span class="lg-goal">goal 11–12 lb</span>
+          <span class="lg-dot">weigh-ins</span>
+        </div>
+      </div>
+      <p class="small">Anywhere inside the red lane is a win. Weigh-ins get added as dots when you post them in the Discord thread.</p>
+      <ul>
+        <li><strong>Month 3:</strong> about 13.6–14.3 lb</li>
+        <li><strong>Month 6:</strong> about 11.9–13.2 lb</li>
+        <li><strong>Month 7–12:</strong> goal range, depending on pace</li>
+      </ul>
+      <div class="callout">
+        <p><strong>Judge the trend, not one weigh-in.</strong> Weekly changes are tiny, and the "weigh yourself, then weigh yourself holding her" method is only accurate to about 0.2 lb. Look at 3–4 weeks together. A $30 baby or pet scale makes this way easier.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">2</span>A day in her bowl</h2>
+      <p>Here's an example day using the foods I'd stick with (more on those below). Three wet meals plus a bedtime treat ball.</p>
+      <div class="meals noread">
+        <div class="meal"><div class="time">7 AM</div><div class="what">½ can Tiki Cat After Dark Chicken<span>5.5 oz can · about 78 g</span></div><div class="kcal">64 kcal</div></div>
+        <div class="meal"><div class="time">12 PM</div><div class="what">1 can Birdie &amp; Louie tuna<span>3 oz can · 85 g</span></div><div class="kcal">68 kcal</div></div>
+        <div class="meal"><div class="time">6 PM</div><div class="what">Other ½ can Tiki Cat After Dark<span>about 78 g</span></div><div class="kcal">64 kcal</div></div>
+        <div class="meal"><div class="time">10 PM</div><div class="what">1 level tbsp Instinct kibble in a treat ball<span>about 7 g · her whole treat budget</span></div><div class="kcal">32 kcal</div></div>
+      </div>
+      <div class="total noread"><span>Total</span><span>≈ 228 kcal</span></div>
+      <p style="margin-top:1rem;">A bit under 240 is fine. The research says 240 is the generous end for her goal anyway.</p>
+      <h3>Using up the Stella &amp; Chewy's first?</h3>
+      <p>Three wet meals of about 70 kcal each, plus the bedtime tablespoon. Check which one you have:</p>
+      <ul>
+        <li><strong>Carnivore Cravings pouch (2.8 oz):</strong> 1 pouch per meal.</li>
+        <li><strong>Savory Shreds (5.2 oz can):</strong> ⅔ can per meal, 2 cans a day.</li>
+        <li><strong>Purrfect Pâté (5.2 oz can):</strong> about 55 g per meal, a third of a can. Pâté is dense, so the portion looks small.</li>
+      </ul>
+      <div class="callout green">
+        <p><strong>Begging tips from people who've done this:</strong> make the last meal late (around 10 PM), play with a wand toy for 10 minutes before meals, and use a timed feeder if she starts yelling at 5 AM. In a small study, cats fed from portioned automatic feeders were far more likely to reach their goal than bowl-fed cats.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">3</span>Same calories, different bowl</h2>
+      <p>This is why lean shreds and flakes in broth beat pâté and kibble for weight loss. Each bar is how much food makes the same 208 calories, which is her wet-food share for the day.</p>
+      <div class="bars noread" id="bowlBars"></div>
+      <p class="small">More food in the bowl for the same calories means a fuller cat and less begging. The water helps her aging kidneys too.</p>
+    </section>
+
+    <section>
+      <h2><span class="num">4</span>Protein check</h2>
+      <p>High protein keeps her muscle while the fat comes off. That matters a lot for an older cat. Aim for at least 11 grams of protein per 100 calories (the black line), which works out to about 26–28 g of protein a day.</p>
+      <div class="bars noread" id="protBars"></div>
+      <p class="small">From label minimums, so real protein is usually a bit higher, especially in the pâtés. Weruva's own lab numbers put Paw Lickin' Chicken around 18 g.</p>
+    </section>
+
+    <section>
+      <h2><span class="num">5</span>The food lineup</h2>
+      <p>What to stick with, what to rotate, and what to skip. Label numbers can change between batches and stores, so the can in your hand always wins.</p>
+
+      <div class="card food">
+        <span class="tag t-staple">Staple</span>
+        <h3>Tiki Cat After Dark Chicken (shreds in broth)</h3>
+        <p>The best all-around fit. Shredded chicken plus liver, gizzard and heart, no gums or starch, complete and balanced. Lean, so she gets a real bowl of food.</p>
+        <div class="rows">
+          <div class="row"><span class="k">Calories</span><span class="v">128 per 5.5 oz · 66 per 2.8 oz</span></div>
+          <div class="row"><span class="k">Protein per 100 kcal</span><span class="v good">14.6 g</span></div>
+          <div class="row"><span class="k">Gums / fillers</span><span class="v good">None</span></div>
+          <div class="row"><span class="k">For 208 kcal</span><span class="v">about 253 g (1⅔ big cans)</span></div>
+        </div>
+      </div>
+
+      <div class="card food">
+        <span class="tag t-staple">Staple</span>
+        <h3>Weruva Paw Lickin' Chicken</h3>
+        <p>The leanest food here, so the most food for the calories. Chicken breast in gravy, fish-free, and lower in phosphorus than most foods, which is nice for older kidneys. Has a little potato starch and xanthan gum.</p>
+        <div class="rows">
+          <div class="row"><span class="k">Calories</span><span class="v">105 per 5.5 oz · 57 per 3 oz</span></div>
+          <div class="row"><span class="k">Protein per 100 kcal</span><span class="v good">14.9 g (label) · ~18 g (lab)</span></div>
+          <div class="row"><span class="k">Gums / fillers</span><span class="v warn">Xanthan, potato starch (small)</span></div>
+          <div class="row"><span class="k">For 208 kcal</span><span class="v">about 309 g (2 big cans)</span></div>
+        </div>
+      </div>
+
+      <div class="card food">
+        <span class="tag t-rotate">Rotation</span>
+        <h3>Birdie &amp; Louie tuna flakes</h3>
+        <p>Great numbers: very high protein, lean, no gums. It's all tuna though, so keep it to about one can a day and mix it with chicken foods. That limits mercury, and fish-heavy diets have a loose link to thyroid problems in older cats.</p>
+        <div class="rows">
+          <div class="row"><span class="k">Calories</span><span class="v">66–69 per 3 oz can</span></div>
+          <div class="row"><span class="k">Protein per 100 kcal</span><span class="v good">17.6 g</span></div>
+          <div class="row"><span class="k">Gums / fillers</span><span class="v warn">Potato starch</span></div>
+          <div class="row"><span class="k">How much</span><span class="v">About 1 can a day max</span></div>
+        </div>
+      </div>
+
+      <div class="card food">
+        <span class="tag t-rotate">Rotation</span>
+        <h3>Tiki Cat Luau Succulent Chicken</h3>
+        <p>The highest protein of anything I compared, no gums, complete and balanced. It's breast meat only, with no organs, so use it as a swap-in rather than the only food.</p>
+        <div class="rows">
+          <div class="row"><span class="k">Calories</span><span class="v">134 per 6 oz · 63 per 2.8 oz</span></div>
+          <div class="row"><span class="k">Protein per 100 kcal</span><span class="v good">20.3 g</span></div>
+          <div class="row"><span class="k">Gums / fillers</span><span class="v good">None</span></div>
+        </div>
+      </div>
+
+      <div class="card food">
+        <span class="tag t-useup">Use up / fine</span>
+        <h3>Stella &amp; Chewy's Carnivore Cravings</h3>
+        <p>Good food, no carrageenan. The pouches are the best S&amp;C pick (no gums). The pâté is dense and lower in protein per calorie, so it's the one to phase down.</p>
+        <div class="rows">
+          <div class="row"><span class="k">Pouch, 2.8 oz</span><span class="v">72 kcal · 10.9 g protein</span></div>
+          <div class="row"><span class="k">Savory Shreds, 5.2 oz</span><span class="v">104 kcal · 11.3 g · guar gum</span></div>
+          <div class="row"><span class="k">Purrfect Pâté, 5.2 oz</span><span class="v warn">185–198 kcal · 7.9 g · guar gum</span></div>
+        </div>
+      </div>
+
+      <div class="card food">
+        <span class="tag t-budget">Budget pick</span>
+        <h3>Dr. Elsey's cleanprotein Chicken pâté</h3>
+        <p>A clean label (agar is the only binder), near-zero carbs, and about $2 a can, the cheapest premium option. It's a denser pâté with only moderate protein, so weigh portions carefully.</p>
+        <div class="rows">
+          <div class="row"><span class="k">Calories</span><span class="v">187 per 5.3 oz</span></div>
+          <div class="row"><span class="k">Protein per 100 kcal</span><span class="v warn">8.8 g</span></div>
+          <div class="row"><span class="k">For 208 kcal</span><span class="v">about 167 g</span></div>
+        </div>
+      </div>
+
+      <div class="card food">
+        <span class="tag t-treat">Treat only</span>
+        <h3>Instinct Original kibble</h3>
+        <p>Decent protein for a kibble, but 505 calories a cup and almost no water. Her whole day of calories would be under half a cup. One level tablespoon a day in a treat ball, and it's the first thing to cut if she stalls.</p>
+        <div class="rows">
+          <div class="row"><span class="k">1 level tablespoon</span><span class="v">about 7 g · 32 kcal</span></div>
+        </div>
+      </div>
+
+      <div class="card food">
+        <span class="tag t-skip">Skip</span>
+        <h3>Freeze-dried raw (S&amp;C Dinner Morsels) as meals</h3>
+        <p>About 125 calories an ounce, so 2 ounces is her whole day. It's also raw: the AVMA, CDC and FDA all advise against raw pet food, and the FDA says cats are especially vulnerable to bird flu (H5N1) and very old animals are at higher risk.</p>
+      </div>
+
+      <div class="card food">
+        <span class="tag t-skip">Skip</span>
+        <h3>Birdie &amp; Louie pâtés</h3>
+        <p>Water is the first ingredient, plus animal plasma, starch and phosphate, with less protein per calorie. Their tuna flakes are the better buy.</p>
+      </div>
+
+      <p class="small">On gums: guar gum was cleared as safe for cats in a 2026 EU review. Carrageenan is the uncertain one. Gums are a tiebreaker, not a reason to drop a food she eats happily. If the vet suggests a prescription diet (like Hill's m/d or Purina OM), those are legit and well tested, even though they're less "clean."</p>
+    </section>
+
+    <section>
+      <h2><span class="num">6</span>The calorie ladder</h2>
+      <p>240 is a gentle starting point. Based on the vet formula and on real cats, she'll probably end up lower. Step down only when the 2–4 week trend is too slow, one small step at a time.</p>
+      <div class="ladder noread">
+        <div class="step"><div class="n">240<small>kcal / day</small></div><div class="d"><strong>Start here.</strong> If she's been free-fed, taper down to this over 1–2 weeks. Don't cut overnight.</div></div>
+        <div class="step"><div class="n">~210<small>kcal / day</small></div><div class="d"><strong>First stall?</strong> Drop the tablespoon of kibble. Hold 3–4 weeks.</div></div>
+        <div class="step"><div class="n">~190<small>kcal / day</small></div><div class="d"><strong>Still stuck?</strong> Trim about 20–25 g of wet food a day. This is around where the vet formula lands (0.8 × resting needs at goal weight).</div></div>
+        <div class="step floor"><div class="n">180<small>floor</small></div><div class="d"><strong>Don't go below this without the vet.</strong></div></div>
+      </div>
+      <ul>
+        <li><strong>Losing too slowly</strong> (under 0.08 lb a week over 3–4 weeks): go down one step.</li>
+        <li><strong>Losing 0.08 to 0.3 lb a week:</strong> change nothing.</li>
+        <li><strong>Losing over 0.3 lb a week:</strong> add about 10% back and call the vet.</li>
+        <li><strong>Gaining:</strong> look for extra calories first (treats, other bowls, people), then step down.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="num">7</span>What other cats' journeys show</h2>
+      <p>I looked at about 20 real weight-loss stories with numbers, from Reddit's dechonkers community, vet blogs, catinfo.org and news stories. Here are the ones most like Stella.</p>
+      <div class="stories">
+        <div class="story"><div class="who">Domino, senior (12–13)</div><div class="nums">15.4 → 11.9 lb</div><div class="time2">about 12 months</div><p>Wet food portioned for his goal weight, kibble only as a 10 g treat-ball snack, 4 set meals. The vet guessed 6 months; it took 12.</p></div>
+        <div class="story"><div class="who">Zulu, spayed female</div><div class="nums">16 → under 12 lb</div><div class="time2">about 16 months</div><p>Almost exactly Stella's numbers. Slow and steady got her right next to her 11.25–11.5 lb goal.</p></div>
+        <div class="story"><div class="who">Felix</div><div class="nums">21.4 → 14.8 lb</div><div class="time2">about 9 months</div><p>Stalled for months on wet plus kibble. Cutting the kibble got him moving again. Now he eats three small cans with water added.</p></div>
+        <div class="story"><div class="who">Kat, stray</div><div class="nums">21 → 14 lb</div><div class="time2">just over a year</div><p>Nothing worked until her vet had her fed for her 12 lb goal instead of her current weight.</p></div>
+        <div class="story"><div class="who">Soot, now 10</div><div class="nums">17.2 → 11.5 lb</div><div class="time2">about 20 months</div><p>Made it, then regained about 2 lb after switching to a calorie-dense senior food without recounting calories.</p></div>
+        <div class="story"><div class="who">Larry (a girl), ~10</div><div class="nums">16.1 → 13.8 lb</div><div class="time2">about 18 months</div><p>Plateaued, and the vet happily accepted a slightly higher goal for her age and build.</p></div>
+      </div>
+      <h3>The patterns</h3>
+      <ul>
+        <li><strong>Slow is normal.</strong> Home cats mostly lost 0.4–0.8% a week. Losing 4–5 lb usually took 9–20 months.</li>
+        <li><strong>Wet food wins.</strong> Most successes were wet-food based, and none relied on dry food alone. Cutting the kibble is what broke Felix's months-long stall.</li>
+        <li><strong>Feed for the goal weight,</strong> not the current one.</li>
+        <li><strong>Begging happens to almost everyone.</strong> More, smaller meals, a late meal, timed feeders and play before meals helped. For some cats it eased after the first month; some never fully stop.</li>
+        <li><strong>Plateaus around 13–14 lb are common.</strong> People broke them with a 10% cut, held for 3–4 weeks.</li>
+        <li><strong>Portion creep and food switches cause regain.</strong> Keep weighing and recount calories whenever the food changes.</li>
+        <li><strong>Multi-pet homes:</strong> a microchip feeder or feeding in separate rooms fixed food stealing every time.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="num">8</span>What the science says</h2>
+      <ul>
+        <li><strong>Pace:</strong> vets recommend 0.5–2% a week. Real study cats averaged about 0.7–0.8%.</li>
+        <li><strong>The main reason cats don't reach goal is the owner stops,</strong> not the cat. In one study that followed cats all the way, 45% reached target, and most of the rest were simply lost to follow-up. Keep weighing and it'll work.</li>
+        <li><strong>High protein keeps muscle</strong> during weight loss. Healthy senior cats shouldn't be protein-restricted unless the vet finds kidney disease, and even then phosphorus is the main thing to limit.</li>
+        <li><strong>The water in wet food</strong> helped cats eat less and move more in feeding studies.</li>
+        <li><strong>Portioned automatic feeders:</strong> 83% of cats on 6 meals a day and 40% on 2 meals a day reached ideal body condition, versus none of the bowl-fed cats. More meals didn't speed up the loss; the feeder just made sticking to it easier.</li>
+        <li><strong>Fatty liver comes from a cat refusing food,</strong> often after a sudden food switch, not from a measured diet. Introduce new foods next to the old ones.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="num">9</span>Vet visit checklist</h2>
+      <ul>
+        <li>Weight, body condition score, and her real goal weight</li>
+        <li>Muscle condition (so we can watch she's losing fat, not muscle)</li>
+        <li>Baseline bloodwork: CBC, chemistry with SDMA, urinalysis, thyroid (T4), and blood pressure</li>
+        <li>Ask for their calorie target, and mention the wet-food plan</li>
+        <li>Ask whether anything in the bloodwork changes the food (kidneys, thyroid, sugar)</li>
+      </ul>
+      <p class="small">Why it matters at 10: hidden kidney disease and hyperthyroidism are common in older cats, and a thyroid problem can make weight loss look like the diet is working.</p>
+    </section>
+
+    <section>
+      <h2><span class="num">10</span>Call the vet if</h2>
+      <ul>
+        <li>She eats little or nothing for 24 hours</li>
+        <li>Her gums, ear skin or eye whites look yellow</li>
+        <li>She drools at the bowl, hides, keeps vomiting, or is lethargic</li>
+        <li>She loses more than 0.3 lb a week</li>
+        <li>She's suddenly hungrier, thirstier, or peeing more</li>
+        <li>Her spine or hips get bony while her belly stays big</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Sources</h2>
+      <ul class="sources">
+        <li>AAHA weight management guidelines: https://www.aaha.org/resources/2021-aaha-nutrition-and-weight-management-guidelines/weight-reduction-in-the-obese-pet/</li>
+        <li>Flanagan 2018, weight loss outcomes in 413 cats: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0200414</li>
+        <li>O'Connell 2018, cats reaching target weight: https://pmc.ncbi.nlm.nih.gov/articles/PMC6295068/</li>
+        <li>Witzel-Rollins 2022, automatic feeders: https://pmc.ncbi.nlm.nih.gov/articles/PMC10812286/</li>
+        <li>Wei 2011, water content and intake: https://pubmed.ncbi.nlm.nih.gov/21728852/</li>
+        <li>AAFP senior care guidelines: https://pmc.ncbi.nlm.nih.gov/articles/PMC10812122/</li>
+        <li>Cornell Feline Health Center, obesity and hepatic lipidosis: https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/hepatic-lipidosis</li>
+        <li>FDA on raw food and H5N1 in cats: https://www.fda.gov/animal-veterinary/cvm-updates/fda-outlines-ways-reduce-risk-hpai-cats</li>
+        <li>EFSA 2026 guar gum review: https://pmc.ncbi.nlm.nih.gov/articles/PMC13418618/</li>
+        <li>catinfo.org on feline obesity: https://catinfo.org/feline-obesity-an-epidemic-of-fat-cats</li>
+        <li>Domino's story: https://thelazyslinky.com/2023/02/12/how-my-obese-cat-lost-2-5-kg-5-5-pounds</li>
+        <li>Zulu: https://www.reddit.com/r/dechonkers/comments/1ajmum1/zulu_successfully_dechonked</li>
+        <li>Felix: https://www.reddit.com/r/dechonkers/comments/1o9fewx/down_3kgs_since_january_wet_food_was_a_gamechanger</li>
+        <li>Kat: https://annarboranimalhospital.com/blog/from-lazy-blimp-to-mountain-lion</li>
+        <li>Soot: https://www.reddit.com/r/dechonkers/comments/1qcwq5t/im_sad_and_worried_about_my_cats_weight_gain</li>
+        <li>Larry: https://www.reddit.com/r/dechonkers/comments/1jp8hro/the_vet_has_officially_declared_larrys_no_longer</li>
+        <li>Tiki Cat After Dark Chicken: https://tikipets.com/product/tiki-cat/tiki-cat-wet-food/shredded-cat/after-dark/chicken-2/</li>
+        <li>Tiki Cat Luau Succulent Chicken: https://tikipets.com/product/tiki-cat/tiki-cat-wet-food/shredded-cat/luau/succulent-chicken/</li>
+        <li>Weruva Paw Lickin' Chicken: https://www.weruva.com/products/paw-lickin-chicken-cat-can</li>
+        <li>Birdie &amp; Louie nutrition info: https://birdieandlouie.gorgias.help/en-US/birdie-and-louie-wet-cat-food-nutritional-information-968870</li>
+        <li>Stella &amp; Chewy's Carnivore Cravings pouch: https://www.stellaandchewys.com/products/carnivore-cravings-chicken-chicken-liver-recipe</li>
+        <li>Dr. Elsey's cleanprotein Chicken: https://drelseys.com/product/chicken-recipe-pate/</li>
+      </ul>
+      <p class="small">Not vet advice. The vet's numbers override anything here.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Stella's plan · built for Matt · October 23, 2026</p>
+  </footer>
+</div>
+
+<!-- Sticky player bar -->
+<div class="player" id="player">
+  <button class="primary" id="pPlay">❚❚</button>
+  <span class="now" id="pNow">Reading…</span>
+  <select id="pVoice" aria-label="Voice"></select>
+  <button class="speed-btn" id="pSpeed">1x</button>
+  <button id="pStop">■</button>
+</div>
+
+<script>
+/* ---------- Data: update WEIGHINS as Stella gets weighed ---------- */
+var START_LB = 15.5;            // estimate until the first real weigh-in
+var GOAL_LO = 11, GOAL_HI = 12, GOAL_MID = 11.5;
+var WEIGHINS = [
+  // { date: '2026-10-30', lb: 15.6 },
+];
+
+var BOWL = [ // grams for 208 kcal (wet share of 240)
+  { n: "Weruva Paw Lickin'", g: 309, c: '' },
+  { n: 'S&C Savory Shreds', g: 295, c: '' },
+  { n: 'Tiki Luau Chicken', g: 264, c: '' },
+  { n: 'B&L tuna flakes', g: 262, c: '' },
+  { n: 'Tiki After Dark', g: 253, c: '' },
+  { n: 'S&C pouch', g: 227, c: 'mid' },
+  { n: "Dr. Elsey's pâté", g: 167, c: 'dense' },
+  { n: 'S&C Purrfect Pâté', g: 165, c: 'dense' },
+  { n: 'Instinct kibble', g: 48, c: 'bad' }
+];
+var PROT = [ // g protein per 100 kcal (label minimums)
+  { n: 'Tiki Luau Chicken', v: 20.3 },
+  { n: 'B&L tuna flakes', v: 17.6 },
+  { n: "Weruva Paw Lickin'", v: 14.9 },
+  { n: 'Tiki After Dark', v: 14.6 },
+  { n: 'S&C Savory Shreds', v: 11.3 },
+  { n: 'S&C pouch', v: 10.9 },
+  { n: 'Instinct kibble', v: 9.5 },
+  { n: "Dr. Elsey's pâté", v: 8.8 },
+  { n: 'S&C Purrfect Pâté', v: 7.9 }
+];
+
+function renderBars() {
+  var bowl = document.getElementById('bowlBars');
+  var max = 320;
+  bowl.innerHTML = BOWL.map(function (b) {
+    return '<div class="bar-row"><div class="name">' + b.n + '</div><div class="bar-track"><div class="bar-fill ' + b.c + '" style="width:' + (b.g / max * 100) + '%"></div></div><div class="val">' + b.g + ' g</div></div>';
+  }).join('');
+  var prot = document.getElementById('protBars');
+  var pmax = 22, target = 11;
+  prot.innerHTML = PROT.map(function (p) {
+    var cls = p.v >= target ? '' : (p.v >= 9 ? 'dense' : 'bad');
+    return '<div class="bar-row"><div class="name">' + p.n + '</div><div class="bar-track"><div class="bar-fill ' + cls + '" style="width:' + (p.v / pmax * 100) + '%"></div><div class="target-line" style="left:' + (target / pmax * 100) + '%"></div></div><div class="val">' + p.v + ' g</div></div>';
+  }).join('');
+}
+
+function renderChart() {
+  var svg = document.getElementById('chart');
+  var W = 420, H = 280, L = 34, R = 10, T = 16, B = 30;
+  var weeks = 56, yMin = 10.5, yMax = 16.5;
+  var start = START_LB, t0 = null;
+  if (WEIGHINS.length) { start = WEIGHINS[0].lb; t0 = new Date(WEIGHINS[0].date + 'T12:00:00'); }
+  function x(w) { return L + (w / weeks) * (W - L - R); }
+  function y(lb) { return T + (yMax - lb) / (yMax - yMin) * (H - T - B); }
+  function path(rate) {
+    var d = '';
+    for (var w = 0; w <= weeks; w++) {
+      var lb = Math.max(GOAL_MID, start * Math.pow(1 - rate, w));
+      d += (w ? 'L' : 'M') + x(w).toFixed(1) + ',' + y(lb).toFixed(1);
+    }
+    return d;
+  }
+  var s = '';
+  // goal band
+  s += '<rect x="' + L + '" y="' + y(GOAL_HI) + '" width="' + (W - L - R) + '" height="' + (y(GOAL_LO) - y(GOAL_HI)) + '" fill="rgba(23,138,59,0.10)"/>';
+  // grid + y labels
+  for (var lb = 11; lb <= 16; lb++) {
+    s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y(lb) + '" y2="' + y(lb) + '" stroke="#ECECEE" stroke-width="1"/>';
+    s += '<text x="' + (L - 8) + '" y="' + (y(lb) + 4) + '" text-anchor="end" font-size="13" fill="#6E6E73">' + lb + '</text>';
+  }
+  // x labels (months)
+  [0, 3, 6, 9, 12].forEach(function (m) {
+    var w = m * 4.345;
+    s += '<text x="' + x(w) + '" y="' + (H - 12) + '" text-anchor="middle" font-size="13" fill="#6E6E73">' + (m === 0 ? 'start' : 'mo ' + m) + '</text>';
+  });
+  s += '<text x="' + (L - 8) + '" y="' + (T + 2) + '" text-anchor="end" font-size="12" fill="#6E6E73">lb</text>';
+  // lane between curves
+  var lane = '';
+  for (var w = 0; w <= weeks; w++) lane += (w ? 'L' : 'M') + x(w).toFixed(1) + ',' + y(Math.max(GOAL_MID, start * Math.pow(0.99, w))).toFixed(1);
+  for (var w2 = weeks; w2 >= 0; w2--) lane += 'L' + x(w2).toFixed(1) + ',' + y(Math.max(GOAL_MID, start * Math.pow(0.994, w2))).toFixed(1);
+  s += '<path d="' + lane + 'Z" fill="rgba(196,32,32,0.08)"/>';
+  s += '<path d="' + path(0.006) + '" fill="none" stroke="#555" stroke-width="2" stroke-dasharray="5 4"/>';
+  s += '<path d="' + path(0.01) + '" fill="none" stroke="#C42020" stroke-width="2.5"/>';
+  s += '<text x="' + (W - R - 4) + '" y="' + (y(GOAL_HI) + 14) + '" text-anchor="end" font-size="13" font-weight="700" fill="#178A3B">goal</text>';
+  // weigh-ins
+  if (WEIGHINS.length) {
+    var pts = WEIGHINS.map(function (p) {
+      var w = (new Date(p.date + 'T12:00:00') - t0) / (7 * 864e5);
+      return { x: x(w), y: y(p.lb), lb: p.lb };
+    });
+    s += '<path d="' + pts.map(function (p, i) { return (i ? 'L' : 'M') + p.x.toFixed(1) + ',' + p.y.toFixed(1); }).join('') + '" fill="none" stroke="#1D1D1F" stroke-width="1.5"/>';
+    pts.forEach(function (p) { s += '<circle cx="' + p.x + '" cy="' + p.y + '" r="4.5" fill="#1D1D1F" stroke="#fff" stroke-width="1.5"/>'; });
+  } else {
+    s += '<circle cx="' + x(0) + '" cy="' + y(start) + '" r="4.5" fill="#fff" stroke="#1D1D1F" stroke-width="1.5"/>';
+    s += '<text x="' + (x(0) + 10) + '" y="' + (y(start) - 8) + '" font-size="13" fill="#1D1D1F">~15.5 lb (estimate)</text>';
+  }
+  svg.innerHTML = s;
+}
+renderBars();
+renderChart();
+
+/* ---------- Listen mode ---------- */
+(function () {
+  var synth = window.speechSynthesis;
+  if (!synth) { document.getElementById('listenBtn').style.display = 'none'; return; }
+
+  var WHITELIST = ['samantha','karen','daniel','moira','tessa','ava','allison','tom','aaron','nicky','evan','zoe','joelle','fiona','martha','arthur'];
+  function isGood(name) {
+    var n = name.toLowerCase();
+    if (n.indexOf('google us english') > -1 || n.indexOf('google uk english') > -1) return true;
+    for (var i = 0; i < WHITELIST.length; i++) { if (n.indexOf(WHITELIST[i]) > -1) return true; }
+    return false;
+  }
+
+  var voices = [], chosenVoice = null;
+  var speeds = [0.8, 1, 1.2, 1.5], speedIdx = 1;
+  var listenBtn = document.getElementById('listenBtn');
+  var voiceSelect = document.getElementById('voiceSelect');
+  var speedBtn = document.getElementById('speedBtn');
+  var player = document.getElementById('player');
+  var pPlay = document.getElementById('pPlay');
+  var pStop = document.getElementById('pStop');
+  var pNow = document.getElementById('pNow');
+  var pVoice = document.getElementById('pVoice');
+  var pSpeed = document.getElementById('pSpeed');
+
+  function loadVoices() {
+    var all = synth.getVoices();
+    voices = all.filter(function (v) { return isGood(v.name); });
+    if (!voices.length) voices = all.slice(0, 5);
+    fillSelect(voiceSelect); fillSelect(pVoice);
+    if (!chosenVoice && voices.length) {
+      var sam = voices.filter(function (v) { return v.name.toLowerCase().indexOf('samantha') > -1; });
+      chosenVoice = sam.length ? sam[0] : voices[0];
+    }
+    syncVoiceSelects();
+  }
+  function fillSelect(sel) {
+    sel.innerHTML = '';
+    voices.forEach(function (v, i) {
+      var o = document.createElement('option');
+      o.value = i; o.textContent = v.name.replace(/\(.*?\)/, '').trim();
+      sel.appendChild(o);
+    });
+  }
+  function syncVoiceSelects() {
+    var idx = voices.indexOf(chosenVoice);
+    if (idx > -1) { voiceSelect.value = idx; pVoice.value = idx; }
+  }
+  loadVoices();
+  if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = loadVoices;
+
+  var content = document.getElementById('content');
+  var nodes = Array.prototype.slice.call(content.querySelectorAll('h2, h3, p, li')).filter(function (el) {
+    return !el.closest('.noread') && !el.closest('.sources');
+  });
+  var queue = nodes.map(function (el) {
+    return { el: el, text: (el.textContent || '').replace(/\s+/g, ' ').trim(), isHeading: el.tagName === 'H2' || el.tagName === 'H3' };
+  }).filter(function (q) { return q.text.length > 1; });
+
+  var idx = 0, playing = false, paused = false, keepAlive = null, lastSection = null;
+
+  function highlight(el) {
+    var s = el.closest ? el.closest('section') : null;
+    if (s === lastSection) return;
+    var secs = content.querySelectorAll('section.reading');
+    for (var i = 0; i < secs.length; i++) secs[i].classList.remove('reading');
+    if (s) { s.classList.add('reading'); s.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    lastSection = s;
+  }
+
+  function speakNext() {
+    if (idx >= queue.length) { stop(); return; }
+    var item = queue[idx];
+    highlight(item.el);
+    pNow.textContent = item.isHeading ? '▸ ' + item.text : item.text;
+    var u = new SpeechSynthesisUtterance(item.text);
+    if (chosenVoice) u.voice = chosenVoice;
+    var rate = speeds[speedIdx];
+    u.rate = item.isHeading ? rate * 0.9 : rate;
+    u.pitch = item.isHeading ? 1.05 : 1;
+    u.onend = function () {
+      if (!playing) return;
+      idx++;
+      setTimeout(function () { if (playing) speakNext(); }, item.isHeading ? 400 : 200);
+    };
+    synth.speak(u);
+  }
+  function start() {
+    if (playing) return;
+    playing = true; paused = false;
+    if (idx >= queue.length) idx = 0;
+    player.classList.add('show');
+    pPlay.textContent = '❚❚'; listenBtn.textContent = '❚❚ Pause';
+    keepAlive = setInterval(function () { try { synth.resume(); } catch (e) {} }, 10000);
+    speakNext();
+  }
+  function pause() {
+    if (!playing) return;
+    if (!paused) { synth.pause(); paused = true; pPlay.textContent = '▶'; listenBtn.textContent = '▶ Resume'; }
+    else { synth.resume(); paused = false; pPlay.textContent = '❚❚'; listenBtn.textContent = '❚❚ Pause'; }
+  }
+  function stop() {
+    playing = false; paused = false;
+    synth.cancel();
+    if (keepAlive) { clearInterval(keepAlive); keepAlive = null; }
+    player.classList.remove('show');
+    listenBtn.textContent = '▶ Listen';
+    var secs = content.querySelectorAll('section.reading');
+    for (var i = 0; i < secs.length; i++) secs[i].classList.remove('reading');
+    idx = 0; lastSection = null;
+  }
+
+  listenBtn.addEventListener('click', function () { if (!playing) start(); else pause(); });
+  pPlay.addEventListener('click', function () { if (!playing) start(); else pause(); });
+  pStop.addEventListener('click', stop);
+  function onVoiceChange(e) {
+    var i = parseInt(e.target.value, 10);
+    if (voices[i]) { chosenVoice = voices[i]; syncVoiceSelects(); }
+  }
+  voiceSelect.addEventListener('change', onVoiceChange);
+  pVoice.addEventListener('change', onVoiceChange);
+  function cycleSpeed() {
+    speedIdx = (speedIdx + 1) % speeds.length;
+    var label = speeds[speedIdx] + 'x';
+    speedBtn.textContent = label; pSpeed.textContent = label;
+  }
+  speedBtn.addEventListener('click', cycleSpeed);
+  pSpeed.addEventListener('click', cycleSpeed);
+  document.getElementById('selectAll').addEventListener('click', function () {
+    try {
+      var range = document.createRange();
+      range.selectNodeContents(content);
+      var sel = window.getSelection();
+      sel.removeAllRanges(); sel.addRange(range);
+    } catch (e) {}
+  });
+  window.addEventListener('beforeunload', function () { synth.cancel(); });
+})();
+</script>
+
+</body>
+</html>
