@@ -215,8 +215,41 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .play-btn {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 60px;
+    height: 60px;
+    margin: -30px 0 0 -30px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .mock-media.playing .play-btn { opacity: 0; }
+
+  .progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: rgba(255,255,255,0.25);
     pointer-events: none;
   }
+
+  .progress i { display: block; height: 100%; width: 0; background: #FFFFFF; }
 
   .mute-chip .on { display: none; }
   .mock-media.sound .mute-chip .on { display: block; }
@@ -365,7 +398,7 @@
 
   <div class="section-head">
     <h2>How it'll look in the feed</h2>
-    <p>Two examples of the video as a post, at phone size. They play silently as you scroll, the way a feed does. Tap one for sound.</p>
+    <p>Two examples of the video as a post, at phone size. Tap a video to play or pause it, and tap the speaker for sound.</p>
   </div>
 
   <!-- Instagram-style example -->
@@ -380,11 +413,13 @@
       <svg class="more" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.6" fill="#0F1419"/><circle cx="12" cy="12" r="1.6" fill="#0F1419"/><circle cx="19" cy="12" r="1.6" fill="#0F1419"/></svg>
     </div>
     <div class="mock-media">
-      <video muted loop playsinline preload="none" poster="poster.jpg" src="web-720.mp4"></video>
-      <div class="mute-chip" aria-hidden="true">
+      <video muted loop playsinline preload="metadata" poster="poster.jpg" src="web-720.mp4"></video>
+      <div class="play-btn" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div>
+      <div class="progress" aria-hidden="true"><i></i></div>
+      <button class="mute-chip" type="button" aria-label="Toggle sound">
         <svg class="off" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z" fill="#fff"/><path d="m16 9 5 6M21 9l-5 6"/></svg>
         <svg class="on" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z" fill="#fff"/><path d="M15.5 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>
-      </div>
+      </button>
     </div>
     <div class="bar">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F1419" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z"/></svg>
@@ -412,11 +447,13 @@
       </div>
       <div class="text">Your caption goes here. Clearing the way for what's next.</div>
       <div class="mock-media">
-        <video muted loop playsinline preload="none" poster="poster.jpg" src="web-720.mp4"></video>
-        <div class="mute-chip" aria-hidden="true">
+        <video muted loop playsinline preload="metadata" poster="poster.jpg" src="web-720.mp4"></video>
+        <div class="play-btn" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div>
+      <div class="progress" aria-hidden="true"><i></i></div>
+      <button class="mute-chip" type="button" aria-label="Toggle sound">
           <svg class="off" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z" fill="#fff"/><path d="m16 9 5 6M21 9l-5 6"/></svg>
           <svg class="on" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z" fill="#fff"/><path d="M15.5 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>
-        </div>
+        </button>
       </div>
       <div class="counts">Be the first to react</div>
       <div class="bar">
@@ -435,36 +472,56 @@
 </div>
 
 <script>
-// Feed previews: play silently while on screen, pause when scrolled away. Tap toggles sound.
+// Feed previews: tap the video to play/pause, tap the speaker for sound. Only one plays at a time.
 const mocks = [...document.querySelectorAll('.mock-media')];
 const main = document.querySelector('.player video');
+const vid = box => box.querySelector('video');
+
+function setSound(box, on) {
+  vid(box).muted = !on;
+  box.classList.toggle('sound', on);
+}
 
 mocks.forEach(box => {
-  const v = box.querySelector('video');
+  const v = vid(box);
+  const bar = box.querySelector('.progress i');
+
   box.addEventListener('click', () => {
-    const turnOn = v.muted;
-    mocks.forEach(b => { b.querySelector('video').muted = true; b.classList.remove('sound'); });
-    if (turnOn) {
-      v.muted = false;
-      box.classList.add('sound');
+    if (v.paused) {
       main.pause();
+      mocks.forEach(b => { if (b !== box) vid(b).pause(); });
+      v.play().catch(() => {});
+    } else {
+      v.pause();
+    }
+  });
+
+  box.querySelector('.mute-chip').addEventListener('click', e => {
+    e.stopPropagation();
+    const on = v.muted;
+    mocks.forEach(b => setSound(b, false));
+    setSound(box, on);
+    if (on && v.paused) {
+      main.pause();
+      mocks.forEach(b => { if (b !== box) vid(b).pause(); });
       v.play().catch(() => {});
     }
   });
+
+  v.addEventListener('play', () => box.classList.add('playing'));
+  v.addEventListener('pause', () => box.classList.remove('playing'));
+  v.addEventListener('timeupdate', () => {
+    if (v.duration) bar.style.width = (v.currentTime / v.duration * 100) + '%';
+  });
 });
 
-main.addEventListener('play', () => {
-  mocks.forEach(b => { b.querySelector('video').muted = true; b.classList.remove('sound'); });
-});
+main.addEventListener('play', () => mocks.forEach(b => vid(b).pause()));
 
+// Pause a preview once it scrolls out of view
 if ('IntersectionObserver' in window) {
   const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      const v = e.target.querySelector('video');
-      if (e.isIntersecting) { v.play().catch(() => {}); }
-      else { v.pause(); v.muted = true; e.target.classList.remove('sound'); }
-    });
-  }, { threshold: 0.6 });
+    entries.forEach(e => { if (!e.isIntersecting) vid(e.target).pause(); });
+  }, { threshold: 0.25 });
   mocks.forEach(b => io.observe(b));
 }
 </script>
