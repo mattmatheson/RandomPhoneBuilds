@@ -668,6 +668,20 @@ if ('IntersectionObserver' in window) {
 }
 
 select(0, false);
+
+// Keep the phone screen awake while this page is open and in front
+let wake = null;
+async function stayAwake() {
+  if (!('wakeLock' in navigator) || document.visibilityState !== 'visible' || wake) return;
+  try {
+    wake = await navigator.wakeLock.request('screen');
+    wake.addEventListener('release', () => { wake = null; });
+  } catch (e) { wake = null; }
+}
+stayAwake();
+document.addEventListener('visibilitychange', stayAwake);
+// Some phones only allow it after a tap, so try again on the first touch or click
+['pointerdown', 'keydown'].forEach(ev => document.addEventListener(ev, stayAwake, { passive: true }));
 </script>
 </body>
 </html>
