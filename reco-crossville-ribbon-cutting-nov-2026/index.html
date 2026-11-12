@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="published" content="2026-11-11">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crossville Ribbon Cutting — RECO Media (November 2026)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    background: #FFFFFF;
+    color: #1D1D1F;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Phone-width column at every screen size, so the previews read true to scale */
+  .container {
+    max-width: 430px;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 8vw, 4rem) 0 3rem;
+    background: #FFFFFF;
+  }
+
+  @media (min-width: 520px) {
+    body { background: #F5F5F7; }
+    .container {
+      min-height: 100vh;
+      box-shadow: 0 0 0 1px #E5E5E7, 0 30px 80px -40px rgba(0,0,0,0.25);
+    }
+  }
+
+  header {
+    margin-bottom: 2rem;
+    padding: 0 1.25rem;
+    animation: fadeIn 0.6s ease-out both;
+  }
+
+  .label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #86868B;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 0.4rem;
+  }
+
+  .meta { font-size: 0.95rem; font-weight: 400; color: #6E6E73; }
+
+  .actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.4rem;
+    border-radius: 980px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+  }
+
+  .btn-primary { background: #1D1D1F; color: #FFFFFF; }
+  .btn-primary:hover { background: #424245; }
+  .btn-outline { background: transparent; color: #1D1D1F; border: 1px solid #D2D2D7; }
+
+  .info-box {
+    background: #F5F5F7;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin: 0 1.25rem 2rem;
+    font-size: 0.82rem;
+    color: #424245;
+    line-height: 1.7;
+  }
+
+  .info-box strong { color: #1D1D1F; }
+
+  .info-box .credit {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #E5E5E7;
+    font-size: 0.78rem;
+    color: #6E6E73;
+  }
+
+  .divider { height: 1px; background: #E5E5E7; margin: 0 1.25rem 2.5rem; }
+
+  .section-head { padding: 0 1.25rem; margin: 3rem 0 1.25rem; }
+  .section-head:first-of-type { margin-top: 0; }
+
+  .section-head h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+  }
+
+  .section-head p { font-size: 0.82rem; color: #6E6E73; line-height: 1.6; }
+
+  /* Clip picker */
+  .picker {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 4px 1.25rem 14px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .picker::-webkit-scrollbar { display: none; }
+
+  .pick {
+    flex: none;
+    width: 78px;
+    scroll-snap-align: start;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+    cursor: pointer;
+    text-align: left;
+    color: #6E6E73;
+  }
+
+  .pick .frame {
+    display: block;
+    aspect-ratio: 9 / 16;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #0C0C0E;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    transition: outline-color 0.15s ease;
+  }
+
+  .pick img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pick .n { display: block; margin-top: 7px; font-size: 0.72rem; font-weight: 600; color: #1D1D1F; }
+  .pick .d { display: block; font-size: 0.68rem; font-variant-numeric: tabular-nums; }
+  .pick[aria-pressed="true"] .frame { outline-color: #1D1D1F; }
+  .pick:focus-visible .frame { outline-color: #0071E3; }
+
+  .now {
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0.25rem 1.25rem 0;
+    padding: 0.8rem 1rem;
+    border: 1px solid #E5E5E7;
+    border-radius: 12px;
+    font-size: 0.8rem;
+  }
+
+  .now b { font-weight: 600; }
+  .now span { color: #6E6E73; font-variant-numeric: tabular-nums; }
+  .now a { color: #1D1D1F; font-weight: 500; text-decoration: none; border-bottom: 1px solid #D2D2D7; white-space: nowrap; }
+  .now a:hover { border-color: #1D1D1F; }
+
+  .preview-label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 0 1.25rem;
+    margin: 2.25rem 0 0.6rem;
+  }
+
+  .preview-label .name {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #1D1D1F;
+  }
+
+  .preview-label .hint { font-size: 0.68rem; color: #86868B; }
+
+  .mock {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #0F1419;
+    border-top: 1px solid #E5E5E7;
+    border-bottom: 1px solid #E5E5E7;
+  }
+
+  .mock svg { display: block; }
+
+  .mock-media {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    background: #0C0C0E;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .mock-media video { width: 100%; height: 100%; display: block; object-fit: cover; }
+
+  .mute-chip {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 3;
+  }
+
+  .play-btn {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 60px;
+    height: 60px;
+    margin: -30px 0 0 -30px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 2;
+  }
+
+  .mock-media.playing .play-btn { opacity: 0; }
+
+  .progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: rgba(255,255,255,0.25);
+    z-index: 3;
+  }
+
+  .progress i { display: block; height: 100%; width: 0; background: #FFFFFF; }
+
+  .mute-chip .on { display: none; }
+  .mock-media.sound .mute-chip .on { display: block; }
+  .mock-media.sound .mute-chip .off { display: none; }
+
+  .avatar {
+    flex: none;
+    border-radius: 50%;
+    background: #1D1D1F;
+    color: #FFFFFF;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Full-screen vertical video view */
+  .mock-r { border: none; background: #000; color: #FFFFFF; }
+  .mock-r .mock-media { aspect-ratio: 9 / 16; }
+
+  .mock-r .shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0) 16%, rgba(0,0,0,0) 62%, rgba(0,0,0,0.6));
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .mock-r .r-top {
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .mock-r .r-side {
+    position: absolute;
+    right: 12px;
+    bottom: 86px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    font-size: 12px;
+    font-weight: 600;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .mock-r .r-side div { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+
+  .mock-r .r-side .tile {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    border: 2px solid #FFFFFF;
+    background: #1D1D1F;
+  }
+
+  .mock-r .r-bottom {
+    position: absolute;
+    left: 14px;
+    right: 64px;
+    bottom: 18px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .mock-r .r-user { display: flex; align-items: center; gap: 9px; font-size: 14px; font-weight: 600; }
+  .mock-r .r-user .avatar { width: 32px; height: 32px; font-size: 11px; background: #FFFFFF; color: #1D1D1F; }
+  .mock-r .r-user .follow { font-size: 12px; font-weight: 600; padding: 4px 10px; border: 1px solid rgba(255,255,255,0.85); border-radius: 8px; }
+  .mock-r .r-cap { margin-top: 9px; font-size: 14px; line-height: 1.35; }
+  .mock-r .r-audio { margin-top: 8px; display: flex; align-items: center; gap: 6px; font-size: 12.5px; }
+  .mock-r .mute-chip { top: 54px; bottom: auto; right: 12px; }
+
+  /* Photo-app style feed post */
+  .mock-a { background: #FFFFFF; }
+  .mock-a .top { display: flex; align-items: center; gap: 10px; padding: 10px 12px; }
+  .mock-a .avatar { width: 32px; height: 32px; font-size: 11px; }
+  .mock-a .user { font-size: 14px; font-weight: 600; line-height: 1.2; }
+  .mock-a .sub { font-size: 12px; color: #55595E; line-height: 1.2; }
+  .mock-a .more { margin-left: auto; }
+  .mock-a .bar { display: flex; align-items: center; gap: 16px; padding: 10px 12px 6px; }
+  .mock-a .bar .save { margin-left: auto; }
+  .mock-a .text { padding: 0 12px 4px; font-size: 14px; line-height: 1.4; }
+  .mock-a .text b { font-weight: 600; }
+  .mock-a .time { padding: 2px 12px 12px; font-size: 12px; color: #737373; }
+
+  /* Social-network style feed post */
+  .mock-b-wrap { background: #F0F2F5; padding: 8px 0; border-top: 1px solid #E5E5E7; border-bottom: 1px solid #E5E5E7; }
+  .mock-b { background: #FFFFFF; border: none; }
+  .mock-b .top { display: flex; align-items: center; gap: 10px; padding: 12px 14px 8px; }
+  .mock-b .avatar { width: 40px; height: 40px; font-size: 13px; }
+  .mock-b .user { font-size: 15px; font-weight: 600; line-height: 1.25; }
+  .mock-b .sub { font-size: 13px; color: #65676B; line-height: 1.25; display: flex; align-items: center; gap: 4px; }
+  .mock-b .more { margin-left: auto; }
+  .mock-b .text { padding: 0 14px 10px; font-size: 15px; line-height: 1.35; }
+  .mock-b .bar { display: flex; margin: 0 14px; border-top: 1px solid #E4E6EB; }
+
+  .mock-b .bar span {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #65676B;
+  }
+
+  .mock-b .counts { padding: 10px 14px; font-size: 14px; color: #65676B; }
+
+  .fine { padding: 0 1.25rem; margin-top: 1.5rem; font-size: 0.72rem; color: #86868B; line-height: 1.6; }
+
+  /* Clip list */
+  .clips { list-style: none; margin: 0 1.25rem; border-top: 1px solid #E5E5E7; }
+
+  .clips li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid #E5E5E7;
+    font-size: 0.82rem;
+  }
+
+  .clips img { width: 36px; height: 64px; object-fit: cover; border-radius: 6px; background: #0C0C0E; flex: none; }
+  .clips .t { font-weight: 600; }
+  .clips .s { display: block; font-size: 0.72rem; color: #6E6E73; font-weight: 400; font-variant-numeric: tabular-nums; }
+  .clips .go { margin-left: auto; display: flex; gap: 14px; }
+  .clips a, .clips button {
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #1D1D1F;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #D2D2D7;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .clips a:hover, .clips button:hover { border-color: #1D1D1F; }
+
+  footer { text-align: center; padding: 3rem 1.25rem 2rem; color: #86868B; font-size: 0.7rem; font-weight: 400; }
+  footer a { color: #86868B; text-decoration: none; }
+  footer a:hover { color: #1D1D1F; }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <span class="label">RECO Media</span>
+    <h1>Crossville Ribbon Cutting</h1>
+    <p class="meta">Crossville office &mdash; November 2026</p>
+    <div class="actions">
+      <a href="https://drive.google.com/drive/folders/1oyeOSFPYmfinfwa6Cg6qqlkAVvQY-Lqk" target="_blank" rel="noopener" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z" fill="#fff"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0-1.2 4.5h27.5z" fill="#fff"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.85z" fill="#fff"/><path d="M43.65 25 57.4 1.2C56.05.4 54.5 0 52.9 0H34.4c-1.6 0-3.15.45-4.5 1.2z" fill="#fff"/><path d="m59.8 53h-32.3L13.75 76.8c1.35.8 2.9 1.2 4.5 1.2h22.6c1.6 0 3.15-.45 4.5-1.2z" fill="#fff"/><path d="M73.4 26.5 60.65 3.3c-.8-1.4-1.95-2.5-3.3-3.3L43.6 25l16.2 28h27.45c0-1.55-.4-3.1-1.2-4.500z" fill="#fff"/></svg>
+        Google Drive
+      </a>
+      <span class="btn btn-outline" style="cursor:default;">1 video &middot; vertical &middot; 4K</span>
+    </div>
+  </header>
+
+  <div class="info-box">
+    <strong>Hey team!</strong> Here's the highlight video from the Crossville office ribbon cutting. The previews below show how it will look once it's posted. The video on this page is a small preview copy so it loads fast. <strong>For posting, download the full-quality file from the Google Drive folder.</strong>
+    <p class="credit">If you post on Instagram, I'd appreciate a tag: <strong style="color:#424245;">@mattmatheson_</strong></p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="now">
+    <div><b>Ribbon Cutting</b> <span>4:48 &middot; 1.2 GB</span></div>
+    <a href="https://drive.google.com/file/d/12L2YWWN7-seXJTtrC9Z8EFNx2xykU_vf/view" target="_blank" rel="noopener">Full-quality file</a>
+  </div>
+
+  <div class="section-head">
+    <h2>How it'll look posted</h2>
+    <p>Three examples at phone size. Tap a video to play or pause it, and tap the speaker for sound.</p>
+  </div>
+
+  <!-- Full-screen vertical video view -->
+  <div class="preview-label"><span class="name">Instagram Reels</span><span class="hint">Full screen, nothing cropped</span></div>
+  <div class="mock mock-r">
+    <div class="mock-media">
+      <video muted loop playsinline preload="none"></video>
+      <div class="shade" aria-hidden="true"></div>
+      <div class="r-top" aria-hidden="true">
+        <span>Reels</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"><path d="M4 8h3l1.500-2.500h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.500"/></svg>
+      </div>
+      <div class="r-side" aria-hidden="true">
+        <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"><path d="M12 20.500s-7.500-4.600-7.500-10.200A4.300 4.300 0 0 1 12 7.600a4.300 4.300 0 0 1 7.500 2.700c0 5.600-7.500 10.200-7.500 10.200z"/></svg>Like</div>
+        <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"><path d="M20.500 11.500a8.500 8.500 0 0 1-12.600 7.400L3.500 20.500l1.600-4.200A8.500 8.500 0 1 1 20.500 11.500z"/></svg>Reply</div>
+        <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"><path d="M21 3 10.500 13.500M21 3l-6.500 18-4-7.500L3 9.500z"/></svg>Send</div>
+        <svg width="22" height="22" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.700" fill="#fff"/><circle cx="12" cy="12" r="1.700" fill="#fff"/><circle cx="19" cy="12" r="1.700" fill="#fff"/></svg>
+        <span class="tile"></span>
+      </div>
+      <div class="r-bottom" aria-hidden="true">
+        <div class="r-user"><span class="avatar">RE</span>reco<span class="follow">Follow</span></div>
+        <div class="r-cap">Your caption goes here.</div>
+        <div class="r-audio"><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M9 4v11.200A3.500 3.500 0 1 0 11 18.500V8h7V4z"/></svg>reco &middot; Original audio</div>
+      </div>
+      <div class="play-btn" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div>
+      <div class="progress" aria-hidden="true"><i></i></div>
+      <button class="mute-chip" type="button" aria-label="Toggle sound">
+        <svg class="off" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z" fill="#fff"/><path d="m16 9 5 6M21 9l-5 6"/></svg>
+        <svg class="on" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z" fill="#fff"/><path d="M15.500 9a4 4 0 0 1 0 6M18.500 6.500a8 8 0 0 1 0 11"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Photo-app style feed post -->
+  <div class="preview-label"><span class="name">Instagram feed</span><span class="hint">Top and bottom trimmed</span></div>
+  <div class="mock mock-a">
+    <div class="top">
+      <div class="avatar">RE</div>
+      <div>
+        <div class="user">reco</div>
+        <div class="sub">Original audio</div>
+      </div>
+      <svg class="more" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.600" fill="#0F1419"/><circle cx="12" cy="12" r="1.600" fill="#0F1419"/><circle cx="19" cy="12" r="1.600" fill="#0F1419"/></svg>
+    </div>
+    <div class="mock-media">
+      <video muted loop playsinline preload="none"></video>
+      <div class="play-btn" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div>
+      <div class="progress" aria-hidden="true"><i></i></div>
+      <button class="mute-chip" type="button" aria-label="Toggle sound">
+        <svg class="off" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z" fill="#fff"/><path d="m16 9 5 6M21 9l-5 6"/></svg>
+        <svg class="on" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z" fill="#fff"/><path d="M15.500 9a4 4 0 0 1 0 6M18.500 6.500a8 8 0 0 1 0 11"/></svg>
+      </button>
+    </div>
+    <div class="bar">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F1419" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.500s-7.500-4.600-7.500-10.200A4.300 4.300 0 0 1 12 7.600a4.300 4.300 0 0 1 7.500 2.700c0 5.600-7.500 10.200-7.500 10.200z"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F1419" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M20.500 11.500a8.500 8.500 0 0 1-12.600 7.400L3.500 20.500l1.600-4.200A8.500 8.500 0 1 1 20.500 11.500z"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F1419" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 10.500 13.500M21 3l-6.500 18-4-7.500L3 9.500z"/></svg>
+      <svg class="save" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F1419" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.500h12v17l-6-4.500-6 4.500z"/></svg>
+    </div>
+    <div class="text"><b>reco</b> Your caption goes here.</div>
+    <div class="time">Just now</div>
+  </div>
+
+  <!-- Social-network style feed post -->
+  <div class="preview-label"><span class="name">Facebook feed</span><span class="hint">Top and bottom trimmed</span></div>
+  <div class="mock-b-wrap">
+    <div class="mock mock-b">
+      <div class="top">
+        <div class="avatar">RE</div>
+        <div>
+          <div class="user">RECO</div>
+          <div class="sub">Just now &middot;
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#65676B" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.500 3 14.500 0 18M12 3c-3 3.500-3 14.500 0 18"/></svg>
+          </div>
+        </div>
+        <svg class="more" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.800" fill="#65676B"/><circle cx="12" cy="12" r="1.800" fill="#65676B"/><circle cx="19" cy="12" r="1.800" fill="#65676B"/></svg>
+      </div>
+      <div class="text">Your caption goes here.</div>
+      <div class="mock-media">
+        <video muted loop playsinline preload="none"></video>
+        <div class="play-btn" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div>
+        <div class="progress" aria-hidden="true"><i></i></div>
+        <button class="mute-chip" type="button" aria-label="Toggle sound">
+          <svg class="off" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z" fill="#fff"/><path d="m16 9 5 6M21 9l-5 6"/></svg>
+          <svg class="on" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z" fill="#fff"/><path d="M15.500 9a4 4 0 0 1 0 6M18.500 6.500a8 8 0 0 1 0 11"/></svg>
+        </button>
+      </div>
+      <div class="counts">Be the first to react</div>
+      <div class="bar">
+        <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#65676B" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M7 10.500v9H4v-9zM7 10.500l4-7c1.700 0 2.600 1.200 2.300 2.800L12.700 9.500H18a2 2 0 0 1 2 2.400l-1.200 6a2 2 0 0 1-2 1.600H7"/></svg>Like</span>
+        <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#65676B" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M4 4.500h16v11.500H10l-4.500 4v-4H4z"/></svg>Comment</span>
+        <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#65676B" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M13 5.500 20 12l-7 6.500v-4c-4.500 0-7.500 1.200-9.500 4 .5-5 3.500-8.500 9.500-9z"/></svg>Share</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="fine">These are mockups to show scale and framing. The account name and caption are placeholders, and the apps change their layouts from time to time. The video is vertical, so in Reels it fills the screen, and in the feed the apps trim a little off the top and bottom.</p>
+
+  <footer>
+    <p>Video by <a href="https://mattmatheson.github.io/RandomPhoneBuilds/">Matt Matheson</a></p>
+  </footer>
+</div>
+
+<script>
+const mocks = [...document.querySelectorAll('.mock-media')];
+const vid = box => box.querySelector('video');
+
+function pauseAll(except) {
+  mocks.forEach(b => { if (b !== except) vid(b).pause(); });
+}
+
+function setSound(box, on) {
+  vid(box).muted = !on;
+  box.classList.toggle('sound', on);
+}
+
+mocks.forEach(b => { const v = vid(b); v.poster = 'poster01.jpg'; v.src = 'clip01.mp4'; });
+
+// Tap the video to play/pause, tap the speaker for sound. Only one plays at a time.
+mocks.forEach(box => {
+  const v = vid(box);
+  const bar = box.querySelector('.progress i');
+
+  box.addEventListener('click', () => {
+    if (v.paused) { pauseAll(box); v.play().catch(() => {}); }
+    else v.pause();
+  });
+
+  box.querySelector('.mute-chip').addEventListener('click', e => {
+    e.stopPropagation();
+    const on = v.muted;
+    mocks.forEach(b => setSound(b, false));
+    setSound(box, on);
+    if (on && v.paused) { pauseAll(box); v.play().catch(() => {}); }
+  });
+
+  v.addEventListener('play', () => box.classList.add('playing'));
+  v.addEventListener('pause', () => box.classList.remove('playing'));
+  v.addEventListener('timeupdate', () => {
+    if (v.duration) bar.style.width = (v.currentTime / v.duration * 100) + '%';
+  });
+});
+
+// Pause a preview once it scrolls out of view
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (!e.isIntersecting) vid(e.target).pause(); });
+  }, { threshold: 0.25 });
+  mocks.forEach(b => io.observe(b));
+}
+
+// Keep the phone screen awake while this page is open and in front
+let wake = null;
+async function stayAwake() {
+  if (!('wakeLock' in navigator) || document.visibilityState !== 'visible' || wake) return;
+  try {
+    wake = await navigator.wakeLock.request('screen');
+    wake.addEventListener('release', () => { wake = null; });
+  } catch (e) { wake = null; }
+}
+stayAwake();
+document.addEventListener('visibilitychange', stayAwake);
+// Some phones only allow it after a tap, so try again on the first touch or click
+['pointerdown', 'keydown'].forEach(ev => document.addEventListener(ev, stayAwake, { passive: true }));
+</script>
+</body>
+</html>
