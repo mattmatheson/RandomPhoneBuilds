@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="published" content="2026-11-14">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Headshots — RECO Media (November 2026)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    background: #FFFFFF;
+    color: #1D1D1F;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Phone-width column at every screen size, so the previews read true to scale */
+  .container {
+    max-width: 430px;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 8vw, 4rem) 0 3rem;
+    background: #FFFFFF;
+  }
+
+  @media (min-width: 520px) {
+    body { background: #F5F5F7; }
+    .container {
+      min-height: 100vh;
+      box-shadow: 0 0 0 1px #E5E5E7, 0 30px 80px -40px rgba(0,0,0,0.25);
+    }
+  }
+
+  header {
+    margin-bottom: 2rem;
+    padding: 0 1.25rem;
+    animation: fadeIn 0.6s ease-out both;
+  }
+
+  .label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #86868B;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 0.4rem;
+  }
+
+  .meta { font-size: 0.95rem; font-weight: 400; color: #6E6E73; }
+
+  .actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.4rem;
+    border-radius: 980px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+  }
+
+  .btn-primary { background: #1D1D1F; color: #FFFFFF; }
+  .btn-primary:hover { background: #424245; }
+  .btn-outline { background: transparent; color: #1D1D1F; border: 1px solid #D2D2D7; }
+
+  .info-box {
+    background: #F5F5F7;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin: 0 1.25rem 2rem;
+    font-size: 0.82rem;
+    color: #424245;
+    line-height: 1.7;
+  }
+
+  .info-box strong { color: #1D1D1F; }
+
+  .info-box .credit {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #E5E5E7;
+    font-size: 0.78rem;
+    color: #6E6E73;
+  }
+
+  .divider { height: 1px; background: #E5E5E7; margin: 0 1.25rem 2.5rem; }
+
+  .section-head { padding: 0 1.25rem; margin: 3rem 0 1.25rem; }
+  .section-head:first-of-type { margin-top: 0; }
+
+  .section-head h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+  }
+
+  .section-head p { font-size: 0.82rem; color: #6E6E73; line-height: 1.6; }
+  .preview-label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 0 1.25rem;
+    margin: 2.25rem 0 0.6rem;
+  }
+
+  .preview-label .name {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #1D1D1F;
+  }
+
+  .preview-label .hint { font-size: 0.68rem; color: #86868B; }
+
+  .mock {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #0F1419;
+    border-top: 1px solid #E5E5E7;
+    border-bottom: 1px solid #E5E5E7;
+  }
+
+  .mock svg { display: block; }
+  .avatar {
+    flex: none;
+    border-radius: 50%;
+    background: #1D1D1F;
+    color: #FFFFFF;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* Photo-app style feed post */
+  .mock-a { background: #FFFFFF; }
+  .mock-a .top { display: flex; align-items: center; gap: 10px; padding: 10px 12px; }
+  .mock-a .avatar { width: 32px; height: 32px; font-size: 11px; }
+  .mock-a .user { font-size: 14px; font-weight: 600; line-height: 1.2; }
+  .mock-a .sub { font-size: 12px; color: #55595E; line-height: 1.2; }
+  .mock-a .more { margin-left: auto; }
+  .mock-a .bar { display: flex; align-items: center; gap: 16px; padding: 10px 12px 6px; }
+  .mock-a .bar .save { margin-left: auto; }
+  .mock-a .text { padding: 0 12px 4px; font-size: 14px; line-height: 1.4; }
+  .mock-a .text b { font-weight: 600; }
+  .mock-a .time { padding: 2px 12px 12px; font-size: 12px; color: #737373; }
+
+  /* Social-network style feed post */
+  .mock-b-wrap { background: #F0F2F5; padding: 8px 0; border-top: 1px solid #E5E5E7; border-bottom: 1px solid #E5E5E7; }
+  .mock-b { background: #FFFFFF; border: none; }
+  .mock-b .top { display: flex; align-items: center; gap: 10px; padding: 12px 14px 8px; }
+  .mock-b .avatar { width: 40px; height: 40px; font-size: 13px; }
+  .mock-b .user { font-size: 15px; font-weight: 600; line-height: 1.25; }
+  .mock-b .sub { font-size: 13px; color: #65676B; line-height: 1.25; display: flex; align-items: center; gap: 4px; }
+  .mock-b .more { margin-left: auto; }
+  .mock-b .text { padding: 0 14px 10px; font-size: 15px; line-height: 1.35; }
+  .mock-b .bar { display: flex; margin: 0 14px; border-top: 1px solid #E4E6EB; }
+
+  .mock-b .bar span {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #65676B;
+  }
+
+  .mock-b .counts { padding: 10px 14px; font-size: 14px; color: #65676B; }
+
+  .fine { padding: 0 1.25rem; margin-top: 1.5rem; font-size: 0.72rem; color: #86868B; line-height: 1.6; }
+  footer { text-align: center; padding: 3rem 1.25rem 2rem; color: #86868B; font-size: 0.7rem; font-weight: 400; }
+  footer a { color: #86868B; text-decoration: none; }
+  footer a:hover { color: #1D1D1F; }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+
+  /* Person picker */
+  .people {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    padding: 6px 1.25rem 14px;
+    scroll-snap-type: x proximity;
+    scroll-padding-left: 1.25rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .people::-webkit-scrollbar { display: none; }
+
+  .person {
+    flex: none;
+    width: 72px;
+    scroll-snap-align: start;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+    cursor: pointer;
+    text-align: center;
+    color: #6E6E73;
+  }
+
+  .person .face {
+    display: block;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #E5E5E7;
+    outline: 2.5px solid transparent;
+    outline-offset: 3px;
+    transition: outline-color 0.15s ease, opacity 0.15s ease;
+    opacity: 0.55;
+  }
+  .person img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .person .d { display: block; margin-top: 9px; font-size: 0.68rem; font-variant-numeric: tabular-nums; }
+  .person[aria-pressed="true"] .face { outline-color: #1D1D1F; opacity: 1; }
+  .person[aria-pressed="true"] .d { color: #1D1D1F; font-weight: 600; }
+  .person:hover .face { opacity: 1; }
+  .person:focus-visible .face { outline-color: #0071E3; }
+
+  /* Photo strip for the chosen person */
+  .strip {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 4px 1.25rem 12px;
+    scroll-snap-type: x proximity;
+    scroll-padding-left: 1.25rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .strip::-webkit-scrollbar { display: none; }
+
+  .shot {
+    flex: none;
+    width: 132px;
+    aspect-ratio: 1336 / 2000;
+    scroll-snap-align: start;
+    border: none;
+    padding: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #E5E5E7;
+    cursor: pointer;
+    position: relative;
+    outline: 2.5px solid transparent;
+    outline-offset: 2px;
+    transition: outline-color 0.15s ease;
+  }
+  .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .shot[aria-pressed="true"] { outline-color: #1D1D1F; }
+  .shot:focus-visible { outline-color: #0071E3; }
+  .shot .tick {
+    position: absolute; right: 7px; top: 7px;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #1D1D1F; display: none; align-items: center; justify-content: center;
+  }
+  .shot[aria-pressed="true"] .tick { display: flex; }
+
+  .now {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0.25rem 1.25rem 0;
+    padding: 0.8rem 1rem;
+    border: 1px solid #E5E5E7;
+    border-radius: 12px;
+    font-size: 0.8rem;
+  }
+  .now b { font-weight: 600; }
+  .now span { color: #6E6E73; font-variant-numeric: tabular-nums; }
+  .now a { color: #1D1D1F; font-weight: 500; text-decoration: none; border-bottom: 1px solid #D2D2D7; white-space: nowrap; }
+  .now a:hover { border-color: #1D1D1F; }
+
+  /* Face-centred circle crop */
+  .circle { position: relative; border-radius: 50%; overflow: hidden; background: #E5E5E7; flex: none; }
+  .circle img { position: absolute; max-width: none; display: block; }
+
+  /* Profile page mock */
+  .mock-p { background: #FFFFFF; }
+  .mock-p .cover { height: 132px; background: linear-gradient(135deg, #DADDE1, #F0F2F5); }
+  .mock-p .head { padding: 0 14px 14px; margin-top: -84px; text-align: center; }
+  .mock-p .big { width: 168px; height: 168px; margin: 0 auto; border: 4px solid #FFFFFF; box-sizing: content-box; }
+  .mock-p .pname { margin-top: 10px; font-size: 24px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; }
+  .mock-p .psub { font-size: 15px; color: #65676B; margin-top: 2px; }
+  .mock-p .pbtns { display: flex; gap: 8px; margin-top: 14px; }
+  .mock-p .pbtns span { flex: 1; padding: 8px 0; border-radius: 6px; font-size: 15px; font-weight: 600; background: #E4E6EB; }
+  .mock-p .pbtns span:first-child { background: #1D1D1F; color: #FFFFFF; }
+  .mock-p .sizes { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-top: 1px solid #E4E6EB; }
+  .mock-p .sizes .bubble { background: #F0F2F5; border-radius: 16px; padding: 7px 12px; font-size: 13px; line-height: 1.3; text-align: left; }
+  .mock-p .sizes .bubble b { display: block; font-weight: 600; }
+
+  .mock-b .avatar-c { width: 40px; height: 40px; }
+  .mock-a .avatar-c { width: 32px; height: 32px; }
+  .mock-b .photo { display: block; width: 100%; aspect-ratio: 1336 / 2000; object-fit: cover; background: #E5E5E7; }
+  .mock-a .photo { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; background: #E5E5E7; }
+
+  .swap { animation: fadeIn 0.3s ease-out both; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <span class="label">RECO Media</span>
+    <h1>Headshots</h1>
+    <p class="meta">Team session &mdash; November 2026</p>
+    <div class="actions">
+      <a href="https://drive.google.com/drive/folders/1vqCcbS8F08Tb8A6FAUUzIc6jZD4fr-l-" target="_blank" rel="noopener" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z" fill="#fff"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0-1.2 4.5h27.5z" fill="#fff"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.85z" fill="#fff"/><path d="M43.65 25 57.4 1.2C56.05.4 54.5 0 52.9 0H34.4c-1.6 0-3.15.45-4.5 1.2z" fill="#fff"/><path d="m59.8 53h-32.3L13.75 76.8c1.35.8 2.9 1.2 4.5 1.2h22.6c1.6 0 3.15-.45 4.5-1.2z" fill="#fff"/><path d="M73.4 26.5 60.65 3.3c-.8-1.4-1.95-2.5-3.3-3.3L43.6 25l16.2 28h27.45c0-1.55-.4-3.1-1.2-4.500z" fill="#fff"/></svg>
+        Google Drive
+      </a>
+      <span class="btn btn-outline" style="cursor:default;">70 photos &middot; 7 people</span>
+    </div>
+  </header>
+
+  <div class="info-box">
+    <strong>Hey team!</strong> Here are your headshots. Tap your face below, swipe through your photos, and pick one to see how it looks as a profile photo and as a post. The photos on this page are smaller copies so they load fast. <strong>For posting, download the full-quality file from Google Drive.</strong>
+    <p class="credit">If you post on Instagram, I'd appreciate a tag: <strong style="color:#424245;">@mattmatheson_</strong></p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-head">
+    <h2>Find your face</h2>
+    <p>Tap yourself and everything below switches to your photos.</p>
+  </div>
+
+  <div class="people" id="people" role="group" aria-label="People"></div>
+
+  <div class="section-head" style="margin-top:1.75rem;">
+    <h2>Your photos</h2>
+    <p>Swipe left and right, then tap the one you like.</p>
+  </div>
+
+  <div class="strip" id="strip" role="group" aria-label="Photos"></div>
+
+  <div class="now">
+    <div><b id="nowName"></b> <span id="nowCount"></span></div>
+    <a id="nowLink" href="https://drive.google.com/drive/folders/1vqCcbS8F08Tb8A6FAUUzIc6jZD4fr-l-" target="_blank" rel="noopener">Full-quality file</a>
+  </div>
+
+  <div class="section-head">
+    <h2>How it'll look</h2>
+    <p>Your chosen photo as a profile photo and as a post, at phone size.</p>
+  </div>
+
+  <!-- Profile page -->
+  <div class="preview-label"><span class="name">Facebook profile photo</span><span class="hint">Circle centred on your face</span></div>
+  <div class="mock-b-wrap">
+    <div class="mock mock-p">
+      <div class="cover" aria-hidden="true"></div>
+      <div class="head">
+        <div class="circle big"><img alt="Profile photo preview"></div>
+        <div class="pname">Your Name</div>
+        <div class="psub">RECO</div>
+        <div class="pbtns" aria-hidden="true"><span>Add to story</span><span>Edit profile</span></div>
+      </div>
+      <div class="sizes" aria-hidden="true">
+        <div class="circle" style="width:40px;height:40px;"><img alt=""></div>
+        <div class="bubble"><b>Your Name</b>This is the size people see next to your comments.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Social-network style feed post -->
+  <div class="preview-label"><span class="name">Facebook post</span><span class="hint">Whole photo, nothing cropped</span></div>
+  <div class="mock-b-wrap">
+    <div class="mock mock-b">
+      <div class="top">
+        <div class="circle avatar-c"><img alt=""></div>
+        <div>
+          <div class="user">Your Name</div>
+          <div class="sub">Just now &middot;
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#65676B" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg>
+          </div>
+        </div>
+        <svg class="more" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.8" fill="#65676B"/><circle cx="12" cy="12" r="1.8" fill="#65676B"/><circle cx="19" cy="12" r="1.8" fill="#65676B"/></svg>
+      </div>
+      <div class="text">Your caption goes here.</div>
+      <img class="photo" id="fbPhoto" alt="Facebook post preview">
+      <div class="counts">Be the first to react</div>
+      <div class="bar">
+        <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#65676B" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M7 10.5v9H4v-9zM7 10.5l4-7c1.7 0 2.6 1.2 2.3 2.8L12.7 9.5H18a2 2 0 0 1 2 2.4l-1.2 6a2 2 0 0 1-2 1.6H7"/></svg>Like</span>
+        <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#65676B" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M4 4.5h16v11.5H10l-4.5 4v-4H4z"/></svg>Comment</span>
+        <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#65676B" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M13 5.5 20 12l-7 6.5v-4c-4.5 0-7.5 1.2-9.5 4 .5-5 3.5-8.500 9.5-9z"/></svg>Share</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Photo-app style feed post -->
+  <div class="preview-label"><span class="name">Instagram post</span><span class="hint">Top and bottom trimmed</span></div>
+  <div class="mock mock-a">
+    <div class="top">
+      <div class="circle avatar-c"><img alt=""></div>
+      <div><div class="user">yourname</div></div>
+      <svg class="more" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.6" fill="#0F1419"/><circle cx="12" cy="12" r="1.6" fill="#0F1419"/><circle cx="19" cy="12" r="1.6" fill="#0F1419"/></svg>
+    </div>
+    <img class="photo" id="igPhoto" alt="Instagram post preview">
+    <div class="bar">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F1419" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.600a4.300 4.300 0 0 1 7.500 2.700c0 5.600-7.500 10.200-7.500 10.200z"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F1419" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.5a8.5 8.5 0 0 1-12.6 7.4L3.500 20.500l1.600-4.200A8.500 8.500 0 1 1 20.500 11.500z"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F1419" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 10.5 13.5M21 3l-6.5 18-4-7.5L3 9.500z"/></svg>
+      <svg class="save" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F1419" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h12v17l-6-4.5-6 4.5z"/></svg>
+    </div>
+    <div class="text"><b>yourname</b> Your caption goes here.</div>
+    <div class="time">Just now</div>
+  </div>
+
+  <p class="fine">These are mockups to show scale and framing. The name and caption are placeholders, and the apps change their layouts from time to time. The profile circle here is centred on your face automatically. When you upload the real photo, the app lets you drag and zoom it yourself. Instagram trims a little off the top and bottom of tall photos, the same as shown.</p>
+
+  <footer>
+    <p>Photos by <a href="https://mattmatheson.github.io/RandomPhoneBuilds/">Matt Matheson</a></p>
+  </footer>
+</div>
+
+<script>
+const FOLDER = 'https://drive.google.com/drive/folders/1vqCcbS8F08Tb8A6FAUUzIc6jZD4fr-l-';
+const PEOPLE = [{"n":1,"photos":[{"f":"DSC03198","c":[0.5128,0.2116,0.1874,0.1252],"id":"114K8aROF1OaQbPLQxMceJsdj64G9qQ0L"},{"f":"DSC03213","c":[0.5022,0.2061,0.2104,0.1406],"id":"1-6BM9n55h83RxruodkJt8s6rsI1qEezA"},{"f":"DSC03215","c":[0.4991,0.2247,0.1936,0.1294],"id":"19TmIgjrMDqsfMV4DlCI5UYaj0ulAOYFg"},{"f":"DSC03224","c":[0.5182,0.3291,0.304,0.203],"id":"1eOfUBfJVciy16-2mmNNikjBa2RwJnPYt"},{"f":"DSC03238","c":[0.5448,0.242,0.1629,0.1088],"id":"1EbHdM_o160qu0vhKUdMSrcp4mWidWHI_"},{"f":"DSC03249","c":[0.5413,0.2075,0.1675,0.1119],"id":"12b4EbZo2Q0n-IYKKJacMy20ydssalGZr"},{"f":"DSC03253","c":[0.5181,0.2891,0.2369,0.1582],"id":"1H57OAkcImni67jgc-IDqvC9PiGDgjC6B"}]},{"n":2,"photos":[{"f":"DSC03257","c":[0.5185,0.3862,0.4315,0.2882],"id":"1NsM9xc_8REpvLHltSLObhzPH8PNDN9l8"},{"f":"DSC03264","c":[0.5001,0.3618,0.3683,0.246],"id":"1eY6zEcIL3eVODyPrduJQYptO1jr17P-T"},{"f":"DSC03274","c":[0.5168,0.3534,0.3553,0.2373],"id":"1BEcMkwr19ENoavt16dlbVlCmXr6-oVOZ"},{"f":"DSC03280","c":[0.5124,0.3289,0.4034,0.2695],"id":"1MS_Jj5ilGlVxzIBqck9fuHMW1dY0V7-7"}]},{"n":3,"photos":[{"f":"DSC03283","c":[0.4793,0.2132,0.2356,0.1574],"id":"1XcEnzZ1vwqx7-qzxIXJ0MlyVY23f70Lq"},{"f":"DSC03286","c":[0.4886,0.2418,0.2177,0.1454],"id":"1YHO_Oow6l4YaIhhYDkXwFgE0x2XPu0pt"},{"f":"DSC03292","c":[0.5055,0.2686,0.2612,0.1745],"id":"13SXr6nmj-k88blXSEMi6HxAVruCyb2p8"},{"f":"DSC03296","c":[0.6165,0.3012,0.2785,0.186],"id":"1xVIKhVv_Z-OtFJkQMtnHTdMO5z12q-GT"},{"f":"DSC03302","c":[0.5823,0.2952,0.2844,0.19],"id":"1lbaGBTHG2KIYtpIvSpM0AqFb22N2kwEJ"},{"f":"DSC03304","c":[0.547,0.2948,0.2692,0.1798],"id":"1YvLrQtZ-vucCZ8nZ7PysbJ57lmfmHgWG"},{"f":"DSC03311","c":[0.5487,0.3874,0.4591,0.3067],"id":"1mOY1HMzbxxYeTu-42uHEtt6UhnAW_vf7"},{"f":"DSC03319","c":[0.5146,0.2814,0.1819,0.1215],"id":"1-1xhNLlPlDZIwRpibZq45pS1PWWaH5a2"},{"f":"DSC03327","c":[0.5275,0.263,0.2759,0.1843],"id":"1UfF9dyCfjVlV_lqb4yWybv2N_xulUFvV"},{"f":"DSC03333","c":[0.5022,0.2342,0.2108,0.1408],"id":"1DDDkk9mpHYKXlAJa_wW738qKJZ0qiwIo"},{"f":"DSC03338","c":[0.471,0.2392,0.2267,0.1514],"id":"1WYmzaalBSsTPzFYEyIhuAgLF_ohhJY02"},{"f":"DSC03351","c":[0.5125,0.1752,0.118,0.0788],"id":"1vtdE0LSUeM-HEL8WNmaOwcpXCAZaz29c"},{"f":"DSC03354","c":[0.5387,0.2217,0.2009,0.1342],"id":"16lEvxDroOSjcU3BNjlY0vi0COjpvvzgR"}]},{"n":4,"photos":[{"f":"DSC03363","c":[0.5707,0.2585,0.2221,0.1484],"id":"1qJlwbAkTdsQ1MOiszaAPkwz5yV0KZXw8"},{"f":"DSC03386","c":[0.5081,0.3019,0.3693,0.2467],"id":"1WP0YFynff1judhIO2iU9r9FbHv8yVL9Y"},{"f":"DSC03421","c":[0.4966,0.3644,0.387,0.2585],"id":"1V_dKLtVf8e87ryuxdv0mptspHOzcIoGq"},{"f":"DSC03425","c":[0.5205,0.1964,0.2076,0.1387],"id":"1GYYQaSenZSgpG7WvNjylOhllfB6tQxQ2"},{"f":"DSC03431","c":[0.5194,0.2396,0.17,0.1136],"id":"1Z9zCBBHtcGCUlpUDgzjzPE-Adiu7xpcG"},{"f":"DSC03448","c":[0.5816,0.2649,0.2366,0.158],"id":"1C-tKO_iPvjHcMOmAkaAFSl2M9K8-HFzp"},{"f":"DSC03453","c":[0.5631,0.2194,0.2058,0.1375],"id":"1c3lcKfrnBN9Al6OoAxn1fnXOqFr7ZNE4"},{"f":"DSC03458","c":[0.5458,0.2252,0.1548,0.1034],"id":"1S3uMBrumvOrFqNf-wFv5QCUcdR4WP05T"},{"f":"DSC03472","c":[0.4995,0.2495,0.2337,0.1561],"id":"1W9Ud6hZ9nvRBHw69bv71aWZPMq9snDnU"},{"f":"DSC03474","c":[0.4742,0.2739,0.2803,0.1872],"id":"1hDrkSUTN19JW78Dg-YF248AIezcdOxQ6"},{"f":"DSC03479","c":[0.4764,0.3219,0.3354,0.224],"id":"1s29-SYj_EGicHiYDCWjLFQWlcwDX1UcU"}]},{"n":5,"photos":[{"f":"DSC03484","c":[0.5316,0.2934,0.2913,0.1946],"id":"1kPMI3YHOTgjGmj5il5H0FUSHdvQfmzHQ"},{"f":"DSC03487","c":[0.5045,0.2692,0.2468,0.1649],"id":"1qvkAZt0fudUlfTEXIWzggnnOzWbgaeC4"},{"f":"DSC03493","c":[0.5093,0.3232,0.4327,0.2891],"id":"1EUMOdq8FGFG6ETYV9e2lYDID-UwB3Wep"},{"f":"DSC03513","c":[0.4757,0.2298,0.1884,0.1259],"id":"1RUguo7AyLzp_ZwH_nJjP0ViPZ4cfsnpK"},{"f":"DSC03517","c":[0.5025,0.2229,0.2167,0.1447],"id":"1H_-s-rGqx1OIZZ2Mlv8SRAEnozblTUff"},{"f":"DSC03523","c":[0.5124,0.2756,0.2321,0.1551],"id":"1PkA-JNIuvVwelT9Rz3qOIr-3WZvncsu_"},{"f":"DSC03527","c":[0.5116,0.2141,0.19,0.1269],"id":"1MTZi_0HQapBwhbFY-DVXQXnEDupAjSyN"},{"f":"DSC03530","c":[0.5015,0.2794,0.2631,0.1757],"id":"1D85QOrBN2zdXKePxjpGqhtt5der-sXEv"},{"f":"DSC03534","c":[0.5049,0.2674,0.2845,0.1901],"id":"1WjElsdEo-8ofNxcg9ADvCLRSL2UcUX7f"}]},{"n":6,"photos":[{"f":"DSC03542","c":[0.5143,0.3766,0.2798,0.1869],"id":"1_OsIiUm__ntKPzZnvtJb6XcuVaoTu1Ro"},{"f":"DSC03548","c":[0.4939,0.3264,0.2958,0.1976],"id":"1I3QcQSVm4KAn3EGLe7rECbCJT3uXdMaM"},{"f":"DSC03549","c":[0.5574,0.3818,0.405,0.2705],"id":"1QjaH6tznK4GpIFZ24Zt3Maasqz3ct1bO"},{"f":"DSC03553","c":[0.5712,0.4187,0.387,0.2585],"id":"1VlzioQmHnEJgJABv8kyZx1I87E6wxIpX"},{"f":"DSC03556","c":[0.5216,0.2595,0.259,0.173],"id":"1N5FYgKU1KTXubRYgzJPsnTqRWGGTuK2d"},{"f":"DSC03560","c":[0.4921,0.2446,0.1833,0.1224],"id":"1plmlLPu5lNQj5pCQFIvp7BL-iLnodHwL"},{"f":"DSC03629","c":[0.5275,0.2001,0.2213,0.1479],"id":"1s9N3yCdHPzcyalvMbnEXnkdmaeyySus8"},{"f":"DSC03632","c":[0.5551,0.195,0.2103,0.1404],"id":"1scjwMuElf17ACyJ5ILvraWc28zfriCVL"},{"f":"DSC03656","c":[0.5555,0.2416,0.1534,0.1025],"id":"1cfu5EESXouyWRkbbSlq9mgCMLdocvOBm"},{"f":"DSC03661","c":[0.5006,0.2098,0.1778,0.1188],"id":"12OpVoaSIMCM45LmZiATHo_RuUouLKJp5"},{"f":"DSC03666","c":[0.5001,0.1879,0.2154,0.1439],"id":"1K_9xKhx1l6YWpUal55GfHB-Q4XXB5G6x"},{"f":"DSC03676","c":[0.549,0.2285,0.1626,0.1086],"id":"1deS3YnwfGrXbe8OiNgKc1Zew2nIC3S1v"},{"f":"DSC03691","c":[0.5236,0.2481,0.1819,0.1215],"id":"1J1lZ7KLeQ1_dAkFWP-5iXJSkxjgCPsmT"},{"f":"DSC03704","c":[0.5235,0.2195,0.1853,0.1238],"id":"1CUPoyIfq-bTs_E1mWwJ1gvhwGnVW7EmB"},{"f":"DSC03710","c":[0.5498,0.2699,0.2606,0.1741],"id":"1SPJqTlAegqY53G6PPwID0d1-GvZ7QtNt"},{"f":"DSC03722","c":[0.4572,0.2375,0.2408,0.1609],"id":"1DSSTkXhL3k6UnhpzVRj1q459Urn2CKyF"}]},{"n":7,"photos":[{"f":"DSC03739","c":[0.4889,0.2436,0.1891,0.1263],"id":"1aDhHA4c8IaHMGy9Zve5_G30aMaPvMEcn"},{"f":"DSC03749","c":[0.5044,0.2815,0.2954,0.1973],"id":"1P63rfmwQX0BRQcR00AxBHvpaphTlRcY7"},{"f":"DSC03754","c":[0.4639,0.2599,0.2501,0.1671],"id":"1vfYEmcUv0guZ84KLQYnHtZor9bB7B0oR"},{"f":"DSC03759","c":[0.4943,0.2449,0.2397,0.1601],"id":"1HFu3NDtC1yrzfb0hj-6pobQVOmLib3U7"},{"f":"DSC03760","c":[0.5016,0.3201,0.3599,0.2404],"id":"19yZ1e9jpoHbqWMAh4pDJB6e25RthmvBU"},{"f":"DSC03775","c":[0.4854,0.2057,0.1789,0.1195],"id":"1LG4f8SZT5WPJHI0UnTblef0w8ChI5mXa"},{"f":"DSC03781","c":[0.4868,0.1769,0.1267,0.0846],"id":"1Msnlz6nTJIDndzGm4JrsUwGhngD5dO66"},{"f":"DSC03790","c":[0.4546,0.1967,0.2057,0.1374],"id":"1I7CuGIZXcxjR89HtEseRCmGPRn5b9_7K"},{"f":"DSC03794","c":[0.4612,0.3221,0.3576,0.2389],"id":"1zi7OPuSZHlA-ezbTPd6ekkwR1w9T0S3a"},{"f":"DSC03820","c":[0.4894,0.3639,0.4243,0.2835],"id":"1wYyjvZbZccZNA2-XQWruk4_BSgs-4xHI"}]}];
+const AR = 2000 / 1336; // every photo is the same shape
+
+const fileUrl = p => p.id ? 'https://drive.google.com/file/d/' + p.id + '/view' : FOLDER;
+const clamp = (v, lo, hi) => Math.min(Math.max(v, lo), hi);
+
+const peopleEl = document.getElementById('people');
+const strip = document.getElementById('strip');
+const circles = [...document.querySelectorAll('.circle img')];
+const fbPhoto = document.getElementById('fbPhoto');
+const igPhoto = document.getElementById('igPhoto');
+let person = -1, shot = -1;
+
+// Square crop around the face, in units of the photo's width
+function faceCrop(p) {
+  const [cx, cy, fw, fh] = p.c;
+  const s = Math.min(1, fw * 2.6);
+  const x = clamp(cx - s / 2, 0, 1 - s);
+  const y = clamp((cy - 0.08 * fh) * AR - s / 2, 0, AR - s);
+  return { s, x, y };
+}
+
+function selectShot(i) {
+  const list = PEOPLE[person].photos;
+  const p = list[i];
+  shot = i;
+  [...strip.children].forEach((b, k) => b.setAttribute('aria-pressed', k === i ? 'true' : 'false'));
+
+  const src = 'photos/' + p.f + '.jpg';
+  const { s, x, y } = faceCrop(p);
+  circles.forEach(img => {
+    img.src = src;
+    img.style.width = (100 / s) + '%';
+    img.style.left = (-x / s * 100) + '%';
+    img.style.top = (-y / s * 100) + '%';
+  });
+
+  fbPhoto.src = src;
+  igPhoto.src = src;
+  // Keep the face inside the 4:5 window
+  const win = 1.25, off = clamp(p.c[1] * AR - 0.42 * win, 0, AR - win);
+  igPhoto.style.objectPosition = '50% ' + (off / (AR - win) * 100) + '%';
+
+  [fbPhoto, igPhoto, circles[0].parentNode].forEach(el => {
+    el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap');
+  });
+
+  document.getElementById('nowName').textContent = 'Photo ' + (i + 1) + ' of ' + list.length;
+  document.getElementById('nowCount').textContent = p.f + '.jpg';
+  document.getElementById('nowLink').href = fileUrl(p);
+}
+
+function selectPerson(i) {
+  if (i === person) return;
+  person = i;
+  [...peopleEl.children].forEach((b, k) => b.setAttribute('aria-pressed', k === i ? 'true' : 'false'));
+  strip.innerHTML = '';
+  PEOPLE[i].photos.forEach((p, k) => {
+    const b = document.createElement('button');
+    b.className = 'shot';
+    b.type = 'button';
+    b.setAttribute('aria-pressed', 'false');
+    b.setAttribute('aria-label', 'Photo ' + (k + 1));
+    b.innerHTML = '<img alt="" src="thumbs/' + p.f + '.jpg">' +
+      '<span class="tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.500 4.500L19 7.500"/></svg></span>';
+    b.addEventListener('click', () => selectShot(k));
+    strip.appendChild(b);
+  });
+  strip.scrollLeft = 0;
+  selectShot(0);
+}
+
+PEOPLE.forEach((P, i) => {
+  const b = document.createElement('button');
+  b.className = 'person';
+  b.type = 'button';
+  b.setAttribute('aria-pressed', 'false');
+  b.setAttribute('aria-label', 'Person ' + P.n + ', ' + P.photos.length + ' photos');
+  b.innerHTML = '<span class="face"><img alt="" src="faces/p' + P.n + '.jpg"></span>' +
+    '<span class="d">' + P.photos.length + ' photos</span>';
+  b.addEventListener('click', () => selectPerson(i));
+  peopleEl.appendChild(b);
+});
+
+// A link ending in #3 opens on the third person, #3-5 on their fifth photo
+const m = location.hash.match(/^#(\d+)(?:-(\d+))?$/);
+const startP = m ? clamp(m[1] - 1, 0, PEOPLE.length - 1) : 0;
+selectPerson(startP);
+if (m && m[2]) {
+  const k = clamp(m[2] - 1, 0, PEOPLE[startP].photos.length - 1);
+  selectShot(k);
+  strip.children[k].scrollIntoView({ block: 'nearest', inline: 'center' });
+}
+</script>
+</body>
+</html>
