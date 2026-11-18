@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="published" content="2026-11-17">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calvin Haus — Studio Photos by Matt Matheson</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    background: #FFFFFF;
+    color: #1D1D1F;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Phone-width column at every screen size, so the feed previews read true to scale */
+  .container {
+    max-width: 430px;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 8vw, 4rem) 0 3rem;
+    background: #FFFFFF;
+  }
+
+  @media (min-width: 520px) {
+    body { background: #F5F5F7; }
+    .container {
+      min-height: 100vh;
+      box-shadow: 0 0 0 1px #E5E5E7, 0 30px 80px -40px rgba(0,0,0,0.25);
+    }
+  }
+
+  header {
+    margin-bottom: 2rem;
+    padding: 0 1.25rem;
+    animation: fadeIn 0.6s ease-out both;
+  }
+
+  .label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #86868B;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 0.4rem;
+  }
+
+  .meta { font-size: 0.95rem; font-weight: 400; color: #6E6E73; }
+
+  .actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.4rem;
+    border-radius: 980px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+  }
+
+  .btn-primary { background: #1D1D1F; color: #FFFFFF; cursor: pointer; transition: all 0.2s ease; }
+  .btn-primary:hover { background: #424245; }
+
+  .btn-outline { background: transparent; color: #1D1D1F; border: 1px solid #D2D2D7; }
+
+  .info-box {
+    background: #F5F5F7;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin: 0 1.25rem 2rem;
+    font-size: 0.82rem;
+    color: #424245;
+    line-height: 1.7;
+  }
+
+  .info-box strong { color: #1D1D1F; }
+
+  .info-box .credit {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #E5E5E7;
+    font-size: 0.78rem;
+    color: #6E6E73;
+  }
+
+  .divider { height: 1px; background: #E5E5E7; margin: 0 1.25rem 2.5rem; }
+
+  .section-head { padding: 0 1.25rem; margin: 0 0 1.5rem; }
+  .section-head.spaced { margin-top: 3rem; }
+
+  .section-head h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+  }
+
+  .section-head p { font-size: 0.82rem; color: #6E6E73; line-height: 1.6; }
+
+  .preview-label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 0 1.25rem;
+    margin: 2rem 0 0.6rem;
+  }
+
+  .preview-label .name {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #1D1D1F;
+  }
+
+  .preview-label .hint { font-size: 0.68rem; color: #86868B; }
+
+  /* Feed mockups */
+  .mock {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #0F1419;
+    border-top: 1px solid #E5E5E7;
+    border-bottom: 1px solid #E5E5E7;
+  }
+
+  .mock svg { display: block; }
+
+  .avatar {
+    flex: none;
+    border-radius: 50%;
+    background: #1D1D1F;
+    color: #FFFFFF;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Instagram-style post */
+  .mock-a { background: #FFFFFF; }
+  .mock-a .top { display: flex; align-items: center; gap: 10px; padding: 10px 12px; }
+  .mock-a .avatar { width: 32px; height: 32px; font-size: 11px; }
+  .mock-a .user { font-size: 14px; font-weight: 600; line-height: 1.2; }
+  .mock-a .sub { font-size: 12px; color: #55595E; line-height: 1.2; }
+  .mock-a .more { margin-left: auto; }
+
+  .carousel { position: relative; background: #0C0C0E; }
+
+  .track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .track::-webkit-scrollbar { display: none; }
+
+  .slide {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+
+  .slide img { width: 100%; height: 100%; display: block; object-fit: cover; }
+
+  .carousel .count {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 4px 9px;
+    border-radius: 980px;
+    background: rgba(0,0,0,0.6);
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 500;
+    pointer-events: none;
+  }
+
+  .carousel .arrow {
+    position: absolute;
+    top: 50%;
+    width: 28px;
+    height: 28px;
+    margin-top: -14px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.85);
+    color: #1D1D1F;
+    font-size: 17px;
+    line-height: 1;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 2px;
+  }
+
+  .carousel .arrow.prev { left: 8px; }
+  .carousel .arrow.next { right: 8px; }
+  .carousel .arrow[disabled] { visibility: hidden; }
+  .carousel .arrow[hidden] { display: none !important; }
+
+  @media (hover: hover) and (pointer: fine) {
+    .carousel .arrow { display: flex; }
+  }
+
+  .mock-a .bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 12px 6px;
+  }
+
+  .mock-a .bar .save { margin-left: auto; }
+
+  .dots {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -30%);
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .dots i { width: 6px; height: 6px; border-radius: 50%; background: #C7C7CC; transition: all 0.2s ease; }
+  .dots i.on { background: #0095F6; }
+  .dots i.far { width: 4px; height: 4px; }
+  .dots i.gone { display: none; }
+
+  .mock-a .text { padding: 0 12px 4px; font-size: 14px; line-height: 1.4; }
+  .mock-a .text b { font-weight: 600; }
+  .mock-a .time { padding: 2px 12px 12px; font-size: 12px; color: #737373; }
+
+  /* Facebook-style post */
+  .mock-b-wrap { background: #F0F2F5; padding: 8px 0; border-top: 1px solid #E5E5E7; border-bottom: 1px solid #E5E5E7; }
+  .mock-b { background: #FFFFFF; border: none; }
+  .mock-b .top { display: flex; align-items: center; gap: 10px; padding: 12px 14px 8px; }
+  .mock-b .avatar { width: 40px; height: 40px; font-size: 13px; }
+  .mock-b .user { font-size: 15px; font-weight: 600; line-height: 1.25; }
+  .mock-b .sub { font-size: 13px; color: #65676B; line-height: 1.25; display: flex; align-items: center; gap: 4px; }
+  .mock-b .more { margin-left: auto; }
+  .mock-b .text { padding: 0 14px 10px; font-size: 15px; line-height: 1.35; }
+
+  .album { display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; }
+  .album .tile { position: relative; cursor: pointer; overflow: hidden; background: #E4E6EB; }
+  .album .tile img { width: 100%; height: 100%; display: block; object-fit: cover; }
+  .album .big { grid-column: span 3; aspect-ratio: 1 / 1; }
+  .album .small { grid-column: span 2; aspect-ratio: 1 / 1; }
+
+  .album .more-count {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    color: #FFFFFF;
+    font-size: 28px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mock-b .counts { padding: 10px 14px; font-size: 14px; color: #65676B; }
+  .mock-b .bar { display: flex; margin: 0 14px; border-top: 1px solid #E4E6EB; }
+
+  .mock-b .bar span {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #65676B;
+  }
+
+  .fine { padding: 0 1.25rem; margin-top: 1.5rem; font-size: 0.72rem; color: #86868B; line-height: 1.6; }
+
+  /* Full-size photo feed */
+  .feed { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .feed-item { background: #F0F0F2; }
+  .feed-item.wide { grid-column: span 2; }
+  .feed-item img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer; transition: opacity 0.3s ease; }
+  .feed-item img:hover { opacity: 0.92; }
+
+  /* Lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.15s ease-out;
+  }
+
+  .lightbox.active { display: flex; }
+  .lightbox img { max-width: 92vw; max-height: calc(100vh - 120px); object-fit: contain; }
+
+  .lightbox-close, .lightbox-nav, .lightbox-bottom .lb-nav-btn {
+    border-radius: 50%;
+    background: rgba(0,0,0,0.06);
+    border: none;
+    color: #1D1D1F;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-close { position: absolute; top: 1.25rem; right: 1.25rem; width: 36px; height: 36px; font-size: 1.1rem; display: flex; z-index: 10; }
+  .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; font-size: 1.3rem; display: flex; z-index: 10; }
+  .lightbox-prev { left: 1rem; }
+  .lightbox-next { right: 1rem; }
+
+  .lightbox-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+  }
+
+  .lightbox-bottom .lb-nav-btn { width: 44px; height: 44px; font-size: 1.3rem; display: none; }
+  .lightbox-counter { color: #86868B; font-size: 0.75rem; font-weight: 500; flex: 1; text-align: center; }
+
+  @media (max-width: 600px) {
+    .lightbox-nav { display: none; }
+    .lightbox-bottom .lb-nav-btn { display: flex; }
+    .lightbox img { max-height: calc(100vh - 140px); }
+  }
+
+  footer { text-align: center; padding: 3rem 1.25rem 2rem; color: #86868B; font-size: 0.7rem; font-weight: 400; }
+  footer a { color: #86868B; text-decoration: none; }
+  footer a:hover { color: #1D1D1F; }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <span class="label">Studio Photography</span>
+    <h1>Calvin Haus</h1>
+    <p class="meta">November 12, 2026 &mdash; Photos by Matt Matheson</p>
+    <div class="actions">
+      <a href="https://drive.google.com/drive/folders/1XxkJwWLfR-uvYs4FoTqHxqhr68C_7VXI" target="_blank" rel="noopener" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z" fill="#fff"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0-1.2 4.5h27.5z" fill="#fff"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.85z" fill="#fff"/><path d="M43.65 25 57.4 1.2C56.05.4 54.5 0 52.9 0H34.4c-1.6 0-3.15.45-4.5 1.2z" fill="#fff"/><path d="m59.8 53h-32.3L13.75 76.8c1.35.8 2.9 1.2 4.5 1.2h22.6c1.6 0 3.15-.45 4.5-1.2z" fill="#fff"/><path d="M73.4 26.5 60.65 3.3c-.8-1.4-1.95-2.5-3.3-3.3L43.6 25l16.2 28h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#fff"/></svg>
+        Google Drive
+      </a>
+      <span class="btn btn-outline" style="cursor:default;">333 photos</span>
+    </div>
+  </header>
+
+  <div class="info-box">
+    <strong>Hey Cayce!</strong> Here are the finished Calvin Haus photos from the studio shoot, 333 in all. The pictures on this page are smaller previews. The full resolution files are in the Google Drive folder, so download those for posting and for the site.
+    <p class="credit">If you post on Instagram, I'd appreciate a tag: <strong style="color:#424245;">@mattmatheson_</strong></p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-head">
+    <h2>How it'll look in the feed</h2>
+    <p>A sample of the set as posts, at phone size. Swipe the Instagram carousel like the real thing. Tap any Facebook photo to open it.</p>
+  </div>
+
+  <div class="preview-label"><span class="name">On Instagram</span><span class="hint">Carousel &middot; 10 of the verticals</span></div>
+  <div class="mock mock-a" data-carousel data-ratio="4 / 5"></div>
+
+  <div class="preview-label"><span class="name">On Facebook</span><span class="hint">Album post</span></div>
+  <div class="mock-b-wrap">
+    <div class="mock mock-b">
+      <div class="top">
+        <div class="avatar">CH</div>
+        <div>
+          <div class="user">Calvin Haus</div>
+          <div class="sub">Just now</div>
+        </div>
+        <svg class="more" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.8" fill="#65676B"/><circle cx="12" cy="12" r="1.8" fill="#65676B"/><circle cx="19" cy="12" r="1.8" fill="#65676B"/></svg>
+      </div>
+      <div class="text">Your caption goes here.</div>
+      <div class="album" id="album"></div>
+      <div class="counts">Be the first to react</div>
+      <div class="bar">
+        <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#65676B" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M7 10.500v9H4v-9zM7 10.500l4-7c1.700 0 2.600 1.200 2.300 2.800L12.700 9.500H18a2 2 0 0 1 2 2.400l-1.200 6a2 2 0 0 1-2 1.600H7"/></svg>Like</span>
+        <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#65676B" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M4 4.500h16v11.500H10l-4.500 4v-4H4z"/></svg>Comment</span>
+        <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#65676B" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M13 5.500 20 12l-7 6.500v-4c-4.500 0-7.500 1.200-9.500 4 .5-5 3.500-8.500 9.500-9z"/></svg>Share</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="fine">These are mockups to show scale and framing. The account name and captions are placeholders, and the apps' own layouts change from time to time. Instagram's tallest shape is 4:5, so the verticals are cropped a little top and bottom here, the same as they would be in the app. An Instagram carousel holds up to 20 photos, so this one shows 10 picked from across the shoot.</p>
+
+  <div class="section-head spaced">
+    <h2>All 333 photos</h2>
+    <p>Uncropped, in shooting order. Tap one to view it larger. The number in the corner of the larger view matches the file name in Drive.</p>
+  </div>
+
+  <div class="feed" id="feed"></div>
+
+  <footer>
+    <p>Photos by <a href="https://mattmatheson.github.io/RandomPhoneBuilds/">Matt Matheson</a></p>
+  </footer>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <button class="lightbox-nav lightbox-prev" onclick="navLightbox(-1)">&#8249;</button>
+  <img id="lightboxImg" src="" alt="">
+  <button class="lightbox-nav lightbox-next" onclick="navLightbox(1)">&#8250;</button>
+  <div class="lightbox-bottom">
+    <button class="lb-nav-btn" onclick="navLightbox(-1)">&#8249;</button>
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+    <button class="lb-nav-btn" onclick="navLightbox(1)">&#8250;</button>
+  </div>
+</div>
+
+<script>
+// n = frame number in the Drive file name, id = Drive file id, t = 1 for vertical
+const photos = [{"n":"1755","id":"1WvQoi5AEzcSMAkE41IdEOeIBKKVhucNk","t":1},{"n":"1757","id":"1a9X4X1tODisN-oo5ogXkF9NCfpgGTslJ","t":1},{"n":"1759","id":"1NelcDs5tV_8uoTrXCDQThzwiwk2Ra2ef","t":1},{"n":"1761","id":"1aI7jJf5GKtMY85m2yky_XK0TBu2oMDFF","t":1},{"n":"1762","id":"1IKG7vV95KFgaWUbcZoT1SXEjgzrA7vf3","t":1},{"n":"1771","id":"1f8UA2tYoA0_icIlcjUXp_4sjcgHpuR13","t":1},{"n":"1772","id":"1Pnxeph3vkLJDvzseTxOsbuCr0P-S0jF0","t":1},{"n":"1773","id":"1pEcq5PUycJVZ_JGtQKiqGpMVbivxxhoI","t":1},{"n":"1774","id":"1znTcKXDCaihApcuaI9GOVFiDZh0f9pUa","t":1},{"n":"1775","id":"1LYz2O2UDyrZ-jjBgZO0LjQQULa6G2Sw7","t":1},{"n":"1776","id":"1riRzEOsR3pNJpG1WaYl8tXqBPTqx7xEk","t":1},{"n":"1777","id":"1_zsh9PQDeRNoEpyN98eDCLQLAcOZwdVL","t":1},{"n":"1778","id":"118KpuLAjuMqKshq_VsIxgi3FSo_ofwu2","t":1},{"n":"1780","id":"1C7dI8IkGvs8JOxvz9dSpCr3O0AEF9xsG","t":1},{"n":"1781","id":"1qRh8BctJEz4eY_4z4RJVsQiBuBZ0XRk9","t":1},{"n":"1782","id":"1g1hSHa6-eGSrzHWEpL_5PX_lLbiWVJtD","t":1},{"n":"1785","id":"1j7S5mUhXG2OMjB2NN2hyhEsKvSzILVFH","t":1},{"n":"1786","id":"1R7ool-VRF8jbkVqjzzWZfOiS1DFomL0b","t":1},{"n":"1788","id":"1VfU32iP7Ra4oYhj9feWfcVcaoxTBUcZv","t":1},{"n":"1795","id":"1SFmUjCETrOhgAk6DCOmKgr8R1hcfeghV","t":1},{"n":"1806","id":"1qAedaDjW49otxjJv55rK0avMeNuq9cpP","t":1},{"n":"1811","id":"1Uf9R8lTOJlhI_sBGiySoVHJnFoCL77jm","t":1},{"n":"1816","id":"1ZIPsZp9xuj8ggsyvW7yB8AbQ_ZbEBT5S","t":1},{"n":"1817","id":"1afaxVHbqbBgkVZMqmKRnyPLrMN3u5Lmf","t":1},{"n":"1820","id":"1__-BiCgNu68kw5ROZMcRakvZuRFZZkaw","t":1},{"n":"1823","id":"1d7t7aDreD1uYZSltvuH_Y8tdbXaaU9ke","t":1},{"n":"1826","id":"17DarLU8JW0Heoer8V6p948d7b6x83aYz","t":1},{"n":"1836","id":"1Giras9ATXZbha3d1DH1jz-gpTX83d3R_","t":1},{"n":"1844","id":"1InnDIyC3O_RNObpGVZ71q5ZoWLSlNvU9","t":1},{"n":"1847","id":"1l4DySwEKChbUdIl8Ax6QviUSxkD7Fi9a","t":1},{"n":"1850","id":"1154xykP5aWZHgYqdjy2jn0TL5zMnUJV_","t":1},{"n":"1860","id":"1ZsIQ3s30pIPXzGf98_J9HcMzrqg7PFuz","t":1},{"n":"1866","id":"18TbfAvDtdCmmF_TE8nW4lilm7RDd9CMC","t":1},{"n":"1867","id":"1uZ_F9tlJ84OSTv9_gKomueKmsAa3jgEq","t":1},{"n":"1878","id":"12yTzVnQS48sHdd6py8aU6K51pG3Rgy92","t":1},{"n":"1881","id":"19vFb90hrM2mpKlhgqrdfyHIfHtvnjxAL","t":1},{"n":"1888","id":"1AfwfoCF3ygLW0CwiGc2y8Bf28PU3Kcgw","t":1},{"n":"1906","id":"1-3pEDSpPpHMZGExBxasCUqKIgQ0JDcyi","t":1},{"n":"1908","id":"1D93REhJ0WZIvI5p2B4XgaetWi7vglnK7","t":1},{"n":"1911","id":"1or3rp_x-D11tLI9ZbwoWaiPa1tOy-HlJ","t":1},{"n":"1919","id":"1M4BdV3YeKZklMYTBjL6y1WvV6FBtd8FS","t":1},{"n":"1924","id":"1PWeaW1oDoYgFAU1WAwhMDdg8g3AH9eNW","t":1},{"n":"1926","id":"14_KQXEEfpJ7M9t8O9GxfS0ZjjTSHuD4y","t":1},{"n":"1931","id":"1JNhqBILyZp2r8mHKFAiTKtLDozqpL357","t":1},{"n":"1932","id":"15hJQFSh3EmGllUXRfzhLWYN0Ytabbae3","t":0},{"n":"1933","id":"1YzRUY3HsacqivMEF_sHAMGcIAPB-_6xZ","t":1},{"n":"1935","id":"1_nsACDs2QXXZhdT0DQUC9xMZHTN04h75","t":1},{"n":"1939","id":"1kPuLaDxtqdEepj-F8x7WsUPgw44eW-SE","t":1},{"n":"1942","id":"19Z4vwm-gpodpF59tUvKdG30rA5o6gPPB","t":1},{"n":"1943","id":"1E3dqLaJlf0enktZHwir9rqSMqBy4GhIN","t":1},{"n":"1948","id":"1ypCO0uCyBfRKJI1L0Z4QWiynyE-w1Nh0","t":1},{"n":"1951","id":"11-wNZUX2pglNcdh--07y7LJbiEkN4tdP","t":1},{"n":"1956","id":"18fqw8LmfZQt2xMR96cg2a5z5YIXdzfzW","t":1},{"n":"1959","id":"1TdbPbSe_di3dwHKRKe6mj1PE91AaYc6x","t":1},{"n":"1960","id":"1GBuQ4RDW6jp3F7bs7jVNsWWjL07B8UH0","t":1},{"n":"1963","id":"1U0y5EjSUxKXE2-MJcQXAicrqHxUKlhox","t":1},{"n":"1965","id":"1ldfakFZKd9ahkCrwO4TYgL-X0QCbQ83t","t":1},{"n":"1966","id":"1Lxtp3mq6o-3Nc3BeuXUXbFQXd6x8KFfx","t":1},{"n":"1968","id":"1HUY3JvftTEdMhqJyh1UzCWnbMWSFCcDr","t":1},{"n":"1973","id":"1rQjV62MFWOBHr2XZ6LbOYDOsmbXgMQZN","t":1},{"n":"1974","id":"1OyFV0KcHf6d9WnC8R2bMk_022FVBcMdj","t":1},{"n":"1975","id":"1g-p0moVoGiCcfN9Qmpvnbadg61UneM7W","t":1},{"n":"1978","id":"1ZIVngivdKPlFnp9S3FrfGGuk2TQ_2EbC","t":1},{"n":"1979","id":"1HZyGdBZLIuktebuQCJuQqsOkrV_MvFe9","t":1},{"n":"1989","id":"1hizs0HWYpAemOYDc13YHaLVqd1PTYju-","t":1},{"n":"1990","id":"1ZNvKIn95zOvjiQyAO-HlEFN-9s2GqFoo","t":1},{"n":"1991","id":"1AU7swAev6_e8MQ57GgtkH004RxR5gxLX","t":1},{"n":"1992","id":"1bvgDnqHk5KEByLGcqeL42l4fCEwaGPiv","t":1},{"n":"1998","id":"1uLoAO_jNn-7m5hSlHhJDpJpJGK1eDOYW","t":1},{"n":"2005","id":"1tC6KYWD8uhqE3Us6DCPbd0jJ0GB-WUap","t":1},{"n":"2008","id":"1o1KkK7n1ZwvIIaKTa7B5Fy_rZWg5TL99","t":1},{"n":"2019","id":"1m_AT1l0mzdlCpC8nIUTVFrU5u_39g43Y","t":1},{"n":"2021","id":"13OxkxEmXH78xk9OZ1kgEsytNoumrza5y","t":1},{"n":"2023","id":"1IdQW-icNkfigE7jL3HpKYljCEgFhZF2_","t":1},{"n":"2027","id":"1uNzSk21Cjxtgz0LOwbZ197LdNJ2tJHWA","t":1},{"n":"2032","id":"11_c5P9atd1Vm1JeggQuIB4ijoel6BSwN","t":1},{"n":"2037","id":"1tVsiWiz8gFqST7YD__9SHaumUmUlMHV3","t":1},{"n":"2040","id":"1DF1CFgjhl8nSdxZfw5lNtbglauKEjayL","t":1},{"n":"2049","id":"1V4fMDShBbXmiaJcHDnSPvlxQn91IW9Aa","t":1},{"n":"2053","id":"1pT9QuIuoxLV6iyKc89gfLays2-2wMfHD","t":1},{"n":"2081","id":"1lXbzdiL_aipsZoqsimXfKeIIgvnDckZT","t":1},{"n":"2089","id":"1z-Phup-cHwu_FA8jW5upenZNDKN1aHZh","t":1},{"n":"2112","id":"1WtbMYSEXY_UHDbX2iBWKc4rKVHNAYdV4","t":1},{"n":"2116","id":"1MtQ-EHABWG5_nNWm2QWd75pWf_jB3NxY","t":1},{"n":"2117","id":"1xATdEZCHDyyGRvvO9NZSSnwgMzCL2jCn","t":1},{"n":"2119","id":"1vIkfUydn7_Fvk6L7G1j9p4lJ5d3-pSPr","t":1},{"n":"2123","id":"1tSwGTxKTaYs8Zk1b_6wdZNrRmvUyAIis","t":1},{"n":"2127","id":"1U7uB-xcPaFMCnV5qkWUDgk4oj_6zKaJt","t":1},{"n":"2131","id":"19LlhPacJ5ysQq1yMDv5knfrfCQmk11dd","t":1},{"n":"2134","id":"1-0Glg_GXk_DfRDl45Hob1fPpTkhKRrKw","t":1},{"n":"2138","id":"1rCwEACc8KzNZz5Qcp4phfjxYAo14oHZU","t":1},{"n":"2217","id":"1PnXl4Z0Dxeu5Xw1YCdwPp3xCKK3vKptF","t":1},{"n":"2221","id":"1kw5bkm9pX0OCtQZD7y70Qha1_QLZm2Hb","t":1},{"n":"2222","id":"1u0l7yyXIbGMiEHs_X6Ww9Z2Xgh4AqstT","t":1},{"n":"2230","id":"1VTkYiO5jJlG5-AATdbZ4nJ7X4iRHkx2S","t":1},{"n":"2234","id":"14Tc-TH-peRudNPYzKISNT5bbGzEPMV7i","t":1},{"n":"2235","id":"1c4sII6XmTENwZ95B_RGf9v57WRHtkWt6","t":1},{"n":"2236","id":"1JuxqwYqdvPD52svKwIM_oEqUJkhW883H","t":1},{"n":"2257","id":"1IOb6t-6FuTIiPsGytLFTJXDtmjsKeRHn","t":1},{"n":"2259","id":"1HHZYz_VfQpMA9_61f8YDNUvqcHs4sKMe","t":1},{"n":"2263","id":"16U0LDDG_zWQqUHzjSqvn8oXLPwa_Hst-","t":1},{"n":"2264","id":"1yXubVL_1YyKIy6W7N2XDg60ydABQ5JJs","t":1},{"n":"2283","id":"1TmX_cNFQaTNGVk_U00JVAOueZ8Zxq4TR","t":1},{"n":"2289","id":"10mC8leLTyz5Zk5neet99xJYRrW_k3o2m","t":1},{"n":"2290","id":"1h149ftwc8fmb2lBg0CZKQA1AZnLdbHiy","t":1},{"n":"2291","id":"1ikadB1DO5oxi4PXOWr4xCbjx5lSMHtWd","t":1},{"n":"2292","id":"1EEgy6qBHcLBSvLNSYuelrenrRye_US3G","t":1},{"n":"2308","id":"1tY5vscFkbwIbvRw1H-Nf0rROKWnCGheU","t":1},{"n":"2320","id":"1aj_pitigSrNyf3ssoXFzYx3iwNtPPSBJ","t":1},{"n":"2327","id":"1DB5DP3I0-4skWSREHQroIMxxsG93_ehb","t":1},{"n":"2331","id":"1eldNtETWOJQkHZu5S9zhmijkCHyS5evk","t":1},{"n":"2336","id":"1kjpx1A0ecsrsaqRonK02YFSlQhFKkWmi","t":1},{"n":"2339","id":"10YqnCbeZsm_y508g0uFA2h4a14QSG6JP","t":1},{"n":"2347","id":"1tqmfUN84CYMxRxfknCkkgySeyw3WKggE","t":1},{"n":"2350","id":"1eeyp7kxpN7H5GTenZ8uMdciwd16PiaSH","t":1},{"n":"2353","id":"1kY6k9RjnQwIh57NnI3hkw9-UUw38Uaka","t":1},{"n":"2360","id":"1J9qurjxEK911o386jqJdVmg6PQhmICX-","t":1},{"n":"2363","id":"1wmNJ5-9IPV3bi_vZw9JXf91CQHLiFlcM","t":1},{"n":"2388","id":"1UNSyZ_LjoD5RceR5Ec0sHu9W4CBS6Ydi","t":1},{"n":"2393","id":"1rn6fhf9AfX7HS5R1y0pwYMvaggleUpPL","t":1},{"n":"2399","id":"1wDgdHdhGsLJwnNLR14xgqw_KZpQwb_KN","t":1},{"n":"2405","id":"11Rcmi6ylqAe2fw4hN_eUQrrHfiKY0kO8","t":1},{"n":"2412","id":"1sQAICdRXlGYgRCKlJu8vkl8QoE0a5Rpr","t":1},{"n":"2414","id":"1Ra4qbeMwJnjJDjsz2rOVBX_Pma5xh6pv","t":1},{"n":"2422","id":"1rYc6HLR5Ew4J-n7Qkj2oHspKqc5N0Mv3","t":1},{"n":"2441","id":"1kim7jpaTUrEP2qbPrXNyKp4LFjjf-tfv","t":1},{"n":"2443","id":"1pWiWxbOIWyLMZ25bfcl8T_-foGv_y_gy","t":1},{"n":"2466","id":"1azCzaReYranPizpPKPXqJ66yjlnK118J","t":1},{"n":"2476","id":"1f-4b5bqkjt0-5PotHuso4pOsTI4nWNUN","t":1},{"n":"2478","id":"1b_exx9-j-hnj71NK8PSPPfPL2J7-x0ae","t":1},{"n":"2489","id":"1d0FEfDt7bk27ZJrYBFuKFYV4CE2xC-YZ","t":1},{"n":"2492","id":"1FIWUTCqJMPNBNOa0abGJaVgo_kjLUbqz","t":1},{"n":"2496","id":"18SPrtBTIkVoXEmg_MGzhUsOPYx9ts31v","t":1},{"n":"2501","id":"1HRqsjOv2zQizsMKeXGoFhgvqU7T11fUv","t":1},{"n":"2504","id":"10tlLBjmMwhLQBxv2hvoKv3S2NRjQAhvW","t":1},{"n":"2509","id":"1bEdQ60SC-NTSqGVUEoKIOPkxa91NNZki","t":1},{"n":"2514","id":"1YQL0_MFdsAeBmjTRzicV50AYB-oh9gCN","t":1},{"n":"2516","id":"102eU5CWCerCNKBiGwXW13u49Jg1Xxi_9","t":1},{"n":"2528","id":"1Iu-aiiIyviIN1YyVhVGlrDeUsjLoQ01N","t":1},{"n":"2535","id":"1gaayJnQxgB23gXtETkFSMhNgB27Alhos","t":1},{"n":"2562","id":"1FJ6qwU7dAoszUROcyj8LfywHlae-HtWQ","t":1},{"n":"2588","id":"1b-Oynckw24BD_5NWbc3v1ismPdrFDCVH","t":1},{"n":"2629","id":"1h9TQz6PMhJB3-hmPjbc3LP5KmWe2aAbn","t":1},{"n":"2672","id":"1Ix9RScMOiT0Z0jYdg8_E0zy_lz7rLRfM","t":1},{"n":"2683","id":"1KWfC3cD2_lPLlFbwisNoU5MDf65wbvJE","t":1},{"n":"2685","id":"168FaEmPJQcR39_p6QPzrMfp9B_1nFDrk","t":1},{"n":"2692","id":"15FkaVVRAcOHBwB9ylpURBZazj7yKynqG","t":1},{"n":"2693","id":"16eOHKiS0kCx6BGtl5kftk-ZGfhfsOMdD","t":1},{"n":"2694","id":"1fffe-Hqj5RyZnw943jAFfSBtkRUk8fl_","t":1},{"n":"2696","id":"1QBR94OGD_33qQwLDvV_rjSxda7Gqeq0k","t":1},{"n":"2697","id":"18JqEshFfmgamnGCxvtdkNB-fef4V6Zbe","t":1},{"n":"2700","id":"1aACh2R42UV--cQmHw_C9Wrx4nVDIpExL","t":1},{"n":"2703","id":"1bZ54YltByLUipvQHRmnrBBfQHOtdCBn0","t":1},{"n":"2707","id":"1rMgas92XmfIpurx4AMR_mvLJ01s2F4Rd","t":1},{"n":"2710","id":"1_DRrLz-PuiQk3fR-BA7HOOIj257Yi7yy","t":1},{"n":"2718","id":"1d9bo_gVx_5E2HHX-7FtgbFm0pg_K6Yk5","t":1},{"n":"2725","id":"1kVmhetNBliYnl3_rH5ajXaANEL2TRaZh","t":1},{"n":"2729","id":"1CsLFd5Du5UijP6lTAqvqkqg-TU48pYkI","t":1},{"n":"2737","id":"1YEdwLK4mfduLJ7E8w5gJpxnDpElJ7rY8","t":1},{"n":"2746","id":"1dkYmsaX9QGURgaPGsmYtTF9l4D9hNtXB","t":1},{"n":"2753","id":"1P2j34wHPK84oXEYOszTfrrsdG3Bs67Y9","t":1},{"n":"2756","id":"1nLceavNTiPDjSl6lIR9PSwzMyuu56tHy","t":1},{"n":"2769","id":"1LoLL2kjwdsGZqAGT1L4bVlMs1LU47Mo1","t":1},{"n":"2783","id":"1piDh5eNlvgWi4Lnzml8Wr5faLoq8kv_O","t":1},{"n":"2784","id":"1DVHZ4Ljj3YSqkUEdg-z3-Rbyfb4DcFdc","t":1},{"n":"2800","id":"1WUnCnpnh18MXEJ0TwW1tXe5acGu7f6eI","t":1},{"n":"2808","id":"1EHPkhdL6ZxEHCMD38FymQ64WSddTaxWo","t":1},{"n":"2814","id":"1xRCLPBKbf8xFr_vBPq_1oWtUZuV59MDD","t":1},{"n":"2819","id":"1hhxQerBSqGAOlf6AtJnoFfMUTKoRkw4m","t":1},{"n":"2829","id":"16JBOUWcJOMM7QzGzkiiIeX0CSBUEPNpW","t":1},{"n":"2836","id":"1b43UtV27nt8AUstbsyTJi4VOJ2jYnkZf","t":1},{"n":"2842","id":"1r2pbZlno5ugIS32_izmL8md3rB8rWQC3","t":1},{"n":"2849","id":"108bcf9ApFLsy1-T_Izs-INr0Mfbe0vAI","t":1},{"n":"2854","id":"14X68PQxLtsGuuj-VVh1OxvMhpnllTSAR","t":1},{"n":"2861","id":"1B26V_hEtB6yTHKydm2ij8P8T96FJSTC8","t":1},{"n":"2865","id":"1jV5YF2gKWYPEK6Z4uSnhF5a4JYxE45z1","t":1},{"n":"2866","id":"1ECF3MvyP5HKa-LUsT8wkQenKeZRRmBt6","t":1},{"n":"2867","id":"1TsJtkpAEzMWyI1t6ILiukfHykFFcUx-E","t":1},{"n":"2869","id":"1rJYAZ0B7vgLPmgXm57hS6tlvN-jvEPYz","t":1},{"n":"2878","id":"1OgIfPKhDwlVoZWZTo74mmvsjUJRLbllN","t":1},{"n":"2882","id":"1cuf-XoGWxcHk9wYu3qeDdA4P2wjI4M1k","t":1},{"n":"2887","id":"1zZsSKsl2q_fSXLbx_kM9FHoTiAbW3wUh","t":1},{"n":"2893","id":"1XgZCs0_ysqibMvl0BregHacoNTHIpuAK","t":1},{"n":"2895","id":"1EL1-XoWkV6P3j3YZBQd-JGtm3N3OtQr8","t":1},{"n":"2899","id":"1lRlMXggxHHSnloflRqtrCO7xyb2cLejJ","t":1},{"n":"2901","id":"1_yEyrAuiDIeOJTfo1dnni5Bzs7ziF6EW","t":1},{"n":"2903","id":"1Y18B8JTYQvucsJd7_aWGVhlqCFa6thkY","t":1},{"n":"2921","id":"11pmRa2pGNWI1bcTN0KRG7A5sgLi3QvFt","t":1},{"n":"2924","id":"10Uz-5bNMBBUno6SRuXIMNyxNXvBEZfVt","t":1},{"n":"2926","id":"1vQkib0HGbnPaH4Rbh0Rzk-Xlwq_jyzOL","t":1},{"n":"2929","id":"1aPEMbdQZ2Xopl0KmHHJXDmQMfwITsEW1","t":1},{"n":"2932","id":"1XA-GMlBOYmFoZLwT7_GRrUHjkpPzWWu3","t":1},{"n":"2935","id":"1osC3HYJ_BabyjRHLiZZegNT47bJXy6vJ","t":1},{"n":"2937","id":"1vdlB4wiYhunvoAOU0ExGVkbLsvs3BnIp","t":1},{"n":"2942","id":"1VwyA6DwHQQ0f2PMktNrFaxLEOE5bbYtA","t":1},{"n":"2943","id":"1EmLVdzMEys6QO56z4uV0Ysp8_Fx8QEGX","t":1},{"n":"2947","id":"1ACIa35D-20SMQKNrYmTJ6plVkPYBskCH","t":1},{"n":"2950","id":"1woJdzHoSimjA6z-iG3PCcrTZq83pHqG-","t":1},{"n":"2955","id":"1Jnx6hjwSjJ7taQSp9t6ChzbeD0ZmDIOb","t":1},{"n":"2958","id":"1P13f2IP-cwL8lupeP3g3XqW3RUDZPAV-","t":1},{"n":"2961","id":"129x6qophWrx6SerojuBTCqOj9PsLEp-l","t":1},{"n":"2967","id":"1MI5uC8XBB669jWQQzOAcedesA31-ScpE","t":1},{"n":"2968","id":"1cdfs9nUGjhJlXkeg1eSeDDZSE4E5xj50","t":1},{"n":"2970","id":"13FSLg-MlBRBAvF51RG32bHCjFcSXRHXq","t":1},{"n":"2973","id":"17_DifEPMB1_SKwtgbmOsVBM0VGpl2VzF","t":1},{"n":"2978","id":"1daEctpjoXs_InqXRmxbh7aelW48jj23d","t":1},{"n":"2982","id":"16btd5-dLFdBXXtS7ZiY5uejvKzwCZmfD","t":1},{"n":"2984","id":"1LHgVydegO--KbBO7bQS2skVfDglhkPB6","t":1},{"n":"2985","id":"1faJM1yVk2YVUkv80KV2YvvD3tT6Ej8WY","t":1},{"n":"2993","id":"1rLYQMZI47ndG_ZnAXzXFdFltCogoFzq3","t":0},{"n":"3002","id":"1xdFoS3BbxSKvTEKm7Itq0qfoiVeueo0q","t":1},{"n":"3045","id":"1jhbnFXDyaKQtb8DPVvCslMPp_mBs5ImB","t":1},{"n":"3046","id":"1ciwH6hRhXy-7vuj8M4Cx4l7-pALawHc0","t":1},{"n":"3050","id":"1ZzYMDgji4qN60o2-pFy34xdmseah4v7r","t":0},{"n":"3053","id":"1BH2eGP33sDTVAHYcF3wX-w6WHfkpJ8NP","t":1},{"n":"3054","id":"1nk8AO4DoA0GSXPy3N_RkBBJvBOAwIXs7","t":1},{"n":"3087","id":"1kDrjO6-MY8P2nzPSPgIFhOna6dV7OnuW","t":1},{"n":"3110","id":"1o3NUu4tmJNXA-pisSBbi13kvQDRlL0tl","t":1},{"n":"3132","id":"1od5rHcYMoXxGHSE7Lo9oCKq3einH1X2j","t":1},{"n":"3135","id":"1ehzHeWIjF3anPC0o0S35NJjI9rJAimwv","t":1},{"n":"3137","id":"1PNX56qG_yI9AkC0DiRNpNeYuFTJgLlBr","t":1},{"n":"3141","id":"11VRTIfcw62MZ-b__8g-nZ4od5pqgofNw","t":1},{"n":"3154","id":"1tIZLyAcKsQHPnDYj7K7TSkFynJk55SjH","t":1},{"n":"3157","id":"1N6WEMh3GmC2uDD3QEEl6lPK58KMZEDOi","t":1},{"n":"3159","id":"101ZBoiMysJuwaSvrCp__lXgLaCOuyakc","t":1},{"n":"3162","id":"1MMNrXLHutd7JeM8mP2K5AlJe6A0KpDwl","t":1},{"n":"3171","id":"1sFTATYrkr3Ja8BvtD5_xKuu9s-tmkF8L","t":1},{"n":"3175","id":"1YFEMBmLQYYipnM5Hnlqs7lmENYY4sKrD","t":1},{"n":"3177","id":"1F1swJvflzg_0MKOIV0WvdtzGIbDdsCwN","t":1},{"n":"3181","id":"1eUywd53QBXR4M8SGlPjfJ1QHjz7L9uu1","t":1},{"n":"3182","id":"1_8w3xNxIA8nOHFOMbFk8Iv4ttbur5dBT","t":1},{"n":"3198","id":"1lfn2Hllsr5Ak45GpLPoqOZaVwt3J_vew","t":1},{"n":"3202","id":"1O8sXeJfJICE4Gsox7QLi58pXRC27_MJW","t":1},{"n":"3220","id":"1qJpbMTfbVrY8JJY7wt0K9Xkp0ovv5XJX","t":1},{"n":"3244","id":"1oU7sPdZ3DbUNdz3laNpv4O57UmcsXIh6","t":1},{"n":"3255","id":"1_BucxeevMedEm5F0azXJxAQ2yP6T5mTq","t":1},{"n":"3260","id":"100YCAvB_CuIczvYvXvG-k-A8ZvHN9F2d","t":1},{"n":"3286","id":"1MgkxQF5GXRpi5OKMmSmo1qj-fDqvlFg8","t":1},{"n":"3293","id":"1bOSqV2ilKTDaFTYMSEoxROMC7sQ4kxHT","t":1},{"n":"3330","id":"12yR7K1Z9GuLygmfzFrTj1CO1X51CPMql","t":1},{"n":"3332","id":"1cpwYclRCmpibot3c7B6lpJVu-XjBCaWo","t":1},{"n":"3334","id":"1ACty0QrOSxm5irNIN33CsyBKLIYey6ds","t":1},{"n":"3340","id":"1pqns6QbVcT5ldS_K8k7vycl-1cuA5kRv","t":1},{"n":"3341","id":"1XxnumhIuPW_IarrkYCRdi8ouHZLIigF5","t":1},{"n":"3343","id":"1sxoUqy3zXId54CVePPs94DHWl7PyhvCp","t":1},{"n":"3347","id":"1D4jCgSyp8QlGTGUVd7G-0FueY-4ront8","t":1},{"n":"3351","id":"1xinw_qCOo4dpCd9K6YLKTci-tuGKxty4","t":1},{"n":"3355","id":"1rK3bqkgqaQ5EX9QJMCmRVijcF9WGMhc8","t":1},{"n":"3392","id":"1dLzWWU_t5E6BvxiyWrA2IgBjyQmOdkR9","t":1},{"n":"3395","id":"12QmCFe9FMhzEithyJy9zlxFRo-5RUPBx","t":1},{"n":"3398","id":"1GWyZgRERpGgqX727Dr0Q_jkDeONxLxbQ","t":1},{"n":"3407","id":"1GEXIxEHkflwb5urR1cJWQ7i8r2d9JR-q","t":1},{"n":"3434","id":"1EKrHw1TwsNQPBdqxHSO9dUEzEeBO6w70","t":1},{"n":"3435","id":"179K2yLUCor4dhoyPbTUoVI3dx3U8ozpd","t":1},{"n":"3439","id":"1EFvzHDHPk3eUNcKyz1Fy7HqQdGQmdXt6","t":1},{"n":"3445","id":"1cAp0FJELgVDAmusaTx8IKh5CvoxlIbPG","t":1},{"n":"3455","id":"1CDxYFxoul-F4LRD-MQBynczfRijwDeJK","t":1},{"n":"3460","id":"1e-RUlH1dhKXzd_ZECGRutgln3E1UdBJy","t":1},{"n":"3469","id":"1t6b2J3R8jhwomP2_InvnUn9PCGtJaTIj","t":1},{"n":"3475","id":"1U1mcQ1PXnMfN2kej-wnPKEohZ9FYj6hl","t":1},{"n":"3478","id":"128c16azb0OAcgEVPz_3_ohtqIS-8eAbq","t":1},{"n":"3481","id":"12Az62wydy5JqJQ87N57aTlE5qA6oQxol","t":1},{"n":"3489","id":"1fi5kykvLYU-k-QJH8jL5p5PRnK_DOT-N","t":1},{"n":"3498","id":"1JiBN6gbW4OUYZmjhcHTQmylfrsvIPJU6","t":1},{"n":"3515","id":"1VLWvbXmiU9fHoasifWDMKTU2fSmF0OMr","t":1},{"n":"3525","id":"1MpADNWiOZ0Cau4PTSKdU5mWo7Wip41p-","t":1},{"n":"3526","id":"1HKN1o1kyPz17au_v9-z7l3d4yk9WDFc7","t":1},{"n":"3527","id":"1dUkgWI2NYByjZ6bnBrirY-iVPjdl-UiN","t":1},{"n":"3538","id":"1rZHbgXsbfoBTxgqg89bX4J_xEMsOeQWt","t":1},{"n":"3542","id":"1bcs_X02sIO1at4lHBQIE5gE0rq5ySaLM","t":1},{"n":"3543","id":"1nuXm9J0-l9CqljCnBk1tsCy06LibpQEC","t":1},{"n":"3544","id":"1elNkUrwHenFBud0qfZH_A8YH9atolNAe","t":1},{"n":"3545","id":"1Q6vpSIkDLCr7jBJ14NexJaiqFasf39Al","t":1},{"n":"3546","id":"1tDHV5odVpMP95GQFioKKmdCNoY4o9PlR","t":1},{"n":"3547","id":"16-hENJZpLR26n2H1JcDS5GAfdu0UNpOt","t":1},{"n":"3548","id":"1FH277gIdBgjtVmlE1jxt95d2hIrXZKRt","t":1},{"n":"3549","id":"1f9iYXBb0HUDv5YUlTpvDAPoLmnVTayuf","t":1},{"n":"3556","id":"1lbnxDmDschqrEq4C7tGUTwuarCYDcYJS","t":1},{"n":"3572","id":"11mGJrE03KC7gwvcN0PN9trOJsIiwWmO1","t":1},{"n":"3596","id":"1Ug5PlTrCa8bDiWnocWb1POJG6v0THdzp","t":1},{"n":"3598","id":"16roXGze3JPdhoO_9TnMD6OdONm48ydHj","t":1},{"n":"3600","id":"1D6nOsGXGrYr12cA1m5sG4MGG23edbshL","t":1},{"n":"3603","id":"12A_uG-QJb6PbY244moxgYs2wZWBesnxV","t":1},{"n":"3604","id":"1tC6PIqyQVkkadksZPzh4lnfMMjnJZLx0","t":1},{"n":"3623","id":"1ZB4m7_mCigLEz1Ih0bnA2jT1HzSgqIa-","t":1},{"n":"3625","id":"1S5KnR9G7oGWzgsAirriiscHWGWJGujzR","t":1},{"n":"3627","id":"1kIYC-hi3Uc-5Xp-5TdfXv_WqD74fn7Xu","t":1},{"n":"3630","id":"1hoWisj6QXZ8b6WKaSv7Yo7Fc1HoYC0XA","t":1},{"n":"3633","id":"1pM6HZ-NieMKSOWExMqYh4m3ZDTqa5-_N","t":1},{"n":"3640","id":"14zTPoLap-EQRnzebVRjcXMV7NrDqvqQT","t":1},{"n":"3651","id":"1g65z1WYSH7dBRGZuPwN3Hstbb3DBGDds","t":1},{"n":"3652","id":"1HVQdrKdjat_jHge1mwIygbBYnwyABOiq","t":1},{"n":"3655","id":"1WsRxqUmBMlOFprbbk1hmwO3uZzKPT2-K","t":1},{"n":"3657","id":"12cm0ukWcOiTG-ApEkpYlKux6LFfJBwnK","t":1},{"n":"3658","id":"1PYkWErQiGrzk2ejsNEA4reQ2JhFFLRXF","t":1},{"n":"3659","id":"1wpJmDhlcSF9rrnz4uL9jYvOrz95pLK_A","t":1},{"n":"3662","id":"1ITO_nB9Cyj2V1TtD2lnMhrzxYm79p24Y","t":1},{"n":"3664","id":"1XAVg6fWmfO7AAm672kDItFyGiJnNTVhG","t":1},{"n":"3669","id":"1ZBugdeCs3klV0-YIQ0ek42i3stsXorMJ","t":1},{"n":"3671","id":"1ivkF4rpFAp3GAMAqPKcl4OqeVVLPuD_J","t":1},{"n":"3674","id":"16vsVOQ22XYpuQ7Ma5NVbdt3EAN9lsqS7","t":1},{"n":"3702","id":"1YOo5DAKovWxF6BATUChnRrtGSTKNs8FH","t":1},{"n":"3722","id":"1Ias0y-Y8fJWVWS3i3HgqojaKi9h4FOlc","t":1},{"n":"3736","id":"1UwmJqro-A8Z1CiNBDhjC5kYu8WgCFpGn","t":1},{"n":"3753","id":"1883tPlND4aCfZ0z4yj0plWk77hAHDzJt","t":1},{"n":"3765","id":"1cNLUjuYe8deatyR_DVjowQ19ENscnHyX","t":1},{"n":"3771","id":"1fL5ZbEK1u-5p3KcUg7OgaWFbcdhrTyQI","t":1},{"n":"3806","id":"1NI1XrSDs_14gVavailtkmQJgS6gkvA7w","t":1},{"n":"3809","id":"1wRaqRYjQzA8IVqnidd9e4_ZAIxJp-Pia","t":1},{"n":"3811","id":"1HFVv-h_9x9ksMM4mzBdq62a1YpLycNlm","t":1},{"n":"3812","id":"1OBGvCAk2qAXTJeA3cJVZDR_bXHBllzs4","t":1},{"n":"3863","id":"1-9M1bppub15INqF1qhXGJR06HNaDYm9r","t":1},{"n":"3889","id":"1hYcj_Z8OV7fUu_Ik0_OH0EQ2zwIfWgam","t":1},{"n":"3904","id":"1O8aG-396SOWFLveWsTqFYEAz2BlGRmU-","t":1},{"n":"3906","id":"1xKZHgGRYACrIjFWXmxH0KrqTqyHZJFX9","t":1},{"n":"3914","id":"17X9NaiPtliIAwEvVD4vTeCw5mpVpLuHX","t":1},{"n":"3930","id":"13JKuzg0vNoKeFXZWuBD6JAOfMCzp2561","t":1},{"n":"3942","id":"1jduKe9j7SXwi1I_PhHnmuXFd7udcIT64","t":1},{"n":"3965","id":"1r_IQiL1XnY9SLWyoMYj9xiTYnQv7oMN8","t":1},{"n":"3966","id":"1TlCBOFZn-3t67PZgFXBjJ0MvlKTDVE-8","t":0},{"n":"3967","id":"1cRgz9l9qk-DT-uLIAxudKQsqV4U9XHbN","t":1},{"n":"3968","id":"1UEpceELJom8NIfHPqrYsv7FDvXraoVqT","t":1},{"n":"3969","id":"1C2avm3C5Tiy7a7kSy6X4kxlcJtRC6c92","t":0},{"n":"3971","id":"1F7fm-waQwvv7rwjKOJFapmCHARQdhCFu","t":1},{"n":"3972","id":"1-sQlq8r0UXqZx875YeYFP4hogE1fyAjx","t":1},{"n":"3973","id":"1N2F1dgx3R3pVq6IR4P-qUMGGpittXtcC","t":1},{"n":"3974","id":"1l-0QjigEyQmKxZ8gr-lp3NWr13IsO1sg","t":1},{"n":"3976","id":"1N6uPC9O1HtZ3v-3NoB8yNJD-eV266Nsr","t":1},{"n":"3977","id":"1-c3ZCB0I3ohfveRnfOGVZ1UIPYRZlXe2","t":1},{"n":"3978","id":"1e0dMO2UoSQfpfTZlCNnAKOqC0tOUTLFv","t":1},{"n":"3979","id":"1y8Fn7xbJh6CXNeZe4mmv15rMD6gFStv5","t":1},{"n":"3983","id":"1Pm7SqMrGF2dedT9-3tDJoQWbE_oQ5Bmg","t":1},{"n":"3988","id":"11T8xDRfbxyscNoroMj3JjhvAsFyuZZur","t":0}];
+const PICKS = ["1762", "1906", "2019", "2290", "2516", "2836", "2970", "3293", "3544", "3753"];
+const thumb = (p, w) => `https://drive.google.com/thumbnail?id=${p.id}&sz=w${w}`;
+const local = n => `photos/${n}.jpg`;
+const indexOf = n => photos.findIndex(p => p.n === n);
+const USER = 'calvinhaus';
+const CAPTION = 'Your caption goes here.';
+
+// ---- Instagram-style carousel ----
+const ICONS = `
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F1419" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.500s-7.500-4.600-7.500-10.200A4.300 4.300 0 0 1 12 7.600a4.300 4.300 0 0 1 7.500 2.700c0 5.600-7.500 10.200-7.500 10.200z"/></svg>
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F1419" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M20.500 11.500a8.500 8.500 0 0 1-12.600 7.400L3.500 20.500l1.600-4.200A8.500 8.500 0 1 1 20.500 11.500z"/></svg>
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F1419" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 10.500 13.500M21 3l-6.500 18-4-7.500L3 9.500z"/></svg>`;
+
+
+document.querySelectorAll('[data-carousel]').forEach(post => {
+  const set = PICKS;
+  const n = set.length;
+
+  post.innerHTML = `
+    <div class="top">
+      <div class="avatar">CH</div>
+      <div><div class="user">${USER}</div><div class="sub">Tennessee</div></div>
+      <svg class="more" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.600" fill="#0F1419"/><circle cx="12" cy="12" r="1.600" fill="#0F1419"/><circle cx="19" cy="12" r="1.600" fill="#0F1419"/></svg>
+    </div>
+    <div class="carousel">
+      <div class="track">
+        ${set.map((p, i) => `<div class="slide" style="aspect-ratio:${post.dataset.ratio}"><img src="${local(p)}" alt="Photo ${i + 1} of ${n}" ${i > 1 ? 'loading="lazy"' : ''}></div>`).join('')}
+      </div>
+      <div class="count">1/${n}</div>
+      <button class="arrow prev" type="button" aria-label="Previous photo" disabled>&#8249;</button>
+      <button class="arrow next" type="button" aria-label="Next photo">&#8250;</button>
+    </div>
+    <div class="bar">
+      ${ICONS}
+      <div class="dots">${set.map(() => '<i></i>').join('')}</div>
+      <svg class="save" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F1419" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.500h12v17l-6-4.500-6 4.500z"/></svg>
+    </div>
+    <div class="text"><b>${USER}</b> ${CAPTION}</div>
+    <div class="time">Just now</div>`;
+
+  const track = post.querySelector('.track');
+  const dots = [...post.querySelectorAll('.dots i')];
+  const count = post.querySelector('.count');
+  const prev = post.querySelector('.prev');
+  const next = post.querySelector('.next');
+  let cur = -1;
+
+  function update() {
+    const i = Math.max(0, Math.min(n - 1, Math.round(track.scrollLeft / track.clientWidth)));
+    if (i === cur) return;
+    cur = i;
+    count.textContent = `${i + 1}/${n}`;
+    prev.disabled = i === 0;
+    next.disabled = i === n - 1;
+    const start = Math.max(0, Math.min(n - 5, i - 2));
+    dots.forEach((d, k) => {
+      d.classList.toggle('on', k === i);
+      d.classList.toggle('gone', k < start || k > start + 4);
+      d.classList.toggle('far', n > 5 && ((k === start && start > 0) || (k === start + 4 && start + 4 < n - 1)));
+    });
+  }
+
+  const go = dir => track.scrollTo({ left: (cur + dir) * track.clientWidth, behavior: 'smooth' });
+  prev.addEventListener('click', () => go(-1));
+  next.addEventListener('click', () => go(1));
+  track.addEventListener('scroll', update, { passive: true });
+  update();
+});
+
+// ---- Facebook-style album: 2 large + 3 small, with a "+N" on the last tile ----
+const album = document.getElementById('album');
+PICKS.slice(0, 5).forEach((n, i) => {
+  const tile = document.createElement('div');
+  tile.className = 'tile ' + (i < 2 ? 'big' : 'small');
+  tile.innerHTML = `<img src="${local(n)}" alt="Photo ${i + 1}">` +
+    (i === 4 ? `<div class="more-count">+${photos.length - 5}</div>` : '');
+  tile.onclick = () => openLightbox(indexOf(n));
+  album.appendChild(tile);
+});
+
+// ---- Full photo grid + lightbox ----
+const feed = document.getElementById('feed');
+let currentIndex = 0;
+
+photos.forEach((p, i) => {
+  const item = document.createElement('div');
+  item.className = 'feed-item' + (p.t ? '' : ' wide');
+  item.style.aspectRatio = p.t ? '2 / 3' : '3 / 2';
+  item.innerHTML = `<img src="${thumb(p, p.t ? 600 : 1200)}" alt="Photo ${p.n}" loading="lazy" referrerpolicy="no-referrer">`;
+  item.querySelector('img').onclick = () => openLightbox(i);
+  feed.appendChild(item);
+});
+
+function openLightbox(index) {
+  currentIndex = index;
+  document.getElementById('lightbox').classList.add('active');
+  updateLightbox();
+  document.addEventListener('keydown', handleKeys);
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.removeEventListener('keydown', handleKeys);
+}
+
+function navLightbox(dir) {
+  currentIndex = (currentIndex + dir + photos.length) % photos.length;
+  updateLightbox();
+}
+
+function updateLightbox() {
+  const p = photos[currentIndex];
+  const img = document.getElementById('lightboxImg');
+  img.referrerPolicy = 'no-referrer';
+  img.src = thumb(p, 2000);
+  img.alt = `Photo ${p.n}`;
+  document.getElementById('lightboxCounter').textContent = `${currentIndex + 1} / ${photos.length}  ·  #${p.n}`;
+}
+
+function handleKeys(e) {
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowRight') navLightbox(1);
+  if (e.key === 'ArrowLeft') navLightbox(-1);
+}
+
+const lbEl = document.getElementById('lightbox');
+lbEl.addEventListener('click', e => { if (e.target === e.currentTarget) closeLightbox(); });
+
+let touchStartX = 0;
+lbEl.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+lbEl.addEventListener('touchend', e => {
+  const diff = e.changedTouches[0].screenX - touchStartX;
+  if (Math.abs(diff) > 50) navLightbox(diff > 0 ? -1 : 1);
+}, { passive: true });
+</script>
+</body>
+</html>
